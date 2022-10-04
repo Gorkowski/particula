@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>The particula JupyterBook &#8212; Particula Book</title>
+    <title>Getting started &#8212; Particula Book</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installing particula" href="getting_started.html" />
+    <link rel="next" title="Particula tour" href="tour/part-tour.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -108,24 +108,51 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    The particula JupyterBook
+                    Getting started
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Installation
+  Tour
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="getting_started.html">
-   Installing
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     particula
-    </span>
-   </code>
+  <a class="reference internal" href="tour/part-tour.html">
+   Particula tour
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_statistics.html">
+   Distribution statistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_coagulation.html">
+   Distribution coagulation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_evolution.html">
+   Distribution evolution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_ambient.html">
+   Distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/ionparticle_coagulation.html">
+   Ion–particle coagulation
   </a>
  </li>
 </ul>
@@ -135,7 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="documentation/environment.html">
    The
    <code class="docutils literal notranslate">
@@ -145,6 +172,40 @@ const thebe_selector_output = ".output, .cell_output"
    </code>
    Class
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/dilution_loss.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       dilution_loss
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/dynamic_viscosity.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       dynamic_viscosity
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/mean_free_path.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mean_free_path
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="documentation/vapor.html">
@@ -157,7 +218,7 @@ const thebe_selector_output = ".output, .cell_output"
    Class
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="documentation/particle.html">
    The
    <code class="docutils literal notranslate">
@@ -167,111 +228,76 @@ const thebe_selector_output = ".output, .cell_output"
    </code>
    Classes
   </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Examples
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="examples/distribution_demo.html">
-   Making a particle distribution.
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="examples/coagulation_demo.html">
-   Comparing different coagulation calculations.
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Utilities
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/dynamic_viscosity.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     dynamic_viscosity
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/mean_free_path.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     mean_free_path
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/distribution_discretization.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     distribution_discretization
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/radius_cutoff.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     radius_cutoff
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/particle_mass.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     particle_mass
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/knudsen_number.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     knudsen_number
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/slip_correction.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     slip_correction
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/friction_factor.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     friction_factor
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/dimensionless_coagulation.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     dimensionless_coagulation
-    </span>
-   </code>
-  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/distribution_discretization.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       distribution_discretization
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/radius_cutoff.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       radius_cutoff
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/particle_mass.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       particle_mass
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/knudsen_number.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       knudsen_number
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/slip_correction.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       slip_correction
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/friction_factor.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       friction_factor
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/dimensionless_coagulation.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       dimensionless_coagulation
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -287,19 +313,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="CODE_OF_CONDUCT.html">
-   Contributor Covenant Code of Conduct
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  FAQ
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="FAQ.html">
-   FAQ
+   Code of Conduct
   </a>
  </li>
 </ul>
@@ -409,7 +423,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/uncscode/particula/edit/v0.0.8/docs/intro.md"
+        <a href="https://github.com/uncscode/particula/edit/v0.0.10/docs/intro.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -497,24 +511,23 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-particula">
-   What is
+  <a class="reference internal nav-link" href="#installing-particula">
+   Installing
    <code class="docutils literal notranslate">
     <span class="pre">
      particula
     </span>
    </code>
-   ?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-can-i-learn-more-about-the-science">
-   How can I learn more about the science?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-can-i-contribute">
-   How can I contribute?
+  <a class="reference internal nav-link" href="#contributing-to-particula">
+   Contributing to
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     particula
+    </span>
+   </code>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -531,7 +544,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>The particula JupyterBook</h1>
+                <h1>Getting started</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -542,24 +555,23 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-particula">
-   What is
+  <a class="reference internal nav-link" href="#installing-particula">
+   Installing
    <code class="docutils literal notranslate">
     <span class="pre">
      particula
     </span>
    </code>
-   ?
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-can-i-learn-more-about-the-science">
-   How can I learn more about the science?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#how-can-i-contribute">
-   How can I contribute?
+  <a class="reference internal nav-link" href="#contributing-to-particula">
+   Contributing to
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     particula
+    </span>
+   </code>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -577,40 +589,36 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="the-particula-jupyterbook">
-<h1>The <code class="docutils literal notranslate"><span class="pre">particula</span></code> JupyterBook<a class="headerlink" href="#the-particula-jupyterbook" title="Permalink to this headline">#</a></h1>
-<p>This is the <code class="docutils literal notranslate"><span class="pre">particula</span></code> JupyterBook for tutorials and documentation.
-It is a Jupyter “book” that is organized into chapters.
-Each chapter is a Jupyter notebook that can be executed.
-The notebooks are organized in a way that makes it easy to follow along.
-You can read more about the JupyterBook project <a class="reference external" href="https://jupyter.org/community/jupyterbook/">here</a>.</p>
-<section id="what-is-particula">
-<h2>What is <code class="docutils literal notranslate"><span class="pre">particula</span></code>?<a class="headerlink" href="#what-is-particula" title="Permalink to this headline">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">particula</span></code> is a Python package for studying and researching atmospheric particles, also known as aerosol(s).
-It is in early development at the moment; we have made a conscious decision to start this development, <em>from scratch</em>, all in the open with the goal of making it a useful tool for the community, with the help of the community.
-As of now, we are a mix of scientists and engineers, both from academia and industry, broadly specializing in atmospheric sciences, software development, and/or the intersection thereof.
-Some of the components of the package may have appeared elsewhere in scattered publications — certainly in some of our own — and we hope this package will be a centralized place for us to conduct our research but for others to use it however they wish. Our license is MIT and it is very permissive.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">#</a></h1>
+<p>The documentation for <code class="docutils literal notranslate"><span class="pre">particula</span></code> is organized into Jupyter notebooks that can be executed in the browser.
+To learn more about Jupyter notebooks, visit <a class="reference external" href="https://jupyter.org/">jupyter.org</a> and <a class="reference external" href="https://jupyterbook.org/">jupyterbook.org</a>.</p>
+<section id="installing-particula">
+<h2>Installing <code class="docutils literal notranslate"><span class="pre">particula</span></code><a class="headerlink" href="#installing-particula" title="Permalink to this headline">#</a></h2>
+<p>You can install <code class="docutils literal notranslate"><span class="pre">particula</span></code> from PyPI using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m pip install particula
+</pre></div>
+</div>
+<p>Or from conda-forge using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c conda-forge particula
+</pre></div>
+</div>
+<p>Alternative, you could fork the repository (or copy it locally) and install it using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/uncscode/particula.git
+<span class="nb">cd</span> particula
+python -m pip install particula
+</pre></div>
+</div>
 </section>
-<section id="how-can-i-learn-more-about-the-science">
-<h2>How can I learn more about the science?<a class="headerlink" href="#how-can-i-learn-more-about-the-science" title="Permalink to this headline">#</a></h2>
-<p>We plan to properly document the science and the code in these Jupyter notebooks in this website <a class="reference external" href="https://uncscode.github.io/particula">https://uncscode.github.io/particula</a>.
-We are particularly keen to explore a few distinct, but highly related, scientific areas: aerosol particle dynamics and chemistry, their effects on air quality and public health, and their importance in weather and climate systems.</p>
+<section id="contributing-to-particula">
+<h2>Contributing to <code class="docutils literal notranslate"><span class="pre">particula</span></code><a class="headerlink" href="#contributing-to-particula" title="Permalink to this headline">#</a></h2>
+<p>We are open to and we welcome contributions from anyone who wants to contribute to this project.
+We have a short contributing document in the root of the repository, which you can read <a class="reference external" href="https://uncscode.github.io/particula/CONTRIBUTING.html">here</a>.
+However, feel free to reach out with any questions or comments!</p>
 </section>
-<section id="how-can-i-contribute">
-<h2>How can I contribute?<a class="headerlink" href="#how-can-i-contribute" title="Permalink to this headline">#</a></h2>
-<p>We are very open and we welcome contributions from anyone who wants to contribute to the project.
-We have a short contributing document in the root of the repository, which you can read <a class="reference external" href="https://github.com/uncscode/particula/blob/master/CONTRIBUTING.md">here</a>.
-We will be adding a longer and more detailed document on this website soon.
-In general, you should feel free to open and issue or submit a pull request with anything you deem appropriate.</p>
-</section>
-<hr class="docutils" />
 <section id="quick-links">
 <h2>Quick links<a class="headerlink" href="#quick-links" title="Permalink to this headline">#</a></h2>
 </section>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -626,7 +634,7 @@ In general, you should feel free to open and issue or submit a pull request with
         requestKernel: true,
         binderOptions: {
             repo: "uncscode/particula",
-            ref: "v0.0.8",
+            ref: "v0.0.10",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -648,10 +656,10 @@ In general, you should feel free to open and issue or submit a pull request with
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="getting_started.html" title="next page">
+    <a class='right-next' id="next-link" href="tour/part-tour.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Installing <code class="docutils literal notranslate"><span class="pre">particula</span></code></p>
+        <p class="prev-next-title">Particula tour</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

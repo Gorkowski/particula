@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Contributor Covenant Code of Conduct &#8212; Particula Book</title>
+    <title>Code of Conduct &#8212; Particula Book</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="FAQ" href="FAQ.html" />
     <link rel="prev" title="Contributor Guidelines" href="CONTRIBUTING.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -109,24 +108,51 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="intro.html">
-                    The particula JupyterBook
+                    Getting started
                 </a>
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Installation
+  Tour
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="getting_started.html">
-   Installing
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     particula
-    </span>
-   </code>
+  <a class="reference internal" href="tour/part-tour.html">
+   Particula tour
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Examples
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_statistics.html">
+   Distribution statistics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_coagulation.html">
+   Distribution coagulation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_evolution.html">
+   Distribution evolution
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/distribution_ambient.html">
+   Distributions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="examples/ionparticle_coagulation.html">
+   Ion–particle coagulation
   </a>
  </li>
 </ul>
@@ -136,7 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="documentation/environment.html">
    The
    <code class="docutils literal notranslate">
@@ -146,6 +172,40 @@ const thebe_selector_output = ".output, .cell_output"
    </code>
    Class
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/dilution_loss.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       dilution_loss
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/dynamic_viscosity.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       dynamic_viscosity
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/mean_free_path.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mean_free_path
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="documentation/vapor.html">
@@ -158,7 +218,7 @@ const thebe_selector_output = ".output, .cell_output"
    Class
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="documentation/particle.html">
    The
    <code class="docutils literal notranslate">
@@ -168,111 +228,76 @@ const thebe_selector_output = ".output, .cell_output"
    </code>
    Classes
   </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Examples
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="examples/distribution_demo.html">
-   Making a particle distribution.
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="examples/coagulation_demo.html">
-   Comparing different coagulation calculations.
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Utilities
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/dynamic_viscosity.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     dynamic_viscosity
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/mean_free_path.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     mean_free_path
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/distribution_discretization.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     distribution_discretization
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/radius_cutoff.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     radius_cutoff
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/particle_mass.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     particle_mass
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/knudsen_number.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     knudsen_number
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/slip_correction.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     slip_correction
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/friction_factor.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     friction_factor
-    </span>
-   </code>
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="documentation/utilities/dimensionless_coagulation.html">
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     dimensionless_coagulation
-    </span>
-   </code>
-  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/distribution_discretization.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       distribution_discretization
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/radius_cutoff.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       radius_cutoff
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/particle_mass.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       particle_mass
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/knudsen_number.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       knudsen_number
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/slip_correction.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       slip_correction
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/friction_factor.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       friction_factor
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="documentation/utilities/dimensionless_coagulation.html">
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       dimensionless_coagulation
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -288,19 +313,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Contributor Covenant Code of Conduct
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  FAQ
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="FAQ.html">
-   FAQ
+   Code of Conduct
   </a>
  </li>
 </ul>
@@ -410,7 +423,7 @@ title="Open an issue"
       </li>
       
       <li>
-        <a href="https://github.com/uncscode/particula/edit/v0.0.8/docs/CODE_OF_CONDUCT.md"
+        <a href="https://github.com/uncscode/particula/edit/v0.0.10/docs/CODE_OF_CONDUCT.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -563,7 +576,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Contributor Covenant Code of Conduct</h1>
+                <h1>Code of Conduct</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -640,8 +653,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="contributor-covenant-code-of-conduct">
-<h1>Contributor Covenant Code of Conduct<a class="headerlink" href="#contributor-covenant-code-of-conduct" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="code-of-conduct">
+<h1>Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permalink to this headline">#</a></h1>
 <section id="our-pledge">
 <h2>Our Pledge<a class="headerlink" href="#our-pledge" title="Permalink to this headline">#</a></h2>
 <p>We as members, contributors, and leaders pledge to make participation in our
@@ -766,7 +779,7 @@ enforcement ladder</a>.</p>
         requestKernel: true,
         binderOptions: {
             repo: "uncscode/particula",
-            ref: "v0.0.8",
+            ref: "v0.0.10",
         },
         codeMirrorConfig: {
             theme: "abcdef",
@@ -794,13 +807,6 @@ enforcement ladder</a>.</p>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Contributor Guidelines</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="FAQ.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">FAQ</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
