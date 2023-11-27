@@ -4,6 +4,7 @@ from typing import Tuple
 import torch
 
 
+@torch.compile()
 def leapfrog(
         position: torch.Tensor,
         velocity: torch.Tensor,

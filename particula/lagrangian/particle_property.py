@@ -4,6 +4,7 @@ import numpy as np
 import torch
 
 
+@torch.compile()
 def radius(
         mass: torch.Tensor,
         density: torch.Tensor

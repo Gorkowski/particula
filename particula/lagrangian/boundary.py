@@ -3,6 +3,7 @@
 import torch
 
 
+@torch.compile()
 def wrapped_cube(
         position: torch.Tensor, cube_side: float) -> torch.Tensor:
     """

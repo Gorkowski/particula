@@ -6,6 +6,7 @@ import torch
 from particula.lagrangian import particle_pairs
 
 
+@torch.compile()
 def find_collisions(
         distance_matrix: torch.Tensor,
         indices: torch.Tensor,
@@ -66,6 +67,7 @@ def find_collisions(
         collisions[:, iteration_index], iteration_index, :].int()
 
 
+@torch.compile()
 def coalescence(
         velocity: torch.Tensor,
         mass: torch.Tensor,
@@ -120,6 +122,7 @@ def coalescence(
 
 # flake8: noqa: C901
 # pylint: disable=line-too-long
+@torch.compile()
 def elastic_collision(
     velocity: torch.Tensor,
     mass: torch.Tensor,

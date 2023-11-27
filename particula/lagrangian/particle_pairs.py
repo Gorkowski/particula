@@ -3,6 +3,7 @@
 import torch
 
 
+@torch.compile()
 def remove_duplicates(
         index_pairs: torch.Tensor,
         index_to_remove: int
@@ -44,6 +45,7 @@ def remove_duplicates(
     return index_pairs[clean_index]
 
 
+@torch.compile()
 def calculate_pairwise_distance(position: torch.Tensor) -> torch.Tensor:
     """
     need to test this:
