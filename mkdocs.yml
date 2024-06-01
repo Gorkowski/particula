@@ -29,8 +29,9 @@ theme:
       primary: indigo
       accent: lime
 
-
-
+nav:
+  - Home: index.md
+  - Jupyter Book: jupyter_book/index.html  # Link to your Jupyter Book as a subdirectory
 
 markdown_extensions:
 
