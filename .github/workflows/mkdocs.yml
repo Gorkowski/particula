@@ -1,0 +1,45 @@
+name: Build and Deploy Documentation
+
+on:
+    pull_request:
+      branches: [ main ]
+    push:
+      branches: [ main ]
+      paths:
+      - docs/**
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with: 
+        persist-credentials: false
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5.1.0
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        pip install mkdocs mkdocs-material handsdown
+
+    - name: Generate Documentation
+      run: handsdown -o docs
+
+    - name: Build MkDocs site
+      run: mkdocs build
+
+    - if: ${{ github.event_name == 'push' }}
+      name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages # your GitHub Pages branch
+        folder: docs/_build/html
+
+    - if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+      name: Preview docs
+      uses: rossjrw/pr-preview-action@v1
+      with:
+        source-dir: docs/_build/html

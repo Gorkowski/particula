@@ -39,7 +39,7 @@ dev = [
     "pylint", "pytest", "autopep8", "jupyterlab",
     "typing", "build", "flake8", "jupyter-book", "ghp-import",
     "matplotlib", "pandas", "netCDF4", "shapely", "PyMieScatt",
-    "tqdm", "pytz", "torch", "mkdocs-material", "pydoc-markdown",
+    "tqdm", "pytz", "torch", "mkdocs-material", "handsdown",
 ]
 
 [build-system]

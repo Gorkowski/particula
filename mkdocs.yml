@@ -1,4 +1,7 @@
 site_name: Particula
+repo_url: https://github.com/gorkowski/particula
+edit_uri: edit/main/docs/
+
 theme:
   name: material
   features:
@@ -27,8 +30,7 @@ theme:
       accent: lime
 
 
-repo_url: https://github.com/gorkowski/particula
-edit_uri: edit/main/docs/
+
 
 markdown_extensions:
 

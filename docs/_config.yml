@@ -11,7 +11,7 @@ launch_buttons:
   thebe: true
 
 repository:
-  url: https://github.com/uncscode/particula
+  url: https://github.com/gorkowski/particula
   path_to_book: docs
   branch: v0.0.10
 
