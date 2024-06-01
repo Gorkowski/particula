@@ -223,6 +223,7 @@ def test_brownian_coagulation_kernel_via_system_state_input_validation():
     errors.
     """
     with pytest.raises(TypeError):
+        # pytype: disable=wrong-arg-types
         brownian_kernel.brownian_coagulation_kernel_via_system_state(
             radius_particle="not a number",
             mass_particle="not a number",
