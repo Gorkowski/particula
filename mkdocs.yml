@@ -29,12 +29,13 @@ theme:
       primary: indigo
       accent: lime
 
-nav:
-  - Home: index.md
-  - Jupyter Book: jupyter_book/index.html  # Link to your Jupyter Book as a subdirectory
+# nav:
+#   - Home: index.md
+#   - Jupyter Book: jupyter_book/index.html  # Link to your Jupyter Book as a subdirectory
+#   - Code Documentation: source-code
+
 
 markdown_extensions:
-
   # Python Markdown
   - abbr
   - admonition
