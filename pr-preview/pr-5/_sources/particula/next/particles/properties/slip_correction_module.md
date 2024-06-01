@@ -26,7 +26,7 @@ non-continuum effects on small particles.
 
 Reference:
 ----------
-Dimensionless quantity accounting for non-continuum effects
+- Dimensionless quantity accounting for non-continuum effects
 on small particles. It is a deviation from Stokes' Law.
 Stokes assumes a no-slip condition that is not correct at
 high Knudsen numbers. The slip correction factor is used to

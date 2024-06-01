@@ -542,18 +542,22 @@ document.write(`
 </ul>
 <section id="dry-mixing">
 <h2>dry_mixing<a class="headerlink" href="#dry-mixing" title="Link to this heading">#</a></h2>
-<p><a class="reference download internal" download="" href="../../_downloads/798ddfd1274af8415dfaee26211f41e7/surface_tension.py"><span class="xref download myst">Show source in surface_tension.py:37</span></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/798ddfd1274af8415dfaee26211f41e7/surface_tension.py"><span class="xref download myst">Show source in surface_tension.py:38</span></a></p>
 <p>Function to calculate the effective surface tension of a dry mixture.</p>
 <section id="arguments">
 <h3>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">#</a></h3>
 <hr class="docutils" />
-<p>volume_fractions : array, volume fractions of solutes
-surface_tensions : array, surface tensions of solutes</p>
+<ul class="simple">
+<li><p>volume_fractions : array, volume fractions of solutes</p></li>
+<li><p>surface_tensions : array, surface tensions of solutes</p></li>
+</ul>
 </section>
 <section id="returns">
 <h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">#</a></h3>
 <hr class="docutils" />
-<p>sigma : array, surface tension of droplet</p>
+<ul class="simple">
+<li><p>sigma : array, surface tension of droplet</p></li>
+</ul>
 </section>
 <section id="signature">
 <h3>Signature<a class="headerlink" href="#signature" title="Link to this heading">#</a></h3>
@@ -570,17 +574,17 @@ and Mares (2018).</p>
 <section id="id1">
 <h3>Arguments<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <hr class="docutils" />
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Temperature : float, Ambient temperature of air
-CritTemp : float, optional: Critical temperature of water
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>Temperature : float, Ambient temperature of air</p></li>
+<li><p>CritTemp : float, optional: Critical temperature of water</p></li>
+</ul>
 </section>
 <section id="id2">
 <h3>Returns<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <hr class="docutils" />
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sigma : float, Surface tension of water at the given temperature
-</pre></div>
-</div>
+<ul class="simple">
+<li><p>sigma : float, Surface tension of water at the given temperature</p></li>
+</ul>
 </section>
 <section id="id3">
 <h3>Signature<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
@@ -591,22 +595,26 @@ CritTemp : float, optional: Critical temperature of water
 </section>
 <section id="wet-mixing">
 <h2>wet_mixing<a class="headerlink" href="#wet-mixing" title="Link to this heading">#</a></h2>
-<p><a class="reference download internal" download="" href="../../_downloads/798ddfd1274af8415dfaee26211f41e7/surface_tension.py"><span class="xref download myst">Show source in surface_tension.py:58</span></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/798ddfd1274af8415dfaee26211f41e7/surface_tension.py"><span class="xref download myst">Show source in surface_tension.py:59</span></a></p>
 <p>Function to calculate the effective surface tension of a wet mixture.</p>
 <section id="id4">
 <h3>Arguments<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <hr class="docutils" />
-<p>volume_solute : array, volume of solute mixture
-volume_water : array, volume of water
-surface_tension_solute : array, surface tension of solute mixture
-temperature : float, temperature of droplet
-method : str, optional: [film, volume] method to calculate effective
-surface tension</p>
+<ul class="simple">
+<li><p>volume_solute : array, volume of solute mixture</p></li>
+<li><p>volume_water : array, volume of water</p></li>
+<li><p>surface_tension_solute : array, surface tension of solute mixture</p></li>
+<li><p>temperature : float, temperature of droplet</p></li>
+<li><p>method : str, optional: [film, volume] method to calculate effective
+surface tension</p></li>
+</ul>
 </section>
 <section id="id5">
 <h3>Returns<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <hr class="docutils" />
-<p>EffSigma : array, effective surface tension of droplet</p>
+<ul class="simple">
+<li><p>EffSigma : array, effective surface tension of droplet</p></li>
+</ul>
 </section>
 <section id="id6">
 <h3>Signature<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
