@@ -9,6 +9,7 @@ theme:
     - navigation.sections
     - toc.integrate
     - navigation.top
+    - navigation.tracking
     - search.suggest
     - search.highlight
     - content.tabs.link
@@ -30,10 +31,9 @@ theme:
       accent: lime
 
 # nav:
-#   - Home: index.md
+  # - Home: index.md
 #   - Jupyter Book: jupyter_book/index.html  # Link to your Jupyter Book as a subdirectory
 #   - Code Documentation: source-code
-
 
 markdown_extensions:
   # Python Markdown
@@ -67,6 +67,12 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
+
+plugins:
+  - search
+  - mkdocs-jupyter:
+      include_source: True
+
 
 copyright: |
   &copy; 2024 By particula contributors

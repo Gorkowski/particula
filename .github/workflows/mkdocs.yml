@@ -26,7 +26,7 @@ jobs:
 
         - name: Install dependencies
           run: |
-            pip install mkdocs mkdocs-material handsdown
+            pip install mkdocs mkdocs-material handsdown mkdocs-jupyter
 
         - name: Generate Documentation with Handsdown
           run: python mk_generator.py

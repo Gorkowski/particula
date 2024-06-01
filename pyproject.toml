@@ -40,6 +40,7 @@ dev = [
     "typing", "build", "flake8", "jupyter-book", "ghp-import",
     "matplotlib", "pandas", "netCDF4", "shapely", "PyMieScatt",
     "tqdm", "pytz", "torch", "mkdocs-material", "handsdown",
+    "mkdocs-jupyter",
 ]
 
 [build-system]

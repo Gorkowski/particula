@@ -1,17 +1,34 @@
-# Welcome to MkDocs
+# Home
 
-## Commands
+The documentation for `particula` is organized into Jupyter notebooks that can be executed in the browser.
+To learn more about Jupyter notebooks, visit [jupyter.org](https://jupyter.org/) and [jupyterbook.org](https://jupyterbook.org/).
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Installing `particula`
 
-## Project layout
+You can install `particula` from PyPI using the following command:
 
-```py
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+```bash
+python -m pip install particula
 ```
+
+Or from conda-forge using the following command:
+
+```bash
+conda install -c conda-forge particula
+```
+
+Alternative, you could fork the repository (or copy it locally) and install it using the following command:
+
+```bash
+git clone https://github.com/uncscode/particula.git
+cd particula
+python -m pip install particula
+```
+
+## Contributing to `particula`
+
+We are open to and we welcome contributions from anyone who wants to contribute to this project.
+We have a short contributing document in the root of the repository, which you can read [here](https://uncscode.github.io/particula/CONTRIBUTING.html).
+However, feel free to reach out with any questions or comments!
+
+## Quick links
