@@ -47,9 +47,10 @@ theme:
       accent: cyan
 
 # nav:
-  # - Home: index.md
-#   - Jupyter Book: jupyter_book/index.html  # Link to your Jupyter Book as a subdirectory
-#   - Code Documentation: source-code
+#   - Home: index.md
+#   - Contribute: contribute/index.md
+#   - Examples: examples/index.md
+#   - Code Documentation: Source-Code/README.md
 
 markdown_extensions:
   # Python Markdown

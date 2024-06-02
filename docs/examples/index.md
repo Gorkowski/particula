@@ -4,6 +4,7 @@ This is a collection of jupyter notebooks that demonstrate how to use the aspect
 
 ## Table of contents
 
+- [Tour of Particula](tour/index.md)
 - [Distributions](distributions/index.md)
 - [Equilibria](equilibria/index.md)
 - [Lagrangian (Direct Numerical Simulation)](lagrangian/index.md)
