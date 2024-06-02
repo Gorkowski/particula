@@ -6097,13 +6097,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6125,14 +6125,84 @@ help(slip_correction)</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Help on module particula.util.slip_correction in particula.util:
+
+NAME
+    particula.util.slip_correction - calculate slip correction
+
+FUNCTIONS
+    scf(radius=None, knu=None, **kwargs)
+        Returns particle's Cunningham slip correction factor.
+        
+        Dimensionless quantity accounting for non-continuum effects
+        on small particles. It is a deviation from Stokes' Law.
+        Stokes assumes a no-slip condition that is not correct at
+        high Knudsen numbers. The slip correction factor is used to
+        calculate the friction factor.
+        
+        Thus, the slip correction factor is about unity (1) for larger
+        particles (Kn -&gt; 0). Its behavior on the other end of the
+        spectrum (smaller particles; Kn -&gt; inf) is more nuanced, though
+        it tends to scale linearly on a log-log scale, log Cc vs log Kn.
+        
+        Examples:
+        ```
+        &gt;&gt;&gt; from particula import u
+        &gt;&gt;&gt; from particula.util.slip_correction import scf
+        &gt;&gt;&gt; # with radius 1e-9 m
+        &gt;&gt;&gt; scf(radius=1e-9)
+        &lt;Quantity(110.720731, 'dimensionless')&gt;
+        &gt;&gt;&gt; # with radius 1e-9 m and knu=1
+        &gt;&gt;&gt; scf(radius=1e-9*u.m, knu=1)
+        &lt;Quantity(2.39014843, 'dimensionless')&gt;
+        &gt;&gt;&gt; # using knu(**kwargs)
+        &gt;&gt;&gt; scf(radius=1e-9*u.m, mfp=60*u.nm)
+        &lt;Quantity(99.9840088, 'dimensionless')&gt;
+        &gt;&gt;&gt; # using mfp(**kwargs)
+        &gt;&gt;&gt; scf(
+        ... radius=1e-9*u.m,
+        ... temperature=300,
+        ... pressure=1e5,
+        ... molecular_weight=0.03
+        ... )
+        &lt;Quantity(111.101591, 'dimensionless')&gt;
+        ```
+        
+        Args:
+            radius  (float) [m]
+            knu     (float) [ ] (default: util)
+        
+        Returns:
+                    (float) [dimensionless]
+        
+        Notes:
+            knu can be calculated using knu(**kwargs);
+            refer to particula.util.knudsen_number.knu for more info.
+
+FILE
+    /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/particula/util/slip_correction.py
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6150,6 +6220,88 @@ help(slip_correction)</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-2">import inspect
 print(inspect.getsource(slip_correction))</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>""" calculate slip correction
+"""
+
+import numpy as np
+from particula.util.input_handling import in_radius, in_scalar
+from particula.util.knudsen_number import knu as knu_func
+
+
+def scf(
+    radius=None,
+    knu=None,
+    **kwargs
+):
+    """ Returns particle's Cunningham slip correction factor.
+
+        Dimensionless quantity accounting for non-continuum effects
+        on small particles. It is a deviation from Stokes' Law.
+        Stokes assumes a no-slip condition that is not correct at
+        high Knudsen numbers. The slip correction factor is used to
+        calculate the friction factor.
+
+        Thus, the slip correction factor is about unity (1) for larger
+        particles (Kn -&gt; 0). Its behavior on the other end of the
+        spectrum (smaller particles; Kn -&gt; inf) is more nuanced, though
+        it tends to scale linearly on a log-log scale, log Cc vs log Kn.
+
+        Examples:
+        ```
+        &gt;&gt;&gt; from particula import u
+        &gt;&gt;&gt; from particula.util.slip_correction import scf
+        &gt;&gt;&gt; # with radius 1e-9 m
+        &gt;&gt;&gt; scf(radius=1e-9)
+        &lt;Quantity(110.720731, 'dimensionless')&gt;
+        &gt;&gt;&gt; # with radius 1e-9 m and knu=1
+        &gt;&gt;&gt; scf(radius=1e-9*u.m, knu=1)
+        &lt;Quantity(2.39014843, 'dimensionless')&gt;
+        &gt;&gt;&gt; # using knu(**kwargs)
+        &gt;&gt;&gt; scf(radius=1e-9*u.m, mfp=60*u.nm)
+        &lt;Quantity(99.9840088, 'dimensionless')&gt;
+        &gt;&gt;&gt; # using mfp(**kwargs)
+        &gt;&gt;&gt; scf(
+        ... radius=1e-9*u.m,
+        ... temperature=300,
+        ... pressure=1e5,
+        ... molecular_weight=0.03
+        ... )
+        &lt;Quantity(111.101591, 'dimensionless')&gt;
+        ```
+
+        Args:
+            radius  (float) [m]
+            knu     (float) [ ] (default: util)
+
+        Returns:
+                    (float) [dimensionless]
+
+        Notes:
+            knu can be calculated using knu(**kwargs);
+            refer to particula.util.knudsen_number.knu for more info.
+
+    """
+    rad = in_radius(radius)
+
+    knu_val = knu_func(radius=rad, **kwargs) if knu is None \
+        else in_scalar(knu)
+
+    return 1 + knu_val * (
+        1.257 + 0.4 * np.exp(-1.1 / knu_val)
+    )
+
+</pre>
 </div>
 </div>
 </div>

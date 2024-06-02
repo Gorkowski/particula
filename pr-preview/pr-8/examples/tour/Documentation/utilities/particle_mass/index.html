@@ -6097,13 +6097,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6125,14 +6125,64 @@ help(particle_mass)</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Help on module particula.util.particle_mass in particula.util:
+
+NAME
+    particula.util.particle_mass - calculating the particle mass
+
+FUNCTIONS
+    mass(radius=None, density=1000, shape_factor=1, volume_void=0, **kwargs)
+        Returns particle's mass: 4/3 pi r^3 * density.
+        
+        Examples:
+        ```
+        &gt;&gt;&gt; particle_mass(1*u.m)
+        &lt;Quantity(4188.7902, 'kilogram')&gt;
+        &gt;&gt;&gt; particle_mass(1*u.nm, 1000*u.kg/u.m**3).m
+        4.188790204786392e-24
+        &gt;&gt;&gt; particle_mass(1*u.nm, 1000*u.kg/u.m**3).m_as(u.g)
+        4.188790204786392e-21
+        &gt;&gt;&gt; particle_mass([1, 2, 3]*u.nm, 1000*u.kg/u.m**3).m
+        array([4.18879020e-24, 3.35103216e-23, 1.13097336e-22])
+        &gt;&gt;&gt; particle_mass([1, 2]*u.nm, [1, 2]*u.g/u.cm**3).m
+        array([4.18879020e-24, 6.70206433e-23])
+        &gt;&gt;&gt; particle_mass(2*u.nm, 2*u.g/u.cm**3).m
+        6.702064327658225e-23
+        ```
+        
+        Args:
+            radius       (float) [m]
+            density      (float) [kg/m^3] (default: 1000)
+            shape_factor (float) [ ]      (default: 1)
+            volume_void  (float) [ ]      (default: 0)
+        
+        Returns:
+                         (float) [kg]
+
+FILE
+    /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/particula/util/particle_mass.py
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6150,6 +6200,70 @@ help(particle_mass)</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-2">import inspect
 print(inspect.getsource(particle_mass))</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>""" calculating the particle mass
+"""
+
+import numpy as np
+from particula.util.input_handling import in_density, in_radius, in_scalar
+
+
+def mass(
+    radius=None,
+    density=1000,
+    shape_factor=1,
+    volume_void=0,
+    **kwargs,
+):
+    """ Returns particle's mass: 4/3 pi r^3 * density.
+
+        Examples:
+        ```
+        &gt;&gt;&gt; particle_mass(1*u.m)
+        &lt;Quantity(4188.7902, 'kilogram')&gt;
+        &gt;&gt;&gt; particle_mass(1*u.nm, 1000*u.kg/u.m**3).m
+        4.188790204786392e-24
+        &gt;&gt;&gt; particle_mass(1*u.nm, 1000*u.kg/u.m**3).m_as(u.g)
+        4.188790204786392e-21
+        &gt;&gt;&gt; particle_mass([1, 2, 3]*u.nm, 1000*u.kg/u.m**3).m
+        array([4.18879020e-24, 3.35103216e-23, 1.13097336e-22])
+        &gt;&gt;&gt; particle_mass([1, 2]*u.nm, [1, 2]*u.g/u.cm**3).m
+        array([4.18879020e-24, 6.70206433e-23])
+        &gt;&gt;&gt; particle_mass(2*u.nm, 2*u.g/u.cm**3).m
+        6.702064327658225e-23
+        ```
+
+        Args:
+            radius       (float) [m]
+            density      (float) [kg/m^3] (default: 1000)
+            shape_factor (float) [ ]      (default: 1)
+            volume_void  (float) [ ]      (default: 0)
+
+        Returns:
+                         (float) [kg]
+    """
+    _ = kwargs.get("something", None)
+    radius = in_radius(radius)
+    density = in_density(density)
+    shape_factor = in_scalar(shape_factor)
+    vol_void = in_scalar(volume_void)
+
+    return (
+        density * (4 * np.pi / 3) * (radius**3)
+        * shape_factor * (1 - vol_void)
+    ).to_base_units()
+
+</pre>
 </div>
 </div>
 </div>

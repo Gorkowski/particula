@@ -6097,13 +6097,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6125,14 +6125,171 @@ help(dimensionless_coagulation)</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Help on module particula.util.dimensionless_coagulation in particula.util:
+
+NAME
+    particula.util.dimensionless_coagulation - A class with methods for dimensionless coagulation
+
+CLASSES
+    particula.util.diffusive_knudsen.DiffusiveKnudsen(particula.util.coulomb_enhancement.CoulombEnhancement)
+        DimensionlessCoagulation
+    
+    class DimensionlessCoagulation(particula.util.diffusive_knudsen.DiffusiveKnudsen)
+     |  DimensionlessCoagulation(dkn_val=None, coag_approx='hardsphere', **kwargs)
+     |  
+     |  dimensionless coagulation
+     |  
+     |  Method resolution order:
+     |      DimensionlessCoagulation
+     |      particula.util.diffusive_knudsen.DiffusiveKnudsen
+     |      particula.util.coulomb_enhancement.CoulombEnhancement
+     |      builtins.object
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, dkn_val=None, coag_approx='hardsphere', **kwargs)
+     |      Dimensionless particle--particle coagulation kernel.
+     |      
+     |      Attributes:
+     |          diff_knu        (float) [dimensionless]
+     |      
+     |      Notes:
+     |          The dimensionless coagulation kernel is defined as
+     |          a function of the diffusive knudsen number; for more info,
+     |          please see the documentation of the respective function:
+     |              - particula.util.diffusive_knudsen.diff_knu(**kwargs)
+     |  
+     |  coag_full(self)
+     |      Retrun the dimensioned coagulation kernel
+     |  
+     |  coag_less(self)
+     |      Return the dimensionless coagulation kernel.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from particula.util.diffusive_knudsen.DiffusiveKnudsen:
+     |  
+     |  get_celimits(self)
+     |      get coag enh limits
+     |  
+     |  get_ces(self)
+     |      get coulomb enhancement parameters
+     |  
+     |  get_diff_knu(self)
+     |      calculate it
+     |  
+     |  get_red_frifac(self)
+     |      get the reduced friction factor
+     |  
+     |  get_red_mass(self)
+     |      get the reduced mass
+     |  
+     |  get_rxr(self)
+     |      add two radii
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from particula.util.coulomb_enhancement.CoulombEnhancement:
+     |  
+     |  coulomb_enhancement_continuum_limit(self)
+     |      Coulombic coagulation enhancement continuum limit.
+     |      
+     |      Args:
+     |          radius          (float) [m]
+     |          other_radius    (float) [m]             (default: radius)
+     |          charge          (float) [dimensionless] (default: 0)
+     |          other_charge    (float) [dimensionless] (default: 0)
+     |          temperature     (float) [K]             (default: 298)
+     |      
+     |      Returns:
+     |                          (float) [dimensionless]
+     |  
+     |  coulomb_enhancement_kinetic_limit(self)
+     |      Coulombic coagulation enhancement kinetic limit.
+     |      
+     |      Args:
+     |          radius          (float) [m]
+     |          other_radius    (float) [m]             (default: radius)
+     |          charge          (float) [dimensionless] (default: 0)
+     |          other_charge    (float) [dimensionless] (default: 0)
+     |          temperature     (float) [K]             (default: 298)
+     |      
+     |      Returns:
+     |                          (float) [dimensionless]
+     |  
+     |  coulomb_potential_ratio(self)
+     |      Calculates the Coulomb potential ratio.
+     |      
+     |      Args:
+     |          radius          (float) [m]
+     |          other_radius    (float) [m]             (default: radius)
+     |          charge          (int)   [dimensionless] (default: 0)
+     |          other_charge    (int)   [dimensionless] (default: 0)
+     |          temperature     (float) [K]             (default: 298)
+     |      
+     |      Returns:
+     |                          (float) [dimensionless]
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from particula.util.coulomb_enhancement.CoulombEnhancement:
+     |  
+     |  __dict__
+     |      dictionary for instance variables
+     |  
+     |  __weakref__
+     |      list of weak references to the object
+
+FUNCTIONS
+    full_coag(**kwargs)
+        Return the dimensioned coagulation kernel
+    
+    less_coag(**kwargs)
+        Return the dimensionless coagulation kernel.
+        
+        The dimensionless coagulation kernel is defined as
+        a function of the diffusive knudsen number; for more info,
+        please see the documentation of the respective function:
+            - particula.util.diffusive_knudsen.diff_knu(**kwargs)
+        
+        Examples:
+        ```
+        &gt;&gt;&gt; from particula import u
+        &gt;&gt;&gt; from particula.util.dimensionless_coagulation import less_coag
+        &gt;&gt;&gt; # only for hardsphere coagulation for now
+        &gt;&gt;&gt; # with only one radius
+        &gt;&gt;&gt; less_coag(radius=1e-9)
+        &lt;Quantity(147.877572, 'dimensionless')&gt;
+        &gt;&gt;&gt; # with two radii
+        &gt;&gt;&gt; less_coag(radius=1e-9, other_radius=1e-8)
+        &lt;Quantity(18.4245966, 'dimensionless')&gt;
+        &gt;&gt;&gt; # with two radii and charges
+        &gt;&gt;&gt; less_coag(
+        ... radius=1e-9, other_radius=1e-8, charge=1, other_charge=-1
+        ... )
+        &lt;Quantity(22.0727435, 'dimensionless')&gt;
+
+FILE
+    /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/particula/util/dimensionless_coagulation.py
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6150,6 +6307,125 @@ help(dimensionless_coagulation)</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-2">import inspect
 print(inspect.getsource(dimensionless_coagulation))</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>""" A class with methods for dimensionless coagulation
+"""
+
+from particula.util.input_handling import in_scalar
+from particula.util.diffusive_knudsen import DiffusiveKnudsen as DKn
+from particula.util.diffusive_knudsen import celimits
+# from particula.util.diffusive_knudsen import diff_knu as dknu
+from particula.util.diffusive_knudsen import red_frifac, red_mass, rxr
+from particula.util.approx_coagulation import approx_coag_less
+
+
+class DimensionlessCoagulation(DKn):
+
+    """ dimensionless coagulation
+    """
+
+    def __init__(
+        self,
+        dkn_val=None,
+        coag_approx="hardsphere",
+        **kwargs
+    ):
+        """ Dimensionless particle--particle coagulation kernel.
+
+            Attributes:
+                diff_knu        (float) [dimensionless]
+
+            Notes:
+                The dimensionless coagulation kernel is defined as
+                a function of the diffusive knudsen number; for more info,
+                please see the documentation of the respective function:
+                    - particula.util.diffusive_knudsen.diff_knu(**kwargs)
+        """
+        super().__init__(**kwargs)
+
+        self.diff_knu = DKn(**kwargs).get_diff_knu() if dkn_val is None \
+            else in_scalar(dkn_val)
+
+        self.coag_approx = coag_approx
+
+        self.kwargs = kwargs
+
+    def coag_less(self):
+        """ Return the dimensionless coagulation kernel.
+        """
+
+        impls = ["hardsphere", "gh2012", "cg2019", "dy2007", "gk2008"]
+
+        if self.coag_approx not in impls:
+            raise ValueError(f"{self.coag_approx} not recognized!")
+
+        return approx_coag_less(
+            diff_knu=self.diff_knu,
+            cpr=self.coulomb_potential_ratio(),
+            approx=self.coag_approx
+        )
+
+    def coag_full(self):
+        """ Retrun the dimensioned coagulation kernel
+        """
+
+        coag = self.coag_less()
+        redff = red_frifac(**self.kwargs)
+        redm = red_mass(**self.kwargs)
+        cekl, cecl = celimits(**self.kwargs)
+        xrxr = rxr(**self.kwargs)
+
+        return (
+            coag * redff * xrxr**3 * cekl**2 / (redm * cecl)
+        )
+
+
+def less_coag(**kwargs):
+    """ Return the dimensionless coagulation kernel.
+
+        The dimensionless coagulation kernel is defined as
+        a function of the diffusive knudsen number; for more info,
+        please see the documentation of the respective function:
+            - particula.util.diffusive_knudsen.diff_knu(**kwargs)
+
+        Examples:
+        ```
+        &gt;&gt;&gt; from particula import u
+        &gt;&gt;&gt; from particula.util.dimensionless_coagulation import less_coag
+        &gt;&gt;&gt; # only for hardsphere coagulation for now
+        &gt;&gt;&gt; # with only one radius
+        &gt;&gt;&gt; less_coag(radius=1e-9)
+        &lt;Quantity(147.877572, 'dimensionless')&gt;
+        &gt;&gt;&gt; # with two radii
+        &gt;&gt;&gt; less_coag(radius=1e-9, other_radius=1e-8)
+        &lt;Quantity(18.4245966, 'dimensionless')&gt;
+        &gt;&gt;&gt; # with two radii and charges
+        &gt;&gt;&gt; less_coag(
+        ... radius=1e-9, other_radius=1e-8, charge=1, other_charge=-1
+        ... )
+        &lt;Quantity(22.0727435, 'dimensionless')&gt;
+    """
+
+    return DimensionlessCoagulation(**kwargs).coag_less()
+
+
+def full_coag(**kwargs):
+    """ Return the dimensioned coagulation kernel
+    """
+
+    return DimensionlessCoagulation(**kwargs).coag_full()
+
+</pre>
 </div>
 </div>
 </div>

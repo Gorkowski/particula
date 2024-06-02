@@ -6097,13 +6097,13 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6125,14 +6125,186 @@ help(distribution_discretization)</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Help on module particula.util.distribution_discretization in particula.util:
+
+NAME
+    particula.util.distribution_discretization - discretization of the distribution of the particles
+
+FUNCTIONS
+    discretize(interval=None, disttype='lognormal', gsigma=array(1.25), mode=&lt;Quantity(1e-07, 'meter')&gt;, nparticles=array(100000.), **kwargs)
+        discretize the distribution of the particles
+        
+        Args:
+            interval    (float) the size interval of the distribution
+            distype     (str)   the type of distribution, "lognormal" for now
+            gsigma      (float) geometric standard deviation of distribution
+            mode        (float) pdf scale (corresponds to mode in lognormal)
+
+DATA
+    lognorm = &lt;scipy.stats._continuous_distns.lognorm_gen object&gt;
+        A lognormal continuous random variable.
+        
+        As an instance of the `rv_continuous` class, `lognorm` object inherits from it
+        a collection of generic methods (see below for the full list),
+        and completes them with details specific for this particular distribution.
+        
+        Methods
+        -------
+        rvs(s, loc=0, scale=1, size=1, random_state=None)
+            Random variates.
+        pdf(x, s, loc=0, scale=1)
+            Probability density function.
+        logpdf(x, s, loc=0, scale=1)
+            Log of the probability density function.
+        cdf(x, s, loc=0, scale=1)
+            Cumulative distribution function.
+        logcdf(x, s, loc=0, scale=1)
+            Log of the cumulative distribution function.
+        sf(x, s, loc=0, scale=1)
+            Survival function  (also defined as ``1 - cdf``, but `sf` is sometimes more accurate).
+        logsf(x, s, loc=0, scale=1)
+            Log of the survival function.
+        ppf(q, s, loc=0, scale=1)
+            Percent point function (inverse of ``cdf`` --- percentiles).
+        isf(q, s, loc=0, scale=1)
+            Inverse survival function (inverse of ``sf``).
+        moment(order, s, loc=0, scale=1)
+            Non-central moment of the specified order.
+        stats(s, loc=0, scale=1, moments='mv')
+            Mean('m'), variance('v'), skew('s'), and/or kurtosis('k').
+        entropy(s, loc=0, scale=1)
+            (Differential) entropy of the RV.
+        fit(data)
+            Parameter estimates for generic data.
+            See `scipy.stats.rv_continuous.fit &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.fit.html#scipy.stats.rv_continuous.fit&gt;`__ for detailed documentation of the
+            keyword arguments.
+        expect(func, args=(s,), loc=0, scale=1, lb=None, ub=None, conditional=False, **kwds)
+            Expected value of a function (of one argument) with respect to the distribution.
+        median(s, loc=0, scale=1)
+            Median of the distribution.
+        mean(s, loc=0, scale=1)
+            Mean of the distribution.
+        var(s, loc=0, scale=1)
+            Variance of the distribution.
+        std(s, loc=0, scale=1)
+            Standard deviation of the distribution.
+        interval(confidence, s, loc=0, scale=1)
+            Confidence interval with equal areas around the median.
+        
+        Notes
+        -----
+        The probability density function for `lognorm` is:
+        
+        .. math::
+        
+            f(x, s) = \frac{1}{s x \sqrt{2\pi}}
+                      \exp\left(-\frac{\log^2(x)}{2s^2}\right)
+        
+        for :math:`x &gt; 0`, :math:`s &gt; 0`.
+        
+        `lognorm` takes ``s`` as a shape parameter for :math:`s`.
+        
+        The probability density above is defined in the "standardized" form. To shift
+        and/or scale the distribution use the ``loc`` and ``scale`` parameters.
+        Specifically, ``lognorm.pdf(x, s, loc, scale)`` is identically
+        equivalent to ``lognorm.pdf(y, s) / scale`` with
+        ``y = (x - loc) / scale``. Note that shifting the location of a distribution
+        does not make it a "noncentral" distribution; noncentral generalizations of
+        some distributions are available in separate classes.
+        
+        Suppose a normally distributed random variable ``X`` has  mean ``mu`` and
+        standard deviation ``sigma``. Then ``Y = exp(X)`` is lognormally
+        distributed with ``s = sigma`` and ``scale = exp(mu)``.
+        
+        Examples
+        --------
+        &gt;&gt;&gt; import numpy as np
+        &gt;&gt;&gt; from scipy.stats import lognorm
+        &gt;&gt;&gt; import matplotlib.pyplot as plt
+        &gt;&gt;&gt; fig, ax = plt.subplots(1, 1)
+        
+        Calculate the first four moments:
+        
+        &gt;&gt;&gt; s = 0.954
+        &gt;&gt;&gt; mean, var, skew, kurt = lognorm.stats(s, moments='mvsk')
+        
+        Display the probability density function (``pdf``):
+        
+        &gt;&gt;&gt; x = np.linspace(lognorm.ppf(0.01, s),
+        ...                 lognorm.ppf(0.99, s), 100)
+        &gt;&gt;&gt; ax.plot(x, lognorm.pdf(x, s),
+        ...        'r-', lw=5, alpha=0.6, label='lognorm pdf')
+        
+        Alternatively, the distribution object can be called (as a function)
+        to fix the shape, location and scale parameters. This returns a "frozen"
+        RV object holding the given parameters fixed.
+        
+        Freeze the distribution and display the frozen ``pdf``:
+        
+        &gt;&gt;&gt; rv = lognorm(s)
+        &gt;&gt;&gt; ax.plot(x, rv.pdf(x), 'k-', lw=2, label='frozen pdf')
+        
+        Check accuracy of ``cdf`` and ``ppf``:
+        
+        &gt;&gt;&gt; vals = lognorm.ppf([0.001, 0.5, 0.999], s)
+        &gt;&gt;&gt; np.allclose([0.001, 0.5, 0.999], lognorm.cdf(vals, s))
+        True
+        
+        Generate random numbers:
+        
+        &gt;&gt;&gt; r = lognorm.rvs(s, size=1000)
+        
+        And compare the histogram:
+        
+        &gt;&gt;&gt; ax.hist(r, density=True, bins='auto', histtype='stepfilled', alpha=0.2)
+        &gt;&gt;&gt; ax.set_xlim([x[0], x[-1]])
+        &gt;&gt;&gt; ax.legend(loc='best', frameon=False)
+        &gt;&gt;&gt; plt.show()
+        
+        
+        The logarithm of a log-normally distributed random variable is
+        normally distributed:
+        
+        &gt;&gt;&gt; import numpy as np
+        &gt;&gt;&gt; import matplotlib.pyplot as plt
+        &gt;&gt;&gt; from scipy import stats
+        &gt;&gt;&gt; fig, ax = plt.subplots(1, 1)
+        &gt;&gt;&gt; mu, sigma = 2, 0.5
+        &gt;&gt;&gt; X = stats.norm(loc=mu, scale=sigma)
+        &gt;&gt;&gt; Y = stats.lognorm(s=sigma, scale=np.exp(mu))
+        &gt;&gt;&gt; x = np.linspace(*X.interval(0.999))
+        &gt;&gt;&gt; y = Y.rvs(size=10000)
+        &gt;&gt;&gt; ax.plot(x, X.pdf(x), label='X (pdf)')
+        &gt;&gt;&gt; ax.hist(np.log(y), density=True, bins=x, label='log(Y) (histogram)')
+        &gt;&gt;&gt; ax.legend()
+        &gt;&gt;&gt; plt.show()
+    
+    u = &lt;pint.registry.UnitRegistry object&gt;
+
+FILE
+    /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/particula/util/distribution_discretization.py
+
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6150,6 +6322,68 @@ help(distribution_discretization)</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-2">import inspect
 print(inspect.getsource(distribution_discretization))</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>""" discretization of the distribution of the particles
+"""
+import numpy as np
+from scipy.stats import lognorm
+from particula import u
+from particula.util.input_handling import in_scalar, in_radius
+
+
+def discretize(
+    interval=None,
+    disttype="lognormal",
+    gsigma=in_scalar(1.25).m,
+    mode=in_radius(100e-9),
+    nparticles=in_scalar(1e5).m,
+    **kwargs
+):
+    """ discretize the distribution of the particles
+
+        Args:
+            interval    (float) the size interval of the distribution
+            distype     (str)   the type of distribution, "lognormal" for now
+            gsigma      (float) geometric standard deviation of distribution
+            mode        (float) pdf scale (corresponds to mode in lognormal)
+    """
+
+    _ = kwargs.get("something")
+    if not isinstance(mode, u.Quantity):
+        mode = in_radius(mode)
+
+    if interval is None:
+        raise ValueError("the 'interval' must be specified!")
+
+    if not isinstance(interval, u.Quantity):
+        interval = u.Quantity(interval, " ")
+
+    if disttype != "lognormal":
+        raise ValueError("the 'disttype' must be 'lognormal' for now!")
+
+    return ((
+        lognorm.pdf(
+            x=interval.m,
+            s=np.reshape(np.log(gsigma), (np.array([gsigma]).size, 1)),
+            scale=np.reshape([mode.m], (np.array([mode.m]).size, 1)),
+        ) / interval.u
+        * np.reshape([nparticles], (np.array([nparticles]).size, 1))
+    ).sum(axis=0) /
+        np.array([nparticles]).sum() /
+        np.max([np.array([mode.m]).size, np.array([gsigma]).size])
+    )
+
+</pre>
 </div>
 </div>
 </div>
