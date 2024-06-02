@@ -6,7 +6,9 @@ from handsdown.generators.material import MaterialGenerator
 from handsdown.utils.path_finder import PathFinder
 from pathlib import Path
 
-# this is our project root directory
+# pytype: skip-file
+
+
 repo_path = Path.cwd()
 
 # this little tool works like `pathlib.Path.glob` with some extra magic
@@ -30,13 +32,6 @@ handsdown = MaterialGenerator(
 # generate all docs at once
 handsdown.generate_docs()
 
-# or generate just for one doc
-# handsdown.generate_doc(repo_path / 'my_module' / 'source.py')
-
 # generate index.md file
-# handsdown.generate_index()
+handsdown.generate_index()
 
-# and generate GitHub Pages and Read the Docs config files
-# handsdown.generate_external_configs()
-
-# navigate to `output` dir and check results
