@@ -335,9 +335,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../../.." title="Particula" class="md-nav__button md-logo" aria-label="Particula" data-md-component="logo">
       
@@ -5829,6 +5827,173 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-importance-of-correcting-for-scattering-truncation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Importance of Correcting for Scattering Truncation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#size-dependent-nature-of-scattering-truncation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Size-Dependent Nature of Scattering Truncation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addressing-the-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      Addressing the Challenge
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#addressing-scattering-truncation-for-single-particle-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Addressing Scattering Truncation for Single Particle Measurements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Addressing Scattering Truncation for Single Particle Measurements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementing-truncation-correction-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementing Truncation Correction with Python
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementing Truncation Correction with Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#insights-from-truncation-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insights from Truncation Correction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-size-dependence-of-truncation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Size Dependence of Truncation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correcting-scattering-truncation-250-nm-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correcting Scattering Truncation 250 nm Distribution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Correcting Scattering Truncation 250 nm Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-a-representative-aerosol-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a Representative Aerosol Distribution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#correcting-scattering-truncation-1000-nm-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correcting Scattering Truncation 1000 nm Distribution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addressing-humidified-aerosol-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Addressing Humidified Aerosol Measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leveraging-truncation-corrections-for-broader-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leveraging Truncation Corrections for Broader Applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -7234,7 +7399,7 @@ correction_for_humidified(kappa: Union[float, numpy.float64], number_per_cm3: nu
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.footer", "toc.integrate", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.footer", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../assets/javascripts/bundle.081f42fc.min.js"></script>
