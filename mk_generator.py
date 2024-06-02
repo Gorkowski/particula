@@ -23,7 +23,7 @@ os.makedirs(repo_path / 'docs/Source-Code/', exist_ok=True)
 # initialize generator
 handsdown = MaterialGenerator(
     input_path=repo_path,
-    output_path=repo_path / 'docs/source-code',
+    output_path=repo_path / 'docs/Source-Code',
     source_paths=path_finder.glob("**/*.py"),
     source_code_url='https://github.com/Gorkowski/particula/blob/main/'
 )
