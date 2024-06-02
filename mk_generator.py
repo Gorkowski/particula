@@ -1,6 +1,7 @@
 """
 Handsdown to generate documentation for the project.
 """
+import os
 from handsdown.generators.base import BaseGenerator
 from handsdown.generators.material import MaterialGenerator
 from handsdown.utils.path_finder import PathFinder
@@ -15,6 +16,9 @@ path_finder = PathFinder(repo_path)
 
 # no docs for tests and build
 path_finder.exclude("tests/*", "build/*")
+
+# generate folder structure, if needed
+os.makedirs(repo_path / 'docs/Source-Code/', exist_ok=True)
 
 # initialize generator
 handsdown = MaterialGenerator(

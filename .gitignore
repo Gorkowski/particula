@@ -2,7 +2,7 @@
 .DS_Store
 
 # ignore local mkdocs source folder
-*/docs/Source-Code/*
+*Source-Code*
 
 # ignore local .vscode folder
 .vscode/
