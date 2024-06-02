@@ -22,19 +22,29 @@ theme:
   language: en
   icon:
     repo: fontawesome/brands/github
+    logo: material/border-none-variant
   palette:
-    - scheme: default
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-      primary: indigo
-      accent: purple
-    - scheme: slate
-      toggle:
-        icon: material/toggle-switch
+        icon: material/brightness-auto
         name: Switch to light mode
-      primary: indigo
-      accent: lime
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+      primary: sky
+      accent: cyan
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+      primary: sky
+      accent: cyan
 
 # nav:
   # - Home: index.md
@@ -76,8 +86,11 @@ markdown_extensions:
 
 plugins:
   - search
-  # - mkdocs-jupyter:
-  #     include_source: True
+  # - social
+  - mkdocs-jupyter:
+      include_source: True
+      execute: False
+      allow_errors: true
 
 
 copyright: |
