@@ -90,7 +90,7 @@ plugins:
   # - social
   - mkdocs-jupyter:
       include_source: True
-      execute: True
+      execute: False  # takes too long, should build separately
       allow_errors: True
 
 extra_css:
