@@ -6,7 +6,7 @@
 
 ## Solver
 
-[Show source in dynamics.py:8](https://github.com/Gorkowski/particula/blob/main/particula/dynamics.py#L8)
+[Show source in dynamics.py:9](https://github.com/Gorkowski/particula/blob/main/particula/dynamics.py#L9)
 
 dynamic solver
 
@@ -32,7 +32,7 @@ class Solver(Rates):
 
 ### Solver()._ode_func
 
-[Show source in dynamics.py:36](https://github.com/Gorkowski/particula/blob/main/particula/dynamics.py#L36)
+[Show source in dynamics.py:35](https://github.com/Gorkowski/particula/blob/main/particula/dynamics.py#L35)
 
 ode_func
 

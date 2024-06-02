@@ -46,6 +46,8 @@
       
     
     
+      <link rel="stylesheet" href="../../../../../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -131,7 +133,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="sky" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
@@ -141,7 +143,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="sky" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
@@ -6126,7 +6128,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py">particula.next.dynamics.coagulation.kernel</a> module.</p>
 </blockquote>
 <h2 id="coulombdyachkov2007">CoulombDyachkov2007<a class="headerlink" href="#coulombdyachkov2007" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L129">Show source in kernel.py:129</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L130">Show source in kernel.py:130</a></p>
 <p>Dyachkov et al. (2007) approximation for the dimensionless coagulation
 kernel. Accounts for the Coulomb potential between particles.</p>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
@@ -6145,7 +6147,7 @@ https://doi.org/10.1063/1.2713719</li>
 <li><a href="#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="coulombdyachkov2007dimensionless">CoulombDyachkov2007().dimensionless<a class="headerlink" href="#coulombdyachkov2007dimensionless" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L142">Show source in kernel.py:142</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L143">Show source in kernel.py:143</a></p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -6182,7 +6184,7 @@ https://doi.org/10.1103/PhysRevE.78.046402</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="coulombgopalakrishnan2012">CoulombGopalakrishnan2012<a class="headerlink" href="#coulombgopalakrishnan2012" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L177">Show source in kernel.py:177</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L176">Show source in kernel.py:176</a></p>
 <p>Gopalakrishnan and Hogan (2012) approximation for the dimensionless
 coagulation kernel. Accounts for the Coulomb potential between particles.</p>
 <h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
@@ -6201,7 +6203,7 @@ https://doi.org/10.1103/PhysRevE.85.026410</li>
 <li><a href="#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="coulombgopalakrishnan2012dimensionless">CoulombGopalakrishnan2012().dimensionless<a class="headerlink" href="#coulombgopalakrishnan2012dimensionless" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L190">Show source in kernel.py:190</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L189">Show source in kernel.py:189</a></p>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -6210,7 +6212,7 @@ https://doi.org/10.1103/PhysRevE.85.026410</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="coulumbchahl2019">CoulumbChahl2019<a class="headerlink" href="#coulumbchahl2019" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L201">Show source in kernel.py:201</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L199">Show source in kernel.py:199</a></p>
 <p>Chahl and Gopalakrishnan (2019) approximation for the dimensionless
 coagulation kernel. Accounts for the Coulomb potential between particles.</p>
 <h4 id="references_3">References<a class="headerlink" href="#references_3" title="Permanent link">&para;</a></h4>
@@ -6229,7 +6231,7 @@ https://doi.org/10.1080/02786826.2019.1614522</li>
 <li><a href="#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="coulumbchahl2019dimensionless">CoulumbChahl2019().dimensionless<a class="headerlink" href="#coulumbchahl2019dimensionless" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L214">Show source in kernel.py:214</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L212">Show source in kernel.py:212</a></p>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -6238,7 +6240,7 @@ https://doi.org/10.1080/02786826.2019.1614522</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="hardsphere">HardSphere<a class="headerlink" href="#hardsphere" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L116">Show source in kernel.py:116</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L117">Show source in kernel.py:117</a></p>
 <p>Hard sphere dimensionless coagulation strategy.</p>
 <h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">HardSphere</span><span class="p">(</span><span class="n">KernelStrategy</span><span class="p">):</span> <span class="o">...</span>
@@ -6248,7 +6250,7 @@ https://doi.org/10.1080/02786826.2019.1614522</li>
 <li><a href="#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="hardspheredimensionless">HardSphere().dimensionless<a class="headerlink" href="#hardspheredimensionless" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L121">Show source in kernel.py:121</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L122">Show source in kernel.py:122</a></p>
 <h4 id="signature_9">Signature<a class="headerlink" href="#signature_9" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">diffusive_knudsen</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span> <span class="n">coulomb_potential_ratio</span><span class="p">:</span> <span class="n">ignore</span>
