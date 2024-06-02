@@ -2,7 +2,6 @@
 Handsdown to generate documentation for the project.
 """
 import os
-from handsdown.generators.base import BaseGenerator
 from handsdown.generators.material import MaterialGenerator
 from handsdown.utils.path_finder import PathFinder
 from pathlib import Path
