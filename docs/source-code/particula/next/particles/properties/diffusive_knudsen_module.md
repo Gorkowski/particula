@@ -2,11 +2,11 @@
 
 [Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Diffusive Knudsen Module
 
-> Auto-generated documentation for [particula.next.particles.properties.diffusive_knudsen_module](../../../../../../particula/next/particles/properties/diffusive_knudsen_module.py) module.
+> Auto-generated documentation for [particula.next.particles.properties.diffusive_knudsen_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusive_knudsen_module.py) module.
 
 ## diffusive_knudsen_number
 
-[Show source in diffusive_knudsen_module.py:12](../../../../../../particula/next/particles/properties/diffusive_knudsen_module.py#L12)
+[Show source in diffusive_knudsen_module.py:12](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusive_knudsen_module.py#L12)
 
 Diffusive Knudsen number. The *diffusive* Knudsen number is different
 from Knudsen number. Ratio of: mean persistence of one particle to the

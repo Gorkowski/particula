@@ -2,11 +2,11 @@
 
 [Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Dynamics](../index.md#dynamics) / [Coagulation](./index.md#coagulation) / Kernel
 
-> Auto-generated documentation for [particula.next.dynamics.coagulation.kernel](../../../../../../particula/next/dynamics/coagulation/kernel.py) module.
+> Auto-generated documentation for [particula.next.dynamics.coagulation.kernel](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py) module.
 
 ## CoulombDyachkov2007
 
-[Show source in kernel.py:129](../../../../../../particula/next/dynamics/coagulation/kernel.py#L129)
+[Show source in kernel.py:129](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L129)
 
 Dyachkov et al. (2007) approximation for the dimensionless coagulation
 kernel. Accounts for the Coulomb potential between particles.
@@ -31,7 +31,7 @@ class CoulombDyachkov2007(KernelStrategy): ...
 
 ### CoulombDyachkov2007().dimensionless
 
-[Show source in kernel.py:142](../../../../../../particula/next/dynamics/coagulation/kernel.py#L142)
+[Show source in kernel.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L142)
 
 #### Signature
 
@@ -47,7 +47,7 @@ def dimensionless(
 
 ## CoulombGatti2008
 
-[Show source in kernel.py:153](../../../../../../particula/next/dynamics/coagulation/kernel.py#L153)
+[Show source in kernel.py:153](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L153)
 
 Gatti and Kortshagen (2008) approximation for the dimensionless coagulation
 kernel. Accounts for the Coulomb potential between particles.
@@ -72,7 +72,7 @@ class CoulombGatti2008(KernelStrategy): ...
 
 ### CoulombGatti2008().dimensionless
 
-[Show source in kernel.py:166](../../../../../../particula/next/dynamics/coagulation/kernel.py#L166)
+[Show source in kernel.py:166](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L166)
 
 #### Signature
 
@@ -88,7 +88,7 @@ def dimensionless(
 
 ## CoulombGopalakrishnan2012
 
-[Show source in kernel.py:177](../../../../../../particula/next/dynamics/coagulation/kernel.py#L177)
+[Show source in kernel.py:177](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L177)
 
 Gopalakrishnan and Hogan (2012) approximation for the dimensionless
 coagulation kernel. Accounts for the Coulomb potential between particles.
@@ -113,7 +113,7 @@ class CoulombGopalakrishnan2012(KernelStrategy): ...
 
 ### CoulombGopalakrishnan2012().dimensionless
 
-[Show source in kernel.py:190](../../../../../../particula/next/dynamics/coagulation/kernel.py#L190)
+[Show source in kernel.py:190](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L190)
 
 #### Signature
 
@@ -129,7 +129,7 @@ def dimensionless(
 
 ## CoulumbChahl2019
 
-[Show source in kernel.py:201](../../../../../../particula/next/dynamics/coagulation/kernel.py#L201)
+[Show source in kernel.py:201](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L201)
 
 Chahl and Gopalakrishnan (2019) approximation for the dimensionless
 coagulation kernel. Accounts for the Coulomb potential between particles.
@@ -154,7 +154,7 @@ class CoulumbChahl2019(KernelStrategy): ...
 
 ### CoulumbChahl2019().dimensionless
 
-[Show source in kernel.py:214](../../../../../../particula/next/dynamics/coagulation/kernel.py#L214)
+[Show source in kernel.py:214](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L214)
 
 #### Signature
 
@@ -170,7 +170,7 @@ def dimensionless(
 
 ## HardSphere
 
-[Show source in kernel.py:116](../../../../../../particula/next/dynamics/coagulation/kernel.py#L116)
+[Show source in kernel.py:116](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L116)
 
 Hard sphere dimensionless coagulation strategy.
 
@@ -186,7 +186,7 @@ class HardSphere(KernelStrategy): ...
 
 ### HardSphere().dimensionless
 
-[Show source in kernel.py:121](../../../../../../particula/next/dynamics/coagulation/kernel.py#L121)
+[Show source in kernel.py:121](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L121)
 
 #### Signature
 
@@ -200,7 +200,7 @@ def dimensionless(
 
 ## KernelStrategy
 
-[Show source in kernel.py:12](../../../../../../particula/next/dynamics/coagulation/kernel.py#L12)
+[Show source in kernel.py:12](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L12)
 
 Abstract class for dimensionless coagulation strategies. This class defines
 the dimensionless kernel (H) method that must be implemented by any
@@ -221,7 +221,7 @@ class KernelStrategy(ABC): ...
 
 ### KernelStrategy().dimensionless
 
-[Show source in kernel.py:25](../../../../../../particula/next/dynamics/coagulation/kernel.py#L25)
+[Show source in kernel.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L25)
 
 Return the dimensionless coagulation kernel (H)
 
@@ -275,7 +275,7 @@ def dimensionless(
 
 ### KernelStrategy().kernel
 
-[Show source in kernel.py:68](../../../../../../particula/next/dynamics/coagulation/kernel.py#L68)
+[Show source in kernel.py:68](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/kernel.py#L68)
 
 The dimensioned coagulation kernel for each particle pair, calculated
 from the dimensionless coagulation kernel and the reduced quantities.

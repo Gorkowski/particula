@@ -2,11 +2,11 @@
 
 [Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Dynamics](../index.md#dynamics) / [Coagulation](./index.md#coagulation) / Rate
 
-> Auto-generated documentation for [particula.next.dynamics.coagulation.rate](../../../../../../particula/next/dynamics/coagulation/rate.py) module.
+> Auto-generated documentation for [particula.next.dynamics.coagulation.rate](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py) module.
 
 ## continuous_gain
 
-[Show source in rate.py:111](../../../../../../particula/next/dynamics/coagulation/rate.py#L111)
+[Show source in rate.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L111)
 
 Calculate the coagulation gain rate, via the integration method.
 
@@ -49,7 +49,7 @@ def continuous_gain(
 
 ## continuous_loss
 
-[Show source in rate.py:84](../../../../../../particula/next/dynamics/coagulation/rate.py#L84)
+[Show source in rate.py:84](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L84)
 
 Calculate the coagulation loss rate, via the integration method.
 
@@ -85,7 +85,7 @@ def continuous_loss(
 
 ## discrete_gain
 
-[Show source in rate.py:43](../../../../../../particula/next/dynamics/coagulation/rate.py#L43)
+[Show source in rate.py:43](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L43)
 
 Calculate the coagulation gain rate, via the summation method.
 
@@ -118,7 +118,7 @@ def discrete_gain(
 
 ## discrete_loss
 
-[Show source in rate.py:19](../../../../../../particula/next/dynamics/coagulation/rate.py#L19)
+[Show source in rate.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L19)
 
 Calculate the coagulation loss rate, via the summation method.
 

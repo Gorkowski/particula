@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Gas](./index.md#gas) / Vapor Pressure Factories
 
-> Auto-generated documentation for [particula.next.gas.vapor_pressure_factories](../../../../../particula/next/gas/vapor_pressure_factories.py) module.
+> Auto-generated documentation for [particula.next.gas.vapor_pressure_factories](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py) module.
 
 ## vapor_pressure_factory
 
-[Show source in vapor_pressure_factories.py:9](../../../../../particula/next/gas/vapor_pressure_factories.py#L9)
+[Show source in vapor_pressure_factories.py:9](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L9)
 
 Factory method to create a concrete VaporPressureStrategy object using
 builders.

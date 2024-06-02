@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Util](./index.md#util) / Reduced Quantity
 
-> Auto-generated documentation for [particula.util.reduced_quantity](../../../../particula/util/reduced_quantity.py) module.
+> Auto-generated documentation for [particula.util.reduced_quantity](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py) module.
 
 ## reduced_quantity
 
-[Show source in reduced_quantity.py:17](../../../../particula/util/reduced_quantity.py#L17)
+[Show source in reduced_quantity.py:17](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L17)
 
 Returns the reduced mass of two particles.
 
@@ -47,7 +47,7 @@ def reduced_quantity(a_quantity, b_quantity): ...
 
 ## reduced_self_broadcast
 
-[Show source in reduced_quantity.py:131](../../../../particula/util/reduced_quantity.py#L131)
+[Show source in reduced_quantity.py:131](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L131)
 
 Returns the reduced value of an array with itself, broadcasting the
 array into a matrix and calculating the reduced value of each element pair.
@@ -73,7 +73,7 @@ def reduced_self_broadcast(alpha_array: NDArray[np.float_]) -> NDArray[np.float_
 
 ## reduced_value
 
-[Show source in reduced_quantity.py:90](../../../../particula/util/reduced_quantity.py#L90)
+[Show source in reduced_quantity.py:90](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L90)
 
 Returns the reduced value of two parameters, calculated as:
 reduced_value = alpha * beta / (alpha + beta)

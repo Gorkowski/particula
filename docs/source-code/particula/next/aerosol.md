@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Next](./index.md#next) / Aerosol
 
-> Auto-generated documentation for [particula.next.aerosol](../../../../particula/next/aerosol.py) module.
+> Auto-generated documentation for [particula.next.aerosol](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py) module.
 
 ## Aerosol
 
-[Show source in aerosol.py:13](../../../../particula/next/aerosol.py#L13)
+[Show source in aerosol.py:13](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L13)
 
 A class for interacting with collections of Gas and Particle objects.
 Allows for the representation and manipulation of an aerosol, which
@@ -30,7 +30,7 @@ class Aerosol:
 
 ### Aerosol().add_gas
 
-[Show source in aerosol.py:55](../../../../particula/next/aerosol.py#L55)
+[Show source in aerosol.py:55](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L55)
 
 Replaces the current Gas instance with a new one.
 
@@ -50,7 +50,7 @@ def add_gas(self, gas: Atmosphere): ...
 
 ### Aerosol().add_particle
 
-[Show source in aerosol.py:64](../../../../particula/next/aerosol.py#L64)
+[Show source in aerosol.py:64](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L64)
 
 Adds a Particle instance to the aerosol.
 
@@ -70,7 +70,7 @@ def add_particle(self, particle: ParticleRepresentation): ...
 
 ### Aerosol().iterate_gas
 
-[Show source in aerosol.py:37](../../../../particula/next/aerosol.py#L37)
+[Show source in aerosol.py:37](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L37)
 
 Returns an iterator for gas species.
 
@@ -90,7 +90,7 @@ def iterate_gas(self) -> Iterator[GasSpecies]: ...
 
 ### Aerosol().iterate_particle
 
-[Show source in aerosol.py:46](../../../../particula/next/aerosol.py#L46)
+[Show source in aerosol.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L46)
 
 Returns an iterator for particle.
 

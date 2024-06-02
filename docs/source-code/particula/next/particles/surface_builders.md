@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Particles](./index.md#particles) / Surface Builders
 
-> Auto-generated documentation for [particula.next.particles.surface_builders](../../../../../particula/next/particles/surface_builders.py) module.
+> Auto-generated documentation for [particula.next.particles.surface_builders](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py) module.
 
 ## SurfaceStrategyMassBuilder
 
-[Show source in surface_builders.py:68](../../../../../particula/next/particles/surface_builders.py#L68)
+[Show source in surface_builders.py:68](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L68)
 
 Builder class for SurfaceStrategyMass objects.
 
@@ -38,7 +38,7 @@ class SurfaceStrategyMassBuilder(
 
 ### SurfaceStrategyMassBuilder().build
 
-[Show source in surface_builders.py:92](../../../../../particula/next/particles/surface_builders.py#L92)
+[Show source in surface_builders.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L92)
 
 Validate and return the SurfaceStrategyMass object.
 
@@ -61,7 +61,7 @@ def build(self) -> SurfaceStrategyMass: ...
 
 ## SurfaceStrategyMolarBuilder
 
-[Show source in surface_builders.py:25](../../../../../particula/next/particles/surface_builders.py#L25)
+[Show source in surface_builders.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L25)
 
 Builder class for SurfaceStrategyMolar objects.
 
@@ -96,7 +96,7 @@ class SurfaceStrategyMolarBuilder(
 
 ### SurfaceStrategyMolarBuilder().build
 
-[Show source in surface_builders.py:53](../../../../../particula/next/particles/surface_builders.py#L53)
+[Show source in surface_builders.py:53](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L53)
 
 Validate and return the SurfaceStrategyMass object.
 
@@ -119,7 +119,7 @@ def build(self) -> SurfaceStrategyMolar: ...
 
 ## SurfaceStrategyVolumeBuilder
 
-[Show source in surface_builders.py:106](../../../../../particula/next/particles/surface_builders.py#L106)
+[Show source in surface_builders.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L106)
 
 Builder class for SurfaceStrategyVolume objects.
 
@@ -151,7 +151,7 @@ class SurfaceStrategyVolumeBuilder(
 
 ### SurfaceStrategyVolumeBuilder().build
 
-[Show source in surface_builders.py:130](../../../../../particula/next/particles/surface_builders.py#L130)
+[Show source in surface_builders.py:130](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L130)
 
 Validate and return the SurfaceStrategyVolume object.
 

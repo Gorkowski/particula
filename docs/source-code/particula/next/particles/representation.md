@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Particles](./index.md#particles) / Representation
 
-> Auto-generated documentation for [particula.next.particles.representation](../../../../../particula/next/particles/representation.py) module.
+> Auto-generated documentation for [particula.next.particles.representation](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py) module.
 
 ## ParticleRepresentation
 
-[Show source in representation.py:14](../../../../../particula/next/particles/representation.py#L14)
+[Show source in representation.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L14)
 
 Represents a particle or a collection of particles, encapsulating the
 strategy for calculating mass, radius, and total mass based on a
@@ -52,7 +52,7 @@ class ParticleRepresentation:
 
 ### ParticleRepresentation().add_concentration
 
-[Show source in representation.py:117](../../../../../particula/next/particles/representation.py#L117)
+[Show source in representation.py:117](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L117)
 
 Adds concentration to the particle distribution, updating the
 concentration array.
@@ -70,7 +70,7 @@ def add_concentration(self, added_concentration: NDArray[np.float_]) -> None: ..
 
 ### ParticleRepresentation().add_mass
 
-[Show source in representation.py:105](../../../../../particula/next/particles/representation.py#L105)
+[Show source in representation.py:105](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L105)
 
 Adds mass to the particle distribution, updating the concentration
 and distribution arrays.
@@ -88,7 +88,7 @@ def add_mass(self, added_mass: NDArray[np.float_]) -> None: ...
 
 ### ParticleRepresentation().get_charge
 
-[Show source in representation.py:85](../../../../../particula/next/particles/representation.py#L85)
+[Show source in representation.py:85](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L85)
 
 Returns the charge per particle.
 
@@ -104,7 +104,7 @@ def get_charge(self) -> NDArray[np.float_]: ...
 
 ### ParticleRepresentation().get_mass
 
-[Show source in representation.py:67](../../../../../particula/next/particles/representation.py#L67)
+[Show source in representation.py:67](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L67)
 
 Returns the mass of the particles as calculated by the strategy.
 
@@ -120,7 +120,7 @@ def get_mass(self) -> NDArray[np.float_]: ...
 
 ### ParticleRepresentation().get_radius
 
-[Show source in representation.py:76](../../../../../particula/next/particles/representation.py#L76)
+[Show source in representation.py:76](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L76)
 
 Returns the radius of the particles as calculated by the strategy.
 
@@ -136,7 +136,7 @@ def get_radius(self) -> NDArray[np.float_]: ...
 
 ### ParticleRepresentation().get_total_mass
 
-[Show source in representation.py:94](../../../../../particula/next/particles/representation.py#L94)
+[Show source in representation.py:94](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L94)
 
 Returns the total mass of the particles as calculated by the strategy,
 taking into account the distribution and concentration.

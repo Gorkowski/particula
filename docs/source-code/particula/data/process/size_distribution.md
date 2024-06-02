@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Data](../index.md#data) / [Process](./index.md#process) / Size Distribution
 
-> Auto-generated documentation for [particula.data.process.size_distribution](../../../../../particula/data/process/size_distribution.py) module.
+> Auto-generated documentation for [particula.data.process.size_distribution](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py) module.
 
 ## iterate_merge_distributions
 
-[Show source in size_distribution.py:351](../../../../../particula/data/process/size_distribution.py#L351)
+[Show source in size_distribution.py:351](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L351)
 
 Merge two sets of particle size distributions using linear weighting.
 
@@ -40,7 +40,7 @@ def iterate_merge_distributions(
 
 ## mean_properties
 
-[Show source in size_distribution.py:20](../../../../../particula/data/process/size_distribution.py#L20)
+[Show source in size_distribution.py:20](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L20)
 
 Calculates the mean properties of the size distribution.
 
@@ -81,7 +81,7 @@ def mean_properties(
 
 ## merge_distributions
 
-[Show source in size_distribution.py:271](../../../../../particula/data/process/size_distribution.py#L271)
+[Show source in size_distribution.py:271](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L271)
 
 Merge two particle size distributions using linear weighting.
 
@@ -119,7 +119,7 @@ def merge_distributions(
 
 ## merge_size_distribution
 
-[Show source in size_distribution.py:397](../../../../../particula/data/process/size_distribution.py#L397)
+[Show source in size_distribution.py:397](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L397)
 
 Merge two sets of particle size distributions using linear weighting.
 The concentration should be in dN/dlogDp.
@@ -154,7 +154,7 @@ def merge_size_distribution(
 
 ## resample_distribution
 
-[Show source in size_distribution.py:437](../../../../../particula/data/process/size_distribution.py#L437)
+[Show source in size_distribution.py:437](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L437)
 
 Resample a particle size distribution to a new set of diameters.
 Using np interpolation, and extrapolation is nan.
@@ -192,7 +192,7 @@ def resample_distribution(
 
 ## sizer_mean_properties
 
-[Show source in size_distribution.py:116](../../../../../particula/data/process/size_distribution.py#L116)
+[Show source in size_distribution.py:116](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L116)
 
 Calculates the mean properties of the size distribution, and returns a
 stream.

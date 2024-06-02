@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Data](../index.md#data) / [Process](./index.md#process) / Mie Bulk
 
-> Auto-generated documentation for [particula.data.process.mie_bulk](../../../../../particula/data/process/mie_bulk.py) module.
+> Auto-generated documentation for [particula.data.process.mie_bulk](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py) module.
 
 ## compute_bulk_optics
 
-[Show source in mie_bulk.py:142](../../../../../particula/data/process/mie_bulk.py#L142)
+[Show source in mie_bulk.py:142](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L142)
 
 Computes bulk optical properties from size dependent efficiency factors for
 the size distribution.
@@ -49,7 +49,7 @@ def compute_bulk_optics(
 
 ## discretize_auto_mieq
 
-[Show source in mie_bulk.py:17](../../../../../particula/data/process/mie_bulk.py#L17)
+[Show source in mie_bulk.py:17](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L17)
 
 Computes Mie coefficients for a spherical particle based on its material
 properties, size, and the properties of the surrounding medium.
@@ -100,7 +100,7 @@ def discretize_auto_mieq(
 
 ## discretize_mie_parameters
 
-[Show source in mie_bulk.py:64](../../../../../particula/data/process/mie_bulk.py#L64)
+[Show source in mie_bulk.py:64](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L64)
 
 Discretizes the refractive index of the material, the wavelength of
 incident light, and the diameters of particles to enhance the numerical
@@ -157,7 +157,7 @@ def discretize_mie_parameters(
 
 ## format_mie_results
 
-[Show source in mie_bulk.py:200](../../../../../particula/data/process/mie_bulk.py#L200)
+[Show source in mie_bulk.py:200](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L200)
 
 Formats the output results of the Mie scattering calculations.
 
@@ -191,7 +191,7 @@ def format_mie_results(
 
 ## mie_size_distribution
 
-[Show source in mie_bulk.py:237](../../../../../particula/data/process/mie_bulk.py#L237)
+[Show source in mie_bulk.py:237](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L237)
 
 Calculates Mie scattering parameters for a size distribution of spherical
 particles.

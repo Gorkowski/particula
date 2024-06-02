@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Particles](./index.md#particles) / Activity Strategies
 
-> Auto-generated documentation for [particula.next.particles.activity_strategies](../../../../../particula/next/particles/activity_strategies.py) module.
+> Auto-generated documentation for [particula.next.particles.activity_strategies](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py) module.
 
 ## ActivityStrategy
 
-[Show source in activity_strategies.py:19](../../../../../particula/next/particles/activity_strategies.py#L19)
+[Show source in activity_strategies.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L19)
 
 Abstract base class for implementing vapor pressure strategies based on
 particle activity calculations.
@@ -19,7 +19,7 @@ class ActivityStrategy(ABC): ...
 
 ### ActivityStrategy().activity
 
-[Show source in activity_strategies.py:25](../../../../../particula/next/particles/activity_strategies.py#L25)
+[Show source in activity_strategies.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L25)
 
 Calculate the activity of a species based on its mass concentration.
 
@@ -43,7 +43,7 @@ def activity(
 
 ### ActivityStrategy().partial_pressure
 
-[Show source in activity_strategies.py:40](../../../../../particula/next/particles/activity_strategies.py#L40)
+[Show source in activity_strategies.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L40)
 
 Calculate the vapor pressure of species in the particle phase based on
 activity.
@@ -73,7 +73,7 @@ def partial_pressure(
 
 ## IdealActivityMass
 
-[Show source in activity_strategies.py:105](../../../../../particula/next/particles/activity_strategies.py#L105)
+[Show source in activity_strategies.py:105](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L105)
 
 Ideal activity strategy, based on mass fractions.
 
@@ -99,7 +99,7 @@ class IdealActivityMass(ActivityStrategy): ...
 
 ### IdealActivityMass().activity
 
-[Show source in activity_strategies.py:117](../../../../../particula/next/particles/activity_strategies.py#L117)
+[Show source in activity_strategies.py:117](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L117)
 
 Calculate the activity of a species.
 
@@ -125,7 +125,7 @@ def activity(
 
 ## IdealActivityMolar
 
-[Show source in activity_strategies.py:62](../../../../../particula/next/particles/activity_strategies.py#L62)
+[Show source in activity_strategies.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L62)
 
 Ideal activity strategy, based on mole fractions.
 
@@ -153,7 +153,7 @@ class IdealActivityMolar(ActivityStrategy):
 
 ### IdealActivityMolar().activity
 
-[Show source in activity_strategies.py:81](../../../../../particula/next/particles/activity_strategies.py#L81)
+[Show source in activity_strategies.py:81](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L81)
 
 Calculate the activity of a species.
 
@@ -179,7 +179,7 @@ def activity(
 
 ## KappaParameterActivity
 
-[Show source in activity_strategies.py:138](../../../../../particula/next/particles/activity_strategies.py#L138)
+[Show source in activity_strategies.py:138](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L138)
 
 Non-ideal activity strategy, based on kappa hygroscopic parameter for
 non-ideal water, and mole fraction for other species.
@@ -212,7 +212,7 @@ class KappaParameterActivity(ActivityStrategy):
 
 ### KappaParameterActivity().activity
 
-[Show source in activity_strategies.py:163](../../../../../particula/next/particles/activity_strategies.py#L163)
+[Show source in activity_strategies.py:163](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L163)
 
 Calculate the activity of a species.
 

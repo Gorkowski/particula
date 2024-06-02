@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Particles](./index.md#particles) / Activity Factories
 
-> Auto-generated documentation for [particula.next.particles.activity_factories](../../../../../particula/next/particles/activity_factories.py) module.
+> Auto-generated documentation for [particula.next.particles.activity_factories](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py) module.
 
 ## ActivityFactory
 
-[Show source in activity_factories.py:19](../../../../../particula/next/particles/activity_factories.py#L19)
+[Show source in activity_factories.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L19)
 
 Factory class to create activity strategy builders for calculating
 activity and partial pressure of species in a mixture of liquids.
@@ -71,7 +71,7 @@ class ActivityFactory(
 
 ### ActivityFactory().get_builders
 
-[Show source in activity_factories.py:65](../../../../../particula/next/particles/activity_factories.py#L65)
+[Show source in activity_factories.py:65](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L65)
 
 Returns the mapping of strategy types to builder instances.
 

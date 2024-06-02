@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Data](./index.md#data) / Stream
 
-> Auto-generated documentation for [particula.data.stream](../../../../particula/data/stream.py) module.
+> Auto-generated documentation for [particula.data.stream](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py) module.
 
 ## Stream
 
-[Show source in stream.py:11](../../../../particula/data/stream.py#L11)
+[Show source in stream.py:11](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L11)
 
 #### Attributes
 
@@ -48,7 +48,7 @@ class Stream: ...
 
 ### Stream().__getitem__
 
-[Show source in stream.py:57](../../../../particula/data/stream.py#L57)
+[Show source in stream.py:57](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L57)
 
 Allows for indexing of the data stream.
 
@@ -72,7 +72,7 @@ def __getitem__(self, index: Union[int, str]): ...
 
 ### Stream().__len__
 
-[Show source in stream.py:86](../../../../particula/data/stream.py#L86)
+[Show source in stream.py:86](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L86)
 
 Returns the length of the time stream.
 
@@ -84,7 +84,7 @@ def __len__(self): ...
 
 ### Stream().__setitem__
 
-[Show source in stream.py:71](../../../../particula/data/stream.py#L71)
+[Show source in stream.py:71](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L71)
 
 Allows for setting or adding of a row of data in the stream.
 
@@ -103,7 +103,7 @@ def __setitem__(self, index: Union[int, str], value): ...
 
 ### Stream().datetime64
 
-[Show source in stream.py:90](../../../../particula/data/stream.py#L90)
+[Show source in stream.py:90](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L90)
 
 Returns an array of datetime64 objects representing the time stream.
 Useful for plotting, with matplotlib.dates.
@@ -117,7 +117,7 @@ def datetime64(self) -> np.ndarray: ...
 
 ### Stream().header_dict
 
-[Show source in stream.py:98](../../../../particula/data/stream.py#L98)
+[Show source in stream.py:98](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L98)
 
 Returns the header as a dictionary with index (0, 1) as the keys
 and the names as values.
@@ -131,7 +131,7 @@ def header_dict(self) -> dict: ...
 
 ### Stream().header_float
 
-[Show source in stream.py:104](../../../../particula/data/stream.py#L104)
+[Show source in stream.py:104](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L104)
 
 Returns the header as a numpy array of floats.
 
@@ -144,7 +144,7 @@ def header_float(self) -> np.ndarray: ...
 
 ### Stream().validate_inputs
 
-[Show source in stream.py:47](../../../../particula/data/stream.py#L47)
+[Show source in stream.py:47](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L47)
 
 Validates the inputs for the DataStream object.
 
@@ -163,7 +163,7 @@ def validate_inputs(self): ...
 
 ## StreamAveraged
 
-[Show source in stream.py:111](../../../../particula/data/stream.py#L111)
+[Show source in stream.py:111](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L111)
 
 A subclass of Stream with additional parameters related to averaging.
 
@@ -186,7 +186,7 @@ class StreamAveraged(Stream): ...
 
 ### StreamAveraged().get_std
 
-[Show source in stream.py:149](../../../../particula/data/stream.py#L149)
+[Show source in stream.py:149](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L149)
 
 Returns the standard deviation of the data.
 
@@ -198,7 +198,7 @@ def get_std(self, index) -> np.ndarray: ...
 
 ### StreamAveraged().validate_averaging_params
 
-[Show source in stream.py:131](../../../../particula/data/stream.py#L131)
+[Show source in stream.py:131](https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L131)
 
 Validates the averaging parameters for the stream.
 

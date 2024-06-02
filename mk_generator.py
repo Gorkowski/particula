@@ -20,7 +20,8 @@ path_finder.exclude("tests/*", "build/*")
 handsdown = MaterialGenerator(
     input_path=repo_path,
     output_path=repo_path / 'docs/source-code',
-    source_paths=path_finder.glob("**/*.py")
+    source_paths=path_finder.glob("**/*.py"),
+    source_code_url='https://github.com/Gorkowski/particula/blob/main/'
 )
 
 # generate all docs at once

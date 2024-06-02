@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Data](../index.md#data) / [Process](./index.md#process) / Kappa Via Extinction
 
-> Auto-generated documentation for [particula.data.process.kappa_via_extinction](../../../../../particula/data/process/kappa_via_extinction.py) module.
+> Auto-generated documentation for [particula.data.process.kappa_via_extinction](https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py) module.
 
 ## extinction_ratio_wet_dry
 
-[Show source in kappa_via_extinction.py:16](../../../../../particula/data/process/kappa_via_extinction.py#L16)
+[Show source in kappa_via_extinction.py:16](https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L16)
 
 Calculates the extinction ratio between wet and dry aerosols, considering
 water uptake through kappa. This function uses Mie theory to determine the
@@ -76,7 +76,7 @@ def extinction_ratio_wet_dry(
 
 ## fit_extinction_ratio_with_kappa
 
-[Show source in kappa_via_extinction.py:131](../../../../../particula/data/process/kappa_via_extinction.py#L131)
+[Show source in kappa_via_extinction.py:131](https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L131)
 
 Fits the kappa parameter based on the measured extinction ratios of dry
 and wet aerosols, utilizing Mie theory to account for water uptake
@@ -147,7 +147,7 @@ def fit_extinction_ratio_with_kappa(
 
 ## kappa_from_extinction_looped
 
-[Show source in kappa_via_extinction.py:232](../../../../../particula/data/process/kappa_via_extinction.py#L232)
+[Show source in kappa_via_extinction.py:232](https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L232)
 
 Fits the extinction ratio to the kappa value for a given set of
 measurements, looping over time indexes in number_per_cm3. This function

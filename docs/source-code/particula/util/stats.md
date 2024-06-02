@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Util](./index.md#util) / Stats
 
-> Auto-generated documentation for [particula.util.stats](../../../../particula/util/stats.py) module.
+> Auto-generated documentation for [particula.util.stats](https://github.com/Gorkowski/particula/blob/main/particula/util/stats.py) module.
 
 ## average_to_interval
 
-[Show source in stats.py:114](../../../../particula/util/stats.py#L114)
+[Show source in stats.py:114](https://github.com/Gorkowski/particula/blob/main/particula/util/stats.py#L114)
 
 Calculate the average of the data stream over the specified time intervals.
 
@@ -58,7 +58,7 @@ def average_to_interval(
 
 ## distribution_integration
 
-[Show source in stats.py:291](../../../../particula/util/stats.py#L291)
+[Show source in stats.py:291](https://github.com/Gorkowski/particula/blob/main/particula/util/stats.py#L291)
 
 Performs either PDF integration or PMS integration based on the input.
 This function supports broadcasting where x_array has shape (m,) and
@@ -97,7 +97,7 @@ def distribution_integration(
 
 ## mask_outliers
 
-[Show source in stats.py:238](../../../../particula/util/stats.py#L238)
+[Show source in stats.py:238](https://github.com/Gorkowski/particula/blob/main/particula/util/stats.py#L238)
 
 Create a boolean mask for outliers in a data array. Outliers are defined as
 values that are either above or below a specified threshold, or that are
@@ -137,7 +137,7 @@ def mask_outliers(
 
 ## merge_formatting
 
-[Show source in stats.py:9](../../../../particula/util/stats.py#L9)
+[Show source in stats.py:9](https://github.com/Gorkowski/particula/blob/main/particula/util/stats.py#L9)
 
 Formats two data arrays and their headers so that the data new can be
 subsiqently added to data current.

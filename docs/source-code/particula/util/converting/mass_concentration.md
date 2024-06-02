@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Util](../index.md#util) / [Converting](./index.md#converting) / Mass Concentration
 
-> Auto-generated documentation for [particula.util.converting.mass_concentration](../../../../../particula/util/converting/mass_concentration.py) module.
+> Auto-generated documentation for [particula.util.converting.mass_concentration](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/mass_concentration.py) module.
 
 ## to_mole_fraction
 
-[Show source in mass_concentration.py:7](../../../../../particula/util/converting/mass_concentration.py#L7)
+[Show source in mass_concentration.py:7](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/mass_concentration.py#L7)
 
 Convert mass concentrations to mole fractions for N components.
 
@@ -40,7 +40,7 @@ def to_mole_fraction(
 
 ## to_volume_fraction
 
-[Show source in mass_concentration.py:41](../../../../../particula/util/converting/mass_concentration.py#L41)
+[Show source in mass_concentration.py:41](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/mass_concentration.py#L41)
 
 Convert mass concentrations to volume fractions for N components.
 

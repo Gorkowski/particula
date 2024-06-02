@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Next](./index.md#next) / Abc Builder
 
-> Auto-generated documentation for [particula.next.abc_builder](../../../../particula/next/abc_builder.py) module.
+> Auto-generated documentation for [particula.next.abc_builder](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py) module.
 
 ## BuilderABC
 
-[Show source in abc_builder.py:20](../../../../particula/next/abc_builder.py#L20)
+[Show source in abc_builder.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L20)
 
 Abstract base class for builders with common methods to check keys and
 set parameters from a dictionary.
@@ -18,10 +18,10 @@ set parameters from a dictionary.
 
 #### Methods
 
--------
-- `-` *check_keys(parameters)* - Check if the keys you want to set are
-present in the parameters dictionary.
-- `-` *set_parameters(parameters)* - Set parameters from a dictionary including
+--------
+- check_keys (parameters): Check if the keys you want to set are
+    present in the parameters dictionary.
+- set_parameters (parameters): Set parameters from a dictionary including
     optional suffix for units as '_units'.
 - `-` *pre_build_check()* - Check if all required attribute parameters are set
     before building.
@@ -46,7 +46,7 @@ class BuilderABC(ABC):
 
 ### BuilderABC().build
 
-[Show source in abc_builder.py:144](../../../../particula/next/abc_builder.py#L144)
+[Show source in abc_builder.py:144](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L144)
 
 Build and return the strategy object with the set parameters.
 
@@ -64,7 +64,7 @@ def build(self) -> Any: ...
 
 ### BuilderABC().check_keys
 
-[Show source in abc_builder.py:51](../../../../particula/next/abc_builder.py#L51)
+[Show source in abc_builder.py:51](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L51)
 
 Check if the keys you want to set are present in the
 parameters dictionary and if all keys are valid.
@@ -93,7 +93,7 @@ def check_keys(self, parameters: dict[str, Any]): ...
 
 ### BuilderABC().pre_build_check
 
-[Show source in abc_builder.py:126](../../../../particula/next/abc_builder.py#L126)
+[Show source in abc_builder.py:126](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L126)
 
 Check if all required attribute parameters are set before building.
 
@@ -115,7 +115,7 @@ def pre_build_check(self): ...
 
 ### BuilderABC().set_parameters
 
-[Show source in abc_builder.py:93](../../../../particula/next/abc_builder.py#L93)
+[Show source in abc_builder.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L93)
 
 Set parameters from a dictionary including optional suffix for
 units as '_units'.
@@ -146,7 +146,7 @@ def set_parameters(self, parameters: dict[str, Any]): ...
 
 ## BuilderConcentrationMixin
 
-[Show source in abc_builder.py:255](../../../../particula/next/abc_builder.py#L255)
+[Show source in abc_builder.py:255](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L255)
 
 Mixin class for Builder classes to set concentration and
 concentration_units.
@@ -166,7 +166,7 @@ class BuilderConcentrationMixin:
 
 ### BuilderConcentrationMixin().set_concentration
 
-[Show source in abc_builder.py:268](../../../../particula/next/abc_builder.py#L268)
+[Show source in abc_builder.py:268](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L268)
 
 Set the concentration of the particle in kg/m^3.
 
@@ -192,7 +192,7 @@ def set_concentration(
 
 ## BuilderDensityMixin
 
-[Show source in abc_builder.py:154](../../../../particula/next/abc_builder.py#L154)
+[Show source in abc_builder.py:154](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L154)
 
 Mixin class for Builder classes to set density and density_units.
 
@@ -211,7 +211,7 @@ class BuilderDensityMixin:
 
 ### BuilderDensityMixin().set_density
 
-[Show source in abc_builder.py:166](../../../../particula/next/abc_builder.py#L166)
+[Show source in abc_builder.py:166](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L166)
 
 Set the density of the particle in kg/m^3.
 
@@ -236,7 +236,7 @@ def set_density(
 
 ## BuilderMolarMassMixin
 
-[Show source in abc_builder.py:221](../../../../particula/next/abc_builder.py#L221)
+[Show source in abc_builder.py:221](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L221)
 
 Mixin class for Builder classes to set molar_mass and molar_mass_units.
 
@@ -255,7 +255,7 @@ class BuilderMolarMassMixin:
 
 ### BuilderMolarMassMixin().set_molar_mass
 
-[Show source in abc_builder.py:233](../../../../particula/next/abc_builder.py#L233)
+[Show source in abc_builder.py:233](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L233)
 
 Set the molar mass of the particle in kg/mol.
 
@@ -281,7 +281,7 @@ def set_molar_mass(
 
 ## BuilderSurfaceTensionMixin
 
-[Show source in abc_builder.py:186](../../../../particula/next/abc_builder.py#L186)
+[Show source in abc_builder.py:186](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L186)
 
 Mixin class for Builder classes to set surface_tension and
 surface_tension_units.
@@ -301,7 +301,7 @@ class BuilderSurfaceTensionMixin:
 
 ### BuilderSurfaceTensionMixin().set_surface_tension
 
-[Show source in abc_builder.py:199](../../../../particula/next/abc_builder.py#L199)
+[Show source in abc_builder.py:199](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L199)
 
 Set the surface tension of the particle in N/m.
 

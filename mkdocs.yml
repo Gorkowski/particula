@@ -1,21 +1,27 @@
 site_name: Particula
 repo_url: https://github.com/gorkowski/particula
-edit_uri: edit/main/docs/
+repo_name: development-fork
+edit_uri: edit/main/docs/_builds
 
 theme:
   name: material
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - toc.integrate
-    - navigation.top
     - navigation.tracking
+    - navigation.top
+    - navigation.footer
+    - toc.integrate
+    - header.autohide
     - search.suggest
     - search.highlight
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
   language: en
+  icon:
+    repo: fontawesome/brands/github
   palette:
     - scheme: default
       toggle:
@@ -70,8 +76,8 @@ markdown_extensions:
 
 plugins:
   - search
-  - mkdocs-jupyter:
-      include_source: True
+  # - mkdocs-jupyter:
+  #     include_source: True
 
 
 copyright: |

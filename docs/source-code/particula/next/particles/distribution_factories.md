@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Particles](./index.md#particles) / Distribution Factories
 
-> Auto-generated documentation for [particula.next.particles.distribution_factories](../../../../../particula/next/particles/distribution_factories.py) module.
+> Auto-generated documentation for [particula.next.particles.distribution_factories](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py) module.
 
 ## DistributionFactory
 
-[Show source in distribution_factories.py:15](../../../../../particula/next/particles/distribution_factories.py#L15)
+[Show source in distribution_factories.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L15)
 
 Factory class to create distribution strategy builders for
 calculating particle distributions based on the specified
@@ -65,7 +65,7 @@ class DistributionFactory(
 
 ### DistributionFactory().get_builders
 
-[Show source in distribution_factories.py:59](../../../../../particula/next/particles/distribution_factories.py#L59)
+[Show source in distribution_factories.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L59)
 
 Returns the mapping of strategy types to builder instances.
 

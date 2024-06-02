@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Data](./index.md#data) / Stream Stats
 
-> Auto-generated documentation for [particula.data.stream_stats](../../../../particula/data/stream_stats.py) module.
+> Auto-generated documentation for [particula.data.stream_stats](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py) module.
 
 ## average_std
 
-[Show source in stream_stats.py:31](../../../../particula/data/stream_stats.py#L31)
+[Show source in stream_stats.py:31](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L31)
 
 Calculate the average and standard deviation of data within a given
 'stream' object over specified intervals.
@@ -60,7 +60,7 @@ def average_std(
 
 ## drop_masked
 
-[Show source in stream_stats.py:11](../../../../particula/data/stream_stats.py#L11)
+[Show source in stream_stats.py:11](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L11)
 
 Drop rows where mask is false, and return data stream.
 
@@ -90,7 +90,7 @@ def drop_masked(stream: Stream, mask: np.ndarray) -> Stream: ...
 
 ## filtering
 
-[Show source in stream_stats.py:103](../../../../particula/data/stream_stats.py#L103)
+[Show source in stream_stats.py:103](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L103)
 
 Filters the data of the given 'stream' object based on the specified
 bounds or specific value. The filtered data can be either dropped or
@@ -154,7 +154,7 @@ def filtering(
 
 ## remove_time_window
 
-[Show source in stream_stats.py:176](../../../../particula/data/stream_stats.py#L176)
+[Show source in stream_stats.py:176](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L176)
 
 Remove a time window from a stream object.
 

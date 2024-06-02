@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Data](../index.md#data) / [Process](./index.md#process) / Scattering Truncation
 
-> Auto-generated documentation for [particula.data.process.scattering_truncation](../../../../../particula/data/process/scattering_truncation.py) module.
+> Auto-generated documentation for [particula.data.process.scattering_truncation](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py) module.
 
 ## correction_for_distribution
 
-[Show source in scattering_truncation.py:246](../../../../../particula/data/process/scattering_truncation.py#L246)
+[Show source in scattering_truncation.py:246](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L246)
 
 Calculates the correction factor for scattering measurements due to
 truncation effects in aerosol size distribution measurements. This
@@ -58,7 +58,7 @@ def correction_for_distribution(
 
 ## correction_for_humidified
 
-[Show source in scattering_truncation.py:321](../../../../../particula/data/process/scattering_truncation.py#L321)
+[Show source in scattering_truncation.py:321](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L321)
 
 Calculates the scattering correction for humidified aerosol measurements,
 accounting for water uptake by adjusting the aerosol's refractive index.
@@ -118,7 +118,7 @@ def correction_for_humidified(
 
 ## correction_for_humidified_looped
 
-[Show source in scattering_truncation.py:407](../../../../../particula/data/process/scattering_truncation.py#L407)
+[Show source in scattering_truncation.py:407](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L407)
 
 Corrects scattering measurements for aerosol particles to account for
 truncation errors in CAPS instrument. This correction is vital for
@@ -185,7 +185,7 @@ def correction_for_humidified_looped(
 
 ## get_truncated_scattering
 
-[Show source in scattering_truncation.py:16](../../../../../particula/data/process/scattering_truncation.py#L16)
+[Show source in scattering_truncation.py:16](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L16)
 
 Extracts the truncated scattering intensity and corresponding angles based
 on the given truncation angles.
@@ -220,7 +220,7 @@ def get_truncated_scattering(
 
 ## trunc_mono
 
-[Show source in scattering_truncation.py:51](../../../../../particula/data/process/scattering_truncation.py#L51)
+[Show source in scattering_truncation.py:51](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L51)
 
 Calculates the single scattering albedo (SSA) correction due to truncation
 for monodisperse aerosol measurements using the CAPS-PM-SSA instrument. The
@@ -276,7 +276,7 @@ def trunc_mono(
 
 ## truncation_for_diameters
 
-[Show source in scattering_truncation.py:189](../../../../../particula/data/process/scattering_truncation.py#L189)
+[Show source in scattering_truncation.py:189](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L189)
 
 Calculates the truncation correction for an array of particle diameters
 given a specific refractive index and wavelength. This function is

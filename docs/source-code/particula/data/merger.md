@@ -2,11 +2,11 @@
 
 [Particula Index](../../README.md#particula-index) / [Particula](../index.md#particula) / [Data](./index.md#data) / Merger
 
-> Auto-generated documentation for [particula.data.merger](../../../../particula/data/merger.py) module.
+> Auto-generated documentation for [particula.data.merger](https://github.com/Gorkowski/particula/blob/main/particula/data/merger.py) module.
 
 ## combine_data
 
-[Show source in merger.py:15](../../../../particula/data/merger.py#L15)
+[Show source in merger.py:15](https://github.com/Gorkowski/particula/blob/main/particula/data/merger.py#L15)
 
 "
 Merge or adds processed data together. Accounts for data shape
@@ -56,7 +56,7 @@ def combine_data(
 
 ## stream_add_data
 
-[Show source in merger.py:100](../../../../particula/data/merger.py#L100)
+[Show source in merger.py:100](https://github.com/Gorkowski/particula/blob/main/particula/data/merger.py#L100)
 
 Adds a new data stream and corresponding time stream to the
 existing data.

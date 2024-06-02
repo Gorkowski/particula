@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Particles](./index.md#particles) / Surface Factories
 
-> Auto-generated documentation for [particula.next.particles.surface_factories](../../../../../particula/next/particles/surface_factories.py) module.
+> Auto-generated documentation for [particula.next.particles.surface_factories](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_factories.py) module.
 
 ## SurfaceFactory
 
-[Show source in surface_factories.py:17](../../../../../particula/next/particles/surface_factories.py#L17)
+[Show source in surface_factories.py:17](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_factories.py#L17)
 
 Factory class to create surface tension strategy builders for
 calculating surface tension and the Kelvin effect for species in
@@ -64,7 +64,7 @@ class SurfaceFactory(
 
 ### SurfaceFactory().get_builders
 
-[Show source in surface_factories.py:60](../../../../../particula/next/particles/surface_factories.py#L60)
+[Show source in surface_factories.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_factories.py#L60)
 
 Returns the mapping of strategy types to builder instances.
 

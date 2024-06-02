@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Dynamics](./index.md#dynamics) / Condensation
 
-> Auto-generated documentation for [particula.next.dynamics.condensation](../../../../../particula/next/dynamics/condensation.py) module.
+> Auto-generated documentation for [particula.next.dynamics.condensation](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py) module.
 
 ## CondensationIsothermal
 
-[Show source in condensation.py:306](../../../../../particula/next/dynamics/condensation.py#L306)
+[Show source in condensation.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L306)
 
 Condensation strategy for isothermal conditions, where the temperature
 remains constant. This class implements the mass transfer rate calculation
@@ -31,7 +31,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:325](../../../../../particula/next/dynamics/condensation.py#L325)
+[Show source in condensation.py:325](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L325)
 
 #### Signature
 
@@ -55,7 +55,7 @@ def mass_transfer_rate(
 
 ## CondensationStrategy
 
-[Show source in condensation.py:122](../../../../../particula/next/dynamics/condensation.py#L122)
+[Show source in condensation.py:122](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L122)
 
 Abstract class for mass transfer strategies, for condensation or
 evaporation of particles. This class should be subclassed to implement
@@ -88,7 +88,7 @@ class CondensationStrategy(ABC):
 
 ### CondensationStrategy().first_order_mass_transport
 
-[Show source in condensation.py:225](../../../../../particula/next/dynamics/condensation.py#L225)
+[Show source in condensation.py:225](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L225)
 
 Calculate the first-order mass transport coefficient, K, for a given
 particle based on the diffusion coefficient, radius, and vapor
@@ -131,7 +131,7 @@ def first_order_mass_transport(
 
 ### CondensationStrategy().knudsen_number
 
-[Show source in condensation.py:187](../../../../../particula/next/dynamics/condensation.py#L187)
+[Show source in condensation.py:187](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L187)
 
 Calculate the Knudsen number based on the mean free path of the gas
 molecules and the radius of the particle.
@@ -171,7 +171,7 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation.py:272](../../../../../particula/next/dynamics/condensation.py#L272)
+[Show source in condensation.py:272](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L272)
 
 Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.
@@ -216,7 +216,7 @@ def mass_transfer_rate(
 
 ### CondensationStrategy().mean_free_path
 
-[Show source in condensation.py:152](../../../../../particula/next/dynamics/condensation.py#L152)
+[Show source in condensation.py:152](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L152)
 
 Calculate the mean free path of the gas molecules based on the
 temperature, pressure, and dynamic viscosity of the gas.
@@ -254,7 +254,7 @@ def mean_free_path(
 
 ## first_order_mass_transport_k
 
-[Show source in condensation.py:53](../../../../../particula/next/dynamics/condensation.py#L53)
+[Show source in condensation.py:53](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L53)
 
 Calculate the first-order mass transport coefficient, K, for a given radius
 diffusion coefficient, and vapor transition correction factor. For a
@@ -296,7 +296,7 @@ def first_order_mass_transport_k(
 
 ## mass_transfer_rate
 
-[Show source in condensation.py:85](../../../../../particula/next/dynamics/condensation.py#L85)
+[Show source in condensation.py:85](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L85)
 
 Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.

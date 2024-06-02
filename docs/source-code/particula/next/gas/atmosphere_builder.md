@@ -2,11 +2,11 @@
 
 [Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Gas](./index.md#gas) / AtmosphereBuilder
 
-> Auto-generated documentation for [particula.next.gas.atmosphere_builder](../../../../../particula/next/gas/atmosphere_builder.py) module.
+> Auto-generated documentation for [particula.next.gas.atmosphere_builder](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py) module.
 
 ## AtmosphereBuilder
 
-[Show source in atmosphere_builder.py:13](../../../../../particula/next/gas/atmosphere_builder.py#L13)
+[Show source in atmosphere_builder.py:13](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L13)
 
 A builder class for creating Atmosphere objects with a fluent interface.
 
@@ -40,7 +40,7 @@ class AtmosphereBuilder(BuilderABC):
 
 ### AtmosphereBuilder().add_species
 
-[Show source in atmosphere_builder.py:99](../../../../../particula/next/gas/atmosphere_builder.py#L99)
+[Show source in atmosphere_builder.py:99](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L99)
 
 Add a GasSpecies component to the gas mixture.
 
@@ -67,7 +67,7 @@ def add_species(self, species: GasSpecies): ...
 
 ### AtmosphereBuilder().build
 
-[Show source in atmosphere_builder.py:114](../../../../../particula/next/gas/atmosphere_builder.py#L114)
+[Show source in atmosphere_builder.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L114)
 
 Validate and return the Atmosphere object.
 
@@ -88,7 +88,7 @@ def build(self) -> Atmosphere: ...
 
 ### AtmosphereBuilder().set_temperature
 
-[Show source in atmosphere_builder.py:39](../../../../../particula/next/gas/atmosphere_builder.py#L39)
+[Show source in atmosphere_builder.py:39](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L39)
 
 Set the temperature of the gas mixture, in Kelvin.
 
@@ -117,7 +117,7 @@ def set_temperature(self, temperature: float, temperature_units: str = "K"): ...
 
 ### AtmosphereBuilder().set_total_pressure
 
-[Show source in atmosphere_builder.py:71](../../../../../particula/next/gas/atmosphere_builder.py#L71)
+[Show source in atmosphere_builder.py:71](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L71)
 
 Set the total pressure of the gas mixture, in Pascals.
 
