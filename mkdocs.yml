@@ -88,10 +88,10 @@ markdown_extensions:
 plugins:
   - search
   # - social
-  # - mkdocs-jupyter:
-  #     include_source: True
-  #     execute: False
-  #     allow_errors: true
+  - mkdocs-jupyter:
+      include_source: True
+      execute: False
+      allow_errors: true
 
 
 copyright: |
