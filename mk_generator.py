@@ -34,4 +34,3 @@ handsdown.generate_docs()
 
 # generate index.md file
 handsdown.generate_index()
-
