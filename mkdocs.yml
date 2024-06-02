@@ -12,7 +12,7 @@ theme:
     - navigation.tracking
     - navigation.top
     - navigation.footer
-    - toc.integrate
+    # - toc.integrate
     - header.autohide
     - search.suggest
     - search.highlight
