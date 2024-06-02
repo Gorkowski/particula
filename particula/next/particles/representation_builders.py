@@ -19,6 +19,5 @@ from particula.next.abc_builder import (
     BuilderMolarMassMixin,
     BuilderDensityMixin,
     BuilderSurfaceTensionMixin,
-    BuilderSurfaceStrategyMixin,
 )
 from particula.next.particles.representation import ParticleRepresentation
