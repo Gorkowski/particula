@@ -150,3 +150,66 @@ class RadiusParticleRepresentationBuilder(
             concentration=self.concentration,  # type: ignore
             charge=self.charge,  # type: ignore
         )
+
+
+class LogNormalParticleRepresentationBuilder(
+    BuilderABC,
+    BuilderDistributionStrategyMixin,
+    BuilderActivityStrategyMixin,
+    BuilderSurfaceStrategyMixin,
+    BuilderRadiusMixin,
+    BuilderDensityMixin,
+    BuilderConcentrationMixin,
+    BuilderChargeMixin,
+):  # pylint: disable=too-many-ancestors
+    """Builder class for ParticleRepresentation objects with log-normal
+    distribution.
+
+    Methods:
+        set_distribution_strategy(strategy): Set the DistributionStrategy.
+        set_activity_strategy(strategy): Set the ActivityStrategy.
+        set_surface_strategy(strategy): Set the SurfaceStrategy.
+        set_radius(radius, radius_units): Set the radius of the particles.
+            Default units are 'm'.
+        set_density(density, density_units): Set the density of the particles.
+            Default units are 'kg/m**3'.
+        set_concentration(concentration, concentration_units): Set the
+            concentration of the particles. Default units are '/m**3'.
+        set_charge(charge, charge_units): Set the number of charges.
+    """
+
+    def __init__(self):
+        required_parameters = [
+            "distribution_strategy",
+            "activity_strategy",
+            "surface_strategy",
+            "radius",
+            "density",
+            "concentration",
+            "charge",
+        ]
+        BuilderABC.__init__(self, required_parameters)
+        BuilderDistributionStrategyMixin.__init__(self)
+        BuilderActivityStrategyMixin.__init__(self)
+        BuilderSurfaceStrategyMixin.__init__(self)
+        BuilderRadiusMixin.__init__(self)
+        BuilderDensityMixin.__init__(self)
+        BuilderConcentrationMixin.__init__(self, default_units="/m**3")
+        BuilderChargeMixin.__init__(self)
+
+    def build(self) -> ParticleRepresentation:
+        """Validate and return the ParticleRepresentation object.
+
+        Returns:
+            The validated ParticleRepresentation object.
+        """
+        self.pre_build_check()
+        return ParticleRepresentation(
+            strategy=self.distribution_strategy,  # type: ignore
+            activity=self.activity_strategy,  # type: ignore
+            surface=self.surface_strategy,  # type: ignore
+            distribution=self.radius,  # type: ignore
+            density=self.density,  # type: ignore
+            concentration=self.concentration,  # type: ignore
+            charge=self.charge,  # type: ignore
+)
