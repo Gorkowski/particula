@@ -22,48 +22,40 @@ class BuilderABC(ABC):
     set parameters from a dictionary.
 
     Attributes:
-    ----------
-    - required_parameters (list): List of required parameters for the builder.
+        required_parameters: List of required parameters for the builder.
 
     Methods:
-    --------
-    - check_keys (parameters): Check if the keys you want to set are
+        check_keys (parameters): Check if the keys you want to set are
         present in the parameters dictionary.
-    - set_parameters (parameters): Set parameters from a dictionary including
+        set_parameters (parameters): Set parameters from a dictionary including
         optional suffix for units as '_units'.
-    - pre_build_check(): Check if all required attribute parameters are set
+        pre_build_check(): Check if all required attribute parameters are set
         before building.
-
-    Abstract Methods:
-    -----------------
-    - build(): Build and return the strategy object with the set parameters.
+        build (abstract): Build and return the strategy object.
 
     Raises:
-    ------
-    - ValueError: If any required key is missing during check_keys or
+        ValueError: If any required key is missing during check_keys or
         pre_build_check, or if trying to set an invalid parameter.
-    - Warning: If using default units for any parameter.
+        Warning: If using default units for any parameter.
+
+    References:
+        This module also defines mixin classes for the Builder classes to set
+        some optional method to be used in the Builder classes.
+        [Mixin Wikipedia](https://en.wikipedia.org/wiki/Mixin)
     """
 
     def __init__(self, required_parameters: Optional[list[str]] = None):
         self.required_parameters = required_parameters or []
 
     def check_keys(self, parameters: dict[str, Any]):
-        """Check if the keys you want to set are present in the
-        parameters dictionary and if all keys are valid.
+        """Check if the keys are present and valid.
 
         Args:
-        ----
-        - parameters (dict): The parameters dictionary to check.
-
-        Returns:
-        -------
-        - None
+            parameters: The parameters dictionary to check.
 
         Raises:
-        ------
-        - ValueError: If any required key is missing or if trying to set an
-        invalid parameter.
+            ValueError: If any required key is missing or if trying to set an
+            invalid parameter.
         """
 
         # Check if all required keys are present
@@ -95,17 +87,14 @@ class BuilderABC(ABC):
         units as '_units'.
 
         Args:
-        ----
-        - parameters (dict): The parameters dictionary to set.
+            parameters: The parameters dictionary to set.
 
         Returns:
-        -------
-        - self: The builder object with the set parameters.
+            self: The builder object with the set parameters.
 
         Raises:
-        ------
-        - ValueError: If any required key is missing.
-        - Warning: If using default units for any parameter.
+            ValueError: If any required key is missing.
+            Warning: If using default units for any parameter.
         """
         self.check_keys(parameters)
         for key in self.required_parameters:
@@ -126,13 +115,8 @@ class BuilderABC(ABC):
     def pre_build_check(self):
         """Check if all required attribute parameters are set before building.
 
-        Returns:
-        -------
-        - None
-
         Raises:
-        ------
-        - ValueError: If any required parameter is missing.
+            ValueError: If any required parameter is missing.
         """
         if missing := [p for p in self.required_parameters
                        if getattr(self, p) is None]:
@@ -146,8 +130,7 @@ class BuilderABC(ABC):
         """Build and return the strategy object with the set parameters.
 
         Returns:
-        -------
-        - strategy: The built strategy object.
+            strategy: The built strategy object.
         """
 
 
@@ -155,9 +138,7 @@ class BuilderDensityMixin():
     """Mixin class for Builder classes to set density and density_units.
 
     Methods:
-    -------
-    - set_density(density: float, density_units: str): Set the density
-        attribute and units.
+        set_density: Set the density attribute and units.
     """
 
     def __init__(self):
@@ -171,10 +152,8 @@ class BuilderDensityMixin():
         """Set the density of the particle in kg/m^3.
 
         Args:
-        -----
-        - density (float or NDArray[float]): Density of the particle [kg/m^3].
-        - density_units (str, optional): Units of the density. Default is
-            'kg/m^3'.
+            density: Density of the particle.
+            density_units: Units of the density. Default is *kg/m^3*
         """
         if np.any(density < 0):
             error_message = "Density must be a positive value."
@@ -184,13 +163,11 @@ class BuilderDensityMixin():
 
 
 class BuilderSurfaceTensionMixin():
-    """Mixin class for Builder classes to set surface_tension and
-    surface_tension_units.
+    """Mixin class for Builder classes to set surface_tension.
 
     Methods:
     -------
-    - set_surface_tension(surface_tension: float, surface_tension_units: str):
-        Set the surface_tension attribute and units.
+        set_surface_tension: Set the surface_tension attribute and units.
     """
 
     def __init__(self):
@@ -204,11 +181,8 @@ class BuilderSurfaceTensionMixin():
         """Set the surface tension of the particle in N/m.
 
         Args:
-        -----
-        - surface_tension (float or NDArray[float]): Surface tension of the
-            particle [N/m].
-        - surface_tension_units (str, optional): Units of the surface tension.
-            Default is 'N/m'.
+            surface_tension: Surface tension of the particle.
+            surface_tension_units: Surface tension units. Default is *N/m*.
         """
         if np.any(surface_tension < 0):
             error_message = "Surface tension must be a positive value."
@@ -222,9 +196,7 @@ class BuilderMolarMassMixin():
     """Mixin class for Builder classes to set molar_mass and molar_mass_units.
 
     Methods:
-    -------
-    - set_molar_mass(molar_mass: float, molar_mass_units: str): Set the
-        molar_mass attribute and units.
+        set_molar_mass: Set the molar_mass attribute and units.
     """
 
     def __init__(self):
@@ -239,10 +211,8 @@ class BuilderMolarMassMixin():
 
         Args:
         -----
-        - molar_mass (float or NDArray[float]): Molar mass of the particle
-            [kg/mol].
-        - molar_mass_units (str, optional): Units of the molar mass. Default is
-            'kg/mol'.
+        - molar_mass: Molar mass of the particle.
+        - molar_mass_units: Units of the molar mass. Default is *kg/mol*.
         """
         if np.any(molar_mass < 0):
             error_message = "Molar mass must be a positive value."
@@ -257,9 +227,7 @@ class BuilderConcentrationMixin():
     concentration_units.
 
     Methods:
-    -------
-    - set_concentration(concentration: float, concentration_units: str):
-    Set the concentration attribute and units.
+        set_concentration: Set the concentration attribute and units.
     """
 
     def __init__(self):
@@ -273,11 +241,9 @@ class BuilderConcentrationMixin():
         """Set the concentration of the particle in kg/m^3.
 
         Args:
-        -----
-        - concentration (float or NDArray[float]): Concentration of the
-        species or particle in the mixture.
-        - concentration_units (str, optional): Units of the concentration.
-            Default is 'kg/m^3'.
+            concentration: Concentration in the mixture.
+            concentration_units: Units of the concentration.
+            Default is *kg/m^3*.
         """
         if np.any(concentration < 0):
             error_message = "Concentration must be a positive value."
@@ -285,3 +251,31 @@ class BuilderConcentrationMixin():
             raise ValueError(error_message)
         self.concentration = concentration \
             * convert_units(concentration_units, 'kg/m^3')
+
+
+class BuilderChargeMixin():
+    """Mixin class for Builder classes to set charge and charge_units.
+
+    Methods:
+    -------
+        set_charge: Set the charge attribute and units.
+    """
+
+    def __init__(self):
+        self.charge = None
+
+    def set_charge(
+        self,
+        charge: Union[float, NDArray[np.float_]],
+        charge_units: Optional[str] = 'unitless'
+    ):
+        """Set the number of elemental charges on the particle.
+
+        Args:
+            charge: Charge of the particle [C].
+            charge_units: Not used. (for interface consistency)
+        """
+        if charge_units is not None:
+            logger.warning("Ignoring units for charge parameter.")
+        self.charge = charge
+        return self
