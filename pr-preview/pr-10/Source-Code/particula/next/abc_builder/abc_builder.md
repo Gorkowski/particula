@@ -128,7 +128,7 @@ def set_parameters(self, parameters: dict[str, Any]): ...
 
 ## BuilderChargeMixin
 
-[Show source in abc_builder.py:256](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L256)
+[Show source in abc_builder.py:262](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L262)
 
 Mixin class for Builder classes to set charge and charge_units.
 
@@ -146,7 +146,7 @@ class BuilderChargeMixin:
 
 ### BuilderChargeMixin().set_charge
 
-[Show source in abc_builder.py:267](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L267)
+[Show source in abc_builder.py:273](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L273)
 
 Set the number of elemental charges on the particle.
 
@@ -174,6 +174,10 @@ def set_charge(
 Mixin class for Builder classes to set concentration and
 concentration_units.
 
+#### Arguments
+
+- `default_units` - Default units of concentration. Default is *kg/m^3*.
+
 #### Methods
 
 - `set_concentration` - Set the concentration attribute and units.
@@ -182,14 +186,14 @@ concentration_units.
 
 ```python
 class BuilderConcentrationMixin:
-    def __init__(self): ...
+    def __init__(self, default_units: Optional[str] = "kg/m^3"): ...
 ```
 
 ### BuilderConcentrationMixin().set_concentration
 
-[Show source in abc_builder.py:236](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L236)
+[Show source in abc_builder.py:240](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L240)
 
-Set the concentration of the particle in kg/m^3.
+Set the concentration.
 
 #### Arguments
 
@@ -203,7 +207,7 @@ Default is *kg/m^3*.
 def set_concentration(
     self,
     concentration: Union[float, NDArray[np.float_]],
-    concentration_units: Optional[str] = "kg/m^3",
+    concentration_units: Optional[str] = None,
 ): ...
 ```
 

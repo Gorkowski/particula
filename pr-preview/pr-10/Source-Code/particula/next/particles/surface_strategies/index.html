@@ -2626,6 +2626,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#signature" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
@@ -6199,13 +6208,24 @@
 </blockquote>
 <h2 id="surfacestrategy">SurfaceStrategy<a class="headerlink" href="#surfacestrategy" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L16">Show source in surface_strategies.py:16</a></p>
-<p>Abstract class for implementing strategies to calculate surface tension and
-the Kelvin effect for species in particulate phases.</p>
+<p>Abstract class for implementing strategies to calculate surface tension
+and the Kelvin effect for species in particulate phases.</p>
+<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>effective_surface_tension</code> - Calculate the effective surface tension of
+species based on their concentration.</li>
+<li><code>effective_density</code> - Calculate the effective density of species based on
+their concentration.</li>
+<li><code>kelvin_radius</code> - Calculate the Kelvin radius which determines the
+curvature effect on vapor pressure.</li>
+<li><code>kelvin_term</code> - Calculate the Kelvin term, which quantifies the effect of
+particle curvature on vapor pressure.</li>
+</ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SurfaceStrategy</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategyeffective_density">SurfaceStrategy().effective_density<a class="headerlink" href="#surfacestrategyeffective_density" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L41">Show source in surface_strategies.py:41</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L50">Show source in surface_strategies.py:50</a></p>
 <p>Calculate the effective density of species based on their
 concentration.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
@@ -6226,7 +6246,7 @@ species [kg/m^3].</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategyeffective_surface_tension">SurfaceStrategy().effective_surface_tension<a class="headerlink" href="#surfacestrategyeffective_surface_tension" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L22">Show source in surface_strategies.py:22</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L31">Show source in surface_strategies.py:31</a></p>
 <p>Calculate the effective surface tension of species based on their
 concentration.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
@@ -6247,7 +6267,7 @@ species [kg/m^3].</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategykelvin_radius">SurfaceStrategy().kelvin_radius<a class="headerlink" href="#surfacestrategykelvin_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L60">Show source in surface_strategies.py:60</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L69">Show source in surface_strategies.py:69</a></p>
 <p>Calculate the Kelvin radius which determines the curvature effect on
 vapor pressure.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
@@ -6282,7 +6302,7 @@ r = 2 * surface_tension * molar_mass / (R * T * density)</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategykelvin_term">SurfaceStrategy().kelvin_term<a class="headerlink" href="#surfacestrategykelvin_term" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L97">Show source in surface_strategies.py:97</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L106">Show source in surface_strategies.py:106</a></p>
 <p>Calculate the Kelvin term, which quantifies the effect of particle
 curvature on vapor pressure.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
@@ -6315,7 +6335,7 @@ exp(kelvin_radius / particle_radius)
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="surfacestrategymass">SurfaceStrategyMass<a class="headerlink" href="#surfacestrategymass" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L187">Show source in surface_strategies.py:187</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L196">Show source in surface_strategies.py:196</a></p>
 <p>Surface tension and density, based on mass fraction weighted values.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <hr />
@@ -6344,21 +6364,21 @@ species.</li>
 <li><a href="#surfacestrategy">SurfaceStrategy</a></li>
 </ul>
 <h3 id="surfacestrategymasseffective_density">SurfaceStrategyMass().effective_density<a class="headerlink" href="#surfacestrategymasseffective_density" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L223">Show source in surface_strategies.py:223</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L232">Show source in surface_strategies.py:232</a></p>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">effective_density</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">mass_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategymasseffective_surface_tension">SurfaceStrategyMass().effective_surface_tension<a class="headerlink" href="#surfacestrategymasseffective_surface_tension" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L211">Show source in surface_strategies.py:211</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L220">Show source in surface_strategies.py:220</a></p>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">effective_surface_tension</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">mass_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="surfacestrategymolar">SurfaceStrategyMolar<a class="headerlink" href="#surfacestrategymolar" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L134">Show source in surface_strategies.py:134</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L143">Show source in surface_strategies.py:143</a></p>
 <p>Surface tension and density, based on mole fraction weighted values.</p>
 <h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
 <hr />
@@ -6390,21 +6410,21 @@ species.</li>
 <li><a href="#surfacestrategy">SurfaceStrategy</a></li>
 </ul>
 <h3 id="surfacestrategymolareffective_density">SurfaceStrategyMolar().effective_density<a class="headerlink" href="#surfacestrategymolareffective_density" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L173">Show source in surface_strategies.py:173</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L182">Show source in surface_strategies.py:182</a></p>
 <h4 id="signature_9">Signature<a class="headerlink" href="#signature_9" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">effective_density</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">mass_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategymolareffective_surface_tension">SurfaceStrategyMolar().effective_surface_tension<a class="headerlink" href="#surfacestrategymolareffective_surface_tension" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L162">Show source in surface_strategies.py:162</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L171">Show source in surface_strategies.py:171</a></p>
 <h4 id="signature_10">Signature<a class="headerlink" href="#signature_10" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">effective_surface_tension</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">mass_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="surfacestrategyvolume">SurfaceStrategyVolume<a class="headerlink" href="#surfacestrategyvolume" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L237">Show source in surface_strategies.py:237</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L246">Show source in surface_strategies.py:246</a></p>
 <p>Surface tension and density, based on volume fraction weighted values.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <hr />
@@ -6433,14 +6453,14 @@ species.</li>
 <li><a href="#surfacestrategy">SurfaceStrategy</a></li>
 </ul>
 <h3 id="surfacestrategyvolumeeffective_density">SurfaceStrategyVolume().effective_density<a class="headerlink" href="#surfacestrategyvolumeeffective_density" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L273">Show source in surface_strategies.py:273</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L282">Show source in surface_strategies.py:282</a></p>
 <h4 id="signature_12">Signature<a class="headerlink" href="#signature_12" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">effective_density</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">mass_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="surfacestrategyvolumeeffective_surface_tension">SurfaceStrategyVolume().effective_surface_tension<a class="headerlink" href="#surfacestrategyvolumeeffective_surface_tension" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L261">Show source in surface_strategies.py:261</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L270">Show source in surface_strategies.py:270</a></p>
 <h4 id="signature_13">Signature<a class="headerlink" href="#signature_13" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">effective_surface_tension</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">mass_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>

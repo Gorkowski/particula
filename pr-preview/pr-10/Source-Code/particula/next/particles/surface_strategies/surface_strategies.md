@@ -8,8 +8,19 @@
 
 [Show source in surface_strategies.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L16)
 
-Abstract class for implementing strategies to calculate surface tension and
-the Kelvin effect for species in particulate phases.
+Abstract class for implementing strategies to calculate surface tension
+and the Kelvin effect for species in particulate phases.
+
+#### Methods
+
+- `effective_surface_tension` - Calculate the effective surface tension of
+species based on their concentration.
+- `effective_density` - Calculate the effective density of species based on
+their concentration.
+- `kelvin_radius` - Calculate the Kelvin radius which determines the
+curvature effect on vapor pressure.
+- `kelvin_term` - Calculate the Kelvin term, which quantifies the effect of
+particle curvature on vapor pressure.
 
 #### Signature
 
@@ -19,7 +30,7 @@ class SurfaceStrategy(ABC): ...
 
 ### SurfaceStrategy().effective_density
 
-[Show source in surface_strategies.py:41](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L41)
+[Show source in surface_strategies.py:50](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L50)
 
 Calculate the effective density of species based on their
 concentration.
@@ -46,7 +57,7 @@ def effective_density(
 
 ### SurfaceStrategy().effective_surface_tension
 
-[Show source in surface_strategies.py:22](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L22)
+[Show source in surface_strategies.py:31](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L31)
 
 Calculate the effective surface tension of species based on their
 concentration.
@@ -73,7 +84,7 @@ def effective_surface_tension(
 
 ### SurfaceStrategy().kelvin_radius
 
-[Show source in surface_strategies.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L60)
+[Show source in surface_strategies.py:69](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L69)
 
 Calculate the Kelvin radius which determines the curvature effect on
 vapor pressure.
@@ -114,7 +125,7 @@ def kelvin_radius(
 
 ### SurfaceStrategy().kelvin_term
 
-[Show source in surface_strategies.py:97](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L97)
+[Show source in surface_strategies.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L106)
 
 Calculate the Kelvin term, which quantifies the effect of particle
 curvature on vapor pressure.
@@ -157,7 +168,7 @@ def kelvin_term(
 
 ## SurfaceStrategyMass
 
-[Show source in surface_strategies.py:187](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L187)
+[Show source in surface_strategies.py:196](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L196)
 
 Surface tension and density, based on mass fraction weighted values.
 
@@ -192,7 +203,7 @@ class SurfaceStrategyMass(SurfaceStrategy):
 
 ### SurfaceStrategyMass().effective_density
 
-[Show source in surface_strategies.py:223](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L223)
+[Show source in surface_strategies.py:232](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L232)
 
 #### Signature
 
@@ -204,7 +215,7 @@ def effective_density(
 
 ### SurfaceStrategyMass().effective_surface_tension
 
-[Show source in surface_strategies.py:211](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L211)
+[Show source in surface_strategies.py:220](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L220)
 
 #### Signature
 
@@ -218,7 +229,7 @@ def effective_surface_tension(
 
 ## SurfaceStrategyMolar
 
-[Show source in surface_strategies.py:134](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L134)
+[Show source in surface_strategies.py:143](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L143)
 
 Surface tension and density, based on mole fraction weighted values.
 
@@ -256,7 +267,7 @@ class SurfaceStrategyMolar(SurfaceStrategy):
 
 ### SurfaceStrategyMolar().effective_density
 
-[Show source in surface_strategies.py:173](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L173)
+[Show source in surface_strategies.py:182](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L182)
 
 #### Signature
 
@@ -268,7 +279,7 @@ def effective_density(
 
 ### SurfaceStrategyMolar().effective_surface_tension
 
-[Show source in surface_strategies.py:162](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L162)
+[Show source in surface_strategies.py:171](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L171)
 
 #### Signature
 
@@ -282,7 +293,7 @@ def effective_surface_tension(
 
 ## SurfaceStrategyVolume
 
-[Show source in surface_strategies.py:237](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L237)
+[Show source in surface_strategies.py:246](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L246)
 
 Surface tension and density, based on volume fraction weighted values.
 
@@ -317,7 +328,7 @@ class SurfaceStrategyVolume(SurfaceStrategy):
 
 ### SurfaceStrategyVolume().effective_density
 
-[Show source in surface_strategies.py:273](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L273)
+[Show source in surface_strategies.py:282](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L282)
 
 #### Signature
 
@@ -329,7 +340,7 @@ def effective_density(
 
 ### SurfaceStrategyVolume().effective_surface_tension
 
-[Show source in surface_strategies.py:261](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L261)
+[Show source in surface_strategies.py:270](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L270)
 
 #### Signature
 

@@ -1921,6 +1921,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#arguments_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#methods_2" class="md-nav__link">
     <span class="md-ellipsis">
       Methods
@@ -1949,7 +1958,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_3" class="md-nav__link">
+  <a href="#arguments_4" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -2015,7 +2024,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_4" class="md-nav__link">
+  <a href="#arguments_5" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -2081,7 +2090,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_5" class="md-nav__link">
+  <a href="#arguments_6" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -2147,7 +2156,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_6" class="md-nav__link">
+  <a href="#arguments_7" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -6326,7 +6335,7 @@ units as '_units'.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderchargemixin">BuilderChargeMixin<a class="headerlink" href="#builderchargemixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L256">Show source in abc_builder.py:256</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L262">Show source in abc_builder.py:262</a></p>
 <p>Mixin class for Builder classes to set charge and charge_units.</p>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
 <hr />
@@ -6337,7 +6346,7 @@ units as '_units'.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderchargemixinset_charge">BuilderChargeMixin().set_charge<a class="headerlink" href="#builderchargemixinset_charge" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L267">Show source in abc_builder.py:267</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L273">Show source in abc_builder.py:273</a></p>
 <p>Set the number of elemental charges on the particle.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6355,18 +6364,22 @@ units as '_units'.</p>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L225">Show source in abc_builder.py:225</a></p>
 <p>Mixin class for Builder classes to set concentration and
 concentration_units.</p>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>default_units</code> - Default units of concentration. Default is <em>kg/m^3</em>.</li>
+</ul>
 <h4 id="methods_2">Methods<a class="headerlink" href="#methods_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>set_concentration</code> - Set the concentration attribute and units.</li>
 </ul>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BuilderConcentrationMixin</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;kg/m^3&quot;</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderconcentrationmixinset_concentration">BuilderConcentrationMixin().set_concentration<a class="headerlink" href="#builderconcentrationmixinset_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L236">Show source in abc_builder.py:236</a></p>
-<p>Set the concentration of the particle in kg/m^3.</p>
-<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L240">Show source in abc_builder.py:240</a></p>
+<p>Set the concentration.</p>
+<h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>concentration</code> - Concentration in the mixture.</li>
 <li><code>concentration_units</code> - Units of the concentration.
@@ -6376,7 +6389,7 @@ Default is <em>kg/m^3</em>.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_concentration</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
-    <span class="n">concentration_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;kg/m^3&quot;</span><span class="p">,</span>
+    <span class="n">concentration_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderdensitymixin">BuilderDensityMixin<a class="headerlink" href="#builderdensitymixin" title="Permanent link">&para;</a></h2>
@@ -6393,7 +6406,7 @@ Default is <em>kg/m^3</em>.</li>
 <h3 id="builderdensitymixinset_density">BuilderDensityMixin().set_density<a class="headerlink" href="#builderdensitymixinset_density" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L147">Show source in abc_builder.py:147</a></p>
 <p>Set the density of the particle in kg/m^3.</p>
-<h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>density</code> - Density of the particle.</li>
 <li><code>density_units</code> - Units of the density. Default is <em>kg/m^3</em></li>
@@ -6419,7 +6432,7 @@ Default is <em>kg/m^3</em>.</li>
 <h3 id="buildermolarmassmixinset_molar_mass">BuilderMolarMassMixin().set_molar_mass<a class="headerlink" href="#buildermolarmassmixinset_molar_mass" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L205">Show source in abc_builder.py:205</a></p>
 <p>Set the molar mass of the particle in kg/mol.</p>
-<h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <hr />
 <ul>
 <li><code>-</code> <em>molar_mass</em> - Molar mass of the particle.</li>
@@ -6446,7 +6459,7 @@ Default is <em>kg/m^3</em>.</li>
 <h3 id="buildersurfacetensionmixinset_surface_tension">BuilderSurfaceTensionMixin().set_surface_tension<a class="headerlink" href="#buildersurfacetensionmixinset_surface_tension" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L176">Show source in abc_builder.py:176</a></p>
 <p>Set the surface tension of the particle in N/m.</p>
-<h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_7">Arguments<a class="headerlink" href="#arguments_7" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>surface_tension</code> - Surface tension of the particle.</li>
 <li><code>surface_tension_units</code> - Surface tension units. Default is <em>N/m</em>.</li>
