@@ -82,6 +82,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
                 - [Slip Correction Module](particula/next/particles/properties/slip_correction_module.md#slip-correction-module)
                 - [Vapor Correction Module](particula/next/particles/properties/vapor_correction_module.md#vapor-correction-module)
             - [Representation](particula/next/particles/representation.md#representation)
+            - [Representation Builders](particula/next/particles/representation_builders.md#representation-builders)
             - [Surface Builders](particula/next/particles/surface_builders.md#surface-builders)
             - [Surface Factories](particula/next/particles/surface_factories.md#surface-factories)
             - [Surface Strategies](particula/next/particles/surface_strategies.md#surface-strategies)

@@ -10,6 +10,28 @@
 
 Coerces data to dtype if it is not already of that type.
 
+#### Examples
+
+```python
+>>> coerce_type(1, float)
+1.0
+>>> coerce_type([1, 2, 3], np.ndarray)
+array([1, 2, 3])
+```
+
+#### Arguments
+
+- `data` - The data to be coerced.
+- `dtype` - The desired data type.
+
+#### Returns
+
+The coerced data.
+
+#### Raises
+
+- `ValueError` - If the data cannot be coerced to the desired type.
+
 #### Signature
 
 ```python
@@ -20,7 +42,7 @@ def coerce_type(data, dtype): ...
 
 ## convert_sizer_dn
 
-[Show source in convert.py:451](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L451)
+[Show source in convert.py:440](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L440)
 
 Converts the sizer data from dn/dlogdp to d_num.
 
@@ -30,26 +52,21 @@ based on the input diameter array. Assumes a log10 scale for dp edges.
 
 #### Arguments
 
------------
-    - `diameter` *np.ndarray* - Array of particle diameters.
-    - `dn_dlogdp` *np.ndarray* - Array of number concentration of particles per
-    unit logarithmic diameter.
-    - `inverse` *bool* - If True, converts from d_num to dn/dlogdp.
+- `diameter` *np.ndarray* - Array of particle diameters.
+- `dn_dlogdp` *np.ndarray* - Array of number concentration of particles per
+unit logarithmic diameter.
+- `inverse` *bool* - If True, converts from d_num to dn/dlogdp.
 
 #### Returns
 
------------
-    - `np.ndarray` - Array of number concentration of particles
-    per unit diameter.
+- `np.ndarray` - Array of number concentration of particles
+per unit diameter.
 
 #### References
 
------------
 - `Eq` - dN/dlogD_p = dN/( log(D_{p-upper}) - log(D_{p-lower}) )
 https://tsi.com/getmedia/1621329b-f410-4dce-992b-e21e1584481a/
 PR-001-RevA_Aerosol-Statistics-AppNote?ext=.pdf
-
-- `#` *future* - Address potential over-counting in last/first bin
 
 #### Signature
 
@@ -63,7 +80,7 @@ def convert_sizer_dn(
 
 ## data_shape_check
 
-[Show source in convert.py:570](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L570)
+[Show source in convert.py:543](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L543)
 
 Check the shape of the input data and header list, and reshape the data if
 necessary. The data array can be 1D or 2D. If the data array is 2D, the
@@ -72,21 +89,18 @@ array is 1D, the header list must be a single entry.
 
 #### Arguments
 
-----------
-    - `time` *np.ndarray* - 1D array of time values.
-    - `data` *np.ndarray* - 1D or 2D array of data values.
-    - `header` *list* - List of header values.
+- `time` *np.ndarray* - 1D array of time values.
+- `data` *np.ndarray* - 1D or 2D array of data values.
+- `header` *list* - List of header values.
 
 #### Returns
 
--------
-    - `np.ndarray` - Reshaped data array.
+Reshaped data array.
 
 #### Raises
 
--------
-    - `ValueError` - If the length of the header list does not match the first
-    dimension of the data array.
+- `ValueError` - If the length of the header list does not match the first
+dimension of the data array.
 
 #### Signature
 
@@ -98,27 +112,25 @@ def data_shape_check(time: np.ndarray, data: np.ndarray, header: list) -> np.nda
 
 ## distribution_convert_pdf_pms
 
-[Show source in convert.py:626](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L626)
+[Show source in convert.py:603](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L603)
 
 Convert between a probability density function (PDF) and a probability
 mass spectrum (PMS) based on the specified direction.
 
 #### Arguments
 
-x_array
-    An array of radii corresponding to the bins of the distribution,
-    shape (m).
-distribution
-    The concentration values of the distribution (either PDF or PMS)
-    at the given radii. Supports broadcasting across x_array (n,m).
-to_PDF
-    Direction of conversion. If True, converts PMS to PDF. If False,
-    converts PDF to PMS.
+- `x_array` - An array of radii corresponding to the bins of the
+distribution, shape (m).
+- `distribution` - The concentration values of the distribution
+(either PDF or PMS) at the given radii. Supports broadcasting across
+x_array (n,m).
+- `to_PDF` - Direction of conversion. If True, converts PMS to PDF.
+If False, converts PDF to PMS.
 
 #### Returns
 
-converted_distribution
-    The converted distribution array (either PDF or PMS).
+- `converted_distribution` - The converted distribution array
+(either PDF or PMS).
 
 #### Signature
 
@@ -132,7 +144,7 @@ def distribution_convert_pdf_pms(
 
 ## effective_refractive_index
 
-[Show source in convert.py:411](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L411)
+[Show source in convert.py:402](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L402)
 
 Calculate the effective refractive index of a mixture of two solutes, given
 the refractive index of each solute and the volume of each solute. The
@@ -140,24 +152,22 @@ mixing is based on volume-weighted molar refraction.
 
 #### Arguments
 
------------
-    m_zero (float or complex): The refractive index of solute 0.
-    m_one (float or complex): The refractive index of solute 1.
-    - `volume_zero` *float* - The volume of solute 0.
-    - `volume_one` *float* - The volume of solute 1.
+- `m_zero` - The refractive index of solute 0.
+- `m_one` - The refractive index of solute 1.
+- `volume_zero` - The volume of solute 0.
+- `volume_one` - The volume of solute 1.
 
 #### Returns
 
------------
-    The effective refractive index of the mixture.
+The effective refractive index of the mixture.
 
-Reference:
------------
-    Liu, Y., &#38; Daum, P. H. (2008).
-    Relationship of refractive index to mass density and self-consistency
-    mixing rules for multicomponent mixtures like ambient aerosols.
-    Journal of Aerosol Science, 39(11), 974-986.
-    https://doi.org/10.1016/j.jaerosci.2008.06.006
+#### References
+
+Liu, Y., &#38; Daum, P. H. (2008). Relationship of refractive
+index to mass density and self-consistency mixing rules for
+multicomponent mixtures like ambient aerosols.
+Journal of Aerosol Science, 39(11), 974-986.
+https://doi.org/10.1016/j.jaerosci.2008.06.006
 
 #### Signature
 
@@ -174,39 +184,31 @@ def effective_refractive_index(
 
 ## get_values_in_dict
 
-[Show source in convert.py:528](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L528)
+[Show source in convert.py:509](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L509)
 
 Returns a list of values for keys in a dictionary.
 
-#### Arguments
-
------------
-key_list : List[str]
-    List of keys to check in the dictionary.
-dict_to_check : Dict[str, Any]
-    The dictionary to check for the given keys.
-
-#### Returns
-
---------
-List[Any]
-    A list of values for keys in the dictionary.
-
-#### Raises
-
--------
-KeyError:
-    If any of the keys in the `key_list` are not present in the dictionary.
-
 #### Examples
-
---------
 
 ```python
 >>> my_dict = {'a': 1, 'b': 2, 'c': 3}
 >>> get_values_in_dict(['a', 'c'], my_dict)
 [1, 3]
 ```
+
+#### Arguments
+
+- `key_list` - List of keys to check in the dictionary.
+- `dict_to_check` - The dictionary to check for the given keys.
+
+#### Returns
+
+- `List` - A list of values for keys in the dictionary.
+
+#### Raises
+
+- `KeyError` - If any of the keys in the `key_list` are not present in
+the dictionary.
 
 #### Signature
 
@@ -220,17 +222,16 @@ def get_values_in_dict(
 
 ## kappa_from_volume
 
-[Show source in convert.py:200](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L200)
+[Show source in convert.py:206](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L206)
 
 Calculate the kappa parameter from the volume of solute and water,
 given the water activity.
 
 #### Arguments
 
------------
-    - `volume_solute` - The volume of solute.
-    - `volume_water` - The volume of water.
-    - `water_activity` - The water activity.
+- `volume_solute` - The volume of solute.
+- `volume_water` - The volume of water.
+- `water_activity` - The water activity.
 
 #### Returns
 
@@ -251,17 +252,16 @@ def kappa_from_volume(
 
 ## kappa_volume_solute
 
-[Show source in convert.py:142](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L142)
+[Show source in convert.py:148](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L148)
 
 Calculate the volume of solute in a volume of total solution,
 given the kappa parameter and water activity.
 
 #### Arguments
 
------------
-    - `volume_total` - The volume of the total solution.
-    - `kappa` - The kappa parameter.
-    - `water_activity` - The water activity.
+- `volume_total` - The volume of the total solution.
+- `kappa` - The kappa parameter.
+- `water_activity` - The water activity.
 
 #### Returns
 
@@ -282,17 +282,16 @@ def kappa_volume_solute(
 
 ## kappa_volume_water
 
-[Show source in convert.py:172](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L172)
+[Show source in convert.py:178](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L178)
 
 Calculate the volume of water given volume of solute, kappa parameter,
 and water activity.
 
 #### Arguments
 
------------
-    - `volume_solute` - The volume of solute.
-    - `kappa` - The kappa parameter.
-    - `water_activity` - The water activity.
+- `volume_solute` - The volume of solute.
+- `kappa` - The kappa parameter.
+- `water_activity` - The water activity.
 
 #### Returns
 
@@ -313,16 +312,15 @@ def kappa_volume_water(
 
 ## length_to_volume
 
-[Show source in convert.py:120](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L120)
+[Show source in convert.py:125](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L125)
 
 Convert radius or diameter to volume.
 
 #### Arguments
 
------------
-    - `length` - The length to be converted.
-    - `length_type` - The type of length ('radius' or 'diameter').
-        Default is 'radius'.
+- `length` - The length to be converted.
+- `length_type` - The type of length ('radius' or 'diameter').
+    Default is 'radius'.
 
 #### Returns
 
@@ -341,21 +339,19 @@ def length_to_volume(
 
 ## list_to_dict
 
-[Show source in convert.py:505](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L505)
+[Show source in convert.py:486](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L486)
 
 Converts a list of strings to a dictionary. The keys are the strings
 and the values are the index of the string in the list.
 
 #### Arguments
 
------------
-    - `list_of_str` *list* - A non-empty list of strings.
+- `list_of_str` *list* - A non-empty list of strings.
 
 #### Returns
 
---------
-    - `dict` - A dictionary where the keys are the strings and the values are
-        the index of the string in the list.
+- `dict` - A dictionary where the keys are the strings and the values are
+    the index of the string in the list.
 
 #### Signature
 
@@ -367,25 +363,22 @@ def list_to_dict(list_of_str: list) -> dict: ...
 
 ## mass_concentration_to_mole_fraction
 
-[Show source in convert.py:282](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L282)
+[Show source in convert.py:284](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L284)
 
 Convert mass concentrations to mole fractions for N components.
 
 #### Arguments
 
------------
-- `-` *mass_concentrations* - A list or ndarray of mass concentrations
+- `mass_concentrations` - A list or ndarray of mass concentrations
 (e.g., kg/m^3).
-- `-` *molar_masses* - A list or ndarray of molecular weights (e.g., g/mol).
+- `molar_masses` - A list or ndarray of molecular weights (e.g., g/mol).
 
 #### Returns
 
---------
-- An ndarray of mole fractions.
+An ndarray of mole fractions.
 
 #### Notes
 
-----
 The mole fraction of a component is given by the ratio of its molar
 concentration to the total molar concentration of all components.
 
@@ -401,25 +394,23 @@ def mass_concentration_to_mole_fraction(
 
 ## mass_concentration_to_volume_fraction
 
-[Show source in convert.py:312](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L312)
+[Show source in convert.py:311](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L311)
 
 Convert mass concentrations to volume fractions for N components.
 
 #### Arguments
 
------------
-- `-` *mass_concentrations* - A list or ndarray of mass concentrations
+- `mass_concentrations` - A list or ndarray of mass concentrations
 (e.g., kg/m^3).
-- `-` *densities* - A list or ndarray of densities of each component (e.g., kg/m^3).
+- `densities` - A list or ndarray of densities of each component
+(e.g., kg/m^3).
 
 #### Returns
 
---------
-- An ndarray of volume fractions.
+An ndarray of volume fractions.
 
 #### Notes
 
-----
 The volume fraction of a component is calculated by dividing the volume
 of that component (derived from mass concentration and density) by the
 total volume of all components.
@@ -436,31 +427,28 @@ def mass_concentration_to_volume_fraction(
 
 ## mass_fraction_to_volume_fraction
 
-[Show source in convert.py:346](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L346)
+[Show source in convert.py:342](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L342)
 
 Converts the mass fraction of a solute to the volume fraction in a
 binary mixture.
 
 #### Arguments
 
------------
-    - `mass_fraction` *float* - The mass fraction of the solute in the mixture.
-    - `density_solute` *float* - The density of the solute.
-    - `density_solvent` *float* - The density of the solvent.
+- `mass_fraction` *float* - The mass fraction of the solute in the mixture.
+- `density_solute` *float* - The density of the solute.
+- `density_solvent` *float* - The density of the solvent.
 
 #### Returns
 
------------
-    - `Tuple[float,` *float]* - A tuple containing the volume fraction of the
-        solute and solvent in the mixture.
+- `Tuple[float,` *float]* - A tuple containing the volume fraction of the
+    solute and solvent in the mixture.
 
 #### Examples
 
------------
-    If `mass_fraction` is 0.5, `density_solute` is 1.5 g/cm^3, and
-    `density_solvent` is 2 g/cm^3, this function returns (0.5714, 0.4285),
-    indicating that the solute and solvent occupy 57% and 42% of the
-    mixture's volume, respectively.
+If `mass_fraction` is 0.5, `density_solute` is 1.5 g/cm^3, and
+`density_solvent` is 2 g/cm^3, this function returns (0.5714, 0.4285),
+indicating that the solute and solvent occupy 57% and 42% of the
+mixture's volume, respectively.
 
 #### Signature
 
@@ -474,21 +462,19 @@ def mass_fraction_to_volume_fraction(
 
 ## mole_fraction_to_mass_fraction
 
-[Show source in convert.py:228](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L228)
+[Show source in convert.py:233](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L233)
 
 Convert mole fraction to mass fraction.
 
 #### Arguments
 
------------
-    - `mole_fraction0` - The mole fraction of the first component.
-    - `molecular_weight0` - The molecular weight of the first component.
-    - `molecular_weight1` - The molecular weight of the second component.
+- `mole_fraction0` - The mole fraction of the first component.
+- `molecular_weight0` - The molecular weight of the first component.
+- `molecular_weight1` - The molecular weight of the second component.
 
 #### Returns
 
------------
-    A tuple containing the mass fractions of the two components as floats.
+A tuple containing the mass fractions of the two components as floats.
 
 #### Signature
 
@@ -502,21 +488,19 @@ def mole_fraction_to_mass_fraction(
 
 ## mole_fraction_to_mass_fraction_multi
 
-[Show source in convert.py:254](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L254)
+[Show source in convert.py:259](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L259)
 
 Convert mole fractions to mass fractions for N components.
 Assumes that sum(mole_fractions) == 1.
 
 #### Arguments
 
------------
-    - `mole_fractions` - A list of mole fractions.
-    - `molecular_weights` - A list of molecular weights.
+- `mole_fractions` - A list of mole fractions.
+- `molecular_weights` - A list of molecular weights.
 
 #### Returns
 
---------
-    A list of mass fractions.
+A list of mass fractions.
 
 #### Signature
 
@@ -530,21 +514,19 @@ def mole_fraction_to_mass_fraction_multi(
 
 ## radius_diameter
 
-[Show source in convert.py:77](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L77)
+[Show source in convert.py:87](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L87)
 
 Convert a radius to a diameter, or vice versa.
 
 #### Arguments
 
------------
-    - `value` - The value to be converted.
-    - `to_diameter` - If True, convert from radius to diameter.
-    If False, convert from diameter to radius.
+- `value` - The value to be converted.
+- `to_diameter` - If True, convert from radius to diameter.
+If False, convert from diameter to radius.
 
 #### Returns
 
------------
-    The converted value.
+The converted value.
 
 #### Signature
 
@@ -556,7 +538,7 @@ def radius_diameter(value: float, to_diameter: bool = True) -> float: ...
 
 ## round_arbitrary
 
-[Show source in convert.py:21](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L21)
+[Show source in convert.py:37](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L37)
 
 Rounds the input values to the nearest multiple of the base.
 
@@ -566,17 +548,15 @@ round to 2.0, -0.5 and 0.5 round to 0.0, etc.
 
 #### Arguments
 
------------
-    - `values` - The values to be rounded.
-    - `base` - The base to which the values should be rounded.
-    - `mode` - The rounding mode: 'round', 'floor', 'ceil'
-    - `nonzero_edge` - If true the zero values are replaced
-    by the original values.
+- `values` - The values to be rounded.
+- `base` - The base to which the values should be rounded.
+- `mode` - The rounding mode: 'round', 'floor', 'ceil'
+- `nonzero_edge` - If true the zero values are replaced
+by the original values.
 
 #### Returns
 
------------
-    - `rounded` - The rounded values.
+- `rounded` - The rounded values.
 
 #### Signature
 
@@ -593,21 +573,19 @@ def round_arbitrary(
 
 ## volume_to_length
 
-[Show source in convert.py:94](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L94)
+[Show source in convert.py:102](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L102)
 
 Convert a volume to a radius or diameter.
 
 #### Arguments
 
------------
-    - `volume` - The volume to be converted.
-    - `length_type` - The type of length to convert to ('radius' or 'diameter')
-    Default is 'radius'.
+- `volume` - The volume to be converted.
+- `length_type` - The type of length to convert to ('radius' or 'diameter')
+Default is 'radius'.
 
 #### Returns
 
------------
-    The converted length.
+The converted length.
 
 #### Signature
 
@@ -621,30 +599,27 @@ def volume_to_length(
 
 ## volume_water_from_volume_fraction
 
-[Show source in convert.py:381](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L381)
+[Show source in convert.py:376](https://github.com/Gorkowski/particula/blob/main/particula/util/convert.py#L376)
 
 Calculates the volume of water in a volume of solute, given the volume
 fraction of water in the mixture.
 
 #### Arguments
 
------------
-    - `volume_solute_dry` *float* - The volume of the solute, excluding water.
-    - `volume_fraction_water` *float* - The volume fraction of water in the
-                        mixture, expressed as a decimal between 0 and 1.
+- `volume_solute_dry` *float* - The volume of the solute, excluding water.
+- `volume_fraction_water` *float* - The volume fraction of water in the
+                    mixture, expressed as a decimal between 0 and 1.
 
 #### Returns
 
------------
-    - `float` - The volume of water in the mixture, in the same units as
-        `volume_solute_dry`.
+- `float` - The volume of water in the mixture, in the same units as
+    `volume_solute_dry`.
 
 #### Examples
 
------------
-    If `volume_solute_dry` is 100 mL and `volume_fraction_water` is 0.8,
-    this function returns 400 mL, indicating that there are 400 mL of water
-    in the total 100 mL + 400 mL mixture.
+If `volume_solute_dry` is 100 mL and `volume_fraction_water` is 0.8,
+this function returns 400 mL, indicating that there are 400 mL of water
+in the total 100 mL + 400 mL mixture.
 
 #### Signature
 

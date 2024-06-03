@@ -14,6 +14,7 @@
 - [Distribution Strategies](./distribution_strategies.md)
 - [Properties](properties/index.md)
 - [Representation](./representation.md)
+- [Representation Builders](./representation_builders.md)
 - [Surface Builders](./surface_builders.md)
 - [Surface Factories](./surface_factories.md)
 - [Surface Strategies](./surface_strategies.md)
