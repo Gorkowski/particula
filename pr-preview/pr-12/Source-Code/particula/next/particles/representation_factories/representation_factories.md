@@ -6,7 +6,7 @@
 
 ## ParticleRepresentationFactory
 
-[Show source in representation_factories.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L15)
+[Show source in representation_factories.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L14)
 
 Factory class to create particle representation builders for the particles.
 
@@ -51,7 +51,7 @@ class ParticleRepresentationFactory(
 
 ### ParticleRepresentationFactory().get_builders
 
-[Show source in representation_factories.py:47](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L47)
+[Show source in representation_factories.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L46)
 
 Returns the mapping of strategy types to builder instances.
 
