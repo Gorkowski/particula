@@ -6011,9 +6011,18 @@ To learn more about Jupyter notebooks, visit <a href="https://jupyter.org/">jupy
 <li>Download Miniconda for Windows from <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda's website</a>.</li>
 <li>Follow the installation instructions to install Miniconda on your system.</li>
 </ul>
-<p><strong>Step 3: Setup Proxy</strong></p>
-<p>If you are behind a proxy, you may need to configure your proxy settings to allow Conda, Pip, and VScode to access the internet.</p>
-<p><strong>Step 4: Create a New Python Environment</strong>  </p>
+<p><strong>Step 3: Install Git</strong></p>
+<p>Install Git to manage your code repositories effectively. Git is a version control system that lets you track changes, revert to previous stages, and collaborate on projects with others.</p>
+<ul>
+<li>Download Git for Windows from <a href="https://git-scm.com/download/win">Git's official website</a>.</li>
+<li>Run the downloaded file to start the installation.</li>
+<li>During the installation, choose your preferred editor for Git, and make sure to select "Git from the command line and also from 3<sup>rd</sup>-party software" to ensure it integrates well with your system's command prompt.</li>
+<li>Complete the installation by following the on-screen instructions.</li>
+</ul>
+<p>Once installed, you can verify the installation by opening a command prompt or terminal and typing <code>git --version</code>, which should display the installed version of Git.</p>
+<p><strong>Step 4: Setup Proxy</strong></p>
+<p>If you are behind a proxy, you may need to configure your proxy settings to allow Conda, Pip, git, and VScode to access the internet.</p>
+<p><strong>Step 5: Create a New Python Environment</strong>  </p>
 <p>Avoid conflicts with other development projects by creating an isolated Python environment. Here’s how:</p>
 <ul>
 <li>Open VSCode, then open the integrated terminal (<code>Terminal &gt; New Terminal</code>).</li>
@@ -6022,7 +6031,7 @@ To learn more about Jupyter notebooks, visit <a href="https://jupyter.org/">jupy
 </ul>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>analysisV1<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
 </code></pre></div>
-<p><strong>Step 5: Activate the Environment</strong>  </p>
+<p><strong>Step 6: Activate the Environment</strong>  </p>
 <p>Ensure you’re working within the context of your new environment:
 - In the VSCode terminal, activate your environment by running:</p>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>analysisV1
