@@ -7,9 +7,9 @@ To learn more about Jupyter notebooks, visit [jupyter.org](https://jupyter.org/)
 ## Getting Started with Python
 
 If you are new to Python, it's highly recommended to go through an introductory course to build a solid foundation. "Python for Everybody" is an excellent free resource that covers the basics and beyond:
-- Access the course and materials at [Python for Everybody](https://www.py4e.com/).
 
-With these steps, you have set up your development environment, installed the project, and know where to start learning Python. You’re now ready to start coding in VSCode. Remember to activate your `analysisV1` environment whenever you resume work on this project to maintain a consistent and isolated workspace.
+- Access the course and materials at [Python for Everybody](https://www.py4e.com/).
+- The course also helps you set up Python on your computer.
 
 
 ## Gorkowski/PARTICULA Setup Instructions
