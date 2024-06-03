@@ -5998,30 +5998,39 @@ To learn more about Jupyter notebooks, visit <a href="https://jupyter.org/">jupy
 <p>Welcome to the development fork of <code>Particula</code>. This repository is actively developed, so you may encounter frequent updates and some instability as new features are integrated.</p>
 <h3 id="setting-up-your-development-environment">Setting Up Your Development Environment<a class="headerlink" href="#setting-up-your-development-environment" title="Permanent link">&para;</a></h3>
 <p><strong>Step 1: Install Visual Studio Code (VSCode)</strong></p>
-<p>To edit and manage your code efficiently, download and install Visual Studio Code, a popular code editor that supports Python and many other languages.
-- Visit the <a href="https://code.visualstudio.com/">Visual Studio Code website</a> to download the installer for Windows.
-- Follow the installation prompts to install VSCode on your machine.
-- Once installed, launch VSCode to configure it for Python development.</p>
+<p>To edit and manage your code efficiently, download and install Visual Studio Code, a popular code editor that supports Python and many other languages.</p>
+<ul>
+<li>Visit the <a href="https://code.visualstudio.com/">Visual Studio Code website</a> to download the installer for Windows.</li>
+<li>Follow the installation prompts to install VSCode on your machine.</li>
+<li>Once installed, launch VSCode to configure it for Python development.</li>
+</ul>
 <p><strong>Step 2: Install Miniconda</strong>  </p>
-<p>Install Miniconda, which includes Conda, a powerful package and environment manager. This tool will help you manage different project dependencies separately and efficiently.
-- Download Miniconda for Windows from <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda's website</a>.
-- Follow the installation instructions to install Miniconda on your system.</p>
-<p><strong>Step 3: Create a New Python Environment</strong>  </p>
-<p>Avoid conflicts with other development projects by creating an isolated Python environment. Here’s how:
-- Open VSCode, then open the integrated terminal (<code>Terminal &gt; New Terminal</code>).
-- Use the following Conda command to create an environment named <code>analysisV1</code> with Python 3.11:</p>
+<p>Install Miniconda, which includes Conda, a powerful package and environment manager. This tool will help you manage different project dependencies separately and efficiently.</p>
+<ul>
+<li>Download Miniconda for Windows from <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda's website</a>.</li>
+<li>Follow the installation instructions to install Miniconda on your system.</li>
+</ul>
+<p><strong>Step 3: Setup Proxy</strong></p>
+<p>If you are behind a proxy, you may need to configure your proxy settings to allow Conda, Pip, and VScode to access the internet.</p>
+<p><strong>Step 4: Create a New Python Environment</strong>  </p>
+<p>Avoid conflicts with other development projects by creating an isolated Python environment. Here’s how:</p>
+<ul>
+<li>Open VSCode, then open the integrated terminal (<code>Terminal &gt; New Terminal</code>).</li>
+<li>Be sure to select <code>cmd</code> for command prompt.</li>
+<li>Use the following Conda command to create an environment named <code>analysisV1</code> with Python 3.11:</li>
+</ul>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>analysisV1<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
 </code></pre></div>
-<p><strong>Step 4: Activate the Environment</strong>  </p>
+<p><strong>Step 5: Activate the Environment</strong>  </p>
 <p>Ensure you’re working within the context of your new environment:
 - In the VSCode terminal, activate your environment by running:</p>
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>analysisV1
 </code></pre></div>
 <h3 id="installing-the-project">Installing the Project<a class="headerlink" href="#installing-the-project" title="Permanent link">&para;</a></h3>
-<p><strong>Step 5: Install the Project</strong></p>
-<p>Now, install the <code>Particula</code> fork directly using pip in your activated environment:
+<p><strong>Step 6: Install the Project</strong></p>
+<p>Now, install the <code>Particula</code> fork directly using pip in your activated environment:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Gorkowski/particula.git
-</code></pre></div></p>
+</code></pre></div>
 <!-- ## Installing `particula`
 
 You can install `particula` from PyPI using the following command:

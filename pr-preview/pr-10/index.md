@@ -21,6 +21,7 @@ Welcome to the development fork of `Particula`. This repository is actively deve
 **Step 1: Install Visual Studio Code (VSCode)**
 
 To edit and manage your code efficiently, download and install Visual Studio Code, a popular code editor that supports Python and many other languages.
+
 - Visit the [Visual Studio Code website](https://code.visualstudio.com/) to download the installer for Windows.
 - Follow the installation prompts to install VSCode on your machine.
 - Once installed, launch VSCode to configure it for Python development.
@@ -28,20 +29,28 @@ To edit and manage your code efficiently, download and install Visual Studio Cod
 **Step 2: Install Miniconda**  
 
 Install Miniconda, which includes Conda, a powerful package and environment manager. This tool will help you manage different project dependencies separately and efficiently.
+
 - Download Miniconda for Windows from [Miniconda's website](https://docs.conda.io/en/latest/miniconda.html).
 - Follow the installation instructions to install Miniconda on your system.
 
-**Step 3: Create a New Python Environment**  
+**Step 3: Setup Proxy**
+
+If you are behind a proxy, you may need to configure your proxy settings to allow Conda, Pip, and VScode to access the internet.
+
+
+**Step 4: Create a New Python Environment**  
 
 Avoid conflicts with other development projects by creating an isolated Python environment. Here’s how:
+
 - Open VSCode, then open the integrated terminal (`Terminal > New Terminal`).
+  - Be sure to select `cmd` for command prompt.
 - Use the following Conda command to create an environment named `analysisV1` with Python 3.11:
 
   ```bash
   conda create --name analysisV1 python=3.11
   ```
 
-**Step 4: Activate the Environment**  
+**Step 5: Activate the Environment**  
 
 Ensure you’re working within the context of your new environment:
 - In the VSCode terminal, activate your environment by running:
@@ -52,9 +61,10 @@ Ensure you’re working within the context of your new environment:
 
 ### Installing the Project
 
-**Step 5: Install the Project**
+**Step 6: Install the Project**
 
 Now, install the `Particula` fork directly using pip in your activated environment:
+
 ```bash
 pip install git+https://github.com/Gorkowski/particula.git
 ```
