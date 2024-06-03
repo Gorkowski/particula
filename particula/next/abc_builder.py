@@ -226,31 +226,37 @@ class BuilderConcentrationMixin():
     """Mixin class for Builder classes to set concentration and
     concentration_units.
 
+    Args:
+        default_units: Default units of concentration. Default is *kg/m^3*.
+
     Methods:
         set_concentration: Set the concentration attribute and units.
     """
 
-    def __init__(self):
+    def __init__(self, default_units: Optional[str] = 'kg/m^3'):
         self.concentration = None
+        self.default_units = default_units if default_units else 'kg/m^3'
 
     def set_concentration(
         self,
         concentration: Union[float, NDArray[np.float_]],
-        concentration_units: Optional[str] = 'kg/m^3'
+        concentration_units: Optional[str] = None
     ):
-        """Set the concentration of the particle in kg/m^3.
+        """Set the concentration.
 
         Args:
             concentration: Concentration in the mixture.
             concentration_units: Units of the concentration.
             Default is *kg/m^3*.
         """
+        if concentration_units is None:
+            concentration_units = self.default_units
         if np.any(concentration < 0):
             error_message = "Concentration must be a positive value."
             logger.error(error_message)
             raise ValueError(error_message)
         self.concentration = concentration \
-            * convert_units(concentration_units, 'kg/m^3')
+            * convert_units(concentration_units, self.default_units)
 
 
 class BuilderChargeMixin():
