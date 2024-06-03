@@ -6,6 +6,6 @@ chamber.
 
 ## Notebooks
 
-- [Wall Loss Forward Simulation](wall_loss_forward_simulation.ipynb)
-- [Chamber Data Analysis](chamber_smps_data.ipynb)
-- [Fitting Data to Model](forward_fit_simple.ipynb)
+- [Wall Loss Forward Simulation](notebooks/wall_loss_forward_simulation.ipynb)
+- [Chamber Data Analysis](notebooks/chamber_smps_data.ipynb)
+- [Fitting Data to Model](notebooks/forward_fit_simple.ipynb)

@@ -4,7 +4,7 @@ This example will cover the basics of the Lagrangian particle model. Starting wi
 
 ## Notebooks
 
-- [Basic Lagrangian Particle Model](basic_lagrangian_box.ipynb)
-- [Faster via Sweep and Prune](sweep_and_prune.ipynb)
-- [Drag Force](friction_force.ipynb)
-- [Turbulence Approximation](turbulence_drops.ipynb)
+- [Basic Lagrangian Particle Model](notebooks/basic_lagrangian_box.ipynb)
+- [Faster via Sweep and Prune](notebooks/sweep_and_prune.ipynb)
+- [Drag Force](notebooks/friction_force.ipynb)
+- [Turbulence Approximation](notebooks/turbulence_drops.ipynb)
