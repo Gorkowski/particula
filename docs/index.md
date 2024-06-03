@@ -9,8 +9,6 @@ To learn more about Jupyter notebooks, visit [jupyter.org](https://jupyter.org/)
 If you are new to Python, it's highly recommended to go through an introductory course to build a solid foundation. "Python for Everybody" is an excellent free resource that covers the basics and beyond:
 
 - Access the course and materials at [Python for Everybody](https://www.py4e.com/).
-- The course also helps you set up Python on your computer.
-
 
 ## Gorkowski/PARTICULA Setup Instructions
 
