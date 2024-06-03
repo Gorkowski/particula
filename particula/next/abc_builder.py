@@ -297,6 +297,71 @@ class BuilderChargeMixin:
         return self
 
 
+class BuilderMassMixin:
+    """Mixin class for Builder classes to set mass and mass_units.
+
+    Methods:
+        set_mass: Set the mass attribute and units.
+    """
+
+    def __init__(self):
+        self.mass = None
+
+    def set_mass(
+        self,
+        mass: Union[float, NDArray[np.float_]],
+        mass_units: Optional[str] = "kg",
+    ):
+        """Set the mass of the particle in kg.
+
+        Args:
+            mass: Mass of the particle.
+            mass_units: Units of the mass. Default is *kg*.
+
+        Raises:
+            ValueError: If mass is negative
+        """
+        if np.any(mass < 0):
+            error_message = "Mass must be a positive value."
+            logger.error(error_message)
+            raise ValueError(error_message)
+        self.mass = mass * convert_units(mass_units, "kg")
+
+
+class BuilderRadiusMixin:
+    """Mixin class for Builder classes to set radius and radius_units.
+
+    Methods:
+        set_radius: Set the radius attribute and units.
+    """
+
+    def __init__(self):
+        self.radius = None
+
+    def set_radius(
+        self,
+        radius: Union[float, NDArray[np.float_]],
+        radius_units: Optional[str] = "m",
+    ):
+        """Set the radius of the particle in meters.
+
+        Args:
+            radius: Radius of the particle.
+            radius_units: Units of the radius. Default is *m*.
+
+        Raises:
+            ValueError: If radius is negative
+        """
+        if np.any(radius < 0):
+            error_message = "Radius must be a positive value."
+            logger.error(error_message)
+            raise ValueError(error_message)
+        self.radius = radius * convert_units(radius_units, "m")
+
+
+# mixins for strategy builders
+
+
 class BuilderSurfaceStrategyMixin:
     """Mixin class for Builder classes to set surface_strategy.
 
