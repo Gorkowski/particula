@@ -4,6 +4,7 @@ This module also defines mixin classes for the Builder classes to set
 some optional method to be used in the Builder classes.
 https://en.wikipedia.org/wiki/Mixin
 """
+
 # pylint: disable=too-few-public-methods
 
 from abc import ABC, abstractmethod
@@ -13,6 +14,11 @@ from numpy.typing import NDArray
 import numpy as np
 
 from particula.util.input_handling import convert_units  # type: ignore
+from particula.next.particles.surface_strategies import SurfaceStrategy
+from particula.next.particles.activity_strategies import ActivityStrategy
+from particula.next.particles.distribution_strategies import (
+    DistributionStrategy,
+)
 
 logger = logging.getLogger("particula")
 
@@ -59,8 +65,9 @@ class BuilderABC(ABC):
         """
 
         # Check if all required keys are present
-        if missing := [p for p in self.required_parameters
-                       if p not in parameters]:
+        if missing := [
+            p for p in self.required_parameters if p not in parameters
+        ]:
             error_message = (
                 f"Missing required parameter(s): {', '.join(missing)}"
             )
@@ -69,12 +76,13 @@ class BuilderABC(ABC):
 
         # Generate a set of all valid keys
         valid_keys = set(
-            self.required_parameters +
-            [f"{key}_units" for key in self.required_parameters]
+            self.required_parameters
+            + [f"{key}_units" for key in self.required_parameters]
         )
         # Check for any invalid keys and handle them within the if condition
-        if invalid_keys := [key for key in parameters
-                            if key not in valid_keys]:
+        if invalid_keys := [
+            key for key in parameters if key not in valid_keys
+        ]:
             error_message = (
                 f"Trying to set an invalid parameter(s) '{invalid_keys}'. "
                 f"The valid parameter(s) '{valid_keys}'."
@@ -98,18 +106,16 @@ class BuilderABC(ABC):
         """
         self.check_keys(parameters)
         for key in self.required_parameters:
-            unit_key = f'{key}_units'
+            unit_key = f"{key}_units"
             if unit_key in parameters:
                 # Call set method with units
-                getattr(
-                    self,
-                    f'set_{key}')(
-                    parameters[key],
-                    parameters[unit_key])
+                getattr(self, f"set_{key}")(
+                    parameters[key], parameters[unit_key]
+                )
             else:
                 logger.warning("Using default units for parameter: '%s'.", key)
                 # Call set method without units
-                getattr(self, f'set_{key}')(parameters[key])
+                getattr(self, f"set_{key}")(parameters[key])
         return self
 
     def pre_build_check(self):
@@ -118,10 +124,12 @@ class BuilderABC(ABC):
         Raises:
             ValueError: If any required parameter is missing.
         """
-        if missing := [p for p in self.required_parameters
-                       if getattr(self, p) is None]:
+        if missing := [
+            p for p in self.required_parameters if getattr(self, p) is None
+        ]:
             error_message = (
-                f"Required parameter(s) not set: {', '.join(missing)}")
+                f"Required parameter(s) not set: {', '.join(missing)}"
+            )
             logger.error(error_message)
             raise ValueError(error_message)
 
@@ -134,7 +142,7 @@ class BuilderABC(ABC):
         """
 
 
-class BuilderDensityMixin():
+class BuilderDensityMixin:
     """Mixin class for Builder classes to set density and density_units.
 
     Methods:
@@ -147,7 +155,7 @@ class BuilderDensityMixin():
     def set_density(
         self,
         density: Union[float, NDArray[np.float_]],
-        density_units: Optional[str] = 'kg/m^3'
+        density_units: Optional[str] = "kg/m^3",
     ):
         """Set the density of the particle in kg/m^3.
 
@@ -159,10 +167,10 @@ class BuilderDensityMixin():
             error_message = "Density must be a positive value."
             logger.error(error_message)
             raise ValueError(error_message)
-        self.density = density * convert_units(density_units, 'kg/m^3')
+        self.density = density * convert_units(density_units, "kg/m^3")
 
 
-class BuilderSurfaceTensionMixin():
+class BuilderSurfaceTensionMixin:
     """Mixin class for Builder classes to set surface_tension.
 
     Methods:
@@ -176,7 +184,7 @@ class BuilderSurfaceTensionMixin():
     def set_surface_tension(
         self,
         surface_tension: Union[float, NDArray[np.float_]],
-        surface_tension_units: Optional[str] = 'N/m'
+        surface_tension_units: Optional[str] = "N/m",
     ):
         """Set the surface tension of the particle in N/m.
 
@@ -189,10 +197,11 @@ class BuilderSurfaceTensionMixin():
             logger.error(error_message)
             raise ValueError(error_message)
         self.surface_tension = surface_tension * convert_units(
-            surface_tension_units, 'N/m')
+            surface_tension_units, "N/m"
+        )
 
 
-class BuilderMolarMassMixin():
+class BuilderMolarMassMixin:
     """Mixin class for Builder classes to set molar_mass and molar_mass_units.
 
     Methods:
@@ -205,7 +214,7 @@ class BuilderMolarMassMixin():
     def set_molar_mass(
         self,
         molar_mass: Union[float, NDArray[np.float_]],
-        molar_mass_units: Optional[str] = 'kg/mol'
+        molar_mass_units: Optional[str] = "kg/mol",
     ):
         """Set the molar mass of the particle in kg/mol.
 
@@ -218,11 +227,12 @@ class BuilderMolarMassMixin():
             error_message = "Molar mass must be a positive value."
             logger.error(error_message)
             raise ValueError(error_message)
-        self.molar_mass = molar_mass \
-            * convert_units(molar_mass_units, 'kg/mol')
+        self.molar_mass = molar_mass * convert_units(
+            molar_mass_units, "kg/mol"
+        )
 
 
-class BuilderConcentrationMixin():
+class BuilderConcentrationMixin:
     """Mixin class for Builder classes to set concentration and
     concentration_units.
 
@@ -233,14 +243,14 @@ class BuilderConcentrationMixin():
         set_concentration: Set the concentration attribute and units.
     """
 
-    def __init__(self, default_units: Optional[str] = 'kg/m^3'):
+    def __init__(self, default_units: Optional[str] = "kg/m^3"):
         self.concentration = None
-        self.default_units = default_units if default_units else 'kg/m^3'
+        self.default_units = default_units if default_units else "kg/m^3"
 
     def set_concentration(
         self,
         concentration: Union[float, NDArray[np.float_]],
-        concentration_units: Optional[str] = None
+        concentration_units: Optional[str] = None,
     ):
         """Set the concentration.
 
@@ -255,15 +265,15 @@ class BuilderConcentrationMixin():
             error_message = "Concentration must be a positive value."
             logger.error(error_message)
             raise ValueError(error_message)
-        self.concentration = concentration \
-            * convert_units(concentration_units, self.default_units)
+        self.concentration = concentration * convert_units(
+            concentration_units, self.default_units
+        )
 
 
-class BuilderChargeMixin():
+class BuilderChargeMixin:
     """Mixin class for Builder classes to set charge and charge_units.
 
     Methods:
-    -------
         set_charge: Set the charge attribute and units.
     """
 
@@ -273,7 +283,7 @@ class BuilderChargeMixin():
     def set_charge(
         self,
         charge: Union[float, NDArray[np.float_]],
-        charge_units: Optional[str] = 'unitless'
+        charge_units: Optional[str] = None,
     ):
         """Set the number of elemental charges on the particle.
 
@@ -284,4 +294,87 @@ class BuilderChargeMixin():
         if charge_units is not None:
             logger.warning("Ignoring units for charge parameter.")
         self.charge = charge
+        return self
+
+
+class BuilderSurfaceStrategyMixin:
+    """Mixin class for Builder classes to set surface_strategy.
+
+    Methods:
+        set_surface_strategy: Set the surface_strategy attribute.
+    """
+
+    def __init__(self):
+        self.surface_strategy = None
+
+    def set_surface_strategy(
+        self,
+        surface_strategy: SurfaceStrategy,
+        surface_strategy_units: Optional[str] = None,
+    ):
+        """Set the surface strategy of the particle.
+
+        Args:
+            surface_strategy: Surface strategy of the particle.
+            surface_strategy_units: Not used. (for interface consistency)
+        """
+        if surface_strategy_units is not None:
+            logger.warning("Ignoring units for surface strategy parameter.")
+        self.surface_strategy = surface_strategy
+        return self
+
+
+class BuilderActivityStrategyMixin:
+    """Mixin class for Builder classes to set activity_strategy.
+
+    Methods:
+        set_activity_strategy: Set the activity_strategy attribute.
+    """
+
+    def __init__(self):
+        self.activity_strategy = None
+
+    def set_activity_strategy(
+        self,
+        activity_strategy: ActivityStrategy,
+        activity_strategy_units: Optional[str] = None,
+    ):
+        """Set the activity strategy of the particle.
+
+        Args:
+            activity_strategy: Activity strategy of the particle.
+            activity_strategy_units: Not used. (for interface consistency)
+        """
+        if activity_strategy_units is not None:
+            logger.warning("Ignoring units for activity strategy parameter.")
+        self.activity_strategy = activity_strategy
+        return self
+
+
+class BuilderDistributionStrategyMixin:
+    """Mixin class for Builder classes to set distribution_strategy.
+
+    Methods:
+        set_distribution_strategy: Set the distribution_strategy attribute.
+    """
+
+    def __init__(self):
+        self.distribution_strategy = None
+
+    def set_distribution_strategy(
+        self,
+        distribution_strategy: DistributionStrategy,
+        distribution_strategy_units: Optional[str] = None,
+    ):
+        """Set the distribution strategy of the particle.
+
+        Args:
+            distribution_strategy: Distribution strategy of the particle.
+            distribution_strategy_units: Not used. (for interface consistency)
+        """
+        if distribution_strategy_units is not None:
+            logger.warning(
+                "Ignoring units for distribution strategy parameter."
+            )
+        self.distribution_strategy = distribution_strategy
         return self
