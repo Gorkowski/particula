@@ -413,11 +413,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#gorkowskiparticula" class="md-nav__link">
+  <a href="#getting-started-with-python" class="md-nav__link">
     <span class="md-ellipsis">
-      Gorkowski/PARTICULA
+      Getting Started with Python
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gorkowskiparticula-setup-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gorkowski/PARTICULA Setup Instructions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gorkowski/PARTICULA Setup Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-your-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Your Development Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-project" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing the Project
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -5955,12 +5988,40 @@
 
 
 <h1 id="home">Home<a class="headerlink" href="#home" title="Permanent link">&para;</a></h1>
-<p>The documentation for <code>particula</code> is organized into Jupyter notebooks that can be executed in the browser.
+<p>The documentation for <code>particula</code> is organized into source code and examples in Jupyter notebooks.
 To learn more about Jupyter notebooks, visit <a href="https://jupyter.org/">jupyter.org</a> and <a href="https://jupyterbook.org/">jupyterbook.org</a>.</p>
-<h2 id="gorkowskiparticula">Gorkowski/PARTICULA<a class="headerlink" href="#gorkowskiparticula" title="Permanent link">&para;</a></h2>
-<p>This repository is a development fork of <code>Particula</code>. Since this is an active development environment, the codebase may undergo frequent changes, and instability can occur. To install this version directly, use the following <code>pip</code> command:</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Gorkowski/particula.git
+<h2 id="getting-started-with-python">Getting Started with Python<a class="headerlink" href="#getting-started-with-python" title="Permanent link">&para;</a></h2>
+<p>If you are new to Python, it's highly recommended to go through an introductory course to build a solid foundation. "Python for Everybody" is an excellent free resource that covers the basics and beyond:
+- Access the course and materials at <a href="https://www.py4e.com/">Python for Everybody</a>.</p>
+<p>With these steps, you have set up your development environment, installed the project, and know where to start learning Python. You’re now ready to start coding in VSCode. Remember to activate your <code>analysisV1</code> environment whenever you resume work on this project to maintain a consistent and isolated workspace.</p>
+<h2 id="gorkowskiparticula-setup-instructions">Gorkowski/PARTICULA Setup Instructions<a class="headerlink" href="#gorkowskiparticula-setup-instructions" title="Permanent link">&para;</a></h2>
+<p>Welcome to the development fork of <code>Particula</code>. This repository is actively developed, so you may encounter frequent updates and some instability as new features are integrated.</p>
+<h3 id="setting-up-your-development-environment">Setting Up Your Development Environment<a class="headerlink" href="#setting-up-your-development-environment" title="Permanent link">&para;</a></h3>
+<p><strong>Step 1: Install Visual Studio Code (VSCode)</strong></p>
+<p>To edit and manage your code efficiently, download and install Visual Studio Code, a popular code editor that supports Python and many other languages.
+- Visit the <a href="https://code.visualstudio.com/">Visual Studio Code website</a> to download the installer for Windows.
+- Follow the installation prompts to install VSCode on your machine.
+- Once installed, launch VSCode to configure it for Python development.</p>
+<p><strong>Step 2: Install Miniconda</strong>  </p>
+<p>Install Miniconda, which includes Conda, a powerful package and environment manager. This tool will help you manage different project dependencies separately and efficiently.
+- Download Miniconda for Windows from <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda's website</a>.
+- Follow the installation instructions to install Miniconda on your system.</p>
+<p><strong>Step 3: Create a New Python Environment</strong>  </p>
+<p>Avoid conflicts with other development projects by creating an isolated Python environment. Here’s how:
+- Open VSCode, then open the integrated terminal (<code>Terminal &gt; New Terminal</code>).
+- Use the following Conda command to create an environment named <code>analysisV1</code> with Python 3.11:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>analysisV1<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
 </code></pre></div>
+<p><strong>Step 4: Activate the Environment</strong>  </p>
+<p>Ensure you’re working within the context of your new environment:
+- In the VSCode terminal, activate your environment by running:</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>analysisV1
+</code></pre></div>
+<h3 id="installing-the-project">Installing the Project<a class="headerlink" href="#installing-the-project" title="Permanent link">&para;</a></h3>
+<p><strong>Step 5: Install the Project</strong></p>
+<p>Now, install the <code>Particula</code> fork directly using pip in your activated environment:
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/Gorkowski/particula.git
+</code></pre></div></p>
 <!-- ## Installing `particula`
 
 You can install `particula` from PyPI using the following command:
