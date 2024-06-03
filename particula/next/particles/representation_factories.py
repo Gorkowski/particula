@@ -11,7 +11,6 @@ from particula.next.particles.representation_builders import (
 from particula.next.particles.representation import ParticleRepresentation
 
 
-
 class ParticleRepresentationFactory(
     StrategyFactory[
         Union[
