@@ -14,9 +14,9 @@ def lognormal_pdf_distribution(
     number_of_particles: NDArray[np.float_],
 ) -> NDArray[np.float_]:
     """
-    Calculate the lognormal distribution of particles for varying modes,
-    geometric standard deviations, and numbers of particles, across a
-    range of x_values.
+    Probability Density Function for the lognormal distribution of particles
+    for varying modes, geometric standard deviations, and numbers of particles,
+    across a range of x_values.
 
     Args:
         x_values: The size interval of the distribution.
@@ -33,7 +33,7 @@ def lognormal_pdf_distribution(
     References:
         - [Log-normal Distribution Wikipedia](
             https://en.wikipedia.org/wiki/Log-normal_distribution)
-         - [Probability Density Funciton Wikipedia](
+         - [Probability Density Function Wikipedia](
             https://en.wikipedia.org/wiki/Probability_density_function)
     """
     if not (
@@ -83,9 +83,9 @@ def lognormal_pmf_distribution(
         across all modes.
 
     References:
-        [Log-normal Distribution Wikipedia](
+        - [Log-normal Distribution Wikipedia](
             https://en.wikipedia.org/wiki/Log-normal_distribution)
-        [Probability Mass Function Wikipedia](
+        - [Probability Mass Function Wikipedia](
             https://en.wikipedia.org/wiki/Probability_mass_function)
     """
     if not (
