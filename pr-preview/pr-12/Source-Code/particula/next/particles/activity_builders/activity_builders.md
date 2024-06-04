@@ -104,9 +104,9 @@ Builder class for KappaParameterActivity objects.
 #### Methods
 
 - `set_kappa(kappa)` - Set the kappa parameter for the activity calculation.
-- `set_density(density,` *density_units)* - Set the density of the species in
+- `set_density(density,density_units)` - Set the density of the species in
     kg/m^3. Default units are 'kg/m^3'.
-- `set_molar_mass(molar_mass,` *molar_mass_units)* - Set the molar mass of the
+- `set_molar_mass(molar_mass,molar_mass_units)` - Set the molar mass of the
     species in kg/mol. Default units are 'kg/mol'.
 - `set_water_index(water_index)` - Set the array index of the species.
 - `set_parameters(dict)` - Set the parameters of the KappaParameterActivity
