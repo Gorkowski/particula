@@ -223,7 +223,7 @@ class LimitedRadiusParticleBuilder(
     def set_mode(
         self,
         mode: NDArray[np.float_],
-        mode_units,
+        mode_units: str = "m",
     ):
         """Set the modes for distribution
 
@@ -235,9 +235,7 @@ class LimitedRadiusParticleBuilder(
             message = "The mode must be positive."
             logger.error(message)
             raise ValueError(message)
-        self.default_parameters["mode"] = mode * convert_units(
-            mode_units, "m"
-        )
+        self.default_parameters["mode"] = mode * convert_units(mode_units, "m")
 
     def set_geometric_standard_deviation(
         self,
@@ -263,7 +261,7 @@ class LimitedRadiusParticleBuilder(
     def set_number_concentration(
         self,
         number_concentration: NDArray[np.float_],
-        number_concentration_units: Optional[str] = None,
+        number_concentration_units: str = "/m**3",
     ):
         """Set the number concentration for the distribution
 
@@ -282,7 +280,7 @@ class LimitedRadiusParticleBuilder(
     def set_radius_bins(
         self,
         radius_bins: NDArray[np.float_],
-        radius_bins_units: Optional[str] = None,
+        radius_bins_units: str = "m",
     ):
         """Set the radius bins for the distribution
 
