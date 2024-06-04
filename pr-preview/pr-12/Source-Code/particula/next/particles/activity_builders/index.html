@@ -6409,12 +6409,10 @@
 </blockquote>
 <h2 id="idealactivitymassbuilder">IdealActivityMassBuilder<a class="headerlink" href="#idealactivitymassbuilder" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L20">Show source in activity_builders.py:20</a></p>
-<p>Builder class for IdealActivityMass objects. No parameters are required
-to be set.</p>
+<p>Builder class for IdealActivityMass objects. No additional parameters.</p>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>build()</em> - Validate and return the IdealActivityMass object.</li>
+<li><code>build()</code> - Validate and return the IdealActivityMass object.</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">IdealActivityMassBuilder</span><span class="p">(</span><span class="n">BuilderABC</span><span class="p">):</span>
@@ -6425,12 +6423,11 @@ to be set.</p>
 <li><a href="../../abc_builder/#builderabc">BuilderABC</a></li>
 </ul>
 <h3 id="idealactivitymassbuilderbuild">IdealActivityMassBuilder().build<a class="headerlink" href="#idealactivitymassbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L33">Show source in activity_builders.py:33</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L31">Show source in activity_builders.py:31</a></p>
 <p>Validate and return the IdealActivityMass object.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>IdealActivityMass</em> - The validated IdealActivityMass object.</li>
+<li><code>IdealActivityMass</code> - The validated IdealActivityMass object.</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ActivityStrategy</span><span class="p">:</span> <span class="o">...</span>
@@ -6440,16 +6437,15 @@ to be set.</p>
 <li><a href="../activity_strategies/#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h2 id="idealactivitymolarbuilder">IdealActivityMolarBuilder<a class="headerlink" href="#idealactivitymolarbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L43">Show source in activity_builders.py:43</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L40">Show source in activity_builders.py:40</a></p>
 <p>Builder class for IdealActivityMolar objects.</p>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>set_molar_mass(molar_mass, molar_mass_units): Set the molar mass of the
+<li><code>set_molar_mass(molar_mass,</code> <em>molar_mass_units)</em> - Set the molar mass of the
     particle in kg/mol. Default units are 'kg/mol'.</li>
-<li><code>-</code> <em>set_parameters(params)</em> - Set the parameters of the IdealActivityMolar
+<li><code>set_parameters(params)</code> - Set the parameters of the IdealActivityMolar
     object from a dictionary including optional units.</li>
-<li><code>-</code> <em>build()</em> - Validate and return the IdealActivityMolar object.</li>
+<li><code>build()</code> - Validate and return the IdealActivityMolar object.</li>
 </ul>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">IdealActivityMolarBuilder</span><span class="p">(</span><span class="n">BuilderABC</span><span class="p">,</span> <span class="n">BuilderMolarMassMixin</span><span class="p">):</span>
@@ -6461,12 +6457,11 @@ to be set.</p>
 <li><a href="../../abc_builder/#buildermolarmassmixin">BuilderMolarMassMixin</a></li>
 </ul>
 <h3 id="idealactivitymolarbuilderbuild">IdealActivityMolarBuilder().build<a class="headerlink" href="#idealactivitymolarbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L63">Show source in activity_builders.py:63</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L59">Show source in activity_builders.py:59</a></p>
 <p>Validate and return the IdealActivityMolar object.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>IdealActivityMolar</em> - The validated IdealActivityMolar object.</li>
+<li><code>IdealActivityMolar</code> - The validated IdealActivityMolar object.</li>
 </ul>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ActivityStrategy</span><span class="p">:</span> <span class="o">...</span>
@@ -6476,20 +6471,19 @@ to be set.</p>
 <li><a href="../activity_strategies/#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h2 id="kappaparameteractivitybuilder">KappaParameterActivityBuilder<a class="headerlink" href="#kappaparameteractivitybuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L74">Show source in activity_builders.py:74</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L69">Show source in activity_builders.py:69</a></p>
 <p>Builder class for KappaParameterActivity objects.</p>
 <h4 id="methods_2">Methods<a class="headerlink" href="#methods_2" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>set_kappa(kappa)</em> - Set the kappa parameter for the activity calculation.</li>
-<li>set_density(density, density_units): Set the density of the species in
+<li><code>set_kappa(kappa)</code> - Set the kappa parameter for the activity calculation.</li>
+<li><code>set_density(density,</code> <em>density_units)</em> - Set the density of the species in
     kg/m^3. Default units are 'kg/m^3'.</li>
-<li>set_molar_mass(molar_mass, molar_mass_units): Set the molar mass of the
+<li><code>set_molar_mass(molar_mass,</code> <em>molar_mass_units)</em> - Set the molar mass of the
     species in kg/mol. Default units are 'kg/mol'.</li>
-<li><code>-</code> <em>set_water_index(water_index)</em> - Set the array index of the species.</li>
-<li><code>-</code> <em>set_parameters(dict)</em> - Set the parameters of the KappaParameterActivity
+<li><code>set_water_index(water_index)</code> - Set the array index of the species.</li>
+<li><code>set_parameters(dict)</code> - Set the parameters of the KappaParameterActivity
     object from a dictionary including optional units.</li>
-<li><code>-</code> <em>build()</em> - Validate and return the KappaParameterActivity object.</li>
+<li><code>build()</code> - Validate and return the KappaParameterActivity object.</li>
 </ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">KappaParameterActivityBuilder</span><span class="p">(</span>
@@ -6504,12 +6498,11 @@ to be set.</p>
 <li><a href="../../abc_builder/#buildermolarmassmixin">BuilderMolarMassMixin</a></li>
 </ul>
 <h3 id="kappaparameteractivitybuilderbuild">KappaParameterActivityBuilder().build<a class="headerlink" href="#kappaparameteractivitybuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L145">Show source in activity_builders.py:145</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L137">Show source in activity_builders.py:137</a></p>
 <p>Validate and return the KappaParameterActivity object.</p>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>KappaParameterActivity</em> - The validated KappaParameterActivity object.</li>
+<li><code>KappaParameterActivity</code> - The validated KappaParameterActivity object.</li>
 </ul>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ActivityStrategy</span><span class="p">:</span> <span class="o">...</span>
@@ -6519,13 +6512,12 @@ to be set.</p>
 <li><a href="../activity_strategies/#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h3 id="kappaparameteractivitybuilderset_kappa">KappaParameterActivityBuilder().set_kappa<a class="headerlink" href="#kappaparameteractivitybuilderset_kappa" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L103">Show source in activity_builders.py:103</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L97">Show source in activity_builders.py:97</a></p>
 <p>Set the kappa parameter for the activity calculation.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>kappa</em> - The kappa parameter for the activity calculation.</li>
-<li><code>-</code> <em>kappa_units</em> - Not used. (for interface consistency)</li>
+<li><code>kappa</code> - The kappa parameter for the activity calculation.</li>
+<li><code>kappa_units</code> - Not used. (for interface consistency)</li>
 </ul>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_kappa</span><span class="p">(</span>
@@ -6533,13 +6525,12 @@ to be set.</p>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="kappaparameteractivitybuilderset_water_index">KappaParameterActivityBuilder().set_water_index<a class="headerlink" href="#kappaparameteractivitybuilderset_water_index" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L124">Show source in activity_builders.py:124</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L117">Show source in activity_builders.py:117</a></p>
 <p>Set the array index of the species.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>water_index (int): The array index of the species.</li>
-<li>water_index_units (str): Not used. (for interface consistency)</li>
+<li><code>water_index</code> - The array index of the species.</li>
+<li><code>water_index_units</code> - Not used. (for interface consistency)</li>
 </ul>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_water_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">water_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">water_index_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
