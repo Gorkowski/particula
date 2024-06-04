@@ -192,17 +192,21 @@ def activity(
 
 [Show source in activity_strategies.py:145](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L145)
 
-Non-ideal activity strategy, based on kappa hygroscopic parameter for
-non-ideal water, and mole fraction for other species.
+Non-ideal activity strategy based on the kappa hygroscopic parameter.
+
+This strategy calculates the activity using the kappa hygroscopic
+parameter, a measure of hygroscopicity. The activity is determined by the
+species' mass concentration along with the hygroscopic parameter.
 
 #### Arguments
 
-------------------
-- kappa (NDArray[np.float_]): Kappa hygroscopic parameter [unitless],
-include a value for water (that will be removed in the calculation).
-- density (NDArray[np.float_]): Density of the species [kg/m^3].
-- molar_mass (NDArray[np.float_]): Molar mass of the species [kg/mol].
-- water_index (int): Index of water in the mass_concentration array.
+- `kappa` *NDArray[np.float_]* - Kappa hygroscopic parameter, unitless.
+    Includes a value for water which is excluded in calculations.
+- `density` *NDArray[np.float_]* - Density of the species in kilograms per
+    cubic meter (kg/m^3).
+- `molar_mass` *NDArray[np.float_]* - Molar mass of the species in kilograms
+    per mole (kg/mol).
+- `water_index` *int* - Index of water in the mass concentration array.
 
 #### Signature
 
@@ -223,7 +227,7 @@ class KappaParameterActivity(ActivityStrategy):
 
 ### KappaParameterActivity().activity
 
-[Show source in activity_strategies.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L170)
+[Show source in activity_strategies.py:175](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L175)
 
 Calculate the activity of a species based on mass concentration.
 

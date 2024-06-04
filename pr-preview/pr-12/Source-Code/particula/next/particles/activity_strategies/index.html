@@ -6604,16 +6604,19 @@ unitless.</li>
 </code></pre></div>
 <h2 id="kappaparameteractivity">KappaParameterActivity<a class="headerlink" href="#kappaparameteractivity" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L145">Show source in activity_strategies.py:145</a></p>
-<p>Non-ideal activity strategy, based on kappa hygroscopic parameter for
-non-ideal water, and mole fraction for other species.</p>
+<p>Non-ideal activity strategy based on the kappa hygroscopic parameter.</p>
+<p>This strategy calculates the activity using the kappa hygroscopic
+parameter, a measure of hygroscopicity. The activity is determined by the
+species' mass concentration along with the hygroscopic parameter.</p>
 <h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>kappa (NDArray[np.float_]): Kappa hygroscopic parameter [unitless],
-include a value for water (that will be removed in the calculation).</li>
-<li>density (NDArray[np.float_]): Density of the species [kg/m^3].</li>
-<li>molar_mass (NDArray[np.float_]): Molar mass of the species [kg/mol].</li>
-<li>water_index (int): Index of water in the mass_concentration array.</li>
+<li><code>kappa</code> <em>NDArray[np.float_]</em> - Kappa hygroscopic parameter, unitless.
+    Includes a value for water which is excluded in calculations.</li>
+<li><code>density</code> <em>NDArray[np.float_]</em> - Density of the species in kilograms per
+    cubic meter (kg/m^3).</li>
+<li><code>molar_mass</code> <em>NDArray[np.float_]</em> - Molar mass of the species in kilograms
+    per mole (kg/mol).</li>
+<li><code>water_index</code> <em>int</em> - Index of water in the mass concentration array.</li>
 </ul>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">KappaParameterActivity</span><span class="p">(</span><span class="n">ActivityStrategy</span><span class="p">):</span>
@@ -6630,7 +6633,7 @@ include a value for water (that will be removed in the calculation).</li>
 <li><a href="#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h3 id="kappaparameteractivityactivity">KappaParameterActivity().activity<a class="headerlink" href="#kappaparameteractivityactivity" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L170">Show source in activity_strategies.py:170</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L175">Show source in activity_strategies.py:175</a></p>
 <p>Calculate the activity of a species based on mass concentration.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <ul>
