@@ -143,17 +143,22 @@ class IdealActivityMass(ActivityStrategy):
 
 # Non-ideal activity strategies
 class KappaParameterActivity(ActivityStrategy):
-    """Non-ideal activity strategy, based on kappa hygroscopic parameter for
-    non-ideal water, and mole fraction for other species.
+    """Non-ideal activity strategy based on the kappa hygroscopic parameter.
 
-    Keyword arguments:
-    ------------------
-    - kappa (NDArray[np.float_]): Kappa hygroscopic parameter [unitless],
-    include a value for water (that will be removed in the calculation).
-    - density (NDArray[np.float_]): Density of the species [kg/m^3].
-    - molar_mass (NDArray[np.float_]): Molar mass of the species [kg/mol].
-    - water_index (int): Index of water in the mass_concentration array.
+    This strategy calculates the activity using the kappa hygroscopic
+    parameter, a measure of hygroscopicity. The activity is determined by the
+    species' mass concentration along with the hygroscopic parameter.
+
+    Args:
+        kappa (NDArray[np.float_]): Kappa hygroscopic parameter, unitless.
+            Includes a value for water which is excluded in calculations.
+        density (NDArray[np.float_]): Density of the species in kilograms per
+            cubic meter (kg/m^3).
+        molar_mass (NDArray[np.float_]): Molar mass of the species in kilograms 
+            per mole (kg/mol).
+        water_index (int): Index of water in the mass concentration array.
     """
+
 
     def __init__(
         self,
