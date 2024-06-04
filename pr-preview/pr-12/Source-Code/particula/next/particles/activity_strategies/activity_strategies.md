@@ -8,14 +8,16 @@
 
 [Show source in activity_strategies.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L19)
 
-Abstract base class for implementing vapor pressure strategies based on
-particle activity calculations.
+Abstract base class for vapor pressure strategies.
+
+This interface is used for implementing strategies based on particle
+activity calculations, specifically for calculating vapor pressures.
 
 #### Methods
 
 - `activity` - Calculate the activity of a species.
-- `partial_pressure` - Calculate the partial pressure of a species in the
-mixture.
+- `partial_pressure` - Calculate the partial pressure of a species in
+                the mixture.
 
 #### Signature
 
@@ -25,18 +27,17 @@ class ActivityStrategy(ABC): ...
 
 ### ActivityStrategy().activity
 
-[Show source in activity_strategies.py:30](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L30)
+[Show source in activity_strategies.py:31](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L31)
 
 Calculate the activity of a species based on its mass concentration.
 
 #### Arguments
 
-- mass_concentration (float or NDArray[float]): Concentration of the
-species [kg/m^3]
+- `mass_concentration` - Concentration of the species [kg/m^3]
 
 #### Returns
 
-- float or NDArray[float]: Activity of the particle, unitless.
+float or NDArray[float]: Activity of the particle, unitless.
 
 #### Signature
 
@@ -51,19 +52,22 @@ def activity(
 
 [Show source in activity_strategies.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L45)
 
-Calculate the vapor pressure of species in the particle phase based on
-activity.
+Calculate the vapor pressure of species in the particle phase.
+
+This method computes the vapor pressure based on the species' activity
+considering its pure vapor pressure and mass concentration.
 
 #### Arguments
 
-- pure_vapor_pressure (float or NDArray[float]): Pure vapor pressure
-of the species [Pa]
-- mass_concentration (float or NDArray[float]): Concentration of the
-species [kg/m^3]
+- `pure_vapor_pressure` - Pure vapor pressure of the species in
+pascals (Pa).
+- `mass_concentration` - Concentration of the species in kilograms per
+cubic meter (kg/m^3).
 
 #### Returns
 
-- float or NDArray[float]: Vapor pressure of the particle [Pa].
+- `Union[float,` *NDArray[np.float_]]* - Vapor pressure of the particle
+in pascals (Pa).
 
 #### Signature
 
@@ -79,19 +83,17 @@ def partial_pressure(
 
 ## IdealActivityMass
 
-[Show source in activity_strategies.py:110](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L110)
+[Show source in activity_strategies.py:113](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L113)
 
-Ideal activity strategy, based on mass fractions.
+Calculate ideal activity based on mass fractions.
 
-#### Arguments
-
-------------------
-- None needed
+This strategy utilizes mass fractions to determine the activity, consistent
+with the principles outlined in Raoult's Law.
 
 #### References
 
------------
-- Mass Based Raoult's Law https://en.wikipedia.org/wiki/Raoult%27s_law
+- Mass Based Raoult's Law: [Raoult's Law](
+    https://en.wikipedia.org/wiki/Raoult%27s_law)
 
 #### Signature
 
@@ -105,19 +107,19 @@ class IdealActivityMass(ActivityStrategy): ...
 
 ### IdealActivityMass().activity
 
-[Show source in activity_strategies.py:122](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L122)
+[Show source in activity_strategies.py:124](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L124)
 
-Calculate the activity of a species.
+Calculate the activity of a species based on mass concentration.
 
 #### Arguments
 
------
-- mass_concentration (float): Concentration of the species [kg/m^3]
+- `mass_concentration` - Concentration of the species in kilograms
+per cubic meter (kg/m^3).
 
 #### Returns
 
---------
-- `-` *float* - Activity of the particle [unitless].
+- `Union[float,` *NDArray[np.float_]]* - Activity of the particle,
+unitless.
 
 #### Signature
 
@@ -131,20 +133,23 @@ def activity(
 
 ## IdealActivityMolar
 
-[Show source in activity_strategies.py:67](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L67)
+[Show source in activity_strategies.py:69](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L69)
 
-Ideal activity strategy, based on mole fractions.
+Calculate ideal activity based on mole fractions.
+
+This strategy uses mole fractions to compute the activity, adhering to
+the principles of Raoult's Law.
 
 #### Arguments
 
-------------------
-- molar_mass (Union[float, NDArray[np.float_]]): Molar mass of the species
-[kg/mol]. If a single value is provided, it will be used for all species.
+molar_mass (Union[float, NDArray[np.float_]]): Molar mass of the
+species [kg/mol]. A single value applies to all species if only one
+is provided.
 
 #### References
 
------------
-- Molar Based Raoult's Law https://en.wikipedia.org/wiki/Raoult%27s_law
+- Molar Based Raoult's Law: [Raoult's Law](
+    https://en.wikipedia.org/wiki/Raoult%27s_law)
 
 #### Signature
 
@@ -159,19 +164,19 @@ class IdealActivityMolar(ActivityStrategy):
 
 ### IdealActivityMolar().activity
 
-[Show source in activity_strategies.py:86](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L86)
+[Show source in activity_strategies.py:88](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L88)
 
-Calculate the activity of a species.
+Calculate the activity of a species based on mass concentration.
 
 #### Arguments
 
------
-- mass_concentration (float): Concentration of the species [kg/m^3]
+- `mass_concentration` - Concentration of the species in kilograms per
+cubic meter (kg/m^3).
 
 #### Returns
 
---------
-- `-` *float* - Activity of the particle [unitless].
+- `Union[float,` *NDArray[np.float_]]* - Activity of the species,
+unitless.
 
 #### Signature
 
@@ -185,7 +190,7 @@ def activity(
 
 ## KappaParameterActivity
 
-[Show source in activity_strategies.py:143](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L143)
+[Show source in activity_strategies.py:145](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L145)
 
 Non-ideal activity strategy, based on kappa hygroscopic parameter for
 non-ideal water, and mole fraction for other species.
@@ -218,28 +223,26 @@ class KappaParameterActivity(ActivityStrategy):
 
 ### KappaParameterActivity().activity
 
-[Show source in activity_strategies.py:168](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L168)
+[Show source in activity_strategies.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L170)
 
-Calculate the activity of a species.
+Calculate the activity of a species based on mass concentration.
 
 #### Arguments
 
------
-- mass_concentration (float): Concentration of the species [kg/m^3]
+- `mass_concentration` - Concentration of the species in kilograms per
+cubic meter (kg/m^3).
 
 #### Returns
 
---------
-- `-` *float* - Activity of the particle [unitless].
+- `Union[float,` *NDArray[np.float_]]* - Activity of the particle,
+unitless.
 
 #### References
 
------------
 Petters, M. D., & Kreidenweis, S. M. (2007). A single parameter
 representation of hygroscopic growth and cloud condensation nucleus
 activity. Atmospheric Chemistry and Physics, 7(8), 1961-1971.
-https://doi.org/10.5194/acp-7-1961-2007
-EQ 2 and 7
+[DOI](https://doi.org/10.5194/acp-7-1961-2007), see EQ 2 and 7.
 
 #### Signature
 
