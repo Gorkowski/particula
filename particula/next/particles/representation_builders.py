@@ -11,6 +11,7 @@ Classes:
 """
 
 import logging
+from typing import Union, Optional
 
 from particula.next.abc_builder import (
     BuilderABC,
@@ -24,6 +25,10 @@ from particula.next.abc_builder import (
     BuilderChargeMixin,
 )
 from particula.next.particles.representation import ParticleRepresentation
+from particula.next.particles.properties.lognormal_size_distribution import (
+    lognormal_pdf_distribution,
+    lognormal_pmf_distribution,
+)
 
 logger = logging.getLogger("particula")
 
@@ -199,7 +204,7 @@ class LogNormalParticleRepresentationBuilder(
     def set_mean_radius(
         self,
         mean_radius: Union[float, NDArrya[np.float_]],
-        mean_radius_units: optional[str] = "m",
+        mean_radius_units: Optional[str] = "m",
     ):
         """_summary_
 
