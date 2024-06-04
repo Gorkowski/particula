@@ -2632,13 +2632,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#lognormalparticlerepresentationbuilderset_mean_radius" class="md-nav__link">
+  <a href="#lognormalparticlerepresentationbuilderset_modes" class="md-nav__link">
     <span class="md-ellipsis">
-      LogNormalParticleRepresentationBuilder().set_mean_radius
+      LogNormalParticleRepresentationBuilder().set_modes
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="LogNormalParticleRepresentationBuilder().set_mean_radius">
+    <nav class="md-nav" aria-label="LogNormalParticleRepresentationBuilder().set_modes">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6375,9 +6375,8 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py">particula.next.particles.representation_builders</a> module.</p>
 </blockquote>
 <h2 id="lognormalparticlerepresentationbuilder">LogNormalParticleRepresentationBuilder<a class="headerlink" href="#lognormalparticlerepresentationbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L160">Show source in representation_builders.py:160</a></p>
-<p>Builder class for ParticleRepresentation objects with log-normal
-distribution.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L162">Show source in representation_builders.py:162</a></p>
+<p>Log-normal radii ParticleRepresentation for particle distributions.</p>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>set_distribution_strategy(strategy)</code> - Set the DistributionStrategy.</li>
@@ -6416,7 +6415,7 @@ distribution.</p>
 <li><a href="../../abc_builder/#buildersurfacestrategymixin">BuilderSurfaceStrategyMixin</a></li>
 </ul>
 <h3 id="lognormalparticlerepresentationbuilderbuild">LogNormalParticleRepresentationBuilder().build<a class="headerlink" href="#lognormalparticlerepresentationbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L217">Show source in representation_builders.py:217</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L221">Show source in representation_builders.py:221</a></p>
 <p>Validate and return the ParticleRepresentation object.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <p>The validated ParticleRepresentation object.</p>
@@ -6427,24 +6426,24 @@ distribution.</p>
 <ul>
 <li><a href="../representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
-<h3 id="lognormalparticlerepresentationbuilderset_mean_radius">LogNormalParticleRepresentationBuilder().set_mean_radius<a class="headerlink" href="#lognormalparticlerepresentationbuilderset_mean_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L204">Show source in representation_builders.py:204</a></p>
-<p><em>summary</em></p>
+<h3 id="lognormalparticlerepresentationbuilderset_modes">LogNormalParticleRepresentationBuilder().set_modes<a class="headerlink" href="#lognormalparticlerepresentationbuilderset_modes" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L207">Show source in representation_builders.py:207</a></p>
+<p>Set the modes of the distribution.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>mean_radius</code> - Modes of the distribution.</li>
 <li><code>mean_radius_units</code> - <em>description</em>. Defaults to "m".</li>
 </ul>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_mean_radius</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_modes</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
-    <span class="n">mean_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArrya</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
+    <span class="n">mean_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
     <span class="n">mean_radius_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="massparticlerepresentationbuilder">MassParticleRepresentationBuilder<a class="headerlink" href="#massparticlerepresentationbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L36">Show source in representation_builders.py:36</a></p>
-<p>Builder class for ParticleRepresentation objects with mass-based bins.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L38">Show source in representation_builders.py:38</a></p>
+<p>General ParticleRepresentation objects with mass-based bins.</p>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>set_distribution_strategy(strategy)</code> - Set the DistributionStrategy.</li>
@@ -6483,7 +6482,7 @@ distribution.</p>
 <li><a href="../../abc_builder/#buildersurfacestrategymixin">BuilderSurfaceStrategyMixin</a></li>
 </ul>
 <h3 id="massparticlerepresentationbuilderbuild">MassParticleRepresentationBuilder().build<a class="headerlink" href="#massparticlerepresentationbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L80">Show source in representation_builders.py:80</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L82">Show source in representation_builders.py:82</a></p>
 <p>Validate and return the ParticleRepresentation object.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <p>The validated ParticleRepresentation object.</p>
@@ -6495,8 +6494,8 @@ distribution.</p>
 <li><a href="../representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h2 id="radiusparticlerepresentationbuilder">RadiusParticleRepresentationBuilder<a class="headerlink" href="#radiusparticlerepresentationbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L98">Show source in representation_builders.py:98</a></p>
-<p>Builder class for ParticleRepresentation objects with radius-based bins.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L100">Show source in representation_builders.py:100</a></p>
+<p>General ParticleRepresentation objects with radius-based bins.</p>
 <h4 id="methods_2">Methods<a class="headerlink" href="#methods_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>set_distribution_strategy(strategy)</code> - Set the DistributionStrategy.</li>
@@ -6535,7 +6534,7 @@ distribution.</p>
 <li><a href="../../abc_builder/#buildersurfacestrategymixin">BuilderSurfaceStrategyMixin</a></li>
 </ul>
 <h3 id="radiusparticlerepresentationbuilderbuild">RadiusParticleRepresentationBuilder().build<a class="headerlink" href="#radiusparticlerepresentationbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L142">Show source in representation_builders.py:142</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L144">Show source in representation_builders.py:144</a></p>
 <p>Validate and return the ParticleRepresentation object.</p>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <p>The validated ParticleRepresentation object.</p>

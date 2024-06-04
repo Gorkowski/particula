@@ -6,3 +6,7 @@ Next is the next iteration of the particula simulation model. It is a complete r
 
 - [Aerosol Distribution](Tutorials/Aerosol_Distributions.ipynb)
 - [Vapor Pressure](Tutorials/next_vapor_pressure.ipynb)
+
+## Guides for Developers
+
+![Four Quadrant representation of Tutorials, How to guides, References, and Discussions Areas](DocsImageDevGuide.png)

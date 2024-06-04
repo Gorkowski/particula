@@ -227,7 +227,7 @@ class KappaParameterActivity(ActivityStrategy):
 
 ### KappaParameterActivity().activity
 
-[Show source in activity_strategies.py:175](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L175)
+[Show source in activity_strategies.py:174](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L174)
 
 Calculate the activity of a species based on mass concentration.
 
