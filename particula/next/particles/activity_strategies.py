@@ -154,7 +154,7 @@ class KappaParameterActivity(ActivityStrategy):
             Includes a value for water which is excluded in calculations.
         density (NDArray[np.float_]): Density of the species in kilograms per
             cubic meter (kg/m^3).
-        molar_mass (NDArray[np.float_]): Molar mass of the species in kilograms 
+        molar_mass (NDArray[np.float_]): Molar mass of the species in kilograms
             per mole (kg/mol).
         water_index (int): Index of water in the mass concentration array.
     """
