@@ -159,7 +159,6 @@ class KappaParameterActivity(ActivityStrategy):
         water_index (int): Index of water in the mass concentration array.
     """
 
-
     def __init__(
         self,
         kappa: NDArray[np.float_] = np.array([0.0], dtype=np.float_),
