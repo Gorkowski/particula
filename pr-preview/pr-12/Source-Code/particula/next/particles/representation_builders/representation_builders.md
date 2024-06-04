@@ -6,7 +6,7 @@
 
 ## LogNormalParticleRepresentationBuilder
 
-[Show source in representation_builders.py:155](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L155)
+[Show source in representation_builders.py:160](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L160)
 
 Builder class for ParticleRepresentation objects with log-normal
 distribution.
@@ -53,7 +53,7 @@ class LogNormalParticleRepresentationBuilder(
 
 ### LogNormalParticleRepresentationBuilder().build
 
-[Show source in representation_builders.py:212](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L212)
+[Show source in representation_builders.py:217](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L217)
 
 Validate and return the ParticleRepresentation object.
 
@@ -73,7 +73,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ### LogNormalParticleRepresentationBuilder().set_mean_radius
 
-[Show source in representation_builders.py:199](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L199)
+[Show source in representation_builders.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L204)
 
 _summary_
 
@@ -88,7 +88,7 @@ _summary_
 def set_mean_radius(
     self,
     mean_radius: Union[float, NDArrya[np.float_]],
-    mean_radius_units: optional[str] = "m",
+    mean_radius_units: Optional[str] = "m",
 ): ...
 ```
 
@@ -96,7 +96,7 @@ def set_mean_radius(
 
 ## MassParticleRepresentationBuilder
 
-[Show source in representation_builders.py:31](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L31)
+[Show source in representation_builders.py:36](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L36)
 
 Builder class for ParticleRepresentation objects with mass-based bins.
 
@@ -142,7 +142,7 @@ class MassParticleRepresentationBuilder(
 
 ### MassParticleRepresentationBuilder().build
 
-[Show source in representation_builders.py:75](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L75)
+[Show source in representation_builders.py:80](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L80)
 
 Validate and return the ParticleRepresentation object.
 
@@ -164,7 +164,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ## RadiusParticleRepresentationBuilder
 
-[Show source in representation_builders.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L93)
+[Show source in representation_builders.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L98)
 
 Builder class for ParticleRepresentation objects with radius-based bins.
 
@@ -210,7 +210,7 @@ class RadiusParticleRepresentationBuilder(
 
 ### RadiusParticleRepresentationBuilder().build
 
-[Show source in representation_builders.py:137](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L137)
+[Show source in representation_builders.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L142)
 
 Validate and return the ParticleRepresentation object.
 
