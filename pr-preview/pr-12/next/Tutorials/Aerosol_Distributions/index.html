@@ -6018,6 +6018,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#probability-density-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probability Density Function
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probability Density Function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#define-particle-size-ranges" class="md-nav__link">
     <span class="md-ellipsis">
       Define Particle Size Ranges
@@ -6025,8 +6035,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#single-mode-pdf-particle-size-distribution" class="md-nav__link">
     <span class="md-ellipsis">
       Single Mode PDF Particle Size Distribution
@@ -6034,8 +6044,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#multi-mode-pdf-particle-distribution" class="md-nav__link">
     <span class="md-ellipsis">
       Multi-Mode PDF Particle Distribution
@@ -6043,8 +6053,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#plotting-the-pdfs-of-particle-size-distributions" class="md-nav__link">
     <span class="md-ellipsis">
       Plotting the PDFs of Particle Size Distributions
@@ -6052,13 +6062,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#calculate-and-display-total-concentration-from-pdfs" class="md-nav__link">
     <span class="md-ellipsis">
       Calculate and Display Total Concentration from PDFs
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -6069,9 +6084,10 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Particle Mass Function (PMF) for Aerosol Distributions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#plotting-the-pmfs-of-particle-size-distributions" class="md-nav__link">
     <span class="md-ellipsis">
       Plotting the PMFs of Particle Size Distributions
@@ -6079,13 +6095,18 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#calculate-and-display-total-number-of-particles-from-pmfs" class="md-nav__link">
     <span class="md-ellipsis">
       Calculate and Display Total Number of Particles from PMFs
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -6627,7 +6648,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6669,7 +6690,22 @@ from particula.next.particles.properties.lognormal_size_distribution import (
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="define-particle-size-ranges">Define Particle Size Ranges<a class="anchor-link" href="#define-particle-size-ranges">¶</a></h2><p>We use logarithmic spacing for particle diameters to cover a broad size range typically observed in aerosol particles.</p>
+<h2 id="probability-density-function">Probability Density Function<a class="anchor-link" href="#probability-density-function">¶</a></h2><p>The probability density function (PDF) of a lognormal distribution is given by:</p>
+<p>$$
+f(x) = \frac{1}{x \sigma \sqrt{2\pi}} e^{-\frac{(\ln x - \mu)^2}{2\sigma^2}}
+$$</p>
+<p>where $x$ is the particle diameter, $\mu$ is the mean of the distribution, and $\sigma$ is the standard deviation of the distribution.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="define-particle-size-ranges">Define Particle Size Ranges<a class="anchor-link" href="#define-particle-size-ranges">¶</a></h3><p>We use logarithmic spacing for particle diameters to cover a broad size range typically observed in aerosol particles.</p>
 </div>
 </div>
 </div>
@@ -6679,7 +6715,7 @@ from particula.next.particles.properties.lognormal_size_distribution import (
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6709,7 +6745,7 @@ x_values = np.logspace(-3, 1, 2000)  # From 0.001 to 10 microns</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="single-mode-pdf-particle-size-distribution">Single Mode PDF Particle Size Distribution<a class="anchor-link" href="#single-mode-pdf-particle-size-distribution">¶</a></h2><p>In this section, we explore modeling a distribution with a single mode, typical for scenarios where particle populations are relatively uniform. The single mode represents a common characteristic size (mode) and spread (geometric standard deviation) of aerosol particles. We utilize parameters for the geometric standard deviation and the modal particle diameter to define this distribution. The distribution is scaled such that the area under the probability density function (PDF) equals the total number of particles, ensuring that it accurately reflects the particle count in terms of probability across different sizes. This method is particularly useful for representing aerosol populations where a single predominant size class exists, making it easier to analyze and predict aerosol behavior in environmental or laboratory settings.</p>
+<h3 id="single-mode-pdf-particle-size-distribution">Single Mode PDF Particle Size Distribution<a class="anchor-link" href="#single-mode-pdf-particle-size-distribution">¶</a></h3><p>In this section, we explore modeling a distribution with a single mode, typical for scenarios where particle populations are relatively uniform. The single mode represents a common characteristic size (mode) and spread (geometric standard deviation) of aerosol particles. We utilize parameters for the geometric standard deviation and the modal particle diameter to define this distribution. The distribution is scaled such that the area under the probability density function (PDF) equals the total number of particles, ensuring that it accurately reflects the particle count in terms of probability across different sizes. This method is particularly useful for representing aerosol populations where a single predominant size class exists, making it easier to analyze and predict aerosol behavior in environmental or laboratory settings.</p>
 </div>
 </div>
 </div>
@@ -6719,7 +6755,7 @@ x_values = np.logspace(-3, 1, 2000)  # From 0.001 to 10 microns</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-3">
@@ -6763,7 +6799,7 @@ single_mode_distribution = lognormal_pdf_distribution(
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="multi-mode-pdf-particle-distribution">Multi-Mode PDF Particle Distribution<a class="anchor-link" href="#multi-mode-pdf-particle-distribution">¶</a></h2><p>For more complex scenarios, such as urban air samples, we often observe multiple modes. Here we define and calculate distributions for a two-mode system.</p>
+<h3 id="multi-mode-pdf-particle-distribution">Multi-Mode PDF Particle Distribution<a class="anchor-link" href="#multi-mode-pdf-particle-distribution">¶</a></h3><p>For more complex scenarios, such as urban air samples, we often observe multiple modes. Here we define and calculate distributions for a two-mode system.</p>
 </div>
 </div>
 </div>
@@ -6773,7 +6809,7 @@ single_mode_distribution = lognormal_pdf_distribution(
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-4">
@@ -6817,7 +6853,7 @@ multi_mode_distribution = lognormal_pdf_distribution(
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="plotting-the-pdfs-of-particle-size-distributions">Plotting the PDFs of Particle Size Distributions<a class="anchor-link" href="#plotting-the-pdfs-of-particle-size-distributions">¶</a></h2><p>Visualizing the probability density functions (PDFs) helps in understanding the frequency of different particle sizes.</p>
+<h3 id="plotting-the-pdfs-of-particle-size-distributions">Plotting the PDFs of Particle Size Distributions<a class="anchor-link" href="#plotting-the-pdfs-of-particle-size-distributions">¶</a></h3><p>Visualizing the probability density functions (PDFs) helps in understanding the frequency of different particle sizes.</p>
 </div>
 </div>
 </div>
@@ -6827,7 +6863,7 @@ multi_mode_distribution = lognormal_pdf_distribution(
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-5">
@@ -6887,7 +6923,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="calculate-and-display-total-concentration-from-pdfs">Calculate and Display Total Concentration from PDFs<a class="anchor-link" href="#calculate-and-display-total-concentration-from-pdfs">¶</a></h2><p>Total concentration is important for understanding the overall particle load in a sample.</p>
+<h3 id="calculate-and-display-total-concentration-from-pdfs">Calculate and Display Total Concentration from PDFs<a class="anchor-link" href="#calculate-and-display-total-concentration-from-pdfs">¶</a></h3><p>Total concentration is important for understanding the overall particle load in a sample.</p>
 </div>
 </div>
 </div>
@@ -6897,7 +6933,7 @@ plt.show()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-6">
@@ -6965,7 +7001,7 @@ Total Concentration for Multi Mode: 2000.000000000001
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-7">
@@ -7003,7 +7039,7 @@ multi_pmf_distribution = lognormal_pmf_distribution(
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="plotting-the-pmfs-of-particle-size-distributions">Plotting the PMFs of Particle Size Distributions<a class="anchor-link" href="#plotting-the-pmfs-of-particle-size-distributions">¶</a></h2><p>Particle mass functions (PMFs) tell us about the actual number of particles at different sizes.</p>
+<h3 id="plotting-the-pmfs-of-particle-size-distributions">Plotting the PMFs of Particle Size Distributions<a class="anchor-link" href="#plotting-the-pmfs-of-particle-size-distributions">¶</a></h3><p>Particle mass functions (PMFs) tell us about the actual number of particles at different sizes.</p>
 </div>
 </div>
 </div>
@@ -7013,7 +7049,7 @@ multi_pmf_distribution = lognormal_pmf_distribution(
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-8">
@@ -7073,7 +7109,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="calculate-and-display-total-number-of-particles-from-pmfs">Calculate and Display Total Number of Particles from PMFs<a class="anchor-link" href="#calculate-and-display-total-number-of-particles-from-pmfs">¶</a></h2><p>This helps quantify the actual particle count in different modes.</p>
+<h3 id="calculate-and-display-total-number-of-particles-from-pmfs">Calculate and Display Total Number of Particles from PMFs<a class="anchor-link" href="#calculate-and-display-total-number-of-particles-from-pmfs">¶</a></h3><p>This helps quantify the actual particle count in different modes.</p>
 </div>
 </div>
 </div>
@@ -7083,7 +7119,7 @@ plt.show()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-9">
