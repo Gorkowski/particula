@@ -192,10 +192,22 @@ class LogNormalParticleRepresentationBuilder(
         BuilderDistributionStrategyMixin.__init__(self)
         BuilderActivityStrategyMixin.__init__(self)
         BuilderSurfaceStrategyMixin.__init__(self)
-        BuilderRadiusMixin.__init__(self)
         BuilderDensityMixin.__init__(self)
         BuilderConcentrationMixin.__init__(self, default_units="/m**3")
         BuilderChargeMixin.__init__(self)
+
+    def set_mean_radius(
+        self,
+        mean_radius: Union[float, NDArrya[np.float_]],
+        mean_radius_units: optional[str] = "m",
+    ):
+        """_summary_
+
+        Args:
+            mean_radius: Modes of the distribution.
+            mean_radius_units: _description_. Defaults to "m".
+        """
+
 
     def build(self) -> ParticleRepresentation:
         """Validate and return the ParticleRepresentation object.
