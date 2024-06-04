@@ -1,7 +1,7 @@
 """Lognormal size distribution properties.
 """
 
-from typing import Union
+# from typing import Union
 from scipy.stats import lognorm
 import numpy as np
 from numpy.typing import NDArray

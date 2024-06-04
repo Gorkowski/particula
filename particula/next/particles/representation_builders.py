@@ -12,6 +12,8 @@ Classes:
 
 import logging
 from typing import Union, Optional
+from numpy.typing import NDArray
+import numpy as np
 
 from particula.next.abc_builder import (
     BuilderABC,
@@ -43,7 +45,7 @@ class MassParticleRepresentationBuilder(
     BuilderConcentrationMixin,
     BuilderChargeMixin,
 ):  # pylint: disable=too-many-ancestors
-    """Builder class for ParticleRepresentation objects with mass-based bins.
+    """General ParticleRepresentation objects with mass-based bins.
 
     Methods:
         set_distribution_strategy(strategy): Set the DistributionStrategy.
@@ -105,7 +107,7 @@ class RadiusParticleRepresentationBuilder(
     BuilderConcentrationMixin,
     BuilderChargeMixin,
 ):  # pylint: disable=too-many-ancestors
-    """Builder class for ParticleRepresentation objects with radius-based bins.
+    """General ParticleRepresentation objects with radius-based bins.
 
     Methods:
         set_distribution_strategy(strategy): Set the DistributionStrategy.
@@ -167,8 +169,7 @@ class LogNormalParticleRepresentationBuilder(
     BuilderConcentrationMixin,
     BuilderChargeMixin,
 ):  # pylint: disable=too-many-ancestors
-    """Builder class for ParticleRepresentation objects with log-normal
-    distribution.
+    """Log-normal radii ParticleRepresentation for particle distributions.
 
     Methods:
         set_distribution_strategy(strategy): Set the DistributionStrategy.
@@ -188,7 +189,9 @@ class LogNormalParticleRepresentationBuilder(
             "distribution_strategy",
             "activity_strategy",
             "surface_strategy",
-            "radius",
+            "modes",
+            "geometric_standard_deviations",
+            "number_concentrations",
             "density",
             "concentration",
             "charge",
@@ -201,17 +204,18 @@ class LogNormalParticleRepresentationBuilder(
         BuilderConcentrationMixin.__init__(self, default_units="/m**3")
         BuilderChargeMixin.__init__(self)
 
-    def set_mean_radius(
+    def set_modes(
         self,
-        mean_radius: Union[float, NDArrya[np.float_]],
+        mean_radius: Union[float, NDArray[np.float_]],
         mean_radius_units: Optional[str] = "m",
     ):
-        """_summary_
+        """Set the modes of the distribution.
 
         Args:
             mean_radius: Modes of the distribution.
             mean_radius_units: _description_. Defaults to "m".
         """
+
 
 
     def build(self) -> ParticleRepresentation:

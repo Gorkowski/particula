@@ -20,8 +20,7 @@ class ParticleRepresentationFactory(
         ParticleRepresentation,
     ]
 ):
-    """
-    Factory class to create particle representation builders for the particles.
+    """Factory class to create particle representation builders.
 
     Methods:
         get_builders (): Returns the mapping of strategy types to builder
