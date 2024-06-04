@@ -6478,10 +6478,20 @@
 <p>General ParticleRepresentation objects with radius-based bins.</p>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>set_distribution_strategy(strategy)</code> - Set the DistributionStrategy.</li>
-<li><code>set_activity_strategy(strategy)</code> - Set the ActivityStrategy.</li>
-<li><code>set_surface_strategy(strategy)</code> - Set the SurfaceStrategy.</li>
-<li><code>set_modes(radius_limits)</code> - Set the limits for the mode.</li>
+<li><code>set_mode(mode,mode_units)</code> - Set the mode(s) of the distribution.
+    Default is np.array([100e-9, 1e-6]) meters.
+set_geometric_standard_deviation(
+    geometric_standard_deviation,geometric_standard_deviation_units):
+        Set the geometric standard deviation(s) of the distribution.
+        Default is np.array([1.2, 1.4]).
+set_number_concentration(<ul>
+<li><code>number_concentration,number_concentration_units)</code> - Set the
+    number concentration of the distribution. Default is
+    np.array([1e4*1e6, 1e3*1e6]) particles/m**3.</li>
+</ul>
+</li>
+<li><code>set_radius_bins(radius_bins,radius_bins_units)</code> - Set the radius bins
+    of the distribution. Default is np.logspace(-9, -4, 250), meters.</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LimitedRadiusParticleBuilder</span><span class="p">(</span>
@@ -6508,7 +6518,7 @@
 <li><a href="../../abc_builder/#buildersurfacestrategymixin">BuilderSurfaceStrategyMixin</a></li>
 </ul>
 <h3 id="limitedradiusparticlebuilderbuild">LimitedRadiusParticleBuilder().build<a class="headerlink" href="#limitedradiusparticlebuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L298">Show source in representation_builders.py:298</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L306">Show source in representation_builders.py:306</a></p>
 <p>Validate and return the ParticleRepresentation object.</p>
 <p>This will build a distribution of particles with a lognormal size
 distribution, before returning the ParticleRepresentation object.</p>
@@ -6522,7 +6532,7 @@ distribution, before returning the ParticleRepresentation object.</p>
 <li><a href="../representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="limitedradiusparticlebuilderset_geometric_standard_deviation">LimitedRadiusParticleBuilder().set_geometric_standard_deviation<a class="headerlink" href="#limitedradiusparticlebuilderset_geometric_standard_deviation" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L240">Show source in representation_builders.py:240</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L248">Show source in representation_builders.py:248</a></p>
 <p>Set the geometric standard deviation for the distribution</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6537,7 +6547,7 @@ the radius.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="limitedradiusparticlebuilderset_mode">LimitedRadiusParticleBuilder().set_mode<a class="headerlink" href="#limitedradiusparticlebuilderset_mode" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L223">Show source in representation_builders.py:223</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L231">Show source in representation_builders.py:231</a></p>
 <p>Set the modes for distribution</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6548,7 +6558,7 @@ the radius.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span> <span class="n">mode_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="limitedradiusparticlebuilderset_number_concentration">LimitedRadiusParticleBuilder().set_number_concentration<a class="headerlink" href="#limitedradiusparticlebuilderset_number_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L261">Show source in representation_builders.py:261</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L269">Show source in representation_builders.py:269</a></p>
 <p>Set the number concentration for the distribution</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6562,7 +6572,7 @@ the radius.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="limitedradiusparticlebuilderset_radius_bins">LimitedRadiusParticleBuilder().set_radius_bins<a class="headerlink" href="#limitedradiusparticlebuilderset_radius_bins" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L280">Show source in representation_builders.py:280</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L288">Show source in representation_builders.py:288</a></p>
 <p>Set the radius bins for the distribution</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
