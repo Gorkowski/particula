@@ -182,10 +182,18 @@ class LimitedRadiusParticleBuilder(
     """General ParticleRepresentation objects with radius-based bins.
 
     Methods:
-        set_distribution_strategy(strategy): Set the DistributionStrategy.
-        set_activity_strategy(strategy): Set the ActivityStrategy.
-        set_surface_strategy(strategy): Set the SurfaceStrategy.
-        set_modes(radius_limits): Set the limits for the mode.
+        set_mode(mode,mode_units): Set the mode(s) of the distribution.
+            Default is np.array([100e-9, 1e-6]) meters.
+        set_geometric_standard_deviation(
+            geometric_standard_deviation,geometric_standard_deviation_units):
+                Set the geometric standard deviation(s) of the distribution.
+                Default is np.array([1.2, 1.4]).
+        set_number_concentration(
+            number_concentration,number_concentration_units): Set the
+                number concentration of the distribution. Default is
+                np.array([1e4*1e6, 1e3*1e6]) particles/m**3.
+        set_radius_bins(radius_bins,radius_bins_units): Set the radius bins
+            of the distribution. Default is np.logspace(-9, -4, 250), meters.
     """
 
     def __init__(self):
@@ -214,7 +222,7 @@ class LimitedRadiusParticleBuilder(
             ),
             "mode": np.array([100e-9, 1e-6]),
             "geometric_standard_deviation": np.array([1.2, 1.4]),
-            "number_concentration": np.array([1e4, 1e3]),
+            "number_concentration": np.array([1e4*1e6, 1e3*1e6]),
             "radius_bins": np.logspace(-9, -4, 250),
             "density": 1000,
             "charge": 0,
