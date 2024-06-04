@@ -6508,7 +6508,7 @@
 <li><a href="../../abc_builder/#buildersurfacestrategymixin">BuilderSurfaceStrategyMixin</a></li>
 </ul>
 <h3 id="limitedradiusparticlebuilderbuild">LimitedRadiusParticleBuilder().build<a class="headerlink" href="#limitedradiusparticlebuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L300">Show source in representation_builders.py:300</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L298">Show source in representation_builders.py:298</a></p>
 <p>Validate and return the ParticleRepresentation object.</p>
 <p>This will build a distribution of particles with a lognormal size
 distribution, before returning the ParticleRepresentation object.</p>
@@ -6522,7 +6522,7 @@ distribution, before returning the ParticleRepresentation object.</p>
 <li><a href="../representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="limitedradiusparticlebuilderset_geometric_standard_deviation">LimitedRadiusParticleBuilder().set_geometric_standard_deviation<a class="headerlink" href="#limitedradiusparticlebuilderset_geometric_standard_deviation" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L242">Show source in representation_builders.py:242</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L240">Show source in representation_builders.py:240</a></p>
 <p>Set the geometric standard deviation for the distribution</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6545,10 +6545,10 @@ the radius.</li>
 <li><code>modes_units</code> - The units for the modes.</li>
 </ul>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span> <span class="n">mode_units</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span> <span class="n">mode_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="limitedradiusparticlebuilderset_number_concentration">LimitedRadiusParticleBuilder().set_number_concentration<a class="headerlink" href="#limitedradiusparticlebuilderset_number_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L263">Show source in representation_builders.py:263</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L261">Show source in representation_builders.py:261</a></p>
 <p>Set the number concentration for the distribution</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6558,11 +6558,11 @@ the radius.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_number_concentration</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">number_concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span>
-    <span class="n">number_concentration_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">number_concentration_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;/m**3&quot;</span><span class="p">,</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="limitedradiusparticlebuilderset_radius_bins">LimitedRadiusParticleBuilder().set_radius_bins<a class="headerlink" href="#limitedradiusparticlebuilderset_radius_bins" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L282">Show source in representation_builders.py:282</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L280">Show source in representation_builders.py:280</a></p>
 <p>Set the radius bins for the distribution</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6570,7 +6570,7 @@ the radius.</li>
 </ul>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_radius_bins</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">radius_bins</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span> <span class="n">radius_bins_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">radius_bins</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span> <span class="n">radius_bins_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="massparticlerepresentationbuilder">MassParticleRepresentationBuilder<a class="headerlink" href="#massparticlerepresentationbuilder" title="Permanent link">&para;</a></h2>
