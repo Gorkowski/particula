@@ -6105,9 +6105,9 @@
 </blockquote>
 <h2 id="lognormal_pdf_distribution">lognormal_pdf_distribution<a class="headerlink" href="#lognormal_pdf_distribution" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L10">Show source in lognormal_size_distribution.py:10</a></p>
-<p>Calculate the lognormal distribution of particles for varying modes,
-geometric standard deviations, and numbers of particles, across a
-range of x_values.</p>
+<p>Probability Density Function for the lognormal distribution of particles
+for varying modes, geometric standard deviations, and numbers of particles,
+across a range of x_values.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>x_values</code> - The size interval of the distribution.</li>
@@ -6123,7 +6123,7 @@ across all modes.</p>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Log-normal_distribution">Log-normal Distribution Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Probability_density_function">Probability Density Funciton Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Probability_density_function">Probability Density Function Wikipedia</a></li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lognormal_pdf_distribution</span><span class="p">(</span>
@@ -6151,8 +6151,10 @@ across a range of x_values.</p>
 <p>The normalized lognormal distribution of the particles, summed
 across all modes.</p>
 <h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
-<p><a href="https://en.wikipedia.org/wiki/Log-normal_distribution">Log-normal Distribution Wikipedia</a>
-<a href="https://en.wikipedia.org/wiki/Probability_mass_function">Probability Mass Function Wikipedia</a></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Log-normal_distribution">Log-normal Distribution Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Probability_mass_function">Probability Mass Function Wikipedia</a></li>
+</ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lognormal_pmf_distribution</span><span class="p">(</span>
     <span class="n">x_values</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">],</span>

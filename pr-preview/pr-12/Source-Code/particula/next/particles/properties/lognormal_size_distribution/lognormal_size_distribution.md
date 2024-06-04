@@ -8,9 +8,9 @@
 
 [Show source in lognormal_size_distribution.py:10](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L10)
 
-Calculate the lognormal distribution of particles for varying modes,
-geometric standard deviations, and numbers of particles, across a
-range of x_values.
+Probability Density Function for the lognormal distribution of particles
+for varying modes, geometric standard deviations, and numbers of particles,
+across a range of x_values.
 
 #### Arguments
 
@@ -30,7 +30,7 @@ across all modes.
 
 - [Log-normal Distribution Wikipedia](
     https://en.wikipedia.org/wiki/Log-normal_distribution)
- - [Probability Density Funciton Wikipedia](
+ - [Probability Density Function Wikipedia](
     https://en.wikipedia.org/wiki/Probability_density_function)
 
 #### Signature
@@ -70,9 +70,9 @@ across all modes.
 
 #### References
 
-[Log-normal Distribution Wikipedia](
+- [Log-normal Distribution Wikipedia](
     https://en.wikipedia.org/wiki/Log-normal_distribution)
-[Probability Mass Function Wikipedia](
+- [Probability Mass Function Wikipedia](
     https://en.wikipedia.org/wiki/Probability_mass_function)
 
 #### Signature
