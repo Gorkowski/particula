@@ -6152,7 +6152,8 @@
 <p>Averages the data in each stream within a 'Lake' object.</p>
 <p>If 'clone' is True, a new 'Lake' instance is created and the averaged
 data is stored there. If 'clone' is False, the original 'Lake' instance
-is modified.</p>
+is modified. The averaged output also includes the standard deviation of
+the data.</p>
 <h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Example lake with two streams, each containing numerical data</span>
 <span class="n">lake_data</span> <span class="o">=</span> <span class="n">Lake</span><span class="p">({</span><span class="s1">&#39;stream1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;stream2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span>

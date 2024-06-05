@@ -12,7 +12,8 @@ Averages the data in each stream within a 'Lake' object.
 
 If 'clone' is True, a new 'Lake' instance is created and the averaged
 data is stored there. If 'clone' is False, the original 'Lake' instance
-is modified.
+is modified. The averaged output also includes the standard deviation of
+the data.
 
 #### Examples
 
