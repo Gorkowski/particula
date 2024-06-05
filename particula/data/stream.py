@@ -60,7 +60,7 @@ class Stream:
         argument is allowed. A list of int is allowed.
 
         Args:
-            index (int or str): The index or name of the data column to
+            index: The index or name of the data column to
                 retrieve.
 
         Returns:
@@ -77,8 +77,8 @@ class Stream:
         to add new data columns to the stream.
 
         Args:
-            index (int or str): The index or name of the data column to set.
-            value (np.ndarray): The data to set at the specified index.
+            index: The index or name of the data column to set.
+            value: The data to set at the specified index.
 
         Notes:
             Support setting multiple rows by accepting a list of values.
@@ -121,7 +121,7 @@ class Stream:
         Returns:
             dict: Dictionary with indices as keys and header names as values.
         """
-        return {i: name for i, name in enumerate(self.header)}
+        return dict(enumerate(self.header))
 
     @property
     def header_float(self) -> NDArray[np.float_]:
