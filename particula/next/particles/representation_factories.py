@@ -7,6 +7,7 @@ from particula.next.abc_factory import StrategyFactory
 from particula.next.particles.representation_builders import (
     MassParticleRepresentationBuilder,
     RadiusParticleRepresentationBuilder,
+    LimitedRadiusParticleBuilder,
 )
 from particula.next.particles.representation import ParticleRepresentation
 
@@ -16,6 +17,7 @@ class ParticleRepresentationFactory(
         Union[
             MassParticleRepresentationBuilder,
             RadiusParticleRepresentationBuilder,
+            LimitedRadiusParticleBuilder,
         ],
         ParticleRepresentation,
     ]
@@ -54,4 +56,5 @@ class ParticleRepresentationFactory(
         return {
             "mass": MassParticleRepresentationBuilder(),
             "radius": RadiusParticleRepresentationBuilder(),
+            "limited_radius": LimitedRadiusParticleBuilder(),
         }

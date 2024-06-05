@@ -86,7 +86,7 @@ class MassParticleRepresentationBuilder(
         BuilderSurfaceStrategyMixin.__init__(self)
         BuilderMassMixin.__init__(self)
         BuilderDensityMixin.__init__(self)
-        BuilderConcentrationMixin.__init__(self, default_units="/m**3")
+        BuilderConcentrationMixin.__init__(self, default_units="1/m^3")
         BuilderChargeMixin.__init__(self)
 
     def build(self) -> ParticleRepresentation:
@@ -128,7 +128,7 @@ class RadiusParticleRepresentationBuilder(
         set_density(density, density_units): Set the density of the particles.
             Default units are 'kg/m**3'.
         set_concentration(concentration, concentration_units): Set the
-            concentration of the particles. Default units are '/m**3'.
+            concentration of the particles. Default units are '1/m^3'.
         set_charge(charge, charge_units): Set the number of charges.
     """
 
@@ -148,7 +148,7 @@ class RadiusParticleRepresentationBuilder(
         BuilderSurfaceStrategyMixin.__init__(self)
         BuilderRadiusMixin.__init__(self)
         BuilderDensityMixin.__init__(self)
-        BuilderConcentrationMixin.__init__(self, default_units="/m**3")
+        BuilderConcentrationMixin.__init__(self, default_units="1/m^3")
         BuilderChargeMixin.__init__(self)
 
     def build(self) -> ParticleRepresentation:
@@ -198,13 +198,9 @@ class LimitedRadiusParticleBuilder(
 
     def __init__(self):
         required_parameters = [
-            "distribution_strategy",
-            "activity_strategy",
-            "surface_strategy",
-            "radius",
-            "density",
-            "concentration",
-            "charge",
+            "mode",
+            "geometric_standard_deviation",
+            "number_concentration",
         ]
         BuilderABC.__init__(self, required_parameters)
         BuilderDistributionStrategyMixin.__init__(self)
@@ -212,21 +208,21 @@ class LimitedRadiusParticleBuilder(
         BuilderSurfaceStrategyMixin.__init__(self)
         BuilderRadiusMixin.__init__(self)
         BuilderDensityMixin.__init__(self)
-        BuilderConcentrationMixin.__init__(self, default_units="/m**3")
+        BuilderConcentrationMixin.__init__(self, default_units="1/m^3")
         BuilderChargeMixin.__init__(self)
-        self.default_parameters = {
-            "distribution_strategy": RadiiBasedMovingBin(),
-            "activity_strategy": IdealActivityMass(),
-            "surface_strategy": SurfaceStrategyVolume(
-                surface_tension=0.072, density=1000
-            ),
-            "mode": np.array([100e-9, 1e-6]),
-            "geometric_standard_deviation": np.array([1.2, 1.4]),
-            "number_concentration": np.array([1e4*1e6, 1e3*1e6]),
-            "radius_bins": np.logspace(-9, -4, 250),
-            "density": 1000,
-            "charge": 0,
-        }
+
+        # set defaults
+        self.mode = np.array([100e-9, 1e-6])
+        self.geometric_standard_deviation = np.array([1.2, 1.4])
+        self.number_concentration = np.array([1e4 * 1e6, 1e3 * 1e6])
+        self.radius_bins = np.logspace(-9, -4, 250)
+        self.set_distribution_strategy(RadiiBasedMovingBin())
+        self.set_activity_strategy(IdealActivityMass())
+        self.set_surface_strategy(SurfaceStrategyVolume(
+            surface_tension=0.072, density=1000
+        ))
+        self.set_density(1000, "kg/m^3")
+        self.set_charge(0)
 
     def set_mode(
         self,
@@ -243,7 +239,7 @@ class LimitedRadiusParticleBuilder(
             message = "The mode must be positive."
             logger.error(message)
             raise ValueError(message)
-        self.default_parameters["mode"] = mode * convert_units(mode_units, "m")
+        self.mode = mode * convert_units(mode_units, "m")
 
     def set_geometric_standard_deviation(
         self,
@@ -262,14 +258,12 @@ class LimitedRadiusParticleBuilder(
             raise ValueError(message)
         if geometric_standard_deviation_units is not None:
             logger.warning("Ignoring units for surface strategy parameter.")
-        self.default_parameters["geometric_standard_deviation"] = (
-            geometric_standard_deviation
-        )
+        self.geometric_standard_deviation = geometric_standard_deviation
 
     def set_number_concentration(
         self,
         number_concentration: NDArray[np.float_],
-        number_concentration_units: str = "/m**3",
+        number_concentration_units: str = "1/m^3",
     ):
         """Set the number concentration for the distribution
 
@@ -280,9 +274,9 @@ class LimitedRadiusParticleBuilder(
             message = "The number concentration must be positive."
             logger.error(message)
             raise ValueError(message)
-        self.default_parameters["number_concentration"] = (
+        self.number_concentration = (
             number_concentration
-            * convert_units(number_concentration_units, "/m**3")
+            * convert_units(number_concentration_units, "1/m^3")
         )
 
     def set_radius_bins(
@@ -299,7 +293,7 @@ class LimitedRadiusParticleBuilder(
             message = "The radius bins must be positive."
             logger.error(message)
             raise ValueError(message)
-        self.default_parameters["radius_bins"] = radius_bins * convert_units(
+        self.radius_bins = radius_bins * convert_units(
             radius_bins_units, "m"
         )
 
@@ -312,33 +306,20 @@ class LimitedRadiusParticleBuilder(
         Returns:
             The validated ParticleRepresentation object.
         """
-        self.default_parameters["radius"] = self.default_parameters[
-            "radius_bins"
-        ]
         number_concentration = lognormal_pdf_distribution(
-            x_values=self.default_parameters["radius_bins"],
-            mode=self.default_parameters["mode"],
-            geometric_standard_deviation=self.default_parameters[
-                "geometric_standard_deviation"
-            ],
-            number_of_particles=self.default_parameters[
-                "number_concentration"
-            ],
+            x_values=self.radius_bins,
+            mode=self.mode,
+            geometric_standard_deviation=self.geometric_standard_deviation,
+            number_of_particles=self.number_concentration,
         )
-        self.default_parameters["concentration"] = number_concentration
-        self.default_parameters.pop("mode")
-        self.default_parameters.pop("geometric_standard_deviation")
-        self.default_parameters.pop("number_concentration")
-        self.default_parameters.pop("radius_bins")
 
-        self.set_parameters(self.default_parameters)
         self.pre_build_check()
         return ParticleRepresentation(
             strategy=self.distribution_strategy,  # type: ignore
             activity=self.activity_strategy,  # type: ignore
             surface=self.surface_strategy,  # type: ignore
-            distribution=self.radius,  # type: ignore
+            distribution=self.radius_bins,
             density=self.density,  # type: ignore
-            concentration=self.concentration,  # type: ignore
+            concentration=number_concentration,  # type: ignore
             charge=self.charge,  # type: ignore
         )
