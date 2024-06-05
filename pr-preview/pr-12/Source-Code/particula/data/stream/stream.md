@@ -51,7 +51,7 @@ argument is allowed. A list of int is allowed.
 
 #### Arguments
 
-index (int or str): The index or name of the data column to
+- `index` - The index or name of the data column to
     retrieve.
 
 #### Returns
@@ -91,8 +91,8 @@ to add new data columns to the stream.
 
 #### Arguments
 
-index (int or str): The index or name of the data column to set.
-- `value` *np.ndarray* - The data to set at the specified index.
+- `index` - The index or name of the data column to set.
+- `value` - The data to set at the specified index.
 
 #### Notes
 

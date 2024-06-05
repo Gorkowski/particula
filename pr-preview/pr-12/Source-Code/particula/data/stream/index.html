@@ -6539,8 +6539,10 @@ corresponding to the header. If a string is used, the header index is
 retrieved and used to return the data array. Only one str
 argument is allowed. A list of int is allowed.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<p>index (int or str): The index or name of the data column to
-    retrieve.</p>
+<ul>
+<li><code>index</code> - The index or name of the data column to
+    retrieve.</li>
+</ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>np.ndarray</code> - The data array at the specified index.</li>
@@ -6564,8 +6566,10 @@ argument is allowed. A list of int is allowed.</p>
 <p>If index is a string and not in headers, it is added. This is used
 to add new data columns to the stream.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<p>index (int or str): The index or name of the data column to set.
-- <code>value</code> <em>np.ndarray</em> - The data to set at the specified index.</p>
+<ul>
+<li><code>index</code> - The index or name of the data column to set.</li>
+<li><code>value</code> - The data to set at the specified index.</li>
+</ul>
 <h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h4>
 <p>Support setting multiple rows by accepting a list of values.</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
