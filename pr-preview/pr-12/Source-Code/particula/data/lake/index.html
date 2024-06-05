@@ -6487,21 +6487,21 @@ names as keys.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Lake</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakedelitem">Lake().<strong>delitem</strong><a class="headerlink" href="#lakedelitem" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L91">Show source in lake.py:91</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L90">Show source in lake.py:90</a></p>
 <p>Remove a stream by name.
 Example: del lake['stream_name']</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakedir">Lake().<strong>dir</strong><a class="headerlink" href="#lakedir" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L50">Show source in lake.py:50</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L49">Show source in lake.py:49</a></p>
 <p>List available streams.
 Example: dir(lake)</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakegetattr">Lake().<strong>getattr</strong><a class="headerlink" href="#lakegetattr" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L39">Show source in lake.py:39</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L38">Show source in lake.py:38</a></p>
 <p>Allow accessing streams as an attributes.</p>
 <h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>- `AttributeError` - If the stream name is not in the lake.
@@ -6513,35 +6513,35 @@ Example: dir(lake)</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakegetitem">Lake().<strong>getitem</strong><a class="headerlink" href="#lakegetitem" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L78">Show source in lake.py:78</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L77">Show source in lake.py:77</a></p>
 <p>Get a stream by name.
 Example: lake['stream_name']</p>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakeiter">Lake().<strong>iter</strong><a class="headerlink" href="#lakeiter" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L55">Show source in lake.py:55</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L54">Show source in lake.py:54</a></p>
 <p>Iterate over the streams in the lake.
 Example: [stream.header for stream in lake]""</p>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakelen">Lake().<strong>len</strong><a class="headerlink" href="#lakelen" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L73">Show source in lake.py:73</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L72">Show source in lake.py:72</a></p>
 <p>Return the number of streams in the lake.
 Example: len(lake)</p>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakerepr">Lake().<strong>repr</strong><a class="headerlink" href="#lakerepr" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L99">Show source in lake.py:99</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L98">Show source in lake.py:98</a></p>
 <p>Return a string representation of the lake.
 Example: print(lake)</p>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakesetitem">Lake().<strong>setitem</strong><a class="headerlink" href="#lakesetitem" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L83">Show source in lake.py:83</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L82">Show source in lake.py:82</a></p>
 <p>Set a stream by name.
 Example: lake['stream_name'] = new_stream</p>
 <h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
@@ -6555,10 +6555,10 @@ Example: lake['stream_name'] = new_stream</p>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L19">Show source in lake.py:19</a></p>
 <p>Add a stream to the lake.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<hr />
-<div class="highlight"><pre><span></span><code>- `stream` *Stream* - The stream object to be added.
-- `name` *str* - The name of the stream.
-</code></pre></div>
+<ul>
+<li><code>stream</code> <em>Stream</em> - The stream object to be added.</li>
+<li><code>name</code> <em>str</em> - The name of the stream.</li>
+</ul>
 <h4 id="raises_1">Raises<a class="headerlink" href="#raises_1" title="Permanent link">&para;</a></h4>
 <hr />
 <div class="highlight"><pre><span></span><code>- `ValueError` - If the stream name is already in use or not a valid
@@ -6572,19 +6572,19 @@ identifier.
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h3 id="lakeitems">Lake().items<a class="headerlink" href="#lakeitems" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L61">Show source in lake.py:61</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L60">Show source in lake.py:60</a></p>
 <p>Return an iterator over the key-value pairs.</p>
 <h4 id="signature_10">Signature<a class="headerlink" href="#signature_10" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakekeys">Lake().keys<a class="headerlink" href="#lakekeys" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L69">Show source in lake.py:69</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L68">Show source in lake.py:68</a></p>
 <p>Return an iterator over the keys.</p>
 <h4 id="signature_11">Signature<a class="headerlink" href="#signature_11" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakesummary">Lake().summary<a class="headerlink" href="#lakesummary" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L104">Show source in lake.py:104</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L103">Show source in lake.py:103</a></p>
 <div class="highlight"><pre><span></span><code>Return a string summary iterating over each stream
 and print Stream.header.
 </code></pre></div>
@@ -6594,7 +6594,7 @@ and print Stream.header.
 <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="lakevalues">Lake().values<a class="headerlink" href="#lakevalues" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L65">Show source in lake.py:65</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake.py#L64">Show source in lake.py:64</a></p>
 <p>Return an iterator over the values.</p>
 <h4 id="signature_13">Signature<a class="headerlink" href="#signature_13" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>

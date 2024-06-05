@@ -990,6 +990,42 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6112,27 +6148,28 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake_stats.py">particula.data.lake_stats</a> module.</p>
 </blockquote>
 <h2 id="average_std">average_std<a class="headerlink" href="#average_std" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake_stats.py#L10">Show source in lake_stats.py:10</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake_stats.py#L11">Show source in lake_stats.py:11</a></p>
 <p>Averages the data in each stream within a 'Lake' object.</p>
 <p>If 'clone' is True, a new 'Lake' instance is created and the averaged
 data is stored there. If 'clone' is False, the original 'Lake' instance
 is modified.</p>
 <h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
-<h1 id="example-lake-with-two-streams-each-containing-numerical-data">Example lake with two streams, each containing numerical data<a class="headerlink" href="#example-lake-with-two-streams-each-containing-numerical-data" title="Permanent link">&para;</a></h1>
-<p>lake_data = Lake({'stream1': [1, 2, 3], 'stream2': [4, 5, 6]})</p>
-<h1 id="average-over-a-60-second-interval-without-creating-a-new-lake">Average over a 60-second interval without creating a new lake.<a class="headerlink" href="#average-over-a-60-second-interval-without-creating-a-new-lake" title="Permanent link">&para;</a></h1>
-<p>averaged_lake = average_std(lake_data, 60, clone=False)
-print(averaged_lake)
-- <code>Lake({'stream1'</code> - [2], 'stream2': [5]})</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example lake with two streams, each containing numerical data</span>
+<span class="n">lake_data</span> <span class="o">=</span> <span class="n">Lake</span><span class="p">({</span><span class="s1">&#39;stream1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;stream2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span>
+<span class="c1"># Average over a 60-second interval without creating a new lake.</span>
+<span class="n">averaged_lake</span> <span class="o">=</span> <span class="n">average_std</span><span class="p">(</span><span class="n">lake_data</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">clone</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">averaged_lake</span><span class="p">)</span>
+<span class="n">Lake</span><span class="p">({</span><span class="s1">&#39;stream1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;stream2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">]})</span>
+</code></pre></div>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>lake</code> <em>Lake</em> - The lake data structure containing multiple streams.</li>
-<li><code>average_interval</code> <em>float-int,optional</em> - The interval over which to
-    average the data. Default is 60.</li>
-<li><code>new_time_array</code> <em>np.ndarray,optional</em> - A new array of time points at
-    which to compute the averages.</li>
-<li><code>clone</code> <em>bool,optional</em> - Indicates whether to modify the original lake
-    or return a new one. Default is True.</li>
+<li><code>lake</code> - The lake data structure containing multiple streams.</li>
+<li><code>average_interval</code> - The interval over which to average the data.
+    Default is 60.</li>
+<li><code>new_time_array</code> - A new array of time points at which to compute the
+    averages.</li>
+<li><code>clone</code> - Indicates whether to modify the original lake or return a new
+    one. Default is True.</li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6142,7 +6179,7 @@ print(averaged_lake)
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">average_std</span><span class="p">(</span>
     <span class="n">lake</span><span class="p">:</span> <span class="n">Lake</span><span class="p">,</span>
     <span class="n">average_interval</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
-    <span class="n">new_time_array</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">new_time_array</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">clone</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Lake</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>

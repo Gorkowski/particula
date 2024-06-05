@@ -6,7 +6,7 @@
 
 ## average_std
 
-[Show source in lake_stats.py:10](https://github.com/Gorkowski/particula/blob/main/particula/data/lake_stats.py#L10)
+[Show source in lake_stats.py:11](https://github.com/Gorkowski/particula/blob/main/particula/data/lake_stats.py#L11)
 
 Averages the data in each stream within a 'Lake' object.
 
@@ -16,22 +16,24 @@ is modified.
 
 #### Examples
 
+```python
 # Example lake with two streams, each containing numerical data
 lake_data = Lake({'stream1': [1, 2, 3], 'stream2': [4, 5, 6]})
 # Average over a 60-second interval without creating a new lake.
 averaged_lake = average_std(lake_data, 60, clone=False)
 print(averaged_lake)
-- `Lake({'stream1'` - [2], 'stream2': [5]})
+Lake({'stream1': [2], 'stream2': [5]})
+```
 
 #### Arguments
 
-- `lake` *Lake* - The lake data structure containing multiple streams.
-- `average_interval` *float-int,optional* - The interval over which to
-    average the data. Default is 60.
-- `new_time_array` *np.ndarray,optional* - A new array of time points at
-    which to compute the averages.
-- `clone` *bool,optional* - Indicates whether to modify the original lake
-    or return a new one. Default is True.
+- `lake` - The lake data structure containing multiple streams.
+- `average_interval` - The interval over which to average the data.
+    Default is 60.
+- `new_time_array` - A new array of time points at which to compute the
+    averages.
+- `clone` - Indicates whether to modify the original lake or return a new
+    one. Default is True.
 
 #### Returns
 
@@ -43,7 +45,7 @@ print(averaged_lake)
 def average_std(
     lake: Lake,
     average_interval: Union[float, int] = 60,
-    new_time_array: Optional[np.ndarray] = None,
+    new_time_array: Optional[NDArray[np.float_]] = None,
     clone: bool = True,
 ) -> Lake: ...
 ```
