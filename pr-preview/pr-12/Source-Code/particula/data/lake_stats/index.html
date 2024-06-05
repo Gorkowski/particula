@@ -982,18 +982,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#signature" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Signature
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      See also
+      Examples
     </span>
   </a>
   
@@ -6122,8 +6113,31 @@
 </blockquote>
 <h2 id="average_std">average_std<a class="headerlink" href="#average_std" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/lake_stats.py#L10">Show source in lake_stats.py:10</a></p>
-<p>"
-Averages the data in a lake over a specified time interval.</p>
+<p>Averages the data in each stream within a 'Lake' object.</p>
+<p>If 'clone' is True, a new 'Lake' instance is created and the averaged
+data is stored there. If 'clone' is False, the original 'Lake' instance
+is modified.</p>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
+<h1 id="example-lake-with-two-streams-each-containing-numerical-data">Example lake with two streams, each containing numerical data<a class="headerlink" href="#example-lake-with-two-streams-each-containing-numerical-data" title="Permanent link">&para;</a></h1>
+<p>lake_data = Lake({'stream1': [1, 2, 3], 'stream2': [4, 5, 6]})</p>
+<h1 id="average-over-a-60-second-interval-without-creating-a-new-lake">Average over a 60-second interval without creating a new lake.<a class="headerlink" href="#average-over-a-60-second-interval-without-creating-a-new-lake" title="Permanent link">&para;</a></h1>
+<p>averaged_lake = average_std(lake_data, 60, clone=False)
+print(averaged_lake)
+- <code>Lake({'stream1'</code> - [2], 'stream2': [5]})</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>lake</code> <em>Lake</em> - The lake data structure containing multiple streams.</li>
+<li><code>average_interval</code> <em>float-int,optional</em> - The interval over which to
+    average the data. Default is 60.</li>
+<li><code>new_time_array</code> <em>np.ndarray,optional</em> - A new array of time points at
+    which to compute the averages.</li>
+<li><code>clone</code> <em>bool,optional</em> - Indicates whether to modify the original lake
+    or return a new one. Default is True.</li>
+</ul>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>Lake</code> - A lake instance with averaged data.</li>
+</ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">average_std</span><span class="p">(</span>
     <span class="n">lake</span><span class="p">:</span> <span class="n">Lake</span><span class="p">,</span>
