@@ -12,6 +12,7 @@
 - [Friction Factor Module](./friction_factor_module.md)
 - [Kelvin Effect Module](./kelvin_effect_module.md)
 - [Knudsen Number Module](./knudsen_number_module.md)
+- [Lognormal Size Distribution](./lognormal_size_distribution.md)
 - [Mean Thermal Speed Module](./mean_thermal_speed_module.md)
 - [Partial Pressure Module](./partial_pressure_module.md)
 - [Slip Correction Module](./slip_correction_module.md)

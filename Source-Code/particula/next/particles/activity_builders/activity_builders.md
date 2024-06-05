@@ -8,13 +8,11 @@
 
 [Show source in activity_builders.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L20)
 
-Builder class for IdealActivityMass objects. No parameters are required
-to be set.
+Builder class for IdealActivityMass objects. No additional parameters.
 
 #### Methods
 
---------
-- `-` *build()* - Validate and return the IdealActivityMass object.
+- `build()` - Validate and return the IdealActivityMass object.
 
 #### Signature
 
@@ -29,14 +27,13 @@ class IdealActivityMassBuilder(BuilderABC):
 
 ### IdealActivityMassBuilder().build
 
-[Show source in activity_builders.py:33](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L33)
+[Show source in activity_builders.py:31](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L31)
 
 Validate and return the IdealActivityMass object.
 
 #### Returns
 
--------
-- `-` *IdealActivityMass* - The validated IdealActivityMass object.
+- `IdealActivityMass` - The validated IdealActivityMass object.
 
 #### Signature
 
@@ -52,18 +49,17 @@ def build(self) -> ActivityStrategy: ...
 
 ## IdealActivityMolarBuilder
 
-[Show source in activity_builders.py:43](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L43)
+[Show source in activity_builders.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L40)
 
 Builder class for IdealActivityMolar objects.
 
 #### Methods
 
---------
-- set_molar_mass(molar_mass, molar_mass_units): Set the molar mass of the
+- `set_molar_mass(molar_mass,` *molar_mass_units)* - Set the molar mass of the
     particle in kg/mol. Default units are 'kg/mol'.
-- `-` *set_parameters(params)* - Set the parameters of the IdealActivityMolar
+- `set_parameters(params)` - Set the parameters of the IdealActivityMolar
     object from a dictionary including optional units.
-- `-` *build()* - Validate and return the IdealActivityMolar object.
+- `build()` - Validate and return the IdealActivityMolar object.
 
 #### Signature
 
@@ -79,14 +75,13 @@ class IdealActivityMolarBuilder(BuilderABC, BuilderMolarMassMixin):
 
 ### IdealActivityMolarBuilder().build
 
-[Show source in activity_builders.py:63](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L63)
+[Show source in activity_builders.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L59)
 
 Validate and return the IdealActivityMolar object.
 
 #### Returns
 
--------
-- `-` *IdealActivityMolar* - The validated IdealActivityMolar object.
+- `IdealActivityMolar` - The validated IdealActivityMolar object.
 
 #### Signature
 
@@ -102,22 +97,21 @@ def build(self) -> ActivityStrategy: ...
 
 ## KappaParameterActivityBuilder
 
-[Show source in activity_builders.py:74](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L74)
+[Show source in activity_builders.py:69](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L69)
 
 Builder class for KappaParameterActivity objects.
 
 #### Methods
 
---------
-- `-` *set_kappa(kappa)* - Set the kappa parameter for the activity calculation.
-- set_density(density, density_units): Set the density of the species in
+- `set_kappa(kappa)` - Set the kappa parameter for the activity calculation.
+- `set_density(density,density_units)` - Set the density of the species in
     kg/m^3. Default units are 'kg/m^3'.
-- set_molar_mass(molar_mass, molar_mass_units): Set the molar mass of the
+- `set_molar_mass(molar_mass,molar_mass_units)` - Set the molar mass of the
     species in kg/mol. Default units are 'kg/mol'.
-- `-` *set_water_index(water_index)* - Set the array index of the species.
-- `-` *set_parameters(dict)* - Set the parameters of the KappaParameterActivity
+- `set_water_index(water_index)` - Set the array index of the species.
+- `set_parameters(dict)` - Set the parameters of the KappaParameterActivity
     object from a dictionary including optional units.
-- `-` *build()* - Validate and return the KappaParameterActivity object.
+- `build()` - Validate and return the KappaParameterActivity object.
 
 #### Signature
 
@@ -136,14 +130,13 @@ class KappaParameterActivityBuilder(
 
 ### KappaParameterActivityBuilder().build
 
-[Show source in activity_builders.py:145](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L145)
+[Show source in activity_builders.py:137](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L137)
 
 Validate and return the KappaParameterActivity object.
 
 #### Returns
 
--------
-- `-` *KappaParameterActivity* - The validated KappaParameterActivity object.
+- `KappaParameterActivity` - The validated KappaParameterActivity object.
 
 #### Signature
 
@@ -157,15 +150,14 @@ def build(self) -> ActivityStrategy: ...
 
 ### KappaParameterActivityBuilder().set_kappa
 
-[Show source in activity_builders.py:103](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L103)
+[Show source in activity_builders.py:97](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L97)
 
 Set the kappa parameter for the activity calculation.
 
 #### Arguments
 
-----
-- `-` *kappa* - The kappa parameter for the activity calculation.
-- `-` *kappa_units* - Not used. (for interface consistency)
+- `kappa` - The kappa parameter for the activity calculation.
+- `kappa_units` - Not used. (for interface consistency)
 
 #### Signature
 
@@ -177,15 +169,14 @@ def set_kappa(
 
 ### KappaParameterActivityBuilder().set_water_index
 
-[Show source in activity_builders.py:124](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L124)
+[Show source in activity_builders.py:117](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L117)
 
 Set the array index of the species.
 
 #### Arguments
 
-----
-- water_index (int): The array index of the species.
-- water_index_units (str): Not used. (for interface consistency)
+- `water_index` - The array index of the species.
+- `water_index_units` - Not used. (for interface consistency)
 
 #### Signature
 

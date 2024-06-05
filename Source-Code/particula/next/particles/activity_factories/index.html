@@ -298,7 +298,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../next/next_vapor_pressure/" class="md-tabs__link">
+        <a href="../../../../../next/" class="md-tabs__link">
           
   
   Next
@@ -2433,17 +2433,17 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="ActivityFactory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     <span class="md-ellipsis">
       Methods
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
@@ -2670,6 +2670,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../representation_factories/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Representation Factories
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../surface_builders/" class="md-nav__link">
         
   
@@ -2745,10 +2766,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_13_8_13" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_13_8_14" >
         
           
-          <label class="md-nav__link" for="__nav_2_2_13_8_13" id="__nav_2_2_13_8_13_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_2_13_8_14" id="__nav_2_2_13_8_14_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -2759,8 +2780,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_13_8_13_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2_13_8_13">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_13_8_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_13_8_14">
             <span class="md-nav__icon md-icon"></span>
             Properties
           </label>
@@ -2904,6 +2925,27 @@
   
   <span class="md-ellipsis">
     Knudsen Number Module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../properties/lognormal_size_distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lognormal Size Distribution
   </span>
   
 
@@ -6015,7 +6057,89 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../next/next_vapor_pressure/" class="md-nav__link">
+      <a href="../../../../../next/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Next Outline
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Tutorials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Aerosol_Distributions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Size Distributions Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/next_vapor_pressure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -6024,6 +6148,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6061,40 +6193,39 @@
 </blockquote>
 <h2 id="activityfactory">ActivityFactory<a class="headerlink" href="#activityfactory" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L19">Show source in activity_factories.py:19</a></p>
+<p>Factory class to create activity strategy builders</p>
 <p>Factory class to create activity strategy builders for calculating
 activity and partial pressure of species in a mixture of liquids.</p>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
-<li>get_builders(): Returns the mapping of strategy types to builder
+<li><code>get_builders()</code> - Returns the mapping of strategy types to builder
 instances.</li>
-<li>get_strategy(strategy_type, parameters): Gets the strategy instance
+<li><code>get_strategy(strategy_type,</code> <em>parameters)</em> - Gets the strategy instance
 for the specified strategy type.<ul>
-<li>strategy_type: Type of activity strategy to use, can be
-'mass_ideal' (default), 'molar_ideal', or 'kappa_parameter'.</li>
-<li>parameters(Dict[str, Any], optional): Parameters required for the
+<li><code>strategy_type</code> - Type of activity strategy to use, can be
+'mass_ideal' (default), 'molar_ideal', or 'kappa_parameter'.
+parameters(Dict[str, Any], optional): Parameters required for the
 builder, dependent on the chosen strategy type.<ul>
-<li>mass_ideal: No parameters are required.</li>
-<li>molar_ideal: molar_mass</li>
-<li>kappa | kappa_parameter: kappa, density, molar_mass, water_index</li>
+<li><code>-</code> <em>mass_ideal</em> - No parameters are required.</li>
+<li><code>-</code> <em>molar_ideal</em> - molar_mass</li>
+<li>kappa | kappa_parameter: kappa, density, molar_mass,
+water_index</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>ActivityStrategy</em> - An instance of the specified ActivityStrategy.</li>
+<li><code>ActivityStrategy</code> - An instance of the specified ActivityStrategy.</li>
 </ul>
 <h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>ValueError</em> - If an unknown strategy type is provided.</li>
-<li><code>-</code> <em>ValueError</em> - If any required key is missing during check_keys or
+<li><code>ValueError</code> - If an unknown strategy type is provided.</li>
+<li><code>ValueError</code> - If any required key is missing during check_keys or
     pre_build_check, or if trying to set an invalid parameter.</li>
 </ul>
 <h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
-<hr />
 <div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">strategy_is</span> <span class="o">=</span> <span class="n">ActivityFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span><span class="s2">&quot;mass_ideal&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
@@ -6119,12 +6250,11 @@ builder, dependent on the chosen strategy type.<ul>
 <li><a href="../activity_strategies/#kappaparameteractivity">KappaParameterActivity</a></li>
 </ul>
 <h3 id="activityfactoryget_builders">ActivityFactory().get_builders<a class="headerlink" href="#activityfactoryget_builders" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L65">Show source in activity_factories.py:65</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L63">Show source in activity_factories.py:63</a></p>
 <p>Returns the mapping of strategy types to builder instances.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>Dict[str, Any]: A dictionary mapping strategy types to builder
+<li><code>Dict[str,</code> <em>Any]</em> - A dictionary mapping strategy types to builder
     instances.<ul>
 <li><code>-</code> <em>mass_ideal</em> - IdealActivityMassBuilder</li>
 <li><code>-</code> <em>molar_ideal</em> - IdealActivityMolarBuilder</li>
@@ -6167,46 +6297,6 @@ builder, dependent on the chosen strategy type.<ul>
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../activity_builders/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Activity Builders">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                Activity Builders
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../activity_strategies/" class="md-footer__link md-footer__link--next" aria-label="Next: Activity Strategies">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Activity Strategies
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
-    
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -6234,7 +6324,7 @@ builder, dependent on the chosen strategy type.<ul>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.footer", "toc.integrate", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "toc.integrate", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../../assets/javascripts/bundle.081f42fc.min.js"></script>
