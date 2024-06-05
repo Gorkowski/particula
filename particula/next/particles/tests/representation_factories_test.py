@@ -11,7 +11,6 @@ from particula.next.particles.representation_factories import (
 from particula.next.particles.distribution_strategies import (
     MassBasedMovingBin,
     RadiiBasedMovingBin,
-    SpeciatedMassMovingBin,
 )
 from particula.next.particles.representation import ParticleRepresentation
 from particula.next.particles.activity_strategies import IdealActivityMass
