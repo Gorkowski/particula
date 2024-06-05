@@ -54,7 +54,7 @@ class LimitedRadiusParticleBuilder(
 
 ### LimitedRadiusParticleBuilder().build
 
-[Show source in representation_builders.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L306)
+[Show source in representation_builders.py:300](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L300)
 
 Validate and return the ParticleRepresentation object.
 
@@ -77,7 +77,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ### LimitedRadiusParticleBuilder().set_geometric_standard_deviation
 
-[Show source in representation_builders.py:248](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L248)
+[Show source in representation_builders.py:244](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L244)
 
 Set the geometric standard deviation for the distribution
 
@@ -98,7 +98,7 @@ def set_geometric_standard_deviation(
 
 ### LimitedRadiusParticleBuilder().set_mode
 
-[Show source in representation_builders.py:231](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L231)
+[Show source in representation_builders.py:227](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L227)
 
 Set the modes for distribution
 
@@ -115,7 +115,7 @@ def set_mode(self, mode: NDArray[np.float_], mode_units: str = "m"): ...
 
 ### LimitedRadiusParticleBuilder().set_number_concentration
 
-[Show source in representation_builders.py:269](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L269)
+[Show source in representation_builders.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L263)
 
 Set the number concentration for the distribution
 
@@ -129,13 +129,13 @@ Set the number concentration for the distribution
 def set_number_concentration(
     self,
     number_concentration: NDArray[np.float_],
-    number_concentration_units: str = "/m**3",
+    number_concentration_units: str = "1/m^3",
 ): ...
 ```
 
 ### LimitedRadiusParticleBuilder().set_radius_bins
 
-[Show source in representation_builders.py:288](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L288)
+[Show source in representation_builders.py:282](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L282)
 
 Set the radius bins for the distribution
 
@@ -237,7 +237,7 @@ General ParticleRepresentation objects with radius-based bins.
 - `set_density(density,` *density_units)* - Set the density of the particles.
     Default units are 'kg/m**3'.
 - `set_concentration(concentration,` *concentration_units)* - Set the
-    concentration of the particles. Default units are '/m**3'.
+    concentration of the particles. Default units are '1/m^3'.
 - `set_charge(charge,` *charge_units)* - Set the number of charges.
 
 #### Signature

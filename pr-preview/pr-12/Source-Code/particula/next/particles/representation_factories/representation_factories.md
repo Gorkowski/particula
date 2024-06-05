@@ -6,7 +6,7 @@
 
 ## ParticleRepresentationFactory
 
-[Show source in representation_factories.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L14)
+[Show source in representation_factories.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L15)
 
 Factory class to create particle representation builders.
 
@@ -37,7 +37,11 @@ pre_build_check, or if trying to set an invalid parameter.
 ```python
 class ParticleRepresentationFactory(
     StrategyFactory[
-        Union[MassParticleRepresentationBuilder, RadiusParticleRepresentationBuilder],
+        Union[
+            MassParticleRepresentationBuilder,
+            RadiusParticleRepresentationBuilder,
+            LimitedRadiusParticleBuilder,
+        ],
         ParticleRepresentation,
     ]
 ): ...
@@ -45,13 +49,14 @@ class ParticleRepresentationFactory(
 
 #### See also
 
+- [LimitedRadiusParticleBuilder](./representation_builders.md#limitedradiusparticlebuilder)
 - [MassParticleRepresentationBuilder](./representation_builders.md#massparticlerepresentationbuilder)
 - [ParticleRepresentation](./representation.md#particlerepresentation)
 - [RadiusParticleRepresentationBuilder](./representation_builders.md#radiusparticlerepresentationbuilder)
 
 ### ParticleRepresentationFactory().get_builders
 
-[Show source in representation_factories.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L45)
+[Show source in representation_factories.py:47](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L47)
 
 Returns the mapping of strategy types to builder instances.
 
