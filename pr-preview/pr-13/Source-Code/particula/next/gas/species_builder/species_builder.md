@@ -6,7 +6,7 @@
 
 ## GasSpeciesBuilder
 
-[Show source in species_builder.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L19)
+[Show source in species_builder.py:26](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L26)
 
 Builder class for GasSpecies objects, allowing for a more fluent and
 readable creation of GasSpecies instances with optional parameters.
@@ -48,17 +48,19 @@ readable creation of GasSpecies instances with optional parameters.
 #### Signature
 
 ```python
-class GasSpeciesBuilder(BuilderABC):
+class GasSpeciesBuilder(BuilderABC, BuilderMolarMassMixin, BuilderConcentrationMixin):
     def __init__(self): ...
 ```
 
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
+- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
+- [BuilderMolarMassMixin](../abc_builder.md#buildermolarmassmixin)
 
 ### GasSpeciesBuilder().build
 
-[Show source in species_builder.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L114)
+[Show source in species_builder.py:100](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L100)
 
 Validate and return the GasSpecies object.
 
@@ -72,26 +74,9 @@ def build(self) -> GasSpecies: ...
 
 - [GasSpecies](./species.md#gasspecies)
 
-### GasSpeciesBuilder().set_concentration
-
-[Show source in species_builder.py:99](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L99)
-
-Set the concentration of the gas species in the mixture,
-in kg/m^3.
-
-#### Signature
-
-```python
-def set_concentration(
-    self,
-    concentration: Union[float, NDArray[np.float_]],
-    concentration_units: str = "kg/m^3",
-): ...
-```
-
 ### GasSpeciesBuilder().set_condensable
 
-[Show source in species_builder.py:91](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L91)
+[Show source in species_builder.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L92)
 
 Set the condensable bool of the gas species.
 
@@ -101,23 +86,9 @@ Set the condensable bool of the gas species.
 def set_condensable(self, condensable: Union[bool, NDArray[np.bool_]]): ...
 ```
 
-### GasSpeciesBuilder().set_molar_mass
-
-[Show source in species_builder.py:70](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L70)
-
-Set the molar mass of the gas species. Units in kg/mol.
-
-#### Signature
-
-```python
-def set_molar_mass(
-    self, molar_mass: Union[float, NDArray[np.float_]], molar_mass_units: str = "kg/mol"
-): ...
-```
-
 ### GasSpeciesBuilder().set_name
 
-[Show source in species_builder.py:65](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L65)
+[Show source in species_builder.py:79](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L79)
 
 Set the name of the gas species.
 
@@ -129,7 +100,7 @@ def set_name(self, name: Union[str, NDArray[np.str_]]): ...
 
 ### GasSpeciesBuilder().set_vapor_pressure_strategy
 
-[Show source in species_builder.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L83)
+[Show source in species_builder.py:84](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L84)
 
 Set the vapor pressure strategy for the gas species.
 

@@ -2163,19 +2163,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#vapor_pressure_factory" class="md-nav__link">
+  <a href="#vaporpressurefactory" class="md-nav__link">
     <span class="md-ellipsis">
-      vapor_pressure_factory
+      VaporPressureFactory
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="vapor_pressure_factory">
+    <nav class="md-nav" aria-label="VaporPressureFactory">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments" class="md-nav__link">
+  <a href="#methods" class="md-nav__link">
     <span class="md-ellipsis">
-      Arguments
+      Methods
     </span>
   </a>
   
@@ -2185,6 +2185,24 @@
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raises" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raises
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
     </span>
   </a>
   
@@ -2205,6 +2223,39 @@
       See also
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaporpressurefactoryget_builders" class="md-nav__link">
+    <span class="md-ellipsis">
+      VaporPressureFactory().get_builders
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VaporPressureFactory().get_builders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -6088,7 +6139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../next/Tutorials/next_vapor_pressure/" class="md-nav__link">
+      <a href="../../../../../next/Tutorials/Vapor_Pressure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -6140,34 +6191,87 @@
 <blockquote>
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py">particula.next.gas.vapor_pressure_factories</a> module.</p>
 </blockquote>
-<h2 id="vapor_pressure_factory">vapor_pressure_factory<a class="headerlink" href="#vapor_pressure_factory" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L9">Show source in vapor_pressure_factories.py:9</a></p>
-<p>Factory method to create a concrete VaporPressureStrategy object using
-builders.</p>
-<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<hr />
+<h2 id="vaporpressurefactory">VaporPressureFactory<a class="headerlink" href="#vaporpressurefactory" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L20">Show source in vapor_pressure_factories.py:20</a></p>
+<p>Factory class to create vapor pressure strategy builders</p>
+<p>Factory class to create vapor pressure strategy builders for calculating
+vapor pressure of gas species.</p>
+<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
-<li>strategy (str): The strategy to use for vapor pressure calculations.</li>
-<li><code>Options</code> - "constant", "antoine", "clausius_clapeyron", "water_buck".</li>
-<li>parameters (dict): A dictionary containing the necessary parameters for
-    the strategy. If no parameters are needed, this can be left as None.</li>
+<li><code>get_builders()</code> - Returns the mapping of strategy types to builder
+instances.</li>
+<li><code>get_strategy(strategy_type,</code> <em>parameters)</em> - Gets the strategy instance
+for the specified strategy type.<ul>
+<li><code>strategy_type</code> - Type of vapor pressure strategy to use, can be
+'constant', 'antoine', 'clausius_clapeyron', or 'water_buck'.
+parameters(Dict[str, Any], optional): Parameters required for the
+builder, dependent on the chosen strategy type.<ul>
+<li><code>-</code> <em>constant</em> - constant_vapor_pressure</li>
+<li><code>-</code> <em>antoine</em> - A, B, C</li>
+<li><code>-</code> <em>clausius_clapeyron</em> - A, B, C</li>
+<li><code>-</code> <em>water_buck</em> - No parameters are required.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>vapor_pressure_strategy (VaporPressureStrategy): A concrete
-  implementation of the VaporPressureStrategy built using the appropriate
-  builder.</li>
+<li><code>VaporPressureStrategy</code> - An instance of the specified
+    VaporPressureStrategy.</li>
 </ul>
+<h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>ValueError</code> - If an unknown strategy type is provided.</li>
+<li><code>ValueError</code> - If any required key is missing during check_keys or
+    pre_build_check, or if trying to set an invalid parameter.</li>
+</ul>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">strategy_is</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">vapor_pressure_factory</span><span class="p">(</span>
-    <span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="n">ignore</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VaporPressureStrategy</span><span class="p">:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">VaporPressureFactory</span><span class="p">(</span>
+    <span class="n">StrategyFactory</span><span class="p">[</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">ConstantBuilder</span><span class="p">,</span> <span class="n">AntoineBuilder</span><span class="p">,</span> <span class="n">ClausiusClapeyronBuilder</span><span class="p">,</span> <span class="n">WaterBuckBuilder</span>
+        <span class="p">],</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">ConstantVaporPressureStrategy</span><span class="p">,</span>
+            <span class="n">AntoineVaporPressureStrategy</span><span class="p">,</span>
+            <span class="n">ClausiusClapeyronStrategy</span><span class="p">,</span>
+            <span class="n">WaterBuckStrategy</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">]</span>
+<span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
 <ul>
-<li><a href="../vapor_pressure_strategies/#vaporpressurestrategy">VaporPressureStrategy</a></li>
+<li><a href="../vapor_pressure_builders/#antoinebuilder">AntoineBuilder</a></li>
+<li><a href="../vapor_pressure_strategies/#antoinevaporpressurestrategy">AntoineVaporPressureStrategy</a></li>
+<li><a href="../vapor_pressure_builders/#clausiusclapeyronbuilder">ClausiusClapeyronBuilder</a></li>
+<li><a href="../vapor_pressure_strategies/#clausiusclapeyronstrategy">ClausiusClapeyronStrategy</a></li>
+<li><a href="../vapor_pressure_builders/#constantbuilder">ConstantBuilder</a></li>
+<li><a href="../vapor_pressure_strategies/#constantvaporpressurestrategy">ConstantVaporPressureStrategy</a></li>
+<li><a href="../vapor_pressure_builders/#waterbuckbuilder">WaterBuckBuilder</a></li>
+<li><a href="../vapor_pressure_strategies/#waterbuckstrategy">WaterBuckStrategy</a></li>
 </ul>
+<h3 id="vaporpressurefactoryget_builders">VaporPressureFactory().get_builders<a class="headerlink" href="#vaporpressurefactoryget_builders" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L68">Show source in vapor_pressure_factories.py:68</a></p>
+<p>Returns the mapping of strategy types to builder instances.</p>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>Dict[str,</code> <em>Any]</em> - A dictionary mapping strategy types to builder
+    instances.<ul>
+<li><code>constant</code> - ConstantBuilder</li>
+<li><code>antoine</code> - AntoineBuilder</li>
+<li><code>clausius_clapeyron</code> - ClausiusClapeyronBuilder</li>
+<li><code>water_buck</code> - WaterBuckBuilder</li>
+</ul>
+</li>
+</ul>
+<h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_builders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
+</code></pre></div>
 
 
 
