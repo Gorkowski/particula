@@ -17,7 +17,6 @@ from particula.next.gas.species import GasSpecies
 from particula.next.gas.vapor_pressure_strategies import (
     VaporPressureStrategy,
 )
-from particula.util.input_handling import convert_units
 
 logger = logging.getLogger("particula")
 
