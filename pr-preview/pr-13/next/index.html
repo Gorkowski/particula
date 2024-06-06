@@ -6168,49 +6168,44 @@
 <h2 id="diagrams">Diagrams<a class="headerlink" href="#diagrams" title="Permanent link">&para;</a></h2>
 <p>To make your documentation clearer and more digestible, you can split the Mermaid diagram into multiple parts, each focusing on a specific component of your aerosol code structure. Below, each diagram is followed by a placeholder for your text descriptions:</p>
 <h3 id="activity-component">Activity Component<a class="headerlink" href="#activity-component" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>graph TD
+<pre class="mermaid"><code>graph TD
     AS[Activity Strategies] --&gt; AFn[Functions]
     AB[Activity Builders] --&gt; AS
     AF[Activity Factories] --&gt; AB
-    AFn --&gt; link3[&quot;[Activity Strategies](./activity_strategies.md)&quot;]
-    AB --&gt; link1[&quot;[Activity Builders](./activity_builders.md)&quot;]
-    AF --&gt; link2[&quot;[Activity Factories](./activity_factories.md)&quot;]
-</code></pre></div>
+    AFn --&gt; link3["[Activity Strategies](./activity_strategies.md)"]
+    AB --&gt; link1["[Activity Builders](./activity_builders.md)"]
+    AF --&gt; link2["[Activity Factories](./activity_factories.md)"]</code></pre>
 <p><em>Description of Activity Component here...</em></p>
 <h3 id="distribution-component">Distribution Component<a class="headerlink" href="#distribution-component" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>graph TD
+<pre class="mermaid"><code>graph TD
     DS[Distribution Strategies] --&gt; DFn[Functions]
     DB[Distribution Builders] --&gt; DS
     DF[Distribution Factories] --&gt; DB
-    DFn --&gt; link6[&quot;[Distribution Strategies](./distribution_strategies.md)&quot;]
-    DB --&gt; link4[&quot;[Distribution Builders](./distribution_builders.md)&quot;]
-    DF --&gt; link5[&quot;[Distribution Factories](./distribution_factories.md)&quot;]
-</code></pre></div>
+    DFn --&gt; link6["[Distribution Strategies](./distribution_strategies.md)"]
+    DB --&gt; link4["[Distribution Builders](./distribution_builders.md)"]
+    DF --&gt; link5["[Distribution Factories](./distribution_factories.md)"]</code></pre>
 <p><em>Description of Distribution Component here...</em></p>
 <h3 id="properties-component">Properties Component<a class="headerlink" href="#properties-component" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>graph TD
-    P[Properties] --&gt; PLink[&quot;[Properties](properties/index.md)&quot;]
-</code></pre></div>
+<pre class="mermaid"><code>graph TD
+    P[Properties] --&gt; PLink["[Properties](properties/index.md)"]</code></pre>
 <p><em>Description of Properties Component here...</em></p>
 <h3 id="representation-component">Representation Component<a class="headerlink" href="#representation-component" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>graph TD
+<pre class="mermaid"><code>graph TD
     RS[Representation Strategies] --&gt; RFn[Functions]
     RB[Representation Builders] --&gt; RS
     R[Representation] --&gt; RB
-    RFn --&gt; link13[&quot;[Representation Strategies](./representation.md)&quot;]
-    RB --&gt; link9[&quot;[Representation Builders](./representation_builders.md)&quot;]
-    R --&gt; link8[&quot;[Representation](./representation.md)&quot;]
-</code></pre></div>
+    RFn --&gt; link13["[Representation Strategies](./representation.md)"]
+    RB --&gt; link9["[Representation Builders](./representation_builders.md)"]
+    R --&gt; link8["[Representation](./representation.md)"]</code></pre>
 <p><em>Description of Representation Component here...</em></p>
 <h3 id="surface-component">Surface Component<a class="headerlink" href="#surface-component" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>graph TD
+<pre class="mermaid"><code>graph TD
     SS[Surface Strategies] --&gt; SFn[Functions]
     SB[Surface Builders] --&gt; SS
     SF[Surface Factories] --&gt; SB
-    SFn --&gt; link12[&quot;[Surface Strategies](./surface_strategies.md)&quot;]
-    SB --&gt; link10[&quot;[Surface Builders](./surface_builders.md)&quot;]
-    SF --&gt; link11[&quot;[Surface Factories](./surface_factories.md)&quot;]
-</code></pre></div>
+    SFn --&gt; link12["[Surface Strategies](./surface_strategies.md)"]
+    SB --&gt; link10["[Surface Builders](./surface_builders.md)"]
+    SF --&gt; link11["[Surface Factories](./surface_factories.md)"]</code></pre>
 <p><em>Description of Surface Component here...</em></p>
 <p>This approach not only visually segments the different components of your code but also provides spaces between diagrams for detailed descriptions, making it easier for readers to understand each part's functionality and role within the larger system.</p>
 
