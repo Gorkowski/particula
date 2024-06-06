@@ -6,7 +6,7 @@
 
 ## GasSpeciesBuilder
 
-[Show source in species_builder.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L25)
+[Show source in species_builder.py:24](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L24)
 
 Builder class for GasSpecies objects, allowing for a more fluent and
 readable creation of GasSpecies instances with optional parameters.
@@ -60,7 +60,7 @@ class GasSpeciesBuilder(BuilderABC, BuilderMolarMassMixin, BuilderConcentrationM
 
 ### GasSpeciesBuilder().build
 
-[Show source in species_builder.py:99](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L99)
+[Show source in species_builder.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L98)
 
 Validate and return the GasSpecies object.
 
@@ -76,7 +76,7 @@ def build(self) -> GasSpecies: ...
 
 ### GasSpeciesBuilder().set_condensable
 
-[Show source in species_builder.py:91](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L91)
+[Show source in species_builder.py:90](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L90)
 
 Set the condensable bool of the gas species.
 
@@ -88,7 +88,7 @@ def set_condensable(self, condensable: Union[bool, NDArray[np.bool_]]): ...
 
 ### GasSpeciesBuilder().set_name
 
-[Show source in species_builder.py:78](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L78)
+[Show source in species_builder.py:77](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L77)
 
 Set the name of the gas species.
 
@@ -100,7 +100,7 @@ def set_name(self, name: Union[str, NDArray[np.str_]]): ...
 
 ### GasSpeciesBuilder().set_vapor_pressure_strategy
 
-[Show source in species_builder.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L83)
+[Show source in species_builder.py:82](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L82)
 
 Set the vapor pressure strategy for the gas species.
 
