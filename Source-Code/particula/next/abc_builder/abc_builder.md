@@ -128,7 +128,7 @@ def set_parameters(self, parameters: dict[str, Any]): ...
 
 ## BuilderActivityStrategyMixin
 
-[Show source in abc_builder.py:392](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L392)
+[Show source in abc_builder.py:398](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L398)
 
 Mixin class for Builder classes to set activity_strategy.
 
@@ -145,7 +145,7 @@ class BuilderActivityStrategyMixin:
 
 ### BuilderActivityStrategyMixin().set_activity_strategy
 
-[Show source in abc_builder.py:402](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L402)
+[Show source in abc_builder.py:408](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L408)
 
 Set the activity strategy of the particle.
 
@@ -172,7 +172,7 @@ def set_activity_strategy(
 
 ## BuilderChargeMixin
 
-[Show source in abc_builder.py:273](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L273)
+[Show source in abc_builder.py:277](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L277)
 
 Mixin class for Builder classes to set charge and charge_units.
 
@@ -189,7 +189,7 @@ class BuilderChargeMixin:
 
 ### BuilderChargeMixin().set_charge
 
-[Show source in abc_builder.py:283](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L283)
+[Show source in abc_builder.py:287](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L287)
 
 Set the number of elemental charges on the particle.
 
@@ -210,7 +210,7 @@ def set_charge(
 
 ## BuilderConcentrationMixin
 
-[Show source in abc_builder.py:235](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L235)
+[Show source in abc_builder.py:238](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L238)
 
 Mixin class for Builder classes to set concentration and
 concentration_units.
@@ -232,7 +232,7 @@ class BuilderConcentrationMixin:
 
 ### BuilderConcentrationMixin().set_concentration
 
-[Show source in abc_builder.py:250](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L250)
+[Show source in abc_builder.py:253](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L253)
 
 Set the concentration.
 
@@ -296,7 +296,7 @@ def set_density(
 
 ## BuilderDistributionStrategyMixin
 
-[Show source in abc_builder.py:419](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L419)
+[Show source in abc_builder.py:425](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L425)
 
 Mixin class for Builder classes to set distribution_strategy.
 
@@ -313,7 +313,7 @@ class BuilderDistributionStrategyMixin:
 
 ### BuilderDistributionStrategyMixin().set_distribution_strategy
 
-[Show source in abc_builder.py:429](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L429)
+[Show source in abc_builder.py:435](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L435)
 
 Set the distribution strategy of the particle.
 
@@ -340,7 +340,7 @@ def set_distribution_strategy(
 
 ## BuilderMassMixin
 
-[Show source in abc_builder.py:300](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L300)
+[Show source in abc_builder.py:304](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L304)
 
 Mixin class for Builder classes to set mass and mass_units.
 
@@ -357,7 +357,7 @@ class BuilderMassMixin:
 
 ### BuilderMassMixin().set_mass
 
-[Show source in abc_builder.py:310](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L310)
+[Show source in abc_builder.py:314](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L314)
 
 Set the mass of the particle in kg.
 
@@ -382,7 +382,7 @@ def set_mass(
 
 ## BuilderMolarMassMixin
 
-[Show source in abc_builder.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L204)
+[Show source in abc_builder.py:206](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L206)
 
 Mixin class for Builder classes to set molar_mass and molar_mass_units.
 
@@ -399,7 +399,7 @@ class BuilderMolarMassMixin:
 
 ### BuilderMolarMassMixin().set_molar_mass
 
-[Show source in abc_builder.py:214](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L214)
+[Show source in abc_builder.py:216](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L216)
 
 Set the molar mass of the particle in kg/mol.
 
@@ -423,7 +423,7 @@ def set_molar_mass(
 
 ## BuilderRadiusMixin
 
-[Show source in abc_builder.py:331](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L331)
+[Show source in abc_builder.py:336](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L336)
 
 Mixin class for Builder classes to set radius and radius_units.
 
@@ -440,7 +440,7 @@ class BuilderRadiusMixin:
 
 ### BuilderRadiusMixin().set_radius
 
-[Show source in abc_builder.py:341](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L341)
+[Show source in abc_builder.py:346](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L346)
 
 Set the radius of the particle in meters.
 
@@ -465,7 +465,7 @@ def set_radius(
 
 ## BuilderSurfaceStrategyMixin
 
-[Show source in abc_builder.py:365](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L365)
+[Show source in abc_builder.py:371](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L371)
 
 Mixin class for Builder classes to set surface_strategy.
 
@@ -482,7 +482,7 @@ class BuilderSurfaceStrategyMixin:
 
 ### BuilderSurfaceStrategyMixin().set_surface_strategy
 
-[Show source in abc_builder.py:375](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L375)
+[Show source in abc_builder.py:381](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L381)
 
 Set the surface strategy of the particle.
 
@@ -507,7 +507,7 @@ def set_surface_strategy(
 
 ## BuilderSurfaceTensionMixin
 
-[Show source in abc_builder.py:173](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L173)
+[Show source in abc_builder.py:174](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L174)
 
 Mixin class for Builder classes to set surface_tension.
 
@@ -525,7 +525,7 @@ class BuilderSurfaceTensionMixin:
 
 ### BuilderSurfaceTensionMixin().set_surface_tension
 
-[Show source in abc_builder.py:184](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L184)
+[Show source in abc_builder.py:185](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L185)
 
 Set the surface tension of the particle in N/m.
 

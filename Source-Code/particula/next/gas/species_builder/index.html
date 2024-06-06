@@ -2209,30 +2209,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#gasspeciesbuilderset_concentration" class="md-nav__link">
-    <span class="md-ellipsis">
-      GasSpeciesBuilder().set_concentration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="GasSpeciesBuilder().set_concentration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#signature_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Signature
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#gasspeciesbuilderset_condensable" class="md-nav__link">
     <span class="md-ellipsis">
       GasSpeciesBuilder().set_condensable
@@ -2243,31 +2219,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#signature_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Signature
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gasspeciesbuilderset_molar_mass" class="md-nav__link">
-    <span class="md-ellipsis">
-      GasSpeciesBuilder().set_molar_mass
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="GasSpeciesBuilder().set_molar_mass">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#signature_4" class="md-nav__link">
+  <a href="#signature_2" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -2291,7 +2243,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#signature_5" class="md-nav__link">
+  <a href="#signature_3" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -2315,7 +2267,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#signature_6" class="md-nav__link">
+  <a href="#signature_4" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -6259,7 +6211,28 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../next/Tutorials/next_vapor_pressure/" class="md-nav__link">
+      <a href="../../../../../next/Tutorials/Gas_Species/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gas Species
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Vapor_Pressure/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -6312,7 +6285,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py">particula.next.gas.species_builder</a> module.</p>
 </blockquote>
 <h2 id="gasspeciesbuilder">GasSpeciesBuilder<a class="headerlink" href="#gasspeciesbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L19">Show source in species_builder.py:19</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L24">Show source in species_builder.py:24</a></p>
 <p>Builder class for GasSpecies objects, allowing for a more fluent and
 readable creation of GasSpecies instances with optional parameters.</p>
 <h4 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h4>
@@ -6350,15 +6323,17 @@ readable creation of GasSpecies instances with optional parameters.</p>
 <li><code>-</code> <em>Warning</em> - If using default units for any parameter.</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GasSpeciesBuilder</span><span class="p">(</span><span class="n">BuilderABC</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">GasSpeciesBuilder</span><span class="p">(</span><span class="n">BuilderABC</span><span class="p">,</span> <span class="n">BuilderMolarMassMixin</span><span class="p">,</span> <span class="n">BuilderConcentrationMixin</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../../abc_builder/#builderabc">BuilderABC</a></li>
+<li><a href="../../abc_builder/#builderconcentrationmixin">BuilderConcentrationMixin</a></li>
+<li><a href="../../abc_builder/#buildermolarmassmixin">BuilderMolarMassMixin</a></li>
 </ul>
 <h3 id="gasspeciesbuilderbuild">GasSpeciesBuilder().build<a class="headerlink" href="#gasspeciesbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L114">Show source in species_builder.py:114</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L98">Show source in species_builder.py:98</a></p>
 <p>Validate and return the GasSpecies object.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GasSpecies</span><span class="p">:</span> <span class="o">...</span>
@@ -6367,41 +6342,22 @@ readable creation of GasSpecies instances with optional parameters.</p>
 <ul>
 <li><a href="../species/#gasspecies">GasSpecies</a></li>
 </ul>
-<h3 id="gasspeciesbuilderset_concentration">GasSpeciesBuilder().set_concentration<a class="headerlink" href="#gasspeciesbuilderset_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L99">Show source in species_builder.py:99</a></p>
-<p>Set the concentration of the gas species in the mixture,
-in kg/m^3.</p>
-<h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_concentration</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
-    <span class="n">concentration_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;kg/m^3&quot;</span><span class="p">,</span>
-<span class="p">):</span> <span class="o">...</span>
-</code></pre></div>
 <h3 id="gasspeciesbuilderset_condensable">GasSpeciesBuilder().set_condensable<a class="headerlink" href="#gasspeciesbuilderset_condensable" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L91">Show source in species_builder.py:91</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L90">Show source in species_builder.py:90</a></p>
 <p>Set the condensable bool of the gas species.</p>
-<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
+<h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_condensable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condensable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]]):</span> <span class="o">...</span>
 </code></pre></div>
-<h3 id="gasspeciesbuilderset_molar_mass">GasSpeciesBuilder().set_molar_mass<a class="headerlink" href="#gasspeciesbuilderset_molar_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L70">Show source in species_builder.py:70</a></p>
-<p>Set the molar mass of the gas species. Units in kg/mol.</p>
-<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_molar_mass</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">molar_mass</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span> <span class="n">molar_mass_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;kg/mol&quot;</span>
-<span class="p">):</span> <span class="o">...</span>
-</code></pre></div>
 <h3 id="gasspeciesbuilderset_name">GasSpeciesBuilder().set_name<a class="headerlink" href="#gasspeciesbuilderset_name" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L65">Show source in species_builder.py:65</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L77">Show source in species_builder.py:77</a></p>
 <p>Set the name of the gas species.</p>
-<h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
+<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">]]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesbuilderset_vapor_pressure_strategy">GasSpeciesBuilder().set_vapor_pressure_strategy<a class="headerlink" href="#gasspeciesbuilderset_vapor_pressure_strategy" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L83">Show source in species_builder.py:83</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species_builder.py#L82">Show source in species_builder.py:82</a></p>
 <p>Set the vapor pressure strategy for the gas species.</p>
-<h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
+<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_vapor_pressure_strategy</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">VaporPressureStrategy</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">VaporPressureStrategy</span><span class="p">]]</span>
 <span class="p">):</span> <span class="o">...</span>
