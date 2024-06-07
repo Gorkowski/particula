@@ -8,20 +8,25 @@
 
 [Show source in atmosphere.py:8](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L8)
 
-Represents a mixture of gas species, detailing properties such as
-temperature, total pressure, and the list of gas species in the mixture.
+Represents a mixture of gas species under specific conditions.
+
+This class represents the atmospheric environment by detailing properties
+such as temperature and pressure, alongside a dynamic list of gas species
+present.
 
 #### Attributes
 
-- temperature (float): The temperature of the gas mixture in Kelvin.
-- total_pressure (float): The total pressure of the gas mixture in Pascals.
-- species (List[GasSpecies]): A list of GasSpecies objects representing the
-    species in the gas mixture.
+- `temperature` - Temperature of the gas mixture in Kelvin.
+- `total_pressure` - Total atmospheric pressure of the mixture inPascals.
+- `species` - List of GasSpecies objects representing the
+    various species within the gas mixture.
 
 #### Methods
 
-- `-` *add_species* - Adds a gas species to the mixture.
-- `-` *remove_species* - Removes a gas species from the mixture by index.
+- `add_species(self,` *species* - GasSpecies) -> None:
+    Adds a GasSpecies object to the mixture.
+- `remove_species(self,` *index* - int) -> None:
+    Removes a GasSpecies object from the mixture based on its index.
 
 #### Signature
 
@@ -31,9 +36,17 @@ class Atmosphere: ...
 
 ### Atmosphere().__getitem__
 
-[Show source in atmosphere.py:55](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L55)
+[Show source in atmosphere.py:64](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L64)
 
-Returns the gas species at the given index.
+Retrieves a gas species by index.
+
+#### Arguments
+
+- `index` - The index of the gas species to retrieve.
+
+#### Returns
+
+- `GasSpecies` - The gas species at the specified index.
 
 #### Signature
 
@@ -47,9 +60,13 @@ def __getitem__(self, index: int) -> GasSpecies: ...
 
 ### Atmosphere().__iter__
 
-[Show source in atmosphere.py:51](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L51)
+[Show source in atmosphere.py:55](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L55)
 
 Allows iteration over the species in the gas mixture.
+
+#### Returns
+
+- `Iterator[GasSpecies]` - An iterator over the gas species objects.
 
 #### Signature
 
@@ -59,38 +76,46 @@ def __iter__(self): ...
 
 ### Atmosphere().__len__
 
-[Show source in atmosphere.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L59)
+[Show source in atmosphere.py:75](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L75)
 
 Returns the number of species in the gas mixture.
+
+#### Returns
+
+- `int` - The number of gas species in the mixture.
 
 #### Signature
 
 ```python
-def __len__(self): ...
+def __len__(self) -> int: ...
 ```
 
 ### Atmosphere().__str__
 
-[Show source in atmosphere.py:63](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L63)
+[Show source in atmosphere.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L83)
 
-Returns a string representation of the Gas object.
+Provides a string representation of the Atmosphere object.
+
+#### Returns
+
+- `str` - A string that includes the temperature, pressure, and a
+    list of species in the mixture.
 
 #### Signature
 
 ```python
-def __str__(self): ...
+def __str__(self) -> str: ...
 ```
 
 ### Atmosphere().add_species
 
-[Show source in atmosphere.py:28](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L28)
+[Show source in atmosphere.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L32)
 
-Adds a gas species to the mixture.
+Adds a GasSpecies object to the mixture.
 
 #### Arguments
 
-- gas_species (GasSpecies): The GasSpecies object to be added to the
-mixture.
+- `gas_species` - The gas species to be added.
 
 #### Signature
 
@@ -104,14 +129,18 @@ def add_species(self, gas_species: GasSpecies) -> None: ...
 
 ### Atmosphere().remove_species
 
-[Show source in atmosphere.py:38](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L38)
+[Show source in atmosphere.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere.py#L40)
 
-Removes a gas species from the mixture by index.
+Removes a gas species from the mixture by its index.
 
 #### Arguments
 
-- index (int): The index of the gas species to be removed from the
-list.
+- `index` - Index of the gas species to remove. Must be within
+            the current range of the list.
+
+#### Raises
+
+- `IndexError` - If the provided index is out of bounds.
 
 #### Signature
 

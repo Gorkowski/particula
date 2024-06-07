@@ -6,59 +6,60 @@
 
 ## AtmosphereBuilder
 
-[Show source in atmosphere_builder.py:13](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L13)
+[Show source in atmosphere_builder.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L16)
 
-A builder class for creating Atmosphere objects with a fluent interface.
+Builder class for creating Atmosphere objects using a fluent interface.
+
+This class provides methods to configure and build an Atmosphere object,
+allowing for step-by-step setting of atmospheric properties and
+species composition.
 
 #### Attributes
 
-----------
-- temperature (float): The temperature of the gas mixture in Kelvin.
-- total_pressure (float): The total pressure of the gas mixture in Pascals.
-- species (list[GasSpecies]): The list of gas species in the mixture.
+- `temperature` - Temperature of the gas mixture in Kelvin.
+- `total_pressure` *float* - Total pressure of the gas mixture in Pascals.
+- `species` *list[GasSpecies]* - List of GasSpecies objects in the mixture.
+    Starts empty.
 
 #### Methods
 
--------
-- `-` *set_temperature(temperature)* - Set the temperature of the gas mixture.
-- `-` *set_total_pressure(total_pressure)* - Set the total pressure of the gas
-mixture.
-- `-` *add_species(species)* - Add a GasSpecies component to the gas mixture.
-- `-` *set_parameters(parameters)* - Set the parameters from a dictionary.
-- `-` *build()* - Validate and return the Atmosphere object.
+- `set_temperature(temperature,temperature_units)` - Sets the temperature.
+- `set_pressure(pressure,pressure_units)` - Sets the total pressure.
+- `add_species(species)` - Adds a GasSpecies object to the gas mixture.
+- `set_parameters(parameters)` - Sets multiple parameters from a dictionary.
+- `build()` - Validates the set parameters and returns an Atmosphere object.
 
 #### Signature
 
 ```python
-class AtmosphereBuilder(BuilderABC):
+class AtmosphereBuilder(BuilderABC, BuilderTemperatureMixin, BuilderPressureMixin):
     def __init__(self): ...
 ```
 
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
+- [BuilderPressureMixin](../abc_builder.md#builderpressuremixin)
+- [BuilderTemperatureMixin](../abc_builder.md#buildertemperaturemixin)
 
 ### AtmosphereBuilder().add_species
 
-[Show source in atmosphere_builder.py:99](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L99)
+[Show source in atmosphere_builder.py:48](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L48)
 
-Add a GasSpecies component to the gas mixture.
+Adds a GasSpecies object to the gas mixture.
 
 #### Arguments
 
-----
-- species (GasSpecies): The GasSpecies object to be added to the
-mixture.
+- `species` *GasSpecies* - The GasSpecies object to be added.
 
 #### Returns
 
--------
-- `-` *self* - The AtmosphereBuilder object.
+- [AtmosphereBuilder](#atmospherebuilder) - Instance of this builder for chaining.
 
 #### Signature
 
 ```python
-def add_species(self, species: GasSpecies): ...
+def add_species(self, species: GasSpecies) -> "AtmosphereBuilder": ...
 ```
 
 #### See also
@@ -67,14 +68,22 @@ def add_species(self, species: GasSpecies): ...
 
 ### AtmosphereBuilder().build
 
-[Show source in atmosphere_builder.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L114)
+[Show source in atmosphere_builder.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L60)
 
-Validate and return the Atmosphere object.
+Validates the configuration and constructs the Atmosphere object.
+
+This method checks that all necessary conditions are met for a valid
+Atmosphere instance(e.g., at least one species must be present) and
+then initializes the Atmosphere.
 
 #### Returns
 
--------
-- `-` *Atmosphere* - The Atmosphere object.
+- `Atmosphere` - The newly created Atmosphere object, configured as
+specified.
+
+#### Raises
+
+- `ValueError` - If no species have been added to the mixture.
 
 #### Signature
 
@@ -85,61 +94,3 @@ def build(self) -> Atmosphere: ...
 #### See also
 
 - [Atmosphere](./atmosphere.md#atmosphere)
-
-### AtmosphereBuilder().set_temperature
-
-[Show source in atmosphere_builder.py:39](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L39)
-
-Set the temperature of the gas mixture, in Kelvin.
-
-#### Arguments
-
-----
-- temperature (float): The temperature of the gas mixture.
-- temperature_units (str): The units of the temperature.
-options are 'degC', 'degF', 'degR', 'K'. Default is 'K'.
-
-#### Returns
-
--------
-- `-` *self* - The AtmosphereBuilder object.
-
-#### Raises
-
-------
-- `-` *ValueError* - If the temperature is below absolute zero.
-
-#### Signature
-
-```python
-def set_temperature(self, temperature: float, temperature_units: str = "K"): ...
-```
-
-### AtmosphereBuilder().set_total_pressure
-
-[Show source in atmosphere_builder.py:71](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L71)
-
-Set the total pressure of the gas mixture, in Pascals.
-
-#### Arguments
-
-----
-- total_pressure (float): The total pressure of the gas mixture.
-- pressure_units (str): The units of the pressure. Options are 'Pa',
-'kPa', 'MPa', 'psi', 'bar', 'atm'. Default is 'Pa'.
-
-#### Returns
-
--------
-- `-` *self* - The AtmosphereBuilder object.
-
-#### Raises
-
-------
-- `-` *ValueError* - If the total pressure is below zero.
-
-#### Signature
-
-```python
-def set_total_pressure(self, total_pressure: float, pressure_units: str = "Pa"): ...
-```

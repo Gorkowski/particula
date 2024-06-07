@@ -128,7 +128,7 @@ def set_parameters(self, parameters: dict[str, Any]): ...
 
 ## BuilderActivityStrategyMixin
 
-[Show source in abc_builder.py:398](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L398)
+[Show source in abc_builder.py:469](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L469)
 
 Mixin class for Builder classes to set activity_strategy.
 
@@ -145,7 +145,7 @@ class BuilderActivityStrategyMixin:
 
 ### BuilderActivityStrategyMixin().set_activity_strategy
 
-[Show source in abc_builder.py:408](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L408)
+[Show source in abc_builder.py:479](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L479)
 
 Set the activity strategy of the particle.
 
@@ -296,7 +296,7 @@ def set_density(
 
 ## BuilderDistributionStrategyMixin
 
-[Show source in abc_builder.py:425](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L425)
+[Show source in abc_builder.py:496](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L496)
 
 Mixin class for Builder classes to set distribution_strategy.
 
@@ -313,7 +313,7 @@ class BuilderDistributionStrategyMixin:
 
 ### BuilderDistributionStrategyMixin().set_distribution_strategy
 
-[Show source in abc_builder.py:435](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L435)
+[Show source in abc_builder.py:506](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L506)
 
 Set the distribution strategy of the particle.
 
@@ -421,6 +421,53 @@ def set_molar_mass(
 
 
 
+## BuilderPressureMixin
+
+[Show source in abc_builder.py:404](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L404)
+
+Mixin class for AtmosphereBuilder to set total pressure.
+
+#### Methods
+
+- `set_pressure` - Set the total pressure attribute and units.
+
+#### Signature
+
+```python
+class BuilderPressureMixin:
+    def __init__(self): ...
+```
+
+### BuilderPressureMixin().set_pressure
+
+[Show source in abc_builder.py:414](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L414)
+
+Set the total pressure of the atmosphere.
+
+#### Arguments
+
+- `total_pressure` - Total pressure of the gas mixture.
+- `pressure_units` - Units of the pressure. Options include
+    'Pa', 'kPa', 'MPa', 'psi', 'bar', 'atm'. Default is 'Pa'.
+
+#### Returns
+
+- `AtmosphereBuilderMixin` - This object instance with updated pressure.
+
+#### Raises
+
+- `ValueError` - If the total pressure is below zero.
+
+#### Signature
+
+```python
+def set_pressure(
+    self, pressure: Union[float, NDArray[np.float_]], pressure_units: str = "Pa"
+): ...
+```
+
+
+
 ## BuilderRadiusMixin
 
 [Show source in abc_builder.py:336](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L336)
@@ -465,7 +512,7 @@ def set_radius(
 
 ## BuilderSurfaceStrategyMixin
 
-[Show source in abc_builder.py:371](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L371)
+[Show source in abc_builder.py:442](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L442)
 
 Mixin class for Builder classes to set surface_strategy.
 
@@ -482,7 +529,7 @@ class BuilderSurfaceStrategyMixin:
 
 ### BuilderSurfaceStrategyMixin().set_surface_strategy
 
-[Show source in abc_builder.py:381](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L381)
+[Show source in abc_builder.py:452](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L452)
 
 Set the surface strategy of the particle.
 
@@ -542,4 +589,50 @@ def set_surface_tension(
     surface_tension: Union[float, NDArray[np.float_]],
     surface_tension_units: Optional[str] = "N/m",
 ): ...
+```
+
+
+
+## BuilderTemperatureMixin
+
+[Show source in abc_builder.py:368](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L368)
+
+Mixin class for AtmosphereBuilder to set temperature.
+
+#### Methods
+
+- `set_temperature` - Set the temperature attribute and units.
+
+#### Signature
+
+```python
+class BuilderTemperatureMixin:
+    def __init__(self): ...
+```
+
+### BuilderTemperatureMixin().set_temperature
+
+[Show source in abc_builder.py:378](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L378)
+
+Set the temperature of the atmosphere.
+
+#### Arguments
+
+- `temperature` *float* - Temperature of the gas mixture.
+- `temperature_units` *str* - Units of the temperature.
+    Options include 'degC', 'degF', 'degR', 'K'. Default is 'K'.
+
+#### Returns
+
+- `AtmosphereBuilderMixin` - This object instance with updated
+    temperature.
+
+#### Raises
+
+- `ValueError` - If the converted temperature is below absolute zero.
+
+#### Signature
+
+```python
+def set_temperature(self, temperature: float, temperature_units: str = "K"): ...
 ```
