@@ -39,7 +39,7 @@ class AtmosphereBuilder(
     """
 
     def __init__(self):
-        required_parameters = ["temperature", "total_pressure", "species"]
+        required_parameters = ["temperature", "pressure", "species"]
         BuilderABC.__init__(self, required_parameters)
         BuilderPressureMixin.__init__(self)
         BuilderTemperatureMixin.__init__(self)
