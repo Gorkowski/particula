@@ -7,6 +7,7 @@ Next is the next iteration of the particula simulation model. It is a complete r
 - [Aerosol Distribution](Tutorials/Aerosol_Distributions.ipynb)
 - [Vapor Pressure](Tutorials/Vapor_Pressure.ipynb)
 - [Gas Species](Tutorials/Gas_Species.ipynb)
+- [Atmosphere Tutorial](Tutorials/AtmosphereTutorial.ipynb)
 
 ## Guides for Developers
 
