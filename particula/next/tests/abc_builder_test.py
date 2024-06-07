@@ -285,4 +285,4 @@ def test_charge_mixin():
 
     # test array of charges
     builder_mixin.set_charge(np.array([1, 2, 3]))
-    np.testing.assert_allclose(builder_mixin.charge, np.array([1, 2, 3])) 
+    np.testing.assert_allclose(builder_mixin.charge, np.array([1, 2, 3]))
