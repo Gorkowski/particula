@@ -1,4 +1,5 @@
-"""Particle Vapor Equilibrium, condensation and evaporation
+"""
+Particle Vapor Equilibrium, condensation and evaporation
 based on partial pressures to get dm/dt or other forms of
 particle growth and decay.
 
@@ -55,29 +56,26 @@ def first_order_mass_transport_k(
         vapor_transition: Union[float, NDArray[np.float_]],
         diffusion_coefficient: Union[float, NDArray[np.float_]] = 2*1e-9
 ) -> Union[float, NDArray[np.float_]]:
-    """
+    """ First-order mass transport coefficient per particle.
+
     Calculate the first-order mass transport coefficient, K, for a given radius
     diffusion coefficient, and vapor transition correction factor. For a
     single particle.
 
     Args:
-    -----
-    - radius (Union[float, NDArray[np.float_]]): The radius of the particle
-    [m].
-    - diffusion_coefficient (Union[float, NDArray[np.float_]]): The diffusion
-    coefficient of the vapor [m^2/s], default to air.
-    - vapor_transition (Union[float, NDArray[np.float_]]): The vapor transition
-    correction factor. [unitless]
+        radius: The radius of the particle [m].
+        diffusion_coefficient: The diffusion coefficient of the vapor [m^2/s],
+        default to air.
+        vapor_transition: The vapor transition correction factor. [unitless]
 
     Returns:
-    --------
-    - Union[float, NDArray[np.float_]]: The first-order mass transport
-    coefficient per particle (m^3/s).
+        Union[float, NDArray[np.float_]]: The first-order mass transport
+        coefficient per particle (m^3/s).
 
     References:
-    ----------
-    - Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle number)
-    - https://en.wikipedia.org/wiki/Mass_diffusivity
+        Aerosol Modeling: Chapter 2, Equation 2.49 (excluding particle number)
+        Mass Diffusivity:
+        [Wikipedia](https://en.wikipedia.org/wiki/Mass_diffusivity)
     """
     return 4 * np.pi * radius * diffusion_coefficient * vapor_transition
 
@@ -88,28 +86,26 @@ def mass_transfer_rate(
         temperature: Union[float, NDArray[np.float_]],
         molar_mass: Union[float, NDArray[np.float_]]
 ) -> Union[float, NDArray[np.float_]]:
-    """
+    """Calculate the mass transfer rate for a particle.
+
     Calculate the mass transfer rate based on the difference in partial
     pressure and the first-order mass transport coefficient.
 
     Args:
-    -----
-    - pressure_delta (Union[float, NDArray[np.float_]]): The difference in
-    partial pressure between the gas phase and the particle phase.
-    - first_order_mass_transport (Union[float, NDArray[np.float_]]): The
-    first-order mass transport coefficient per particle.
-    - temperature (Union[float, NDArray[np.float_]]): The temperature at which
-    the mass transfer rate is to be calculated.
+        pressure_delta: The difference in partial pressure between the gas
+        phase and the particle phase.
+        first_order_mass_transport: The first-order mass transport coefficient
+        per particle.
+        temperature: The temperature at which the mass transfer rate is to be
+        calculated.
 
     Returns:
-    --------
-    - Union[float, NDArray[np.float_]]: The mass transfer rate for the particle
-    [kg/s].
+        Union[float, NDArray[np.float_]]: The mass transfer rate for the
+        particle [kg/s].
 
     References:
-    ----------
-    - Aerosol Modeling, Chapter 2, Equation 2.41 (excluding particle number)
-    - Seinfeld and Pandis, "Atmospheric Chemistry and Physics", Equation 13.3
+        Aerosol Modeling: Chapter 2, Equation 2.41 (excluding particle number)
+        Seinfeld and Pandis: "Atmospheric Chemistry and Physics", Equation 13.3
     """
     return np.array(
         first_order_mass_transport * pressure_delta
