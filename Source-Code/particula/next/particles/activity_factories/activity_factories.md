@@ -23,9 +23,9 @@ for the specified strategy type.
     'mass_ideal' (default), 'molar_ideal', or 'kappa_parameter'.
     parameters(Dict[str, Any], optional): Parameters required for the
     builder, dependent on the chosen strategy type.
-        - `-` *mass_ideal* - No parameters are required.
-        - `-` *molar_ideal* - molar_mass
-        - kappa | kappa_parameter: kappa, density, molar_mass,
+        - `mass_ideal` - No parameters are required.
+        - `molar_ideal` - molar_mass
+        kappa | kappa_parameter: kappa, density, molar_mass,
         water_index
 
 #### Returns
@@ -77,10 +77,10 @@ Returns the mapping of strategy types to builder instances.
 #### Returns
 
 - `Dict[str,` *Any]* - A dictionary mapping strategy types to builder
-    instances.
-    - `-` *mass_ideal* - IdealActivityMassBuilder
-    - `-` *molar_ideal* - IdealActivityMolarBuilder
-    - `-` *kappa_parameter* - KappaParameterActivityBuilder
+instances.
+    - `mass_ideal` - IdealActivityMassBuilder
+    - `molar_ideal` - IdealActivityMolarBuilder
+    - `kappa_parameter` - KappaParameterActivityBuilder
 
 #### Signature
 

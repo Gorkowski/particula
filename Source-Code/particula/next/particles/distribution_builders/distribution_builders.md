@@ -6,7 +6,7 @@
 
 ## MassBasedMovingBinBuilder
 
-[Show source in distribution_builders.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L14)
+[Show source in distribution_builders.py:13](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L13)
 
 Builds a MassBasedMovingBin instance.
 
@@ -23,7 +23,7 @@ class MassBasedMovingBinBuilder(BuilderABC):
 
 ### MassBasedMovingBinBuilder().build
 
-[Show source in distribution_builders.py:21](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L21)
+[Show source in distribution_builders.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L20)
 
 Builds a MassBasedMovingBin instance.
 
@@ -41,7 +41,7 @@ def build(self) -> MassBasedMovingBin: ...
 
 ## RadiiBasedMovingBinBuilder
 
-[Show source in distribution_builders.py:26](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L26)
+[Show source in distribution_builders.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L25)
 
 Builds a RadiiBasedMovingBin instance.
 
@@ -58,7 +58,7 @@ class RadiiBasedMovingBinBuilder(BuilderABC):
 
 ### RadiiBasedMovingBinBuilder().build
 
-[Show source in distribution_builders.py:33](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L33)
+[Show source in distribution_builders.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L32)
 
 Builds a RadiiBasedMovingBin instance.
 
@@ -76,7 +76,7 @@ def build(self) -> RadiiBasedMovingBin: ...
 
 ## SpeciatedMassMovingBinBuilder
 
-[Show source in distribution_builders.py:38](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L38)
+[Show source in distribution_builders.py:37](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L37)
 
 Builds a SpeciatedMassMovingBin instance.
 
@@ -93,7 +93,7 @@ class SpeciatedMassMovingBinBuilder(BuilderABC):
 
 ### SpeciatedMassMovingBinBuilder().build
 
-[Show source in distribution_builders.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L45)
+[Show source in distribution_builders.py:44](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_builders.py#L44)
 
 Builds a SpeciatedMassMovingBin instance.
 

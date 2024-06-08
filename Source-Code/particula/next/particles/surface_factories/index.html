@@ -6109,6 +6109,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Activity_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Activity Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../next/Tutorials/Aerosol_Distributions/" class="md-nav__link">
         
   
@@ -6151,11 +6172,53 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Distribution_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Strategy Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../next/Tutorials/Gas_Species/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Gas Species Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Particle_Representation_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Particle Representation
   </span>
   
 
@@ -6254,16 +6317,18 @@ particulate phases.</p>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>get_builders()</code> - Returns the mapping of strategy types to builder
-    instances.</li>
+instances.</li>
 <li><code>get_strategy(strategy_type,</code> <em>parameters)</em> - Gets the strategy instance
 for the specified strategy type.<ul>
 <li><code>strategy_type</code> - Type of surface tension strategy to use, can be
-    'volume', 'mass', or 'molar'.
+'volume', 'mass', or 'molar'.
 parameters(Dict[str, Any], optional): Parameters required for the
-    builder, dependent on the chosen strategy type.
-        - <code>volume</code> - density, surface_tension
-        - <code>mass</code> - density, surface_tension
-        - <code>molar</code> - molar_mass, density, surface_tension</li>
+builder, dependent on the chosen strategy type.<ul>
+<li><code>volume</code> - density, surface_tension</li>
+<li><code>mass</code> - density, surface_tension</li>
+<li><code>molar</code> - molar_mass, density, surface_tension</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -6304,10 +6369,12 @@ parameters(Dict[str, Any], optional): Parameters required for the
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>Dict[str,</code> <em>BuilderT]</em> - A dictionary mapping strategy types to
-    builder instances.
-        - <code>volume</code> - SurfaceStrategyVolumeBuilder
-        - <code>mass</code> - SurfaceStrategyMassBuilder
-        - <code>molar</code> - SurfaceStrategyMolarBuilder</li>
+builder instances.<ul>
+<li><code>volume</code> - SurfaceStrategyVolumeBuilder</li>
+<li><code>mass</code> - SurfaceStrategyMassBuilder</li>
+<li><code>molar</code> - SurfaceStrategyMolarBuilder</li>
+</ul>
+</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_builders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>

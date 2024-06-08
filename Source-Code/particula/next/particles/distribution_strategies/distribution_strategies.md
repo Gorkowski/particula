@@ -6,7 +6,7 @@
 
 ## DistributionStrategy
 
-[Show source in distribution_strategies.py:11](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L11)
+[Show source in distribution_strategies.py:10](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L10)
 
 Abstract base class for particle strategy, defining the common
 interface for mass, radius, and total mass calculations for different
@@ -27,25 +27,22 @@ class DistributionStrategy(ABC): ...
 
 ### DistributionStrategy().add_mass
 
-[Show source in distribution_strategies.py:84](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L84)
+[Show source in distribution_strategies.py:70](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L70)
 
-Adds mass to the distribution of particles based on their distribution,
-concentration, and density.
+Adds mass to the distribution of particles.
 
 #### Arguments
 
-- distribution (NDArray[np.float_]): The distribution representation
-of particles
-- concentration (NDArray[np.float_]): The concentration of each
-particle in the distribution.
-- density (NDArray[np.float_]): The density of the particles.
-- added_mass (NDArray[np.float_]): The mass to be added per
-distribution bin.
+- `distribution` - The distribution of particle sizes or masses.
+- `concentration` - The concentration of each particle size or mass in
+the distribution.
+- `density` - The density of the particles.
+- `added_mass` - The mass to be added per distribution bin.
 
 #### Returns
 
-- `-` *NDArray[np.float_]* - The new concentration array.
-- `-` *NDArray[np.float_]* - The new distribution array.
+- `NDArray[np.float_]` - The new concentration array.
+- `NDArray[np.float_]` - The new distribution array.
 
 #### Signature
 
@@ -62,20 +59,18 @@ def add_mass(
 
 ### DistributionStrategy().get_mass
 
-[Show source in distribution_strategies.py:24](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L24)
+[Show source in distribution_strategies.py:23](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L23)
 
-Calculates the mass of particles based on their distribution and
-density.
+Calculates the mass of the particles.
 
 #### Arguments
 
-- distribution (NDArray[np.float_]): The distribution of particle
-    sizes or masses.
-- density (NDArray[np.float_]): The density of the particles.
+- `distribution` - The distribution of particle sizes or masses.
+- `density` - The density of the particles.
 
 #### Returns
 
-- `-` *NDArray[np.float_]* - The mass of the particles.
+- `NDArray[np.float_]` - The mass of the particles.
 
 #### Signature
 
@@ -88,20 +83,18 @@ def get_mass(
 
 ### DistributionStrategy().get_radius
 
-[Show source in distribution_strategies.py:43](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L43)
+[Show source in distribution_strategies.py:37](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L37)
 
-Calculates the radius of particles based on their distribution and
-density.
+Calculates the radius of the particles.
 
 #### Arguments
 
-- distribution (NDArray[np.float_]): The distribution of particle
-    sizes or masses.
-- density (NDArray[np.float_]): The density of the particles.
+- `distribution` - The distribution of particle sizes or masses.
+- `density` - The density of the particles.
 
 #### Returns
 
-- `-` *NDArray[np.float_]* - The radius of the particles.
+- `NDArray[np.float_]` - The radius of the particles.
 
 #### Signature
 
@@ -114,22 +107,20 @@ def get_radius(
 
 ### DistributionStrategy().get_total_mass
 
-[Show source in distribution_strategies.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L62)
+[Show source in distribution_strategies.py:51](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L51)
 
-Calculates the total mass of particles based on their distribution,
-concentration, and density.
+Calculates the total mass of particles.
 
 #### Arguments
 
-- distribution (NDArray[np.float_]): The distribution of particle
-    sizes or masses.
-- concentration (NDArray[np.float_]): The concentration of each
-    particle size or mass in the distribution.
-- density (NDArray[np.float_]): The density of the particles.
+- `distribution` - The distribution of particle sizes or masses.
+- `concentration` - The concentration of each particle size or mass in
+the distribution.
+- `density` - The density of the particles.
 
 #### Returns
 
-- `-` *np.float_* - The total mass of the particles.
+- `np.float_` - The total mass of the particles.
 
 #### Signature
 
@@ -147,10 +138,13 @@ def get_total_mass(
 
 ## MassBasedMovingBin
 
-[Show source in distribution_strategies.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L111)
+[Show source in distribution_strategies.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L93)
 
-A strategy for particles represented by their mass distribution, and
-particle number concentration. Moving the bins when adding mass.
+A strategy for particles represented by their mass distribution.
+
+This strategy calculates particle mass, radius, and total mass based on
+the particle's mass, number concentration, and density. It also moves the
+bins when adding mass to the distribution.
 
 #### Signature
 
@@ -164,7 +158,7 @@ class MassBasedMovingBin(DistributionStrategy): ...
 
 ### MassBasedMovingBin().add_mass
 
-[Show source in distribution_strategies.py:145](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L145)
+[Show source in distribution_strategies.py:125](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L125)
 
 #### Signature
 
@@ -180,7 +174,7 @@ def add_mass(
 
 ### MassBasedMovingBin().get_mass
 
-[Show source in distribution_strategies.py:117](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L117)
+[Show source in distribution_strategies.py:101](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L101)
 
 #### Signature
 
@@ -192,7 +186,7 @@ def get_mass(
 
 ### MassBasedMovingBin().get_radius
 
-[Show source in distribution_strategies.py:125](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L125)
+[Show source in distribution_strategies.py:107](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L107)
 
 #### Signature
 
@@ -204,7 +198,7 @@ def get_radius(
 
 ### MassBasedMovingBin().get_total_mass
 
-[Show source in distribution_strategies.py:135](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L135)
+[Show source in distribution_strategies.py:115](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L115)
 
 #### Signature
 
@@ -221,11 +215,10 @@ def get_total_mass(
 
 ## RadiiBasedMovingBin
 
-[Show source in distribution_strategies.py:156](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L156)
+[Show source in distribution_strategies.py:136](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L136)
 
-A strategy for particles represented by their radius (distribution),
-and particle concentration. Implementing the DistributionStrategy
-interface.
+A strategy for particles represented by their radius.
+
 This strategy calculates particle mass, radius, and total mass based on
 the particle's radius, number concentration, and density.
 
@@ -241,7 +234,7 @@ class RadiiBasedMovingBin(DistributionStrategy): ...
 
 ### RadiiBasedMovingBin().add_mass
 
-[Show source in distribution_strategies.py:192](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L192)
+[Show source in distribution_strategies.py:168](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L168)
 
 #### Signature
 
@@ -257,7 +250,7 @@ def add_mass(
 
 ### RadiiBasedMovingBin().get_mass
 
-[Show source in distribution_strategies.py:165](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L165)
+[Show source in distribution_strategies.py:143](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L143)
 
 #### Signature
 
@@ -269,7 +262,7 @@ def get_mass(
 
 ### RadiiBasedMovingBin().get_radius
 
-[Show source in distribution_strategies.py:174](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L174)
+[Show source in distribution_strategies.py:150](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L150)
 
 #### Signature
 
@@ -281,7 +274,7 @@ def get_radius(
 
 ### RadiiBasedMovingBin().get_total_mass
 
-[Show source in distribution_strategies.py:181](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L181)
+[Show source in distribution_strategies.py:157](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L157)
 
 #### Signature
 
@@ -298,7 +291,9 @@ def get_total_mass(
 
 ## SpeciatedMassMovingBin
 
-[Show source in distribution_strategies.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L204)
+[Show source in distribution_strategies.py:180](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L180)
+
+Strategy for particles with speciated mass distribution.
 
 Strategy for particles with speciated mass distribution.
 Some particles may have different densities and their mass is
@@ -318,7 +313,7 @@ class SpeciatedMassMovingBin(DistributionStrategy): ...
 
 ### SpeciatedMassMovingBin().add_mass
 
-[Show source in distribution_strategies.py:280](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L280)
+[Show source in distribution_strategies.py:215](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L215)
 
 #### Signature
 
@@ -334,22 +329,7 @@ def add_mass(
 
 ### SpeciatedMassMovingBin().get_mass
 
-[Show source in distribution_strategies.py:211](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L211)
-
-Calculates the mass for each mass and species, leveraging densities
-for adjustment.
-
-#### Arguments
-
-- distribution (NDArray[np.float_]): A 2D array with rows
-    representing mass bins and columns representing species.
-- densities (NDArray[np.float_]): An array of densities for each
-    species.
-
-#### Returns
-
-- `-` *NDArray[np.float_]* - A 1D array of calculated masses for each mass
-    bin. The sum of each column (species) in the distribution matrix.
+[Show source in distribution_strategies.py:190](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L190)
 
 #### Signature
 
@@ -361,22 +341,7 @@ def get_mass(
 
 ### SpeciatedMassMovingBin().get_radius
 
-[Show source in distribution_strategies.py:235](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L235)
-
-Calculates the radius for each mass bin and species, based on the
-volume derived from mass and density.
-
-#### Arguments
-
-- distribution (NDArray[np.float_]): A 2D array with rows representing
-    mass bins and columns representing species.
-- density (NDArray[np.float_]): An array of densities for each
-    species.
-
-#### Returns
-
-- `-` *NDArray[np.float_]* - A 1D array of calculated radii for each mass
-    bin.
+[Show source in distribution_strategies.py:198](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L198)
 
 #### Signature
 
@@ -388,20 +353,7 @@ def get_radius(
 
 ### SpeciatedMassMovingBin().get_total_mass
 
-[Show source in distribution_strategies.py:258](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L258)
-
-Calculates the total mass of all species, incorporating the
-concentration of particles per species.
-
-#### Arguments
-
-- distribution (NDArray[np.float_]): The mass distribution matrix.
-- counts (NDArray[np.float_]): A 1D array with elements representing
-    the count of particles for each species.
-
-#### Returns
-
-- `-` *np.float_* - The total mass of all particles.
+[Show source in distribution_strategies.py:205](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L205)
 
 #### Signature
 

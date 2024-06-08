@@ -54,7 +54,7 @@ class LimitedRadiusParticleBuilder(
 
 ### LimitedRadiusParticleBuilder().build
 
-[Show source in representation_builders.py:300](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L300)
+[Show source in representation_builders.py:304](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L304)
 
 Validate and return the ParticleRepresentation object.
 
@@ -77,7 +77,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ### LimitedRadiusParticleBuilder().set_geometric_standard_deviation
 
-[Show source in representation_builders.py:244](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L244)
+[Show source in representation_builders.py:245](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L245)
 
 Set the geometric standard deviation for the distribution
 
@@ -115,7 +115,7 @@ def set_mode(self, mode: NDArray[np.float_], mode_units: str = "m"): ...
 
 ### LimitedRadiusParticleBuilder().set_number_concentration
 
-[Show source in representation_builders.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L263)
+[Show source in representation_builders.py:265](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L265)
 
 Set the number concentration for the distribution
 
@@ -135,7 +135,7 @@ def set_number_concentration(
 
 ### LimitedRadiusParticleBuilder().set_radius_bins
 
-[Show source in representation_builders.py:282](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L282)
+[Show source in representation_builders.py:285](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L285)
 
 Set the radius bins for the distribution
 

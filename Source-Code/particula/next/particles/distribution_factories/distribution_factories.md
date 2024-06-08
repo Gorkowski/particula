@@ -8,36 +8,36 @@
 
 [Show source in distribution_factories.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L15)
 
-Factory class to create distribution strategy builders for
-calculating particle distributions based on the specified
+Factory class to create distribution strategy from builders.
+
+Used for calculating particle distributions based on the specified
 representation type.
 
-Methods
--------
-- get_builders(): Returns the mapping of strategy types to builder
+#### Methods
+
+- `get_builders()` - Returns the mapping of strategy types to builder
 instances.
-- get_strategy(strategy_type, parameters): Gets the strategy instance
+- `get_strategy(strategy_type,` *parameters)* - Gets the strategy instance
 for the specified strategy type.
-    - strategy_type: Type of distribution strategy to use, can be
+    - `strategy_type` - Type of distribution strategy to use, can be
     'mass_based_moving_bin', 'radii_based_moving_bin', or
     'speciated_mass_moving_bin'.
-    - parameters(Dict[str, Any], optional): Parameters required for the
+    parameters(Dict[str, Any], optional): Parameters required for the
     builder, dependent on the chosen strategy type.
-        - mass_based_moving_bin: None
-        - radii_based_moving_bin: None
-        - speciated_mass_moving_bin: None
+        - `mass_based_moving_bin` - None
+        - `radii_based_moving_bin` - None
+        - `speciated_mass_moving_bin` - None
 
 #### Returns
 
---------
-- `-` *DistributionStrategy* - An instance of the specified DistributionStrategy.
+- `DistributionStrategy` - An instance of the specified
+DistributionStrategy.
 
 #### Raises
 
--------
-- `-` *ValueError* - If an unknown strategy type is provided.
-- `-` *ValueError* - If any required key is missing during check_keys or
-    pre_build_check, or if trying to set an invalid parameter.
+- `ValueError` - If an unknown strategy type is provided.
+- `ValueError` - If any required key is missing during check_keys or
+pre_build_check, or if trying to set an invalid parameter.
 
 #### Signature
 
@@ -65,18 +65,17 @@ class DistributionFactory(
 
 ### DistributionFactory().get_builders
 
-[Show source in distribution_factories.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L59)
+[Show source in distribution_factories.py:57](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L57)
 
 Returns the mapping of strategy types to builder instances.
 
 #### Returns
 
---------
-- Dict[str, BuilderABC]: Mapping of strategy types to builder
+- `Dict[str,` *BuilderABC]* - Mapping of strategy types to builder
 instances.
-    - `-` *'mass_based_moving_bin'* - MassBasedMovingBinBuilder
-    - `-` *'radii_based_moving_bin'* - RadiiBasedMovingBinBuilder
-    - `-` *'speciated_mass_moving_bin'* - SpeciatedMassMovingBinBuilder
+    - `'mass_based_moving_bin'` - MassBasedMovingBinBuilder
+    - `'radii_based_moving_bin'` - RadiiBasedMovingBinBuilder
+    - `'speciated_mass_moving_bin'` - SpeciatedMassMovingBinBuilder
 
 #### Signature
 

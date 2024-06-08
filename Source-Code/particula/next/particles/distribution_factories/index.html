@@ -2496,17 +2496,17 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="DistributionFactory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#methods" class="md-nav__link">
     <span class="md-ellipsis">
       Methods
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
@@ -6109,6 +6109,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Activity_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Activity Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../next/Tutorials/Aerosol_Distributions/" class="md-nav__link">
         
   
@@ -6151,11 +6172,53 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Distribution_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution Strategy Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../next/Tutorials/Gas_Species/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Gas Species Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../next/Tutorials/Particle_Representation_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Particle Representation
   </span>
   
 
@@ -6247,39 +6310,38 @@
 </blockquote>
 <h2 id="distributionfactory">DistributionFactory<a class="headerlink" href="#distributionfactory" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L15">Show source in distribution_factories.py:15</a></p>
-<p>Factory class to create distribution strategy builders for
-calculating particle distributions based on the specified
+<p>Factory class to create distribution strategy from builders.</p>
+<p>Used for calculating particle distributions based on the specified
 representation type.</p>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
+<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
-<li>get_builders(): Returns the mapping of strategy types to builder
+<li><code>get_builders()</code> - Returns the mapping of strategy types to builder
 instances.</li>
-<li>get_strategy(strategy_type, parameters): Gets the strategy instance
+<li><code>get_strategy(strategy_type,</code> <em>parameters)</em> - Gets the strategy instance
 for the specified strategy type.<ul>
-<li>strategy_type: Type of distribution strategy to use, can be
+<li><code>strategy_type</code> - Type of distribution strategy to use, can be
 'mass_based_moving_bin', 'radii_based_moving_bin', or
-'speciated_mass_moving_bin'.</li>
-<li>parameters(Dict[str, Any], optional): Parameters required for the
+'speciated_mass_moving_bin'.
+parameters(Dict[str, Any], optional): Parameters required for the
 builder, dependent on the chosen strategy type.<ul>
-<li>mass_based_moving_bin: None</li>
-<li>radii_based_moving_bin: None</li>
-<li>speciated_mass_moving_bin: None</li>
+<li><code>mass_based_moving_bin</code> - None</li>
+<li><code>radii_based_moving_bin</code> - None</li>
+<li><code>speciated_mass_moving_bin</code> - None</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>DistributionStrategy</em> - An instance of the specified DistributionStrategy.</li>
+<li><code>DistributionStrategy</code> - An instance of the specified
+DistributionStrategy.</li>
 </ul>
 <h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>ValueError</em> - If an unknown strategy type is provided.</li>
-<li><code>-</code> <em>ValueError</em> - If any required key is missing during check_keys or
-    pre_build_check, or if trying to set an invalid parameter.</li>
+<li><code>ValueError</code> - If an unknown strategy type is provided.</li>
+<li><code>ValueError</code> - If any required key is missing during check_keys or
+pre_build_check, or if trying to set an invalid parameter.</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DistributionFactory</span><span class="p">(</span>
@@ -6303,16 +6365,15 @@ builder, dependent on the chosen strategy type.<ul>
 <li><a href="../distribution_strategies/#speciatedmassmovingbin">SpeciatedMassMovingBin</a></li>
 </ul>
 <h3 id="distributionfactoryget_builders">DistributionFactory().get_builders<a class="headerlink" href="#distributionfactoryget_builders" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L59">Show source in distribution_factories.py:59</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L57">Show source in distribution_factories.py:57</a></p>
 <p>Returns the mapping of strategy types to builder instances.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>Dict[str, BuilderABC]: Mapping of strategy types to builder
+<li><code>Dict[str,</code> <em>BuilderABC]</em> - Mapping of strategy types to builder
 instances.<ul>
-<li><code>-</code> <em>'mass_based_moving_bin'</em> - MassBasedMovingBinBuilder</li>
-<li><code>-</code> <em>'radii_based_moving_bin'</em> - RadiiBasedMovingBinBuilder</li>
-<li><code>-</code> <em>'speciated_mass_moving_bin'</em> - SpeciatedMassMovingBinBuilder</li>
+<li><code>'mass_based_moving_bin'</code> - MassBasedMovingBinBuilder</li>
+<li><code>'radii_based_moving_bin'</code> - RadiiBasedMovingBinBuilder</li>
+<li><code>'speciated_mass_moving_bin'</code> - SpeciatedMassMovingBinBuilder</li>
 </ul>
 </li>
 </ul>
