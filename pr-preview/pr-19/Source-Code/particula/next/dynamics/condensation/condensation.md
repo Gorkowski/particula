@@ -33,7 +33,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:310](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L310)
+[Show source in condensation.py:309](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L309)
 
 #### Signature
 
