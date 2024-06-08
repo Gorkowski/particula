@@ -6,7 +6,7 @@
 
 ## CondensationIsothermal
 
-[Show source in condensation.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L306)
+[Show source in condensation.py:302](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L302)
 
 Condensation strategy for isothermal conditions, where the temperature
 remains constant. This class implements the mass transfer rate calculation
@@ -31,7 +31,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:325](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L325)
+[Show source in condensation.py:321](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L321)
 
 #### Signature
 
@@ -55,7 +55,7 @@ def mass_transfer_rate(
 
 ## CondensationStrategy
 
-[Show source in condensation.py:122](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L122)
+[Show source in condensation.py:118](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L118)
 
 Abstract class for mass transfer strategies, for condensation or
 evaporation of particles. This class should be subclassed to implement
@@ -88,7 +88,7 @@ class CondensationStrategy(ABC):
 
 ### CondensationStrategy().first_order_mass_transport
 
-[Show source in condensation.py:225](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L225)
+[Show source in condensation.py:221](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L221)
 
 Calculate the first-order mass transport coefficient, K, for a given
 particle based on the diffusion coefficient, radius, and vapor
@@ -131,7 +131,7 @@ def first_order_mass_transport(
 
 ### CondensationStrategy().knudsen_number
 
-[Show source in condensation.py:187](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L187)
+[Show source in condensation.py:183](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L183)
 
 Calculate the Knudsen number based on the mean free path of the gas
 molecules and the radius of the particle.
@@ -171,7 +171,7 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation.py:272](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L272)
+[Show source in condensation.py:268](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L268)
 
 Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.
@@ -216,7 +216,7 @@ def mass_transfer_rate(
 
 ### CondensationStrategy().mean_free_path
 
-[Show source in condensation.py:152](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L152)
+[Show source in condensation.py:148](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L148)
 
 Calculate the mean free path of the gas molecules based on the
 temperature, pressure, and dynamic viscosity of the gas.
@@ -254,7 +254,9 @@ def mean_free_path(
 
 ## first_order_mass_transport_k
 
-[Show source in condensation.py:53](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L53)
+[Show source in condensation.py:54](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L54)
+
+First-order mass transport coefficient per particle.
 
 Calculate the first-order mass transport coefficient, K, for a given radius
 diffusion coefficient, and vapor transition correction factor. For a
@@ -262,25 +264,21 @@ single particle.
 
 #### Arguments
 
------
-- radius (Union[float, NDArray[np.float_]]): The radius of the particle
-[m].
-- diffusion_coefficient (Union[float, NDArray[np.float_]]): The diffusion
-coefficient of the vapor [m^2/s], default to air.
-- vapor_transition (Union[float, NDArray[np.float_]]): The vapor transition
-correction factor. [unitless]
+- `radius` - The radius of the particle [m].
+- `diffusion_coefficient` - The diffusion coefficient of the vapor [m^2/s],
+default to air.
+- `vapor_transition` - The vapor transition correction factor. [unitless]
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float_]]: The first-order mass transport
+- `Union[float,` *NDArray[np.float_]]* - The first-order mass transport
 coefficient per particle (m^3/s).
 
 #### References
 
-----------
-- Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle number)
-- https://en.wikipedia.org/wiki/Mass_diffusivity
+- `Aerosol` *Modeling* - Chapter 2, Equation 2.49 (excluding particle number)
+Mass Diffusivity:
+[Wikipedia](https://en.wikipedia.org/wiki/Mass_diffusivity)
 
 #### Signature
 
@@ -296,32 +294,31 @@ def first_order_mass_transport_k(
 
 ## mass_transfer_rate
 
-[Show source in condensation.py:85](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L85)
+[Show source in condensation.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L83)
+
+Calculate the mass transfer rate for a particle.
 
 Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.
 
 #### Arguments
 
------
-- pressure_delta (Union[float, NDArray[np.float_]]): The difference in
-partial pressure between the gas phase and the particle phase.
-- first_order_mass_transport (Union[float, NDArray[np.float_]]): The
-first-order mass transport coefficient per particle.
-- temperature (Union[float, NDArray[np.float_]]): The temperature at which
-the mass transfer rate is to be calculated.
+- `pressure_delta` - The difference in partial pressure between the gas
+phase and the particle phase.
+- `first_order_mass_transport` - The first-order mass transport coefficient
+per particle.
+- `temperature` - The temperature at which the mass transfer rate is to be
+calculated.
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float_]]: The mass transfer rate for the particle
-[kg/s].
+- `Union[float,` *NDArray[np.float_]]* - The mass transfer rate for the
+particle [kg/s].
 
 #### References
 
-----------
-- Aerosol Modeling, Chapter 2, Equation 2.41 (excluding particle number)
-- Seinfeld and Pandis, "Atmospheric Chemistry and Physics", Equation 13.3
+- `Aerosol` *Modeling* - Chapter 2, Equation 2.41 (excluding particle number)
+Seinfeld and Pandis: "Atmospheric Chemistry and Physics", Equation 13.3
 
 #### Signature
 
