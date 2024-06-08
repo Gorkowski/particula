@@ -6290,9 +6290,9 @@ for the specified strategy type.<ul>
 'mass_ideal' (default), 'molar_ideal', or 'kappa_parameter'.
 parameters(Dict[str, Any], optional): Parameters required for the
 builder, dependent on the chosen strategy type.<ul>
-<li><code>-</code> <em>mass_ideal</em> - No parameters are required.</li>
-<li><code>-</code> <em>molar_ideal</em> - molar_mass</li>
-<li>kappa | kappa_parameter: kappa, density, molar_mass,
+<li><code>mass_ideal</code> - No parameters are required.</li>
+<li><code>molar_ideal</code> - molar_mass
+kappa | kappa_parameter: kappa, density, molar_mass,
 water_index</li>
 </ul>
 </li>
@@ -6339,10 +6339,10 @@ water_index</li>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>Dict[str,</code> <em>Any]</em> - A dictionary mapping strategy types to builder
-    instances.<ul>
-<li><code>-</code> <em>mass_ideal</em> - IdealActivityMassBuilder</li>
-<li><code>-</code> <em>molar_ideal</em> - IdealActivityMolarBuilder</li>
-<li><code>-</code> <em>kappa_parameter</em> - KappaParameterActivityBuilder</li>
+instances.<ul>
+<li><code>mass_ideal</code> - IdealActivityMassBuilder</li>
+<li><code>molar_ideal</code> - IdealActivityMolarBuilder</li>
+<li><code>kappa_parameter</code> - KappaParameterActivityBuilder</li>
 </ul>
 </li>
 </ul>
