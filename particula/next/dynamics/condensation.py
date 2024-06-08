@@ -300,8 +300,7 @@ class CondensationIsothermal(CondensationStrategy):
         diffusion_coefficient: Union[float, NDArray[np.float_]] = 2*1e-9,
         accommodation_coefficient: Union[float, NDArray[np.float_]] = 1.0
     ):
-        CondensationIsothermal.__init__(
-            self,
+        super().__init__(
             molar_mass=molar_mass,
             diffusion_coefficient=diffusion_coefficient,
             accommodation_coefficient=accommodation_coefficient
