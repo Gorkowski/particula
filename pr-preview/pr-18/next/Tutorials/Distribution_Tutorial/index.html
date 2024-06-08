@@ -6098,6 +6098,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#factory-speciatedmassmovingbin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Factory: SpeciatedMassMovingBin
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -6715,7 +6733,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6791,7 +6809,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-3">
@@ -6853,6 +6871,85 @@ Total mass of the particles: 6.544984694978737 kg
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="factory-speciatedmassmovingbin">Factory: SpeciatedMassMovingBin<a class="anchor-link" href="#factory-speciatedmassmovingbin">¶</a></h2><p>The <code>SpeciatedMassMovingBin</code> strategy is used when the distribution is speciated-mass based. This means that the mass of the particles is known and the radius is calculated from the mass. The <code>SpeciatedMassMovingBin</code> has multiple species, and the mass of each species is known for that given bin or particle.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-4">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">mass_distribution1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># kg</span>
+<span class="n">mass_distribution2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># kg</span>
+<span class="n">masses_combined</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">mass_distribution1</span><span class="p">,</span> <span class="n">mass_distribution2</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1000.0</span><span class="p">,</span> <span class="mf">2000.0</span><span class="p">])</span>  <span class="c1"># kg/m^3</span>
+
+<span class="n">speciated_mass</span> <span class="o">=</span> <span class="n">DistributionFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span><span class="s2">"speciated_mass_moving_bin"</span><span class="p">)</span>
+
+<span class="n">radius</span> <span class="o">=</span> <span class="n">speciated_mass</span><span class="o">.</span><span class="n">get_radius</span><span class="p">(</span><span class="n">masses_combined</span><span class="p">,</span> <span class="n">density</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Radius of the particles: </span><span class="si">{</span><span class="n">radius</span><span class="si">}</span><span class="s2"> m"</span><span class="p">)</span>
+
+<span class="n">total_mass</span> <span class="o">=</span> <span class="n">speciated_mass</span><span class="o">.</span><span class="n">get_total_mass</span><span class="p">(</span>
+    <span class="n">masses_combined</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">mass_distribution1</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total mass of the particles: </span><span class="si">{</span><span class="n">total_mass</span><span class="si">}</span><span class="s2"> kg"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-4">mass_distribution1 = np.linspace(0, 10, 5)  # kg
+mass_distribution2 = np.linspace(0, 10, 5)  # kg
+masses_combined = np.vstack((mass_distribution1, mass_distribution2)).T
+density = np.array([1000.0, 2000.0])  # kg/m^3
+
+speciated_mass = DistributionFactory().get_strategy("speciated_mass_moving_bin")
+
+radius = speciated_mass.get_radius(masses_combined, density)
+
+print(f"Radius of the particles: {radius} m")
+
+total_mass = speciated_mass.get_total_mass(
+    masses_combined, concentration=np.ones_like(mass_distribution1), density=density)
+print(f"Total mass of the particles: {total_mass} kg")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Radius of the particles: [0.         0.09637866 0.1214295  0.13900208 0.15299159] m
+Total mass of the particles: 50.0 kg
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="summary">Summary<a class="anchor-link" href="#summary">¶</a></h2><p>In this tutorial, we covered the distribution strategies implemented in the simulation. We covered the <code>MassBasedMovingBin</code>, <code>RadiiBasedMovingBin</code>, and <code>SpeciatedMassMovingBin</code> strategies. These strategies are used to calculate the properties of the particles based on the distribution type.</p>
 </div>
 </div>
 </div>
