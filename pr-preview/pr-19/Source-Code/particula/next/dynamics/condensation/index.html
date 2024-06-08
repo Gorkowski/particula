@@ -6621,7 +6621,8 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py">particula.next.dynamics.condensation</a> module.</p>
 </blockquote>
 <h2 id="condensationisothermal">CondensationIsothermal<a class="headerlink" href="#condensationisothermal" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L297">Show source in condensation.py:297</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L289">Show source in condensation.py:289</a></p>
+<p>Condensation strategy for isothermal conditions.</p>
 <p>Condensation strategy for isothermal conditions, where the temperature
 remains constant. This class implements the mass transfer rate calculation
 for condensation of particles based on partial pressures. No Latent heat
@@ -6640,7 +6641,7 @@ of vaporization effect is considered.</p>
 <li><a href="#condensationstrategy">CondensationStrategy</a></li>
 </ul>
 <h3 id="condensationisothermalmass_transfer_rate">CondensationIsothermal().mass_transfer_rate<a class="headerlink" href="#condensationisothermalmass_transfer_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L316">Show source in condensation.py:316</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L310">Show source in condensation.py:310</a></p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mass_transfer_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -6683,33 +6684,28 @@ species. Default is 1.0.</li>
     <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="condensationstrategyfirst_order_mass_transport">CondensationStrategy().first_order_mass_transport<a class="headerlink" href="#condensationstrategyfirst_order_mass_transport" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L216">Show source in condensation.py:216</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L213">Show source in condensation.py:213</a></p>
+<p>First-order mass transport coefficient per particle.</p>
 <p>Calculate the first-order mass transport coefficient, K, for a given
 particle based on the diffusion coefficient, radius, and vapor
 transition correction factor.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>radius (Union[float, NDArray[np.float_]]): The radius of the particle
-[m].</li>
-<li>temperature (float): The temperature at which the first-order mass
+<li><code>radius</code> - The radius of the particle [m].</li>
+<li><code>temperature</code> - The temperature at which the first-order mass
 transport coefficient is to be calculated.</li>
-<li>pressure (float): The pressure of the gas phase.</li>
-<li>dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature</li>
+<li><code>pressure</code> - The pressure of the gas phase.</li>
+<li><code>dynamic_viscosity</code> - The dynamic viscosity of the gas [Pa*s]. If not
+provided, it will be calculated based on the temperature</li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>Union[float, NDArray[np.float_]]: The first-order mass transport
+<li><code>Union[float,</code> <em>NDArray[np.float_]]</em> - The first-order mass transport
 coefficient per particle (m^3/s).</li>
 </ul>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
-<hr />
-<ul>
-<li>Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
-number)</li>
-</ul>
+<p>Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
+number)</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">first_order_mass_transport</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -6721,29 +6717,24 @@ number)</li>
 </code></pre></div>
 <h3 id="condensationstrategyknudsen_number">CondensationStrategy().knudsen_number<a class="headerlink" href="#condensationstrategyknudsen_number" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L178">Show source in condensation.py:178</a></p>
+<p>The Knudsen number for a particle.</p>
 <p>Calculate the Knudsen number based on the mean free path of the gas
 molecules and the radius of the particle.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>radius (Union[float, NDArray[np.float_]]): The radius of the particle
-[m].</li>
-<li>temperature (float): The temperature of the gas [K].</li>
-<li>pressure (float): The pressure of the gas [Pa].</li>
-<li>dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature</li>
+<li><code>radius</code> - The radius of the particle [m].</li>
+<li><code>temperature</code> - The temperature of the gas [K].</li>
+<li><code>pressure</code> - The pressure of the gas [Pa].</li>
+<li><code>dynamic_viscosity</code> - The dynamic viscosity of the gas [Pa*s]. If
+not provided, it will be calculated based on the temperature</li>
 </ul>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>Union[float, NDArray[np.float_]]: The Knudsen number, which is the
+<li><code>Union[float,</code> <em>NDArray[np.float_]]</em> - The Knudsen number, which is the
 ratio of the mean free path to the particle radius.</li>
 </ul>
 <h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
-<hr />
-<ul>
-<li>https://en.wikipedia.org/wiki/Knudsen_number</li>
-</ul>
+<p><a href="https://en.wikipedia.org/wiki/Knudsen_number">Knudsen Number</a></p>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">knudsen_number</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -6754,26 +6745,24 @@ ratio of the mean free path to the particle radius.</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="condensationstrategymass_transfer_rate">CondensationStrategy().mass_transfer_rate<a class="headerlink" href="#condensationstrategymass_transfer_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L263">Show source in condensation.py:263</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L257">Show source in condensation.py:257</a></p>
+<p>Mass transfer rate for a particle.</p>
 <p>Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>particle (Particle class): The particle for which the mass transfer
-rate is to be calculated.</li>
-<li>gas_species (GasSpecies class): The gas species with which the
-particle is in contact.</li>
-<li>temperature (float): The temperature at which the mass transfer rate
+<li><code>particle</code> - The particle for which the mass transfer rate is to be
+calculated.</li>
+<li><code>gas_species</code> - The gas species with which the particle is in contact.</li>
+<li><code>temperature</code> - The temperature at which the mass transfer rate
 is to be calculated.</li>
-<li>pressure (float): The pressure of the gas phase.</li>
-<li>dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature</li>
+<li><code>pressure</code> - The pressure of the gas phase.</li>
+<li><code>dynamic_viscosity</code> - The dynamic viscosity of the gas [Pa*s]. If not
+provided, it will be calculated based on the temperature</li>
 </ul>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li>Union[float, NDArray[np.float_]]: The mass transfer rate for the
+<li><code>Union[float,</code> <em>NDArray[np.float_]]</em> - The mass transfer rate for the
 particle [kg/s].</li>
 </ul>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>

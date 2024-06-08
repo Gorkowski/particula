@@ -6,7 +6,9 @@
 
 ## CondensationIsothermal
 
-[Show source in condensation.py:297](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L297)
+[Show source in condensation.py:289](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L289)
+
+Condensation strategy for isothermal conditions.
 
 Condensation strategy for isothermal conditions, where the temperature
 remains constant. This class implements the mass transfer rate calculation
@@ -31,7 +33,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:316](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L316)
+[Show source in condensation.py:310](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L310)
 
 #### Signature
 
@@ -88,7 +90,9 @@ class CondensationStrategy(ABC):
 
 ### CondensationStrategy().first_order_mass_transport
 
-[Show source in condensation.py:216](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L216)
+[Show source in condensation.py:213](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L213)
+
+First-order mass transport coefficient per particle.
 
 Calculate the first-order mass transport coefficient, K, for a given
 particle based on the diffusion coefficient, radius, and vapor
@@ -96,25 +100,21 @@ transition correction factor.
 
 #### Arguments
 
------
-- radius (Union[float, NDArray[np.float_]]): The radius of the particle
-[m].
-- temperature (float): The temperature at which the first-order mass
+- `radius` - The radius of the particle [m].
+- `temperature` - The temperature at which the first-order mass
 transport coefficient is to be calculated.
-- pressure (float): The pressure of the gas phase.
-- dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature
+- `pressure` - The pressure of the gas phase.
+- `dynamic_viscosity` - The dynamic viscosity of the gas [Pa*s]. If not
+provided, it will be calculated based on the temperature
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float_]]: The first-order mass transport
+- `Union[float,` *NDArray[np.float_]]* - The first-order mass transport
 coefficient per particle (m^3/s).
 
 #### References
 
-----------
-- Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
+Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
 number)
 
 #### Signature
@@ -133,29 +133,27 @@ def first_order_mass_transport(
 
 [Show source in condensation.py:178](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L178)
 
+The Knudsen number for a particle.
+
 Calculate the Knudsen number based on the mean free path of the gas
 molecules and the radius of the particle.
 
 #### Arguments
 
------
-- radius (Union[float, NDArray[np.float_]]): The radius of the particle
-[m].
-- temperature (float): The temperature of the gas [K].
-- pressure (float): The pressure of the gas [Pa].
-- dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature
+- `radius` - The radius of the particle [m].
+- `temperature` - The temperature of the gas [K].
+- `pressure` - The pressure of the gas [Pa].
+- `dynamic_viscosity` - The dynamic viscosity of the gas [Pa*s]. If
+not provided, it will be calculated based on the temperature
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float_]]: The Knudsen number, which is the
+- `Union[float,` *NDArray[np.float_]]* - The Knudsen number, which is the
 ratio of the mean free path to the particle radius.
 
 #### References
 
-----------
-- https://en.wikipedia.org/wiki/Knudsen_number
+[Knudsen Number](https://en.wikipedia.org/wiki/Knudsen_number)
 
 #### Signature
 
@@ -171,28 +169,27 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L263)
+[Show source in condensation.py:257](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L257)
+
+Mass transfer rate for a particle.
 
 Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.
 
 #### Arguments
 
------
-- particle (Particle class): The particle for which the mass transfer
-rate is to be calculated.
-- gas_species (GasSpecies class): The gas species with which the
-particle is in contact.
-- temperature (float): The temperature at which the mass transfer rate
+- `particle` - The particle for which the mass transfer rate is to be
+calculated.
+- `gas_species` - The gas species with which the particle is in contact.
+- `temperature` - The temperature at which the mass transfer rate
 is to be calculated.
-- pressure (float): The pressure of the gas phase.
-- dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature
+- `pressure` - The pressure of the gas phase.
+- `dynamic_viscosity` - The dynamic viscosity of the gas [Pa*s]. If not
+provided, it will be calculated based on the temperature
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float_]]: The mass transfer rate for the
+- `Union[float,` *NDArray[np.float_]]* - The mass transfer rate for the
 particle [kg/s].
 
 #### Signature
