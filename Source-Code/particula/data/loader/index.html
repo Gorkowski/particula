@@ -1327,6 +1327,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#signature_6" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
@@ -7004,6 +7013,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../next/Tutorials/Particle_Surface_Tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Particle Surface Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../next/Tutorials/Vapor_Pressure/" class="md-nav__link">
         
   
@@ -7057,7 +7087,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py">particula.data.loader</a> module.</p>
 </blockquote>
 <h2 id="data_format_checks">data_format_checks<a class="headerlink" href="#data_format_checks" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L94">Show source in loader.py:94</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L98">Show source in loader.py:98</a></p>
 <p>Check if the data is in the correct format.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7088,7 +7118,8 @@
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">data_format_checks</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">data_checks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="data_raw_loader">data_raw_loader<a class="headerlink" href="#data_raw_loader" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L21">Show source in loader.py:21</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L22">Show source in loader.py:22</a></p>
+<p>Loads raw data from file.</p>
 <p>Load raw data from a file at the specified file path and return it as a
 list of strings.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
@@ -7109,7 +7140,7 @@ list of strings.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">data_raw_loader</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="filter_list">filter_list<a class="headerlink" href="#filter_list" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L47">Show source in loader.py:47</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L49">Show source in loader.py:49</a></p>
 <p>A pass filter of rows from a list of strings.
 Each row must contain a specified number of characters to pass the filter.
 The number of characters to count is specified in the char_counts
@@ -7146,7 +7177,7 @@ character count requirements.
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_list</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">char_counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="general_data_formatter">general_data_formatter<a class="headerlink" href="#general_data_formatter" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L348">Show source in loader.py:348</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L394">Show source in loader.py:394</a></p>
 <p>Formats and samples the data to get the time and data streams.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <hr />
@@ -7186,7 +7217,7 @@ seconds_shift : int, default=0
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="get_files_in_folder_with_size">get_files_in_folder_with_size<a class="headerlink" href="#get_files_in_folder_with_size" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L573">Show source in loader.py:573</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L619">Show source in loader.py:619</a></p>
 <p>Returns a list of files in the specified folder and subfolder that
 match the given filename pattern and have a size greater than the
 specified minimum size.</p>
@@ -7213,7 +7244,7 @@ min_size : int, optional
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="keyword_to_index">keyword_to_index<a class="headerlink" href="#keyword_to_index" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L414">Show source in loader.py:414</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L459">Show source in loader.py:459</a></p>
 <p>Convert a keyword indicating a position in the header to its index.</p>
 <p>This function takes a keyword which can be either an integer index or
 a string representing the column name. If the keyword is an integer,
@@ -7236,7 +7267,7 @@ function searches for the keyword in the header list and returns its index.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">keyword_to_index</span><span class="p">(</span><span class="n">keyword</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">header</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="load_lake">load_lake<a class="headerlink" href="#load_lake" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L822">Show source in loader.py:822</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L881">Show source in loader.py:881</a></p>
 <p>Load datalake object from a pickle file.</p>
 <h2 id="args">Args<a class="headerlink" href="#args" title="Permanent link">&para;</a></h2>
 <p>path : str
@@ -7244,15 +7275,19 @@ function searches for the keyword in the header list and returns its index.</p>
 <h2 id="returns_6">Returns<a class="headerlink" href="#returns_6" title="Permanent link">&para;</a></h2>
 <p>data_lake : DataLake
     Loaded DataLake object.</p>
+<h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h4>
+<p>spell correction sufix -&gt; suffix</p>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_lake</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sufix_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Lake</span><span class="p">:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_lake</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sufix_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Lake</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../lake/#lake">Lake</a></li>
 </ul>
 <h2 id="load_stream">load_stream<a class="headerlink" href="#load_stream" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L736">Show source in loader.py:736</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L795">Show source in loader.py:795</a></p>
 <p>Load stream object from a pickle file.</p>
 <h2 id="args_1">Args<a class="headerlink" href="#args_1" title="Permanent link">&para;</a></h2>
 <p>path : str
@@ -7274,7 +7309,7 @@ folder : str, optional
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="netcdf_data_1d_load">netcdf_data_1d_load<a class="headerlink" href="#netcdf_data_1d_load" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L882">Show source in loader.py:882</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L942">Show source in loader.py:942</a></p>
 <p>Given a netCDF file path and settings, returns a tuple containing the
 epoch time, header, and data as a numpy array. We do apply the mask to the
 data, and fill the masked values with nan.</p>
@@ -7297,7 +7332,7 @@ header, and data as a numpy array.
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="netcdf_data_2d_load">netcdf_data_2d_load<a class="headerlink" href="#netcdf_data_2d_load" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L941">Show source in loader.py:941</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1001">Show source in loader.py:1001</a></p>
 <p>Given a netCDF file path and settings, returns a tuple containing the
 epoch time, header, and data as a numpy array. We do apply the mask to the
 data, and fill the masked values with nan.</p>
@@ -7320,7 +7355,7 @@ header, and data as a numpy array.
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="netcdf_get_epoch_time">netcdf_get_epoch_time<a class="headerlink" href="#netcdf_get_epoch_time" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L851">Show source in loader.py:851</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L914">Show source in loader.py:914</a></p>
 <p>Given a netCDF file path and settings, returns an array of epoch times in
 seconds as a float.</p>
 <p>Currently only uses ARM 1.2 netCDF files (base_time + time_offset)</p>
@@ -7337,7 +7372,7 @@ seconds as a float.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">netcdf_get_epoch_time</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="netcdf_info_print">netcdf_info_print<a class="headerlink" href="#netcdf_info_print" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L995">Show source in loader.py:995</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1053">Show source in loader.py:1053</a></p>
 <p>Prints information about a netCDF file. Useful for generating settings
 dictionaries.</p>
 <h4 id="arguments_9">Arguments<a class="headerlink" href="#arguments_9" title="Permanent link">&para;</a></h4>
@@ -7354,7 +7389,7 @@ dictionaries.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">netcdf_info_print</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_return</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="non_standard_date_location">non_standard_date_location<a class="headerlink" href="#non_standard_date_location" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L535">Show source in loader.py:535</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L584">Show source in loader.py:584</a></p>
 <p>Extracts the date from a non-standard location in the data.</p>
 <h4 id="arguments_10">Arguments<a class="headerlink" href="#arguments_10" title="Permanent link">&para;</a></h4>
 <hr />
@@ -7379,7 +7414,7 @@ date_location : dict
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">non_standard_date_location</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">date_location</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="parse_time_column">parse_time_column<a class="headerlink" href="#parse_time_column" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L162">Show source in loader.py:162</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L161">Show source in loader.py:161</a></p>
 <p>Parses the time column of a data line and returns it as a timestamp.</p>
 <h4 id="arguments_11">Arguments<a class="headerlink" href="#arguments_11" title="Permanent link">&para;</a></h4>
 <hr />
@@ -7460,7 +7495,7 @@ timezone_identifier : str, optional
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="save_lake">save_lake<a class="headerlink" href="#save_lake" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L774">Show source in loader.py:774</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L834">Show source in loader.py:834</a></p>
 <p>Save lake object as a pickle file.</p>
 <h2 id="args_2">Args<a class="headerlink" href="#args_2" title="Permanent link">&para;</a></h2>
 <p>data_lake : DataLake
@@ -7482,7 +7517,7 @@ sufix_name : str, optional
 <li><a href="../lake/#lake">Lake</a></li>
 </ul>
 <h2 id="save_stream">save_stream<a class="headerlink" href="#save_stream" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L688">Show source in loader.py:688</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L746">Show source in loader.py:746</a></p>
 <p>Save stream object as a pickle file.</p>
 <h2 id="args_3">Args<a class="headerlink" href="#args_3" title="Permanent link">&para;</a></h2>
 <p>stream : Stream
@@ -7504,7 +7539,7 @@ sufix_name : str, optional
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="save_stream_to_csv">save_stream_to_csv<a class="headerlink" href="#save_stream_to_csv" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L624">Show source in loader.py:624</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L670">Show source in loader.py:670</a></p>
 <p>Save stream object as a CSV file, with an option to include formatted time.</p>
 <h4 id="arguments_13">Arguments<a class="headerlink" href="#arguments_13" title="Permanent link">&para;</a></h4>
 <hr />
@@ -7517,7 +7552,11 @@ suffix_name : str, optional
 folder : str, optional
     Subfolder within path to save the CSV file. The default is 'output'.
 include_time : bool, optional
-    Whether to include time data in the first column. The default is True.</p>
+    Whether to include time data in the first column. The default is True.
+include_iso_datatime : bool, optional
+    Whether to include ISO formatted datetime in the second column.
+    The default is True. The format is ISO 8601,
+    '2021-01-01T00:00:00Z'.</p>
 <h4 id="signature_17">Signature<a class="headerlink" href="#signature_17" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">save_stream_to_csv</span><span class="p">(</span>
     <span class="n">stream</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span>
@@ -7532,7 +7571,7 @@ include_time : bool, optional
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="sizer_data_formatter">sizer_data_formatter<a class="headerlink" href="#sizer_data_formatter" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L448">Show source in loader.py:448</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L494">Show source in loader.py:494</a></p>
 <p>Formats data from a particle sizer.</p>
 <h2 id="args_4">Args<a class="headerlink" href="#args_4" title="Permanent link">&para;</a></h2>
 <p>data : List[str]
