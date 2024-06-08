@@ -182,27 +182,24 @@ class CondensationStrategy(ABC):
         pressure: float,
         dynamic_viscosity: Optional[float] = None
     ) -> Union[float, NDArray[np.float_]]:
-        """
+        """The Knudsen number for a particle.
+
         Calculate the Knudsen number based on the mean free path of the gas
         molecules and the radius of the particle.
 
         Args:
-        -----
-        - radius (Union[float, NDArray[np.float_]]): The radius of the particle
-        [m].
-        - temperature (float): The temperature of the gas [K].
-        - pressure (float): The pressure of the gas [Pa].
-        - dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-        [Pa*s]. If not provided, it will be calculated based on the temperature
+            radius: The radius of the particle [m].
+            temperature: The temperature of the gas [K].
+            pressure: The pressure of the gas [Pa].
+            dynamic_viscosity: The dynamic viscosity of the gas [Pa*s]. If
+            not provided, it will be calculated based on the temperature
 
         Returns:
-        --------
-        - Union[float, NDArray[np.float_]]: The Knudsen number, which is the
-        ratio of the mean free path to the particle radius.
+            Union[float, NDArray[np.float_]]: The Knudsen number, which is the
+            ratio of the mean free path to the particle radius.
 
         References:
-        ----------
-        - https://en.wikipedia.org/wiki/Knudsen_number
+            [Knudsen Number](https://en.wikipedia.org/wiki/Knudsen_number)
         """
         return calculate_knudsen_number(
             mean_free_path=self.mean_free_path(
@@ -220,30 +217,27 @@ class CondensationStrategy(ABC):
         pressure: float,
         dynamic_viscosity: Optional[float] = None
     ) -> Union[float, NDArray[np.float_]]:
-        """
+        """First-order mass transport coefficient per particle.
+
         Calculate the first-order mass transport coefficient, K, for a given
         particle based on the diffusion coefficient, radius, and vapor
         transition correction factor.
 
         Args:
-        -----
-        - radius (Union[float, NDArray[np.float_]]): The radius of the particle
-        [m].
-        - temperature (float): The temperature at which the first-order mass
-        transport coefficient is to be calculated.
-        - pressure (float): The pressure of the gas phase.
-        - dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-        [Pa*s]. If not provided, it will be calculated based on the temperature
+            radius: The radius of the particle [m].
+            temperature: The temperature at which the first-order mass
+            transport coefficient is to be calculated.
+            pressure: The pressure of the gas phase.
+            dynamic_viscosity: The dynamic viscosity of the gas [Pa*s]. If not
+            provided, it will be calculated based on the temperature
 
         Returns:
-        --------
-        - Union[float, NDArray[np.float_]]: The first-order mass transport
-        coefficient per particle (m^3/s).
+            Union[float, NDArray[np.float_]]: The first-order mass transport
+            coefficient per particle (m^3/s).
 
         References:
-        ----------
-        - Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
-        number)
+            Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
+            number)
         """
         vapor_transition = vapor_transition_correction(
             knudsen_number=self.knudsen_number(
@@ -270,32 +264,31 @@ class CondensationStrategy(ABC):
         dynamic_viscosity: Optional[float] = None
     ) -> Union[float, NDArray[np.float_]]:
         # pylint: disable=too-many-arguments
-        """
+        """Mass transfer rate for a particle.
+
         Calculate the mass transfer rate based on the difference in partial
         pressure and the first-order mass transport coefficient.
 
         Args:
-        -----
-        - particle (Particle class): The particle for which the mass transfer
-        rate is to be calculated.
-        - gas_species (GasSpecies class): The gas species with which the
-        particle is in contact.
-        - temperature (float): The temperature at which the mass transfer rate
-        is to be calculated.
-        - pressure (float): The pressure of the gas phase.
-        - dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-        [Pa*s]. If not provided, it will be calculated based on the temperature
+            particle: The particle for which the mass transfer rate is to be
+            calculated.
+            gas_species: The gas species with which the particle is in contact.
+            temperature: The temperature at which the mass transfer rate
+            is to be calculated.
+            pressure: The pressure of the gas phase.
+            dynamic_viscosity: The dynamic viscosity of the gas [Pa*s]. If not
+            provided, it will be calculated based on the temperature
 
         Returns:
-        --------
-        - Union[float, NDArray[np.float_]]: The mass transfer rate for the
-        particle [kg/s].
+            Union[float, NDArray[np.float_]]: The mass transfer rate for the
+            particle [kg/s].
         """
 
 
 # Define a condensation strategy with no latent heat of vaporization effect
 class CondensationIsothermal(CondensationStrategy):
-    """
+    """Condensation strategy for isothermal conditions.
+
     Condensation strategy for isothermal conditions, where the temperature
     remains constant. This class implements the mass transfer rate calculation
     for condensation of particles based on partial pressures. No Latent heat
@@ -307,7 +300,8 @@ class CondensationIsothermal(CondensationStrategy):
         diffusion_coefficient: Union[float, NDArray[np.float_]] = 2*1e-9,
         accommodation_coefficient: Union[float, NDArray[np.float_]] = 1.0
     ):
-        super().__init__(
+        CondensationIsothermal.__init__(
+            self,
             molar_mass=molar_mass,
             diffusion_coefficient=diffusion_coefficient,
             accommodation_coefficient=accommodation_coefficient
