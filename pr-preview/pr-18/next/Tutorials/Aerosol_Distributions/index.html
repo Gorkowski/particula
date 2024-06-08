@@ -6099,13 +6099,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#particle-mass-function-pmf-for-aerosol-distributions" class="md-nav__link">
+  <a href="#probability-mass-function-pmf-for-aerosol-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Particle Mass Function (PMF) for Aerosol Distributions
+      Probability Mass Function (PMF) for Aerosol Distributions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Particle Mass Function (PMF) for Aerosol Distributions">
+    <nav class="md-nav" aria-label="Probability Mass Function (PMF) for Aerosol Distributions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6786,6 +6786,11 @@ for x &gt; 0, s &gt; 0
 $$</p>
 <p>The <code>scale</code> parameter is defined as the mode of the distribution.</p>
 <p>The probability density above is defined in the “standardized” form. To shift and/or scale the distribution use the loc and scale parameters. Specifically, <code>lognorm.pdf(x, s, loc, scale)</code> is identically equivalent to <code>lognorm.pdf(y, s) / scale</code> with <code>y = (x - loc) / scale</code>. Note that shifting the location of a distribution does not make it a “noncentral” distribution; noncentral generalizations of some distributions are available in separate classes.</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/probability_density_function">PDF Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Log-normal_distribution">Log-normal Wikipedia</a></li>
+<li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.lognorm.html">Log-normal Scipy</a></li>
+</ul>
 </div>
 </div>
 </div>
@@ -7080,9 +7085,10 @@ Total Concentration for Multi Mode: 2000.000000000001
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="particle-mass-function-pmf-for-aerosol-distributions">Particle Mass Function (PMF) for Aerosol Distributions<a class="anchor-link" href="#particle-mass-function-pmf-for-aerosol-distributions">¶</a></h2><p>The Particle Mass Function (PMF) of aerosol distributions provides a distinct perspective compared to the Probability Density Function (PDF). While the PDF represents the probability of particle sizes occurring within a continuous range, ensuring that the integral over all sizes equals the total number of particles, the PMF deals directly with discrete particle counts.</p>
+<h2 id="probability-mass-function-pmf-for-aerosol-distributions">Probability Mass Function (PMF) for Aerosol Distributions<a class="anchor-link" href="#probability-mass-function-pmf-for-aerosol-distributions">¶</a></h2><p>The Probability Mass Function (PMF) of aerosol distributions provides a distinct perspective compared to the Probability Density Function (PDF). While the PDF represents the probability of particle sizes occurring within a continuous range, ensuring that the integral over all sizes equals the total number of particles, the PMF deals directly with discrete particle counts.</p>
 <p>In PMF, each value represents the actual number of particles expected at a specific size interval, rather than the probability density. This approach is particularly advantageous when quantifying and visualizing the actual particle counts across various size classes, making it ideal for detailed statistical analysis and practical applications like filter testing or health impact studies.</p>
 <p>Unlike the PDF, where the area under the curve corresponds to the total number of particles (when scaled appropriately), the PMF sums directly to the total number of particles without needing any integral calculation. Each point on the PMF curve directly indicates the number of particles in that particular size class, thus providing a more intuitive grasp of the size distribution's impact, especially in contexts where the exact count of particles is more relevant than their probability density.</p>
+<p><a href="https://en.wikipedia.org/wiki/probability_mass_function">PMF Wikipedia</a></p>
 </div>
 </div>
 </div>
@@ -7153,11 +7159,10 @@ multi_pmf_distribution = lognormal_pmf_distribution(
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># %%</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">single_pmf_distribution</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Single Mode"</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">multi_pmf_distribution</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Multi Mode"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Lognormal Particle Mass Function"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Lognormal PMF Particle Size Distribution"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Particle Diameter (μm)"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Number of Particles"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
@@ -7165,11 +7170,10 @@ multi_pmf_distribution = lognormal_pmf_distribution(
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-8"># %%
-plt.figure(figsize=(10, 6))
+<div class="clipboard-copy-txt" id="cell-8">plt.figure(figsize=(10, 6))
 plt.plot(x_values, single_pmf_distribution, label="Single Mode", linewidth=4)
 plt.plot(x_values, multi_pmf_distribution, label="Multi Mode")
-plt.title("Lognormal Particle Mass Function")
+plt.title("Lognormal PMF Particle Size Distribution")
 plt.xlabel("Particle Diameter (μm)")
 plt.ylabel("Number of Particles")
 plt.xscale("log")
