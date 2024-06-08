@@ -323,8 +323,7 @@ class CondensationIsothermal(CondensationStrategy):
             pressure=pressure,
             dynamic_viscosity=dynamic_viscosity
         )
-
-        # Calculate the partial pressure
+        # calculate the partial pressure
         partial_pressure_particle = particle.activity.partial_pressure(
             pure_vapor_pressure=gas_species.get_pure_vapor_pressure(
                 temperature),
@@ -344,7 +343,6 @@ class CondensationIsothermal(CondensationStrategy):
             partial_pressure_particle=partial_pressure_particle,
             kelvin_term=kelvin_term
         )
-
         # Calculate the mass transfer rate per particle
         return mass_transfer_rate(
             pressure_delta=pressure_delta,
