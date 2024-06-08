@@ -6665,7 +6665,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6684,7 +6684,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="c1"># Import the functions from the particula package</span>
 <span class="kn">from</span> <span class="nn">particula.next.gas</span> <span class="kn">import</span> <span class="n">vapor_pressure_strategies</span>
 <span class="kn">from</span> <span class="nn">particula.next.gas</span> <span class="kn">import</span> <span class="n">vapor_pressure_builders</span>
-<span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_factories</span> <span class="kn">import</span> <span class="n">vapor_pressure_factory</span>
+<span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_factories</span> <span class="kn">import</span> <span class="n">VaporPressureFactory</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-1">import numpy as np
 import matplotlib.pyplot as plt
@@ -6692,7 +6692,7 @@ import matplotlib.pyplot as plt
 # Import the functions from the particula package
 from particula.next.gas import vapor_pressure_strategies
 from particula.next.gas import vapor_pressure_builders
-from particula.next.gas.vapor_pressure_factories import vapor_pressure_factory</div>
+from particula.next.gas.vapor_pressure_factories import VaporPressureFactory</div>
 </div>
 </div>
 </div>
@@ -6766,7 +6766,7 @@ $$</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -6804,7 +6804,7 @@ $$</p>
 <span class="c1"># This approach ensures that object creation is centralized and consistent across the application.</span>
 <span class="c1"># Note: The strategy name provided to the factory method is case-insensitive.</span>
 <span class="n">water_coefficients</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mf">7.949017</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mf">1657.462</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span> <span class="mf">227.02</span><span class="p">}</span>
-<span class="n">water_antione</span> <span class="o">=</span> <span class="n">vapor_pressure_factory</span><span class="p">(</span>
+<span class="n">water_antione</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
     <span class="n">strategy</span><span class="o">=</span><span class="s1">'Antoine'</span><span class="p">,</span>
     <span class="n">parameters</span><span class="o">=</span><span class="n">water_coefficients</span>
 <span class="p">)</span>
@@ -6843,7 +6843,7 @@ styrene_antione = (
 # This approach ensures that object creation is centralized and consistent across the application.
 # Note: The strategy name provided to the factory method is case-insensitive.
 water_coefficients = {'a': 7.949017, 'b': 1657.462, 'c': 227.02}
-water_antione = vapor_pressure_factory(
+water_antione = VaporPressureFactory().get_strategy(
     strategy='Antoine',
     parameters=water_coefficients
 )
@@ -6866,11 +6866,26 @@ print(f'Water Antoine vapor pressure at 300 K: {water_antione.pure_vapor_pressur
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Butanol Antoine vapor pressure at 300 K: 7.117073414020618e-06 Pa
-Styrene Antoine vapor pressure at 300 K: 7.239567651587212e-11 Pa
-Water Antoine vapor pressure at 300 K: 2.305354272293551e-13 Pa
-</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[3], line 26</span>
+<span class="ansi-green-fg">     21</span> <span style="color: rgb(95,135,135)"># Initialize a vapor pressure strategy for water using the factory method.</span>
+<span class="ansi-green-fg">     22</span> <span style="color: rgb(95,135,135)"># The factory method abstracts the creation logic of the builder and can instantiate different builder strategies based on the input strategy.</span>
+<span class="ansi-green-fg">     23</span> <span style="color: rgb(95,135,135)"># This approach ensures that object creation is centralized and consistent across the application.</span>
+<span class="ansi-green-fg">     24</span> <span style="color: rgb(95,135,135)"># Note: The strategy name provided to the factory method is case-insensitive.</span>
+<span class="ansi-green-fg">     25</span> water_coefficients <span style="color: rgb(98,98,98)">=</span> {<span style="color: rgb(175,0,0)">'</span><span style="color: rgb(175,0,0)">a</span><span style="color: rgb(175,0,0)">'</span>: <span style="color: rgb(98,98,98)">7.949017</span>, <span style="color: rgb(175,0,0)">'</span><span style="color: rgb(175,0,0)">b</span><span style="color: rgb(175,0,0)">'</span>: <span style="color: rgb(98,98,98)">1657.462</span>, <span style="color: rgb(175,0,0)">'</span><span style="color: rgb(175,0,0)">c</span><span style="color: rgb(175,0,0)">'</span>: <span style="color: rgb(98,98,98)">227.02</span>}
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 26</span> water_antione <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">VaporPressureFactory</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get_strategy</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">     27</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">strategy</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">'</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">Antoine</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">'</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">     28</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">parameters</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">water_coefficients</span>
+<span class="ansi-green-fg">     29</span> <span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">     32</span> <span style="color: rgb(95,135,135)"># Calculate and print the vapor pressures at 300 Kelvin for each substance using the initialized strategies.</span>
+<span class="ansi-green-fg">     33</span> <span style="color: rgb(95,135,135)"># The function 'pure_vapor_pressure' is used here, which calculates the</span>
+<span class="ansi-green-fg">     34</span> <span style="color: rgb(95,135,135)"># vapor pressure based on the provided temperature.</span>
+<span class="ansi-green-fg">     36</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">'</span><span style="color: rgb(175,0,0)">Butanol Antoine vapor pressure at 300 K: </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>butanol_antione<span style="color: rgb(98,98,98)">.</span>pure_vapor_pressure(<span style="color: rgb(98,98,98)">300</span>)<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> Pa</span><span style="color: rgb(175,0,0)">'</span>)
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: StrategyFactory.get_strategy() got an unexpected keyword argument 'strategy'</pre>
 </div>
 </div>
 </div>
@@ -6893,7 +6908,7 @@ Water Antoine vapor pressure at 300 K: 2.305354272293551e-13 Pa
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-3">
@@ -7008,7 +7023,7 @@ File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula
 <span class="n">water_vapor_pressure</span> <span class="o">=</span> <span class="n">water_antione</span><span class="o">.</span><span class="n">pure_vapor_pressure</span><span class="p">(</span><span class="n">temperatures</span><span class="p">)</span>
 
 <span class="c1"># Plot the vapor pressures for each substance.</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">butanol_vapor_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Butanol'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">styrene_vapor_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Styrene'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_vapor_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Water'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-.'</span><span class="p">)</span>
@@ -7028,7 +7043,7 @@ styrene_vapor_pressure = styrene_antione.pure_vapor_pressure(temperatures)
 water_vapor_pressure = water_antione.pure_vapor_pressure(temperatures)
 
 # Plot the vapor pressures for each substance.
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.plot(temperatures, butanol_vapor_pressure, label='Butanol')
 ax.plot(temperatures, styrene_vapor_pressure, label='Styrene', linestyle='--')
 ax.plot(temperatures, water_vapor_pressure, label='Water', linestyle='-.')
@@ -7115,7 +7130,7 @@ $$</p>
     <span class="n">temperature</span><span class="o">=</span><span class="n">temperatures</span><span class="p">)</span>
 
 <span class="c1"># Plot the saturation concentrations for each substance.</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">butanol_saturation_concentration</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Butanol'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">styrene_saturation_concentration</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Styrene'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_saturation_concentration</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Water'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-.'</span><span class="p">)</span>
@@ -7143,7 +7158,7 @@ water_saturation_concentration = water_antione.saturation_concentration(
     temperature=temperatures)
 
 # Plot the saturation concentrations for each substance.
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.plot(temperatures, butanol_saturation_concentration, label='Butanol')
 ax.plot(temperatures, styrene_saturation_concentration, label='Styrene', linestyle='--')
 ax.plot(temperatures, water_saturation_concentration, label='Water', linestyle='-.')
@@ -7233,7 +7248,7 @@ $$</p>
     <span class="n">temperature</span><span class="o">=</span><span class="n">temperatures</span><span class="p">)</span>
 
 <span class="c1"># Plot the partial pressures for each substance.</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">butanol_partial_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Butanol'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">styrene_partial_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Styrene'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_partial_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Water'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-.'</span><span class="p">)</span>
@@ -7264,7 +7279,7 @@ water_partial_pressure = water_antione.partial_pressure(
     temperature=temperatures)
 
 # Plot the partial pressures for each substance.
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.plot(temperatures, butanol_partial_pressure, label='Butanol')
 ax.plot(temperatures, styrene_partial_pressure, label='Styrene', linestyle='--')
 ax.plot(temperatures, water_partial_pressure, label='Water', linestyle='-.')
@@ -7348,7 +7363,7 @@ $$</p>
     <span class="n">temperature</span><span class="o">=</span><span class="n">temperatures</span><span class="p">)</span>
 
 <span class="c1"># Plot the saturation ratios for each substance.</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">butanol_saturation_ratio</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Butanol'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">styrene_saturation_ratio</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Styrene'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_saturation_ratio</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Water'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-.'</span><span class="p">)</span>
@@ -7373,7 +7388,7 @@ water_saturation_ratio = water_antione.saturation_ratio(
     temperature=temperatures)
 
 # Plot the saturation ratios for each substance.
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.plot(temperatures, butanol_saturation_ratio, label='Butanol')
 ax.plot(temperatures, styrene_saturation_ratio, label='Styrene', linestyle='--')
 ax.plot(temperatures, water_saturation_ratio, label='Water', linestyle='-.')
@@ -7470,7 +7485,7 @@ plt.show()</div>
     <span class="n">temp</span><span class="p">)</span> <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">]</span>
 
 <span class="c1"># Plotting the results using Matplotlib</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_pure_constant</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Constant'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'-'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_pure_antione</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Antoine'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="n">water_pure_clausius_clapeyron</span><span class="p">,</span>
@@ -7517,7 +7532,7 @@ water_pure_buck = [water_buck_strategy.pure_vapor_pressure(
     temp) for temp in temperatures]
 
 # Plotting the results using Matplotlib
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 6))
 ax.plot(temperatures, water_pure_constant, label='Constant', linestyle='-')
 ax.plot(temperatures, water_pure_antione, label='Antoine', linestyle='--')
 ax.plot(temperatures, water_pure_clausius_clapeyron,
