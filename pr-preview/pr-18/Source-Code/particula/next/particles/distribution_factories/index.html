@@ -2500,6 +2500,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
@@ -6262,19 +6271,25 @@
 <p>Factory class to create distribution strategy from builders.</p>
 <p>Used for calculating particle distributions based on the specified
 representation type.</p>
-<p>Methods
-    get_builders(): Returns the mapping of strategy types to builder
-    instances.
-    get_strategy(strategy_type, parameters): Gets the strategy instance
-    for the specified strategy type.
-        strategy_type: Type of distribution strategy to use, can be
-        'mass_based_moving_bin', 'radii_based_moving_bin', or
-        'speciated_mass_moving_bin'.
-        parameters(Dict[str, Any], optional): Parameters required for the
-        builder, dependent on the chosen strategy type.
-            mass_based_moving_bin: None
-            radii_based_moving_bin: None
-            speciated_mass_moving_bin: None</p>
+<h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>get_builders()</code> - Returns the mapping of strategy types to builder
+instances.</li>
+<li><code>get_strategy(strategy_type,</code> <em>parameters)</em> - Gets the strategy instance
+for the specified strategy type.<ul>
+<li><code>strategy_type</code> - Type of distribution strategy to use, can be
+'mass_based_moving_bin', 'radii_based_moving_bin', or
+'speciated_mass_moving_bin'.
+parameters(Dict[str, Any], optional): Parameters required for the
+builder, dependent on the chosen strategy type.<ul>
+<li><code>mass_based_moving_bin</code> - None</li>
+<li><code>radii_based_moving_bin</code> - None</li>
+<li><code>speciated_mass_moving_bin</code> - None</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>DistributionStrategy</code> - An instance of the specified

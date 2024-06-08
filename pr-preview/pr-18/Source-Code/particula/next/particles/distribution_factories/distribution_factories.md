@@ -13,19 +13,20 @@ Factory class to create distribution strategy from builders.
 Used for calculating particle distributions based on the specified
 representation type.
 
-Methods
-    get_builders(): Returns the mapping of strategy types to builder
-    instances.
-    get_strategy(strategy_type, parameters): Gets the strategy instance
-    for the specified strategy type.
-        strategy_type: Type of distribution strategy to use, can be
-        'mass_based_moving_bin', 'radii_based_moving_bin', or
-        'speciated_mass_moving_bin'.
-        parameters(Dict[str, Any], optional): Parameters required for the
-        builder, dependent on the chosen strategy type.
-            mass_based_moving_bin: None
-            radii_based_moving_bin: None
-            speciated_mass_moving_bin: None
+#### Methods
+
+- `get_builders()` - Returns the mapping of strategy types to builder
+instances.
+- `get_strategy(strategy_type,` *parameters)* - Gets the strategy instance
+for the specified strategy type.
+    - `strategy_type` - Type of distribution strategy to use, can be
+    'mass_based_moving_bin', 'radii_based_moving_bin', or
+    'speciated_mass_moving_bin'.
+    parameters(Dict[str, Any], optional): Parameters required for the
+    builder, dependent on the chosen strategy type.
+        - `mass_based_moving_bin` - None
+        - `radii_based_moving_bin` - None
+        - `speciated_mass_moving_bin` - None
 
 #### Returns
 
