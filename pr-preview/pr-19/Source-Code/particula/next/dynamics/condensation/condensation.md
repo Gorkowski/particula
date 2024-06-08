@@ -6,7 +6,7 @@
 
 ## CondensationIsothermal
 
-[Show source in condensation.py:302](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L302)
+[Show source in condensation.py:297](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L297)
 
 Condensation strategy for isothermal conditions, where the temperature
 remains constant. This class implements the mass transfer rate calculation
@@ -31,7 +31,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:321](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L321)
+[Show source in condensation.py:316](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L316)
 
 #### Signature
 
@@ -55,7 +55,9 @@ def mass_transfer_rate(
 
 ## CondensationStrategy
 
-[Show source in condensation.py:118](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L118)
+[Show source in condensation.py:119](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L119)
+
+Condensation strategy abstract class.
 
 Abstract class for mass transfer strategies, for condensation or
 evaporation of particles. This class should be subclassed to implement
@@ -63,16 +65,14 @@ specific mass transfer strategies.
 
 #### Arguments
 
------------
-- molar_mass (Union[float, NDArray[np.float_]]): The molar mass of the
-species [kg/mol]. If a single value is provided, it will be used for all
-species.
-- diffusion_coefficient (Union[float, NDArray[np.float_]]): The diffusion
-coefficient of the species [m^2/s]. If a single value is provided, it will
-be used for all species. Default is 2*1e-9 m^2/s for air.
-- accommodation_coefficient (Union[float, NDArray[np.float_]]): The mass
-accommodation coefficient of the species. If a single value is provided,
-it will be used for all species. Default is 1.0.
+- `molar_mass` - The molar mass of the species [kg/mol]. If a single value
+is provided, it will be used for all species.
+- `diffusion_coefficient` - The diffusion coefficient of the species
+[m^2/s]. If a single value is provided, it will be used for all
+species. Default is 2*1e-9 m^2/s for air.
+- `accommodation_coefficient` - The mass accommodation coefficient of the
+species. If a single value is provided, it will be used for all
+species. Default is 1.0.
 
 #### Signature
 
@@ -88,7 +88,7 @@ class CondensationStrategy(ABC):
 
 ### CondensationStrategy().first_order_mass_transport
 
-[Show source in condensation.py:221](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L221)
+[Show source in condensation.py:216](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L216)
 
 Calculate the first-order mass transport coefficient, K, for a given
 particle based on the diffusion coefficient, radius, and vapor
@@ -131,7 +131,7 @@ def first_order_mass_transport(
 
 ### CondensationStrategy().knudsen_number
 
-[Show source in condensation.py:183](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L183)
+[Show source in condensation.py:178](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L178)
 
 Calculate the Knudsen number based on the mean free path of the gas
 molecules and the radius of the particle.
@@ -171,7 +171,7 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation.py:268](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L268)
+[Show source in condensation.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L263)
 
 Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.
@@ -216,31 +216,27 @@ def mass_transfer_rate(
 
 ### CondensationStrategy().mean_free_path
 
-[Show source in condensation.py:148](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L148)
+[Show source in condensation.py:147](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L147)
 
 Calculate the mean free path of the gas molecules based on the
 temperature, pressure, and dynamic viscosity of the gas.
 
 #### Arguments
 
------
-- temperature (float): The temperature of the
-gas [K].
-- pressure (float): The pressure of the gas
-[Pa].
-- dynamic_viscosity (Optional[float]): The dynamic viscosity of the gas
-[Pa*s]. If not provided, it will be calculated based on the temperature
+- `temperature` - The temperature of the gas [K].
+- `pressure` - The pressure of the gas [Pa].
+- `dynamic_viscosity` - The dynamic viscosity of the gas [Pa*s]. If not
+provided, it will be calculated based on the temperature
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float_]]: The mean free path of the gas
+- `Union[float,` *NDArray[np.float_]]* - The mean free path of the gas
 molecules in meters (m).
 
 #### References
 
-----------
-- https://en.wikipedia.org/wiki/Mean_free_path
+Mean Free Path:
+[Wikipedia](https://en.wikipedia.org/wiki/Mean_free_path)
 
 #### Signature
 
@@ -276,9 +272,9 @@ coefficient per particle (m^3/s).
 
 #### References
 
-- `Aerosol` *Modeling* - Chapter 2, Equation 2.49 (excluding particle number)
-Mass Diffusivity:
-[Wikipedia](https://en.wikipedia.org/wiki/Mass_diffusivity)
+- Aerosol Modeling: Chapter 2, Equation 2.49 (excluding number)
+- Mass Diffusivity:
+    [Wikipedia](https://en.wikipedia.org/wiki/Mass_diffusivity)
 
 #### Signature
 
@@ -317,8 +313,9 @@ particle [kg/s].
 
 #### References
 
-- `Aerosol` *Modeling* - Chapter 2, Equation 2.41 (excluding particle number)
-Seinfeld and Pandis: "Atmospheric Chemistry and Physics", Equation 13.3
+- Aerosol Modeling Chapter 2, Equation 2.41 (excluding particle number)
+- Seinfeld and Pandis: "Atmospheric Chemistry and Physics",
+    Equation 13.3
 
 #### Signature
 
