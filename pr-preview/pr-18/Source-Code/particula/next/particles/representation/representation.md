@@ -56,8 +56,8 @@ Adds concentration to the particle distribution.
 
 #### Arguments
 
-- `-` *added_concentration* - The concentration to be
-    added per distribution bin.
+- `added_concentration` - The concentration to be
+added per distribution bin.
 
 #### Signature
 
@@ -73,8 +73,8 @@ Adds mass to the particle distribution, and updates parameters.
 
 #### Arguments
 
-- `-` *added_mass* - The mass to be added per
-    distribution bin.
+- `added_mass` - The mass to be added per
+distribution bin.
 
 #### Signature
 
