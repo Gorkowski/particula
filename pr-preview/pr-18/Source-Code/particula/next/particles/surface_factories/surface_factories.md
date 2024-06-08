@@ -21,12 +21,12 @@ particulate phases.
 - `get_strategy(strategy_type,` *parameters)* - Gets the strategy instance
 for the specified strategy type.
     - `strategy_type` - Type of surface tension strategy to use, can be
-        'volume', 'mass', or 'molar'.
+    'volume', 'mass', or 'molar'.
     parameters(Dict[str, Any], optional): Parameters required for the
-        builder, dependent on the chosen strategy type.
-            - `volume` - density, surface_tension
-            - `mass` - density, surface_tension
-            - `molar` - molar_mass, density, surface_tension
+    builder, dependent on the chosen strategy type.
+        - `volume` - density, surface_tension
+        - `mass` - density, surface_tension
+        - `molar` - molar_mass, density, surface_tension
 
 #### Returns
 
@@ -71,10 +71,10 @@ Returns the mapping of strategy types to builder instances.
 #### Returns
 
 - `Dict[str,` *BuilderT]* - A dictionary mapping strategy types to
-    builder instances.
-        - `-` *volume* - SurfaceStrategyVolumeBuilder
-        - `-` *mass* - SurfaceStrategyMassBuilder
-        - `-` *molar* - SurfaceStrategyMolarBuilder
+builder instances.
+    - `-` *volume* - SurfaceStrategyVolumeBuilder
+    - `-` *mass* - SurfaceStrategyMassBuilder
+    - `-` *molar* - SurfaceStrategyMolarBuilder
 
 #### Signature
 
