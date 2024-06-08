@@ -126,24 +126,21 @@ to the curvature of the particle.
 
 #### Arguments
 
-    - `radius` - Radius of the particle [m].
-    - `molar_mass` - Molar mass of the species a
-[kg/mol].
-- mass_concentration (float or NDArray[float]): Concentration of the
-species [kg/m^3].
-- temperature (float): Temperature of the system [K].
+- `radius` - Radius of the particle [m].
+- `molar_mass` - Molar mass of the species a [kg/mol].
+- `mass_concentration` - Concentration of the species [kg/m^3].
+- `temperature` - Temperature of the system [K].
 
 #### Returns
 
---------
-- float or NDArray[float]: The exponential factor adjusting vapor
-pressure due to curvature.
+float or NDArray[float]: The exponential factor adjusting vapor
+    pressure due to curvature.
 
 #### References
 
 Based on Neil Donahue's approach to the Kelvin equation:
 exp(kelvin_radius / particle_radius)
-- `See` *more* - https://en.wikipedia.org/wiki/Kelvin_equation
+[Kelvin Eq Wikipedia](https://en.wikipedia.org/wiki/Kelvin_equation)
 
 #### Signature
 
@@ -161,23 +158,20 @@ def kelvin_term(
 
 ## SurfaceStrategyMass
 
-[Show source in surface_strategies.py:187](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L187)
+[Show source in surface_strategies.py:181](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L181)
 
 Surface tension and density, based on mass fraction weighted values.
 
 #### Arguments
 
-------------------
-- surface_tension (Union[float, NDArray[np.float_]]): Surface tension of
-the species [N/m]. If a single value is provided, it will be used for all
-species.
-- density (Union[float, NDArray[np.float_]]): Density of the species
-[kg/m^3]. If a single value is provided, it will be used for all species.
+- `surface_tension` - Surface tension of the species [N/m]. If a single
+    value is provided, it will be used for all species.
+- `density` - Density of the species [kg/m^3]. If a single value is
+    provided, it will be used for all species.
 
 #### References
 
------------
-- Mass Fractions https://en.wikipedia.org/wiki/Mass_fraction_(chemistry)
+[Mass Fractions](https://en.wikipedia.org/wiki/Mass_fraction_(chemistry))
 
 #### Signature
 
@@ -196,7 +190,7 @@ class SurfaceStrategyMass(SurfaceStrategy):
 
 ### SurfaceStrategyMass().effective_density
 
-[Show source in surface_strategies.py:223](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L223)
+[Show source in surface_strategies.py:214](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L214)
 
 #### Signature
 
@@ -208,7 +202,7 @@ def effective_density(
 
 ### SurfaceStrategyMass().effective_surface_tension
 
-[Show source in surface_strategies.py:211](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L211)
+[Show source in surface_strategies.py:202](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L202)
 
 #### Signature
 
@@ -222,25 +216,22 @@ def effective_surface_tension(
 
 ## SurfaceStrategyMolar
 
-[Show source in surface_strategies.py:132](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L132)
+[Show source in surface_strategies.py:129](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L129)
 
 Surface tension and density, based on mole fraction weighted values.
 
 #### Arguments
 
-------------------
-- surface_tension (Union[float, NDArray[np.float_]]): Surface tension of
-the species [N/m]. If a single value is provided, it will be used for all
-species.
-- density (Union[float, NDArray[np.float_]]): Density of the species
-[kg/m^3]. If a single value is provided, it will be used for all species.
-- molar_mass (Union[float, NDArray[np.float_]]): Molar mass of the species
-[kg/mol]. If a single value is provided, it will be used for all species.
+- `surface_tension` - Surface tension of the species [N/m]. If a single
+    value is provided, it will be used for all species.
+- `density` - Density of the species [kg/m^3]. If a single value is
+    provided, it will be used for all species.
+- `molar_mass` - Molar mass of the species [kg/mol]. If a single value is
+    provided, it will be used for all species.
 
 #### References
 
------------
-- Mole Fractions https://en.wikipedia.org/wiki/Mole_fraction
+[Mole Fractions](https://en.wikipedia.org/wiki/Mole_fraction)
 
 #### Signature
 
@@ -260,7 +251,7 @@ class SurfaceStrategyMolar(SurfaceStrategy):
 
 ### SurfaceStrategyMolar().effective_density
 
-[Show source in surface_strategies.py:173](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L173)
+[Show source in surface_strategies.py:167](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L167)
 
 #### Signature
 
@@ -272,7 +263,7 @@ def effective_density(
 
 ### SurfaceStrategyMolar().effective_surface_tension
 
-[Show source in surface_strategies.py:160](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L160)
+[Show source in surface_strategies.py:154](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L154)
 
 #### Signature
 
@@ -286,23 +277,20 @@ def effective_surface_tension(
 
 ## SurfaceStrategyVolume
 
-[Show source in surface_strategies.py:234](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L234)
+[Show source in surface_strategies.py:225](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L225)
 
 Surface tension and density, based on volume fraction weighted values.
 
 #### Arguments
 
-------------------
-- surface_tension (Union[float, NDArray[np.float_]]): Surface tension of
-the species [N/m]. If a single value is provided, it will be used for all
-species.
-- density (Union[float, NDArray[np.float_]]): Density of the species
-[kg/m^3]. If a single value is provided, it will be used for all species.
+- `surface_tension` - Surface tension of the species [N/m]. If a single
+    value is provided, it will be used for all species.
+- `density` - Density of the species [kg/m^3]. If a single value is
+    provided, it will be used for all species.
 
 #### References
 
------------
-- Volume Fractions https://en.wikipedia.org/wiki/Volume_fraction
+[Volume Fractions](https://en.wikipedia.org/wiki/Volume_fraction)
 
 #### Signature
 
@@ -321,7 +309,7 @@ class SurfaceStrategyVolume(SurfaceStrategy):
 
 ### SurfaceStrategyVolume().effective_density
 
-[Show source in surface_strategies.py:271](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L271)
+[Show source in surface_strategies.py:259](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L259)
 
 #### Signature
 
@@ -333,7 +321,7 @@ def effective_density(
 
 ### SurfaceStrategyVolume().effective_surface_tension
 
-[Show source in surface_strategies.py:258](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L258)
+[Show source in surface_strategies.py:246](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_strategies.py#L246)
 
 #### Signature
 

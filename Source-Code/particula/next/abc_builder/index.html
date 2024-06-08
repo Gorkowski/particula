@@ -7252,7 +7252,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py">particula.next.abc_builder</a> module.</p>
 </blockquote>
 <h2 id="builderabc">BuilderABC<a class="headerlink" href="#builderabc" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L26">Show source in abc_builder.py:26</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L32">Show source in abc_builder.py:32</a></p>
 <p>Abstract base class for builders with common methods to check keys and
 set parameters from a dictionary.</p>
 <h4 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h4>
@@ -7284,7 +7284,7 @@ some optional method to be used in the Builder classes.
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">required_parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabcbuild">BuilderABC().build<a class="headerlink" href="#builderabcbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L136">Show source in abc_builder.py:136</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L142">Show source in abc_builder.py:142</a></p>
 <p>Build and return the strategy object with the set parameters.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7295,7 +7295,7 @@ some optional method to be used in the Builder classes.
 <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabccheck_keys">BuilderABC().check_keys<a class="headerlink" href="#builderabccheck_keys" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L56">Show source in abc_builder.py:56</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L62">Show source in abc_builder.py:62</a></p>
 <p>Check if the keys are present and valid.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7310,7 +7310,7 @@ invalid parameter.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabcpre_build_check">BuilderABC().pre_build_check<a class="headerlink" href="#builderabcpre_build_check" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L121">Show source in abc_builder.py:121</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L127">Show source in abc_builder.py:127</a></p>
 <p>Check if all required attribute parameters are set before building.</p>
 <h4 id="raises_2">Raises<a class="headerlink" href="#raises_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7320,7 +7320,7 @@ invalid parameter.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pre_build_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabcset_parameters">BuilderABC().set_parameters<a class="headerlink" href="#builderabcset_parameters" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L93">Show source in abc_builder.py:93</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L99">Show source in abc_builder.py:99</a></p>
 <p>Set parameters from a dictionary including optional suffix for
 units as '_units'.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
@@ -7340,7 +7340,7 @@ units as '_units'.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderactivitystrategymixin">BuilderActivityStrategyMixin<a class="headerlink" href="#builderactivitystrategymixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L469">Show source in abc_builder.py:469</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L475">Show source in abc_builder.py:475</a></p>
 <p>Mixin class for Builder classes to set activity_strategy.</p>
 <h4 id="methods_1">Methods<a class="headerlink" href="#methods_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7351,7 +7351,7 @@ units as '_units'.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderactivitystrategymixinset_activity_strategy">BuilderActivityStrategyMixin().set_activity_strategy<a class="headerlink" href="#builderactivitystrategymixinset_activity_strategy" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L479">Show source in abc_builder.py:479</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L485">Show source in abc_builder.py:485</a></p>
 <p>Set the activity strategy of the particle.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7370,7 +7370,7 @@ units as '_units'.</p>
 <li><a href="../particles/activity_strategies/#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h2 id="builderchargemixin">BuilderChargeMixin<a class="headerlink" href="#builderchargemixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L277">Show source in abc_builder.py:277</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L283">Show source in abc_builder.py:283</a></p>
 <p>Mixin class for Builder classes to set charge and charge_units.</p>
 <h4 id="methods_2">Methods<a class="headerlink" href="#methods_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7381,7 +7381,7 @@ units as '_units'.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderchargemixinset_charge">BuilderChargeMixin().set_charge<a class="headerlink" href="#builderchargemixinset_charge" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L287">Show source in abc_builder.py:287</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L293">Show source in abc_builder.py:293</a></p>
 <p>Set the number of elemental charges on the particle.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7394,7 +7394,7 @@ units as '_units'.</p>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderconcentrationmixin">BuilderConcentrationMixin<a class="headerlink" href="#builderconcentrationmixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L238">Show source in abc_builder.py:238</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L244">Show source in abc_builder.py:244</a></p>
 <p>Mixin class for Builder classes to set concentration and
 concentration_units.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
@@ -7410,7 +7410,7 @@ concentration_units.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;kg/m^3&quot;</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderconcentrationmixinset_concentration">BuilderConcentrationMixin().set_concentration<a class="headerlink" href="#builderconcentrationmixinset_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L253">Show source in abc_builder.py:253</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L259">Show source in abc_builder.py:259</a></p>
 <p>Set the concentration.</p>
 <h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7426,7 +7426,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderdensitymixin">BuilderDensityMixin<a class="headerlink" href="#builderdensitymixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L145">Show source in abc_builder.py:145</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L151">Show source in abc_builder.py:151</a></p>
 <p>Mixin class for Builder classes to set density and density_units.</p>
 <h4 id="methods_4">Methods<a class="headerlink" href="#methods_4" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7437,7 +7437,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderdensitymixinset_density">BuilderDensityMixin().set_density<a class="headerlink" href="#builderdensitymixinset_density" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L155">Show source in abc_builder.py:155</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L161">Show source in abc_builder.py:161</a></p>
 <p>Set the density of the particle in kg/m^3.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7452,7 +7452,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderdistributionstrategymixin">BuilderDistributionStrategyMixin<a class="headerlink" href="#builderdistributionstrategymixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L496">Show source in abc_builder.py:496</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L502">Show source in abc_builder.py:502</a></p>
 <p>Mixin class for Builder classes to set distribution_strategy.</p>
 <h4 id="methods_5">Methods<a class="headerlink" href="#methods_5" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7463,7 +7463,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderdistributionstrategymixinset_distribution_strategy">BuilderDistributionStrategyMixin().set_distribution_strategy<a class="headerlink" href="#builderdistributionstrategymixinset_distribution_strategy" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L506">Show source in abc_builder.py:506</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L512">Show source in abc_builder.py:512</a></p>
 <p>Set the distribution strategy of the particle.</p>
 <h4 id="arguments_7">Arguments<a class="headerlink" href="#arguments_7" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7482,7 +7482,7 @@ Default is <em>kg/m^3</em>.</li>
 <li><a href="../particles/distribution_strategies/#distributionstrategy">DistributionStrategy</a></li>
 </ul>
 <h2 id="buildermassmixin">BuilderMassMixin<a class="headerlink" href="#buildermassmixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L304">Show source in abc_builder.py:304</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L310">Show source in abc_builder.py:310</a></p>
 <p>Mixin class for Builder classes to set mass and mass_units.</p>
 <h4 id="methods_6">Methods<a class="headerlink" href="#methods_6" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7493,7 +7493,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="buildermassmixinset_mass">BuilderMassMixin().set_mass<a class="headerlink" href="#buildermassmixinset_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L314">Show source in abc_builder.py:314</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L320">Show source in abc_builder.py:320</a></p>
 <p>Set the mass of the particle in kg.</p>
 <h4 id="arguments_8">Arguments<a class="headerlink" href="#arguments_8" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7510,7 +7510,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="buildermolarmassmixin">BuilderMolarMassMixin<a class="headerlink" href="#buildermolarmassmixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L206">Show source in abc_builder.py:206</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L212">Show source in abc_builder.py:212</a></p>
 <p>Mixin class for Builder classes to set molar_mass and molar_mass_units.</p>
 <h4 id="methods_7">Methods<a class="headerlink" href="#methods_7" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7521,7 +7521,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="buildermolarmassmixinset_molar_mass">BuilderMolarMassMixin().set_molar_mass<a class="headerlink" href="#buildermolarmassmixinset_molar_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L216">Show source in abc_builder.py:216</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L222">Show source in abc_builder.py:222</a></p>
 <p>Set the molar mass of the particle in kg/mol.</p>
 <h4 id="arguments_9">Arguments<a class="headerlink" href="#arguments_9" title="Permanent link">&para;</a></h4>
 <hr />
@@ -7537,7 +7537,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderpressuremixin">BuilderPressureMixin<a class="headerlink" href="#builderpressuremixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L404">Show source in abc_builder.py:404</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L410">Show source in abc_builder.py:410</a></p>
 <p>Mixin class for AtmosphereBuilder to set total pressure.</p>
 <h4 id="methods_8">Methods<a class="headerlink" href="#methods_8" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7548,7 +7548,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderpressuremixinset_pressure">BuilderPressureMixin().set_pressure<a class="headerlink" href="#builderpressuremixinset_pressure" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L414">Show source in abc_builder.py:414</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L420">Show source in abc_builder.py:420</a></p>
 <p>Set the total pressure of the atmosphere.</p>
 <h4 id="arguments_10">Arguments<a class="headerlink" href="#arguments_10" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7570,7 +7570,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="builderradiusmixin">BuilderRadiusMixin<a class="headerlink" href="#builderradiusmixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L336">Show source in abc_builder.py:336</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L342">Show source in abc_builder.py:342</a></p>
 <p>Mixin class for Builder classes to set radius and radius_units.</p>
 <h4 id="methods_9">Methods<a class="headerlink" href="#methods_9" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7581,7 +7581,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderradiusmixinset_radius">BuilderRadiusMixin().set_radius<a class="headerlink" href="#builderradiusmixinset_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L346">Show source in abc_builder.py:346</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L352">Show source in abc_builder.py:352</a></p>
 <p>Set the radius of the particle in meters.</p>
 <h4 id="arguments_11">Arguments<a class="headerlink" href="#arguments_11" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7598,7 +7598,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="buildersurfacestrategymixin">BuilderSurfaceStrategyMixin<a class="headerlink" href="#buildersurfacestrategymixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L442">Show source in abc_builder.py:442</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L448">Show source in abc_builder.py:448</a></p>
 <p>Mixin class for Builder classes to set surface_strategy.</p>
 <h4 id="methods_10">Methods<a class="headerlink" href="#methods_10" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7609,7 +7609,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="buildersurfacestrategymixinset_surface_strategy">BuilderSurfaceStrategyMixin().set_surface_strategy<a class="headerlink" href="#buildersurfacestrategymixinset_surface_strategy" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L452">Show source in abc_builder.py:452</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L458">Show source in abc_builder.py:458</a></p>
 <p>Set the surface strategy of the particle.</p>
 <h4 id="arguments_12">Arguments<a class="headerlink" href="#arguments_12" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7626,7 +7626,7 @@ Default is <em>kg/m^3</em>.</li>
 <li><a href="../particles/surface_strategies/#surfacestrategy">SurfaceStrategy</a></li>
 </ul>
 <h2 id="buildersurfacetensionmixin">BuilderSurfaceTensionMixin<a class="headerlink" href="#buildersurfacetensionmixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L174">Show source in abc_builder.py:174</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L180">Show source in abc_builder.py:180</a></p>
 <p>Mixin class for Builder classes to set surface_tension.</p>
 <h4 id="methods_11">Methods<a class="headerlink" href="#methods_11" title="Permanent link">&para;</a></h4>
 <hr />
@@ -7637,7 +7637,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="buildersurfacetensionmixinset_surface_tension">BuilderSurfaceTensionMixin().set_surface_tension<a class="headerlink" href="#buildersurfacetensionmixinset_surface_tension" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L185">Show source in abc_builder.py:185</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L191">Show source in abc_builder.py:191</a></p>
 <p>Set the surface tension of the particle in N/m.</p>
 <h4 id="arguments_13">Arguments<a class="headerlink" href="#arguments_13" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7652,7 +7652,7 @@ Default is <em>kg/m^3</em>.</li>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="buildertemperaturemixin">BuilderTemperatureMixin<a class="headerlink" href="#buildertemperaturemixin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L368">Show source in abc_builder.py:368</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L374">Show source in abc_builder.py:374</a></p>
 <p>Mixin class for AtmosphereBuilder to set temperature.</p>
 <h4 id="methods_12">Methods<a class="headerlink" href="#methods_12" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7663,7 +7663,7 @@ Default is <em>kg/m^3</em>.</li>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="buildertemperaturemixinset_temperature">BuilderTemperatureMixin().set_temperature<a class="headerlink" href="#buildertemperaturemixinset_temperature" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L378">Show source in abc_builder.py:378</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L384">Show source in abc_builder.py:384</a></p>
 <p>Set the temperature of the atmosphere.</p>
 <h4 id="arguments_14">Arguments<a class="headerlink" href="#arguments_14" title="Permanent link">&para;</a></h4>
 <ul>

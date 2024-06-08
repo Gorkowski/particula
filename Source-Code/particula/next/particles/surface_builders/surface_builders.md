@@ -6,20 +6,19 @@
 
 ## SurfaceStrategyMassBuilder
 
-[Show source in surface_builders.py:68](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L68)
+[Show source in surface_builders.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L60)
 
 Builder class for SurfaceStrategyMass objects.
 
 #### Methods
 
---------
-- set_surface_tension(surface_tension, surface_tension_units): Set the
+- `set_surface_tension(surface_tension,` *surface_tension_units)* - Set the
     surface tension of the particle in N/m. Default units are 'N/m'.
-- set_density(density, density_units): Set the density of the particle in
+- `set_density(density,` *density_units)* - Set the density of the particle in
     kg/m^3. Default units are 'kg/m^3'.
-- `-` *set_parameters(params)* - Set the parameters of the SurfaceStrategyMass
+- `set_parameters(params)` - Set the parameters of the SurfaceStrategyMass
     object from a dictionary including optional units.
-- `-` *build()* - Validate and return the SurfaceStrategyMass object.
+- `build()` - Validate and return the SurfaceStrategyMass object.
 
 #### Signature
 
@@ -38,14 +37,13 @@ class SurfaceStrategyMassBuilder(
 
 ### SurfaceStrategyMassBuilder().build
 
-[Show source in surface_builders.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L92)
+[Show source in surface_builders.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L83)
 
 Validate and return the SurfaceStrategyMass object.
 
 #### Returns
 
---------
-- `-` *SurfaceStrategyMass* - Instance of the SurfaceStrategyMass object.
+- `SurfaceStrategyMass` - Instance of the SurfaceStrategyMass object.
 
 #### Signature
 
@@ -61,22 +59,21 @@ def build(self) -> SurfaceStrategyMass: ...
 
 ## SurfaceStrategyMolarBuilder
 
-[Show source in surface_builders.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L25)
+[Show source in surface_builders.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L19)
 
 Builder class for SurfaceStrategyMolar objects.
 
 #### Methods
 
---------
-- set_surface_tension(surface_tension, surface_tension_units): Set the
+- `set_surface_tension(surface_tension,` *surface_tension_units)* - Set the
     surface tension of the particle in N/m. Default units are 'N/m'.
-- set_density(density, density_units): Set the density of the particle in
+- `set_density(density,` *density_units)* - Set the density of the particle in
     kg/m^3. Default units are 'kg/m^3'.
-- set_molar_mass(molar_mass, molar_mass_units): Set the molar mass of the
+- `set_molar_mass(molar_mass,` *molar_mass_units)* - Set the molar mass of the
     particle in kg/mol. Default units are 'kg/mol'.
-- `-` *set_parameters(params)* - Set the parameters of the SurfaceStrategyMolar
+- `set_parameters(params)` - Set the parameters of the SurfaceStrategyMolar
     object from a dictionary including optional units.
-- `-` *build()* - Validate and return the SurfaceStrategyMolar object.
+- `build()` - Validate and return the SurfaceStrategyMolar object.
 
 #### Signature
 
@@ -96,14 +93,13 @@ class SurfaceStrategyMolarBuilder(
 
 ### SurfaceStrategyMolarBuilder().build
 
-[Show source in surface_builders.py:53](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L53)
+[Show source in surface_builders.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L46)
 
 Validate and return the SurfaceStrategyMass object.
 
 #### Returns
 
---------
-- `-` *SurfaceStrategyMolar* - Instance of the SurfaceStrategyMolar object.
+- `SurfaceStrategyMolar` - Instance of the SurfaceStrategyMolar object.
 
 #### Signature
 
@@ -119,20 +115,19 @@ def build(self) -> SurfaceStrategyMolar: ...
 
 ## SurfaceStrategyVolumeBuilder
 
-[Show source in surface_builders.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L106)
+[Show source in surface_builders.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L96)
 
 Builder class for SurfaceStrategyVolume objects.
 
 #### Methods
 
---------
-- set_surface_tension(surface_tension, surface_tension_units): Set the
+- `set_surface_tension(surface_tension,` *surface_tension_units)* - Set the
     surface tension of the particle in N/m. Default units are 'N/m'.
-- set_density(density, density_units): Set the density of the particle in
+- `set_density(density,` *density_units)* - Set the density of the particle in
     kg/m^3. Default units are 'kg/m^3'.
-- `-` *set_parameters(params)* - Set the parameters of the SurfaceStrategyVolume
+- `set_parameters(params)` - Set the parameters of the SurfaceStrategyVolume
     object from a dictionary including optional units.
-- `-` *build()* - Validate and return the SurfaceStrategyVolume object.
+- `build()` - Validate and return the SurfaceStrategyVolume object.
 
 #### Signature
 
@@ -151,14 +146,14 @@ class SurfaceStrategyVolumeBuilder(
 
 ### SurfaceStrategyVolumeBuilder().build
 
-[Show source in surface_builders.py:130](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L130)
+[Show source in surface_builders.py:119](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L119)
 
 Validate and return the SurfaceStrategyVolume object.
 
 #### Returns
 
---------
-- `-` *SurfaceStrategyVolume* - Instance of the SurfaceStrategyVolume object.
+- `SurfaceStrategyVolume` - Instance of the SurfaceStrategyVolume
+    object.
 
 #### Signature
 
