@@ -6,7 +6,9 @@
 
 ## Aerosol
 
-[Show source in aerosol.py:13](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L13)
+[Show source in aerosol.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L14)
+
+Collection of Gas and Particle objects.
 
 A class for interacting with collections of Gas and Particle objects.
 Allows for the representation and manipulation of an aerosol, which
@@ -18,7 +20,7 @@ is composed of various gases and particles.
 class Aerosol:
     def __init__(
         self,
-        gas: Atmosphere,
+        atmosphere: Atmosphere,
         particles: Union[ParticleRepresentation, List[ParticleRepresentation]],
     ): ...
 ```
@@ -28,35 +30,15 @@ class Aerosol:
 - [Atmosphere](gas/atmosphere.md#atmosphere)
 - [ParticleRepresentation](particles/representation.md#particlerepresentation)
 
-### Aerosol().add_gas
-
-[Show source in aerosol.py:55](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L55)
-
-Replaces the current Gas instance with a new one.
-
-#### Arguments
-
-- gas (Gas): The Gas instance to replace the current one.
-
-#### Signature
-
-```python
-def add_gas(self, gas: Atmosphere): ...
-```
-
-#### See also
-
-- [Atmosphere](gas/atmosphere.md#atmosphere)
-
 ### Aerosol().add_particle
 
-[Show source in aerosol.py:64](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L64)
+[Show source in aerosol.py:63](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L63)
 
 Adds a Particle instance to the aerosol.
 
 #### Arguments
 
-- particle (Particle): The Particle instance to add.
+- `particle` - The Particle instance to add.
 
 #### Signature
 
@@ -70,9 +52,9 @@ def add_particle(self, particle: ParticleRepresentation): ...
 
 ### Aerosol().iterate_gas
 
-[Show source in aerosol.py:37](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L37)
+[Show source in aerosol.py:39](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L39)
 
-Returns an iterator for gas species.
+Returns an iterator for atmosphere species.
 
 #### Returns
 
@@ -90,7 +72,7 @@ def iterate_gas(self) -> Iterator[GasSpecies]: ...
 
 ### Aerosol().iterate_particle
 
-[Show source in aerosol.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L46)
+[Show source in aerosol.py:47](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L47)
 
 Returns an iterator for particle.
 
@@ -107,3 +89,23 @@ def iterate_particle(self) -> Iterator[ParticleRepresentation]: ...
 #### See also
 
 - [ParticleRepresentation](particles/representation.md#particlerepresentation)
+
+### Aerosol().replace_atmosphere
+
+[Show source in aerosol.py:55](https://github.com/Gorkowski/particula/blob/main/particula/next/aerosol.py#L55)
+
+Replaces the current Atmosphere instance with a new one.
+
+#### Arguments
+
+- `gas` - The instance to replace the current one.
+
+#### Signature
+
+```python
+def replace_atmosphere(self, atmosphere: Atmosphere): ...
+```
+
+#### See also
+
+- [Atmosphere](gas/atmosphere.md#atmosphere)

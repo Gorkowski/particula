@@ -54,7 +54,7 @@ class LimitedRadiusParticleBuilder(
 
 ### LimitedRadiusParticleBuilder().build
 
-[Show source in representation_builders.py:304](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L304)
+[Show source in representation_builders.py:321](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L321)
 
 Validate and return the ParticleRepresentation object.
 
@@ -75,9 +75,27 @@ def build(self) -> ParticleRepresentation: ...
 
 - [ParticleRepresentation](./representation.md#particlerepresentation)
 
+### LimitedRadiusParticleBuilder().set_distribution_type
+
+[Show source in representation_builders.py:302](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L302)
+
+Set the distribution type for the particle representation.
+
+#### Arguments
+
+- `distribution_type` - The type of distribution to use.
+
+#### Signature
+
+```python
+def set_distribution_type(
+    self, distribution_type: str, distribution_type_units: Optional[str] = None
+): ...
+```
+
 ### LimitedRadiusParticleBuilder().set_geometric_standard_deviation
 
-[Show source in representation_builders.py:245](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L245)
+[Show source in representation_builders.py:246](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L246)
 
 Set the geometric standard deviation for the distribution
 
@@ -98,7 +116,7 @@ def set_geometric_standard_deviation(
 
 ### LimitedRadiusParticleBuilder().set_mode
 
-[Show source in representation_builders.py:227](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L227)
+[Show source in representation_builders.py:228](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L228)
 
 Set the modes for distribution
 
@@ -115,7 +133,7 @@ def set_mode(self, mode: NDArray[np.float_], mode_units: str = "m"): ...
 
 ### LimitedRadiusParticleBuilder().set_number_concentration
 
-[Show source in representation_builders.py:265](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L265)
+[Show source in representation_builders.py:266](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L266)
 
 Set the number concentration for the distribution
 
