@@ -48,6 +48,8 @@
     
       <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -6350,9 +6352,9 @@
 <p>With the gas phase and particle phase defined, we can start the condensation process. Excluding the latent heat of vaporization for the gas-particle phase transition, which is important in cloud droplet formation.</p>
 <p>This follows Chapter 2 (EQ 2.41) by Topping, D., &amp; Bane, M. (2022). Introduction to Aerosol Modelling (D. Topping &amp; M. Bane, Eds.). Wiley. https://doi.org/10.1002/9781119625728. Also Chapter 12 and 13 (EQ 13.3) of Seinfeld, J. H., &amp; Pandis, S. N. (2016). Atmospheric Chemistry and Physics: From Air Pollution to Climate Change (3<sup>rd</sup> ed.). Wiley.</p>
 <p>The isothermal condensation or evaporation process is defined by the following equation:</p>
-<div class="arithmatex">\[
-\frac{dm_{i}}{dt} = N \frac{k_{cond} (p_{i, gas} - p_{i, particle~surface})}{RT/ molar~mass_{i}}
-\]</div>
+<p>$$</p>
+<p>\frac{dm_{i}}{dt} = N \frac{k_{cond} (p_{i, gas} - p_{i, particle~surface})}{RT/ molar~mass_{i}}</p>
+<p>$$</p>
 <p>Where:
 - <span class="arithmatex">\(m_{i}\)</span> is the mass of species <span class="arithmatex">\(i\)</span> in the particle phase, of a specific bin
 - N is the number of particles
@@ -6367,21 +6369,25 @@
 <div class="arithmatex">\[
 k_{cond} = 4 \pi~radius_{particle}~D_{i}~f(Kn, \alpha)
 \]</div>
-<p>Where:
-- <span class="arithmatex">\(radius_{particle}\)</span> is the radius of the particle
-- <span class="arithmatex">\(D_{i}\)</span> is the vapor diffusion coefficient of species <span class="arithmatex">\(i\)</span>
-- <span class="arithmatex">\(f(Kn, \alpha)\)</span> is the correction factor for the molecular regime to continuum regime transition. This is a function of the Knudsen number and the accommodation coefficient.</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(radius_{particle}\)</span> is the radius of the particle</li>
+<li><span class="arithmatex">\(D_{i}\)</span> is the vapor diffusion coefficient of species <span class="arithmatex">\(i\)</span></li>
+<li><span class="arithmatex">\(f(Kn, \alpha)\)</span> is the correction factor for the molecular regime to continuum regime transition. This is a function of the Knudsen number and the accommodation coefficient.</li>
+</ul>
 <p>The correction factor is defined as:</p>
 <div class="arithmatex">\[
 f(Kn, \alpha_{i, accom.}) = \frac{0.75 \alpha_{i, accom.} (1 + Kn)}{
     (Kn^2 + Kn) + 0.283 \alpha_{i, accom.} Kn + 0.75 \alpha_{i, accom.}}
 \]</div>
-<p>Where:
-- <span class="arithmatex">\(\alpha_{i, accom.}\)</span> is the accommodation coefficient of species <span class="arithmatex">\(i\)</span>
-- Kn is the Knudsen number
-- <span class="arithmatex">\(Kn = \frac{\lambda_{i}}{radius_{particle}}\)</span>
-  - <span class="arithmatex">\(\lambda\)</span> is the mean free path of the gas molecules of species <span class="arithmatex">\(i\)</span>
-  - <span class="arithmatex">\(radius\)</span> is the radius of the particle</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\alpha_{i, accom.}\)</span> is the accommodation coefficient of species <span class="arithmatex">\(i\)</span></li>
+<li>Kn is the Knudsen number</li>
+<li><span class="arithmatex">\(Kn = \frac{\lambda_{i}}{radius_{particle}}\)</span></li>
+<li><span class="arithmatex">\(\lambda\)</span> is the mean free path of the gas molecules of species <span class="arithmatex">\(i\)</span></li>
+<li><span class="arithmatex">\(radius\)</span> is the radius of the particle</li>
+</ul>
 <h3 id="partial-pressures">Partial Pressures<a class="headerlink" href="#partial-pressures" title="Permanent link">&para;</a></h3>
 <p>The partial pressures of species <span class="arithmatex">\(i\)</span> in the gas phase and at the surface of the particle are defined as:</p>
 <div class="arithmatex">\[
@@ -6465,6 +6471,12 @@ p_{i, particle~surface} = p^{pure}_{i} \gamma_{i} x_{i} k_{i,Kelvin}
     
     
       <script src="../../../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
       
     
   </body>
