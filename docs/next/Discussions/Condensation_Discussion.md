@@ -48,7 +48,7 @@ $$
 Where:
 
 - $\alpha_{i, accom.}$ is the accommodation coefficient of species $i$
-- Kn is the Knudsen number
+- $Kn$ is the Knudsen number
 - $Kn = \frac{\lambda_{i}}{radius_{particle}}$
   - $\lambda$ is the mean free path of the gas molecules of species $i$
   - $radius$ is the radius of the particle
