@@ -6350,19 +6350,21 @@
 <p>With the gas phase and particle phase defined, we can start the condensation process. Excluding the latent heat of vaporization for the gas-particle phase transition, which is important in cloud droplet formation.</p>
 <p>This follows Chapter 2 (EQ 2.41) by Topping, D., &amp; Bane, M. (2022). Introduction to Aerosol Modelling (D. Topping &amp; M. Bane, Eds.). Wiley. https://doi.org/10.1002/9781119625728. Also Chapter 12 and 13 (EQ 13.3) of Seinfeld, J. H., &amp; Pandis, S. N. (2016). Atmospheric Chemistry and Physics: From Air Pollution to Climate Change (3<sup>rd</sup> ed.). Wiley.</p>
 <p>The isothermal condensation or evaporation process is defined by the following equation:</p>
-<p>$$</p>
-<p>\frac{dm_{i}}{dt} = N \frac{k_{cond} (p_{i, gas} - p_{i, particle~surface})}{RT/ molar~mass_{i}}</p>
-<p>$$</p>
-<p>Where:
-- <span class="arithmatex">\(m_{i}\)</span> is the mass of species <span class="arithmatex">\(i\)</span> in the particle phase, of a specific bin
-- N is the number of particles
-- k_{cond} is the per-particle for order condensation coefficient
-- p_{i, gas} is the partial pressure of species <span class="arithmatex">\(i\)</span> in the gas phase
-- p_{i, particle~surface} is the partial pressure of species <span class="arithmatex">\(i\)</span> at the surface of the particle, acounting for Kelvin effect and activity coefficients.
-- R is the ideal gas constant
-- T is the temperature
-- molar mass_{i} is the molar mass of species <span class="arithmatex">\(i\)</span>
-- <span class="arithmatex">\(dm_{i}/dt\)</span> is the rate of change of mass of species <span class="arithmatex">\(i\)</span> in the particle phase</p>
+<div class="arithmatex">\[
+\frac{dm_{i}}{dt} = N \frac{k_{cond} (p_{i, gas} - p_{i, particle~surface})}{RT/ molar~mass_{i}}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(m_{i}\)</span> is the mass of species <span class="arithmatex">\(i\)</span> in the particle phase, of a specific bin</li>
+<li>N is the number of particles</li>
+<li>k_{cond} is the per-particle for order condensation coefficient</li>
+<li>p_{i, gas} is the partial pressure of species <span class="arithmatex">\(i\)</span> in the gas phase</li>
+<li>p_{i, particle~surface} is the partial pressure of species <span class="arithmatex">\(i\)</span> at the surface of the particle, acounting for Kelvin effect and activity coefficients.</li>
+<li>R is the ideal gas constant</li>
+<li>T is the temperature</li>
+<li>molar mass_{i} is the molar mass of species <span class="arithmatex">\(i\)</span></li>
+<li><span class="arithmatex">\(dm_{i}/dt\)</span> is the rate of change of mass of species <span class="arithmatex">\(i\)</span> in the particle phase</li>
+</ul>
 <p>The first order condensation coefficient is defined as:</p>
 <div class="arithmatex">\[
 k_{cond} = 4 \pi~radius_{particle}~D_{i}~f(Kn, \alpha)
@@ -6397,15 +6399,19 @@ p_{i, gas} = conc_{i, gas} RT/molar~mass_{i}
 <div class="arithmatex">\[
 p_{i, particle~surface} = p^{pure}_{i} \gamma_{i} x_{i} k_{i,Kelvin}
 \]</div>
-<p>Where:
-- <span class="arithmatex">\(p^{pure}_{i}\)</span> is the saturation vapor pressure of species <span class="arithmatex">\(i\)</span>, sometimes called <span class="arithmatex">\(p^{sat}_{i}\)</span>, <span class="arithmatex">\(p^{vap}_{i}\)</span>, or <span class="arithmatex">\(p^{0}_{i}\)</span>
-- <span class="arithmatex">\(\gamma_{i}\)</span> is the activity coefficient of species <span class="arithmatex">\(i\)</span>
-- <span class="arithmatex">\(x_{i}\)</span> is the mole fraction of species <span class="arithmatex">\(i\)</span> in the particle phase
-- <span class="arithmatex">\(k_{i,Kelvin}\)</span> is the Kelvin effect correction factor
-  - <span class="arithmatex">\(k_{i,Kelvin} = exp(k_{i, Kelvin~radius}/radius_{particle})\)</span>
-  - <span class="arithmatex">\(k_{i, Kelvin~radius} = 2 \sigma_{surface}~molar~mass_{i} / (R  T ~ density)\)</span>
-    - <span class="arithmatex">\(\sigma_{surface}\)</span> is the effective surface tension of the particle.
-    - <span class="arithmatex">\(density\)</span> is the effective density of the particle.</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(p^{pure}_{i}\)</span> is the saturation vapor pressure of species <span class="arithmatex">\(i\)</span>, sometimes called <span class="arithmatex">\(p^{sat}_{i}\)</span>, <span class="arithmatex">\(p^{vap}_{i}\)</span>, or <span class="arithmatex">\(p^{0}_{i}\)</span></li>
+<li><span class="arithmatex">\(\gamma_{i}\)</span> is the activity coefficient of species <span class="arithmatex">\(i\)</span></li>
+<li><span class="arithmatex">\(x_{i}\)</span> is the mole fraction of species <span class="arithmatex">\(i\)</span> in the particle phase</li>
+<li><span class="arithmatex">\(k_{i,Kelvin}\)</span> is the Kelvin effect correction factor</li>
+<li><span class="arithmatex">\(k_{i,Kelvin} = exp(k_{i, Kelvin~radius}/radius_{particle})\)</span></li>
+<li><span class="arithmatex">\(k_{i, Kelvin~radius} = 2 \sigma_{surface}~molar~mass_{i} / (R  T ~ density)\)</span><ul>
+<li><span class="arithmatex">\(\sigma_{surface}\)</span> is the effective surface tension of the particle.</li>
+<li><span class="arithmatex">\(density\)</span> is the effective density of the particle.</li>
+</ul>
+</li>
+</ul>
 
 
 
