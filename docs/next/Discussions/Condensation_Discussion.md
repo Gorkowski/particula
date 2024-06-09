@@ -11,7 +11,9 @@ This follows Chapter 2 (EQ 2.41) by Topping, D., & Bane, M. (2022). Introduction
 The isothermal condensation or evaporation process is defined by the following equation:
 
 $$
+
 \frac{dm_{i}}{dt} = N \frac{k_{cond} (p_{i, gas} - p_{i, particle~surface})}{RT/ molar~mass_{i}}
+
 $$
 
 Where:
@@ -32,6 +34,7 @@ k_{cond} = 4 \pi~radius_{particle}~D_{i}~f(Kn, \alpha)
 $$
 
 Where:
+
 - $radius_{particle}$ is the radius of the particle
 - $D_{i}$ is the vapor diffusion coefficient of species $i$
 - $f(Kn, \alpha)$ is the correction factor for the molecular regime to continuum regime transition. This is a function of the Knudsen number and the accommodation coefficient.
@@ -44,6 +47,7 @@ f(Kn, \alpha_{i, accom.}) = \frac{0.75 \alpha_{i, accom.} (1 + Kn)}{
 $$
 
 Where:
+
 - $\alpha_{i, accom.}$ is the accommodation coefficient of species $i$
 - Kn is the Knudsen number
 - $Kn = \frac{\lambda_{i}}{radius_{particle}}$
