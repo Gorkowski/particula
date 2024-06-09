@@ -11,12 +11,11 @@ This follows Chapter 2 (EQ 2.41) by Topping, D., & Bane, M. (2022). Introduction
 The isothermal condensation or evaporation process is defined by the following equation:
 
 $$
-
 \frac{dm_{i}}{dt} = N \frac{k_{cond} (p_{i, gas} - p_{i, particle~surface})}{RT/ molar~mass_{i}}
-
 $$
 
 Where:
+
 - $m_{i}$ is the mass of species $i$ in the particle phase, of a specific bin
 - N is the number of particles
 - k_{cond} is the per-particle for order condensation coefficient
@@ -73,6 +72,7 @@ p_{i, particle~surface} = p^{pure}_{i} \gamma_{i} x_{i} k_{i,Kelvin}
 $$
 
 Where:
+
 - $p^{pure}_{i}$ is the saturation vapor pressure of species $i$, sometimes called $p^{sat}_{i}$, $p^{vap}_{i}$, or $p^{0}_{i}$
 - $\gamma_{i}$ is the activity coefficient of species $i$
 - $x_{i}$ is the mole fraction of species $i$ in the particle phase
