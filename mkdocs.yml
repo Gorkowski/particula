@@ -64,7 +64,6 @@ markdown_extensions:
       permalink: true
 
   # Python Markdown Extensions
-  markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.betterem:
