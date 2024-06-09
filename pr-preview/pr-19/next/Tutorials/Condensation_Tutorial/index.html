@@ -7032,7 +7032,8 @@ Gas mixture at 298.15 K and 101325.0 Pa consisting of ['Glycerol']
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="condensation-process-isothermal">Condensation Process (Isothermal)<a class="anchor-link" href="#condensation-process-isothermal">¶</a></h2><p>In code this process is implemented as a <code>Runnable</code> process. This means that the process is expected to modify the aerosol object in place, returning the modified aerosol object. This is defined in <code>Particle_processes.py</code> as the <code>MassCondensation</code> class.</p>
 <p>The <code>MassCondensation</code> class takes a <code>CondensationStrategy</code> object as an input. This object defines and evaluates the $dm_{i}/dt$ equation for the condensation process. More strategies can be added into the <code>condensation.py</code> file.</p>
-<p>For now, let's just implement the isothermal condensation process, and loop. Saving the particle composition and size at each time step.</p>
+<p>For now, let's just run it for a few time steps and see what happens.</p>
+<p>Note: We have a moving bin particle representation, so we would expect all the bins to move.</p>
 </div>
 </div>
 </div>
