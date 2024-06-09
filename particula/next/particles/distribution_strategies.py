@@ -193,13 +193,13 @@ class SpeciatedMassMovingBin(DistributionStrategy):
         # Broadcasting works natively as each column represents a species
         if distribution.ndim == 1:
             return distribution
-        return np.sum(distribution, axis=1)
+        return distribution
 
     def get_radius(
         self, distribution: NDArray[np.float_], density: NDArray[np.float_]
     ) -> NDArray[np.float_]:
         # Calculate volume from mass and density, then derive radius
-        volumes = np.sum(distribution / density, axis=1)
+        volumes = np.sum(distribution / density[:, np.newaxis], axis=1)
         return (3 * volumes / (4 * np.pi)) ** (1 / 3)
 
     def get_total_mass(
