@@ -85,3 +85,47 @@ def lognormal_pmf_distribution(
     number_of_particles: NDArray[np.float_],
 ) -> NDArray[np.float_]: ...
 ```
+
+
+
+## lognormal_sample_distribution
+
+[Show source in lognormal_size_distribution.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L114)
+
+Sample a Probability Density Function for the lognormal distribution.
+
+Samples a set of samples (particle) to represent the lognormal distribution
+for varying modes, geometric standard deviations, and numbers of particles,
+across a range of x_values.
+
+#### Arguments
+
+- `mode` - Scales corresponding to the mode in lognormal for different
+    modes.
+- `geometric_standard_deviation` - Geometric standard deviations of the
+    distribution for different modes.
+- `number_of_particles` - Number of particles for each mode.
+- `number_of_samples` - Number of samples to generate.
+
+#### Returns
+
+The normalized lognormal distribution of the particles, summed
+across all modes.
+
+#### References
+
+- [Log-normal Distribution Wikipedia](
+    https://en.wikipedia.org/wiki/Log-normal_distribution)
+ - [Probability Density Function Wikipedia](
+    https://en.wikipedia.org/wiki/Probability_density_function)
+
+#### Signature
+
+```python
+def lognormal_sample_distribution(
+    mode: NDArray[np.float_],
+    geometric_standard_deviation: NDArray[np.float_],
+    number_of_particles: NDArray[np.float_],
+    number_of_samples: int,
+) -> NDArray[np.float_]: ...
+```
