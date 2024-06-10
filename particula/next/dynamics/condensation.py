@@ -77,6 +77,9 @@ def first_order_mass_transport_k(
         - Mass Diffusivity:
             [Wikipedia](https://en.wikipedia.org/wiki/Mass_diffusivity)
     """
+    if vapor_transition.ndim == 2:  # extent radius
+        radius = radius[:, np.newaxis]
+
     return 4 * np.pi * radius * diffusion_coefficient * vapor_transition
 
 

@@ -222,8 +222,10 @@ class SpeciatedMassMovingBin(DistributionStrategy):
     ) -> tuple[NDArray[np.float_], NDArray[np.float_]]:
         # Add the mass to the distribution moving the bins
         # limit add to zero, total mass cannot be negative
+        if distribution.ndim == 2:
+            concentration_expand = concentration[:, np.newaxis]
         new_mass = (
-            np.maximum(distribution * concentration + added_mass, 0)
-            / concentration
+            np.maximum(distribution * concentration_expand + added_mass, 0)
+            / concentration_expand
         )
-        return (concentration, new_mass)
+        return (new_mass, concentration)
