@@ -3,7 +3,7 @@
 ## Particle Resolved
 
 - [ ] Coagulation needs to be implemented
-- [ ] fix density broadcast for radius in speciated mass calc
+- [ ] check equilibrium for condensation and evaporation
 
 ## Continuous Particle PDF and PMF
 
