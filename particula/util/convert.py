@@ -328,7 +328,7 @@ def mass_concentration_to_volume_fraction(
         total volume of all components.
     """
     # Calculate volumes for each component using mass concentration and density
-    volumes = mass_concentrations / densities  #[:, np.newaxis]
+    volumes = mass_concentrations / densities  # [:, np.newaxis]
 
     # Calculate total volume of the mixture
     total_volume = np.sum(volumes)  # axis=0

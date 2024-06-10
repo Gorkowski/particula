@@ -35,7 +35,8 @@ def calculate_knudsen_number(
     - For more information at https://en.wikipedia.org/wiki/Knudsen_number
     """
     if not isinstance(mean_free_path, (float, np.ndarray)) or not isinstance(
-        particle_radius, (float, np.ndarray)):
+        particle_radius, (float, np.ndarray)
+    ):
         message = "The input must be a float or a numpy array"
         logger.error(message)
         raise TypeError(message)
