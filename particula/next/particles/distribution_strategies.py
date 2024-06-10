@@ -224,6 +224,8 @@ class SpeciatedMassMovingBin(DistributionStrategy):
         # limit add to zero, total mass cannot be negative
         if distribution.ndim == 2:
             concentration_expand = concentration[:, np.newaxis]
+        else:
+            concentration_expand = concentration
         new_mass = (
             np.maximum(distribution * concentration_expand + added_mass, 0)
             / concentration_expand
