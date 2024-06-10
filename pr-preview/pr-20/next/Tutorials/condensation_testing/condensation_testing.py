@@ -83,17 +83,16 @@ particles_sample = lognormal_sample_distribution(
     number_of_particles=np.array([1e3, 1e2]),
     number_of_samples=1000,
 )
-
 # histogram lognormal
 bins_lognormal = np.logspace(-8, -5, 100)
 bins, edges = np.histogram(particles_sample, bins=bins_lognormal, density=True)
-# plot
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge")
-ax.set_xscale("log")
-ax.set_xlabel("Diameter (m)")
-ax.set_ylabel("Count")
-plt.show()
+# # plot
+# fig, ax = plt.subplots(figsize=(8, 6))
+# ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge")
+# ax.set_xscale("log")
+# ax.set_xlabel("Diameter (m)")
+# ax.set_ylabel("Count")
+# plt.show()
 
 # %%
 # particle radis to mass
@@ -173,7 +172,7 @@ ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge", label="Initial")
 
 # singe step
 aerosol = condensation_process.execute(aerosol, time_step)
-
+aerosol = condensation_process.execute(aerosol, time_step)
 plt.legend()
 ax.set_xlabel("Radius (nm)")
 ax.set_ylabel("Concentration (1/m^3)")

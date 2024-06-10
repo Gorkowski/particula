@@ -49,7 +49,7 @@ def kelvin_radius(
 
 ## kelvin_term
 
-[Show source in kelvin_effect_module.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/kelvin_effect_module.py#L46)
+[Show source in kelvin_effect_module.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/kelvin_effect_module.py#L45)
 
 Calculate the Kelvin term, which quantifies the effect of particle
 curvature on vapor pressure.

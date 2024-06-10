@@ -6786,7 +6786,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </style>
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8013a47e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1609e462">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -6799,7 +6799,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=de1b23ab">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a0c4ac0b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -6876,7 +6876,7 @@ from particula.next.particles.properties.lognormal_size_distribution import (
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5636ad39">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bf0cdba5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -6975,7 +6975,7 @@ atmosphere = (
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=70db11a4">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8cb11ea5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7000,17 +7000,16 @@ atmosphere = (
     <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e2</span><span class="p">]),</span>
     <span class="n">number_of_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
 <span class="p">)</span>
-
 <span class="c1"># histogram lognormal</span>
 <span class="n">bins_lognormal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">bins</span><span class="p">,</span> <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">particles_sample</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins_lognormal</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># plot</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">bins</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">edges</span><span class="p">),</span> <span class="n">align</span><span class="o">=</span><span class="s2">"edge"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Diameter (m)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Count"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># # plot</span>
+<span class="c1"># fig, ax = plt.subplots(figsize=(8, 6))</span>
+<span class="c1"># ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge")</span>
+<span class="c1"># ax.set_xscale("log")</span>
+<span class="c1"># ax.set_xlabel("Diameter (m)")</span>
+<span class="c1"># ax.set_ylabel("Count")</span>
+<span class="c1"># plt.show()</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-3"># sample
 particles_sample = lognormal_sample_distribution(
@@ -7019,24 +7018,23 @@ particles_sample = lognormal_sample_distribution(
     number_of_particles=np.array([1e3, 1e2]),
     number_of_samples=1000,
 )
-
 # histogram lognormal
 bins_lognormal = np.logspace(-8, -5, 100)
 bins, edges = np.histogram(particles_sample, bins=bins_lognormal, density=True)
-# plot
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge")
-ax.set_xscale("log")
-ax.set_xlabel("Diameter (m)")
-ax.set_ylabel("Count")
-plt.show()</div>
+# # plot
+# fig, ax = plt.subplots(figsize=(8, 6))
+# ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge")
+# ax.set_xscale("log")
+# ax.set_xlabel("Diameter (m)")
+# ax.set_ylabel("Count")
+# plt.show()</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3f5cd60d">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8351c496">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7147,7 +7145,7 @@ print(aerosol.particles[0].get_total_mass())</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c1ada9a3">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=94b30981">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7196,7 +7194,7 @@ print(aerosol.particles[0].get_total_mass())</div>
 
 <span class="c1"># singe step</span>
 <span class="n">aerosol</span> <span class="o">=</span> <span class="n">condensation_process</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">)</span>
-
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">condensation_process</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Radius (nm)"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Concentration (1/m^3)"</span><span class="p">)</span>
@@ -7233,7 +7231,7 @@ ax.bar(edges[:-1], bins, width=np.diff(edges), align="edge", label="Initial")
 
 # singe step
 aerosol = condensation_process.execute(aerosol, time_step)
-
+aerosol = condensation_process.execute(aerosol, time_step)
 plt.legend()
 ax.set_xlabel("Radius (nm)")
 ax.set_ylabel("Concentration (1/m^3)")
