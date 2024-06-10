@@ -313,7 +313,7 @@ class SpeciatedMassMovingBin(DistributionStrategy): ...
 
 ### SpeciatedMassMovingBin().add_mass
 
-[Show source in distribution_strategies.py:215](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L215)
+[Show source in distribution_strategies.py:216](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L216)
 
 #### Signature
 
