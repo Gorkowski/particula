@@ -83,7 +83,7 @@ def partial_pressure(
 
 ## IdealActivityMass
 
-[Show source in activity_strategies.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L111)
+[Show source in activity_strategies.py:110](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L110)
 
 Calculate ideal activity based on mass fractions.
 
@@ -106,7 +106,7 @@ class IdealActivityMass(ActivityStrategy): ...
 
 ### IdealActivityMass().activity
 
-[Show source in activity_strategies.py:121](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L121)
+[Show source in activity_strategies.py:120](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L120)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -188,7 +188,7 @@ def activity(
 
 ## KappaParameterActivity
 
-[Show source in activity_strategies.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L142)
+[Show source in activity_strategies.py:141](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L141)
 
 Non-ideal activity strategy based on the kappa hygroscopic parameter.
 
@@ -225,7 +225,7 @@ class KappaParameterActivity(ActivityStrategy):
 
 ### KappaParameterActivity().activity
 
-[Show source in activity_strategies.py:171](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L171)
+[Show source in activity_strategies.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L170)
 
 Calculate the activity of a species based on mass concentration.
 
