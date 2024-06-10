@@ -84,8 +84,7 @@ class IdealActivityMolar(ActivityStrategy):
         self.molar_mass = molar_mass
 
     def activity(
-        self,
-        mass_concentration: Union[float, NDArray[np.float_]]
+        self, mass_concentration: Union[float, NDArray[np.float_]]
     ) -> Union[float, NDArray[np.float_]]:
         """Calculate the activity of a species based on mass concentration.
 
@@ -191,10 +190,13 @@ class KappaParameterActivity(ActivityStrategy):
         volume_fractions = mass_concentration_to_volume_fraction(
             mass_concentrations=mass_concentration, densities=self.density
         )
-        if mass_concentration.ndim == 2:
+        if isinstance(mass_concentration, np.ndarray) and (
+            mass_concentration.ndim == 2
+        ):
             water_volume_fraction = volume_fractions[:, self.water_index]
             solute_volume_fractions = np.delete(
-                volume_fractions, self.water_index, axis=1)
+                volume_fractions, self.water_index, axis=1
+            )
             solute_volume = 1 - water_volume_fraction
             # volume weighted kappa, EQ 7 Petters and Kreidenweis (2007)
             kappa_weighted = np.sum(
