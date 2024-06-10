@@ -6,7 +6,7 @@
 
 ## calculate_knudsen_number
 
-[Show source in knudsen_number_module.py:9](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/knudsen_number_module.py#L9)
+[Show source in knudsen_number_module.py:12](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/knudsen_number_module.py#L12)
 
 Calculate the Knudsen number using the mean free path of the gas and the
 radius of the particle. The Knudsen number is a dimensionless number that
