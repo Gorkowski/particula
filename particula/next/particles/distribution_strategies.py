@@ -199,7 +199,7 @@ class SpeciatedMassMovingBin(DistributionStrategy):
         self, distribution: NDArray[np.float_], density: NDArray[np.float_]
     ) -> NDArray[np.float_]:
         # Calculate volume from mass and density, then derive radius
-        volumes = np.sum(distribution / density[:, np.newaxis], axis=1)
+        volumes = np.sum(distribution / density, axis=1)
         return (3 * volumes / (4 * np.pi)) ** (1 / 3)
 
     def get_total_mass(
@@ -209,7 +209,8 @@ class SpeciatedMassMovingBin(DistributionStrategy):
         density: NDArray[np.float_],
     ) -> np.float_:
         # Calculate mass for each bin and species, then sum for total mass
-        mass_per_species = self.get_mass(distribution, density)
+        # mass_per_species = self.get_mass(distribution, density)
+        mass_per_species = np.sum(distribution, axis=1)
         return np.sum(mass_per_species * concentration)
 
     def add_mass(
