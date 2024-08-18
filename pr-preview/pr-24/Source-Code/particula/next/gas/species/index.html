@@ -6858,7 +6858,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py">particula.next.gas.species</a> module.</p>
 </blockquote>
 <h2 id="gasspecies">GasSpecies<a class="headerlink" href="#gasspecies" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L16">Show source in species.py:16</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L17">Show source in species.py:17</a></p>
 <p>GasSpecies represents an individual or array of gas species with
 properties like name, molar mass, vapor pressure, and condensability.</p>
 <h4 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h4>
@@ -6895,12 +6895,12 @@ properties like name, molar mass, vapor pressure, and condensability.</p>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">]],</span>
-        <span class="n">molar_mass</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
+        <span class="n">molar_mass</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
         <span class="n">vapor_pressure_strategy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
             <span class="n">VaporPressureStrategy</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">VaporPressureStrategy</span><span class="p">]</span>
         <span class="p">]</span> <span class="o">=</span> <span class="n">ConstantVaporPressureStrategy</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span>
         <span class="n">condensable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
@@ -6908,19 +6908,19 @@ properties like name, molar mass, vapor pressure, and condensability.</p>
 <li><a href="../vapor_pressure_strategies/#vaporpressurestrategy">VaporPressureStrategy</a></li>
 </ul>
 <h3 id="gasspecieslen">GasSpecies().<strong>len</strong><a class="headerlink" href="#gasspecieslen" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L68">Show source in species.py:68</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L69">Show source in species.py:69</a></p>
 <p>Return the number of gas species.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesstr">GasSpecies().<strong>str</strong><a class="headerlink" href="#gasspeciesstr" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L64">Show source in species.py:64</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L65">Show source in species.py:65</a></p>
 <p>Return a string representation of the GasSpecies object.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesadd_concentration">GasSpecies().add_concentration<a class="headerlink" href="#gasspeciesadd_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L263">Show source in species.py:263</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L269">Show source in species.py:269</a></p>
 <p>Add concentration to the gas species.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6928,21 +6928,21 @@ properties like name, molar mass, vapor pressure, and condensability.</p>
     species.</li>
 </ul>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_concentration">GasSpecies().get_concentration<a class="headerlink" href="#gasspeciesget_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L99">Show source in species.py:99</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L100">Show source in species.py:100</a></p>
 <p>Get the concentration of the gas species in the mixture, in kg/m^3.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <ul>
-<li>concentration (float or NDArray[np.float_]): The concentration of the
+<li>concentration (float or NDArray[np.float64]): The concentration of the
     gas species in the mixture.</li>
 </ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_condensable">GasSpecies().get_condensable<a class="headerlink" href="#gasspeciesget_condensable" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L91">Show source in species.py:91</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L92">Show source in species.py:92</a></p>
 <p>Check if the gas species is condensable or not.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6953,18 +6953,18 @@ properties like name, molar mass, vapor pressure, and condensability.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_condensable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_molar_mass">GasSpecies().get_molar_mass<a class="headerlink" href="#gasspeciesget_molar_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L83">Show source in species.py:83</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L84">Show source in species.py:84</a></p>
 <p>Get the molar mass of the gas species in kg/mol.</p>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <ul>
-<li>molar_mass (float or NDArray[np.float_]): The molar mass of the gas
+<li>molar_mass (float or NDArray[np.float64]): The molar mass of the gas
     species, in kg/mol.</li>
 </ul>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_molar_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_molar_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_name">GasSpecies().get_name<a class="headerlink" href="#gasspeciesget_name" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L76">Show source in species.py:76</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L77">Show source in species.py:77</a></p>
 <p>Get the name of the gas species.</p>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6974,19 +6974,19 @@ properties like name, molar mass, vapor pressure, and condensability.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_partial_pressure">GasSpecies().get_partial_pressure<a class="headerlink" href="#gasspeciesget_partial_pressure" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L140">Show source in species.py:140</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L144">Show source in species.py:144</a></p>
 <p>Calculate the partial pressure of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
 assigned and calculates partial pressure for each strategy based on
 the corresponding concentration and molar mass.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
-<li>temperature (float or NDArray[np.float_]): The temperature in
+<li>temperature (float or NDArray[np.float64]): The temperature in
 Kelvin at which to calculate the partial pressure.</li>
 </ul>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <ul>
-<li>partial_pressure (float or NDArray[np.float_]): Partial pressure
+<li>partial_pressure (float or NDArray[np.float64]): Partial pressure
 of the gas in Pascals.</li>
 </ul>
 <h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
@@ -6995,23 +6995,23 @@ of the gas in Pascals.</li>
 </ul>
 <h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_partial_pressure</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_pure_vapor_pressure">GasSpecies().get_pure_vapor_pressure<a class="headerlink" href="#gasspeciesget_pure_vapor_pressure" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L107">Show source in species.py:107</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L108">Show source in species.py:108</a></p>
 <p>Calculate the pure vapor pressure of the gas species at a given
 temperature in Kelvin.</p>
 <p>This method supports both a single strategy or a list of strategies
 for calculating vapor pressure.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
-<li>temperature (float or NDArray[np.float_]): The temperature in
+<li>temperature (float or NDArray[np.float64]): The temperature in
 Kelvin at which to calculate vapor pressure.</li>
 </ul>
 <h4 id="returns_5">Returns<a class="headerlink" href="#returns_5" title="Permanent link">&para;</a></h4>
 <ul>
-<li>vapor_pressure (float or NDArray[np.float_]): The calculated pure
+<li>vapor_pressure (float or NDArray[np.float64]): The calculated pure
 vapor pressure in Pascals.</li>
 </ul>
 <h4 id="raises_1">Raises<a class="headerlink" href="#raises_1" title="Permanent link">&para;</a></h4>
@@ -7020,23 +7020,23 @@ vapor pressure in Pascals.</li>
 </ul>
 <h4 id="signature_9">Signature<a class="headerlink" href="#signature_9" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_pure_vapor_pressure</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_saturation_concentration">GasSpecies().get_saturation_concentration<a class="headerlink" href="#gasspeciesget_saturation_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L224">Show source in species.py:224</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L230">Show source in species.py:230</a></p>
 <p>Calculate the saturation concentration of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
 assigned and calculates saturation concentration for each strategy
 based on the molar mass.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
-<li>temperature (float or NDArray[np.float_]): The temperature in
+<li>temperature (float or NDArray[np.float64]): The temperature in
 Kelvin at which to calculate the partial pressure.</li>
 </ul>
 <h4 id="returns_6">Returns<a class="headerlink" href="#returns_6" title="Permanent link">&para;</a></h4>
 <ul>
-<li>saturation_concentration (float or NDArray[np.float_]): The
+<li>saturation_concentration (float or NDArray[np.float64]): The
 saturation concentration of the gas</li>
 </ul>
 <h4 id="raises_2">Raises<a class="headerlink" href="#raises_2" title="Permanent link">&para;</a></h4>
@@ -7045,23 +7045,23 @@ saturation concentration of the gas</li>
 </ul>
 <h4 id="signature_10">Signature<a class="headerlink" href="#signature_10" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_saturation_concentration</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="gasspeciesget_saturation_ratio">GasSpecies().get_saturation_ratio<a class="headerlink" href="#gasspeciesget_saturation_ratio" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L182">Show source in species.py:182</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L187">Show source in species.py:187</a></p>
 <p>Calculate the saturation ratio of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
 assigned and calculates saturation ratio for each strategy based on
 the corresponding concentration and molar mass.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <ul>
-<li>temperature (float or NDArray[np.float_]): The temperature in
+<li>temperature (float or NDArray[np.float64]): The temperature in
 Kelvin at which to calculate the partial pressure.</li>
 </ul>
 <h4 id="returns_7">Returns<a class="headerlink" href="#returns_7" title="Permanent link">&para;</a></h4>
 <ul>
-<li>saturation_ratio (float or NDArray[np.float_]): The saturation ratio
+<li>saturation_ratio (float or NDArray[np.float64]): The saturation ratio
 of the gas</li>
 </ul>
 <h4 id="raises_3">Raises<a class="headerlink" href="#raises_3" title="Permanent link">&para;</a></h4>
@@ -7070,8 +7070,8 @@ of the gas</li>
 </ul>
 <h4 id="signature_11">Signature<a class="headerlink" href="#signature_11" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_saturation_ratio</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 
 

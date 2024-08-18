@@ -35,10 +35,10 @@ class ParticleRepresentation:
         strategy: DistributionStrategy,
         activity: ActivityStrategy,
         surface: SurfaceStrategy,
-        distribution: NDArray[np.float_],
-        density: NDArray[np.float_],
-        concentration: NDArray[np.float_],
-        charge: NDArray[np.float_],
+        distribution: NDArray[np.float64],
+        density: NDArray[np.float64],
+        concentration: NDArray[np.float64],
+        charge: NDArray[np.float64],
     ): ...
 ```
 
@@ -62,7 +62,7 @@ added per distribution bin.
 #### Signature
 
 ```python
-def add_concentration(self, added_concentration: NDArray[np.float_]) -> None: ...
+def add_concentration(self, added_concentration: NDArray[np.float64]) -> None: ...
 ```
 
 ### ParticleRepresentation().add_mass
@@ -79,7 +79,7 @@ distribution bin.
 #### Signature
 
 ```python
-def add_mass(self, added_mass: NDArray[np.float_]) -> None: ...
+def add_mass(self, added_mass: NDArray[np.float64]) -> None: ...
 ```
 
 ### ParticleRepresentation().get_charge
@@ -95,7 +95,7 @@ The charge of the particles.
 #### Signature
 
 ```python
-def get_charge(self) -> NDArray[np.float_]: ...
+def get_charge(self) -> NDArray[np.float64]: ...
 ```
 
 ### ParticleRepresentation().get_mass
@@ -111,7 +111,7 @@ The mass of the particles.
 #### Signature
 
 ```python
-def get_mass(self) -> NDArray[np.float_]: ...
+def get_mass(self) -> NDArray[np.float64]: ...
 ```
 
 ### ParticleRepresentation().get_radius
@@ -127,7 +127,7 @@ The radius of the particles.
 #### Signature
 
 ```python
-def get_radius(self) -> NDArray[np.float_]: ...
+def get_radius(self) -> NDArray[np.float64]: ...
 ```
 
 ### ParticleRepresentation().get_total_mass
@@ -141,10 +141,10 @@ the distribution and concentration.
 
 #### Returns
 
-- `np.float_` - The total mass of the particles.
+- `np.float64` - The total mass of the particles.
 
 #### Signature
 
 ```python
-def get_total_mass(self) -> np.float_: ...
+def get_total_mass(self) -> np.float64: ...
 ```

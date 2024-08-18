@@ -38,6 +38,6 @@ it tends to scale linearly on a log-log scale, log Cc vs log Kn.
 
 ```python
 def cunningham_slip_correction(
-    knudsen_number: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    knudsen_number: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

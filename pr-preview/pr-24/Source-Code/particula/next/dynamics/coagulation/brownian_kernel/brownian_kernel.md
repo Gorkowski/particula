@@ -6,9 +6,9 @@
 
 ## brownian_coagulation_kernel
 
-[Show source in brownian_kernel.py:107](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L107)
+[Show source in brownian_kernel.py:109](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L109)
 
- Returns the Brownian coagulation kernel for aerosol particles. Defined
+Returns the Brownian coagulation kernel for aerosol particles. Defined
 as the product of the diffusivity of the particles, the collection term
 `g`, and the radius of the particles.
 
@@ -35,19 +35,19 @@ Coefficient K12 (with alpha collision efficiency term 13.56)
 
 ```python
 def brownian_coagulation_kernel(
-    radius_particle: Union[float, NDArray[np.float_]],
-    diffusivity_particle: Union[float, NDArray[np.float_]],
-    g_collection_term_particle: Union[float, NDArray[np.float_]],
-    mean_thermal_speed_particle: Union[float, NDArray[np.float_]],
-    alpha_collision_efficiency: Union[float, NDArray[np.float_]] = 1.0,
-) -> Union[float, NDArray[np.float_]]: ...
+    radius_particle: Union[float, NDArray[np.float64]],
+    diffusivity_particle: Union[float, NDArray[np.float64]],
+    g_collection_term_particle: Union[float, NDArray[np.float64]],
+    mean_thermal_speed_particle: Union[float, NDArray[np.float64]],
+    alpha_collision_efficiency: Union[float, NDArray[np.float64]] = 1.0,
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## brownian_coagulation_kernel_via_system_state
 
-[Show source in brownian_kernel.py:173](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L173)
+[Show source in brownian_kernel.py:178](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L178)
 
 Returns the Brownian coagulation kernel for aerosol particles,
 calculating the intermediate properties needed.
@@ -76,19 +76,19 @@ Coefficient K12.
 
 ```python
 def brownian_coagulation_kernel_via_system_state(
-    radius_particle: Union[float, NDArray[np.float_]],
-    mass_particle: Union[float, NDArray[np.float_]],
+    radius_particle: Union[float, NDArray[np.float64]],
+    mass_particle: Union[float, NDArray[np.float64]],
     temperature: float,
     pressure: float,
-    alpha_collision_efficiency: Union[float, NDArray[np.float_]] = 1.0,
-) -> Union[float, NDArray[np.float_]]: ...
+    alpha_collision_efficiency: Union[float, NDArray[np.float64]] = 1.0,
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## brownian_diffusivity
 
-[Show source in brownian_kernel.py:81](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L81)
+[Show source in brownian_kernel.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L83)
 
 Returns the diffusivity of the particles due to Brownian motion
 
@@ -113,16 +113,16 @@ Coefficient K12
 
 ```python
 def brownian_diffusivity(
-    temperature: Union[float, NDArray[np.float_]],
-    aerodynamic_mobility: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    temperature: Union[float, NDArray[np.float64]],
+    aerodynamic_mobility: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## g_collection_term
 
-[Show source in brownian_kernel.py:47](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L47)
+[Show source in brownian_kernel.py:49](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L49)
 
 Returns the `g` collection term for Brownian coagulation.
 
@@ -152,16 +152,16 @@ values are too small, by about 2x.
 
 ```python
 def g_collection_term(
-    mean_free_path_particle: Union[float, NDArray[np.float_]],
-    radius_particle: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    mean_free_path_particle: Union[float, NDArray[np.float64]],
+    radius_particle: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## mean_free_path_l
 
-[Show source in brownian_kernel.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L16)
+[Show source in brownian_kernel.py:18](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L18)
 
 Calculate the mean free path of particles for coagulation.
 
@@ -193,7 +193,7 @@ Coefficient K12.
 
 ```python
 def mean_free_path_l(
-    diffusivity_particle: Union[float, NDArray[np.float_]],
-    mean_thermal_speed_particle: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    diffusivity_particle: Union[float, NDArray[np.float64]],
+    mean_thermal_speed_particle: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

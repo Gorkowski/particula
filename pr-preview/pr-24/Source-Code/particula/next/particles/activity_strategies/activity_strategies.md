@@ -44,8 +44,8 @@ float or NDArray[float]: Activity of the particle, unitless.
 ```python
 @abstractmethod
 def activity(
-    self, mass_concentration: Union[float, NDArray[np.float_]]
-) -> Union[float, NDArray[np.float_]]: ...
+    self, mass_concentration: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 ### ActivityStrategy().partial_pressure
@@ -66,7 +66,7 @@ cubic meter (kg/m^3).
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float_]]* - Vapor pressure of the particle
+- `Union[float,` *NDArray[np.float64]]* - Vapor pressure of the particle
 in pascals (Pa).
 
 #### Signature
@@ -74,9 +74,9 @@ in pascals (Pa).
 ```python
 def partial_pressure(
     self,
-    pure_vapor_pressure: Union[float, NDArray[np.float_]],
-    mass_concentration: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    pure_vapor_pressure: Union[float, NDArray[np.float64]],
+    mass_concentration: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -117,15 +117,15 @@ per cubic meter (kg/m^3).
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float_]]* - Activity of the particle,
+- `Union[float,` *NDArray[np.float64]]* - Activity of the particle,
 unitless.
 
 #### Signature
 
 ```python
 def activity(
-    self, mass_concentration: Union[float, NDArray[np.float_]]
-) -> Union[float, NDArray[np.float_]]: ...
+    self, mass_concentration: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -141,7 +141,7 @@ the principles of Raoult's Law.
 
 #### Arguments
 
-molar_mass (Union[float, NDArray[np.float_]]): Molar mass of the
+molar_mass (Union[float, NDArray[np.float64]]): Molar mass of the
 species [kg/mol]. A single value applies to all species if only one
 is provided.
 
@@ -153,7 +153,7 @@ Molar [Raoult's Law](https://en.wikipedia.org/wiki/Raoult%27s_law)
 
 ```python
 class IdealActivityMolar(ActivityStrategy):
-    def __init__(self, molar_mass: Union[float, NDArray[np.float_]] = 0.0): ...
+    def __init__(self, molar_mass: Union[float, NDArray[np.float64]] = 0.0): ...
 ```
 
 #### See also
@@ -173,15 +173,15 @@ cubic meter (kg/m^3).
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float_]]* - Activity of the species,
+- `Union[float,` *NDArray[np.float64]]* - Activity of the species,
 unitless.
 
 #### Signature
 
 ```python
 def activity(
-    self, mass_concentration: Union[float, NDArray[np.float_]]
-) -> Union[float, NDArray[np.float_]]: ...
+    self, mass_concentration: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -212,9 +212,9 @@ species' mass concentration along with the hygroscopic parameter.
 class KappaParameterActivity(ActivityStrategy):
     def __init__(
         self,
-        kappa: NDArray[np.float_] = np.array([0.0], dtype=np.float_),
-        density: NDArray[np.float_] = np.array([0.0], dtype=np.float_),
-        molar_mass: NDArray[np.float_] = np.array([0.0], dtype=np.float_),
+        kappa: NDArray[np.float64] = np.array([0.0], dtype=np.float64),
+        density: NDArray[np.float64] = np.array([0.0], dtype=np.float64),
+        molar_mass: NDArray[np.float64] = np.array([0.0], dtype=np.float64),
         water_index: int = 0,
     ): ...
 ```
@@ -236,7 +236,7 @@ cubic meter (kg/m^3).
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float_]]* - Activity of the particle,
+- `Union[float,` *NDArray[np.float64]]* - Activity of the particle,
 unitless.
 
 #### References
@@ -250,6 +250,6 @@ activity. Atmospheric Chemistry and Physics, 7(8), 1961-1971.
 
 ```python
 def activity(
-    self, mass_concentration: Union[float, NDArray[np.float_]]
-) -> Union[float, NDArray[np.float_]]: ...
+    self, mass_concentration: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
 ```

@@ -38,9 +38,9 @@ class CoulombDyachkov2007(KernelStrategy): ...
 ```python
 def dimensionless(
     self,
-    diffusive_knudsen: NDArray[np.float_],
-    coulomb_potential_ratio: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    diffusive_knudsen: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -79,9 +79,9 @@ class CoulombGatti2008(KernelStrategy): ...
 ```python
 def dimensionless(
     self,
-    diffusive_knudsen: NDArray[np.float_],
-    coulomb_potential_ratio: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    diffusive_knudsen: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -120,9 +120,9 @@ class CoulombGopalakrishnan2012(KernelStrategy): ...
 ```python
 def dimensionless(
     self,
-    diffusive_knudsen: NDArray[np.float_],
-    coulomb_potential_ratio: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    diffusive_knudsen: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -161,9 +161,9 @@ class CoulumbChahl2019(KernelStrategy): ...
 ```python
 def dimensionless(
     self,
-    diffusive_knudsen: NDArray[np.float_],
-    coulomb_potential_ratio: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    diffusive_knudsen: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -192,8 +192,8 @@ class HardSphere(KernelStrategy): ...
 
 ```python
 def dimensionless(
-    self, diffusive_knudsen: NDArray[np.float_], coulomb_potential_ratio: ignore
-) -> NDArray[np.float_]: ...
+    self, diffusive_knudsen: NDArray[np.float64], coulomb_potential_ratio: ignore
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -268,9 +268,9 @@ https://doi.org/10.1080/02786826.2019.1614522
 @abstractmethod
 def dimensionless(
     self,
-    diffusive_knudsen: NDArray[np.float_],
-    coulomb_potential_ratio: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    diffusive_knudsen: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 ### KernelStrategy().kernel
@@ -309,10 +309,10 @@ Check, were the /s comes from.
 ```python
 def kernel(
     self,
-    dimensionless_kernel: NDArray[np.float_],
-    coulomb_potential_ratio: NDArray[np.float_],
-    sum_of_radii: NDArray[np.float_],
-    reduced_mass: NDArray[np.float_],
-    reduced_friction_factor: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    dimensionless_kernel: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+    sum_of_radii: NDArray[np.float64],
+    reduced_mass: NDArray[np.float64],
+    reduced_friction_factor: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```

@@ -6,7 +6,7 @@
 
 ## diffusive_knudsen_number
 
-[Show source in diffusive_knudsen_module.py:12](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusive_knudsen_module.py#L12)
+[Show source in diffusive_knudsen_module.py:13](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusive_knudsen_module.py#L13)
 
 Diffusive Knudsen number. The *diffusive* Knudsen number is different
 from Knudsen number. Ratio of: mean persistence of one particle to the
@@ -46,10 +46,10 @@ https://doi.org/10.1103/PhysRevE.85.026410
 
 ```python
 def diffusive_knudsen_number(
-    radius: Union[float, NDArray[np.float_]],
-    mass_particle: Union[float, NDArray[np.float_]],
-    friction_factor: Union[float, NDArray[np.float_]],
-    coulomb_potential_ratio: Union[float, NDArray[np.float_]] = 0.0,
+    radius: Union[float, NDArray[np.float64]],
+    mass_particle: Union[float, NDArray[np.float64]],
+    friction_factor: Union[float, NDArray[np.float64]],
+    coulomb_potential_ratio: Union[float, NDArray[np.float64]] = 0.0,
     temperature: float = 298.15,
-) -> Union[float, NDArray[np.float_]]: ...
+) -> Union[float, NDArray[np.float64]]: ...
 ```

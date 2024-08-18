@@ -6557,7 +6557,7 @@ allowing two-body problems to be solved as one-body problems.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reduced_quantity</span><span class="p">(</span><span class="n">a_quantity</span><span class="p">,</span> <span class="n">b_quantity</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="reduced_self_broadcast">reduced_self_broadcast<a class="headerlink" href="#reduced_self_broadcast" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L131">Show source in reduced_quantity.py:131</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L128">Show source in reduced_quantity.py:128</a></p>
 <p>Returns the reduced value of an array with itself, broadcasting the
 array into a matrix and calculating the reduced value of each element pair.
 reduced_value = alpha_matrix * alpha_matrix_Transpose
@@ -6572,10 +6572,10 @@ reduced_value = alpha_matrix * alpha_matrix_Transpose
 <li>A square matrix of the reduced values.</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reduced_self_broadcast</span><span class="p">(</span><span class="n">alpha_array</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reduced_self_broadcast</span><span class="p">(</span><span class="n">alpha_array</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="reduced_value">reduced_value<a class="headerlink" href="#reduced_value" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L90">Show source in reduced_quantity.py:90</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L89">Show source in reduced_quantity.py:89</a></p>
 <p>Returns the reduced value of two parameters, calculated as:
 reduced_value = alpha * beta / (alpha + beta)</p>
 <p>This formula calculates an "effective inertial" quantity,
@@ -6598,8 +6598,8 @@ allowing two-body problems to be solved as if they were one-body problems.</p>
 </ul>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">reduced_value</span><span class="p">(</span>
-    <span class="n">alpha</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span> <span class="n">beta</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]:</span> <span class="o">...</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span> <span class="n">beta</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 
 

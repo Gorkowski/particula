@@ -6,9 +6,9 @@
 
 ## continuum
 
-[Show source in coulomb_enhancement.py:91](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L91)
+[Show source in coulomb_enhancement.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L96)
 
- Calculates the Coulombic enhancement continuum limit. For all particle-
+Calculates the Coulombic enhancement continuum limit. For all particle-
 particle interactions.
 
 #### Arguments
@@ -34,17 +34,17 @@ https://doi.org/10.1103/PhysRevE.85.026410
 
 ```python
 def continuum(
-    coulomb_potential: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    coulomb_potential: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## kinetic
 
-[Show source in coulomb_enhancement.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L62)
+[Show source in coulomb_enhancement.py:65](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L65)
 
- Calculates the Coulombic enhancement kinetic limit. For all particle-
+Calculates the Coulombic enhancement kinetic limit. For all particle-
 particle interactions.
 
 #### Arguments
@@ -70,17 +70,17 @@ https://doi.org/10.1103/PhysRevE.85.026410
 
 ```python
 def kinetic(
-    coulomb_potential: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    coulomb_potential: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## ratio
 
-[Show source in coulomb_enhancement.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L19)
+[Show source in coulomb_enhancement.py:22](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L22)
 
- Calculates the Coulomb potential ratio, phi_E. For all particle-
+Calculates the Coulomb potential ratio, phi_E. For all particle-
 particle interactions.
 
 #### Arguments
@@ -108,8 +108,8 @@ https://doi.org/10.1103/PhysRevE.85.026410
 
 ```python
 def ratio(
-    radius: Union[float, NDArray[np.float_]],
-    charge: Union[int, NDArray[np.float_]] = 0,
+    radius: Union[float, NDArray[np.float64]],
+    charge: Union[int, NDArray[np.float64]] = 0,
     temperature: float = 298.15,
-) -> Union[float, NDArray[np.float_]]: ...
+) -> Union[float, NDArray[np.float64]]: ...
 ```

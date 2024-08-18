@@ -38,11 +38,11 @@ r = 2 * surface_tension * molar_mass / (R * T * density)
 
 ```python
 def kelvin_radius(
-    effective_surface_tension: Union[float, NDArray[np.float_]],
-    effective_density: Union[float, NDArray[np.float_]],
-    molar_mass: Union[float, NDArray[np.float_]],
+    effective_surface_tension: Union[float, NDArray[np.float64]],
+    effective_density: Union[float, NDArray[np.float64]],
+    molar_mass: Union[float, NDArray[np.float64]],
     temperature: float,
-) -> Union[float, NDArray[np.float_]]: ...
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -76,7 +76,7 @@ exp(kelvin_radius / particle_radius)
 
 ```python
 def kelvin_term(
-    radius: Union[float, NDArray[np.float_]],
-    kelvin_radius_value: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    radius: Union[float, NDArray[np.float64]],
+    kelvin_radius_value: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

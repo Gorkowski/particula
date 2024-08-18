@@ -6,7 +6,7 @@
 
 ## molecule_mean_free_path
 
-[Show source in mean_free_path.py:24](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/properties/mean_free_path.py#L24)
+[Show source in mean_free_path.py:27](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/properties/mean_free_path.py#L27)
 
 Calculate the mean free path of a gas molecule in air based on the
 temperature, pressure, and molar mass of the gas. The mean free path
@@ -16,7 +16,7 @@ other molecules present in a medium (air).
 #### Arguments
 
 -----
-- molar_mass (Union[float, NDArray[np.float_]]): The molar mass
+- molar_mass (Union[float, NDArray[np.float64]]): The molar mass
 of the gas molecule [kg/mol]. Default is the molecular weight of air.
 - temperature (float): The temperature of the gas [K]. Default is 298.15 K.
 - pressure (float): The pressure of the gas [Pa]. Default is 101325 Pa.
@@ -26,7 +26,7 @@ of the gas molecule [kg/mol]. Default is the molecular weight of air.
 #### Returns
 
 --------
-- Union[float, NDArray[np.float_]]: The mean free path of the gas molecule
+- Union[float, NDArray[np.float64]]: The mean free path of the gas molecule
 in meters (m).
 
 #### References
@@ -42,5 +42,5 @@ def molecule_mean_free_path(
     temperature: float = 298.15,
     pressure: float = 101325,
     dynamic_viscosity: Optional[float] = None,
-) -> Union[float, NDArray[np.float_]]: ...
+) -> Union[float, NDArray[np.float64]]: ...
 ```

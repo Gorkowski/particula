@@ -6,7 +6,7 @@
 
 ## continuous_gain
 
-[Show source in rate.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L108)
+[Show source in rate.py:109](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L109)
 
 Calculate the coagulation gain rate, via the integration method.
 
@@ -39,17 +39,17 @@ physics, Chapter 13 Equations 13.61
 
 ```python
 def continuous_gain(
-    radius: Union[float, NDArray[np.float_]],
-    concentration: Union[float, NDArray[np.float_]],
-    kernel: NDArray[np.float_],
-) -> Union[float, NDArray[np.float_]]: ...
+    radius: Union[float, NDArray[np.float64]],
+    concentration: Union[float, NDArray[np.float64]],
+    kernel: NDArray[np.float64],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## continuous_loss
 
-[Show source in rate.py:81](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L81)
+[Show source in rate.py:82](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L82)
 
 Calculate the coagulation loss rate, via the integration method.
 
@@ -75,10 +75,10 @@ physics, Chapter 13 Equations 13.61
 
 ```python
 def continuous_loss(
-    radius: Union[float, NDArray[np.float_]],
-    concentration: Union[float, NDArray[np.float_]],
-    kernel: NDArray[np.float_],
-) -> Union[float, NDArray[np.float_]]: ...
+    radius: Union[float, NDArray[np.float64]],
+    concentration: Union[float, NDArray[np.float64]],
+    kernel: NDArray[np.float64],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -110,8 +110,8 @@ physics, Chapter 13 Equations 13.61
 
 ```python
 def discrete_gain(
-    concentration: Union[float, NDArray[np.float_]], kernel: NDArray[np.float_]
-) -> Union[float, NDArray[np.float_]]: ...
+    concentration: Union[float, NDArray[np.float64]], kernel: NDArray[np.float64]
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -140,6 +140,6 @@ physics, Chapter 13 Equations 13.61
 
 ```python
 def discrete_loss(
-    concentration: Union[float, NDArray[np.float_]], kernel: NDArray[np.float_]
-) -> Union[float, NDArray[np.float_]]: ...
+    concentration: Union[float, NDArray[np.float64]], kernel: NDArray[np.float64]
+) -> Union[float, NDArray[np.float64]]: ...
 ```
