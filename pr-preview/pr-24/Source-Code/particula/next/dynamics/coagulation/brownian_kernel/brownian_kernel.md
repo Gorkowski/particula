@@ -49,27 +49,28 @@ def brownian_coagulation_kernel(
 
 [Show source in brownian_kernel.py:173](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L173)
 
- Returns the Brownian coagulation kernel for aerosol particles.
-Calculating the intermediate properties needed.
+Returns the Brownian coagulation kernel for aerosol particles,
+calculating the intermediate properties needed.
 
-Args
-----
+#### Arguments
+
 radius_particle : The radius of the particles [m].
 mass_particle : The mass of the particles [kg].
 temperature : The temperature of the air [K].
 pressure : The pressure of the air [Pa].
 alpha_collision_efficiency : The collision efficiency of the particles
-[dimensionless].
+    [dimensionless].
 
-Returns
--------
-Square matrix of Brownian coagulation kernel for aerosol particles [m^3/s].
+#### Returns
 
-References
-----------
+Square matrix of Brownian coagulation kernel for aerosol particles
+    [m^3/s].
+
+#### References
+
 Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
 physics, Section 13 TABLE 13.1 Fuchs Form of the Brownian Coagulation
-Coefficient K12
+Coefficient K12.
 
 #### Signature
 

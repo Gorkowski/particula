@@ -6,7 +6,7 @@
 
 ## continuous_gain
 
-[Show source in rate.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L111)
+[Show source in rate.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L108)
 
 Calculate the coagulation gain rate, via the integration method.
 
@@ -49,7 +49,7 @@ def continuous_gain(
 
 ## continuous_loss
 
-[Show source in rate.py:84](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L84)
+[Show source in rate.py:81](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L81)
 
 Calculate the coagulation loss rate, via the integration method.
 
@@ -85,7 +85,7 @@ def continuous_loss(
 
 ## discrete_gain
 
-[Show source in rate.py:43](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L43)
+[Show source in rate.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L40)
 
 Calculate the coagulation gain rate, via the summation method.
 
@@ -124,18 +124,15 @@ Calculate the coagulation loss rate, via the summation method.
 
 #### Arguments
 
------
-- `-` *concentraiton* - The distribution of particles.
-- `-` *kernel* - The coagulation kernel.
+concentraiton : The distribution of particles.
+kernel : The coagulation kernel.
 
 #### Returns
 
---------
-- The coagulation loss rate.
+The coagulation loss rate.
 
 #### References
 
-----------
 Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
 physics, Chapter 13 Equations 13.61
 

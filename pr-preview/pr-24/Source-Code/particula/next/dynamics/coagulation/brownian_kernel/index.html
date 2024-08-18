@@ -1935,18 +1935,19 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#args_1" class="md-nav__link">
+    <nav class="md-nav" aria-label="brownian_coagulation_kernel_via_system_state">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Args
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_1" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
@@ -1954,16 +1955,15 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#references_1" class="md-nav__link">
     <span class="md-ellipsis">
       References
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_1" class="md-nav__link">
@@ -1989,7 +1989,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#args_2" class="md-nav__link">
+  <a href="#args_1" class="md-nav__link">
     <span class="md-ellipsis">
       Args
     </span>
@@ -2040,7 +2040,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#args_3" class="md-nav__link">
+  <a href="#args_2" class="md-nav__link">
     <span class="md-ellipsis">
       Args
     </span>
@@ -2092,7 +2092,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments" class="md-nav__link">
+  <a href="#arguments_1" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -6447,6 +6447,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../../next/Tutorials/Coagulation_Basic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coagulation Basic 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../../next/Tutorials/Condensation_Tutorial-1/" class="md-nav__link">
         
   
@@ -6654,21 +6675,22 @@ Coefficient K12 (with alpha collision efficiency term 13.56)</p>
 </code></pre></div>
 <h2 id="brownian_coagulation_kernel_via_system_state">brownian_coagulation_kernel_via_system_state<a class="headerlink" href="#brownian_coagulation_kernel_via_system_state" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L173">Show source in brownian_kernel.py:173</a></p>
-<p>Returns the Brownian coagulation kernel for aerosol particles.
-Calculating the intermediate properties needed.</p>
-<h2 id="args_1">Args<a class="headerlink" href="#args_1" title="Permanent link">&para;</a></h2>
+<p>Returns the Brownian coagulation kernel for aerosol particles,
+calculating the intermediate properties needed.</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <p>radius_particle : The radius of the particles [m].
 mass_particle : The mass of the particles [kg].
 temperature : The temperature of the air [K].
 pressure : The pressure of the air [Pa].
 alpha_collision_efficiency : The collision efficiency of the particles
-[dimensionless].</p>
-<h2 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
-<p>Square matrix of Brownian coagulation kernel for aerosol particles [m^3/s].</p>
-<h2 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h2>
+    [dimensionless].</p>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<p>Square matrix of Brownian coagulation kernel for aerosol particles
+    [m^3/s].</p>
+<h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
 <p>Seinfeld, J. H., &amp; Pandis, S. N. (2016). Atmospheric chemistry and
 physics, Section 13 TABLE 13.1 Fuchs Form of the Brownian Coagulation
-Coefficient K12</p>
+Coefficient K12.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">brownian_coagulation_kernel_via_system_state</span><span class="p">(</span>
     <span class="n">radius_particle</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
@@ -6682,7 +6704,7 @@ Coefficient K12</p>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/brownian_kernel.py#L81">Show source in brownian_kernel.py:81</a></p>
 <p>Returns the diffusivity of the particles due to Brownian motion</p>
 <p>THis is just the scaled aerodynamic mobility of the particles.</p>
-<h2 id="args_2">Args<a class="headerlink" href="#args_2" title="Permanent link">&para;</a></h2>
+<h2 id="args_1">Args<a class="headerlink" href="#args_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>temperature : The temperature of the air [K].</li>
 <li>aerodynamic_mobility : The aerodynamic mobility of the particles [m^2/s].</li>
@@ -6704,7 +6726,7 @@ Coefficient K12</p>
 <p>Returns the <code>g</code> collection term for Brownian coagulation.</p>
 <p>Defined as the ratio of the mean free path of the particles to the
 radius of the particles.</p>
-<h2 id="args_3">Args<a class="headerlink" href="#args_3" title="Permanent link">&para;</a></h2>
+<h2 id="args_2">Args<a class="headerlink" href="#args_2" title="Permanent link">&para;</a></h2>
 <p>mean_free_path_particle : The mean free path of the particles [m].
 radius_particle : The radius of the particles [m].</p>
 <h2 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h2>
@@ -6729,7 +6751,7 @@ values are too small, by about 2x.</p>
 coagulation as the ratio of the diffusivity of the particles to their mean
 thermal speed. This parameter is crucial for understanding particle
 dynamics in a fluid.</p>
-<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <hr />
 <ul>
 <li>diffusivity_particle : The diffusivity of the particles [m^2/s].</li>
