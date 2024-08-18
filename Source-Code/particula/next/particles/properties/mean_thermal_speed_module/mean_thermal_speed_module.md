@@ -8,7 +8,7 @@
 
 [Show source in mean_thermal_speed_module.py:11](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/mean_thermal_speed_module.py#L11)
 
- Returns the particles mean thermal speed. Due to the the impact
+Returns the particles mean thermal speed. Due to the the impact
 of air molecules on the particles, the particles will have a mean
 thermal speed.
 
@@ -30,6 +30,7 @@ physics, Section 9.5.3 Mean Free Path of an Aerosol Particle Equation 9.87.
 
 ```python
 def mean_thermal_speed(
-    mass: Union[float, NDArray[np.float_]], temperature: Union[float, NDArray[np.float_]]
-) -> Union[float, NDArray[np.float_]]: ...
+    mass: Union[float, NDArray[np.float64]],
+    temperature: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

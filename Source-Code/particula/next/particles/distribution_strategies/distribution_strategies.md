@@ -41,8 +41,8 @@ the distribution.
 
 #### Returns
 
-- `NDArray[np.float_]` - The new concentration array.
-- `NDArray[np.float_]` - The new distribution array.
+- `NDArray[np.float64]` - The new concentration array.
+- `NDArray[np.float64]` - The new distribution array.
 
 #### Signature
 
@@ -50,11 +50,11 @@ the distribution.
 @abstractmethod
 def add_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-    added_mass: NDArray[np.float_],
-) -> tuple[NDArray[np.float_], NDArray[np.float_]]: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+    added_mass: NDArray[np.float64],
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 ```
 
 ### DistributionStrategy().get_mass
@@ -70,15 +70,15 @@ Calculates the mass of the particles.
 
 #### Returns
 
-- `NDArray[np.float_]` - The mass of the particles.
+- `NDArray[np.float64]` - The mass of the particles.
 
 #### Signature
 
 ```python
 @abstractmethod
 def get_mass(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### DistributionStrategy().get_radius
@@ -94,15 +94,15 @@ Calculates the radius of the particles.
 
 #### Returns
 
-- `NDArray[np.float_]` - The radius of the particles.
+- `NDArray[np.float64]` - The radius of the particles.
 
 #### Signature
 
 ```python
 @abstractmethod
 def get_radius(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### DistributionStrategy().get_total_mass
@@ -120,7 +120,7 @@ the distribution.
 
 #### Returns
 
-- `np.float_` - The total mass of the particles.
+- `np.float64` - The total mass of the particles.
 
 #### Signature
 
@@ -128,10 +128,10 @@ the distribution.
 @abstractmethod
 def get_total_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-) -> np.float_: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+) -> np.float64: ...
 ```
 
 
@@ -165,11 +165,11 @@ class MassBasedMovingBin(DistributionStrategy): ...
 ```python
 def add_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-    added_mass: NDArray[np.float_],
-) -> tuple[NDArray[np.float_], NDArray[np.float_]]: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+    added_mass: NDArray[np.float64],
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 ```
 
 ### MassBasedMovingBin().get_mass
@@ -180,8 +180,8 @@ def add_mass(
 
 ```python
 def get_mass(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### MassBasedMovingBin().get_radius
@@ -192,8 +192,8 @@ def get_mass(
 
 ```python
 def get_radius(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### MassBasedMovingBin().get_total_mass
@@ -205,10 +205,10 @@ def get_radius(
 ```python
 def get_total_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-) -> np.float_: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+) -> np.float64: ...
 ```
 
 
@@ -241,11 +241,11 @@ class RadiiBasedMovingBin(DistributionStrategy): ...
 ```python
 def add_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-    added_mass: NDArray[np.float_],
-) -> tuple[NDArray[np.float_], NDArray[np.float_]]: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+    added_mass: NDArray[np.float64],
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 ```
 
 ### RadiiBasedMovingBin().get_mass
@@ -256,8 +256,8 @@ def add_mass(
 
 ```python
 def get_mass(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### RadiiBasedMovingBin().get_radius
@@ -268,8 +268,8 @@ def get_mass(
 
 ```python
 def get_radius(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### RadiiBasedMovingBin().get_total_mass
@@ -281,10 +281,10 @@ def get_radius(
 ```python
 def get_total_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-) -> np.float_: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+) -> np.float64: ...
 ```
 
 
@@ -320,11 +320,11 @@ class SpeciatedMassMovingBin(DistributionStrategy): ...
 ```python
 def add_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-    added_mass: NDArray[np.float_],
-) -> tuple[NDArray[np.float_], NDArray[np.float_]]: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+    added_mass: NDArray[np.float64],
+) -> tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 ```
 
 ### SpeciatedMassMovingBin().get_mass
@@ -335,8 +335,8 @@ def add_mass(
 
 ```python
 def get_mass(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### SpeciatedMassMovingBin().get_radius
@@ -347,8 +347,8 @@ def get_mass(
 
 ```python
 def get_radius(
-    self, distribution: NDArray[np.float_], density: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    self, distribution: NDArray[np.float64], density: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 ### SpeciatedMassMovingBin().get_total_mass
@@ -360,8 +360,8 @@ def get_radius(
 ```python
 def get_total_mass(
     self,
-    distribution: NDArray[np.float_],
-    concentration: NDArray[np.float_],
-    density: NDArray[np.float_],
-) -> np.float_: ...
+    distribution: NDArray[np.float64],
+    concentration: NDArray[np.float64],
+    density: NDArray[np.float64],
+) -> np.float64: ...
 ```

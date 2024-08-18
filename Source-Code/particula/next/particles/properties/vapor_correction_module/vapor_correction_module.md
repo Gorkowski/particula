@@ -16,17 +16,17 @@ flow. This is the Suchs and Futugin transition function.
 #### Arguments
 
 -----
-- knudsen_number (Union[float, NDArray[np.float_]]): The Knudsen number,
+- knudsen_number (Union[float, NDArray[np.float64]]): The Knudsen number,
 which quantifies the relative importance of the mean free path of gas
 molecules to the size of the particle.
-- mass_accommodation (Union[float, NDArray[np.float_]]): The mass
+- mass_accommodation (Union[float, NDArray[np.float64]]): The mass
 accommodation coefficient, representing the probability of a gas molecule
 sticking to the particle upon collision.
 
 #### Returns
 
 --------
-- Union[float, NDArray[np.float_]]: The transition correction value
+- Union[float, NDArray[np.float64]]: The transition correction value
 calculated based on the specified inputs.
 
 #### References
@@ -46,7 +46,7 @@ https://doi.org/10.1016/B978-0-08-016674-2.50006-6
 
 ```python
 def vapor_transition_correction(
-    knudsen_number: Union[float, NDArray[np.float_]],
-    mass_accommodation: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    knudsen_number: Union[float, NDArray[np.float64]],
+    mass_accommodation: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

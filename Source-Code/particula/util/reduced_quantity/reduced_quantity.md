@@ -47,7 +47,7 @@ def reduced_quantity(a_quantity, b_quantity): ...
 
 ## reduced_self_broadcast
 
-[Show source in reduced_quantity.py:131](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L131)
+[Show source in reduced_quantity.py:128](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L128)
 
 Returns the reduced value of an array with itself, broadcasting the
 array into a matrix and calculating the reduced value of each element pair.
@@ -66,14 +66,14 @@ reduced_value = alpha_matrix * alpha_matrix_Transpose
 #### Signature
 
 ```python
-def reduced_self_broadcast(alpha_array: NDArray[np.float_]) -> NDArray[np.float_]: ...
+def reduced_self_broadcast(alpha_array: NDArray[np.float64]) -> NDArray[np.float64]: ...
 ```
 
 
 
 ## reduced_value
 
-[Show source in reduced_quantity.py:90](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L90)
+[Show source in reduced_quantity.py:89](https://github.com/Gorkowski/particula/blob/main/particula/util/reduced_quantity.py#L89)
 
 Returns the reduced value of two parameters, calculated as:
 reduced_value = alpha * beta / (alpha + beta)
@@ -101,6 +101,6 @@ allowing two-body problems to be solved as if they were one-body problems.
 
 ```python
 def reduced_value(
-    alpha: Union[float, NDArray[np.float_]], beta: Union[float, NDArray[np.float_]]
-) -> Union[float, NDArray[np.float_]]: ...
+    alpha: Union[float, NDArray[np.float64]], beta: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
 ```

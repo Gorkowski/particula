@@ -61,7 +61,7 @@ argument is allowed. A list of int is allowed.
 #### Signature
 
 ```python
-def __getitem__(self, index: Union[int, str]) -> NDArray[np.float_]: ...
+def __getitem__(self, index: Union[int, str]) -> NDArray[np.float64]: ...
 ```
 
 ### Stream().__len__
@@ -101,7 +101,7 @@ Support setting multiple rows by accepting a list of values.
 #### Signature
 
 ```python
-def __setitem__(self, index: Union[int, str], value: NDArray[np.float_]): ...
+def __setitem__(self, index: Union[int, str], value: NDArray[np.float64]): ...
 ```
 
 ### Stream().datetime64
@@ -122,7 +122,7 @@ that the time array is in seconds since the epoch.
 
 ```python
 @property
-def datetime64(self) -> NDArray[np.float_]: ...
+def datetime64(self) -> NDArray[np.float64]: ...
 ```
 
 ### Stream().header_dict
@@ -156,7 +156,7 @@ Attempts to convert header names to a float array, where possible.
 
 ```python
 @property
-def header_float(self) -> NDArray[np.float_]: ...
+def header_float(self) -> NDArray[np.float64]: ...
 ```
 
 ### Stream().validate_inputs
@@ -233,7 +233,7 @@ for which standard deviation is needed.
 #### Signature
 
 ```python
-def get_std(self, index: Union[int, str]) -> NDArray[np.float_]: ...
+def get_std(self, index: Union[int, str]) -> NDArray[np.float64]: ...
 ```
 
 ### StreamAveraged().validate_averaging_params

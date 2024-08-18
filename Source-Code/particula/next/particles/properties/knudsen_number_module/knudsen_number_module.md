@@ -15,15 +15,15 @@ indicates the regime of gas flow relative to the size of particles.
 #### Arguments
 
 -----
-- mean_free_path (Union[float, NDArray[np.float_]]): The mean free path of
+- mean_free_path (Union[float, NDArray[np.float64]]): The mean free path of
 the gas molecules [meters (m)].
-- particle_radius (Union[float, NDArray[np.float_]]): The radius of the
+- particle_radius (Union[float, NDArray[np.float64]]): The radius of the
 particle [meters (m)].
 
 #### Returns
 
 --------
-- Union[float, NDArray[np.float_]]: The Knudsen number, which is the
+- Union[float, NDArray[np.float64]]: The Knudsen number, which is the
 ratio of the mean free path to the particle radius.
 
 #### References
@@ -35,7 +35,7 @@ ratio of the mean free path to the particle radius.
 
 ```python
 def calculate_knudsen_number(
-    mean_free_path: Union[float, NDArray[np.float_]],
-    particle_radius: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    mean_free_path: Union[float, NDArray[np.float64]],
+    particle_radius: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

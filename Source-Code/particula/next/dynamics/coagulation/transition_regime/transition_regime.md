@@ -6,9 +6,9 @@
 
 ## coulomb_chahl2019
 
-[Show source in transition_regime.py:202](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L202)
+[Show source in transition_regime.py:209](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L209)
 
- Chahl and Gopalakrishnan (2019) approximation for the dimensionless
+Chahl and Gopalakrishnan (2019) approximation for the dimensionless
 coagulation kernel. Accounts for the Coulomb potential between particles.
 
 #### Arguments
@@ -36,9 +36,9 @@ https://doi.org/10.1080/02786826.2019.1614522
 
 ```python
 def coulomb_chahl2019(
-    diffusive_knudsen: Union[float, NDArray[np.float_]],
-    coulomb_potential_ratio: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    diffusive_knudsen: Union[float, NDArray[np.float64]],
+    coulomb_potential_ratio: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -47,7 +47,7 @@ def coulomb_chahl2019(
 
 [Show source in transition_regime.py:51](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L51)
 
- Dyachkov et al. (2007) approximation for the dimensionless coagulation
+Dyachkov et al. (2007) approximation for the dimensionless coagulation
 kernel. Accounts for the Coulomb potential between particles.
 
 #### Arguments
@@ -75,18 +75,18 @@ https://doi.org/10.1063/1.2713719
 
 ```python
 def coulomb_dyachkov2007(
-    diffusive_knudsen: Union[float, NDArray[np.float_]],
-    coulomb_potential_ratio: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    diffusive_knudsen: Union[float, NDArray[np.float64]],
+    coulomb_potential_ratio: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## coulomb_gatti2008
 
-[Show source in transition_regime.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L108)
+[Show source in transition_regime.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L106)
 
- Gatti et al. (2008) approximation for the dimensionless coagulation
+Gatti et al. (2008) approximation for the dimensionless coagulation
 kernel. Accounts for the Coulomb potential between particles.
 
 #### Arguments
@@ -114,18 +114,18 @@ https://doi.org/10.1103/PhysRevE.78.046402
 
 ```python
 def coulomb_gatti2008(
-    diffusive_knudsen: Union[float, NDArray[np.float_]],
-    coulomb_potential_ratio: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    diffusive_knudsen: Union[float, NDArray[np.float64]],
+    coulomb_potential_ratio: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
 
 ## coulomb_gopalakrishnan2012
 
-[Show source in transition_regime.py:163](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L163)
+[Show source in transition_regime.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/transition_regime.py#L170)
 
- Gopalakrishnan and Hogan (2012) approximation for the dimensionless
+Gopalakrishnan and Hogan (2012) approximation for the dimensionless
 coagulation kernel. Accounts for the Coulomb potential between particles.
 
 #### Arguments
@@ -153,9 +153,9 @@ https://doi.org/10.1103/PhysRevE.85.026410
 
 ```python
 def coulomb_gopalakrishnan2012(
-    diffusive_knudsen: Union[float, NDArray[np.float_]],
-    coulomb_potential_ratio: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    diffusive_knudsen: Union[float, NDArray[np.float64]],
+    coulomb_potential_ratio: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -189,6 +189,6 @@ https://doi.org/10.1063/1.2713719
 
 ```python
 def hard_sphere(
-    diffusive_knudsen: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    diffusive_knudsen: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

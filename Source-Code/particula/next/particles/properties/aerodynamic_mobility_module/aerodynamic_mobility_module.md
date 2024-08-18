@@ -6,7 +6,7 @@
 
 ## particle_aerodynamic_mobility
 
-[Show source in aerodynamic_mobility_module.py:8](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/aerodynamic_mobility_module.py#L8)
+[Show source in aerodynamic_mobility_module.py:9](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/aerodynamic_mobility_module.py#L9)
 
 Calculate the aerodynamic mobility of a particle, defined as the ratio
 of the slip correction factor to the product of the dynamic viscosity of
@@ -32,8 +32,8 @@ in the fluid (dimensionless).
 
 ```python
 def particle_aerodynamic_mobility(
-    radius: Union[float, NDArray[np.float_]],
-    slip_correction_factor: Union[float, NDArray[np.float_]],
+    radius: Union[float, NDArray[np.float64]],
+    slip_correction_factor: Union[float, NDArray[np.float64]],
     dynamic_viscosity: float,
-) -> Union[float, NDArray[np.float_]]: ...
+) -> Union[float, NDArray[np.float64]]: ...
 ```

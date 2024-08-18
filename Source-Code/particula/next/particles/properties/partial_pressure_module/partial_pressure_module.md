@@ -15,25 +15,25 @@ of change of mass of an aerosol particle.
 #### Arguments
 
 -----
-- partial_pressure_gas (Union[float, NDArray[np.float_]]): The partial
+- partial_pressure_gas (Union[float, NDArray[np.float64]]): The partial
 pressure of the species in the gas phase.
-- partial_pressure_particle (Union[float, NDArray[np.float_]]): The partial
+- partial_pressure_particle (Union[float, NDArray[np.float64]]): The partial
 pressure of the species in the particle phase.
-- kelvin_term (Union[float, NDArray[np.float_]]): Kelvin effect to account
+- kelvin_term (Union[float, NDArray[np.float64]]): Kelvin effect to account
 for the curvature of the particle.
 
 #### Returns
 
 --------
-- Union[float, NDArray[np.float_]]: The difference in partial pressure
+- Union[float, NDArray[np.float64]]: The difference in partial pressure
 between the gas phase and the particle phase.
 
 #### Signature
 
 ```python
 def partial_pressure_delta(
-    partial_pressure_gas: Union[float, NDArray[np.float_]],
-    partial_pressure_particle: Union[float, NDArray[np.float_]],
-    kelvin_term: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    partial_pressure_gas: Union[float, NDArray[np.float64]],
+    partial_pressure_particle: Union[float, NDArray[np.float64]],
+    kelvin_term: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

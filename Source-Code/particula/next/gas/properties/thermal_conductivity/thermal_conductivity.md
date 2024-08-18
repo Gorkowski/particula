@@ -16,13 +16,13 @@ Earth's surface.
 #### Arguments
 
 -----
-- temperature (Union[float, NDArray[np.float_]]): The temperature at which
+- temperature (Union[float, NDArray[np.float64]]): The temperature at which
 the thermal conductivity of air is to be calculated, in Kelvin (K).
 
 #### Returns
 
 --------
-- Union[float, NDArray[np.float_]]: The thermal conductivity of air at the
+- Union[float, NDArray[np.float64]]: The thermal conductivity of air at the
 specified temperature in Watts per meter-Kelvin (W/m·K) or J/(m s K).
 
 #### Raises
@@ -39,6 +39,6 @@ specified temperature in Watts per meter-Kelvin (W/m·K) or J/(m s K).
 
 ```python
 def get_thermal_conductivity(
-    temperature: Union[float, NDArray[np.float_]],
-) -> Union[float, NDArray[np.float_]]: ...
+    temperature: Union[float, NDArray[np.float64]],
+) -> Union[float, NDArray[np.float64]]: ...
 ```

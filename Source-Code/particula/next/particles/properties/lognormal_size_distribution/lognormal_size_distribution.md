@@ -37,11 +37,11 @@ across all modes.
 
 ```python
 def lognormal_pdf_distribution(
-    x_values: NDArray[np.float_],
-    mode: NDArray[np.float_],
-    geometric_standard_deviation: NDArray[np.float_],
-    number_of_particles: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    x_values: NDArray[np.float64],
+    mode: NDArray[np.float64],
+    geometric_standard_deviation: NDArray[np.float64],
+    number_of_particles: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -79,11 +79,11 @@ across all modes.
 
 ```python
 def lognormal_pmf_distribution(
-    x_values: NDArray[np.float_],
-    mode: NDArray[np.float_],
-    geometric_standard_deviation: NDArray[np.float_],
-    number_of_particles: NDArray[np.float_],
-) -> NDArray[np.float_]: ...
+    x_values: NDArray[np.float64],
+    mode: NDArray[np.float64],
+    geometric_standard_deviation: NDArray[np.float64],
+    number_of_particles: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -123,9 +123,9 @@ across all modes.
 
 ```python
 def lognormal_sample_distribution(
-    mode: NDArray[np.float_],
-    geometric_standard_deviation: NDArray[np.float_],
-    number_of_particles: NDArray[np.float_],
+    mode: NDArray[np.float64],
+    geometric_standard_deviation: NDArray[np.float64],
+    number_of_particles: NDArray[np.float64],
     number_of_samples: int,
-) -> NDArray[np.float_]: ...
+) -> NDArray[np.float64]: ...
 ```

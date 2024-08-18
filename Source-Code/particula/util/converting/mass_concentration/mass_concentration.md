@@ -32,15 +32,15 @@ concentration to the total molar concentration of all components.
 
 ```python
 def to_mole_fraction(
-    mass_concentrations: NDArray[np.float_], molar_masses: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    mass_concentrations: NDArray[np.float64], molar_masses: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```
 
 
 
 ## to_volume_fraction
 
-[Show source in mass_concentration.py:41](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/mass_concentration.py#L41)
+[Show source in mass_concentration.py:40](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/mass_concentration.py#L40)
 
 Convert mass concentrations to volume fractions for N components.
 
@@ -68,6 +68,6 @@ total volume of all components.
 
 ```python
 def to_volume_fraction(
-    mass_concentrations: NDArray[np.float_], densities: NDArray[np.float_]
-) -> NDArray[np.float_]: ...
+    mass_concentrations: NDArray[np.float64], densities: NDArray[np.float64]
+) -> NDArray[np.float64]: ...
 ```

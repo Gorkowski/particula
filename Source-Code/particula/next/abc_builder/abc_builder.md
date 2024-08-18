@@ -202,7 +202,7 @@ Set the number of elemental charges on the particle.
 
 ```python
 def set_charge(
-    self, charge: Union[float, NDArray[np.float_]], charge_units: Optional[str] = None
+    self, charge: Union[float, NDArray[np.float64]], charge_units: Optional[str] = None
 ): ...
 ```
 
@@ -247,7 +247,7 @@ Default is *kg/m^3*.
 ```python
 def set_concentration(
     self,
-    concentration: Union[float, NDArray[np.float_]],
+    concentration: Union[float, NDArray[np.float64]],
     concentration_units: Optional[str] = None,
 ): ...
 ```
@@ -287,7 +287,7 @@ Set the density of the particle in kg/m^3.
 ```python
 def set_density(
     self,
-    density: Union[float, NDArray[np.float_]],
+    density: Union[float, NDArray[np.float64]],
     density_units: Optional[str] = "kg/m^3",
 ): ...
 ```
@@ -374,7 +374,7 @@ Set the mass of the particle in kg.
 
 ```python
 def set_mass(
-    self, mass: Union[float, NDArray[np.float_]], mass_units: Optional[str] = "kg"
+    self, mass: Union[float, NDArray[np.float64]], mass_units: Optional[str] = "kg"
 ): ...
 ```
 
@@ -414,7 +414,7 @@ Set the molar mass of the particle in kg/mol.
 ```python
 def set_molar_mass(
     self,
-    molar_mass: Union[float, NDArray[np.float_]],
+    molar_mass: Union[float, NDArray[np.float64]],
     molar_mass_units: Optional[str] = "kg/mol",
 ): ...
 ```
@@ -462,7 +462,7 @@ Set the total pressure of the atmosphere.
 
 ```python
 def set_pressure(
-    self, pressure: Union[float, NDArray[np.float_]], pressure_units: str = "Pa"
+    self, pressure: Union[float, NDArray[np.float64]], pressure_units: str = "Pa"
 ): ...
 ```
 
@@ -504,7 +504,7 @@ Set the radius of the particle in meters.
 
 ```python
 def set_radius(
-    self, radius: Union[float, NDArray[np.float_]], radius_units: Optional[str] = "m"
+    self, radius: Union[float, NDArray[np.float64]], radius_units: Optional[str] = "m"
 ): ...
 ```
 
@@ -586,7 +586,7 @@ Set the surface tension of the particle in N/m.
 ```python
 def set_surface_tension(
     self,
-    surface_tension: Union[float, NDArray[np.float_]],
+    surface_tension: Union[float, NDArray[np.float64]],
     surface_tension_units: Optional[str] = "N/m",
 ): ...
 ```
