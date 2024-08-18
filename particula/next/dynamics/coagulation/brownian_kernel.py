@@ -177,27 +177,25 @@ def brownian_coagulation_kernel_via_system_state(
     pressure: float,
     alpha_collision_efficiency: Union[float, NDArray[np.float_]] = 1.0
 ) -> Union[float, NDArray[np.float_]]:
-    """ Returns the Brownian coagulation kernel for aerosol particles.
-    Calculating the intermediate properties needed.
+    """Returns the Brownian coagulation kernel for aerosol particles,
+    calculating the intermediate properties needed.
 
-    Args
-    ----
-    radius_particle : The radius of the particles [m].
-    mass_particle : The mass of the particles [kg].
-    temperature : The temperature of the air [K].
-    pressure : The pressure of the air [Pa].
-    alpha_collision_efficiency : The collision efficiency of the particles
-    [dimensionless].
+    Arguments:
+        radius_particle : The radius of the particles [m].
+        mass_particle : The mass of the particles [kg].
+        temperature : The temperature of the air [K].
+        pressure : The pressure of the air [Pa].
+        alpha_collision_efficiency : The collision efficiency of the particles
+            [dimensionless].
 
-    Returns
-    -------
-    Square matrix of Brownian coagulation kernel for aerosol particles [m^3/s].
+    Returns:
+        Square matrix of Brownian coagulation kernel for aerosol particles
+            [m^3/s].
 
-    References
-    ----------
-    Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
-    physics, Section 13 TABLE 13.1 Fuchs Form of the Brownian Coagulation
-    Coefficient K12
+    References:
+        Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
+        physics, Section 13 TABLE 13.1 Fuchs Form of the Brownian Coagulation
+        Coefficient K12.
     """
     # calculations to get particle diffusivity
     dynamic_viscosity = get_dynamic_viscosity(temperature)

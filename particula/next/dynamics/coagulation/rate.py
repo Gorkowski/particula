@@ -24,18 +24,15 @@ def discrete_loss(
     Calculate the coagulation loss rate, via the summation method.
 
     Args:
-    -----
-    - concentraiton: The distribution of particles.
-    - kernel: The coagulation kernel.
+        concentraiton : The distribution of particles.
+        kernel : The coagulation kernel.
 
     Returns:
-    --------
-    - The coagulation loss rate.
+        The coagulation loss rate.
 
     References:
-    ----------
-    Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
-    physics, Chapter 13 Equations 13.61
+        Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
+        physics, Chapter 13 Equations 13.61
     """
     return np.sum(kernel * np.outer(concentration, concentration), axis=0)
 
