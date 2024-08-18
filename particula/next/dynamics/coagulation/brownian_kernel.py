@@ -18,6 +18,8 @@ def mean_free_path_l(
     mean_thermal_speed_particle: Union[float, NDArray[np.float_]]
 ) -> Union[float, NDArray[np.float_]]:
     """
+    Calculate the mean free path of particles for coagulation.
+
     Calculate the mean free path of particles, defined for Brownian
     coagulation as the ratio of the diffusivity of the particles to their mean
     thermal speed. This parameter is crucial for understanding particle
@@ -46,9 +48,10 @@ def g_collection_term(
     mean_free_path_particle: Union[float, NDArray[np.float_]],
     radius_particle: Union[float, NDArray[np.float_]],
 ) -> Union[float, NDArray[np.float_]]:
-    """ Returns the `g` collection term for Brownian coagulation. Defined as
-    the ratio of the mean free path of the particles to the radius of the
-    particles.
+    """ Returns the `g` collection term for Brownian coagulation.
+
+    Defined as the ratio of the mean free path of the particles to the
+    radius of the particles.
 
     Args
     ----
@@ -79,8 +82,9 @@ def brownian_diffusivity(
     temperature: Union[float, NDArray[np.float_]],
     aerodynamic_mobility: Union[float, NDArray[np.float_]],
 ) -> Union[float, NDArray[np.float_]]:
-    """ Returns the diffusivity of the particles due to Brownian motion. Which
-    is just the scaled aerodynamic mobility of the particles.
+    """Returns the diffusivity of the particles due to Brownian motion
+
+    THis is just the scaled aerodynamic mobility of the particles.
 
     Args
     ----
