@@ -58,25 +58,36 @@ def discrete_gain(
     - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
     physics, Chapter 13 Equations 13.61
     """
-    # gain
-    # 0.5* C_i * C_j * K_ij
-    # outer replaces, concentration * np.transpose([concentration])
-    gain_matrix = 0.5 * kernel * np.outer(concentration, concentration)
+    # # gain
+    # # 0.5* C_i * C_j * K_ij
+    # # outer replaces, concentration * np.transpose([concentration])
+    # gain_matrix = 0.5 * kernel * np.outer(concentration, concentration)
 
-    # select the diagonal to sum over, skip the first one, size as no particles
-    # will coagulate into it.
-    # rotate matrix
-    flipped_matrix = np.fliplr(gain_matrix)
+    # # select the diagonal to sum over, skip the first one, size as no particles
+    # # will coagulate into it.
+    # # rotate matrix
+    # flipped_matrix = np.fliplr(gain_matrix)
 
-    # Generate offsets
-    offsets = len(flipped_matrix) - 1 - np.arange(len(flipped_matrix))
+    # # Generate offsets
+    # offsets = len(flipped_matrix) - 1 - np.arange(len(flipped_matrix))
 
-    # Calculate traces of each diagonal
-    gain = np.array(
-        [np.trace(flipped_matrix, offset=off) for off in offsets[:-1]]
-    )
-    # prepend the first element, as zero
-    return np.insert(gain, 0, 0)
+    # # Calculate traces of each diagonal
+    # gain = np.array(
+    #     [np.trace(flipped_matrix, offset=off) for off in offsets[:-1]]
+    # )
+    # # prepend the first element, as zero
+
+    # Initialize the gain array
+    gain = np.zeros_like(concentration)
+
+    # Compute the concentration outer product only once
+    concentration_outer = np.outer(concentration, concentration)
+
+    # Compute slices of the kernel and the concentration outer product
+    for k in range(1, np.size(concentration)):
+        gain[k] = np.dot(kernel[:k, k - 1], concentration_outer[:k, k - 1])
+
+    return gain
 
 
 def continuous_loss(
