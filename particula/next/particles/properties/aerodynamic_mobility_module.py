@@ -6,21 +6,6 @@ from numpy.typing import NDArray
 import numpy as np
 
 
-AERODYNAMIC_SHAPE_FACTOR_DICT = {
-    "sphere": 1.0,
-    "cube": 1.08,
-    "cylinder_avg_aspect_2": 1.10,
-    "cylinder_avg_aspect_5": 1.35,
-    "cylinder_avg_aspect_10": 1.68,
-    "spheres_cluster_3": 1.15,
-    "spheres_cluster_4": 1.17,
-    "bituminous_coal": 1.08,
-    "quartz": 1.36,
-    "sand": 1.57,
-    "talc": 1.88,
-}
-
-
 def particle_aerodynamic_mobility(
     radius: Union[float, NDArray[np.float64]],
     slip_correction_factor: Union[float, NDArray[np.float64]],
