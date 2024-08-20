@@ -7,6 +7,7 @@
 ## Modules
 
 - [Aerodynamic Mobility Module](./aerodynamic_mobility_module.md)
+- [Aerodynamic Size](./aerodynamic_size.md)
 - [Coulomb Enhancement](./coulomb_enhancement.md)
 - [Diffusive Knudsen Module](./diffusive_knudsen_module.md)
 - [Friction Factor Module](./friction_factor_module.md)

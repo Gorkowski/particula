@@ -72,6 +72,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
             - [Distribution Strategies](particula/next/particles/distribution_strategies.md#distribution-strategies)
             - [Properties](particula/next/particles/properties/index.md#properties)
                 - [Aerodynamic Mobility Module](particula/next/particles/properties/aerodynamic_mobility_module.md#aerodynamic-mobility-module)
+                - [Aerodynamic Size](particula/next/particles/properties/aerodynamic_size.md#aerodynamic-size)
                 - [Coulomb Enhancement](particula/next/particles/properties/coulomb_enhancement.md#coulomb-enhancement)
                 - [Diffusive Knudsen Module](particula/next/particles/properties/diffusive_knudsen_module.md#diffusive-knudsen-module)
                 - [Friction Factor Module](particula/next/particles/properties/friction_factor_module.md#friction-factor-module)
