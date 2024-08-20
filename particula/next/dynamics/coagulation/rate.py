@@ -23,7 +23,7 @@ def discrete_loss(
     """
     Calculate the coagulation loss rate, via the summation method.
 
-    Args:
+    Arguments:
         concentraiton : The distribution of particles.
         kernel : The coagulation kernel.
 
@@ -44,17 +44,14 @@ def discrete_gain(
     """
     Calculate the coagulation gain rate, via the summation method.
 
-    Args:
-    -----
-    - concentration: The distribution of particles.
-    - kernel: The coagulation kernel.
+    Arguments:
+        concentration : The distribution of particles.
+        kernel : The coagulation kernel.
 
     Returns:
-    --------
-    - The coagulation gain rate.
+        The coagulation gain rate.
 
     References:
-    ----------
     - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
     physics, Chapter 13 Equations 13.61
     """
@@ -82,20 +79,17 @@ def continuous_loss(
     """
     Calculate the coagulation loss rate, via the integration method.
 
-    Args:
-    -----
-    - radius: The radius of the particles.
-    - concentration: The distribution of particles.
-    - kernel: The coagulation kernel.
+    Arguments:
+        radius : The radius of the particles.
+        concentration : The distribution of particles.
+        kernel : The coagulation kernel.
 
     Returns:
-    --------
-    - The coagulation loss rate.
+        The coagulation loss rate.
 
     References:
-    ----------
-    Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
-    physics, Chapter 13 Equations 13.61
+    - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
+        physics, Chapter 13 Equations 13.61
     """
     # concentration (n,) and kernel (n,n)
     return concentration * np.trapz(y=kernel * concentration, x=radius)
@@ -109,15 +103,13 @@ def continuous_gain(
     """
     Calculate the coagulation gain rate, via the integration method.
 
-    Args:
-    -----
-    - radius: The radius of the particles.
-    - concentration: The distribution of particles.
-    - kernel: The coagulation kernel.
+    Arguments:
+        radius : The radius of the particles.
+        concentration : The distribution of particles.
+        kernel : The coagulation kernel.
 
     Returns:
-    --------
-    - The coagulation gain rate.
+        The coagulation gain rate.
 
     References:
     ----------
