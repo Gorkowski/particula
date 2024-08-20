@@ -6,21 +6,19 @@
 
 ## continuous_gain
 
-[Show source in rate.py:109](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L109)
+[Show source in rate.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L98)
 
 Calculate the coagulation gain rate, via the integration method.
 
 #### Arguments
 
------
-- `-` *radius* - The radius of the particles.
-- `-` *concentration* - The distribution of particles.
-- `-` *kernel* - The coagulation kernel.
+radius : The radius of the particles.
+concentration : The distribution of particles.
+kernel : The coagulation kernel.
 
 #### Returns
 
---------
-- The coagulation gain rate.
+The coagulation gain rate.
 
 #### References
 
@@ -49,27 +47,24 @@ def continuous_gain(
 
 ## continuous_loss
 
-[Show source in rate.py:82](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L82)
+[Show source in rate.py:74](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L74)
 
 Calculate the coagulation loss rate, via the integration method.
 
 #### Arguments
 
------
-- `-` *radius* - The radius of the particles.
-- `-` *concentration* - The distribution of particles.
-- `-` *kernel* - The coagulation kernel.
+radius : The radius of the particles.
+concentration : The distribution of particles.
+kernel : The coagulation kernel.
 
 #### Returns
 
---------
-- The coagulation loss rate.
+The coagulation loss rate.
 
 #### References
 
-----------
-Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
-physics, Chapter 13 Equations 13.61
+- Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
+    physics, Chapter 13 Equations 13.61
 
 #### Signature
 
@@ -91,18 +86,15 @@ Calculate the coagulation gain rate, via the summation method.
 
 #### Arguments
 
------
-- `-` *concentration* - The distribution of particles.
-- `-` *kernel* - The coagulation kernel.
+concentration : The distribution of particles.
+kernel : The coagulation kernel.
 
 #### Returns
 
---------
-- The coagulation gain rate.
+The coagulation gain rate.
 
 #### References
 
-----------
 - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
 physics, Chapter 13 Equations 13.61
 
