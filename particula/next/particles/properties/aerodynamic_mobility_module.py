@@ -107,7 +107,7 @@ def get_aerodynamic_shape_factor(shape_key: str) -> float:
     # Retrieve the shape factor from the dictionary, or raise an error
     try:
         return AERODYNAMIC_SHAPE_FACTOR_DICT[shape_key]
-    except KeyError:
+    except KeyError as exc:
         raise ValueError(
             f"The shape factor for the shape '{shape_key}' is not available."
-        )
+            ) from exc
