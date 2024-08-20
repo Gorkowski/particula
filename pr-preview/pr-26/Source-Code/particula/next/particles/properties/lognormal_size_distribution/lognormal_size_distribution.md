@@ -90,7 +90,7 @@ def lognormal_pmf_distribution(
 
 ## lognormal_sample_distribution
 
-[Show source in lognormal_size_distribution.py:137](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L137)
+[Show source in lognormal_size_distribution.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L114)
 
 Sample a Probability Density Function for the lognormal distribution.
 
