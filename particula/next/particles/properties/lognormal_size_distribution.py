@@ -110,29 +110,6 @@ def lognormal_pmf_distribution(
     return distribution_pmf * (
         np.sum(number_of_particles)/distribution_pmf_sum)
 
-    # if not (
-    #     x_values.ndim == 1
-    #     and geometric_standard_deviation.shape
-    #     == mode.shape
-    #     == number_of_particles.shape
-    # ):
-    #     raise ValueError(
-    #         "The shapes of geometric_standard_deviation, "
-    #         "mode, and number_of_particles must match."
-    #     )
-
-    # # Calculate PDF for each set of parameters
-    # distribution = lognorm.pdf(
-    #     x=x_values[:, np.newaxis],
-    #     s=np.log(geometric_standard_deviation),
-    #     scale=mode,
-    # )
-
-    # bin_sum = np.sum(distribution, axis=0)
-    # scaled_distribution = distribution * (number_of_particles / bin_sum)
-    # return scaled_distribution.sum(axis=1)
-
-
 
 def lognormal_sample_distribution(
     mode: NDArray[np.float64],
