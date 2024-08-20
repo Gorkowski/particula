@@ -6,7 +6,7 @@
 
 ## particle_aerodynamic_mobility
 
-[Show source in aerodynamic_mobility_module.py:24](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/aerodynamic_mobility_module.py#L24)
+[Show source in aerodynamic_mobility_module.py:9](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/aerodynamic_mobility_module.py#L9)
 
 Calculate the aerodynamic mobility of a particle, defined as the ratio
 of the slip correction factor to the product of the dynamic viscosity of
