@@ -6,7 +6,7 @@
 
 ## continuous_gain
 
-[Show source in rate.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L98)
+[Show source in rate.py:151](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L151)
 
 Calculate the coagulation gain rate, via the integration method.
 
@@ -47,7 +47,7 @@ def continuous_gain(
 
 ## continuous_loss
 
-[Show source in rate.py:74](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L74)
+[Show source in rate.py:127](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L127)
 
 Calculate the coagulation loss rate, via the integration method.
 
@@ -80,12 +80,14 @@ def continuous_loss(
 
 ## discrete_gain
 
-[Show source in rate.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L40)
+[Show source in rate.py:73](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L73)
 
-Calculate the coagulation gain rate, via the summation method.
+Calculate the coagulation gain rate, via the integration method, by
+converting to a continuous distribution.
 
 #### Arguments
 
+radius : The radius of the particles.
 concentration : The distribution of particles.
 kernel : The coagulation kernel.
 
@@ -95,14 +97,23 @@ The coagulation gain rate.
 
 #### References
 
-- Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
+----------
+- This equation necessitates the use of a for-loop due to the
+convoluted use of different radii at different stages. This is the
+most expensive step of all coagulation calculations. Using
+`RectBivariateSpline` accelerates this significantly.
+- Note, to estimate the kernel and distribution at
+(other_radius**3 - some_radius**3)*(1/3) we use interporlation techniques.
+- Seinfeld, J. H., & Pandis, S. (2016). Atmospheric chemistry and
 physics, Chapter 13 Equations 13.61
 
 #### Signature
 
 ```python
 def discrete_gain(
-    concentration: Union[float, NDArray[np.float64]], kernel: NDArray[np.float64]
+    radius: Union[float, NDArray[np.float64]],
+    concentration: Union[float, NDArray[np.float64]],
+    kernel: NDArray[np.float64],
 ) -> Union[float, NDArray[np.float64]]: ...
 ```
 
