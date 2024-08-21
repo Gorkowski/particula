@@ -21,7 +21,7 @@ The shape factor of the particle as a float.
 #### Raises
 
 - `ValueError` - If the shape is not found in the predefined shape
-factor dictionary.
+    factor dictionary.
 
 #### Signature
 
