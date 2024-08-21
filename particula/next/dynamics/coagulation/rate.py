@@ -55,7 +55,7 @@ def discrete_gain(
     - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric chemistry and
     physics, Chapter 13 Equations 13.61
     """
-    # gain
+    # discrete distribution, kernel (n,n)
     # 0.5* C_i * C_j * K_ij
 
     # Initialize the gain array
@@ -123,7 +123,7 @@ def continuous_gain(
     - Seinfeld, J. H., & Pandis, S. (2016). Atmospheric chemistry and
     physics, Chapter 13 Equations 13.61
     """
-
+    # continuous distribution, kernel (n,n)
     # outer replaces, concentration * np.transpose([concentration])
     interp = RectBivariateSpline(
         x=radius, y=radius, z=kernel * np.outer(concentration, concentration)
@@ -133,5 +133,7 @@ def continuous_gain(
     dpi = (np.transpose(radius) ** 3 - dpd**3) ** (1 / 3)
 
     return radius**2 * np.trapz(
-        interp.ev(dpd, dpi) / dpi**2, dpd, axis=0  # type: ignore
+        interp.ev(dpd, dpi) / dpi**2,  # type: ignore
+        dpd,
+        axis=0  # type: ignore
     )

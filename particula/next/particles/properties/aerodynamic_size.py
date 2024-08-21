@@ -65,7 +65,9 @@ def particle_aerodynamic_length(  # pylint: disable=too-many-arguments
     )
 
 
-def get_aerodynamic_shape_factor(shape_key: str) -> float:
+def get_aerodynamic_shape_factor(
+    shape_key: str
+) -> float:
     """Retrieve the aerodynamic shape factor for a given particle shape.
 
     Args:
@@ -76,7 +78,7 @@ def get_aerodynamic_shape_factor(shape_key: str) -> float:
 
     Raises:
         ValueError: If the shape is not found in the predefined shape
-        factor dictionary.
+            factor dictionary.
     """
     shape_key = shape_key.strip().lower()  # Clean up the input
 
