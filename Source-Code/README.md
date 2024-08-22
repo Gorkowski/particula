@@ -19,6 +19,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
         - [Loader Interface](particula/data/loader_interface.md#loader-interface)
         - [Merger](particula/data/merger.md#merger)
         - [Process](particula/data/process/index.md#process)
+            - [Aerodynamic Convert](particula/data/process/aerodynamic_convert.md#aerodynamic-convert)
             - [Kappa Via Extinction](particula/data/process/kappa_via_extinction.md#kappa-via-extinction)
             - [Mie Angular](particula/data/process/mie_angular.md#mie-angular)
             - [Mie Bulk](particula/data/process/mie_bulk.md#mie-bulk)

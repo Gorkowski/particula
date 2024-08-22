@@ -6,6 +6,7 @@
 
 ## Modules
 
+- [Aerodynamic Convert](./aerodynamic_convert.md)
 - [Kappa Via Extinction](./kappa_via_extinction.md)
 - [Mie Angular](./mie_angular.md)
 - [Mie Bulk](./mie_bulk.md)
