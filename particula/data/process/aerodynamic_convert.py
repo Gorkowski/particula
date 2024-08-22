@@ -138,7 +138,7 @@ def convert_aerodynamic_to_physical_radius(
     particle_density: float,
     aerodynamic_shape_factor: float = 1.0,
     reference_density: float = 1000.0,
-) -> Union[float, NDArray[np.float64]]:
+) -> Union[float, NDArray[np.float64]]:  # pylint: disable=too-many-arguments
     """
     Convert aerodynamic radius to physical radius for an array of particles.
 
@@ -195,7 +195,7 @@ def convert_physical_to_aerodynamic_radius(
     particle_density: float,
     aerodynamic_shape_factor: float = 1.0,
     reference_density: float = 1000.0,
-) -> Union[float, NDArray[np.float64]]:
+) -> Union[float, NDArray[np.float64]]:  # pylint: disable=too-many-arguments
     """
     Convert physical to aerodynamic radius for an array of particles.
 
