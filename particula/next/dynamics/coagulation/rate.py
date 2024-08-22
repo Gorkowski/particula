@@ -99,7 +99,8 @@ def discrete_gain(
     physics, Chapter 13 Equations 13.61
     """
     # Calculate bin widths (delta_x_array)
-    delta_x_array = np.diff(radius, append=2 * radius[-1] - radius[-2])
+    delta_x_array = np.diff(
+        radius, append=2 * radius[-1] - radius[-2])  # type: ignore
 
     # Convert concentration to a probability density function (PDF)
     concentration_pdf = concentration / delta_x_array
@@ -113,12 +114,13 @@ def discrete_gain(
 
     # Define dpd and dpi for integration
     # integration variable
-    dpd = np.linspace(0, radius / 2 ** (1 / 3), radius.size)
+    dpd = np.linspace(0, radius / 2 ** (1 / 3), radius.size)  # type: ignore
     # adjusted for broadcasting
     dpi = (np.transpose(radius) ** 3 - dpd**3) ** (1 / 3)
 
     # Compute gain using numerical integration
-    gain = radius**2 * np.trapz(interp.ev(dpd, dpi) / dpi**2, dpd, axis=0)
+    gain = radius**2 * np.trapz(
+        interp.ev(dpd, dpi) / dpi**2, dpd, axis=0)  # type: ignore
 
     # Convert back to original scale (from PDF to PMF)
     return gain * delta_x_array
