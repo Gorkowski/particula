@@ -3,6 +3,7 @@ Convert between aerodynamic and physical radii of particles.
 """
 
 from typing import Union
+from functools import partial
 import numpy as np
 from numpy.typing import NDArray
 from scipy.optimize import fsolve
@@ -170,11 +171,18 @@ def convert_aerodynamic_to_physical_radius(
     # Initial guess for physical radius is the same as the aerodynamic radius
     initial_physical_guess = aerodynamic_radius
 
+    # Partially apply the cost function with the keyword arguments
+    cost_function_with_kwargs = partial(
+        cost_physical_radius,
+        mean_free_path_air=mean_free_path_air,
+        aerodynamic_radius=aerodynamic_radius,
+        **keywords
+    )
+
     # Solve for physical radius using fsolve
     optimal_physical_radius = fsolve(
-        cost_physical_radius,
-        initial_physical_guess,
-        args=(mean_free_path_air, aerodynamic_radius, keywords),
+        cost_function_with_kwargs,
+        initial_physical_guess
     )
 
     return optimal_physical_radius  # type: ignore
@@ -189,7 +197,7 @@ def convert_physical_to_aerodynamic_radius(
     reference_density: float = 1000.0,
 ) -> Union[float, NDArray[np.float64]]:
     """
-    Convert physical  to aerodynamic radius for an array of particles.
+    Convert physical to aerodynamic radius for an array of particles.
 
     Args:
         physical_radius : Array of physical radii to be converted.
@@ -219,11 +227,18 @@ def convert_physical_to_aerodynamic_radius(
     # Initial guess for aerodynamic radius is the same as the physical radius
     initial_guess = physical_radius
 
+    # Partially apply the cost function with the keyword arguments
+    cost_function_with_kwargs = partial(
+        cost_aerodynamic_radius,
+        mean_free_path_air=mean_free_path_air,
+        particle_radius=physical_radius,
+        **keywords
+    )
+
     # Solve for aerodynamic radius using fsolve
     optimal_aerodynamic_radius = fsolve(
-        cost_aerodynamic_radius,
-        initial_guess,
-        args=(mean_free_path_air, physical_radius, keywords),
+        cost_function_with_kwargs,
+        initial_guess
     )
 
     return optimal_aerodynamic_radius  # type: ignore
