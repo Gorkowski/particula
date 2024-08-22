@@ -4,9 +4,86 @@
 
 > Auto-generated documentation for [particula.data.process.aerodynamic_convert](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py) module.
 
+## _cost_aerodynamic_radius
+
+[Show source in aerodynamic_convert.py:15](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L15)
+
+Optimization cost function to find the aerodynamic radius of a particle.
+
+#### Arguments
+
+guess_aerodynamic_radius : The initial guess for the
+    aerodynamic radius.
+mean_free_path_air : The mean free path of air.
+particle_radius : The known physical radius of
+    the particle.
+kwargs : Additional keyword arguments for the optimization function
+    - density (float): The density of the particle. Default is 1500
+        kg/m^3.
+    - reference_density (float): The reference density for the
+        aerodynamic radius. Default is 1000 kg/m^3.
+    - aerodynamic_shape_factor (float): The aerodynamic shape factor.
+        Default is 1.0.
+
+#### Returns
+
+The squared error between the guessed aerodynamic radius and
+the calculated aerodynamic radius.
+
+#### Signature
+
+```python
+def _cost_aerodynamic_radius(
+    guess_aerodynamic_radius: Union[float, NDArray[np.float64]],
+    mean_free_path_air: Union[float, NDArray[np.float64]],
+    particle_radius: Union[float, NDArray[np.float64]],
+    **kwargs
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+
+
+## _cost_physical_radius
+
+[Show source in aerodynamic_convert.py:75](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L75)
+
+Optimization cost function to find the physical radius of a particle.
+
+#### Arguments
+
+guess_physical_radius : The initial guess for the physical radius.
+mean_free_path_air : The mean free path of air.
+aerodynamic_radius : The known aerodynamic radius of
+    the particle.
+kwargs : Additional keyword arguments for the optimization function
+    - density (float): The density of the particle. Default is 1500
+        kg/m^3.
+    - reference_density (float): The reference density for the
+        aerodynamic radius. Default is 1000 kg/m^3.
+    - aerodynamic_shape_factor (float): The aerodynamic shape factor.
+        Default is 1.0.
+
+#### Returns
+
+- `float` - The squared error between the guessed physical radius and the
+    calculated aerodynamic radius.
+
+#### Signature
+
+```python
+def _cost_physical_radius(
+    guess_physical_radius: Union[float, NDArray[np.float64]],
+    mean_free_path_air: Union[float, NDArray[np.float64]],
+    aerodynamic_radius: Union[float, NDArray[np.float64]],
+    **kwargs
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+
+
 ## convert_aerodynamic_to_physical_radius
 
-[Show source in aerodynamic_convert.py:133](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L133)
+[Show source in aerodynamic_convert.py:134](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L134)
 
 Convert aerodynamic radius to physical radius for an array of particles.
 
@@ -43,9 +120,9 @@ def convert_aerodynamic_to_physical_radius(
 
 ## convert_physical_to_aerodynamic_radius
 
-[Show source in aerodynamic_convert.py:183](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L183)
+[Show source in aerodynamic_convert.py:191](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L191)
 
-Convert physical  to aerodynamic radius for an array of particles.
+Convert physical to aerodynamic radius for an array of particles.
 
 #### Arguments
 
@@ -72,82 +149,5 @@ def convert_physical_to_aerodynamic_radius(
     particle_density: float,
     aerodynamic_shape_factor: float = 1.0,
     reference_density: float = 1000.0,
-) -> Union[float, NDArray[np.float64]]: ...
-```
-
-
-
-## cost_aerodynamic_radius
-
-[Show source in aerodynamic_convert.py:14](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L14)
-
-Optimization cost function to find the aerodynamic radius of a particle.
-
-#### Arguments
-
-guess_aerodynamic_radius : The initial guess for the
-    aerodynamic radius.
-mean_free_path_air : The mean free path of air.
-particle_radius : The known physical radius of
-    the particle.
-kwargs : Additional keyword arguments for the optimization function
-    - density (float): The density of the particle. Default is 1500
-        kg/m^3.
-    - reference_density (float): The reference density for the
-        aerodynamic radius. Default is 1000 kg/m^3.
-    - aerodynamic_shape_factor (float): The aerodynamic shape factor.
-        Default is 1.0.
-
-#### Returns
-
-The squared error between the guessed aerodynamic radius and
-the calculated aerodynamic radius.
-
-#### Signature
-
-```python
-def cost_aerodynamic_radius(
-    guess_aerodynamic_radius: Union[float, NDArray[np.float64]],
-    mean_free_path_air: Union[float, NDArray[np.float64]],
-    particle_radius: Union[float, NDArray[np.float64]],
-    **kwargs
-) -> Union[float, NDArray[np.float64]]: ...
-```
-
-
-
-## cost_physical_radius
-
-[Show source in aerodynamic_convert.py:74](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L74)
-
-Optimization cost function to find the physical radius of a particle.
-
-#### Arguments
-
-guess_physical_radius : The initial guess for the physical radius.
-mean_free_path_air : The mean free path of air.
-aerodynamic_radius : The known aerodynamic radius of
-    the particle.
-kwargs : Additional keyword arguments for the optimization function
-    - density (float): The density of the particle. Default is 1500
-        kg/m^3.
-    - reference_density (float): The reference density for the
-        aerodynamic radius. Default is 1000 kg/m^3.
-    - aerodynamic_shape_factor (float): The aerodynamic shape factor.
-        Default is 1.0.
-
-#### Returns
-
-- `float` - The squared error between the guessed physical radius and the
-    calculated aerodynamic radius.
-
-#### Signature
-
-```python
-def cost_physical_radius(
-    guess_physical_radius: Union[float, NDArray[np.float64]],
-    mean_free_path_air: Union[float, NDArray[np.float64]],
-    aerodynamic_radius: Union[float, NDArray[np.float64]],
-    **kwargs
 ) -> Union[float, NDArray[np.float64]]: ...
 ```

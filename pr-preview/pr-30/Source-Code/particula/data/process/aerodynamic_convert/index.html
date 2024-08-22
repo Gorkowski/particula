@@ -1182,13 +1182,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#convert_aerodynamic_to_physical_radius" class="md-nav__link">
+  <a href="#_cost_aerodynamic_radius" class="md-nav__link">
     <span class="md-ellipsis">
-      convert_aerodynamic_to_physical_radius
+      _cost_aerodynamic_radius
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="convert_aerodynamic_to_physical_radius">
+    <nav class="md-nav" aria-label="_cost_aerodynamic_radius">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1224,13 +1224,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#convert_physical_to_aerodynamic_radius" class="md-nav__link">
+  <a href="#_cost_physical_radius" class="md-nav__link">
     <span class="md-ellipsis">
-      convert_physical_to_aerodynamic_radius
+      _cost_physical_radius
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="convert_physical_to_aerodynamic_radius">
+    <nav class="md-nav" aria-label="_cost_physical_radius">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1266,13 +1266,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cost_aerodynamic_radius" class="md-nav__link">
+  <a href="#convert_aerodynamic_to_physical_radius" class="md-nav__link">
     <span class="md-ellipsis">
-      cost_aerodynamic_radius
+      convert_aerodynamic_to_physical_radius
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="cost_aerodynamic_radius">
+    <nav class="md-nav" aria-label="convert_aerodynamic_to_physical_radius">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1308,13 +1308,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cost_physical_radius" class="md-nav__link">
+  <a href="#convert_physical_to_aerodynamic_radius" class="md-nav__link">
     <span class="md-ellipsis">
-      cost_physical_radius
+      convert_physical_to_aerodynamic_radius
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="cost_physical_radius">
+    <nav class="md-nav" aria-label="convert_physical_to_aerodynamic_radius">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6603,27 +6603,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../next/Tutorials/aerodynamic_convert_example/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Aerodynamic convert example
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -6662,63 +6641,10 @@
 <blockquote>
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py">particula.data.process.aerodynamic_convert</a> module.</p>
 </blockquote>
-<h2 id="convert_aerodynamic_to_physical_radius">convert_aerodynamic_to_physical_radius<a class="headerlink" href="#convert_aerodynamic_to_physical_radius" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L133">Show source in aerodynamic_convert.py:133</a></p>
-<p>Convert aerodynamic radius to physical radius for an array of particles.</p>
-<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<p>aerodynamic_radius : Array of aerodynamic radii to be
-    converted.
-pressure : The ambient pressure.
-temperature : The ambient temperature.
-particle_density : The density of the particles.
-aerodynamic_shape_factor : The aerodynamic shape factor. Default is 1.
-reference_density : The reference density for the aerodynamic radius.
-    Default is 1000 kg/m^3.</p>
-<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>np.ndarray</code> - Array of physical radii corresponding to the aerodynamic
-    radii.</li>
-</ul>
-<h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">convert_aerodynamic_to_physical_radius</span><span class="p">(</span>
-    <span class="n">aerodynamic_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
-    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">particle_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">aerodynamic_shape_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">reference_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
-</code></pre></div>
-<h2 id="convert_physical_to_aerodynamic_radius">convert_physical_to_aerodynamic_radius<a class="headerlink" href="#convert_physical_to_aerodynamic_radius" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L183">Show source in aerodynamic_convert.py:183</a></p>
-<p>Convert physical  to aerodynamic radius for an array of particles.</p>
-<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<p>physical_radius : Array of physical radii to be converted.
-pressure : The ambient pressure.
-temperature : The ambient temperature.
-particle_density : The density of the particles.
-aerodynamic_shape_factor : The aerodynamic shape factor. Default is 1.
-reference_density : The reference density for the aerodynamic radius.
-    Default is 1000 kg/m^3.</p>
-<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>np.ndarray</code> - Array of aerodynamic radii corresponding to the physical
-    radii.</li>
-</ul>
-<h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">convert_physical_to_aerodynamic_radius</span><span class="p">(</span>
-    <span class="n">physical_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
-    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">particle_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">aerodynamic_shape_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="n">reference_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
-</code></pre></div>
-<h2 id="cost_aerodynamic_radius">cost_aerodynamic_radius<a class="headerlink" href="#cost_aerodynamic_radius" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L14">Show source in aerodynamic_convert.py:14</a></p>
+<h2 id="_cost_aerodynamic_radius">_cost_aerodynamic_radius<a class="headerlink" href="#_cost_aerodynamic_radius" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L15">Show source in aerodynamic_convert.py:15</a></p>
 <p>Optimization cost function to find the aerodynamic radius of a particle.</p>
-<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <p>guess_aerodynamic_radius : The initial guess for the
     aerodynamic radius.
 mean_free_path_air : The mean free path of air.
@@ -6731,21 +6657,21 @@ kwargs : Additional keyword arguments for the optimization function
         aerodynamic radius. Default is 1000 kg/m^3.
     - aerodynamic_shape_factor (float): The aerodynamic shape factor.
         Default is 1.0.</p>
-<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <p>The squared error between the guessed aerodynamic radius and
 the calculated aerodynamic radius.</p>
-<h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">cost_aerodynamic_radius</span><span class="p">(</span>
+<h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">_cost_aerodynamic_radius</span><span class="p">(</span>
     <span class="n">guess_aerodynamic_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">mean_free_path_air</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">particle_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
-<h2 id="cost_physical_radius">cost_physical_radius<a class="headerlink" href="#cost_physical_radius" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L74">Show source in aerodynamic_convert.py:74</a></p>
+<h2 id="_cost_physical_radius">_cost_physical_radius<a class="headerlink" href="#_cost_physical_radius" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L75">Show source in aerodynamic_convert.py:75</a></p>
 <p>Optimization cost function to find the physical radius of a particle.</p>
-<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <p>guess_physical_radius : The initial guess for the physical radius.
 mean_free_path_air : The mean free path of air.
 aerodynamic_radius : The known aerodynamic radius of
@@ -6757,17 +6683,70 @@ kwargs : Additional keyword arguments for the optimization function
         aerodynamic radius. Default is 1000 kg/m^3.
     - aerodynamic_shape_factor (float): The aerodynamic shape factor.
         Default is 1.0.</p>
-<h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>float</code> - The squared error between the guessed physical radius and the
     calculated aerodynamic radius.</li>
 </ul>
-<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">cost_physical_radius</span><span class="p">(</span>
+<h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">_cost_physical_radius</span><span class="p">(</span>
     <span class="n">guess_physical_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">mean_free_path_air</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">aerodynamic_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+</code></pre></div>
+<h2 id="convert_aerodynamic_to_physical_radius">convert_aerodynamic_to_physical_radius<a class="headerlink" href="#convert_aerodynamic_to_physical_radius" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L134">Show source in aerodynamic_convert.py:134</a></p>
+<p>Convert aerodynamic radius to physical radius for an array of particles.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<p>aerodynamic_radius : Array of aerodynamic radii to be
+    converted.
+pressure : The ambient pressure.
+temperature : The ambient temperature.
+particle_density : The density of the particles.
+aerodynamic_shape_factor : The aerodynamic shape factor. Default is 1.
+reference_density : The reference density for the aerodynamic radius.
+    Default is 1000 kg/m^3.</p>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>np.ndarray</code> - Array of physical radii corresponding to the aerodynamic
+    radii.</li>
+</ul>
+<h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">convert_aerodynamic_to_physical_radius</span><span class="p">(</span>
+    <span class="n">aerodynamic_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">particle_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">aerodynamic_shape_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">reference_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+</code></pre></div>
+<h2 id="convert_physical_to_aerodynamic_radius">convert_physical_to_aerodynamic_radius<a class="headerlink" href="#convert_physical_to_aerodynamic_radius" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L191">Show source in aerodynamic_convert.py:191</a></p>
+<p>Convert physical to aerodynamic radius for an array of particles.</p>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<p>physical_radius : Array of physical radii to be converted.
+pressure : The ambient pressure.
+temperature : The ambient temperature.
+particle_density : The density of the particles.
+aerodynamic_shape_factor : The aerodynamic shape factor. Default is 1.
+reference_density : The reference density for the aerodynamic radius.
+    Default is 1000 kg/m^3.</p>
+<h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>np.ndarray</code> - Array of aerodynamic radii corresponding to the physical
+    radii.</li>
+</ul>
+<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">convert_physical_to_aerodynamic_radius</span><span class="p">(</span>
+    <span class="n">physical_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">particle_density</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">aerodynamic_shape_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">reference_density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 
