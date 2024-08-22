@@ -12,7 +12,7 @@
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../coulomb_enhancement/">
+        <link rel="next" href="../aerodynamic_size/">
       
       
       <link rel="icon" href="../../../../../../assets/images/favicon.png">
@@ -2766,6 +2766,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aerodynamic_size/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aerodynamic Size
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -6437,6 +6458,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../next/Tutorials/aerodynamic_convert_example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aerodynamic convert example
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -6483,18 +6525,12 @@ the fluid, the particle radius, and a slip correction constant derived.</p>
 <p>This mobility quantifies the ease with which a particle can move through
 a fluid.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<hr />
-<ul>
-<li><code>-</code> <em>radius</em> - The radius of the particle (m).</li>
-<li><code>-</code> <em>slip_correction_factor</em> - The slip correction factor for the particle
-in the fluid (dimensionless).</li>
-<li><code>-</code> <em>dynamic_viscosity</em> - The dynamic viscosity of the fluid (Pa.s).</li>
-</ul>
+<p>radius : The radius of the particle (m).
+slip_correction_factor : The slip correction factor for the particle
+    in the fluid (dimensionless).
+dynamic_viscosity : The dynamic viscosity of the fluid (Pa.s).</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
-<ul>
-<li>The particle aerodynamic mobility (m^2/s).</li>
-</ul>
+<p>The particle aerodynamic mobility (m^2/s).</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">particle_aerodynamic_mobility</span><span class="p">(</span>
     <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>

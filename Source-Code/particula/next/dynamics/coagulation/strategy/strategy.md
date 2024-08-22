@@ -300,7 +300,7 @@ def net_rate(
 
 ## ContinuousGeneralPDF
 
-[Show source in strategy.py:419](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L419)
+[Show source in strategy.py:421](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L421)
 
 Continuous PDF coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
@@ -329,7 +329,7 @@ class ContinuousGeneralPDF(CoagulationStrategy):
 
 ### ContinuousGeneralPDF().dimensionless_kernel
 
-[Show source in strategy.py:437](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L437)
+[Show source in strategy.py:439](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L439)
 
 #### Signature
 
@@ -343,7 +343,7 @@ def dimensionless_kernel(
 
 ### ContinuousGeneralPDF().gain_rate
 
-[Show source in strategy.py:494](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L494)
+[Show source in strategy.py:496](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L496)
 
 #### Signature
 
@@ -359,7 +359,7 @@ def gain_rate(
 
 ### ContinuousGeneralPDF().kernel
 
-[Show source in strategy.py:447](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L447)
+[Show source in strategy.py:449](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L449)
 
 #### Signature
 
@@ -375,7 +375,7 @@ def kernel(
 
 ### ContinuousGeneralPDF().loss_rate
 
-[Show source in strategy.py:482](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L482)
+[Show source in strategy.py:484](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L484)
 
 #### Signature
 
@@ -393,7 +393,7 @@ def loss_rate(
 
 ## DiscreteGeneral
 
-[Show source in strategy.py:328](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L328)
+[Show source in strategy.py:329](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L329)
 
 Discrete general coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
@@ -428,7 +428,7 @@ class DiscreteGeneral(CoagulationStrategy):
 
 ### DiscreteGeneral().dimensionless_kernel
 
-[Show source in strategy.py:351](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L351)
+[Show source in strategy.py:352](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L352)
 
 #### Signature
 
@@ -442,7 +442,7 @@ def dimensionless_kernel(
 
 ### DiscreteGeneral().gain_rate
 
-[Show source in strategy.py:407](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L407)
+[Show source in strategy.py:408](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L408)
 
 #### Signature
 
@@ -458,7 +458,7 @@ def gain_rate(
 
 ### DiscreteGeneral().kernel
 
-[Show source in strategy.py:361](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L361)
+[Show source in strategy.py:362](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L362)
 
 #### Signature
 
@@ -474,7 +474,7 @@ def kernel(
 
 ### DiscreteGeneral().loss_rate
 
-[Show source in strategy.py:396](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L396)
+[Show source in strategy.py:397](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L397)
 
 #### Signature
 

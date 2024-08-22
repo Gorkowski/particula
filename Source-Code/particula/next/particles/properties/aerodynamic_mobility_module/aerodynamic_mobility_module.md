@@ -17,16 +17,14 @@ a fluid.
 
 #### Arguments
 
------
-- `-` *radius* - The radius of the particle (m).
-- `-` *slip_correction_factor* - The slip correction factor for the particle
-in the fluid (dimensionless).
-- `-` *dynamic_viscosity* - The dynamic viscosity of the fluid (Pa.s).
+radius : The radius of the particle (m).
+slip_correction_factor : The slip correction factor for the particle
+    in the fluid (dimensionless).
+dynamic_viscosity : The dynamic viscosity of the fluid (Pa.s).
 
 #### Returns
 
---------
-- The particle aerodynamic mobility (m^2/s).
+The particle aerodynamic mobility (m^2/s).
 
 #### Signature
 

@@ -2690,6 +2690,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../next/particles/properties/aerodynamic_size/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aerodynamic Size
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../next/particles/properties/coulomb_enhancement/" class="md-nav__link">
         
   
@@ -7330,6 +7351,27 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../next/Tutorials/aerodynamic_convert_example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aerodynamic convert example
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -7447,20 +7489,16 @@ dimension of the data array.</li>
 <p>Convert between a probability density function (PDF) and a probability
 mass spectrum (PMS) based on the specified direction.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>x_array</code> - An array of radii corresponding to the bins of the
-distribution, shape (m).</li>
-<li><code>distribution</code> - The concentration values of the distribution
-(either PDF or PMS) at the given radii. Supports broadcasting across
-x_array (n,m).</li>
-<li><code>to_PDF</code> - Direction of conversion. If True, converts PMS to PDF.
-If False, converts PDF to PMS.</li>
-</ul>
+<p>x_array : An array of radii corresponding to the bins of the
+    distribution, shape (m).
+distribution : The concentration values of the distribution
+    (either PDF or PMS) at the given radii. Supports broadcasting
+    across x_array (n,m).
+to_PDF : Direction of conversion. If True, converts PMS to PDF.
+    If False, converts PDF to PMS.</p>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>converted_distribution</code> - The converted distribution array
-(either PDF or PMS).</li>
-</ul>
+<p>converted_distribution : The converted distribution array
+    (either PDF or PMS).</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">distribution_convert_pdf_pms</span><span class="p">(</span>
     <span class="n">x_array</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">distribution</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">to_pdf</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
