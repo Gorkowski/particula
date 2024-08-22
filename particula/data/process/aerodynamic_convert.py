@@ -12,7 +12,7 @@ from particula.next.particles import properties
 from particula.next.gas.properties import mean_free_path
 
 
-def cost_aerodynamic_radius(
+def _cost_aerodynamic_radius(
     guess_aerodynamic_radius: Union[float, NDArray[np.float64]],
     mean_free_path_air: Union[float, NDArray[np.float64]],
     particle_radius: Union[float, NDArray[np.float64]],
@@ -72,7 +72,7 @@ def cost_aerodynamic_radius(
     return (new_aerodynamic_radius - guess_aerodynamic_radius) ** 2
 
 
-def cost_physical_radius(
+def _cost_physical_radius(
     guess_physical_radius: Union[float, NDArray[np.float64]],
     mean_free_path_air: Union[float, NDArray[np.float64]],
     aerodynamic_radius: Union[float, NDArray[np.float64]],
@@ -173,7 +173,7 @@ def convert_aerodynamic_to_physical_radius(
 
     # Partially apply the cost function with the keyword arguments
     cost_function_with_kwargs = partial(
-        cost_physical_radius,
+        _cost_physical_radius,
         mean_free_path_air=mean_free_path_air,
         aerodynamic_radius=aerodynamic_radius,
         **keywords
@@ -229,7 +229,7 @@ def convert_physical_to_aerodynamic_radius(
 
     # Partially apply the cost function with the keyword arguments
     cost_function_with_kwargs = partial(
-        cost_aerodynamic_radius,
+        _cost_aerodynamic_radius,
         mean_free_path_air=mean_free_path_air,
         particle_radius=physical_radius,
         **keywords
