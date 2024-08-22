@@ -6,7 +6,7 @@
 
 ## continuous_gain
 
-[Show source in rate.py:151](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L151)
+[Show source in rate.py:153](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L153)
 
 Calculate the coagulation gain rate, via the integration method.
 
@@ -47,7 +47,7 @@ def continuous_gain(
 
 ## continuous_loss
 
-[Show source in rate.py:127](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L127)
+[Show source in rate.py:129](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/rate.py#L129)
 
 Calculate the coagulation loss rate, via the integration method.
 
