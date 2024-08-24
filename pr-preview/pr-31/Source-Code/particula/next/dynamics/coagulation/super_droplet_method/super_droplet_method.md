@@ -6,7 +6,7 @@
 
 ## bin_to_particle_indices
 
-[Show source in super_droplet_method.py:222](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L222)
+[Show source in super_droplet_method.py:216](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L216)
 
 Convert bin indices to actual particle indices in the particle array.
 
@@ -48,7 +48,7 @@ def bin_to_particle_indices(
 
 ## coagulation_events
 
-[Show source in super_droplet_method.py:310](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L310)
+[Show source in super_droplet_method.py:304](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L304)
 
 Calculate coagulation probabilities and filter events based on them.
 
@@ -93,7 +93,7 @@ def coagulation_events(
 
 ## event_pairs
 
-[Show source in super_droplet_method.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L108)
+[Show source in super_droplet_method.py:102](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L102)
 
 Calculate the number of particle pairs based on kernel value.
 
@@ -127,7 +127,7 @@ def event_pairs(
 
 ## filter_valid_indices
 
-[Show source in super_droplet_method.py:264](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L264)
+[Show source in super_droplet_method.py:258](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L258)
 
 Filter particles indices based on particle radius and event counters.
 
@@ -166,7 +166,7 @@ def filter_valid_indices(
 
 ## sample_events
 
-[Show source in super_droplet_method.py:150](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L150)
+[Show source in super_droplet_method.py:144](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L144)
 
 Sample the number of coagulation events from a Poisson distribution.
 
@@ -199,7 +199,7 @@ def sample_events(
 
 ## select_random_indices
 
-[Show source in super_droplet_method.py:181](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L181)
+[Show source in super_droplet_method.py:175](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L175)
 
 Select random indices for particles involved in coagulation events.
 

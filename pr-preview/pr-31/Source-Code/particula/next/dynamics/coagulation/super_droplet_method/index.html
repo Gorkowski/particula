@@ -6833,7 +6833,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py">particula.next.dynamics.coagulation.super_droplet_method</a> module.</p>
 </blockquote>
 <h2 id="bin_to_particle_indices">bin_to_particle_indices<a class="headerlink" href="#bin_to_particle_indices" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L222">Show source in super_droplet_method.py:222</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L216">Show source in super_droplet_method.py:216</a></p>
 <p>Convert bin indices to actual particle indices in the particle array.</p>
 <p>This function calculates the actual indices in the particle array
 corresponding to the bins specified by <code>lower_bin</code> and <code>upper_bin</code>.
@@ -6862,7 +6862,7 @@ bin_indices : Array containing the start indices of each bin in the
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="coagulation_events">coagulation_events<a class="headerlink" href="#coagulation_events" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L310">Show source in super_droplet_method.py:310</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L304">Show source in super_droplet_method.py:304</a></p>
 <p>Calculate coagulation probabilities and filter events based on them.</p>
 <p>This function calculates the probability of coagulation events occurring
 between pairs of particles, based on the ratio of the kernel value for
@@ -6894,7 +6894,7 @@ generator : A NumPy random generator used to sample random numbers.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="event_pairs">event_pairs<a class="headerlink" href="#event_pairs" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L108">Show source in super_droplet_method.py:108</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L102">Show source in super_droplet_method.py:102</a></p>
 <p>Calculate the number of particle pairs based on kernel value.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <p>lower_bin : Lower bin index.
@@ -6916,7 +6916,7 @@ number of particles in the bins.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="filter_valid_indices">filter_valid_indices<a class="headerlink" href="#filter_valid_indices" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L264">Show source in super_droplet_method.py:264</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L258">Show source in super_droplet_method.py:258</a></p>
 <p>Filter particles indices based on particle radius and event counters.</p>
 <p>This function filters out particle indices that are considered invalid
 based on two criteria:
@@ -6942,7 +6942,7 @@ single_event_counter (Optional) : Optional array tracking the
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="sample_events">sample_events<a class="headerlink" href="#sample_events" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L150">Show source in super_droplet_method.py:150</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L144">Show source in super_droplet_method.py:144</a></p>
 <p>Sample the number of coagulation events from a Poisson distribution.</p>
 <p>This function calculates the expected number of coagulation events based on
 the number of particle pairs, the simulation volume, and the time step. It
@@ -6962,7 +6962,7 @@ generator : A NumPy random generator used to sample from the Poisson
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="select_random_indices">select_random_indices<a class="headerlink" href="#select_random_indices" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L181">Show source in super_droplet_method.py:181</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L175">Show source in super_droplet_method.py:175</a></p>
 <p>Select random indices for particles involved in coagulation events.</p>
 <p>This function generates random indices for particles in the specified bins
 (<code>lower_bin</code> and <code>upper_bin</code>) that are involved in a specified number of
