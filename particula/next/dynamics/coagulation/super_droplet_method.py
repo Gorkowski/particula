@@ -49,53 +49,47 @@ def super_droplet_update_step(
     concentration_delta = (
         concentration[small_index] - concentration[large_index]
     )
-    small_concentration = (
-        concentration_delta > 0
-    )  # More small particles than large
-    large_concentration = (
-        concentration_delta < 0
-    )  # More large particles than small
-    split_concentration = (
-        concentration_delta == 0
-    )  # Equal number of small and large particles
+    more_small = concentration_delta > 0
+    more_large = concentration_delta < 0
+    equal_concentration = concentration_delta == 0
 
     # Step 4: Handle cases where small and large particle concentrations are
     # equal. In these cases, split the concentrations equally and update
     # both small and large particle radii.
-    if np.any(split_concentration):
+    if np.any(equal_concentration):
         # print("Handling equal concentration case (split)")
-        concentration[small_index[split_concentration]] /= 2
-        concentration[large_index[split_concentration]] /= 2
+        concentration[small_index[equal_concentration]] /= 2
+        concentration[large_index[equal_concentration]] /= 2
 
-        particle_radius[small_index[split_concentration]] = new_radii[
-            split_concentration
+        particle_radius[small_index[equal_concentration]] = new_radii[
+            equal_concentration
         ]
-        particle_radius[large_index[split_concentration]] = new_radii[
-            split_concentration
+        particle_radius[large_index[equal_concentration]] = new_radii[
+            equal_concentration
         ]
 
     # Step 5: Handle cases where there are more large particles than small ones
     # Update the concentration of large particles and adjust the radii of
     # small particles.
-    if np.any(large_concentration):
+    if np.any(more_large):
         # print("Handling more large particles case")
-        concentration[large_index[large_concentration]] = np.abs(
-            concentration_delta[large_concentration]
+        concentration[large_index[more_large]] = np.abs(
+            concentration_delta[more_large]
         )
-        particle_radius[small_index[large_concentration]] = new_radii[
-            large_concentration
+        particle_radius[small_index[more_large]] = new_radii[
+            more_large
         ]
 
     # Step 6: Handle cases where there are more small particles than large ones
     # Update the concentration of small particles and adjust the radii of
     # large particles.
-    if np.any(small_concentration):
+    if np.any(more_small):
         # print("Handling more small particles case")
-        concentration[small_index[small_concentration]] = np.abs(
-            concentration_delta[small_concentration]
+        concentration[small_index[more_small]] = np.abs(
+            concentration_delta[more_small]
         )
-        particle_radius[large_index[small_concentration]] = new_radii[
-            small_concentration
+        particle_radius[large_index[more_small]] = new_radii[
+            more_small
         ]
 
     # Increment event counters for both small and large particles
