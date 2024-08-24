@@ -6910,7 +6910,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4c45536b">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=62d3649d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -6987,7 +6987,7 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d4966782">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=83b5b56c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7006,7 +7006,7 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">radius_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span>
-    <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span>
+    <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">20</span>
 <span class="p">)</span>  <span class="c1"># Define the radius bins for the distribution</span>
 <span class="n">mass_bins</span> <span class="o">=</span> <span class="p">(</span>
     <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">1000</span>
@@ -7024,7 +7024,7 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-2">
 radius_bins = np.logspace(
-    -9, -6, num=10
+    -9, -6, num=20
 )  # Define the radius bins for the distribution
 mass_bins = (
     4 / 3 * np.pi * radius_bins**3 * 1000
@@ -7045,7 +7045,7 @@ rng = np.random.default_rng(12345)</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=841ca810">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=eb74b4a0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7072,7 +7072,9 @@ rng = np.random.default_rng(12345)</div>
 <span class="n">particles_original</span> <span class="o">=</span> <span class="n">particle_radius</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Particle radius (m)"</span><span class="p">)</span>
@@ -7088,7 +7090,9 @@ rng = np.random.default_rng(12345)</div>
 particles_original = particle_radius.copy()
 
 fig, ax = plt.subplots()
-ax.hist(particle_radius, bins=100, histtype="step", color="black", density=True)
+ax.hist(
+    particle_radius, bins=100, histtype="step", color="black", density=True
+)
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlabel("Particle radius (m)")
@@ -7100,7 +7104,7 @@ plt.show()</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8cd13c55">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ce998dc5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7122,11 +7126,14 @@ plt.show()</div>
 <span class="c1"># overflow test for bins</span>
 <span class="c1"># particle_radius[0] = 5e-10</span>
 <span class="c1"># particle_radius[-1] = 5e-6</span>
-<span class="n">random_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">particle_radius</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-<span class="n">particle_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span> <span class="o">*</span> <span class="n">random_concentration</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># particles per m^3</span>
+<span class="n">random_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">particle_radius</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">particle_concentration</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span> <span class="o">*</span> <span class="n">random_concentration</span> <span class="o">*</span> <span class="mf">1e4</span>
+<span class="p">)</span>  <span class="c1"># particles per m^3</span>
 <span class="n">volume_sim</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># m^3</span>
 <span class="n">particle_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
 <span class="n">number_in_bins</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total number of particles: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Get the bin index for each particle (0-based indexing)</span>
 <span class="n">bin_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -7147,57 +7154,96 @@ plt.show()</div>
 <span class="k">for</span> <span class="n">unique_bin</span> <span class="ow">in</span> <span class="n">unique_bins</span><span class="p">:</span>
     <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">unique_bin</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
         <span class="n">particle_concentration</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="n">unique_bin</span><span class="p">]</span>
-        <span class="p">)</span>
+    <span class="p">)</span>
 <span class="n">concentration_in_bins</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
 
 <span class="n">delta_t</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># time step in seconds</span>
-<span class="c1"># total_number_concentration = 10000 * 1e6  # particles per m^3</span>
-<span class="c1"># total_number_tracked = np.sum(number_in_bins)</span>
-<span class="c1"># volume_sim = total_number_tracked / total_number_concentration</span>
 
 <span class="c1"># Initialize spline for kernel interpolation</span>
 <span class="n">interp_kernel</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span>
     <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">kernel_bins</span>
 <span class="p">)</span>
+<span class="c1"># Initialize spline for kernel interpolation</span>
+<span class="n">interp_kernel</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">kernel_bins</span>
+<span class="p">)</span>
 
+
+<span class="c1"># def kernel_nearest_neighbor_extrapolation(</span>
+<span class="c1">#     interp_func, x_vals, y_vals, x_bins, y_bins</span>
+<span class="c1"># ):</span>
+<span class="c1">#     # Clamping x_vals to be within the bounds of x_bins</span>
+<span class="c1">#     x_vals_clamped = np.clip(x_vals, x_bins[0], x_bins[-1])</span>
+
+<span class="c1">#     # Clamping y_vals to be within the bounds of y_bins</span>
+<span class="c1">#     y_vals_clamped = np.clip(y_vals, y_bins[0], y_bins[-1])</span>
+
+<span class="c1">#     # Use the interpolating function with clamped values</span>
+<span class="c1">#     return interp_func.ev(x_vals_clamped, y_vals_clamped)</span>
+
+
+<span class="c1"># # Use nearest_neighbor_extrapolation instead of interp_kernel.ev directly</span>
+<span class="c1"># B_values = nearest_neighbor_extrapolation(</span>
+<span class="c1">#     interp_kernel,</span>
+<span class="c1">#     particle_radius[indices_i],</span>
+<span class="c1">#     particle_radius[indices_j],</span>
+<span class="c1">#     radius_bins,</span>
+<span class="c1">#     radius_bins,</span>
+<span class="c1"># )</span>
 <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
 <span class="n">gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
-
+<span class="n">single_event_counter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
 
 <span class="c1"># pair_indices.pop(-1)  # Remove the last pair (k, k)</span>
 
 <span class="c1"># Vectorized operations over bin pairs</span>
 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pair_indices</span><span class="p">:</span>
     <span class="c1"># Kernel value at the max size for the pair of bins</span>
-    <span class="n">Kmax</span> <span class="o">=</span> <span class="n">kernel_bins</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">Kmax</span> <span class="o">=</span> <span class="n">kernel_bins</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
 
     <span class="c1"># Calculate the number of particle pairs</span>
     <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
         <span class="n">N_pairs</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
-            <span class="o">*</span> <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
-            <span class="p">)</span>
+            <span class="n">Kmax</span>
+            <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+            <span class="o">*</span> <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="o">*</span> <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+        <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">N_pairs</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="mf">0.5</span> <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
-            <span class="p">)</span>
+            <span class="n">Kmax</span>
+            <span class="o">*</span> <span class="mf">0.5</span>
+            <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">])</span>
+        <span class="p">)</span>
 
     <span class="c1"># Determine the exact number of events and sample from a Poisson distribution</span>
-    <span class="n">N_events_exact</span> <span class="o">=</span> <span class="n">N_pairs</span> <span class="o">*</span> <span class="n">Kmax</span> <span class="o">/</span> <span class="n">volume_sim</span>
+    <span class="n">N_events_exact</span> <span class="o">=</span> <span class="n">N_pairs</span> <span class="o">/</span> <span class="n">volume_sim</span>
     <span class="n">N_events</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">N_events_exact</span> <span class="o">*</span> <span class="n">delta_t</span><span class="p">)</span>
 
     <span class="c1"># Skip iteration if no events are expected</span>
     <span class="k">if</span> <span class="n">N_events</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">continue</span>
 
-    <span class="c1"># Vectorized random particle selection</span>
+    <span class="c1"># Vectorized random particle selection, may remove if always max N_events</span>
+    <span class="n">N_events</span> <span class="o">=</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">if</span> <span class="n">N_events</span> <span class="o">&gt;</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">else</span> <span class="n">N_events</span>
+    <span class="n">N_events</span> <span class="o">=</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="k">if</span> <span class="n">N_events</span> <span class="o">&gt;</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="k">else</span> <span class="n">N_events</span>
+
     <span class="n">r_i_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
-        <span class="mi">0</span><span class="p">,</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">],</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">r_j_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
-        <span class="mi">0</span><span class="p">,</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="mi">0</span><span class="p">,</span>
+        <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">],</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="c1"># Get the indices in the particle array where the bins start</span>
@@ -7209,8 +7255,11 @@ plt.show()</div>
     <span class="n">indices_j</span> <span class="o">=</span> <span class="n">start_index_l</span> <span class="o">+</span> <span class="n">r_j_indices</span>
 
     <span class="c1"># Early exit for zero-sized particles due to previous coagulation</span>
-    <span class="n">valid_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
-        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">valid_indices</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">single_event_counter</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><span class="n">single_event_counter</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">valid_indices</span><span class="p">):</span>
         <span class="k">continue</span>
@@ -7226,6 +7275,7 @@ plt.show()</div>
 
     <span class="c1"># Perform coagulation with probability B/Kmax</span>
     <span class="n">coagulation_probabilities</span> <span class="o">=</span> <span class="n">B_values</span> <span class="o">/</span> <span class="n">Kmax</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">coagulation_probabilities</span><span class="p">)</span>
     <span class="n">coagulation_events</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coagulation_probabilities</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">coagulation_probabilities</span>
     <span class="p">)</span>
@@ -7236,32 +7286,74 @@ plt.show()</div>
 
     <span class="c1"># Calculate new radii for coagulation events</span>
     <span class="n">new_radii</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
-        <span class="o">+</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
+        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
     <span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
-
-    <span class="c1"># Concentration distribution</span>
-
 
     <span class="c1"># Save radii gain and loss for coagulation events</span>
     <span class="n">loss</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span>
     <span class="n">loss</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span>
     <span class="n">gain</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_radii</span>
 
-    <span class="c1"># Update the particle array</span>
-    <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_radii</span>
+    <span class="c1"># Concentration change for coagulation events</span>
+    <span class="n">concentration_delta</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">-</span> <span class="n">particle_concentration</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">small_particle_concentration</span> <span class="o">=</span> <span class="n">concentration_delta</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">large_particle_concentration</span> <span class="o">=</span> <span class="n">concentration_delta</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="n">split_concentration</span> <span class="o">=</span> <span class="n">concentration_delta</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="c1"># equal number of large and small particles</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">split_concentration</span><span class="p">):</span>
+        <span class="c1"># Split the concentration for equal mass</span>
+        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">indices_i</span><span class="p">[</span><span class="n">split_concentration</span><span class="p">]]</span> <span class="o">/=</span> <span class="mi">2</span>
+        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">indices_j</span><span class="p">[</span><span class="n">split_concentration</span><span class="p">]]</span> <span class="o">/=</span> <span class="mi">2</span>
+        <span class="c1"># Update the particle array</span>
+        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">[</span><span class="n">split_concentration</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_radii</span><span class="p">[</span>
+            <span class="n">split_concentration</span>
+        <span class="p">]</span>
+        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">[</span><span class="n">split_concentration</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_radii</span><span class="p">[</span>
+            <span class="n">split_concentration</span>
+        <span class="p">]</span>
+        <span class="c1"># keep track of the number of events per particle</span>
+        <span class="n">single_event_counter</span><span class="p">[</span><span class="n">indices_i</span><span class="p">[</span><span class="n">split_concentration</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">single_event_counter</span><span class="p">[</span><span class="n">indices_j</span><span class="p">[</span><span class="n">split_concentration</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># more large particles than small particles</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">large_particle_concentration</span><span class="p">):</span>
+        <span class="c1"># remove the concentration from large particles, small concentration stays the same</span>
+        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">indices_j</span><span class="p">[</span><span class="n">large_particle_concentration</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">concentration_delta</span><span class="p">[</span><span class="n">large_particle_concentration</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="c1"># Update the particle array, small concentration grow in size</span>
+        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">[</span><span class="n">large_particle_concentration</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_radii</span><span class="p">[</span><span class="n">large_particle_concentration</span><span class="p">]</span>
+        <span class="c1"># indices j stay the same</span>
+
+    <span class="c1"># more small particles than large particles</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">small_particle_concentration</span><span class="p">):</span>
+        <span class="c1"># remove the concentration from small particles, large concentration stays the same</span>
+        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">indices_i</span><span class="p">[</span><span class="n">small_particle_concentration</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">concentration_delta</span><span class="p">[</span><span class="n">small_particle_concentration</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="c1"># Update the particle array, large concentration grow in size</span>
+        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">[</span><span class="n">small_particle_concentration</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_radii</span><span class="p">[</span><span class="n">small_particle_concentration</span><span class="p">]</span>
+        <span class="c1"># indices i stay the same</span>
+
+<span class="c1">#</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final number of particles: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-4">
 # Sort particles by size and bin them
 # overflow test for bins
 # particle_radius[0] = 5e-10
 # particle_radius[-1] = 5e-6
-random_concentration = np.random.randint(1, 2, size=particle_radius.size)
-particle_concentration = np.ones_like(particle_radius) * random_concentration * 1e6  # particles per m^3
+random_concentration = np.random.randint(1, 10, size=particle_radius.size)
+particle_concentration = (
+    np.ones_like(particle_radius) * random_concentration * 1e4
+)  # particles per m^3
 volume_sim = 1  # m^3
 particle_radius = np.sort(particle_radius)
 number_in_bins, bins = np.histogram(particle_radius, bins=radius_bins)
+print(f"Total number of particles: {np.sum(particle_concentration)}")
 
 # Get the bin index for each particle (0-based indexing)
 bin_indices = np.digitize(particle_radius, bins, right=True)
@@ -7282,57 +7374,96 @@ concentration_in_bins = np.zeros_like(number_in_bins)
 for unique_bin in unique_bins:
     concentration_in_bins[unique_bin] = np.sum(
         particle_concentration[bin_indices == unique_bin]
-        )
+    )
 concentration_in_bins.astype(np.float64)
 
 
 delta_t = 1  # time step in seconds
-# total_number_concentration = 10000 * 1e6  # particles per m^3
-# total_number_tracked = np.sum(number_in_bins)
-# volume_sim = total_number_tracked / total_number_concentration
 
 # Initialize spline for kernel interpolation
 interp_kernel = RectBivariateSpline(
     x=radius_bins, y=radius_bins, z=kernel_bins
 )
+# Initialize spline for kernel interpolation
+interp_kernel = RectBivariateSpline(
+    x=radius_bins, y=radius_bins, z=kernel_bins
+)
 
+
+# def kernel_nearest_neighbor_extrapolation(
+#     interp_func, x_vals, y_vals, x_bins, y_bins
+# ):
+#     # Clamping x_vals to be within the bounds of x_bins
+#     x_vals_clamped = np.clip(x_vals, x_bins[0], x_bins[-1])
+
+#     # Clamping y_vals to be within the bounds of y_bins
+#     y_vals_clamped = np.clip(y_vals, y_bins[0], y_bins[-1])
+
+#     # Use the interpolating function with clamped values
+#     return interp_func.ev(x_vals_clamped, y_vals_clamped)
+
+
+# # Use nearest_neighbor_extrapolation instead of interp_kernel.ev directly
+# B_values = nearest_neighbor_extrapolation(
+#     interp_kernel,
+#     particle_radius[indices_i],
+#     particle_radius[indices_j],
+#     radius_bins,
+#     radius_bins,
+# )
 loss = np.zeros_like(particle_radius)
 gain = np.zeros_like(particle_radius)
-
+single_event_counter = np.zeros_like(particle_radius)
 
 # pair_indices.pop(-1)  # Remove the last pair (k, k)
 
 # Vectorized operations over bin pairs
 for k, l in pair_indices:
     # Kernel value at the max size for the pair of bins
-    Kmax = kernel_bins[k, l+1]
+    Kmax = kernel_bins[k, l + 1]
 
     # Calculate the number of particle pairs
     if k != l:
         N_pairs = (
-            number_in_bins[k] * number_in_bins[l]
-            * concentration_in_bins[k] * concentration_in_bins[l]
-            )
+            Kmax
+            * number_in_bins[k]
+            * number_in_bins[l]
+            * concentration_in_bins[k]
+            * concentration_in_bins[l]
+        )
     else:
         N_pairs = (
-            0.5 * number_in_bins[k] * (number_in_bins[l] - 1)
-            * concentration_in_bins[k] * (concentration_in_bins[l])
-            )
+            Kmax
+            * 0.5
+            * number_in_bins[k]
+            * (number_in_bins[l] - 1)
+            * concentration_in_bins[k]
+            * (concentration_in_bins[l])
+        )
 
     # Determine the exact number of events and sample from a Poisson distribution
-    N_events_exact = N_pairs * Kmax / volume_sim
+    N_events_exact = N_pairs / volume_sim
     N_events = rng.poisson(N_events_exact * delta_t)
 
     # Skip iteration if no events are expected
     if N_events == 0:
         continue
 
-    # Vectorized random particle selection
+    # Vectorized random particle selection, may remove if always max N_events
+    N_events = number_in_bins[k] if N_events &gt; number_in_bins[k] else N_events
+    N_events = number_in_bins[l] if N_events &gt; number_in_bins[l] else N_events
+
     r_i_indices = np.random.randint(
-        0, number_in_bins[k], size=N_events, dtype=int,
+        0,
+        number_in_bins[k],
+        size=N_events,
+        dtype=int,
     )
     r_j_indices = np.random.randint(
-        0, number_in_bins[l], size=N_events, dtype=int,
+        0,
+        number_in_bins[l],
+        size=N_events,
+        dtype=int,
     )
 
     # Get the indices in the particle array where the bins start
@@ -7344,8 +7475,11 @@ for k, l in pair_indices:
     indices_j = start_index_l + r_j_indices
 
     # Early exit for zero-sized particles due to previous coagulation
-    valid_indices = (particle_radius[indices_i] &gt; 0) &amp; (
-        particle_radius[indices_j] &gt; 0
+    valid_indices = (
+        (particle_radius[indices_i] &gt; 0)
+        &amp; (particle_radius[indices_j] &gt; 0)
+        &amp; (single_event_counter[indices_i] &lt; 1)
+        &amp; (single_event_counter[indices_j] &lt; 1)
     )
     if not np.any(valid_indices):
         continue
@@ -7361,6 +7495,7 @@ for k, l in pair_indices:
 
     # Perform coagulation with probability B/Kmax
     coagulation_probabilities = B_values / Kmax
+    print(coagulation_probabilities)
     coagulation_events = (
         rng.random(len(coagulation_probabilities)) &lt; coagulation_probabilities
     )
@@ -7371,28 +7506,67 @@ for k, l in pair_indices:
 
     # Calculate new radii for coagulation events
     new_radii = (
-        particle_radius[indices_i] ** 3
-        + particle_radius[indices_j] ** 3
+        particle_radius[indices_i] ** 3 + particle_radius[indices_j] ** 3
     ) ** (1 / 3)
-
-    # Concentration distribution
-
 
     # Save radii gain and loss for coagulation events
     loss[indices_i] = particle_radius[indices_i]
     loss[indices_j] = particle_radius[indices_j]
     gain[indices_j] = new_radii
 
-    # Update the particle array
-    particle_radius[indices_i] = 0
-    particle_radius[indices_j] = new_radii</div>
+    # Concentration change for coagulation events
+    concentration_delta = (
+        particle_concentration[indices_i] - particle_concentration[indices_j]
+    )
+    small_particle_concentration = concentration_delta &gt; 0
+    large_particle_concentration = concentration_delta &lt; 0
+    split_concentration = concentration_delta == 0
+
+    # equal number of large and small particles
+    if np.any(split_concentration):
+        # Split the concentration for equal mass
+        particle_concentration[indices_i[split_concentration]] /= 2
+        particle_concentration[indices_j[split_concentration]] /= 2
+        # Update the particle array
+        particle_radius[indices_i[split_concentration]] = new_radii[
+            split_concentration
+        ]
+        particle_radius[indices_j[split_concentration]] = new_radii[
+            split_concentration
+        ]
+        # keep track of the number of events per particle
+        single_event_counter[indices_i[split_concentration]] += 1
+        single_event_counter[indices_j[split_concentration]] += 1
+
+    # more large particles than small particles
+    if np.any(large_particle_concentration):
+        # remove the concentration from large particles, small concentration stays the same
+        particle_concentration[indices_j[large_particle_concentration]] = (
+            np.abs(concentration_delta[large_particle_concentration])
+        )
+        # Update the particle array, small concentration grow in size
+        particle_radius[indices_i[large_particle_concentration]] = new_radii[large_particle_concentration]
+        # indices j stay the same
+
+    # more small particles than large particles
+    if np.any(small_particle_concentration):
+        # remove the concentration from small particles, large concentration stays the same
+        particle_concentration[indices_i[small_particle_concentration]] = (
+            np.abs(concentration_delta[small_particle_concentration])
+        )
+        # Update the particle array, large concentration grow in size
+        particle_radius[indices_j[small_particle_concentration]] = new_radii[small_particle_concentration]
+        # indices i stay the same
+
+#
+print(f"Final number of particles: {np.sum(particle_concentration)}")</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f3b0556a">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e7117f04">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7411,8 +7585,12 @@ for k, l in pair_indices:
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">particles_original</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">particles_original</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Particle radius (m)"</span><span class="p">)</span>
@@ -7420,8 +7598,12 @@ for k, l in pair_indices:
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-5">fig, ax = plt.subplots()
-ax.hist(particles_original, bins=100, histtype="step", color="blue", density=True)
-ax.hist(particle_radius, bins=100, histtype="step", color="black", density=True)
+ax.hist(
+    particles_original, bins=100, histtype="step", color="blue", density=True
+)
+ax.hist(
+    particle_radius, bins=100, histtype="step", color="black", density=True
+)
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlabel("Particle radius (m)")
@@ -7433,7 +7615,7 @@ plt.show()</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6688391c">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=80d4ea79">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7478,7 +7660,7 @@ plt.show()</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e37ef799">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f882f169">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7509,7 +7691,7 @@ print(volume_loss, volume_gain)</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=185e3ffc">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=40deb2e3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
