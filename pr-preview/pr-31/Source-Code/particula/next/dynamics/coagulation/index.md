@@ -10,4 +10,5 @@
 - [Kernel](./kernel.md)
 - [Rate](./rate.md)
 - [Strategy](./strategy.md)
+- [Super Droplet Method](./super_droplet_method.md)
 - [Transition Regime](./transition_regime.md)

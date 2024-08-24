@@ -112,6 +112,7 @@ gain = np.zeros_like(particle_radius)
 
 # pair_indices.pop(-1)  # Remove the last pair (k, k)
 
+# particle resolved coagulation
 # Vectorized operations over bin pairs
 for k, l in pair_indices:
     # Kernel value at the max size for the pair of bins
@@ -119,12 +120,21 @@ for k, l in pair_indices:
 
     # Calculate the number of particle pairs
     if k != l:
-        N_pairs = number_in_bins[k] * number_in_bins[l]
+        N_pairs = (
+            Kmax
+            * number_in_bins[k]
+            * number_in_bins[l]
+        )
     else:
-        N_pairs = 0.5 * number_in_bins[k] * (number_in_bins[l] - 1)
+        N_pairs = (
+            Kmax
+            * 0.5
+            * number_in_bins[k]
+            * (number_in_bins[l] - 1)
+        )
 
     # Determine the exact number of events and sample from a Poisson distribution
-    N_events_exact = N_pairs * Kmax / volume_sim
+    N_events_exact = N_pairs / volume_sim
     N_events = rng.poisson(N_events_exact * delta_t)
 
     # Skip iteration if no events are expected

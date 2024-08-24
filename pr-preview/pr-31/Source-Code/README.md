@@ -49,6 +49,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
                 - [Kernel](particula/next/dynamics/coagulation/kernel.md#kernel)
                 - [Rate](particula/next/dynamics/coagulation/rate.md#rate)
                 - [Strategy](particula/next/dynamics/coagulation/strategy.md#strategy)
+                - [Super Droplet Method](particula/next/dynamics/coagulation/super_droplet_method.md#super-droplet-method)
                 - [Transition Regime](particula/next/dynamics/coagulation/transition_regime.md#transition-regime)
             - [Condensation](particula/next/dynamics/condensation.md#condensation)
             - [Particle Process](particula/next/dynamics/particle_process.md#particle-process)
