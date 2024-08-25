@@ -6,7 +6,7 @@
 
 ## bin_particles
 
-[Show source in super_droplet_method.py:383](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L383)
+[Show source in super_droplet_method.py:385](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L385)
 
 Bin particles by size and return the number of particles in each bin.
 
@@ -33,7 +33,7 @@ def bin_particles(
 
 ## bin_to_particle_indices
 
-[Show source in super_droplet_method.py:209](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L209)
+[Show source in super_droplet_method.py:211](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L211)
 
 Convert bin indices to actual particle indices in the particle array.
 
@@ -75,7 +75,7 @@ def bin_to_particle_indices(
 
 ## calculate_concentration_in_bins
 
-[Show source in super_droplet_method.py:426](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L426)
+[Show source in super_droplet_method.py:428](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L428)
 
 Calculate the concentration of particles in each bin.
 
@@ -103,7 +103,7 @@ def calculate_concentration_in_bins(
 
 ## coagulation_events
 
-[Show source in super_droplet_method.py:297](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L297)
+[Show source in super_droplet_method.py:299](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L299)
 
 Calculate coagulation probabilities and filter events based on them.
 
@@ -148,7 +148,7 @@ def coagulation_events(
 
 ## coagulation_step
 
-[Show source in super_droplet_method.py:454](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L454)
+[Show source in super_droplet_method.py:456](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L456)
 
 Perform a single step of the Super Droplet coagulation process.
 
@@ -194,7 +194,7 @@ def coagulation_step(
 
 ## event_pairs
 
-[Show source in super_droplet_method.py:104](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L104)
+[Show source in super_droplet_method.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L106)
 
 Calculate the number of particle pairs based on kernel value.
 
@@ -225,7 +225,7 @@ def event_pairs(
 
 ## filter_valid_indices
 
-[Show source in super_droplet_method.py:251](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L251)
+[Show source in super_droplet_method.py:253](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L253)
 
 Filter particles indices based on particle radius and event counters.
 
@@ -264,7 +264,7 @@ def filter_valid_indices(
 
 ## get_bin_pairs
 
-[Show source in super_droplet_method.py:410](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L410)
+[Show source in super_droplet_method.py:412](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L412)
 
 Pre-compute the unique bin pairs for vectorized operations.
 
@@ -286,7 +286,7 @@ def get_bin_pairs(bin_indices: NDArray[np.int64]) -> list[Tuple[int, int]]: ...
 
 ## sample_events
 
-[Show source in super_droplet_method.py:137](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L137)
+[Show source in super_droplet_method.py:139](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L139)
 
 Sample the number of coagulation events from a Poisson distribution.
 
@@ -319,7 +319,7 @@ def sample_events(
 
 ## select_random_indices
 
-[Show source in super_droplet_method.py:168](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L168)
+[Show source in super_droplet_method.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L170)
 
 Select random indices for particles involved in coagulation events.
 
@@ -359,7 +359,7 @@ def select_random_indices(
 
 ## sort_particles
 
-[Show source in super_droplet_method.py:343](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L343)
+[Show source in super_droplet_method.py:345](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L345)
 
 Sort particles by size and optionally sort their concentrations.
 
@@ -397,16 +397,18 @@ Update the particle radii and concentrations after coagulation events.
 
 #### Arguments
 
-particle_radius : Array of particle radii.
-concentration : Array representing the concentration of particles.
-single_event_counter : Tracks the number of coagulation events for
-    each particle.
-small_index : Indices corresponding to smaller particles.
-large_index : Indices corresponding to larger particles.
+- `particle_radius` *NDArray[float64]* - Array of particle radii.
+- `concentration` *NDArray[float64]* - Array representing the concentration
+    of particles.
+- `single_event_counter` *NDArray[int64]* - Tracks the number of
+    coagulation events for each particle.
+- `small_index` *NDArray[int64]* - Indices corresponding to smaller
+    particles.
+- `large_index` *NDArray[int64]* - Indices corresponding to larger
+    particles.
 
 #### Returns
 
-Tuple :
 - Updated array of particle radii.
 - Updated array representing the concentration of particles.
 - Updated array tracking the number of coagulation events.
