@@ -7046,10 +7046,12 @@
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L385">Show source in super_droplet_method.py:385</a></p>
 <p>Bin particles by size and return the number of particles in each bin.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<p>particle_radius : Array of sorted particle radii.
-radius_bins : Array defining the bin edges for particle radii.</p>
+<ul>
+<li><code>particle_radius</code> - Array of sorted particle radii.</li>
+<li><code>radius_bins</code> - Array defining the bin edges for particle radii.</li>
+</ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<p>Tuple :
+<p>Tuple:
     - Array of the number of particles in each bin.
     - Array of bin indices for each particle.</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
@@ -7065,16 +7067,18 @@ corresponding to the bins specified by <code>lower_bin</code> and <code>upper_bi
 The function adjusts the provided bin-relative indices to reflect
 their position in the full particle array.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<p>lower_indices : Array of indices relative to the start of
-    the <code>lower_bin</code>.
-upper_indices : Array of indices relative to the start of
-    the <code>upper_bin</code>.
-lower_bin : Index of the bin containing smaller particles.
-upper_bin : Index of the bin containing larger particles.
-bin_indices : Array containing the start indices of each bin in the
-    particle array.</p>
+<ul>
+<li><code>lower_indices</code> - Array of indices relative to the start of
+    the <code>lower_bin</code>.</li>
+<li><code>upper_indices</code> - Array of indices relative to the start of
+    the <code>upper_bin</code>.</li>
+<li><code>lower_bin</code> - Index of the bin containing smaller particles.</li>
+<li><code>upper_bin</code> - Index of the bin containing larger particles.</li>
+<li><code>bin_indices</code> - Array containing the start indices of each bin in the
+    particle array.</li>
+</ul>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<p>Tuple :
+<p>Tuple:
     - <code>-</code> <em><code>small_index</code></em> - Indices of particles from the <code>lower_bin</code>.
     - <code>-</code> <em><code>large_index</code></em> - Indices of particles from the <code>upper_bin</code>.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
@@ -7090,9 +7094,11 @@ bin_indices : Array containing the start indices of each bin in the
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L428">Show source in super_droplet_method.py:428</a></p>
 <p>Calculate the concentration of particles in each bin.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
-<p>bin_indices : Array of bin indices for each particle.
-particle_concentration : Array of sorted particle concentrations.
-number_in_bins : Array of the number of particles in each bin.</p>
+<ul>
+<li><code>bin_indices</code> - Array of bin indices for each particle.</li>
+<li><code>particle_concentration</code> - Array of sorted particle concentrations.
+number_in_bins : Array of the number of particles in each bin.</li>
+</ul>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <p>The total concentration in each bin.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
@@ -7110,15 +7116,17 @@ between pairs of particles, based on the ratio of the kernel value for
 each pair to the maximum kernel value for the bins. The function then
 randomly determines which events occur using these probabilities.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
-<p>small_index : Array of indices for the first set of particles
-    (smaller particles) involved in the events.
-large_index : Array of indices for the second set of particles
-    (larger particles) involved in the events.
-kernel_values : Array of kernel values corresponding to the
-    particle pairs.
-kernel_max : The maximum kernel value used for normalization
-    of probabilities.
-generator : A NumPy random generator used to sample random numbers.</p>
+<ul>
+<li><code>small_index</code> - Array of indices for the first set of particles
+    (smaller particles) involved in the events.</li>
+<li><code>large_index</code> - Array of indices for the second set of particles
+    (larger particles) involved in the events.</li>
+<li><code>kernel_values</code> - Array of kernel values corresponding to the
+    particle pairs.</li>
+<li><code>kernel_max</code> - The maximum kernel value used for normalization
+    of probabilities.</li>
+<li><code>generator</code> - A NumPy random generator used to sample random numbers.</li>
+</ul>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <p>Tuple:
     - Filtered <code>small_index</code> array containing indices where
@@ -7141,19 +7149,21 @@ generator : A NumPy random generator used to sample random numbers.</p>
 computing coagulation events based on the coagulation kernel, and
 updating particle properties accordingly.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
-<p>particle_radius : Array of particle radii.
-particle_concentration : Array of particle concentrations
-    corresponding to each radius.
-kernel : 2D array representing the coagulation kernel values between
-    different bins.
-kernel_radius : Array defining the radii corresponding to the
-    kernel bins.
-volume : Volume of the system or relevant scaling factor.
-time_step : Duration of the current time step.
+<ul>
+<li><code>particle_radius</code> - Array of particle radii.</li>
+<li><code>particle_concentration</code> - Array of particle concentrations
+    corresponding to each radius.</li>
+<li><code>kernel</code> - 2D array representing the coagulation kernel values between
+    different bins.</li>
+<li><code>kernel_radius</code> - Array defining the radii corresponding to the
+    kernel bins.</li>
+<li><code>volume</code> - Volume of the system or relevant scaling factor.</li>
+<li><code>time_step</code> - Duration of the current time step.
 random_generator : A NumPy random number generator for
-    stochastic processes.</p>
+    stochastic processes.</li>
+</ul>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
-<p>Tuple :
+<p>Tuple:
     - Updated array of particle radii after coagulation.
     - Updated array of particle concentrations after coagulation.</p>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
@@ -7171,10 +7181,12 @@ random_generator : A NumPy random number generator for
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L106">Show source in super_droplet_method.py:106</a></p>
 <p>Calculate the number of particle pairs based on kernel value.</p>
 <h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
-<p>lower_bin : Lower bin index.
-upper_bin : Upper bin index.
-kernel_max : Maximum value of the kernel.
-number_in_bins : Number of particles in each bin.</p>
+<ul>
+<li><code>lower_bin</code> - Lower bin index.</li>
+<li><code>upper_bin</code> - Upper bin index.</li>
+<li><code>kernel_max</code> - Maximum value of the kernel.</li>
+<li><code>number_in_bins</code> - Number of particles in each bin.</li>
+</ul>
 <h4 id="returns_5">Returns<a class="headerlink" href="#returns_5" title="Permanent link">&para;</a></h4>
 <p>The number of particle pairs events based on the kernel and
 number of particles in the bins.</p>
@@ -7194,14 +7206,16 @@ based on two criteria:
 1. The particle radius must be greater than zero.
 2. If provided, the single event counter must be less than one.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
-<p>small_index : Array of indices for particles in the smaller bin.
-large_index : Array of indices for particles in the larger bin.
-particle_radius : Array containing the radii of particles.
-single_event_counter (Optional) : Optional array tracking the
+<ul>
+<li><code>small_index</code> - Array of indices for particles in the smaller bin.</li>
+<li><code>large_index</code> - Array of indices for particles in the larger bin.</li>
+<li><code>particle_radius</code> - Array containing the radii of particles.</li>
+<li><code>single_event_counter</code> <em>Optional</em> - Optional array tracking the
     number of events for each particle. If provided, only particles
-    with a counter value less than one are valid.</p>
+    with a counter value less than one are valid.</li>
+</ul>
 <h4 id="returns_6">Returns<a class="headerlink" href="#returns_6" title="Permanent link">&para;</a></h4>
-<p>Tuple :
+<p>Tuple:
     - Filtered <code>small_index</code> array containing only valid indices.
     - Filtered <code>large_index</code> array containing only valid indices.</p>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
@@ -7216,7 +7230,9 @@ single_event_counter (Optional) : Optional array tracking the
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L412">Show source in super_droplet_method.py:412</a></p>
 <p>Pre-compute the unique bin pairs for vectorized operations.</p>
 <h4 id="arguments_7">Arguments<a class="headerlink" href="#arguments_7" title="Permanent link">&para;</a></h4>
-<p>bin_indices : Array of bin indices.</p>
+<ul>
+<li><code>bin_indices</code> - Array of bin indices.</li>
+</ul>
 <h4 id="returns_7">Returns<a class="headerlink" href="#returns_7" title="Permanent link">&para;</a></h4>
 <p>Unique bin pairs for vectorized operations.</p>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
@@ -7229,12 +7245,14 @@ single_event_counter (Optional) : Optional array tracking the
 the number of particle pairs, the simulation volume, and the time step. It
 then samples the actual number of events using a Poisson distribution.</p>
 <h4 id="arguments_8">Arguments<a class="headerlink" href="#arguments_8" title="Permanent link">&para;</a></h4>
-<p>events : The calculated number of particle pairs that could
-    interact.
-volume : The volume of the simulation space.
-time_step : The time step over which the events are being simulated.
-generator : A NumPy random generator used to sample from the Poisson
-    distribution.</p>
+<ul>
+<li><code>events</code> - The calculated number of particle pairs that could
+    interact.</li>
+<li><code>volume</code> - The volume of the simulation space.</li>
+<li><code>time_step</code> - The time step over which the events are being simulated.</li>
+<li><code>generator</code> - A NumPy random generator used to sample from the Poisson
+    distribution.</li>
+</ul>
 <h4 id="returns_8">Returns<a class="headerlink" href="#returns_8" title="Permanent link">&para;</a></h4>
 <p>The sampled number of coagulation events as an integer.</p>
 <h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
@@ -7250,14 +7268,16 @@ generator : A NumPy random generator used to sample from the Poisson
 events. The indices are selected based on the number of particles in
 each bin.</p>
 <h4 id="arguments_9">Arguments<a class="headerlink" href="#arguments_9" title="Permanent link">&para;</a></h4>
-<p>lower_bin : Index of the bin containing smaller particles.
-upper_bin : Index of the bin containing larger particles.
-events : The number of events to sample indices for.
-number_in_bins : Array representing the number of particles in
-    each bin.
-- <code>generator</code> - A NumPy random generator used to sample indices.</p>
+<ul>
+<li><code>lower_bin</code> - Index of the bin containing smaller particles.</li>
+<li><code>upper_bin</code> - Index of the bin containing larger particles.</li>
+<li><code>events</code> - The number of events to sample indices for.</li>
+<li><code>number_in_bins</code> - Array representing the number of particles in
+    each bin.</li>
+<li><code>generator</code> - A NumPy random generator used to sample indices.</li>
+</ul>
 <h4 id="returns_9">Returns<a class="headerlink" href="#returns_9" title="Permanent link">&para;</a></h4>
-<p>Tuple :
+<p>Tuple:
     - Indices of particles from <code>lower_bin</code>.
     - Indices of particles from <code>upper_bin</code>.</p>
 <h4 id="signature_9">Signature<a class="headerlink" href="#signature_9" title="Permanent link">&para;</a></h4>
@@ -7273,12 +7293,14 @@ number_in_bins : Array representing the number of particles in
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L345">Show source in super_droplet_method.py:345</a></p>
 <p>Sort particles by size and optionally sort their concentrations.</p>
 <h4 id="arguments_10">Arguments<a class="headerlink" href="#arguments_10" title="Permanent link">&para;</a></h4>
-<p>particle_radius : Array of particle radii.
-particle_concentration : Optional array of particle concentrations
+<ul>
+<li><code>particle_radius</code> - Array of particle radii.</li>
+<li><code>particle_concentration</code> - Optional array of particle concentrations
     corresponding to each radius. If provided, it will be sorted to
-    match the sorted radii.</p>
+    match the sorted radii.</li>
+</ul>
 <h4 id="returns_10">Returns<a class="headerlink" href="#returns_10" title="Permanent link">&para;</a></h4>
-<p>Tuple :
+<p>Tuple:
     - <code>-</code> <em><code>unsort_indices</code></em> - Array of indices to revert the sorting.
     - <code>-</code> <em><code>sorted_radius</code></em> - Array of sorted particle radii.
     - <code>-</code> <em><code>sorted_concentration</code></em> - Optional array of sorted particle
