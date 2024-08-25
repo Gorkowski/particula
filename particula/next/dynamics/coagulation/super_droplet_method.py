@@ -22,15 +22,17 @@ def super_droplet_update_step(
     Update the particle radii and concentrations after coagulation events.
 
     Args:
-        particle_radius : Array of particle radii.
-        concentration : Array representing the concentration of particles.
-        single_event_counter : Tracks the number of coagulation events for
-            each particle.
-        small_index : Indices corresponding to smaller particles.
-        large_index : Indices corresponding to larger particles.
+        particle_radius (NDArray[float64]): Array of particle radii.
+        concentration (NDArray[float64]): Array representing the concentration
+            of particles.
+        single_event_counter (NDArray[int64]): Tracks the number of
+            coagulation events for each particle.
+        small_index (NDArray[int64]): Indices corresponding to smaller
+            particles.
+        large_index (NDArray[int64]): Indices corresponding to larger
+            particles.
 
     Returns:
-        Tuple :
         - Updated array of particle radii.
         - Updated array representing the concentration of particles.
         - Updated array tracking the number of coagulation events.
