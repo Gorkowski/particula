@@ -112,10 +112,10 @@ def event_pairs(
     """Calculate the number of particle pairs based on kernel value.
 
     Args:
-        lower_bin : Lower bin index.
-        upper_bin : Upper bin index.
-        kernel_max : Maximum value of the kernel.
-        number_in_bins : Number of particles in each bin.
+        lower_bin: Lower bin index.
+        upper_bin: Upper bin index.
+        kernel_max: Maximum value of the kernel.
+        number_in_bins: Number of particles in each bin.
 
     Returns:
         The number of particle pairs events based on the kernel and
@@ -150,11 +150,11 @@ def sample_events(
     then samples the actual number of events using a Poisson distribution.
 
     Args:
-        events : The calculated number of particle pairs that could
+        events: The calculated number of particle pairs that could
             interact.
-        volume : The volume of the simulation space.
-        time_step : The time step over which the events are being simulated.
-        generator : A NumPy random generator used to sample from the Poisson
+        volume: The volume of the simulation space.
+        time_step: The time step over which the events are being simulated.
+        generator: A NumPy random generator used to sample from the Poisson
             distribution.
 
     Returns:
@@ -183,15 +183,15 @@ def select_random_indices(
     each bin.
 
     Args:
-        lower_bin : Index of the bin containing smaller particles.
-        upper_bin : Index of the bin containing larger particles.
-        events : The number of events to sample indices for.
-        number_in_bins : Array representing the number of particles in
+        lower_bin: Index of the bin containing smaller particles.
+        upper_bin: Index of the bin containing larger particles.
+        events: The number of events to sample indices for.
+        number_in_bins: Array representing the number of particles in
             each bin.
         generator: A NumPy random generator used to sample indices.
 
     Returns:
-        Tuple :
+        Tuple:
             - Indices of particles from `lower_bin`.
             - Indices of particles from `upper_bin`.
     """
@@ -224,17 +224,17 @@ def bin_to_particle_indices(
     their position in the full particle array.
 
     Args:
-        lower_indices : Array of indices relative to the start of
+        lower_indices: Array of indices relative to the start of
             the `lower_bin`.
-        upper_indices : Array of indices relative to the start of
+        upper_indices: Array of indices relative to the start of
             the `upper_bin`.
-        lower_bin : Index of the bin containing smaller particles.
-        upper_bin : Index of the bin containing larger particles.
-        bin_indices : Array containing the start indices of each bin in the
+        lower_bin: Index of the bin containing smaller particles.
+        upper_bin: Index of the bin containing larger particles.
+        bin_indices: Array containing the start indices of each bin in the
             particle array.
 
     Returns:
-        Tuple :
+        Tuple:
             - `small_index`: Indices of particles from the `lower_bin`.
             - `large_index`: Indices of particles from the `upper_bin`.
     """
@@ -265,15 +265,15 @@ def filter_valid_indices(
     2. If provided, the single event counter must be less than one.
 
     Args:
-        small_index : Array of indices for particles in the smaller bin.
-        large_index : Array of indices for particles in the larger bin.
-        particle_radius : Array containing the radii of particles.
-        single_event_counter (Optional) : Optional array tracking the
+        small_index: Array of indices for particles in the smaller bin.
+        large_index: Array of indices for particles in the larger bin.
+        particle_radius: Array containing the radii of particles.
+        single_event_counter (Optional): Optional array tracking the
             number of events for each particle. If provided, only particles
             with a counter value less than one are valid.
 
     Returns:
-        Tuple :
+        Tuple:
             - Filtered `small_index` array containing only valid indices.
             - Filtered `large_index` array containing only valid indices.
     """
@@ -312,15 +312,15 @@ def coagulation_events(
     randomly determines which events occur using these probabilities.
 
     Args:
-        small_index : Array of indices for the first set of particles
+        small_index: Array of indices for the first set of particles
             (smaller particles) involved in the events.
-        large_index : Array of indices for the second set of particles
+        large_index: Array of indices for the second set of particles
             (larger particles) involved in the events.
-        kernel_values : Array of kernel values corresponding to the
+        kernel_values: Array of kernel values corresponding to the
             particle pairs.
-        kernel_max : The maximum kernel value used for normalization
+        kernel_max: The maximum kernel value used for normalization
             of probabilities.
-        generator : A NumPy random generator used to sample random numbers.
+        generator: A NumPy random generator used to sample random numbers.
 
     Returns:
         Tuple:
@@ -354,13 +354,13 @@ def sort_particles(
     Sort particles by size and optionally sort their concentrations.
 
     Args:
-        particle_radius : Array of particle radii.
-        particle_concentration : Optional array of particle concentrations
+        particle_radius: Array of particle radii.
+        particle_concentration: Optional array of particle concentrations
             corresponding to each radius. If provided, it will be sorted to
             match the sorted radii.
 
     Returns:
-        Tuple :
+        Tuple:
             - `unsort_indices`: Array of indices to revert the sorting.
             - `sorted_radius`: Array of sorted particle radii.
             - `sorted_concentration`: Optional array of sorted particle
@@ -390,11 +390,11 @@ def bin_particles(
     Bin particles by size and return the number of particles in each bin.
 
     Args:
-        particle_radius : Array of sorted particle radii.
-        radius_bins : Array defining the bin edges for particle radii.
+        particle_radius: Array of sorted particle radii.
+        radius_bins: Array defining the bin edges for particle radii.
 
     Returns:
-        Tuple :
+        Tuple:
             - Array of the number of particles in each bin.
             - Array of bin indices for each particle.
     """
@@ -416,7 +416,7 @@ def get_bin_pairs(
     Pre-compute the unique bin pairs for vectorized operations.
 
     Args:
-        bin_indices : Array of bin indices.
+        bin_indices: Array of bin indices.
 
     Returns:
         Unique bin pairs for vectorized operations.
@@ -434,8 +434,8 @@ def calculate_concentration_in_bins(
     Calculate the concentration of particles in each bin.
 
     Args:
-        bin_indices : Array of bin indices for each particle.
-        particle_concentration : Array of sorted particle concentrations.
+        bin_indices: Array of bin indices for each particle.
+        particle_concentration: Array of sorted particle concentrations.
         number_in_bins : Array of the number of particles in each bin.
 
     Returns:
@@ -470,20 +470,20 @@ def coagulation_step(
     updating particle properties accordingly.
 
     Args:
-        particle_radius : Array of particle radii.
-        particle_concentration : Array of particle concentrations
+        particle_radius: Array of particle radii.
+        particle_concentration: Array of particle concentrations
             corresponding to each radius.
-        kernel : 2D array representing the coagulation kernel values between
+        kernel: 2D array representing the coagulation kernel values between
             different bins.
-        kernel_radius : Array defining the radii corresponding to the
+        kernel_radius: Array defining the radii corresponding to the
             kernel bins.
-        volume : Volume of the system or relevant scaling factor.
-        time_step : Duration of the current time step.
+        volume: Volume of the system or relevant scaling factor.
+        time_step: Duration of the current time step.
         random_generator : A NumPy random number generator for
             stochastic processes.
 
     Returns:
-        Tuple :
+        Tuple:
             - Updated array of particle radii after coagulation.
             - Updated array of particle concentrations after coagulation.
     """
