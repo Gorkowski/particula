@@ -49,7 +49,7 @@ rng = np.random.default_rng(12345)
 # %% sample particle distribution
 particle_radius = lognormal_sample_distribution(
     mode=np.array([1e-8, 1e-7]),
-    geometric_standard_deviation=np.array([1.1, 1.1]),
+    geometric_standard_deviation=np.array([1.4, 1.4]),
     number_of_particles=np.array([5000, 1000]),
     number_of_samples=1000,
 )
@@ -68,176 +68,153 @@ plt.show()
 
 # %% Coagulation step
 
-# Sort particles by size and bin them
-# overflow test for bins
-# particle_radius[0] = 5e-10
-# particle_radius[-1] = 5e-6
+delta_t = 1  # time step in seconds
+
 random_concentration = np.random.uniform(1, 10, size=particle_radius.size)
 particle_concentration = (
     np.ones_like(particle_radius) * random_concentration * 1e6
 )  # particles per m^3
 particle_concentration = particle_concentration.astype(np.float64)
-particle_concentration_original = particle_concentration.copy()
 volume_sim = 1  # m^3
-number_in_bins, bins = np.histogram(particle_radius, bins=radius_bins)
-print(f"Total number of particles: {np.sum(particle_concentration)}")
-
-# Get the bin index for each particle (0-based indexing)
-bin_indices = np.digitize(particle_radius, bins, right=True)
-# replace overflow bin with the last bin
-bin_indices[bin_indices == len(bins)] = len(bins) - 1
-# replace underflow bin with the first bin
-bin_indices[bin_indices == 0] = 1
-# change to 0-based indexing
-bin_indices -= 1
-# Precompute the bin pairs for vectorized operations
-# change pairs for super-droplet method
-unique_bins = np.unique(bin_indices)
-# Generate unique pairs directly, no mirror pairs
-pair_indices = list(combinations(unique_bins, 2))
-
-# bin the particle concentrations
-concentration_in_bins = np.zeros_like(number_in_bins)
-for unique_bin in unique_bins:
-    concentration_in_bins[unique_bin] = np.sum(
-        particle_concentration[bin_indices == unique_bin]
-    )
-concentration_in_bins.astype(np.float64)
 
 
-delta_t = 10  # time step in seconds
+# %% pre processing
 
-# Initialize spline for kernel interpolation
-interp_kernel = RectBivariateSpline(
-    x=radius_bins, y=radius_bins, z=kernel_bins
-)
-# Initialize spline for kernel interpolation
-interp_kernel = RectBivariateSpline(
-    x=radius_bins, y=radius_bins, z=kernel_bins
-)
+# # Step 1: Sort particles by size
+# unsort_indices, sorted_radius, sorted_concentration = super_droplet_method.sort_particles(
+#     particle_radius, particle_concentration)
 
+# # Step 2: Bin particles by size
+# number_in_bins, bin_indices = super_droplet_method.bin_particles(
+#     sorted_radius, radius_bins)
 
-# def kernel_nearest_neighbor_extrapolation(
-#     interp_func, x_vals, y_vals, x_bins, y_bins
-# ):
-#     # Clamping x_vals to be within the bounds of x_bins
-#     x_vals_clamped = np.clip(x_vals, x_bins[0], x_bins[-1])
+# # Step 3: Precompute the unique bin pairs for vectorized operations
+# pair_indices = super_droplet_method.get_bin_pairs(
+#     bin_indices)
 
-#     # Clamping y_vals to be within the bounds of y_bins
-#     y_vals_clamped = np.clip(y_vals, y_bins[0], y_bins[-1])
-
-#     # Use the interpolating function with clamped values
-#     return interp_func.ev(x_vals_clamped, y_vals_clamped)
-
-
-# # Use nearest_neighbor_extrapolation instead of interp_kernel.ev directly
-# B_values = nearest_neighbor_extrapolation(
-#     interp_kernel,
-#     particle_radius[indices_i],
-#     particle_radius[indices_j],
-#     radius_bins,
-#     radius_bins,
+# # Step 4: Compute the concentration in each bin
+# concentration_in_bins = super_droplet_method.calculate_concentration_in_bins(
+#     bin_indices, sorted_concentration, number_in_bins
 # )
-loss = np.zeros_like(particle_radius)
-gain = np.zeros_like(particle_radius)
-single_event_counter = np.zeros_like(particle_radius, dtype=int)
 
-# pair_indices.pop(-1)  # Remove the last pair (k, k)
+# # Initialize spline for kernel interpolation
+# interp_kernel = RectBivariateSpline(
+#     x=radius_bins, y=radius_bins, z=kernel_bins
+# )
+# # Initialize single event counter, used to track coagulation per particle
+# single_event_counter = np.zeros_like(particle_radius, dtype=int)
 
-# Super droplet method
-# Vectorized operations over bin pairs
-for k, l in pair_indices:
-    # Kernel value at the max size for the pair of bins
-    Kmax = kernel_bins[k, l + 1]
+# # Super droplet method
+# # Vectorized operations over bin pairs
+# for lower_bin, upper_bin in pair_indices:
+#     # Kernel value at the max size for the pair of bins
+#     kernel_max = kernel_bins[lower_bin, upper_bin + 1]
 
-    event_pairs = super_droplet_method.event_pairs(
-        lower_bin=k,
-        upper_bin=l,
-        kernel_max=Kmax,
-        number_in_bins=number_in_bins,
-        concentration_in_bins=concentration_in_bins,
-    )
+#     event_pairs = super_droplet_method.event_pairs(
+#         lower_bin=lower_bin,
+#         upper_bin=upper_bin,
+#         kernel_max=kernel_max,
+#         number_in_bins=concentration_in_bins,
+#         # concentration_in_bins=concentration_in_bins,
+#     )
 
-    # Determine the exact number of events and sample from a
-    # Poisson distribution
-    N_events = super_droplet_method.sample_events(
-        events=event_pairs,
-        volume=volume_sim,
-        time_step=delta_t,
-        generator=rng,
-    )
+#     # Determine the exact number of events and sample from a
+#     # Poisson distribution
+#     num_events = super_droplet_method.sample_events(
+#         events=event_pairs,
+#         volume=volume_sim,
+#         time_step=delta_t,
+#         generator=rng,
+#     )
 
-    # Skip iteration if no events are expected
-    if N_events == 0:
-        continue
+#     # Skip iteration if no events are expected
+#     if num_events == 0:
+#         continue
 
-    # Limiter, may remove, else always max N_events
-    N_events = number_in_bins[k] if N_events > number_in_bins[k] else N_events
-    N_events = number_in_bins[l] if N_events > number_in_bins[l] else N_events
+#     # Limiter, may remove in future
+#     num_events = (
+#         number_in_bins[lower_bin]
+#         if num_events > number_in_bins[lower_bin]
+#         else num_events
+#     )
+#     num_events = (
+#         number_in_bins[upper_bin]
+#         if num_events > number_in_bins[upper_bin]
+#         else num_events
+#     )
 
-    # Get random indices for particles in the bins
-    r_i_indices, r_j_indices = super_droplet_method.select_random_indices(
-        lower_bin=k,
-        upper_bin=l,
-        events=N_events,
-        number_in_bins=number_in_bins,
-        generator=rng,
-    )
-    # Get the particle indices
-    indices_i, indices_j = super_droplet_method.bin_to_particle_indices(
-        lower_indices=r_i_indices,
-        upper_indices=r_j_indices,
-        lower_bin=k,
-        upper_bin=l,
-        bin_indices=bin_indices,
-    )
+#     # Get random indices for particles in the bins
+#     r_i_indices, r_j_indices = super_droplet_method.select_random_indices(
+#         lower_bin=lower_bin,
+#         upper_bin=upper_bin,
+#         events=num_events,
+#         number_in_bins=number_in_bins,
+#         generator=rng,
+#     )
+#     # Get the particle indices
+#     indices_i, indices_j = super_droplet_method.bin_to_particle_indices(
+#         lower_indices=r_i_indices,
+#         upper_indices=r_j_indices,
+#         lower_bin=lower_bin,
+#         upper_bin=upper_bin,
+#         bin_indices=bin_indices,
+#     )
 
-    # Filter valid indices
-    indices_i, indices_j = super_droplet_method.filter_valid_indices(
-        small_index=indices_i,
-        large_index=indices_j,
-        particle_radius=particle_radius,
-        single_event_counter=single_event_counter,
-    )
+#     # Filter valid indices
+#     indices_i, indices_j = super_droplet_method.filter_valid_indices(
+#         small_index=indices_i,
+#         large_index=indices_j,
+#         particle_radius=particle_radius,
+#         single_event_counter=single_event_counter,
+#     )
 
-    # Early exit for zero-sized indices
-    if indices_i.size == 0:
-        continue
+#     # Early exit for zero-sized indices
+#     if indices_i.size == 0:
+#         continue
 
-    # Calulate or interpolate the kernel for the selected particles
-    B_values = interp_kernel.ev(
-        particle_radius[indices_i], particle_radius[indices_j]
-    )
+#     # Calulate or interpolate the kernel for the selected particles
+#     kernel_values = interp_kernel.ev(
+#         particle_radius[indices_i], particle_radius[indices_j]
+#     )
 
-    # Calculate the coagulation events, with random selection
-    indices_i, indices_j = super_droplet_method.coagulation_events(
-        small_index=indices_i,
-        large_index=indices_j,
-        kernel_values=B_values,
-        kernel_max=Kmax,
-        generator=rng,
-    )
+#     # Calculate the coagulation events, with random selection
+#     indices_i, indices_j = super_droplet_method.coagulation_events(
+#         small_index=indices_i,
+#         large_index=indices_j,
+#         kernel_values=kernel_values,
+#         kernel_max=kernel_max,
+#         generator=rng,
+#     )
 
-    particle_radius, particle_concentration, single_event_counter = super_droplet_method.super_droplet_update_step(
-        particle_radius=particle_radius,
-        concentration=particle_concentration,
-        single_event_counter=single_event_counter,
-        small_index=indices_i,
-        large_index=indices_j,
-    )
+#     # Move the particle concentrations and update radius
+#     # for coagulated particles
+#     particle_radius, particle_concentration, single_event_counter = super_droplet_method.super_droplet_update_step(
+#         particle_radius=particle_radius,
+#         concentration=particle_concentration,
+#         single_event_counter=single_event_counter,
+#         small_index=indices_i,
+#         large_index=indices_j,
+#     )
 
-volume_orginal = np.power(particles_original, 3)
-volume_concentration_orginal = volume_orginal * particle_concentration_original
-volume_total_original = np.sum(volume_concentration_orginal)
+# # unsort particles
+# particle_radius = particle_radius[unsort_indices]
+# particle_concentration = particle_concentration[unsort_indices]
 
-# final volume
+particle_radius, particle_concentration = super_droplet_method.coagulation_step(
+    particle_radius=particle_radius,
+    particle_concentration=particle_concentration,
+    kernel=kernel_bins,
+    kernel_radius=radius_bins,
+    volume=volume_sim,
+    time_step=delta_t,
+    random_generator= rng
+)
+
 volume_final = np.power(particle_radius, 3)
 volume_concentration_final = volume_final * particle_concentration
 volume_total_final = np.sum(volume_concentration_final)
 
-print(f"Original volume: {volume_total_original}")
 print(f"Final volume: {volume_total_final}")
-print(f"Percent change in volume: {((volume_total_final - volume_total_original) / volume_total_original) * 100}%")
 print(f"Final number of particles: {np.sum(particle_concentration)}")
 
 # %% plot new distribution
@@ -253,7 +230,6 @@ ax.set_yscale("log")
 ax.set_xlabel("Particle radius (m)")
 ax.set_ylabel("Frequency")
 plt.show()
-
 
 
 # %%  check volume conservation
