@@ -6931,7 +6931,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9bb589c8">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=abe53bfe">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7010,7 +7010,7 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4d2d58c5">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=101f40e1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7068,7 +7068,7 @@ rng = np.random.default_rng(12345)</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9549f81b">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=38d1fcc9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7088,7 +7088,7 @@ rng = np.random.default_rng(12345)</div>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">particle_radius</span> <span class="o">=</span> <span class="n">lognormal_sample_distribution</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">]),</span>
-    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]),</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">]),</span>
     <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]),</span>
     <span class="n">number_of_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
 <span class="p">)</span>
@@ -7107,7 +7107,7 @@ rng = np.random.default_rng(12345)</div>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-3">particle_radius = lognormal_sample_distribution(
     mode=np.array([1e-8, 1e-7]),
-    geometric_standard_deviation=np.array([1.1, 1.1]),
+    geometric_standard_deviation=np.array([1.4, 1.4]),
     number_of_particles=np.array([5000, 1000]),
     number_of_samples=1000,
 )
@@ -7129,7 +7129,7 @@ plt.show()</div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a91b6d4c">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=7f1a380d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7147,357 +7147,31 @@ plt.show()</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Sort particles by size and bin them</span>
-<span class="c1"># overflow test for bins</span>
-<span class="c1"># particle_radius[0] = 5e-10</span>
-<span class="c1"># particle_radius[-1] = 5e-6</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">delta_t</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># time step in seconds</span>
+
 <span class="n">random_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">particle_radius</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 <span class="n">particle_concentration</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span> <span class="o">*</span> <span class="n">random_concentration</span> <span class="o">*</span> <span class="mf">1e6</span>
 <span class="p">)</span>  <span class="c1"># particles per m^3</span>
 <span class="n">particle_concentration</span> <span class="o">=</span> <span class="n">particle_concentration</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-<span class="n">particle_concentration_original</span> <span class="o">=</span> <span class="n">particle_concentration</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">volume_sim</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># m^3</span>
-<span class="n">number_in_bins</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total number of particles: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Get the bin index for each particle (0-based indexing)</span>
-<span class="n">bin_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># replace overflow bin with the last bin</span>
-<span class="n">bin_indices</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-<span class="c1"># replace underflow bin with the first bin</span>
-<span class="n">bin_indices</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="c1"># change to 0-based indexing</span>
-<span class="n">bin_indices</span> <span class="o">-=</span> <span class="mi">1</span>
-<span class="c1"># Precompute the bin pairs for vectorized operations</span>
-<span class="c1"># change pairs for super-droplet method</span>
-<span class="n">unique_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">bin_indices</span><span class="p">)</span>
-<span class="c1"># Generate unique pairs directly, no mirror pairs</span>
-<span class="n">pair_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">unique_bins</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-<span class="c1"># bin the particle concentrations</span>
-<span class="n">concentration_in_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">number_in_bins</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">unique_bin</span> <span class="ow">in</span> <span class="n">unique_bins</span><span class="p">:</span>
-    <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">unique_bin</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="n">unique_bin</span><span class="p">]</span>
-    <span class="p">)</span>
-<span class="n">concentration_in_bins</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-
-
-<span class="n">delta_t</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># time step in seconds</span>
-
-<span class="c1"># Initialize spline for kernel interpolation</span>
-<span class="n">interp_kernel</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">kernel_bins</span>
-<span class="p">)</span>
-<span class="c1"># Initialize spline for kernel interpolation</span>
-<span class="n">interp_kernel</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">kernel_bins</span>
-<span class="p">)</span>
-
-
-<span class="c1"># def kernel_nearest_neighbor_extrapolation(</span>
-<span class="c1">#     interp_func, x_vals, y_vals, x_bins, y_bins</span>
-<span class="c1"># ):</span>
-<span class="c1">#     # Clamping x_vals to be within the bounds of x_bins</span>
-<span class="c1">#     x_vals_clamped = np.clip(x_vals, x_bins[0], x_bins[-1])</span>
-
-<span class="c1">#     # Clamping y_vals to be within the bounds of y_bins</span>
-<span class="c1">#     y_vals_clamped = np.clip(y_vals, y_bins[0], y_bins[-1])</span>
-
-<span class="c1">#     # Use the interpolating function with clamped values</span>
-<span class="c1">#     return interp_func.ev(x_vals_clamped, y_vals_clamped)</span>
-
-
-<span class="c1"># # Use nearest_neighbor_extrapolation instead of interp_kernel.ev directly</span>
-<span class="c1"># B_values = nearest_neighbor_extrapolation(</span>
-<span class="c1">#     interp_kernel,</span>
-<span class="c1">#     particle_radius[indices_i],</span>
-<span class="c1">#     particle_radius[indices_j],</span>
-<span class="c1">#     radius_bins,</span>
-<span class="c1">#     radius_bins,</span>
-<span class="c1"># )</span>
-<span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
-<span class="n">gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
-<span class="n">single_event_counter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
-<span class="c1"># pair_indices.pop(-1)  # Remove the last pair (k, k)</span>
-
-<span class="c1"># Super droplet method</span>
-<span class="c1"># Vectorized operations over bin pairs</span>
-<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pair_indices</span><span class="p">:</span>
-    <span class="c1"># Kernel value at the max size for the pair of bins</span>
-    <span class="n">Kmax</span> <span class="o">=</span> <span class="n">kernel_bins</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-
-    <span class="n">event_pairs</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">event_pairs</span><span class="p">(</span>
-        <span class="n">lower_bin</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
-        <span class="n">upper_bin</span><span class="o">=</span><span class="n">l</span><span class="p">,</span>
-        <span class="n">kernel_max</span><span class="o">=</span><span class="n">Kmax</span><span class="p">,</span>
-        <span class="n">number_in_bins</span><span class="o">=</span><span class="n">number_in_bins</span><span class="p">,</span>
-        <span class="n">concentration_in_bins</span><span class="o">=</span><span class="n">concentration_in_bins</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Determine the exact number of events and sample from a</span>
-    <span class="c1"># Poisson distribution</span>
-    <span class="n">N_events</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">sample_events</span><span class="p">(</span>
-        <span class="n">events</span><span class="o">=</span><span class="n">event_pairs</span><span class="p">,</span>
-        <span class="n">volume</span><span class="o">=</span><span class="n">volume_sim</span><span class="p">,</span>
-        <span class="n">time_step</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span>
-        <span class="n">generator</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Skip iteration if no events are expected</span>
-    <span class="k">if</span> <span class="n">N_events</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">continue</span>
-
-    <span class="c1"># Limiter, may remove, else always max N_events</span>
-    <span class="n">N_events</span> <span class="o">=</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">if</span> <span class="n">N_events</span> <span class="o">&gt;</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">else</span> <span class="n">N_events</span>
-    <span class="n">N_events</span> <span class="o">=</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="k">if</span> <span class="n">N_events</span> <span class="o">&gt;</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="k">else</span> <span class="n">N_events</span>
-
-    <span class="c1"># Get random indices for particles in the bins</span>
-    <span class="n">r_i_indices</span><span class="p">,</span> <span class="n">r_j_indices</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">select_random_indices</span><span class="p">(</span>
-        <span class="n">lower_bin</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
-        <span class="n">upper_bin</span><span class="o">=</span><span class="n">l</span><span class="p">,</span>
-        <span class="n">events</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span>
-        <span class="n">number_in_bins</span><span class="o">=</span><span class="n">number_in_bins</span><span class="p">,</span>
-        <span class="n">generator</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="c1"># Get the particle indices</span>
-    <span class="n">indices_i</span><span class="p">,</span> <span class="n">indices_j</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">bin_to_particle_indices</span><span class="p">(</span>
-        <span class="n">lower_indices</span><span class="o">=</span><span class="n">r_i_indices</span><span class="p">,</span>
-        <span class="n">upper_indices</span><span class="o">=</span><span class="n">r_j_indices</span><span class="p">,</span>
-        <span class="n">lower_bin</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
-        <span class="n">upper_bin</span><span class="o">=</span><span class="n">l</span><span class="p">,</span>
-        <span class="n">bin_indices</span><span class="o">=</span><span class="n">bin_indices</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Filter valid indices</span>
-    <span class="n">indices_i</span><span class="p">,</span> <span class="n">indices_j</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">filter_valid_indices</span><span class="p">(</span>
-        <span class="n">small_index</span><span class="o">=</span><span class="n">indices_i</span><span class="p">,</span>
-        <span class="n">large_index</span><span class="o">=</span><span class="n">indices_j</span><span class="p">,</span>
-        <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle_radius</span><span class="p">,</span>
-        <span class="n">single_event_counter</span><span class="o">=</span><span class="n">single_event_counter</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Early exit for zero-sized indices</span>
-    <span class="k">if</span> <span class="n">indices_i</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">continue</span>
-
-    <span class="c1"># Calulate or interpolate the kernel for the selected particles</span>
-    <span class="n">B_values</span> <span class="o">=</span> <span class="n">interp_kernel</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span>
-        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">],</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Calculate the coagulation events, with random selection</span>
-    <span class="n">indices_i</span><span class="p">,</span> <span class="n">indices_j</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">coagulation_events</span><span class="p">(</span>
-        <span class="n">small_index</span><span class="o">=</span><span class="n">indices_i</span><span class="p">,</span>
-        <span class="n">large_index</span><span class="o">=</span><span class="n">indices_j</span><span class="p">,</span>
-        <span class="n">kernel_values</span><span class="o">=</span><span class="n">B_values</span><span class="p">,</span>
-        <span class="n">kernel_max</span><span class="o">=</span><span class="n">Kmax</span><span class="p">,</span>
-        <span class="n">generator</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">particle_radius</span><span class="p">,</span> <span class="n">particle_concentration</span><span class="p">,</span> <span class="n">single_event_counter</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">super_droplet_update_step</span><span class="p">(</span>
-        <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle_radius</span><span class="p">,</span>
-        <span class="n">concentration</span><span class="o">=</span><span class="n">particle_concentration</span><span class="p">,</span>
-        <span class="n">single_event_counter</span><span class="o">=</span><span class="n">single_event_counter</span><span class="p">,</span>
-        <span class="n">small_index</span><span class="o">=</span><span class="n">indices_i</span><span class="p">,</span>
-        <span class="n">large_index</span><span class="o">=</span><span class="n">indices_j</span><span class="p">,</span>
-    <span class="p">)</span>
-
-<span class="n">volume_orginal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">particles_original</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">volume_concentration_orginal</span> <span class="o">=</span> <span class="n">volume_orginal</span> <span class="o">*</span> <span class="n">particle_concentration_original</span>
-<span class="n">volume_total_original</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">volume_concentration_orginal</span><span class="p">)</span>
-
-<span class="c1"># final volume</span>
-<span class="n">volume_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">volume_concentration_final</span> <span class="o">=</span> <span class="n">volume_final</span> <span class="o">*</span> <span class="n">particle_concentration</span>
-<span class="n">volume_total_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">volume_concentration_final</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Original volume: </span><span class="si">{</span><span class="n">volume_total_original</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final volume: </span><span class="si">{</span><span class="n">volume_total_final</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Percent change in volume: </span><span class="si">{</span><span class="p">((</span><span class="n">volume_total_final</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">volume_total_original</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">volume_total_original</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final number of particles: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-4">
-# Sort particles by size and bin them
-# overflow test for bins
-# particle_radius[0] = 5e-10
-# particle_radius[-1] = 5e-6
+delta_t = 1  # time step in seconds
+
 random_concentration = np.random.uniform(1, 10, size=particle_radius.size)
 particle_concentration = (
     np.ones_like(particle_radius) * random_concentration * 1e6
 )  # particles per m^3
 particle_concentration = particle_concentration.astype(np.float64)
-particle_concentration_original = particle_concentration.copy()
-volume_sim = 1  # m^3
-number_in_bins, bins = np.histogram(particle_radius, bins=radius_bins)
-print(f"Total number of particles: {np.sum(particle_concentration)}")
-
-# Get the bin index for each particle (0-based indexing)
-bin_indices = np.digitize(particle_radius, bins, right=True)
-# replace overflow bin with the last bin
-bin_indices[bin_indices == len(bins)] = len(bins) - 1
-# replace underflow bin with the first bin
-bin_indices[bin_indices == 0] = 1
-# change to 0-based indexing
-bin_indices -= 1
-# Precompute the bin pairs for vectorized operations
-# change pairs for super-droplet method
-unique_bins = np.unique(bin_indices)
-# Generate unique pairs directly, no mirror pairs
-pair_indices = list(combinations(unique_bins, 2))
-
-# bin the particle concentrations
-concentration_in_bins = np.zeros_like(number_in_bins)
-for unique_bin in unique_bins:
-    concentration_in_bins[unique_bin] = np.sum(
-        particle_concentration[bin_indices == unique_bin]
-    )
-concentration_in_bins.astype(np.float64)
-
-
-delta_t = 10  # time step in seconds
-
-# Initialize spline for kernel interpolation
-interp_kernel = RectBivariateSpline(
-    x=radius_bins, y=radius_bins, z=kernel_bins
-)
-# Initialize spline for kernel interpolation
-interp_kernel = RectBivariateSpline(
-    x=radius_bins, y=radius_bins, z=kernel_bins
-)
-
-
-# def kernel_nearest_neighbor_extrapolation(
-#     interp_func, x_vals, y_vals, x_bins, y_bins
-# ):
-#     # Clamping x_vals to be within the bounds of x_bins
-#     x_vals_clamped = np.clip(x_vals, x_bins[0], x_bins[-1])
-
-#     # Clamping y_vals to be within the bounds of y_bins
-#     y_vals_clamped = np.clip(y_vals, y_bins[0], y_bins[-1])
-
-#     # Use the interpolating function with clamped values
-#     return interp_func.ev(x_vals_clamped, y_vals_clamped)
-
-
-# # Use nearest_neighbor_extrapolation instead of interp_kernel.ev directly
-# B_values = nearest_neighbor_extrapolation(
-#     interp_kernel,
-#     particle_radius[indices_i],
-#     particle_radius[indices_j],
-#     radius_bins,
-#     radius_bins,
-# )
-loss = np.zeros_like(particle_radius)
-gain = np.zeros_like(particle_radius)
-single_event_counter = np.zeros_like(particle_radius, dtype=int)
-
-# pair_indices.pop(-1)  # Remove the last pair (k, k)
-
-# Super droplet method
-# Vectorized operations over bin pairs
-for k, l in pair_indices:
-    # Kernel value at the max size for the pair of bins
-    Kmax = kernel_bins[k, l + 1]
-
-    event_pairs = super_droplet_method.event_pairs(
-        lower_bin=k,
-        upper_bin=l,
-        kernel_max=Kmax,
-        number_in_bins=number_in_bins,
-        concentration_in_bins=concentration_in_bins,
-    )
-
-    # Determine the exact number of events and sample from a
-    # Poisson distribution
-    N_events = super_droplet_method.sample_events(
-        events=event_pairs,
-        volume=volume_sim,
-        time_step=delta_t,
-        generator=rng,
-    )
-
-    # Skip iteration if no events are expected
-    if N_events == 0:
-        continue
-
-    # Limiter, may remove, else always max N_events
-    N_events = number_in_bins[k] if N_events &gt; number_in_bins[k] else N_events
-    N_events = number_in_bins[l] if N_events &gt; number_in_bins[l] else N_events
-
-    # Get random indices for particles in the bins
-    r_i_indices, r_j_indices = super_droplet_method.select_random_indices(
-        lower_bin=k,
-        upper_bin=l,
-        events=N_events,
-        number_in_bins=number_in_bins,
-        generator=rng,
-    )
-    # Get the particle indices
-    indices_i, indices_j = super_droplet_method.bin_to_particle_indices(
-        lower_indices=r_i_indices,
-        upper_indices=r_j_indices,
-        lower_bin=k,
-        upper_bin=l,
-        bin_indices=bin_indices,
-    )
-
-    # Filter valid indices
-    indices_i, indices_j = super_droplet_method.filter_valid_indices(
-        small_index=indices_i,
-        large_index=indices_j,
-        particle_radius=particle_radius,
-        single_event_counter=single_event_counter,
-    )
-
-    # Early exit for zero-sized indices
-    if indices_i.size == 0:
-        continue
-
-    # Calulate or interpolate the kernel for the selected particles
-    B_values = interp_kernel.ev(
-        particle_radius[indices_i], particle_radius[indices_j]
-    )
-
-    # Calculate the coagulation events, with random selection
-    indices_i, indices_j = super_droplet_method.coagulation_events(
-        small_index=indices_i,
-        large_index=indices_j,
-        kernel_values=B_values,
-        kernel_max=Kmax,
-        generator=rng,
-    )
-
-    particle_radius, particle_concentration, single_event_counter = super_droplet_method.super_droplet_update_step(
-        particle_radius=particle_radius,
-        concentration=particle_concentration,
-        single_event_counter=single_event_counter,
-        small_index=indices_i,
-        large_index=indices_j,
-    )
-
-volume_orginal = np.power(particles_original, 3)
-volume_concentration_orginal = volume_orginal * particle_concentration_original
-volume_total_original = np.sum(volume_concentration_orginal)
-
-# final volume
-volume_final = np.power(particle_radius, 3)
-volume_concentration_final = volume_final * particle_concentration
-volume_total_final = np.sum(volume_concentration_final)
-
-print(f"Original volume: {volume_total_original}")
-print(f"Final volume: {volume_total_final}")
-print(f"Percent change in volume: {((volume_total_final - volume_total_original) / volume_total_original) * 100}%")
-print(f"Final number of particles: {np.sum(particle_concentration)}")</div>
+volume_sim = 1  # m^3</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cf179adf">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c8a8707d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7506,6 +7180,304 @@ print(f"Final number of particles: {np.sum(particle_concentration)}")</div>
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-5">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># # Step 1: Sort particles by size</span>
+<span class="c1"># unsort_indices, sorted_radius, sorted_concentration = super_droplet_method.sort_particles(</span>
+<span class="c1">#     particle_radius, particle_concentration)</span>
+
+<span class="c1"># # Step 2: Bin particles by size</span>
+<span class="c1"># number_in_bins, bin_indices = super_droplet_method.bin_particles(</span>
+<span class="c1">#     sorted_radius, radius_bins)</span>
+
+<span class="c1"># # Step 3: Precompute the unique bin pairs for vectorized operations</span>
+<span class="c1"># pair_indices = super_droplet_method.get_bin_pairs(</span>
+<span class="c1">#     bin_indices)</span>
+
+<span class="c1"># # Step 4: Compute the concentration in each bin</span>
+<span class="c1"># concentration_in_bins = super_droplet_method.calculate_concentration_in_bins(</span>
+<span class="c1">#     bin_indices, sorted_concentration, number_in_bins</span>
+<span class="c1"># )</span>
+
+<span class="c1"># # Initialize spline for kernel interpolation</span>
+<span class="c1"># interp_kernel = RectBivariateSpline(</span>
+<span class="c1">#     x=radius_bins, y=radius_bins, z=kernel_bins</span>
+<span class="c1"># )</span>
+<span class="c1"># # Initialize single event counter, used to track coagulation per particle</span>
+<span class="c1"># single_event_counter = np.zeros_like(particle_radius, dtype=int)</span>
+
+<span class="c1"># # Super droplet method</span>
+<span class="c1"># # Vectorized operations over bin pairs</span>
+<span class="c1"># for lower_bin, upper_bin in pair_indices:</span>
+<span class="c1">#     # Kernel value at the max size for the pair of bins</span>
+<span class="c1">#     kernel_max = kernel_bins[lower_bin, upper_bin + 1]</span>
+
+<span class="c1">#     event_pairs = super_droplet_method.event_pairs(</span>
+<span class="c1">#         lower_bin=lower_bin,</span>
+<span class="c1">#         upper_bin=upper_bin,</span>
+<span class="c1">#         kernel_max=kernel_max,</span>
+<span class="c1">#         number_in_bins=concentration_in_bins,</span>
+<span class="c1">#         # concentration_in_bins=concentration_in_bins,</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Determine the exact number of events and sample from a</span>
+<span class="c1">#     # Poisson distribution</span>
+<span class="c1">#     num_events = super_droplet_method.sample_events(</span>
+<span class="c1">#         events=event_pairs,</span>
+<span class="c1">#         volume=volume_sim,</span>
+<span class="c1">#         time_step=delta_t,</span>
+<span class="c1">#         generator=rng,</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Skip iteration if no events are expected</span>
+<span class="c1">#     if num_events == 0:</span>
+<span class="c1">#         continue</span>
+
+<span class="c1">#     # Limiter, may remove in future</span>
+<span class="c1">#     num_events = (</span>
+<span class="c1">#         number_in_bins[lower_bin]</span>
+<span class="c1">#         if num_events &gt; number_in_bins[lower_bin]</span>
+<span class="c1">#         else num_events</span>
+<span class="c1">#     )</span>
+<span class="c1">#     num_events = (</span>
+<span class="c1">#         number_in_bins[upper_bin]</span>
+<span class="c1">#         if num_events &gt; number_in_bins[upper_bin]</span>
+<span class="c1">#         else num_events</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Get random indices for particles in the bins</span>
+<span class="c1">#     r_i_indices, r_j_indices = super_droplet_method.select_random_indices(</span>
+<span class="c1">#         lower_bin=lower_bin,</span>
+<span class="c1">#         upper_bin=upper_bin,</span>
+<span class="c1">#         events=num_events,</span>
+<span class="c1">#         number_in_bins=number_in_bins,</span>
+<span class="c1">#         generator=rng,</span>
+<span class="c1">#     )</span>
+<span class="c1">#     # Get the particle indices</span>
+<span class="c1">#     indices_i, indices_j = super_droplet_method.bin_to_particle_indices(</span>
+<span class="c1">#         lower_indices=r_i_indices,</span>
+<span class="c1">#         upper_indices=r_j_indices,</span>
+<span class="c1">#         lower_bin=lower_bin,</span>
+<span class="c1">#         upper_bin=upper_bin,</span>
+<span class="c1">#         bin_indices=bin_indices,</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Filter valid indices</span>
+<span class="c1">#     indices_i, indices_j = super_droplet_method.filter_valid_indices(</span>
+<span class="c1">#         small_index=indices_i,</span>
+<span class="c1">#         large_index=indices_j,</span>
+<span class="c1">#         particle_radius=particle_radius,</span>
+<span class="c1">#         single_event_counter=single_event_counter,</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Early exit for zero-sized indices</span>
+<span class="c1">#     if indices_i.size == 0:</span>
+<span class="c1">#         continue</span>
+
+<span class="c1">#     # Calulate or interpolate the kernel for the selected particles</span>
+<span class="c1">#     kernel_values = interp_kernel.ev(</span>
+<span class="c1">#         particle_radius[indices_i], particle_radius[indices_j]</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Calculate the coagulation events, with random selection</span>
+<span class="c1">#     indices_i, indices_j = super_droplet_method.coagulation_events(</span>
+<span class="c1">#         small_index=indices_i,</span>
+<span class="c1">#         large_index=indices_j,</span>
+<span class="c1">#         kernel_values=kernel_values,</span>
+<span class="c1">#         kernel_max=kernel_max,</span>
+<span class="c1">#         generator=rng,</span>
+<span class="c1">#     )</span>
+
+<span class="c1">#     # Move the particle concentrations and update radius</span>
+<span class="c1">#     # for coagulated particles</span>
+<span class="c1">#     particle_radius, particle_concentration, single_event_counter = super_droplet_method.super_droplet_update_step(</span>
+<span class="c1">#         particle_radius=particle_radius,</span>
+<span class="c1">#         concentration=particle_concentration,</span>
+<span class="c1">#         single_event_counter=single_event_counter,</span>
+<span class="c1">#         small_index=indices_i,</span>
+<span class="c1">#         large_index=indices_j,</span>
+<span class="c1">#     )</span>
+
+<span class="c1"># # unsort particles</span>
+<span class="c1"># particle_radius = particle_radius[unsort_indices]</span>
+<span class="c1"># particle_concentration = particle_concentration[unsort_indices]</span>
+
+<span class="n">particle_radius</span><span class="p">,</span> <span class="n">particle_concentration</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">coagulation_step</span><span class="p">(</span>
+    <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle_radius</span><span class="p">,</span>
+    <span class="n">particle_concentration</span><span class="o">=</span><span class="n">particle_concentration</span><span class="p">,</span>
+    <span class="n">kernel</span><span class="o">=</span><span class="n">kernel_bins</span><span class="p">,</span>
+    <span class="n">kernel_radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">volume</span><span class="o">=</span><span class="n">volume_sim</span><span class="p">,</span>
+    <span class="n">time_step</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span>
+    <span class="n">random_generator</span><span class="o">=</span> <span class="n">rng</span>
+<span class="p">)</span>
+
+<span class="n">volume_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">volume_concentration_final</span> <span class="o">=</span> <span class="n">volume_final</span> <span class="o">*</span> <span class="n">particle_concentration</span>
+<span class="n">volume_total_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">volume_concentration_final</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final volume: </span><span class="si">{</span><span class="n">volume_total_final</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final number of particles: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-5">
+# # Step 1: Sort particles by size
+# unsort_indices, sorted_radius, sorted_concentration = super_droplet_method.sort_particles(
+#     particle_radius, particle_concentration)
+
+# # Step 2: Bin particles by size
+# number_in_bins, bin_indices = super_droplet_method.bin_particles(
+#     sorted_radius, radius_bins)
+
+# # Step 3: Precompute the unique bin pairs for vectorized operations
+# pair_indices = super_droplet_method.get_bin_pairs(
+#     bin_indices)
+
+# # Step 4: Compute the concentration in each bin
+# concentration_in_bins = super_droplet_method.calculate_concentration_in_bins(
+#     bin_indices, sorted_concentration, number_in_bins
+# )
+
+# # Initialize spline for kernel interpolation
+# interp_kernel = RectBivariateSpline(
+#     x=radius_bins, y=radius_bins, z=kernel_bins
+# )
+# # Initialize single event counter, used to track coagulation per particle
+# single_event_counter = np.zeros_like(particle_radius, dtype=int)
+
+# # Super droplet method
+# # Vectorized operations over bin pairs
+# for lower_bin, upper_bin in pair_indices:
+#     # Kernel value at the max size for the pair of bins
+#     kernel_max = kernel_bins[lower_bin, upper_bin + 1]
+
+#     event_pairs = super_droplet_method.event_pairs(
+#         lower_bin=lower_bin,
+#         upper_bin=upper_bin,
+#         kernel_max=kernel_max,
+#         number_in_bins=concentration_in_bins,
+#         # concentration_in_bins=concentration_in_bins,
+#     )
+
+#     # Determine the exact number of events and sample from a
+#     # Poisson distribution
+#     num_events = super_droplet_method.sample_events(
+#         events=event_pairs,
+#         volume=volume_sim,
+#         time_step=delta_t,
+#         generator=rng,
+#     )
+
+#     # Skip iteration if no events are expected
+#     if num_events == 0:
+#         continue
+
+#     # Limiter, may remove in future
+#     num_events = (
+#         number_in_bins[lower_bin]
+#         if num_events &gt; number_in_bins[lower_bin]
+#         else num_events
+#     )
+#     num_events = (
+#         number_in_bins[upper_bin]
+#         if num_events &gt; number_in_bins[upper_bin]
+#         else num_events
+#     )
+
+#     # Get random indices for particles in the bins
+#     r_i_indices, r_j_indices = super_droplet_method.select_random_indices(
+#         lower_bin=lower_bin,
+#         upper_bin=upper_bin,
+#         events=num_events,
+#         number_in_bins=number_in_bins,
+#         generator=rng,
+#     )
+#     # Get the particle indices
+#     indices_i, indices_j = super_droplet_method.bin_to_particle_indices(
+#         lower_indices=r_i_indices,
+#         upper_indices=r_j_indices,
+#         lower_bin=lower_bin,
+#         upper_bin=upper_bin,
+#         bin_indices=bin_indices,
+#     )
+
+#     # Filter valid indices
+#     indices_i, indices_j = super_droplet_method.filter_valid_indices(
+#         small_index=indices_i,
+#         large_index=indices_j,
+#         particle_radius=particle_radius,
+#         single_event_counter=single_event_counter,
+#     )
+
+#     # Early exit for zero-sized indices
+#     if indices_i.size == 0:
+#         continue
+
+#     # Calulate or interpolate the kernel for the selected particles
+#     kernel_values = interp_kernel.ev(
+#         particle_radius[indices_i], particle_radius[indices_j]
+#     )
+
+#     # Calculate the coagulation events, with random selection
+#     indices_i, indices_j = super_droplet_method.coagulation_events(
+#         small_index=indices_i,
+#         large_index=indices_j,
+#         kernel_values=kernel_values,
+#         kernel_max=kernel_max,
+#         generator=rng,
+#     )
+
+#     # Move the particle concentrations and update radius
+#     # for coagulated particles
+#     particle_radius, particle_concentration, single_event_counter = super_droplet_method.super_droplet_update_step(
+#         particle_radius=particle_radius,
+#         concentration=particle_concentration,
+#         single_event_counter=single_event_counter,
+#         small_index=indices_i,
+#         large_index=indices_j,
+#     )
+
+# # unsort particles
+# particle_radius = particle_radius[unsort_indices]
+# particle_concentration = particle_concentration[unsort_indices]
+
+particle_radius, particle_concentration = super_droplet_method.coagulation_step(
+    particle_radius=particle_radius,
+    particle_concentration=particle_concentration,
+    kernel=kernel_bins,
+    kernel_radius=radius_bins,
+    volume=volume_sim,
+    time_step=delta_t,
+    random_generator= rng
+)
+
+volume_final = np.power(particle_radius, 3)
+volume_concentration_final = volume_final * particle_concentration
+volume_total_final = np.sum(volume_concentration_final)
+
+print(f"Final volume: {volume_total_final}")
+print(f"Final number of particles: {np.sum(particle_concentration)}")</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2f1d0c1d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy for="cell-6">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -7528,7 +7500,7 @@ print(f"Final number of particles: {np.sum(particle_concentration)}")</div>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Frequency"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-5">fig, ax = plt.subplots()
+<div class="clipboard-copy-txt" id="cell-6">fig, ax = plt.subplots()
 ax.hist(
     particles_original, bins=100, histtype="step", color="blue", density=True
 )
@@ -7539,16 +7511,14 @@ ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlabel("Particle radius (m)")
 ax.set_ylabel("Frequency")
-plt.show()
-
-</div>
+plt.show()</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3305e2d7">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=71d72afd">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7556,7 +7526,7 @@ plt.show()
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy for="cell-6">
+<clipboard-copy for="cell-7">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -7578,7 +7548,7 @@ plt.show()
 <span class="c1"># print(f"Original volume: {volume_total_original}")</span>
 <span class="c1"># print(f"Final volume: {volume_total_final}")</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6"># volume_orginal = particles_original**3
+<div class="clipboard-copy-txt" id="cell-7"># volume_orginal = particles_original**3
 # volume_concentration_orginal = volume_orginal * particle_concentration_original
 # volume_total_original = np.sum(volume_concentration_orginal)
 
@@ -7595,7 +7565,7 @@ plt.show()
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=775b7a5a">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2aa64825">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7603,7 +7573,7 @@ plt.show()
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy for="cell-7">
+<clipboard-copy for="cell-8">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -7615,7 +7585,7 @@ plt.show()
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-7"></div>
+<div class="clipboard-copy-txt" id="cell-8"></div>
 </div>
 </div>
 </div>

@@ -4,9 +4,36 @@
 
 > Auto-generated documentation for [particula.next.dynamics.coagulation.super_droplet_method](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py) module.
 
+## bin_particles
+
+[Show source in super_droplet_method.py:383](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L383)
+
+Bin particles by size and return the number of particles in each bin.
+
+#### Arguments
+
+particle_radius : Array of sorted particle radii.
+radius_bins : Array defining the bin edges for particle radii.
+
+#### Returns
+
+Tuple :
+    - Array of the number of particles in each bin.
+    - Array of bin indices for each particle.
+
+#### Signature
+
+```python
+def bin_particles(
+    particle_radius: NDArray[np.float64], radius_bins: NDArray[np.float64]
+) -> Tuple[NDArray[np.float64], NDArray[np.int64]]: ...
+```
+
+
+
 ## bin_to_particle_indices
 
-[Show source in super_droplet_method.py:216](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L216)
+[Show source in super_droplet_method.py:209](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L209)
 
 Convert bin indices to actual particle indices in the particle array.
 
@@ -46,9 +73,37 @@ def bin_to_particle_indices(
 
 
 
+## calculate_concentration_in_bins
+
+[Show source in super_droplet_method.py:426](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L426)
+
+Calculate the concentration of particles in each bin.
+
+#### Arguments
+
+bin_indices : Array of bin indices for each particle.
+particle_concentration : Array of sorted particle concentrations.
+number_in_bins : Array of the number of particles in each bin.
+
+#### Returns
+
+The total concentration in each bin.
+
+#### Signature
+
+```python
+def calculate_concentration_in_bins(
+    bin_indices: NDArray[np.int64],
+    particle_concentration: NDArray[np.float64],
+    number_in_bins: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
+```
+
+
+
 ## coagulation_events
 
-[Show source in super_droplet_method.py:304](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L304)
+[Show source in super_droplet_method.py:297](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L297)
 
 Calculate coagulation probabilities and filter events based on them.
 
@@ -91,9 +146,55 @@ def coagulation_events(
 
 
 
+## coagulation_step
+
+[Show source in super_droplet_method.py:454](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L454)
+
+Perform a single step of the Super Droplet coagulation process.
+
+This function processes particles by sorting them, binning by size,
+computing coagulation events based on the coagulation kernel, and
+updating particle properties accordingly.
+
+#### Arguments
+
+particle_radius : Array of particle radii.
+particle_concentration : Array of particle concentrations
+    corresponding to each radius.
+kernel : 2D array representing the coagulation kernel values between
+    different bins.
+kernel_radius : Array defining the radii corresponding to the
+    kernel bins.
+volume : Volume of the system or relevant scaling factor.
+time_step : Duration of the current time step.
+random_generator : A NumPy random number generator for
+    stochastic processes.
+
+#### Returns
+
+Tuple :
+    - Updated array of particle radii after coagulation.
+    - Updated array of particle concentrations after coagulation.
+
+#### Signature
+
+```python
+def coagulation_step(
+    particle_radius: NDArray[np.float64],
+    particle_concentration: NDArray[np.float64],
+    kernel: NDArray[np.float64],
+    kernel_radius: NDArray[np.float64],
+    volume: float,
+    time_step: float,
+    random_generator: np.random.Generator,
+) -> Tuple[NDArray[np.float64], NDArray[np.float64]]: ...
+```
+
+
+
 ## event_pairs
 
-[Show source in super_droplet_method.py:102](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L102)
+[Show source in super_droplet_method.py:104](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L104)
 
 Calculate the number of particle pairs based on kernel value.
 
@@ -103,8 +204,6 @@ lower_bin : Lower bin index.
 upper_bin : Upper bin index.
 kernel_max : Maximum value of the kernel.
 number_in_bins : Number of particles in each bin.
-concentration_in_bins : Concentration of particles in each bin.
-    Default is None.
 
 #### Returns
 
@@ -118,8 +217,7 @@ def event_pairs(
     lower_bin: int,
     upper_bin: int,
     kernel_max: Union[float, NDArray[np.float64]],
-    number_in_bins: NDArray[np.int64],
-    concentration_in_bins: Optional[NDArray[np.float64]] = None,
+    number_in_bins: NDArray[np.float64 | np.int64],
 ) -> float: ...
 ```
 
@@ -127,7 +225,7 @@ def event_pairs(
 
 ## filter_valid_indices
 
-[Show source in super_droplet_method.py:258](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L258)
+[Show source in super_droplet_method.py:251](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L251)
 
 Filter particles indices based on particle radius and event counters.
 
@@ -164,9 +262,31 @@ def filter_valid_indices(
 
 
 
+## get_bin_pairs
+
+[Show source in super_droplet_method.py:410](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L410)
+
+Pre-compute the unique bin pairs for vectorized operations.
+
+#### Arguments
+
+bin_indices : Array of bin indices.
+
+#### Returns
+
+Unique bin pairs for vectorized operations.
+
+#### Signature
+
+```python
+def get_bin_pairs(bin_indices: NDArray[np.int64]) -> list[Tuple[int, int]]: ...
+```
+
+
+
 ## sample_events
 
-[Show source in super_droplet_method.py:144](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L144)
+[Show source in super_droplet_method.py:137](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L137)
 
 Sample the number of coagulation events from a Poisson distribution.
 
@@ -199,7 +319,7 @@ def sample_events(
 
 ## select_random_indices
 
-[Show source in super_droplet_method.py:175](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L175)
+[Show source in super_droplet_method.py:168](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L168)
 
 Select random indices for particles involved in coagulation events.
 
@@ -237,9 +357,41 @@ def select_random_indices(
 
 
 
+## sort_particles
+
+[Show source in super_droplet_method.py:343](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L343)
+
+Sort particles by size and optionally sort their concentrations.
+
+#### Arguments
+
+particle_radius : Array of particle radii.
+particle_concentration : Optional array of particle concentrations
+    corresponding to each radius. If provided, it will be sorted to
+    match the sorted radii.
+
+#### Returns
+
+Tuple :
+    - `-` *`unsort_indices`* - Array of indices to revert the sorting.
+    - `-` *`sorted_radius`* - Array of sorted particle radii.
+    - `-` *`sorted_concentration`* - Optional array of sorted particle
+        concentrations (or `None` if not provided).
+
+#### Signature
+
+```python
+def sort_particles(
+    particle_radius: NDArray[np.float64],
+    particle_concentration: Optional[NDArray[np.float64]] = None,
+) -> Tuple[NDArray[np.int64], NDArray[np.float64], Optional[NDArray[np.float64]]]: ...
+```
+
+
+
 ## super_droplet_update_step
 
-[Show source in super_droplet_method.py:12](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L12)
+[Show source in super_droplet_method.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L14)
 
 Update the particle radii and concentrations after coagulation events.
 
