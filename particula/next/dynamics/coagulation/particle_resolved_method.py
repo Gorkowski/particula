@@ -63,6 +63,7 @@ def particle_resolved_update_step(
     return particle_radius, loss, gain
 
 
+# pylint: disable=too-many-arguments
 def coagulation_step(
     particle_radius: NDArray[np.float64],
     kernel: NDArray[np.float64],
@@ -70,36 +71,59 @@ def coagulation_step(
     volume: float,
     time_step: float,
     random_generator: np.random.Generator,
-) -> Tuple[NDArray[np.float64], NDArray[np.float64]]:
+) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
+    """
+    Perform a single step of particle coagulation, updating particle radii
+    based on coagulation events.
+
+    Args:
+        particle_radius (NDArray[np.float64]): Array of particle radii.
+        kernel (NDArray[np.float64]): Coagulation kernel as a 2D array where
+            each element represents the probability of coagulation between
+            particles of corresponding sizes.
+        kernel_radius (NDArray[np.float64]): Array of radii corresponding to
+            the kernel bins.
+        volume (float): Volume of the system in which coagulation occurs.
+        time_step (float): Time step over which coagulation is calculated.
+        random_generator (np.random.Generator): Random number generator for
+            stochastic processes.
+
+    Returns:
+        Tuple: Updated particle radii, and arrays representing the loss and
+            gain in particle counts due to coagulation events.
+    """
 
     # Step 1: Sort particles by size and obtain indices to revert sorting later
     unsort_indices, sorted_radius, _ = sort_particles(
         particle_radius=particle_radius,
     )
+
     # Step 2: Bin particles by size using the provided kernel radius bins
     number_in_bins, bin_indices = bin_particles(
         particle_radius=sorted_radius, radius_bins=kernel_radius
     )
+
     # Step 3: Precompute unique bin pairs for efficient coagulation
     # computations
     pair_indices = get_bin_pairs(bin_indices=bin_indices)
 
-    # Step 4: Initialize a bivariate spline for interpolating kernel values
-    # between bin radii
+    # Step 4: Initialize a bivariate spline for interpolating kernel
+    # values between bin radii
     interp_kernel = RectBivariateSpline(
-        x=kernel_radius, y=kernel_radius, z=kernel)
+        x=kernel_radius, y=kernel_radius, z=kernel
+    )
 
+    # Initialize loss and gain arrays
     loss = np.zeros_like(particle_radius, dtype=np.float64)
     gain = np.zeros_like(particle_radius, dtype=np.float64)
 
+    # Iterate over each bin pair to calculate potential coagulation events
     for lower_bin, upper_bin in pair_indices:
-        # Step 7.1: Retrieve the maximum kernel value for the current bin pair
-        # Note: The '+1' indexing assumes that 'kernel' has dimensions
-        # accommodating this offset due to bin edges
+        # Retrieve the maximum kernel value for the current bin pair
         kernel_max = kernel[lower_bin, upper_bin + 1]
 
-        # Step 7.2: Determine potential coagulation events between
-        # particles in these bins
+        # Determine potential coagulation events between particles in these
+        # bins
         events = event_pairs(
             lower_bin=lower_bin,
             upper_bin=upper_bin,
@@ -107,8 +131,7 @@ def coagulation_step(
             number_in_bins=number_in_bins,
         )
 
-        # Step 7.3: Sample the number of coagulation events from a
-        # Poisson distribution
+        # Sample the number of coagulation events from a Poisson distribution
         num_events = sample_events(
             events=events,
             volume=volume,
@@ -116,13 +139,13 @@ def coagulation_step(
             generator=random_generator,
         )
 
-        # Step 7.4: If no events are expected, skip to the next bin pair
+        # Skip to the next bin pair if no events are expected
         if num_events == 0:
             continue
 
-        # Step 7.6: Randomly select indices of particles involved in the
-        # coagulation events within the current bins
-        r_i_indices, r_j_indices = select_random_indices(
+        # Randomly select indices of particles involved in the coagulation
+        # events within the current bins
+        lower_indices, upper_indices = select_random_indices(
             lower_bin=lower_bin,
             upper_bin=upper_bin,
             events=num_events,
@@ -130,56 +153,57 @@ def coagulation_step(
             generator=random_generator,
         )
 
-        # Step 7.7: Convert bin-relative indices to actual particle indices
-        # in the sorted arrays
-        indices_i, indices_j = bin_to_particle_indices(
-            lower_indices=r_i_indices,
-            upper_indices=r_j_indices,
+        # Convert bin-relative indices to actual particle indices in the
+        # sorted arrays
+        small_index, large_index = bin_to_particle_indices(
+            lower_indices=lower_indices,
+            upper_indices=upper_indices,
             lower_bin=lower_bin,
             upper_bin=upper_bin,
             bin_indices=bin_indices,
         )
 
-        # Step 7.8: Filter out invalid particle pairs based on their radii
-        # and event counters
-        indices_i, indices_j = filter_valid_indices(
-            small_index=indices_i,
-            large_index=indices_j,
+        # Filter out invalid particle pairs based on their radii and event
+        # counters
+        small_index, large_index = filter_valid_indices(
+            small_index=small_index,
+            large_index=large_index,
             particle_radius=particle_radius,
         )
 
-        # Step 7.9: If no valid indices remain after filtering, skip to
-        # the next bin pair
-        if indices_i.size == 0:
+        # Skip to the next bin pair if no valid indices remain after filtering
+        if small_index.size == 0:
             continue
 
-        # Step 7.10: Interpolate kernel values for the selected particle pairs
+        # Interpolate kernel values for the selected particle pairs
         kernel_values = interp_kernel.ev(
-            particle_radius[indices_i], particle_radius[indices_j]
+            particle_radius[small_index], particle_radius[large_index]
         )
 
-        # Step 7.11: Determine which coagulation events actually occur based
-        # on interpolated kernel probabilities
-        indices_i, indices_j = coagulation_events(
-            small_index=indices_i,
-            large_index=indices_j,
+        # Determine which coagulation events actually occur based on
+        # interpolated kernel probabilities
+        small_index, large_index = coagulation_events(
+            small_index=small_index,
+            large_index=large_index,
             kernel_values=kernel_values,
             kernel_max=kernel_max,
             generator=random_generator,
         )
 
-        # Evaluate the coagulation events
+        # Evaluate the coagulation events and update particle radii,
+        # loss, and gain
         particle_radius, loss, gain = particle_resolved_update_step(
             particle_radius=particle_radius,
             loss=loss,
             gain=gain,
-            small_index=indices_i,
-            large_index=indices_j,
+            small_index=small_index,
+            large_index=large_index,
         )
 
-    # Step 8: Unsort the particle radii to match the original order
+    # Unsort the particle radii and loss/gain arrays to match the original
+    # order
     particle_radius = particle_radius[unsort_indices]
-    loss = loss[unsort_indices]  # type: ignore
-    gain = gain[unsort_indices]  # type: ignore
+    loss = loss[unsort_indices]
+    gain = gain[unsort_indices]
 
-    return particle_radius, loss, gain  # type: ignore
+    return particle_radius, loss, gain
