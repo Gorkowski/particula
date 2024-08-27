@@ -385,7 +385,7 @@ def sort_particles(
 def bin_particles(
     particle_radius: NDArray[np.float64],
     radius_bins: NDArray[np.float64],
-) -> Tuple[NDArray[np.float64], NDArray[np.int64]]:
+) -> Tuple[NDArray[np.int64], NDArray[np.int64]]:
     """
     Bin particles by size and return the number of particles in each bin.
 
