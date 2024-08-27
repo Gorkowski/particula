@@ -35,8 +35,8 @@ Array:
     coefficient for truncation effects, calculated as the ratio of
     the ideal (full angular range) to truncated scattering coefficient.
 
-Example
--------
+#### Examples
+
 b_sca_corrected = b_sca_measured * bsca_correction
 
 #### Signature
@@ -55,7 +55,7 @@ def correction_for_distribution(
 
 ## correction_for_humidified
 
-[Show source in scattering_truncation.py:303](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L303)
+[Show source in scattering_truncation.py:302](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L302)
 
 Truncation Correction for humidified aerosol measurements.
 
@@ -111,7 +111,7 @@ def correction_for_humidified(
 
 ## correction_for_humidified_looped
 
-[Show source in scattering_truncation.py:382](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L382)
+[Show source in scattering_truncation.py:381](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L381)
 
 Looped correction for humidified aerosol measurements.
 

@@ -1314,20 +1314,14 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Example
+      Examples
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Example">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature" class="md-nav__link">
@@ -6879,7 +6873,7 @@ coefficient, accounting for the limited angular range of the instrument.</p>
     dimensionless and is used to correct the measured scattering
     coefficient for truncation effects, calculated as the ratio of
     the ideal (full angular range) to truncated scattering coefficient.</p>
-<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
 <p>b_sca_corrected = b_sca_measured * bsca_correction</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">correction_for_distribution</span><span class="p">(</span>
@@ -6891,7 +6885,7 @@ coefficient, accounting for the limited angular range of the instrument.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="correction_for_humidified">correction_for_humidified<a class="headerlink" href="#correction_for_humidified" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L303">Show source in scattering_truncation.py:303</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L302">Show source in scattering_truncation.py:302</a></p>
 <p>Truncation Correction for humidified aerosol measurements.</p>
 <p>Calculates the scattering correction for humidified aerosol measurements,
 accounting for water uptake by adjusting the aerosol's refractive index.
@@ -6936,7 +6930,7 @@ their hygroscopic growth.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="correction_for_humidified_looped">correction_for_humidified_looped<a class="headerlink" href="#correction_for_humidified_looped" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L382">Show source in scattering_truncation.py:382</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L381">Show source in scattering_truncation.py:381</a></p>
 <p>Looped correction for humidified aerosol measurements.</p>
 <p>Corrects scattering measurements for aerosol particles to account for
 truncation errors in CAPS instrument. This correction is vital for
