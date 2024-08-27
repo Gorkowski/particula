@@ -11,5 +11,4 @@
 - [Mie Angular](./mie_angular.md)
 - [Mie Bulk](./mie_bulk.md)
 - [Optical Instrument](./optical_instrument.md)
-- [Scattering Truncation](./scattering_truncation.md)
 - [Size Distribution](./size_distribution.md)
