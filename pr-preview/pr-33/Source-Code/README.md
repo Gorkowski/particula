@@ -24,6 +24,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
             - [Mie Angular](particula/data/process/mie_angular.md#mie-angular)
             - [Mie Bulk](particula/data/process/mie_bulk.md#mie-bulk)
             - [Optical Instrument](particula/data/process/optical_instrument.md#optical-instrument)
+            - [Scattering Truncation](particula/data/process/scattering_truncation.md#scattering-truncation)
             - [Size Distribution](particula/data/process/size_distribution.md#size-distribution)
         - [Settings Generator](particula/data/settings_generator.md#settings-generator)
         - [Stream](particula/data/stream.md#stream)
