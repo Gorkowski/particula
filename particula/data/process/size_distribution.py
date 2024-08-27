@@ -480,6 +480,10 @@ def resample_distribution(
     # resample the pdf
     for i, row in enumerate(concentration_pdf):
         is_nan = np.isnan(row)  # nan mask
+        # is full of nans
+        if np.all(is_nan):
+            new_concentration[i, :] = np.nan
+            continue
         new_concentration[i, :] = np.interp(
             new_diameters,
             diameters[~is_nan],
