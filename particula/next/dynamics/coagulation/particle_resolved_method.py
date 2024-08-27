@@ -124,7 +124,7 @@ def coagulation_step(
 
         # Determine potential coagulation events between particles in these
         # bins
-        events = event_pairs(
+        particle_events = event_pairs(
             lower_bin=lower_bin,
             upper_bin=upper_bin,
             kernel_max=kernel_max,
@@ -132,15 +132,15 @@ def coagulation_step(
         )
 
         # Sample the number of coagulation events from a Poisson distribution
-        num_events = sample_events(
-            events=events,
+        num_particle_events = sample_events(
+            events=particle_events,
             volume=volume,
             time_step=time_step,
             generator=random_generator,
         )
 
         # Skip to the next bin pair if no events are expected
-        if num_events == 0:
+        if num_particle_events == 0:
             continue
 
         # Randomly select indices of particles involved in the coagulation
@@ -148,7 +148,7 @@ def coagulation_step(
         lower_indices, upper_indices = select_random_indices(
             lower_bin=lower_bin,
             upper_bin=upper_bin,
-            events=num_events,
+            events=num_particle_events,
             number_in_bins=number_in_bins,
             generator=random_generator,
         )
