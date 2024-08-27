@@ -472,7 +472,7 @@ def correction_for_humidified_looped(
 
     # Iterate over each time index to apply the scattering correction
     for index, row_number_per_cm3 in tqdm(enumerate(number_per_cm3),
-                                          'Processing Scattering Correction'):
+                                          'Scattering Truncation'):
         if skip_data[index]:
             # Assign NaN for indices with incomplete data
             correction_multiple[index] = np.nan
