@@ -6830,7 +6830,7 @@
 <li><code>dict</code> - The validated keywords dictionary.</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="capsinstrumentkeywordbuilderpre_build_check">CapsInstrumentKeywordBuilder().pre_build_check<a class="headerlink" href="#capsinstrumentkeywordbuilderpre_build_check" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L77">Show source in optical_instrument.py:77</a></p>
@@ -6856,7 +6856,7 @@
     is incorrect.</li>
 </ul>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyword</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_keyword</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyword</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="capsinstrumentkeywordbuilderset_keywords">CapsInstrumentKeywordBuilder().set_keywords<a class="headerlink" href="#capsinstrumentkeywordbuilderset_keywords" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L67">Show source in optical_instrument.py:67</a></p>
@@ -6866,7 +6866,7 @@
 <li><code>kwargs</code> - The keywords and their values to set.</li>
 </ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="albedo_from_ext_scat">albedo_from_ext_scat<a class="headerlink" href="#albedo_from_ext_scat" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L221">Show source in optical_instrument.py:221</a></p>
@@ -6918,7 +6918,7 @@ it to the datalake. Also applies truncation corrections to the CAPS data.</p>
     <span class="n">stream_size_distribution</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span>
     <span class="n">stream_sizer_properties</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span>
     <span class="n">stream_caps</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span>
-    <span class="n">keywords</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">keywords</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]],</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_1">See also<a class="headerlink" href="#see-also_1" title="Permanent link">&para;</a></h4>

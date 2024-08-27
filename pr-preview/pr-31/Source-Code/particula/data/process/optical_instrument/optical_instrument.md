@@ -30,7 +30,7 @@ Validate and return the keywords dictionary.
 #### Signature
 
 ```python
-def build(self) -> dict: ...
+def build(self) -> dict[str, Union[str, float, int, bool]]: ...
 ```
 
 ### CapsInstrumentKeywordBuilder().pre_build_check
@@ -68,7 +68,7 @@ Set the keyword parameter for the activity calculation.
 #### Signature
 
 ```python
-def set_keyword(self, keyword: str, value: Optional[Union[str, float, bool]]): ...
+def set_keyword(self, keyword: str, value: Optional[Union[str, float, int, bool]]): ...
 ```
 
 ### CapsInstrumentKeywordBuilder().set_keywords
@@ -84,7 +84,7 @@ Set multiple keywords at once.
 #### Signature
 
 ```python
-def set_keywords(self, **kwargs): ...
+def set_keywords(self, **kwargs: Union[str, float, int, bool]): ...
 ```
 
 
@@ -153,7 +153,7 @@ def caps_processing(
     stream_size_distribution: Stream,
     stream_sizer_properties: Stream,
     stream_caps: Stream,
-    keywords: dict,
+    keywords: dict[str, Union[str, float, int, bool]],
 ): ...
 ```
 
