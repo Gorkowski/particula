@@ -18,25 +18,25 @@ class CapsInstrumentKeywordBuilder:
         "caps_extinction_wet": None,
         "caps_scattering_dry": None,
         "caps_scattering_wet": None,
-        "caps_water_activity_dry": None,
-        "caps_water_activity_wet": None,
-        "sizer_water_activity": None,
+        "caps_relative_humidity_dry": None,
+        "caps_relative_humidity_wet": None,
+        "sizer_relative_humidity": None,
         "refractive_index_dry": None,
         "water_refractive_index": None,
-        "wavelength": None,
+        "wavelength": 450,
         "discretize_kappa_fit": True,
         "discretize_truncation": True,
         "fit_kappa": True,
         "calculate_truncation": True,
-        "calibration_dry": 1,
-        "calibration_wet": 1,
+        "calibration_dry": 1.0,
+        "calibration_wet": 1.0,
     }
 
     def __init__(self):
         self.keyword_dict = self._default_keywords.copy()
 
     def set_keyword(
-        self, keyword: str, value: Optional[Union[str, float, bool]]
+        self, keyword: str, value: Optional[Union[str, float, int, bool]]
     ):
         """Set the keyword parameter for the activity calculation.
 
@@ -54,17 +54,17 @@ class CapsInstrumentKeywordBuilder:
             raise ValueError(value_error)
 
         # Optionally, add type checking or value validation here
-        if not isinstance(value, (str, float, bool, type(None))):
+        if not isinstance(value, (str, float, bool, int)):
             type_message = (
                 f"Invalid value type for keyword '{keyword}': {type(value)}"
             )
             logger.error(type_message)
             raise TypeError(type_message)
 
-        self.keyword_dict[keyword] = value
-        return self  # Enable method chaining
+        self.keyword_dict[keyword] = value  # type: ignore
+        return self
 
-    def set_keywords(self, **kwargs):
+    def set_keywords(self, **kwargs: Union[str, float, int, bool]):
         """Set multiple keywords at once.
 
         Args:
@@ -89,21 +89,21 @@ class CapsInstrumentKeywordBuilder:
             logger.error(value_message)
             raise ValueError(value_message)
 
-    def build(self) -> dict:
+    def build(self) -> dict[str, Union[str, float, int, bool]]:
         """Validate and return the keywords dictionary.
 
         Returns:
             dict: The validated keywords dictionary.
         """
         self.pre_build_check()
-        return self.keyword_dict
+        return self.keyword_dict  # type: ignore
 
 
 def caps_processing(
         stream_size_distribution: Stream,
         stream_sizer_properties: Stream,
         stream_caps: Stream,
-        keywords: dict
+        keywords: dict[str, Union[str, float, int, bool]]
 ):
     """
     Function to process the CAPS data, and smps for kappa fitting, and then add
@@ -124,11 +124,11 @@ def caps_processing(
                 number_per_cm3=stream_size_distribution.data,
                 diameter=stream_size_distribution.header_float,
                 water_activity_sizer=stream_sizer_properties[
-                    keywords['sizer_water_activity']],
+                    keywords['sizer_relative_humidity']]/100,
                 water_activity_sample_dry=stream_caps[
-                    keywords['caps_water_activity_dry']],
+                    keywords['caps_relative_humidity_dry']]/100,
                 water_activity_sample_wet=stream_caps[
-                    keywords['caps_water_activity_wet']],
+                    keywords['caps_relative_humidity_wet']]/100,
                 refractive_index_dry=keywords['refractive_index_dry'],
                 water_refractive_index=keywords['water_refractive_index'],
                 wavelength=keywords['wavelength'],
@@ -180,9 +180,9 @@ def caps_processing(
                 number_per_cm3=stream_size_distribution.data,
                 diameter=stream_size_distribution.header_float,
                 water_activity_sizer=stream_sizer_properties[
-                    keywords['sizer_water_activity']],
+                    keywords['sizer_relative_humidity']]/100,
                 water_activity_sample=stream_caps[
-                    keywords['caps_water_activity_dry']],
+                    keywords['caps_relative_humidity_dry']]/100,
                 refractive_index_dry=keywords['refractive_index_dry'],
                 water_refractive_index=keywords['water_refractive_index'],
                 wavelength=keywords['wavelength'],
@@ -195,9 +195,9 @@ def caps_processing(
                 number_per_cm3=stream_size_distribution.data,
                 diameter=stream_size_distribution.header_float,
                 water_activity_sizer=stream_sizer_properties[
-                    keywords['sizer_water_activity']],
+                    keywords['sizer_relative_humidity']]/100,
                 water_activity_sample=stream_caps[
-                    keywords['caps_water_activity_wet']],
+                    keywords['caps_relative_humidity_wet']]/100,
                 refractive_index_dry=keywords['refractive_index_dry'],
                 water_refractive_index=keywords['water_refractive_index'],
                 wavelength=keywords['wavelength'],
