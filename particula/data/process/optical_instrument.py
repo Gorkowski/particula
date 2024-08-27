@@ -147,7 +147,7 @@ def caps_processing(
 
     # check if raw in dict
     index_dic = stream_caps.header_dict
-    if ("raw_" + keywords["caps_scattering_dry"]) in index_dic:
+    if "raw_" + keywords["caps_scattering_dry"] in index_dic:
         pass
     else:
         # copy and save raw data

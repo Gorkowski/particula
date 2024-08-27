@@ -122,7 +122,6 @@ class Stream:
         self.data = np.delete(self.data, index, axis=1)
         self.header.pop(index)
 
-
     @property
     def datetime64(self) -> NDArray[np.float64]:
         """Converts the epoch time array to a datetime64 for plotting.
