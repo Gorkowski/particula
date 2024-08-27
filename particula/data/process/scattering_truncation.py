@@ -263,9 +263,8 @@ def correction_for_distribution(
             coefficient for truncation effects, calculated as the ratio of
             the ideal (full angular range) to truncated scattering coefficient.
 
-    Example
-    -------
-    b_sca_corrected = b_sca_measured * bsca_correction
+    Example:
+        b_sca_corrected = b_sca_measured * bsca_correction
     """
     # Calculate the truncation correction array for each diameter
     trunc_corr = truncation_for_diameters(
