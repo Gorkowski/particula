@@ -26,7 +26,7 @@ Tuple:
 ```python
 def bin_particles(
     particle_radius: NDArray[np.float64], radius_bins: NDArray[np.float64]
-) -> Tuple[NDArray[np.float64], NDArray[np.int64]]: ...
+) -> Tuple[NDArray[np.int64], NDArray[np.int64]]: ...
 ```
 
 

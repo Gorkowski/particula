@@ -9,8 +9,10 @@
       
       
       
-        <link rel="prev" href="../coagulation_SDM_example/">
+        <link rel="prev" href="../Coagulation_Basic_4_ParticleResolved/">
       
+      
+        <link rel="next" href="../Condensation_Tutorial-1/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -18,7 +20,7 @@
     
     
       
-        <title>Coagulation particle resolved example - Particula</title>
+        <title>Particle Resolved Coagulation Using the Super Droplet Method - Particula</title>
       
     
     
@@ -71,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#particle-resolved-coagulation-using-the-super-droplet-method" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -103,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Coagulation particle resolved example
+              Particle Resolved Coagulation Using the Super Droplet Method
             
           </span>
         </div>
@@ -1877,6 +1884,27 @@
   
   <span class="md-ellipsis">
     Kernel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Source-Code/particula/next/dynamics/coagulation/particle_resolved_method/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Particle Resolved Method
   </span>
   
 
@@ -6289,6 +6317,169 @@
   
   
     <li class="md-nav__item">
+      <a href="../Coagulation_Basic_4_ParticleResolved/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Particle Resolved Coagulation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Particle Resolved Coagulation Using the Super Droplet Method
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Particle Resolved Coagulation Using the Super Droplet Method
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-and-imports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup and Imports
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-a-lognormal-spacing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a Lognormal Spacing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coagulation-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coagulation Kernel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random-seed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Random seed
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sampling-the-particle-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sampling the Particle Distribution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coagulation-step-using-the-super-droplet-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coagulation Step Using the Super Droplet Method
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-the-new-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plotting the New Distribution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../Condensation_Tutorial-1/" class="md-nav__link">
         
   
@@ -6429,56 +6620,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../coagulation_SDM_example/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    coagulation SDM example
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Coagulation particle resolved example
-  </span>
-  
-
-      </a>
-      
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -6511,8 +6652,6 @@
   
   
 
-
-  <h1>Coagulation particle resolved example</h1>
 
 <script>
 (function (global, factory) {
@@ -6949,13 +7088,26 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </style>
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="particle-resolved-coagulation-using-the-super-droplet-method">Particle Resolved Coagulation Using the Super Droplet Method<a class="anchor-link" href="#particle-resolved-coagulation-using-the-super-droplet-method">¶</a></h1><h2 id="introduction">Introduction<a class="anchor-link" href="#introduction">¶</a></h2><p>In aerosol science, understanding particle-particle interactions is crucial for predicting the evolution of particle size distributions. One such interaction is <strong>coagulation</strong>, where two particles collide and merge into a larger particle. Modeling coagulation accurately can be computationally expensive, especially when tracking individual particles.</p>
+<p>The <strong>super droplet method</strong> is a technique that allows for the efficient simulation of coagulation in a computationally feasible manner. It represents a large number of real particles with a smaller number of computational particles (super droplets), each carrying a statistical weight that reflects the number of real particles it represents.</p>
+<p>This notebook provides a step-by-step guide to simulating coagulation using the super droplet method with a particle-resolved approach.</p>
+<h2 id="setup-and-imports">Setup and Imports<a class="anchor-link" href="#setup-and-imports">¶</a></h2><p>We'll start by importing the necessary libraries and setting up the environment.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6b34edcd">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -6968,71 +7120,54 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># %% particle resolved coagulation example</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1"># For numerical operations and array manipulations</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># For plotting graphs and visualizations</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>  <span class="c1"># For data manipulation and analysis</span>
-<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">trapezoid</span><span class="p">,</span>
-<span class="p">)</span>  <span class="c1"># For numerical integration using the trapezoidal rule</span>
-<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">RectBivariateSpline</span>  <span class="c1"># type: ignore</span>
 
 <span class="c1"># Import specific modules from the particula package</span>
-<span class="kn">from</span> <span class="nn">particula.next.dynamics.coagulation</span> <span class="kn">import</span> <span class="n">brownian_kernel</span><span class="p">,</span> <span class="n">rate</span>
+<span class="kn">from</span> <span class="nn">particula.next.dynamics.coagulation</span> <span class="kn">import</span> <span class="n">brownian_kernel</span>
+<span class="kn">from</span> <span class="nn">particula.next.dynamics.coagulation</span> <span class="kn">import</span> <span class="n">super_droplet_method</span>
 
-<span class="c1"># The 'brownian_kernel' module calculates the Brownian coagulation kernel,</span>
-<span class="c1"># which is used to determine coagulation rates between particles.</span>
-<span class="c1"># The 'rate' module includes functions for calculating gain and loss rates during coagulation.</span>
 <span class="kn">from</span> <span class="nn">particula.next.particles.properties.lognormal_size_distribution</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">lognormal_pmf_distribution</span><span class="p">,</span>
-    <span class="n">lognormal_pdf_distribution</span><span class="p">,</span>
     <span class="n">lognormal_sample_distribution</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="c1"># The 'lognormal_pmf_distribution' function generates a lognormal distribution</span>
-<span class="c1"># represented as a Probability Mass Function (PMF).</span>
-<span class="c1"># The 'lognormal_pdf_distribution' function generates a lognormal distribution</span>
-<span class="c1"># represented as a Probability Density Function (PDF).</span>
-<span class="kn">from</span> <span class="nn">particula.util.convert</span> <span class="kn">import</span> <span class="n">distribution_convert_pdf_pms</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">from itertools import combinations
+<div class="clipboard-copy-txt" id="cell-1"># %% particle resolved coagulation example
 import numpy as np  # For numerical operations and array manipulations
 import matplotlib.pyplot as plt  # For plotting graphs and visualizations
-import pandas as pd  # For data manipulation and analysis
-from scipy.integrate import (
-    trapezoid,
-)  # For numerical integration using the trapezoidal rule
-from scipy.interpolate import RectBivariateSpline  # type: ignore
 
 # Import specific modules from the particula package
-from particula.next.dynamics.coagulation import brownian_kernel, rate
+from particula.next.dynamics.coagulation import brownian_kernel
+from particula.next.dynamics.coagulation import super_droplet_method
 
-# The 'brownian_kernel' module calculates the Brownian coagulation kernel,
-# which is used to determine coagulation rates between particles.
-# The 'rate' module includes functions for calculating gain and loss rates during coagulation.
 from particula.next.particles.properties.lognormal_size_distribution import (
-    lognormal_pmf_distribution,
-    lognormal_pdf_distribution,
     lognormal_sample_distribution,
-)
-
-# The 'lognormal_pmf_distribution' function generates a lognormal distribution
-# represented as a Probability Mass Function (PMF).
-# The 'lognormal_pdf_distribution' function generates a lognormal distribution
-# represented as a Probability Density Function (PDF).
-from particula.util.convert import distribution_convert_pdf_pms</div>
+)</div>
 </div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="generating-a-lognormal-spacing">Generating a Lognormal Spacing<a class="anchor-link" href="#generating-a-lognormal-spacing">¶</a></h2><p>In this section, we generate a sample particle size distribution following a lognormal distribution. The lognormal distribution is commonly used in aerosol science to describe particle size distributions.</p>
+<h2 id="coagulation-kernel">Coagulation Kernel<a class="anchor-link" href="#coagulation-kernel">¶</a></h2><p>We also calculate the Brownian coagulation kernel for these particles, which quantifies the probability of coagulation between particles of different sizes.</p>
+<h2 id="random-seed">Random seed<a class="anchor-link" href="#random-seed">¶</a></h2><p>We set a random seed to ensure reproducibility of the results.</p>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b9b33956">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -7045,13 +7180,14 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">radius_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span>
-    <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># lognormal spacing</span>
+
+<span class="n">radius_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span>
+    <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">20</span>
 <span class="p">)</span>  <span class="c1"># Define the radius bins for the distribution</span>
 <span class="n">mass_bins</span> <span class="o">=</span> <span class="p">(</span>
     <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">1000</span>
 <span class="p">)</span>  <span class="c1"># Calculate the mass of the particles in the bins</span>
-
 
 <span class="n">kernel_bins</span> <span class="o">=</span> <span class="n">brownian_kernel</span><span class="o">.</span><span class="n">brownian_coagulation_kernel_via_system_state</span><span class="p">(</span>
     <span class="n">radius_particle</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
@@ -7062,14 +7198,14 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-2">
+<div class="clipboard-copy-txt" id="cell-2"># lognormal spacing
+
 radius_bins = np.logspace(
-    -9, -6, num=10
+    -9, -6, num=20
 )  # Define the radius bins for the distribution
 mass_bins = (
     4 / 3 * np.pi * radius_bins**3 * 1000
 )  # Calculate the mass of the particles in the bins
-
 
 kernel_bins = brownian_kernel.brownian_coagulation_kernel_via_system_state(
     radius_particle=radius_bins,
@@ -7084,13 +7220,24 @@ rng = np.random.default_rng(12345)</div>
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="sampling-the-particle-distribution">Sampling the Particle Distribution<a class="anchor-link" href="#sampling-the-particle-distribution">¶</a></h2><p>We then sample particles from the lognormal distribution. These particles will be sorted by size to prepare for the coagulation step.</p>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fb060dc3">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-3">
@@ -7103,49 +7250,48 @@ rng = np.random.default_rng(12345)</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">particle_radius</span> <span class="o">=</span> <span class="n">lognormal_sample_distribution</span><span class="p">(</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># %% sample particle distribution</span>
+<span class="n">particle_radius</span> <span class="o">=</span> <span class="n">lognormal_sample_distribution</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">]),</span>
-    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]),</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">]),</span>
     <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]),</span>
     <span class="n">number_of_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="n">particle_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
 <span class="n">particles_original</span> <span class="o">=</span> <span class="n">particle_radius</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Particle radius (m)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Frequency"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3">particle_radius = lognormal_sample_distribution(
+<div class="clipboard-copy-txt" id="cell-3"># %% sample particle distribution
+particle_radius = lognormal_sample_distribution(
     mode=np.array([1e-8, 1e-7]),
-    geometric_standard_deviation=np.array([1.3, 2.0]),
+    geometric_standard_deviation=np.array([1.4, 1.4]),
     number_of_particles=np.array([5000, 1000]),
     number_of_samples=1000,
 )
-particles_original = particle_radius.copy()
-
-fig, ax = plt.subplots()
-ax.hist(particle_radius, bins=100, histtype="step", color="black", density=True)
-ax.set_xscale("log")
-ax.set_yscale("log")
-ax.set_xlabel("Particle radius (m)")
-ax.set_ylabel("Frequency")
-plt.show()</div>
+particle_radius = np.sort(particle_radius)
+particles_original = particle_radius.copy()</div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1785a214">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="coagulation-step-using-the-super-droplet-method">Coagulation Step Using the Super Droplet Method<a class="anchor-link" href="#coagulation-step-using-the-super-droplet-method">¶</a></h2><p>In the coagulation step, particles collide and merge over a given time step. The super droplet method efficiently simulates this process by adjusting the particle sizes and concentrations based on the calculated kernel and the specified volume and time step.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-4">
@@ -7158,286 +7304,102 @@ plt.show()</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Sort particles by size and bin them</span>
-<span class="c1"># overflow test for bins</span>
-<span class="c1"># particle_radius[0] = 5e-10</span>
-<span class="c1"># particle_radius[-1] = 5e-6</span>
-<span class="n">random_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">particle_radius</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-<span class="n">particle_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span> <span class="o">*</span> <span class="n">random_concentration</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># particles per m^3</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># %% Coagulation step</span>
+
+<span class="n">delta_t</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># time step in seconds</span>
+
+<span class="n">random_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">particle_radius</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">particle_concentration</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span> <span class="o">*</span> <span class="n">random_concentration</span> <span class="o">*</span> <span class="mf">1e6</span>
+<span class="p">)</span>  <span class="c1"># particles per m^3</span>
+<span class="n">particle_concentration</span> <span class="o">=</span> <span class="n">particle_concentration</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 <span class="n">volume_sim</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># m^3</span>
-<span class="n">particle_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
-<span class="n">number_in_bins</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
 
-<span class="c1"># Get the bin index for each particle (0-based indexing)</span>
-<span class="n">bin_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">digitize</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># replace overflow bin with the last bin</span>
-<span class="n">bin_indices</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-<span class="c1"># replace underflow bin with the first bin</span>
-<span class="n">bin_indices</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="c1"># change to 0-based indexing</span>
-<span class="n">bin_indices</span> <span class="o">-=</span> <span class="mi">1</span>
-<span class="c1"># Precompute the bin pairs for vectorized operations</span>
-<span class="c1"># change pairs for super-droplet method</span>
-<span class="n">unique_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">bin_indices</span><span class="p">)</span>
-<span class="c1"># Generate unique pairs directly, no mirror pairs</span>
-<span class="n">pair_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">unique_bins</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-<span class="c1"># bin the particle concentrations</span>
-<span class="n">concentration_in_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">number_in_bins</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">unique_bin</span> <span class="ow">in</span> <span class="n">unique_bins</span><span class="p">:</span>
-    <span class="n">concentration_in_bins</span><span class="p">[</span><span class="n">unique_bin</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-        <span class="n">particle_concentration</span><span class="p">[</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="n">unique_bin</span><span class="p">]</span>
-        <span class="p">)</span>
-
-
-<span class="n">delta_t</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># time step in seconds</span>
-<span class="n">total_number_concentration</span> <span class="o">=</span> <span class="mi">10000</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># particles per m^3</span>
-<span class="n">total_number_tracked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">number_in_bins</span><span class="p">)</span>
-<span class="n">volume_sim</span> <span class="o">=</span> <span class="n">total_number_tracked</span> <span class="o">/</span> <span class="n">total_number_concentration</span>
-
-<span class="c1"># Initialize spline for kernel interpolation</span>
-<span class="n">interp_kernel</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">kernel_bins</span>
+<span class="n">particle_radius</span><span class="p">,</span> <span class="n">particle_concentration</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">coagulation_step</span><span class="p">(</span>
+        <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle_radius</span><span class="p">,</span>
+        <span class="n">particle_concentration</span><span class="o">=</span><span class="n">particle_concentration</span><span class="p">,</span>
+        <span class="n">kernel</span><span class="o">=</span><span class="n">kernel_bins</span><span class="p">,</span>
+        <span class="n">kernel_radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+        <span class="n">volume</span><span class="o">=</span><span class="n">volume_sim</span><span class="p">,</span>
+        <span class="n">time_step</span><span class="o">=</span><span class="n">delta_t</span><span class="p">,</span>
+        <span class="n">random_generator</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span>
+    <span class="p">)</span>
 <span class="p">)</span>
 
-<span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
-<span class="n">gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">)</span>
+<span class="n">volume_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">volume_concentration_final</span> <span class="o">=</span> <span class="n">volume_final</span> <span class="o">*</span> <span class="n">particle_concentration</span>
+<span class="n">volume_total_final</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">volume_concentration_final</span><span class="p">)</span>
 
-
-<span class="c1"># pair_indices.pop(-1)  # Remove the last pair (k, k)</span>
-
-<span class="c1"># particle resolved coagulation</span>
-<span class="c1"># Vectorized operations over bin pairs</span>
-<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pair_indices</span><span class="p">:</span>
-    <span class="c1"># Kernel value at the max size for the pair of bins</span>
-    <span class="n">Kmax</span> <span class="o">=</span> <span class="n">kernel_bins</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="c1"># Calculate the number of particle pairs</span>
-    <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">l</span><span class="p">:</span>
-        <span class="n">N_pairs</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">Kmax</span>
-            <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-            <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">N_pairs</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">Kmax</span>
-            <span class="o">*</span> <span class="mf">0.5</span>
-            <span class="o">*</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="p">)</span>
-
-    <span class="c1"># Determine the exact number of events and sample from a Poisson distribution</span>
-    <span class="n">N_events_exact</span> <span class="o">=</span> <span class="n">N_pairs</span> <span class="o">/</span> <span class="n">volume_sim</span>
-    <span class="n">N_events</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">N_events_exact</span> <span class="o">*</span> <span class="n">delta_t</span><span class="p">)</span>
-
-    <span class="c1"># Skip iteration if no events are expected</span>
-    <span class="k">if</span> <span class="n">N_events</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">continue</span>
-
-    <span class="c1"># Vectorized random particle selection</span>
-    <span class="n">r_i_indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span>
-        <span class="mi">0</span><span class="p">,</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
-    <span class="n">r_j_indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span>
-        <span class="mi">0</span><span class="p">,</span> <span class="n">number_in_bins</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N_events</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Get the indices in the particle array where the bins start</span>
-    <span class="n">start_index_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">bin_indices</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
-    <span class="n">start_index_l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">bin_indices</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
-
-    <span class="c1"># Actual indices in the particle array</span>
-    <span class="n">indices_i</span> <span class="o">=</span> <span class="n">start_index_k</span> <span class="o">+</span> <span class="n">r_i_indices</span>
-    <span class="n">indices_j</span> <span class="o">=</span> <span class="n">start_index_l</span> <span class="o">+</span> <span class="n">r_j_indices</span>
-
-    <span class="c1"># Early exit for zero-sized particles due to previous coagulation</span>
-    <span class="n">valid_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span>
-        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
-    <span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">valid_indices</span><span class="p">):</span>
-        <span class="k">continue</span>
-
-    <span class="c1"># process only valid indices</span>
-    <span class="n">indices_i</span> <span class="o">=</span> <span class="n">indices_i</span><span class="p">[</span><span class="n">valid_indices</span><span class="p">]</span>
-    <span class="n">indices_j</span> <span class="o">=</span> <span class="n">indices_j</span><span class="p">[</span><span class="n">valid_indices</span><span class="p">]</span>
-
-    <span class="c1"># Calulate or interpolate the kernel for the selected particles</span>
-    <span class="n">B_values</span> <span class="o">=</span> <span class="n">interp_kernel</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span>
-        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">],</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Perform coagulation with probability B/Kmax</span>
-    <span class="n">coagulation_probabilities</span> <span class="o">=</span> <span class="n">B_values</span> <span class="o">/</span> <span class="n">Kmax</span>
-    <span class="n">coagulation_events</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coagulation_probabilities</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">coagulation_probabilities</span>
-    <span class="p">)</span>
-
-    <span class="c1"># process only coagulation events, i indices coagulate into j indices</span>
-    <span class="n">indices_i</span> <span class="o">=</span> <span class="n">indices_i</span><span class="p">[</span><span class="n">coagulation_events</span><span class="p">]</span>
-    <span class="n">indices_j</span> <span class="o">=</span> <span class="n">indices_j</span><span class="p">[</span><span class="n">coagulation_events</span><span class="p">]</span>
-
-    <span class="c1"># Calculate new radii for coagulation events</span>
-    <span class="n">new_radii</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
-        <span class="o">+</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">**</span> <span class="mi">3</span>
-    <span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
-
-    <span class="c1"># Save gain and loss for coagulation events</span>
-    <span class="n">loss</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span>
-    <span class="n">loss</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span>
-    <span class="n">gain</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_radii</span>
-
-    <span class="c1"># Update the particle array</span>
-    <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">particle_radius</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_radii</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final volume: </span><span class="si">{</span><span class="n">volume_total_final</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Final number of particles: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-4">
-# Sort particles by size and bin them
-# overflow test for bins
-# particle_radius[0] = 5e-10
-# particle_radius[-1] = 5e-6
-random_concentration = np.random.randint(1, 10000, size=particle_radius.size)
-particle_concentration = np.ones_like(particle_radius) * random_concentration * 1e6  # particles per m^3
+<div class="clipboard-copy-txt" id="cell-4"># %% Coagulation step
+
+delta_t = 1  # time step in seconds
+
+random_concentration = np.random.uniform(1, 10, size=particle_radius.size)
+particle_concentration = (
+    np.ones_like(particle_radius) * random_concentration * 1e6
+)  # particles per m^3
+particle_concentration = particle_concentration.astype(np.float64)
 volume_sim = 1  # m^3
-particle_radius = np.sort(particle_radius)
-number_in_bins, bins = np.histogram(particle_radius, bins=radius_bins)
 
-# Get the bin index for each particle (0-based indexing)
-bin_indices = np.digitize(particle_radius, bins, right=True)
-# replace overflow bin with the last bin
-bin_indices[bin_indices == len(bins)] = len(bins) - 1
-# replace underflow bin with the first bin
-bin_indices[bin_indices == 0] = 1
-# change to 0-based indexing
-bin_indices -= 1
-# Precompute the bin pairs for vectorized operations
-# change pairs for super-droplet method
-unique_bins = np.unique(bin_indices)
-# Generate unique pairs directly, no mirror pairs
-pair_indices = list(combinations(unique_bins, 2))
-
-# bin the particle concentrations
-concentration_in_bins = np.zeros_like(number_in_bins)
-for unique_bin in unique_bins:
-    concentration_in_bins[unique_bin] = np.sum(
-        particle_concentration[bin_indices == unique_bin]
-        )
-
-
-delta_t = 100  # time step in seconds
-total_number_concentration = 10000 * 1e6  # particles per m^3
-total_number_tracked = np.sum(number_in_bins)
-volume_sim = total_number_tracked / total_number_concentration
-
-# Initialize spline for kernel interpolation
-interp_kernel = RectBivariateSpline(
-    x=radius_bins, y=radius_bins, z=kernel_bins
+particle_radius, particle_concentration = (
+    super_droplet_method.coagulation_step(
+        particle_radius=particle_radius,
+        particle_concentration=particle_concentration,
+        kernel=kernel_bins,
+        kernel_radius=radius_bins,
+        volume=volume_sim,
+        time_step=delta_t,
+        random_generator=rng,
+    )
 )
 
-loss = np.zeros_like(particle_radius)
-gain = np.zeros_like(particle_radius)
+volume_final = np.power(particle_radius, 3)
+volume_concentration_final = volume_final * particle_concentration
+volume_total_final = np.sum(volume_concentration_final)
 
-
-# pair_indices.pop(-1)  # Remove the last pair (k, k)
-
-# particle resolved coagulation
-# Vectorized operations over bin pairs
-for k, l in pair_indices:
-    # Kernel value at the max size for the pair of bins
-    Kmax = kernel_bins[k, l+1]
-
-    # Calculate the number of particle pairs
-    if k != l:
-        N_pairs = (
-            Kmax
-            * number_in_bins[k]
-            * number_in_bins[l]
-        )
-    else:
-        N_pairs = (
-            Kmax
-            * 0.5
-            * number_in_bins[k]
-            * (number_in_bins[l] - 1)
-        )
-
-    # Determine the exact number of events and sample from a Poisson distribution
-    N_events_exact = N_pairs / volume_sim
-    N_events = rng.poisson(N_events_exact * delta_t)
-
-    # Skip iteration if no events are expected
-    if N_events == 0:
-        continue
-
-    # Vectorized random particle selection
-    r_i_indices = rng.integers(
-        0, number_in_bins[k], size=N_events, endpoint=False
-    )
-    r_j_indices = rng.integers(
-        0, number_in_bins[l], size=N_events, endpoint=False
-    )
-
-    # Get the indices in the particle array where the bins start
-    start_index_k = np.searchsorted(bin_indices, k)
-    start_index_l = np.searchsorted(bin_indices, l)
-
-    # Actual indices in the particle array
-    indices_i = start_index_k + r_i_indices
-    indices_j = start_index_l + r_j_indices
-
-    # Early exit for zero-sized particles due to previous coagulation
-    valid_indices = (particle_radius[indices_i] &gt; 0) &amp; (
-        particle_radius[indices_j] &gt; 0
-    )
-    if not np.any(valid_indices):
-        continue
-
-    # process only valid indices
-    indices_i = indices_i[valid_indices]
-    indices_j = indices_j[valid_indices]
-
-    # Calulate or interpolate the kernel for the selected particles
-    B_values = interp_kernel.ev(
-        particle_radius[indices_i], particle_radius[indices_j]
-    )
-
-    # Perform coagulation with probability B/Kmax
-    coagulation_probabilities = B_values / Kmax
-    coagulation_events = (
-        rng.random(len(coagulation_probabilities)) &lt; coagulation_probabilities
-    )
-
-    # process only coagulation events, i indices coagulate into j indices
-    indices_i = indices_i[coagulation_events]
-    indices_j = indices_j[coagulation_events]
-
-    # Calculate new radii for coagulation events
-    new_radii = (
-        particle_radius[indices_i] ** 3
-        + particle_radius[indices_j] ** 3
-    ) ** (1 / 3)
-
-    # Save gain and loss for coagulation events
-    loss[indices_i] = particle_radius[indices_i]
-    loss[indices_j] = particle_radius[indices_j]
-    gain[indices_j] = new_radii
-
-    # Update the particle array
-    particle_radius[indices_i] = 0
-    particle_radius[indices_j] = new_radii</div>
+print(f"Final volume: {volume_total_final}")
+print(f"Final number of particles: {np.sum(particle_concentration)}")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Final volume: 1.7513691992283998e-12
+Final number of particles: 3866207246.663141
+</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=443b3d18">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="plotting-the-new-distribution">Plotting the New Distribution<a class="anchor-link" href="#plotting-the-new-distribution">¶</a></h2><p>Finally, we plot the particle size distribution before and after coagulation. This visualization helps us understand the effect of the coagulation process on the particle size distribution.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-5">
@@ -7450,214 +7412,28 @@ for k, l in pair_indices:
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># # bin particles</span>
-<span class="c1"># particle_radius = np.sort(particle_radius)  # sort particles by size</span>
-<span class="c1"># particles_original = particles.copy()</span>
-<span class="c1"># number_in_bins, bins = np.histogram(particle_radius, bins=radius_bins)</span>
-
-<span class="c1"># # Get the bin index for each particle</span>
-<span class="c1"># # Note: np.digitize returns indices starting from 1,</span>
-<span class="c1"># # so if you want to have 0-based indexing, subtract 1</span>
-<span class="c1"># bin_indices = np.digitize(particle_radius, bins) - 1</span>
-
-
-<span class="c1"># delta_t = 100  # time step in seconds</span>
-
-<span class="c1"># total_number_concentration = 100000 * 1e6  # particles per m^3</span>
-<span class="c1"># total_number_tracked = np.sum(number_in_bins)</span>
-<span class="c1"># # simulated volume</span>
-<span class="c1"># volume_sim = total_number_tracked / total_number_concentration</span>
-
-<span class="c1"># # initialize spline</span>
-<span class="c1"># interp_kernel = RectBivariateSpline(</span>
-<span class="c1">#     x=radius_bins, y=radius_bins, z=kernel_bins</span>
-<span class="c1"># )</span>
-
-<span class="c1"># loss = np.zeros_like(particle_radius)</span>
-<span class="c1"># gain = np.zeros_like(particle_radius)</span>
-
-<span class="c1"># # step from smallest to largest bin</span>
-<span class="c1"># for k in range(bins.size - 1):</span>
-<span class="c1">#     # step from all possible bins larger than k, to largest bin k+1</span>
-<span class="c1">#     for l in range(k + 1):</span>
-<span class="c1">#         # outside edge of the bin, kernel</span>
-<span class="c1">#         Kmax = kernel_bins[k, l]</span>
-
-<span class="c1">#         # Calculate the number of particle pairs</span>
-<span class="c1">#         if k != l:</span>
-<span class="c1">#             N_pairs = number_in_bins[k] * number_in_bins[l]</span>
-<span class="c1">#         else:</span>
-<span class="c1">#             N_pairs = 0.5 * number_in_bins[k] * (number_in_bins[l] - 1)</span>
-
-<span class="c1">#         # Determine the exact number of events and sample from a Poisson distribution</span>
-<span class="c1">#         N_events_exact = N_pairs * Kmax / volume_sim</span>
-<span class="c1">#         N_events = rng.poisson(N_events_exact * delta_t)</span>
-
-<span class="c1">#         for _ in range(N_events):</span>
-<span class="c1">#             if number_in_bins[k] &gt; 0 and number_in_bins[l] &gt; 0:</span>
-<span class="c1">#                 # Select random particles from bins k and l</span>
-<span class="c1">#                 r_i = rng.integers(0, number_in_bins[k], endpoint=False)</span>
-<span class="c1">#                 r_j = rng.integers(0, number_in_bins[l], endpoint=False)</span>
-<span class="c1">#                 # get the index in the particle array where the bin starts</span>
-<span class="c1">#                 index_r_i = np.searchsorted(bin_indices, k)</span>
-<span class="c1">#                 index_r_j = np.searchsorted(bin_indices, l)</span>
-
-<span class="c1">#                 # Early exit if particles sizes are zero, due</span>
-<span class="c1">#                 # to previous coagulation</span>
-<span class="c1">#                 if (</span>
-<span class="c1">#                     particle_radius[index_r_i + r_i] == 0</span>
-<span class="c1">#                     or particle_radius[index_r_j + r_j] == 0</span>
-<span class="c1">#                 ):</span>
-<span class="c1">#                     continue</span>
-
-<span class="c1">#                 # Calculate the kernel for the selected particles</span>
-<span class="c1">#                 B = interp_kernel.ev(</span>
-<span class="c1">#                     particle_radius[index_r_i + r_i], particle_radius[index_r_j + r_j]</span>
-<span class="c1">#                 )</span>
-<span class="c1">#                 # B = kernel_helper.GetKernel(M[k][r_i], M[l][r_j])</span>
-
-<span class="c1">#                 # Perform coagulation with probability B/Kmax</span>
-<span class="c1">#                 probability_of_coagulation = B / Kmax</span>
-<span class="c1">#                 if rng.random() &lt; probability_of_coagulation:</span>
-<span class="c1">#                     # If true coagulation event occurs</span>
-<span class="c1">#                     new_radius = (</span>
-<span class="c1">#                         particle_radius[index_r_i + r_i] ** 3</span>
-<span class="c1">#                         + particle_radius[index_r_j + r_j] ** 3</span>
-<span class="c1">#                     ) ** (1 / 3)</span>
-
-<span class="c1">#                     # update gain and loss</span>
-<span class="c1">#                     loss[index_r_i + r_i] = particle_radius[index_r_i + r_i]</span>
-<span class="c1">#                     loss[index_r_j + r_j] = particle_radius[index_r_j + r_j]</span>
-<span class="c1">#                     gain[index_r_j + r_j] = new_radius</span>
-
-<span class="c1">#                     # update the particle array</span>
-<span class="c1">#                     # set smaller particle to zero</span>
-<span class="c1">#                     particle_radius[index_r_i + r_i] = 0</span>
-<span class="c1">#                     # set larger particle to new radius</span>
-<span class="c1">#                     particle_radius[index_r_j + r_j] = new_radius</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-5">
-# # bin particles
-# particle_radius = np.sort(particle_radius)  # sort particles by size
-# particles_original = particles.copy()
-# number_in_bins, bins = np.histogram(particle_radius, bins=radius_bins)
-
-# # Get the bin index for each particle
-# # Note: np.digitize returns indices starting from 1,
-# # so if you want to have 0-based indexing, subtract 1
-# bin_indices = np.digitize(particle_radius, bins) - 1
-
-
-# delta_t = 100  # time step in seconds
-
-# total_number_concentration = 100000 * 1e6  # particles per m^3
-# total_number_tracked = np.sum(number_in_bins)
-# # simulated volume
-# volume_sim = total_number_tracked / total_number_concentration
-
-# # initialize spline
-# interp_kernel = RectBivariateSpline(
-#     x=radius_bins, y=radius_bins, z=kernel_bins
-# )
-
-# loss = np.zeros_like(particle_radius)
-# gain = np.zeros_like(particle_radius)
-
-# # step from smallest to largest bin
-# for k in range(bins.size - 1):
-#     # step from all possible bins larger than k, to largest bin k+1
-#     for l in range(k + 1):
-#         # outside edge of the bin, kernel
-#         Kmax = kernel_bins[k, l]
-
-#         # Calculate the number of particle pairs
-#         if k != l:
-#             N_pairs = number_in_bins[k] * number_in_bins[l]
-#         else:
-#             N_pairs = 0.5 * number_in_bins[k] * (number_in_bins[l] - 1)
-
-#         # Determine the exact number of events and sample from a Poisson distribution
-#         N_events_exact = N_pairs * Kmax / volume_sim
-#         N_events = rng.poisson(N_events_exact * delta_t)
-
-#         for _ in range(N_events):
-#             if number_in_bins[k] &gt; 0 and number_in_bins[l] &gt; 0:
-#                 # Select random particles from bins k and l
-#                 r_i = rng.integers(0, number_in_bins[k], endpoint=False)
-#                 r_j = rng.integers(0, number_in_bins[l], endpoint=False)
-#                 # get the index in the particle array where the bin starts
-#                 index_r_i = np.searchsorted(bin_indices, k)
-#                 index_r_j = np.searchsorted(bin_indices, l)
-
-#                 # Early exit if particles sizes are zero, due
-#                 # to previous coagulation
-#                 if (
-#                     particle_radius[index_r_i + r_i] == 0
-#                     or particle_radius[index_r_j + r_j] == 0
-#                 ):
-#                     continue
-
-#                 # Calculate the kernel for the selected particles
-#                 B = interp_kernel.ev(
-#                     particle_radius[index_r_i + r_i], particle_radius[index_r_j + r_j]
-#                 )
-#                 # B = kernel_helper.GetKernel(M[k][r_i], M[l][r_j])
-
-#                 # Perform coagulation with probability B/Kmax
-#                 probability_of_coagulation = B / Kmax
-#                 if rng.random() &lt; probability_of_coagulation:
-#                     # If true coagulation event occurs
-#                     new_radius = (
-#                         particle_radius[index_r_i + r_i] ** 3
-#                         + particle_radius[index_r_j + r_j] ** 3
-#                     ) ** (1 / 3)
-
-#                     # update gain and loss
-#                     loss[index_r_i + r_i] = particle_radius[index_r_i + r_i]
-#                     loss[index_r_j + r_j] = particle_radius[index_r_j + r_j]
-#                     gain[index_r_j + r_j] = new_radius
-
-#                     # update the particle array
-#                     # set smaller particle to zero
-#                     particle_radius[index_r_i + r_i] = 0
-#                     # set larger particle to new radius
-#                     particle_radius[index_r_j + r_j] = new_radius</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bc3c65c4">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy for="cell-6">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">particles_original</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># %% plot new distribution</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">particles_original</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">particle_radius</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Particle radius (m)"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Frequency"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6">fig, ax = plt.subplots()
-ax.hist(particles_original, bins=100, histtype="step", color="blue", density=True)
-ax.hist(particle_radius, bins=100, histtype="step", color="black", density=True)
+<div class="clipboard-copy-txt" id="cell-5"># %% plot new distribution
+fig, ax = plt.subplots()
+ax.hist(
+    particles_original, bins=100, histtype="step", color="black", density=True
+)
+ax.hist(
+    particle_radius, bins=100, histtype="step", color="blue", density=True
+)
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlabel("Particle radius (m)")
@@ -7667,107 +7443,27 @@ plt.show()</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=68021455">
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedImage jp-OutputArea-output" tabindex="0">
+<img alt="No description has been provided for this image" class="" src="data:image/png;base64,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+vp67dy5M/S4trZWW7Zs0cknnyybzaaysjLNmTNH48eP14UXXqglS5aooaEhdBUWAABAVyIKOv/5n/+pm266STfeeKPy8/M7nee0007T008/3WNbmzZt0uTJk0OPy8rKJElz5szRihUrNGvWLB04cED33Xef9u3bpzFjxujNN9/s0EG5t5xOp5xOp5qbm6NqBwAAJK+Igs6OHTt6nCcjI0Nz5szpcb7vf//7am1t7Xae+fPna/78+WHXF47S0lKVlpaqrq5OOTk5MW0bAAAkh4j66DzzzDN66aWXOkx/6aWXtHLlyqiLAgAAiIWIgs6iRYtktVo7TD/ttNP00EMPRV0UAABALEQUdNxut4qKijpMHzFihNxud9RFAQAAxEJEQee0007Thx9+2GH63/72N51yyilRFwUAABALEQWdf/qnf9Ltt9+ud955R83NzWpubtbbb7+tO+64Qz/96U9jXSMAAEBEIrrqqqKiQp999pmuuOIKDRwYaKKlpUU33HBDv+mjw+XlAACYX0RBJyMjQy+88IIqKir0t7/9TdnZ2brgggs0YsSIWNcXN1xeDgCA+UUUdILOPvtsnX322bGqBQAAIKYiCjrNzc1asWKF1q5dqy+//FItLS3tnn/77bdjUhwAAEA0Igo6d9xxh1asWKGrr75a559/vtLS0mJdFwAAQNQiCjrPP/+8XnzxRU2bNi3W9QAAAMRMRJeXZ2Rk6Mwzz4x1LQAAADEVUdC566679Pjjj/c4GCcAAEAiRXTq6r333tM777yjP/zhDzrvvPM0aNCgds+/8sorMSkunriPDgAA5hdR0MnNzdW1114b61r6FPfRAQDA/CIKOs8880ys6wAAAIi5iProSNKxY8e0Zs0aPfXUU/rmm28kSXv37lV9fX3MigMAAIhGREd0du/erSuvvFJut1tHjhzRD37wAw0ZMkQPP/ywjhw5omXLlsW6TgAAgF6L6IjOHXfcofHjx+vgwYPKzs4OTb/22mu1du3amBUHAAAQjYiO6Kxfv14bNmxQRkZGu+mFhYX64osvYlIYAABAtCI6otPS0tLpZdmff/65hgwZEnVRAAAAsRBR0PnhD3+oJUuWhB6npaWpvr5e999/P8NCAACApBHRqatHH31UU6dOVXFxsfx+v66//nrt2LFDVqtVv/vd72JdY1xww0AAAMwvoqBz+umn629/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aMeOHbrrrrv0wAMP6JFHHomorebmZrW0tHT6XHp6uoYNG6aBAwdGU25Ujh49GrO2cnJylJubG7P2OrN06VLNnTtXAwZE9yc5IyND119/vZYuXRqjyoD+j6ADpIjMzEwNGzZMI0aM0K233qopU6Zo9erVkqTFixfrggsu0ODBg1VQUKDbbrtN9fX1oWVXrFih3NxcrV69WsXFxcrMzNRNN92klStX6ve//33oaNG7777b6amrrVu3avr06Ro6dKiGDBmiSZMmadeuXZ3W2dLSokWLFqmoqEjZ2dkaPXq0qqqqut22wsJCVVRU6IYbbtDQoUP1z//8z5Kkf//3f9fZZ58ti8WiM844Q+Xl5Wpqamq37C9/+Uvl5eVpyJAhmjdvnvx+f7vnTzxqVVhYqCVLlrSbZ8yYMXrggQckSa2trXrggQdks9mUmZmp4cOH6/bbb++y9gMHDujtt9/ucMopLS1NTz31lKZPny6LxSK73a6NGzdq586d+v73v6/Bgwfru9/9bofXccaMGVq9erUaGxu7fc2AVEHQAVJUdnZ26MjHgAEDtHTpUm3dulUrV67U22+/rbvvvrvd/D6fTw8//LD+67/+S1u3btXSpUv1k5/8JHSkyOPx6Lvf/W6H9XzxxRe69NJLlZmZqbffflvV1dW66aabujxttmjRIj377LNatmyZtm7dqjvvvFMOh0N/+tOfut2eX//61xo9erQ2b96s8vJySdKQIUO0YsUKbdu2TY8//rh++9vf6rHHHgst8+KLL+qBBx7QQw89pE2bNik/P19PPvlkr17HE7388st67LHH9NRTT2nHjh167bXXdMEFF3Q5/3vvvRcKMicKhrctW7bo3HPP1fXXX69/+Zd/0T333KNNmzaptbVV8+fPb7fM+PHjdezYMf31r3+NajsAs0jcsWUACdHa2qq1a9fqrbfe0s9+9jNJ0r/+67+Gni8sLFRlZaVuueWWdl/6TU1NevLJJzV69OjQtOzsbB05ckTDhg3rcn1Op1M5OTl6/vnnNWjQIEnS2Wef3em8R44c0UMPPaQ1a9bo4osvliSdccYZeu+99/TUU0/psssu63I9l19+ue6666520xYuXNhuuxYsWKDnn38+FOKWLFmiefPmad68eZKkyspKrVmzpsNRnd5wu90aNmyYpkyZokGDBslms+nCCy/scv7du3crLy+v09NWc+fO1U9+8hNJgaNTF198scrLyzV16lRJ0h133KG5c+e2W8ZisSgnJ0e7d++OeBsAMyHoACni9ddf13e+8x01NTWppaVF119/feh0y5o1a7Ro0SJ9/PHHqqur07Fjx+T3++Xz+WSxWCQF+n+MGjWq1+vdsmWLJk2aFAo53dm5c6d8Pp9+8IMftJt+9OhRjR07tttlx48f32HaCy+8oKVLl2rXrl2qr6/XsWPHNHTo0NDzhmHolltuabfMxRdfrHfeeafHWrvyj//4j1qyZInOOOMMXXnllZo2bZpmzJjRZZ+lxsZGZWVldfpc29c7Ly9PktodHcrLy5Pf71ddXV277crOzpbP54t4GwAz4dQVkCImT56sLVu2aMeOHWpsbNTKlSs1ePBgffbZZ5o+fbpGjRqll19+WdXV1XI6nZLad+rNzs5WWlpar9ebnZ0d9rzBfkFvvPGGtmzZEvrZtm1bj/10Bg8e3O7xxo0bNXv2bE2bNk2vv/66Nm/erHvvvTfqjsoDBgxQa2tru2lt+/0UFBRo+/btevLJJ5Wdna3bbrtNl156aYe+QUFWq1UHDx7s9Lm24TD42nc27cSO4V9//bVOPfXUXmwVYF4c0QFSxODBg3XmmWd2mF5dXa2WlhY9+uijodMnL774YlhtZmRkqLm5udt5Ro0apZUrV6qpqanHozrBjs5ut7vb01Th2LBhg0aMGKF77703NO3E0zl2u11//etfdcMNN4Sm/eUvf+m23VNPPVUejyf0uK6uTrW1te3myc7O1owZMzRjxgyVlpbq3HPP1UcffaSSkpIO7Y0dO1b79u3TwYMHddJJJ/VqGzuza9cu+f3+Ho+AAamCIzpAijvzzDPV1NSk3/zmN/r000/13HPPadmyZWEtW1hYqA8//FDbt2+X1+vt9KjF/PnzVVdXp5/+9KfatGmTduzYoeeee07bt2/vMO+QIUO0YMEC3XnnnVq5cqV27dqlmpoa/eY3v9HKlSt7tV1nnXWW3G63nn/+ee3atUtLly7Vq6++2m6eO+64Q8uXL9czzzyjTz75RPfff7+2bt3abbuXX365nnvuOa1fv14fffSR5syZo/T09NDzK1as0NNPP62///3v+vTTT+VyuZSdna0RI0Z02t7YsWNltVr15z//uVfb15X169frjDPO0MiRI2PSHtDfEXSAFDd69GgtXrxYDz/8sM4//3ytWrVKixYtCmvZm2++Weecc47Gjx+vU089tdMv61NOOUVvv/226uvrddlll2ncuHH67W9/2+XRnYqKCpWXl2vRokWy2+268sor9cYbb6ioqKhX2/WjH/1Id955p+bPn68xY8Zow4YNoauxgmbNmqXy8nLdfffdGjdunHbv3q1bb72123bvueceXXbZZZo+fbquvvpqXXPNNe1CRW5urn7729/qe9/7nkaNGqU1a9bof/7nf3TKKad02l56errmzp2rVatW9Wr7uvK73/1ON998c0zaAswgrfXEk80AgD61b98+nXfeeaqpqenyyE84tm7dqssvv1yffPKJcnJyYlgh0H9xRAcAEmzYsGF6+umn5Xa7o2rH4/Ho2WefJeQAbXBEBwAAmBZHdAAAgGkRdAAAgGkRdAAAgGkRdAAAgGkRdAAAgGkRdAAAgGkRdAAAgGkRdAAAgGkRdAAAgGn9f3SlgujMsfk/AAAAAElFTkSuQmCC"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy for="cell-7">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">[</span><span class="n">loss</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">gain</span> <span class="o">=</span> <span class="n">gain</span><span class="p">[</span><span class="n">gain</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">gain</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s2">"step"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"green"</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>
-<span class="c1"># ax.set_yscale("log")</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Particle radius (m)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Frequency"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-7">loss = loss[loss != 0]
-gain = gain[gain != 0]
-fig, ax = plt.subplots()
-ax.hist(loss, bins=100, histtype="step", color="red", density=True)
-ax.hist(gain, bins=100, histtype="step", color="green", density=True)
-ax.set_xscale("log")
-# ax.set_yscale("log")
-ax.set_xlabel("Particle radius (m)")
-ax.set_ylabel("Frequency")
-plt.show()</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=30b06f25">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy for="cell-8">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">volume_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">loss</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">volume_gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gain</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">volume_loss</span><span class="p">,</span> <span class="n">volume_gain</span><span class="p">)</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-8">volume_loss = np.sum(loss**3)
-volume_gain = np.sum(gain**3)
-print(volume_loss, volume_gain)</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e9527653">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy for="cell-9">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-9"></div>
-</div>
-</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="conclusion">Conclusion<a class="anchor-link" href="#conclusion">¶</a></h2><p>This notebook demonstrated the use of the super droplet method to simulate particle coagulation in a computationally efficient manner. By representing multiple real particles with fewer computational particles, we can model complex aerosol dynamics over time without the need for excessive computational resources.</p>
 </div>
 </div>
 </div>
@@ -7775,6 +7471,10 @@ print(volume_loss, volume_gain)</div>
 </div> <!-- jp-Notebook -->
 </div> <!-- jupyter-wrapper -->
 
+        <style>
+        ['pre { line-height: 125%; }\ntd.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }\nspan.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }\ntd.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }\nspan.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }\n.highlight-ipynb .hll { background-color: var(--jp-cell-editor-active-background) }\n.highlight-ipynb { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }\n.highlight-ipynb .c { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment */\n.highlight-ipynb .err { color: var(--jp-mirror-editor-error-color) } /* Error */\n.highlight-ipynb .k { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword */\n.highlight-ipynb .o { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator */\n.highlight-ipynb .p { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation */\n.highlight-ipynb .ch { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Hashbang */\n.highlight-ipynb .cm { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Multiline */\n.highlight-ipynb .cp { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Preproc */\n.highlight-ipynb .cpf { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.PreprocFile */\n.highlight-ipynb .c1 { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Single */\n.highlight-ipynb .cs { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Special */\n.highlight-ipynb .kc { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Constant */\n.highlight-ipynb .kd { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Declaration */\n.highlight-ipynb .kn { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Namespace */\n.highlight-ipynb .kp { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Pseudo */\n.highlight-ipynb .kr { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Reserved */\n.highlight-ipynb .kt { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Type */\n.highlight-ipynb .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */\n.highlight-ipynb .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */\n.highlight-ipynb .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */\n.highlight-ipynb .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */\n.highlight-ipynb .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */\n.highlight-ipynb .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */\n.highlight-ipynb .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */\n.highlight-ipynb .mh { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Hex */\n.highlight-ipynb .mi { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer */\n.highlight-ipynb .mo { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Oct */\n.highlight-ipynb .sa { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Affix */\n.highlight-ipynb .sb { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Backtick */\n.highlight-ipynb .sc { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Char */\n.highlight-ipynb .dl { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Delimiter */\n.highlight-ipynb .sd { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Doc */\n.highlight-ipynb .s2 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Double */\n.highlight-ipynb .se { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Escape */\n.highlight-ipynb .sh { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Heredoc */\n.highlight-ipynb .si { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Interpol */\n.highlight-ipynb .sx { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Other */\n.highlight-ipynb .sr { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Regex */\n.highlight-ipynb .s1 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Single */\n.highlight-ipynb .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */\n.highlight-ipynb .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */']
+        </style>
+        
 
 
 

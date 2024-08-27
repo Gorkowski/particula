@@ -48,6 +48,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
             - [Coagulation](particula/next/dynamics/coagulation/index.md#coagulation)
                 - [Brownian Kernel](particula/next/dynamics/coagulation/brownian_kernel.md#brownian-kernel)
                 - [Kernel](particula/next/dynamics/coagulation/kernel.md#kernel)
+                - [Particle Resolved Method](particula/next/dynamics/coagulation/particle_resolved_method.md#particle-resolved-method)
                 - [Rate](particula/next/dynamics/coagulation/rate.md#rate)
                 - [Strategy](particula/next/dynamics/coagulation/strategy.md#strategy)
                 - [Super Droplet Method](particula/next/dynamics/coagulation/super_droplet_method.md#super-droplet-method)
