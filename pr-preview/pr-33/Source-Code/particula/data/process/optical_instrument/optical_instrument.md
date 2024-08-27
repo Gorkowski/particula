@@ -1,0 +1,162 @@
+# Optical Instrument
+
+[Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Data](../index.md#data) / [Process](./index.md#process) / Optical Instrument
+
+> Auto-generated documentation for [particula.data.process.optical_instrument](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py) module.
+
+## CapsInstrumentKeywordBuilder
+
+[Show source in optical_instrument.py:13](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L13)
+
+Builder class for CAPS Instrument Keywords dictionary.
+
+#### Signature
+
+```python
+class CapsInstrumentKeywordBuilder:
+    def __init__(self): ...
+```
+
+### CapsInstrumentKeywordBuilder().build
+
+[Show source in optical_instrument.py:92](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L92)
+
+Validate and return the keywords dictionary.
+
+#### Returns
+
+- `dict` - The validated keywords dictionary.
+
+#### Signature
+
+```python
+def build(self) -> dict[str, Union[str, float, int, bool]]: ...
+```
+
+### CapsInstrumentKeywordBuilder().pre_build_check
+
+[Show source in optical_instrument.py:77](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L77)
+
+Check that all required parameters have been set.
+
+#### Raises
+
+- `ValueError` - If any required keyword has not been set.
+
+#### Signature
+
+```python
+def pre_build_check(self): ...
+```
+
+### CapsInstrumentKeywordBuilder().set_keyword
+
+[Show source in optical_instrument.py:38](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L38)
+
+Set the keyword parameter for the activity calculation.
+
+#### Arguments
+
+- `keyword` - The keyword to set.
+- `value` - The value to set the keyword to.
+
+#### Raises
+
+- `ValueError` - If the keyword is not recognized or the value type
+    is incorrect.
+
+#### Signature
+
+```python
+def set_keyword(self, keyword: str, value: Optional[Union[str, float, int, bool]]): ...
+```
+
+### CapsInstrumentKeywordBuilder().set_keywords
+
+[Show source in optical_instrument.py:67](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L67)
+
+Set multiple keywords at once.
+
+#### Arguments
+
+- `kwargs` - The keywords and their values to set.
+
+#### Signature
+
+```python
+def set_keywords(self, **kwargs: Union[str, float, int, bool]): ...
+```
+
+
+
+## albedo_from_ext_scat
+
+[Show source in optical_instrument.py:221](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L221)
+
+Calculates the albedo from the extinction and scattering data in Stream.
+
+The function computes the absorption as the difference between extinction
+and scattering, and the single-scattering albedo as the ratio of
+scattering to extinction. If the extinction values are zero or negative,
+the albedo is set to np.nan. The user can choose to filter out
+zero or negative extinction values before calculation.
+
+#### Arguments
+
+- `stream` *Stream* - The datastream containing CAPS data.
+- `extinction_key` *str* - The key for the extinction data in the stream.
+- `scattering_key` *str* - The key for the scattering data in the stream.
+- `new_absorption_key` *str* - The key where the calculated absorption will
+    be stored.
+- `new_albedo_key` *str* - The key where the calculated albedo will
+    be stored.
+
+#### Returns
+
+- `Stream` - The updated datastream with the new absorption and albedo
+    values.
+
+#### Raises
+
+- `KeyError` - If the provided extinction or scattering keys are not found
+    in the stream.
+
+#### Signature
+
+```python
+def albedo_from_ext_scat(
+    stream: Stream,
+    extinction_key: str,
+    scattering_key: str,
+    new_absorption_key: str,
+    new_albedo_key: str,
+) -> Stream: ...
+```
+
+#### See also
+
+- [Stream](../stream.md#stream)
+
+
+
+## caps_processing
+
+[Show source in optical_instrument.py:102](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L102)
+
+Function to process the CAPS data, and smps for kappa fitting, and then add
+it to the datalake. Also applies truncation corrections to the CAPS data.
+
+#### Signature
+
+```python
+def caps_processing(
+    stream_size_distribution: Stream,
+    stream_sizer_properties: Stream,
+    stream_caps: Stream,
+    keywords: dict[str, Union[str, float, int, bool]],
+): ...
+```
+
+#### See also
+
+- [Stream](../stream.md#stream)
