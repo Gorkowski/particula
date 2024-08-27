@@ -6,7 +6,28 @@
 
 ## coagulation_step
 
-[Show source in particle_resolved_method.py:66](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L66)
+[Show source in particle_resolved_method.py:67](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L67)
+
+Perform a single step of particle coagulation, updating particle radii
+based on coagulation events.
+
+#### Arguments
+
+- `particle_radius` *NDArray[np.float64]* - Array of particle radii.
+- `kernel` *NDArray[np.float64]* - Coagulation kernel as a 2D array where
+    each element represents the probability of coagulation between
+    particles of corresponding sizes.
+- `kernel_radius` *NDArray[np.float64]* - Array of radii corresponding to
+    the kernel bins.
+- `volume` *float* - Volume of the system in which coagulation occurs.
+- `time_step` *float* - Time step over which coagulation is calculated.
+- `random_generator` *np.random.Generator* - Random number generator for
+    stochastic processes.
+
+#### Returns
+
+- `Tuple` - Updated particle radii, and arrays representing the loss and
+    gain in particle counts due to coagulation events.
 
 #### Signature
 
@@ -18,7 +39,7 @@ def coagulation_step(
     volume: float,
     time_step: float,
     random_generator: np.random.Generator,
-) -> Tuple[NDArray[np.float64], NDArray[np.float64]]: ...
+) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
 ```
 
 

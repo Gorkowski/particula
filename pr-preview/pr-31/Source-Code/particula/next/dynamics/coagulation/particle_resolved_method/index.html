@@ -1972,6 +1972,24 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#signature" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
@@ -1996,7 +2014,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments" class="md-nav__link">
+  <a href="#arguments_1" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -2005,7 +2023,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#returns" class="md-nav__link">
+  <a href="#returns_1" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
@@ -6647,7 +6665,27 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py">particula.next.dynamics.coagulation.particle_resolved_method</a> module.</p>
 </blockquote>
 <h2 id="coagulation_step">coagulation_step<a class="headerlink" href="#coagulation_step" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L66">Show source in particle_resolved_method.py:66</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L67">Show source in particle_resolved_method.py:67</a></p>
+<p>Perform a single step of particle coagulation, updating particle radii
+based on coagulation events.</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>particle_radius</code> <em>NDArray[np.float64]</em> - Array of particle radii.</li>
+<li><code>kernel</code> <em>NDArray[np.float64]</em> - Coagulation kernel as a 2D array where
+    each element represents the probability of coagulation between
+    particles of corresponding sizes.</li>
+<li><code>kernel_radius</code> <em>NDArray[np.float64]</em> - Array of radii corresponding to
+    the kernel bins.</li>
+<li><code>volume</code> <em>float</em> - Volume of the system in which coagulation occurs.</li>
+<li><code>time_step</code> <em>float</em> - Time step over which coagulation is calculated.</li>
+<li><code>random_generator</code> <em>np.random.Generator</em> - Random number generator for
+    stochastic processes.</li>
+</ul>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>Tuple</code> - Updated particle radii, and arrays representing the loss and
+    gain in particle counts due to coagulation events.</li>
+</ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">coagulation_step</span><span class="p">(</span>
     <span class="n">particle_radius</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -6656,12 +6694,12 @@
     <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">random_generator</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="particle_resolved_update_step">particle_resolved_update_step<a class="headerlink" href="#particle_resolved_update_step" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L21">Show source in particle_resolved_method.py:21</a></p>
 <p>Update the particle radii and concentrations after coagulation events.</p>
-<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>particle_radius</code> <em>NDArray[float64]</em> - Array of particle radii.</li>
 <li><code>small_index</code> <em>NDArray[int64]</em> - Indices corresponding to smaller
@@ -6669,7 +6707,7 @@
 <li><code>large_index</code> <em>NDArray[int64]</em> - Indices corresponding to larger
     particles.</li>
 </ul>
-<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Updated array of particle radii.</li>
 <li>Updated array for the radii of particles that were lost.</li>
