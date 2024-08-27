@@ -7113,7 +7113,7 @@ to add new data columns to the stream.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamdatetime64">Stream().datetime64<a class="headerlink" href="#streamdatetime64" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L126">Show source in stream.py:126</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L125">Show source in stream.py:125</a></p>
 <p>Converts the epoch time array to a datetime64 for plotting.</p>
 <p>This method converts the time array to a datetime64 array, which
 can be used for plotting time series data. This generally assumes
@@ -7127,7 +7127,7 @@ that the time array is in seconds since the epoch.</p>
 <span class="k">def</span> <span class="nf">datetime64</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamheader_dict">Stream().header_dict<a class="headerlink" href="#streamheader_dict" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L139">Show source in stream.py:139</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L138">Show source in stream.py:138</a></p>
 <p>Provides a dictionary mapping from index to header names.</p>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7138,7 +7138,7 @@ that the time array is in seconds since the epoch.</p>
 <span class="k">def</span> <span class="nf">header_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamheader_float">Stream().header_float<a class="headerlink" href="#streamheader_float" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L148">Show source in stream.py:148</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L147">Show source in stream.py:147</a></p>
 <p>Attempts to convert header names to a float array, where possible.</p>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7159,7 +7159,7 @@ that the time array is in seconds since the epoch.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="streamaveraged">StreamAveraged<a class="headerlink" href="#streamaveraged" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L159">Show source in stream.py:159</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L158">Show source in stream.py:158</a></p>
 <p>Stream Class with Averaged Data and Standard Deviation.</p>
 <p>Extends the Stream class with functionalities specific to handling
 averaged data streams. Mainly adding standard deviation to the data
@@ -7181,7 +7181,7 @@ stream.</p>
 <li><a href="#stream">Stream</a></li>
 </ul>
 <h3 id="streamaveragedget_std">StreamAveraged().get_std<a class="headerlink" href="#streamaveragedget_std" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L211">Show source in stream.py:211</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L210">Show source in stream.py:210</a></p>
 <p>Retrieves the standard deviation</p>
 <p>In the averaged data stream, the standard deviation of the data is
 stored in a separate array that mirrors the same indices as the data
@@ -7204,7 +7204,7 @@ for which standard deviation is needed.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamaveragedvalidate_averaging_params">StreamAveraged().validate_averaging_params<a class="headerlink" href="#streamaveragedvalidate_averaging_params" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L186">Show source in stream.py:186</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L185">Show source in stream.py:185</a></p>
 <p>Ensures that averaging parameters are valid.</p>
 <h4 id="raises_2">Raises<a class="headerlink" href="#raises_2" title="Permanent link">&para;</a></h4>
 <ul>
