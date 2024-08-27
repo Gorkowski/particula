@@ -6,7 +6,7 @@
 
 ## correction_for_distribution
 
-[Show source in scattering_truncation.py:235](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L235)
+[Show source in scattering_truncation.py:234](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L234)
 
 Correction for a size distribution of particles.
 
@@ -55,7 +55,7 @@ def correction_for_distribution(
 
 ## correction_for_humidified
 
-[Show source in scattering_truncation.py:304](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L304)
+[Show source in scattering_truncation.py:303](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L303)
 
 Truncation Correction for humidified aerosol measurements.
 
@@ -111,7 +111,7 @@ def correction_for_humidified(
 
 ## correction_for_humidified_looped
 
-[Show source in scattering_truncation.py:383](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L383)
+[Show source in scattering_truncation.py:382](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L382)
 
 Looped correction for humidified aerosol measurements.
 
@@ -285,9 +285,8 @@ truncation effects due to instrument geometry need to be accounted for.
 
 #### Returns
 
-NDArray[np.float64]:
-    An array of truncation corrections corresponding to the input array of
-    particle diameters.
+An array of truncation corrections corresponding to the input
+array of particle diameters.
 
 #### Signature
 

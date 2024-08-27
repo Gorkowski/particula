@@ -6855,7 +6855,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py">particula.data.process.scattering_truncation</a> module.</p>
 </blockquote>
 <h2 id="correction_for_distribution">correction_for_distribution<a class="headerlink" href="#correction_for_distribution" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L235">Show source in scattering_truncation.py:235</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L234">Show source in scattering_truncation.py:234</a></p>
 <p>Correction for a size distribution of particles.</p>
 <p>Calculates the correction factor for scattering measurements due to
 truncation effects in aerosol size distribution measurements. This
@@ -6891,7 +6891,7 @@ coefficient, accounting for the limited angular range of the instrument.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="correction_for_humidified">correction_for_humidified<a class="headerlink" href="#correction_for_humidified" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L304">Show source in scattering_truncation.py:304</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L303">Show source in scattering_truncation.py:303</a></p>
 <p>Truncation Correction for humidified aerosol measurements.</p>
 <p>Calculates the scattering correction for humidified aerosol measurements,
 accounting for water uptake by adjusting the aerosol's refractive index.
@@ -6936,7 +6936,7 @@ their hygroscopic growth.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="correction_for_humidified_looped">correction_for_humidified_looped<a class="headerlink" href="#correction_for_humidified_looped" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L383">Show source in scattering_truncation.py:383</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L382">Show source in scattering_truncation.py:382</a></p>
 <p>Looped correction for humidified aerosol measurements.</p>
 <p>Corrects scattering measurements for aerosol particles to account for
 truncation errors in CAPS instrument. This correction is vital for
@@ -7072,9 +7072,8 @@ truncation effects due to instrument geometry need to be accounted for.</p>
     the truncation correction, so 150 is 1. Default is True.</li>
 </ul>
 <h4 id="returns_5">Returns<a class="headerlink" href="#returns_5" title="Permanent link">&para;</a></h4>
-<p>NDArray[np.float64]:
-    An array of truncation corrections corresponding to the input array of
-    particle diameters.</p>
+<p>An array of truncation corrections corresponding to the input
+array of particle diameters.</p>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">truncation_for_diameters</span><span class="p">(</span>
     <span class="n">m_sphere</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
