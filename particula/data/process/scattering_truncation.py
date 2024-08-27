@@ -206,9 +206,8 @@ def truncation_for_diameters(
             the truncation correction, so 150 is 1. Default is True.
 
     Returns:
-        NDArray[np.float64]:
-            An array of truncation corrections corresponding to the input array of
-            particle diameters.
+        An array of truncation corrections corresponding to the input
+        array of particle diameters.
     """
     truncation_array = np.zeros_like(diameter_sizes, dtype=np.float64)
 
@@ -413,7 +412,7 @@ def correction_for_humidified_looped(
             the ambient conditions during measurement.
         refractive_index_dry: Refractive index of the dry particles,
             affecting their scattering behavior. Default is 1.45.
-        water_refractive_index: Refractive index of water, important 
+        water_refractive_index: Refractive index of water, important
             for calculations involving humidified conditions. Default is 1.33.
         wavelength: Wavelength of the incident light in nanometers,
             which influences scattering intensity. Default is 450.
