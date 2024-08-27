@@ -312,7 +312,7 @@ def correction_for_humidified(
     wavelength: float = 450,
     discretize: bool = True
 ) -> np.float64:
-   """ Truncation Correction for humidified aerosol measurements.
+    """Truncation Correction for humidified aerosol measurements.
 
     Calculates the scattering correction for humidified aerosol measurements,
     accounting for water uptake by adjusting the aerosol's refractive index.
