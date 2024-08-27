@@ -8,6 +8,8 @@
 
 - [Brownian Kernel](./brownian_kernel.md)
 - [Kernel](./kernel.md)
+- [Particle Resolved Method](./particle_resolved_method.md)
 - [Rate](./rate.md)
 - [Strategy](./strategy.md)
+- [Super Droplet Method](./super_droplet_method.md)
 - [Transition Regime](./transition_regime.md)
