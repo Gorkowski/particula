@@ -7517,11 +7517,10 @@ list of strings.</p>
 <li><code>list</code> - The raw data read from the file as a list of strings.</li>
 </ul>
 <h4 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data_raw_loader</span><span class="p">(</span><span class="s1">&#39;my_file.txt&#39;</span><span class="p">)</span>
-<span class="n">Loading</span> <span class="n">data</span> <span class="n">from</span><span class="p">:</span> <span class="n">my_file</span><span class="o">.</span><span class="n">txt</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;line 1&#39;</span><span class="p">,</span> <span class="s1">&#39;line 2&#39;</span><span class="p">,</span> <span class="s1">&#39;line 3&#39;</span><span class="p">]</span>
-</code></pre></div>
+<p>data = data_raw_loader('my_file.txt')
+Loading data from: my_file.txt
+print(data)
+['line 1', 'line 2', 'line 3']</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">data_raw_loader</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>

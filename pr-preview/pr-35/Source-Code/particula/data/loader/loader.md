@@ -66,12 +66,10 @@ list of strings.
 
 #### Examples
 
-```python
->>> data = data_raw_loader('my_file.txt')
+data = data_raw_loader('my_file.txt')
 Loading data from: my_file.txt
->>> print(data)
+print(data)
 ['line 1', 'line 2', 'line 3']
-```
 
 #### Signature
 
