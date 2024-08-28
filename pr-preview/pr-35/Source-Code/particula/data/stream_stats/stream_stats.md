@@ -160,17 +160,17 @@ Remove a time window from a stream object.
 
 #### Arguments
 
-- `-` *stream* - The input stream object containing 'data' and 'time'
+- `stream` - The input stream object containing 'data' and 'time'
     attributes.
-- `-` *epoch_start* - The start time of the time window to be
+- `epoch_start` - The start time of the time window to be
     removed.
-- `-` *epoch_end* - The end time of the time window to be
-    removed. If not provided, the time window is the closest time point to
-    'epoch_start'.
+- `epoch_end` - The end time of the time window to be
+    removed. If not provided, the time window is the closest time
+    point to 'epoch_start'.
 
 #### Returns
 
-- `-` *Stream* - The 'stream' object with the specified time window removed.
+- `Stream` - The 'stream' object with the specified time window removed.
 
 #### Signature
 
@@ -179,6 +179,42 @@ def remove_time_window(
     stream: Stream,
     epoch_start: Union[float, int],
     epoch_end: Optional[Union[float, int]] = None,
+) -> Stream: ...
+```
+
+#### See also
+
+- [Stream](./stream.md#stream)
+
+
+
+## select_time_window
+
+[Show source in stream_stats.py:211](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L211)
+
+Keep only a specified time window in a stream object and remove all other
+data.
+
+#### Arguments
+
+- `stream` - The input stream object containing 'data' and 'time'
+    attributes.
+- `epoch_start` - The start time of the time window to be kept.
+- `epoch_end` - The end time of the time window to be kept. If not provided,
+    only the closest time point to 'epoch_start' will be kept.
+
+#### Returns
+
+- `Stream` - The stream object with only the specified time window retained.
+
+#### Signature
+
+```python
+def select_time_window(
+    stream: Stream,
+    epoch_start: Union[float, int],
+    epoch_end: Optional[Union[float, int]] = None,
+    clone: Optional[bool] = True,
 ) -> Stream: ...
 ```
 

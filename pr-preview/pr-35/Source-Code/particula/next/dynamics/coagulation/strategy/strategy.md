@@ -309,11 +309,10 @@ kernel representation.
 
 #### Methods
 
---------
-- `-` *kernel* - Calculate the coagulation kernel.
-- `-` *loss_rate* - Calculate the coagulation loss rate.
-- `-` *gain_rate* - Calculate the coagulation gain rate.
-- `-` *net_rate* - Calculate the net coagulation rate.
+- `kernel` - Calculate the coagulation kernel.
+- `loss_rate` - Calculate the coagulation loss rate.
+- `gain_rate` - Calculate the coagulation gain rate.
+- `net_rate` - Calculate the net coagulation rate.
 
 #### Signature
 
@@ -329,7 +328,7 @@ class ContinuousGeneralPDF(CoagulationStrategy):
 
 ### ContinuousGeneralPDF().dimensionless_kernel
 
-[Show source in strategy.py:439](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L439)
+[Show source in strategy.py:438](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L438)
 
 #### Signature
 
@@ -343,7 +342,7 @@ def dimensionless_kernel(
 
 ### ContinuousGeneralPDF().gain_rate
 
-[Show source in strategy.py:496](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L496)
+[Show source in strategy.py:495](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L495)
 
 #### Signature
 
@@ -359,7 +358,7 @@ def gain_rate(
 
 ### ContinuousGeneralPDF().kernel
 
-[Show source in strategy.py:449](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L449)
+[Show source in strategy.py:448](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L448)
 
 #### Signature
 
@@ -375,7 +374,7 @@ def kernel(
 
 ### ContinuousGeneralPDF().loss_rate
 
-[Show source in strategy.py:484](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L484)
+[Show source in strategy.py:483](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L483)
 
 #### Signature
 
