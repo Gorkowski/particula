@@ -66,7 +66,7 @@ list of strings.
 
 #### Examples
 
-```
+``` py title="Load Text Data"
 data = data_raw_loader('my_file.txt')
 Loading data from: my_file.txt
 print(data)
