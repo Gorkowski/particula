@@ -265,14 +265,14 @@ def merge_distributions(
     diameters_upper: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray]:
     """
-    Merge two particle size distributions using linear weighting, 
+    Merge two particle size distributions using linear weighting,
     accounting for mobility versus aerodynamic diameters.
 
     Arguments:
-        concentration_lower: The concentration of particles in the lower 
+        concentration_lower: The concentration of particles in the lower
             distribution.
         diameters_lower: The diameters corresponding to the lower distribution.
-        concentration_upper: The concentration of particles in the upper 
+        concentration_upper: The concentration of particles in the upper
             distribution.
         diameters_upper: The diameters corresponding to the upper distribution.
 
