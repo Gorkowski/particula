@@ -1356,26 +1356,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#args" class="md-nav__link">
+    <nav class="md-nav" aria-label="mean_properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Args
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_1" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_1" class="md-nav__link">
@@ -1402,7 +1402,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_1" class="md-nav__link">
+  <a href="#arguments_2" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -1414,6 +1414,15 @@
   <a href="#returns_2" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Notes
     </span>
   </a>
   
@@ -1444,7 +1453,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_2" class="md-nav__link">
+  <a href="#arguments_3" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -1495,7 +1504,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_3" class="md-nav__link">
+  <a href="#arguments_4" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -1542,26 +1551,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#args_1" class="md-nav__link">
+    <nav class="md-nav" aria-label="sizer_mean_properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_5" class="md-nav__link">
     <span class="md-ellipsis">
-      Args
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_5" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_5" class="md-nav__link">
@@ -6858,21 +6867,21 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py">particula.data.process.size_distribution</a> module.</p>
 </blockquote>
 <h2 id="iterate_merge_distributions">iterate_merge_distributions<a class="headerlink" href="#iterate_merge_distributions" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L351">Show source in size_distribution.py:351</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L341">Show source in size_distribution.py:341</a></p>
 <p>Merge two sets of particle size distributions using linear weighting.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>concentration_lower</code> - The concentration of particles in the
-    lower distribution.</li>
-<li><code>diameters_lower</code> - The diameters corresponding to the
-    lower distribution.</li>
-<li><code>concentration_upper</code> - The concentration of particles in the
-    upper distribution.</li>
+<li><code>concentration_lower</code> - The concentration of particles in the lower
+    distribution.</li>
+<li><code>diameters_lower</code> - The diameters corresponding to the lower distribution.</li>
+<li><code>concentration_upper</code> - The concentration of particles in the upper
+    distribution.</li>
 <li><code>diameters_upper</code> - The diameters corresponding to the upper distribution.</li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<p>A tuple containing the merged diameter distribution and the merged
-    concentration distribution.</p>
+<p>Tuple:
+- The merged diameter distribution.
+- The merged concentration distribution.</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">iterate_merge_distributions</span><span class="p">(</span>
     <span class="n">concentration_lower</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -6883,25 +6892,25 @@
 </code></pre></div>
 <h2 id="mean_properties">mean_properties<a class="headerlink" href="#mean_properties" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L20">Show source in size_distribution.py:20</a></p>
-<p>Calculates the mean properties of the size distribution.</p>
-<h2 id="args">Args<a class="headerlink" href="#args" title="Permanent link">&para;</a></h2>
-<p>sizer_dndlogdp : List[float]
-    Concentration of particles in each bin.
-sizer_diameter : List[float]
-    Bin centers
-total_concentration : Optional[float], default=None
-    Total concentration of particles in the distribution.
-sizer_limits : Optional[Tuple[float, float]], default=None
-    The lower and upper limits of the size of interest.</p>
-<h2 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
-<p>Tuple[float, float, float, float, float, float, float]
-    Total concentration of particles in the distribution.
-    Total mass of particles in the distribution.
-    Mean diameter of the distribution by number.
-    Mean diameter of the distribution by volume.
-    Geometric mean diameter of the distribution.
-    Mode diameter of the distribution by number.
-    Mode diameter of the distribution by volume.</p>
+<p>Calculate the mean properties of the size distribution.</p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>sizer_dndlogdp</code> - Array of particle concentrations in each bin.</li>
+<li><code>sizer_diameter</code> - Array of bin center diameters.</li>
+<li><code>total_concentration</code> - Optional; the total concentration of particles
+    in the distribution. If not provided, it will be calculated.</li>
+<li><code>sizer_limits</code> - Optional; the lower and upper limits of the size
+    range of interest. If not provided, the full range will be used.</li>
+</ul>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- Total concentration of particles in the distribution.
+- Total mass of particles in the distribution.
+- Mean diameter of the distribution by number.
+- Mean diameter of the distribution by volume.
+- Geometric mean diameter of the distribution.
+- Mode diameter of the distribution by number.
+- Mode diameter of the distribution by volume.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mean_properties</span><span class="p">(</span>
     <span class="n">sizer_dndlogdp</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -6911,24 +6920,24 @@ sizer_limits : Optional[Tuple[float, float]], default=None
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="merge_distributions">merge_distributions<a class="headerlink" href="#merge_distributions" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L271">Show source in size_distribution.py:271</a></p>
-<p>Merge two particle size distributions using linear weighting.</p>
-<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<p>concentration_lower:
-    The concentration of particles in the lower
-    distribution.
-diameters_lower:
-    The diameters corresponding to the lower distribution.
-    - <code>concentration_upper</code> - The concentration of particles in the upper
-    distribution.
-diameters_upper:
-    The diameters corresponding to the upper distribution.</p>
-<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L261">Show source in size_distribution.py:261</a></p>
+<p>Merge two particle size distributions using linear weighting,
+accounting for mobility versus aerodynamic diameters.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>new_2d</code> - The merged concentration distribution.</li>
-<li><code>new_diameter</code> - The merged diameter distribution.</li>
+<li><code>concentration_lower</code> - The concentration of particles in the lower
+    distribution.</li>
+<li><code>diameters_lower</code> - The diameters corresponding to the lower distribution.</li>
+<li><code>concentration_upper</code> - The concentration of particles in the upper
+    distribution.</li>
+<li><code>diameters_upper</code> - The diameters corresponding to the upper distribution.</li>
 </ul>
-<p>add in an acount for the moblity vs aerodynamic diameters</p>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- <code>-</code> <em>new_2d</em> - The merged concentration distribution.
+- <code>-</code> <em>new_diameter</em> - The merged diameter distribution.</p>
+<h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h4>
+<p>Add process the moblity vs aerodynamic diameters</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">merge_distributions</span><span class="p">(</span>
     <span class="n">concentration_lower</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -6938,15 +6947,16 @@ diameters_upper:
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="merge_size_distribution">merge_size_distribution<a class="headerlink" href="#merge_size_distribution" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L397">Show source in size_distribution.py:397</a></p>
-<p>Merge two sets of particle size distributions using linear weighting.
-The concentration should be in dN/dlogDp.</p>
-<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L387">Show source in size_distribution.py:387</a></p>
+<p>Merge two particle size distributions using linear weighting.
+The concentrations should be in dN/dlogDp.</p>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>stream_smaller</code> - The stream with lower sizes, e.g. SMPS.</li>
-<li><code>stream_larger</code> - The stream with larger sizes, e.g. OPS. or APS</li>
-<li><code>lower_units</code> - The units of the lower distribution. The default is 'nm'.</li>
-<li><code>upper_units</code> - The units of the upper distribution. The default is 'um'.</li>
+<li><code>stream_lower</code> - The stream with the lower size range, e.g., from an SMPS.</li>
+<li><code>stream_upper</code> - The stream with the upper size range, e.g., from an
+    OPS or APS.</li>
+<li><code>lower_units</code> - The units of the lower distribution. Default is 'nm'.</li>
+<li><code>upper_units</code> - The units of the upper distribution. Default is 'um'.</li>
 </ul>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -6965,22 +6975,22 @@ The concentration should be in dN/dlogDp.</p>
 <li><a href="../../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="resample_distribution">resample_distribution<a class="headerlink" href="#resample_distribution" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L437">Show source in size_distribution.py:437</a></p>
-<p>Resample a particle size distribution to a new set of diameters.
-Using np interpolation, and extrapolation is nan.</p>
-<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L428">Show source in size_distribution.py:428</a></p>
+<p>Resample a particle size distribution to a new set of diameters using
+numpy interpolation. Extrapolated values will be set to NaN.</p>
+<h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>stream</code> - (Stream)
-    The stream to resample.</li>
-<li><code>new_diameters</code> - (np.ndarry)
-    The new diameters to resample to.</li>
-<li><code>concentration_scale</code> - (str)
-    The concentration scale of the distribution. Either, 'dn/dlogdp',
-    'dn', 'pms' (which is dn), or 'pdf'.</li>
+<li><code>stream</code> - The stream object containing the size distribution to resample.</li>
+<li><code>new_diameters</code> - The new diameters to which the distribution will be
+    resampled.</li>
+<li><code>concentration_scale</code> - The concentration scale of the distribution.
+    Options are 'dn/dlogdp', 'dn', 'pms'
+    (which is equivalent to 'dn'), or 'pdf'. Default is 'dn/dlogdp'.</li>
+<li><code>clone</code> - Whether to clone the stream before resampling. Default is False.</li>
 </ul>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>Stream</code> - The resampled stream.</li>
+<li><code>Stream</code> - The resampled stream object.</li>
 </ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">resample_distribution</span><span class="p">(</span>
@@ -6995,22 +7005,23 @@ Using np interpolation, and extrapolation is nan.</p>
 <li><a href="../../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="sizer_mean_properties">sizer_mean_properties<a class="headerlink" href="#sizer_mean_properties" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L116">Show source in size_distribution.py:116</a></p>
-<p>Calculates the mean properties of the size distribution, and returns a
-stream.</p>
-<h2 id="args_1">Args<a class="headerlink" href="#args_1" title="Permanent link">&para;</a></h2>
-<p>stream : Stream
-    The stream to process.
-sizer_limits : list, optional [in diameter_units]
-    The lower and upper limits of the size of interest. The default is None
-density : float, optional
-    The density of the particles. The default is 1.5 g/cm3.
-diameter_units : str
-    The units of the diameter. The default is 'nm'. This will be converted
-    to nm.</p>
-<h2 id="returns_5">Returns<a class="headerlink" href="#returns_5" title="Permanent link">&para;</a></h2>
-<p>stream : Stream
-    The stream with the mean properties added.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L112">Show source in size_distribution.py:112</a></p>
+<p>Calculate the mean properties of the size distribution and return the
+updated stream.</p>
+<h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>stream</code> - The stream containing the size distribution data to process.</li>
+<li><code>sizer_limits</code> - A list specifying the lower and upper limits of the
+    size range of interest, in the units specified by <code>diameter_units</code>.
+    Default is None, which means the full range is used.</li>
+<li><code>density</code> - The density of the particles in g/cm³. Default is 1.5 g/cm³.</li>
+<li><code>diameter_units</code> - The units of the diameter. Default is 'nm'. The
+    specified units will be converted to nanometers.</li>
+</ul>
+<h4 id="returns_5">Returns<a class="headerlink" href="#returns_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>Stream</code> - The updated stream with the mean properties added.</li>
+</ul>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sizer_mean_properties</span><span class="p">(</span>
     <span class="n">stream</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span>

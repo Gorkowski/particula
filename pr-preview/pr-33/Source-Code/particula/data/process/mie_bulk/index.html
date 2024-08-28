@@ -1251,26 +1251,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
+    <nav class="md-nav" aria-label="compute_bulk_optics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature" class="md-nav__link">
@@ -1293,26 +1293,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#args" class="md-nav__link">
+    <nav class="md-nav" aria-label="discretize_auto_mieq">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Args
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_1" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_1" class="md-nav__link">
@@ -1335,26 +1335,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
+    <nav class="md-nav" aria-label="discretize_mie_parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_2" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_2" class="md-nav__link">
@@ -1377,26 +1377,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+    <nav class="md-nav" aria-label="format_mie_results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_3" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_3" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_3" class="md-nav__link">
@@ -1419,18 +1419,19 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_3" class="md-nav__link">
+    <nav class="md-nav" aria-label="mie_size_distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_4" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_4" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
@@ -1438,16 +1439,15 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#raises" class="md-nav__link">
     <span class="md-ellipsis">
       Raises
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Raises">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_4" class="md-nav__link">
@@ -6798,23 +6798,33 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py">particula.data.process.mie_bulk</a> module.</p>
 </blockquote>
 <h2 id="compute_bulk_optics">compute_bulk_optics<a class="headerlink" href="#compute_bulk_optics" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L142">Show source in mie_bulk.py:142</a></p>
-<p>Computes bulk optical properties from size dependent efficiency factors for
-the size distribution.</p>
-<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
-<p>q_ext, q_sca, q_abs, q_pr, q_back, q_ratio, g : NDArray[np.float64]
-    Arrays of efficiency factors and the asymmetry factor.
-area : NDArray[np.float64]
-    area scaled size distribution.
-extinction_only : bool
-    Flag to compute only the extinction coefficient.
-pms : bool
-    Flag indicating if probability mass distribution, where sum of
-    all bins is total number of particles, is used.
-dp : NDArray[np.float64]
-    An array of particle diameters in nanometers.</p>
-<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
-<p>Tuple containing bulk optical properties.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L137">Show source in mie_bulk.py:137</a></p>
+<p>Compute bulk optical properties from size-dependent efficiency factors for
+a size distribution.</p>
+<p>This function calculates various bulk optical properties such as
+extinction, scattering, and backscattering coefficients based on the size
+distribution and corresponding efficiency factors.</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>q_ext</code> - Array of extinction efficiency factors.</li>
+<li><code>q_sca</code> - Array of scattering efficiency factors.</li>
+<li><code>q_back</code> - Array of backscatter efficiency factors.</li>
+<li><code>q_ratio</code> - Array of backscatter-to-extinction ratio efficiency factors.</li>
+<li><code>g</code> - Array of asymmetry factors.</li>
+<li><code>area_dist</code> - Area-scaled size distribution array.</li>
+<li><code>extinction_only</code> - Flag indicating whether to compute only the
+    extinction coefficient.</li>
+<li><code>pms</code> - Flag indicating whether a probability mass distribution is used,
+    where the sum of all bins
+    represents the total number of particles.</li>
+<li><code>dp</code> - Array of particle diameters in nanometers.</li>
+</ul>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<p>If <code>extinction_only</code> is True, returns an array with the bulk
+extinction coefficient. Otherwise, returns a tuple containing the
+bulk optical properties, including extinction, scattering, and
+backscattering coefficients, and possibly others depending on
+the input flags.</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">compute_bulk_optics</span><span class="p">(</span>
     <span class="n">q_ext</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -6830,32 +6840,35 @@ dp : NDArray[np.float64]
 </code></pre></div>
 <h2 id="discretize_auto_mieq">discretize_auto_mieq<a class="headerlink" href="#discretize_auto_mieq" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L17">Show source in mie_bulk.py:17</a></p>
-<p>Computes Mie coefficients for a spherical particle based on its material
+<p>Compute Mie coefficients for a spherical particle based on its material
 properties, size, and the properties of the surrounding medium.</p>
-<p>This function leverages the PyMieScatt library to calculate the extinction
-(q_ext), scattering (q_sca), absorption (q_abs) efficiencies, the
-asymmetry factor (g), radiation pressure efficiency (q_pr), backscatter
-efficiency (q_back), and the ratio of backscatter to extinction efficiency
-(q_ratio) for a single sphere under specified conditions.</p>
-<p>This function is optimized with an LRU (Least Recently Used) cache to
-enhance performance by storing up to 100,000 recent calls. The cache
-memorizes the results of expensive function calls and returns the cached
-result when the same inputs occur again, reducing the need to recompute
-these values.</p>
-<h2 id="args">Args<a class="headerlink" href="#args" title="Permanent link">&para;</a></h2>
-<p>m_sphere : The complex refractive index of the sphere. For non-absorbing
-    material a real number can be provided.
-wavelength : The wavelength of the incident light in nanometers (nm).
-diameter : The diameter of the sphere in nanometers (nm).
-mMedium : The refractive index of the surrounding medium.
-    Defaults to 1.0, corresponding to vacuum.</p>
-<h2 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
-<p>Tuple[float, float, float, float, float, float, float]
-    A tuple containing the calculated Mie efficiencies and parameters:
-    q_ext (extinction efficiency), q_sca (scattering efficiency),
-    q_abs (absorption efficiency), g (asymmetry factor),
-    q_pr (radiation pressure efficiency), q_back (backscatter efficiency),
-    and q_ratio (the ratio of backscatter to extinction efficiency).</p>
+<p>This function uses the PyMieScatt library to calculate various Mie
+efficiencies and parameters for a single sphere, including extinction
+efficiency (q_ext), scattering efficiency (q_sca), absorption efficiency
+(q_abs), asymmetry factor (g), radiation pressure efficiency (q_pr),
+backscatter efficiency (q_back), and the ratio of backscatter to
+extinction efficiency (q_ratio).</p>
+<p>The function is optimized with an LRU (Least Recently Used) cache,
+which stores up to 100,000 recent computations to improve performance
+by avoiding repeated calculations for the same inputs.</p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>m_sphere</code> - The complex refractive index of the sphere. A real
+    number can be provided for non-absorbing materials.</li>
+<li><code>wavelength</code> - The wavelength of the incident light in nanometers (nm).</li>
+<li><code>diameter</code> - The diameter of the sphere in nanometers (nm).</li>
+<li><code>m_medium</code> - The refractive index of the surrounding medium.
+    Default is 1.0, corresponding to vacuum.</li>
+</ul>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- <code>-</code> <em>q_ext</em> - Extinction efficiency.
+- <code>-</code> <em>q_sca</em> - Scattering efficiency.
+- <code>-</code> <em>q_abs</em> - Absorption efficiency.
+- <code>-</code> <em>g</em> - Asymmetry factor.
+- <code>-</code> <em>q_pr</em> - Radiation pressure efficiency.
+- <code>-</code> <em>q_back</em> - Backscatter efficiency.
+- <code>-</code> <em>q_ratio</em> - Ratio of backscatter to extinction efficiency.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">discretize_auto_mieq</span><span class="p">(</span>
@@ -6866,40 +6879,39 @@ mMedium : The refractive index of the surrounding medium.
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="discretize_mie_parameters">discretize_mie_parameters<a class="headerlink" href="#discretize_mie_parameters" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L64">Show source in mie_bulk.py:64</a></p>
-<p>Discretizes the refractive index of the material, the wavelength of
-incident light, and the diameters of particles to enhance the numerical
-stability and performance of Mie scattering calculations. This approach is
-particularly useful for caching Mie scattering computations, as it reduces
-the variability in input parameters leading to a more manageable set of
-unique calculations.</p>
-<h2 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h2>
-<p>m_sphere : Union[complex, float]
-    The complex or real refractive index of the particles. This value is
-    discretized to a specified base to reduce the granularity of input
-    variations.
-wavelength : float
-    The wavelength of incident light in nanometers (nm). It is discretized
-    to minimize the variations in computations related to different
-    wavelengths.
-diameter : NDArray[np.float64]
-    An array of particle diameters in nanometers (nm), each of which is
-    discretized to a specified base to standardize the input sizes for
-    calculations.
-base_m_sphere : float, optional
-    The base value to which the real and imaginary parts of the refractive
-    index are rounded. Defaults to 0.001.
-base_wavelength : float, optional
-    The base value to which the wavelength is rounded. Defaults to 1 nm.
-base_diameter : float, optional
-    The base value to which particle diameters are rounded.
-    Defaults to 5 nm.</p>
-<h2 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h2>
-<p>Tuple[Union[complex, float], float, NDArray[np.float64]]
-A tuple containing the discretized refractive index (m_sphere), wavelength,
-and diameters (diameter), suitable for use in further Mie scattering
-calculations with potentially improved performance and reduced
-computational overhead.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L63">Show source in mie_bulk.py:63</a></p>
+<p>Discretize the refractive index, wavelength, and diameters for Mie
+scattering calculations.</p>
+<p>This function improves numerical stability and performance by discretizing
+the refractive index of the material, the wavelength of incident light,
+and the diameters of particles. Discretization reduces the variability
+in input parameters, making Mie scattering computations more efficient
+by creating a more manageable set of unique calculations.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>m_sphere</code> - The complex or real refractive index of the particles.
+    This value is discretized to a specified base to reduce
+    input variability.</li>
+<li><code>wavelength</code> - The wavelength of incident light in nanometers (nm),
+    discretized to minimize variations in related computations.</li>
+<li><code>diameter</code> - The particle diameter or array of diameters in nanometers
+    (nm), discretized to a specified base to standardize input sizes
+    for calculations.</li>
+<li><code>base_m_sphere</code> - Optional; the base value to which the real and
+    imaginary parts of the refractive index are rounded.
+    Default is 0.001.</li>
+<li><code>base_wavelength</code> - Optional; the base value to which the wavelength is
+    rounded. Default is 1 nm.</li>
+<li><code>base_diameter</code> - Optional; the base value to which particle diameters
+    are rounded. Default is 5 nm.</li>
+</ul>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- The discretized refractive index (m_sphere).
+- The discretized wavelength.
+- The discretized diameter or array of diameters, suitable for use in
+    Mie scattering calculations with potentially improved performance
+    and reduced computational overhead.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">discretize_mie_parameters</span><span class="p">(</span>
     <span class="n">m_sphere</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
@@ -6911,15 +6923,27 @@ computational overhead.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="format_mie_results">format_mie_results<a class="headerlink" href="#format_mie_results" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L200">Show source in mie_bulk.py:200</a></p>
-<p>Formats the output results of the Mie scattering calculations.</p>
-<h2 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h2>
-<p>b_ext, b_sca, b_abs, bigG, b_pr, b_back, b_ratio : float
-    Bulk optical properties.
-asDict : bool
-    Determines the format of the results.</p>
-<h2 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h2>
-<p>Either a dictionary or a tuple of the computed bulk optical properties.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L202">Show source in mie_bulk.py:202</a></p>
+<p>Format the output results of the Mie scattering calculations.</p>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>b_ext</code> - Array of bulk extinction coefficients.</li>
+<li><code>b_sca</code> - Array of bulk scattering coefficients.</li>
+<li><code>b_abs</code> - Array of bulk absorption coefficients.</li>
+<li><code>big_g</code> - Array of asymmetry factors (g).</li>
+<li><code>b_pr</code> - Array of bulk radiation pressure efficiencies.</li>
+<li><code>b_back</code> - Array of bulk backscattering coefficients.</li>
+<li><code>b_ratio</code> - Array of backscatter-to-extinction ratios.</li>
+<li><code>as_dict</code> - Flag to determine if the results should be returned as a
+    dictionary.</li>
+</ul>
+<h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
+<p>(dict, Tuple):
+    - If <code>as_dict</code> is True, returns a dictionary with the bulk optical
+    properties.
+    - If <code>as_dict</code> is False, returns a tuple of the bulk
+    optical properties in the following order,
+    (b_ext, b_sca, b_abs, big_g, b_pr, b_back, b_ratio).</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">format_mie_results</span><span class="p">(</span>
     <span class="n">b_ext</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -6933,52 +6957,49 @@ asDict : bool
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="o">...</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="mie_size_distribution">mie_size_distribution<a class="headerlink" href="#mie_size_distribution" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L237">Show source in mie_bulk.py:237</a></p>
-<p>Calculates Mie scattering parameters for a size distribution of spherical
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L247">Show source in mie_bulk.py:247</a></p>
+<p>Calculate Mie scattering parameters for a size distribution of spherical
 particles.</p>
 <p>This function computes optical properties such as extinction, scattering,
 absorption coefficients, asymmetry factor, backscatter efficiency, and
 their ratios for a given size distribution of spherical particles. It
 supports various modes of calculation, including discretization of input
 parameters and optional truncation of the scattering efficiency.</p>
-<h2 id="parameters_3">Parameters<a class="headerlink" href="#parameters_3" title="Permanent link">&para;</a></h2>
-<p>m_sphere : Union[complex, float]
-    The complex refractive index of the particles. Real values can be used
-    for non-absorbing materials.
-wavelength : float
-    The wavelength of the incident light in nanometers (nm).
-diameter : NDArray[np.float64]
-    An array of particle diameters in nanometers (nm).
-number_per_cm3 : NDArray[np.float64]
-    The number distribution of particles per cubic centimeter (#/cm^3).
-n_medium : float, optional
-    The refractive index of the medium. Defaults to 1.0 (air or vacuum).
-pms : bool, optional
-    Specifies if the size distribution is in probability mass form.
-as_dict : bool, optional
-    If True, results are returned as a dictionary. Otherwise, as a tuple.
-extinction_only : bool, optional
-    If True, only the extinction coefficient is calculated and returned.
-discretize : bool, optional
-    If True, input parameters (m, wavelength, dp) are discretized for
-    computation. Defaults to False.
-truncation_calculation : bool, optional
-    Enables truncation of the scattering efficiency based on a multiple
-    of the backscattering coefficient. Defaults to False.
-truncation_b_sca_multiple : Optional[float], optional
-    The multiple of the backscattering coefficient used for truncating the
-    scattering efficiency. Required if <code>truncation_calculation</code> is True.</p>
-<h2 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h2>
-<p>Union[float, Dict[str, float], Tuple[float, ...]]
-    Depending on the parameters <code>asDict</code> and <code>extinction_only</code>, the
-    function can return:
-    - A single float (extinction coefficient) if <code>extinction_only</code> is True.
-    - A dictionary of computed optical properties if <code>asDict</code> is True.
-    - A tuple of computed optical properties.</p>
-<h2 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h2>
-<p>ValueError
-    If <code>truncation_calculation</code> is True but <code>truncation_b_sca_multiple</code>
-    is not specified.</p>
+<h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>m_sphere</code> - The complex refractive index of the particles. Real values
+    can be used for non-absorbing materials.</li>
+<li><code>wavelength</code> - The wavelength of the incident light in nanometers (nm).</li>
+<li><code>diameter</code> - An array of particle diameters in nanometers (nm).</li>
+<li><code>number_per_cm3</code> - The number distribution of particles per cubic
+    centimeter (#/cm^3).</li>
+<li><code>n_medium</code> - The refractive index of the medium. Defaults to 1.0
+    (air or vacuum).</li>
+<li><code>pms</code> - Specifies if the size distribution is in probability mass form.
+    Default is True.</li>
+<li><code>as_dict</code> - If True, results are returned as a dictionary. Otherwise,
+    as a tuple. Default is False.</li>
+<li><code>extinction_only</code> - If True, only the extinction coefficient is
+    calculated and returned. Default is False.</li>
+<li><code>discretize</code> - If True, input parameters (m_sphere, wavelength, diameter)
+    are discretized for computation. Default is False.</li>
+<li><code>truncation_calculation</code> - Enables truncation of the scattering
+    efficiency based on a multiple of the backscattering coefficient.
+    Default is False.</li>
+<li><code>truncation_b_sca_multiple</code> - The multiple of the backscattering
+    coefficient used for truncating the scattering efficiency.
+    Required if <code>truncation_calculation</code> is True.</li>
+</ul>
+<h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
+<p>(NDArray, dict, Tuple):
+- An array of extinction coefficients if <code>extinction_only</code> is True.
+- A dictionary of computed optical properties if <code>as_dict</code> is True.
+- A tuple of computed optical properties otherwise.</p>
+<h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>ValueError</code> - If <code>truncation_calculation</code> is True but
+    <code>truncation_b_sca_multiple</code> is not specified.</li>
+</ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mie_size_distribution</span><span class="p">(</span>
     <span class="n">m_sphere</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
