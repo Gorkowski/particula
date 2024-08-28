@@ -7474,7 +7474,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py">particula.data.loader</a> module.</p>
 </blockquote>
 <h2 id="data_format_checks">data_format_checks<a class="headerlink" href="#data_format_checks" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L94">Show source in loader.py:94</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L98">Show source in loader.py:98</a></p>
 <p>Validate and format raw data according to specified checks.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7489,16 +7489,16 @@
 <li><code>TypeError</code> - If <code>data</code> is not provided as a list.</li>
 </ul>
 <h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;row 1&#39;</span><span class="p">,</span> <span class="s1">&#39;row 2&#39;</span><span class="p">,</span> <span class="s1">&#39;row 3&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data_checks</span> <span class="o">=</span> <span class="p">{</span>
-<span class="o">...</span>     <span class="s2">&quot;characters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
-<span class="o">...</span>     <span class="s2">&quot;char_counts&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;,&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
-<span class="o">...</span>     <span class="s2">&quot;skip_rows&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-<span class="o">...</span>     <span class="s2">&quot;skip_end&quot;</span><span class="p">:</span> <span class="mi">0</span>
-<span class="o">...</span> <span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">formatted_data</span> <span class="o">=</span> <span class="n">data_format_checks</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data_checks</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">formatted_data</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;row 2&#39;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code>data = [&#39;row 1&#39;, &#39;row 2&#39;, &#39;row 3&#39;]
+data_checks = {
+    &quot;characters&quot;: [0, 10],
+    &quot;char_counts&quot;: {&quot;,&quot;: 2, &quot;/&quot;: 0, &quot;:&quot;: 0},
+    &quot;skip_rows&quot;: 0,
+    &quot;skip_end&quot;: 0
+}
+formatted_data = data_format_checks(data, data_checks)
+print(formatted_data)
+[&#39;row 2&#39;]
 </code></pre></div>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">data_format_checks</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">data_checks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
@@ -7517,15 +7517,16 @@ list of strings.</p>
 <li><code>list</code> - The raw data read from the file as a list of strings.</li>
 </ul>
 <h4 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h4>
-<p>data = data_raw_loader('my_file.txt')
+<div class="highlight"><pre><span></span><code>data = data_raw_loader(&#39;my_file.txt&#39;)
 Loading data from: my_file.txt
 print(data)
-['line 1', 'line 2', 'line 3']</p>
+[&#39;line 1&#39;, &#39;line 2&#39;, &#39;line 3&#39;]
+</code></pre></div>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">data_raw_loader</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="filter_list">filter_list<a class="headerlink" href="#filter_list" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L49">Show source in loader.py:49</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L51">Show source in loader.py:51</a></p>
 <p>Filter rows from a list of strings based on character counts.</p>
 <p>Each row must contain a specified number of certain characters to pass
 the filter. The <code>char_counts</code> dictionary specifies the characters to count
@@ -7547,18 +7548,18 @@ character count requirements.</p>
     character(s).</li>
 </ul>
 <h4 id="examples_2">Examples<a class="headerlink" href="#examples_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple,banana,orange&#39;</span><span class="p">,</span>
-<span class="o">&gt;&gt;&gt;</span>         <span class="s1">&#39;pear,kiwi,plum&#39;</span><span class="p">,</span> <span class="s1">&#39;grapefruit,lemon&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">char_counts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;,&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">filtered_data</span> <span class="o">=</span> <span class="n">filter_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">char_counts</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;apple,banana,orange&#39;</span><span class="p">,</span> <span class="s1">&#39;pear,kiwi,plum&#39;</span><span class="p">]</span>
+<div class="highlight"><pre><span></span><code>data = [&#39;apple,banana,orange&#39;,
+         &#39;pear,kiwi,plum&#39;, &#39;grapefruit,lemon&#39;]
+char_counts = {&#39;,&#39;: 2}
+filtered_data = filter_list(data, char_counts)
+print(filtered_data)
+[&#39;apple,banana,orange&#39;, &#39;pear,kiwi,plum&#39;]
 </code></pre></div>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_list</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">char_counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="general_data_formatter">general_data_formatter<a class="headerlink" href="#general_data_formatter" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L374">Show source in loader.py:374</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L380">Show source in loader.py:380</a></p>
 <p>Format and sample data to extract time and data streams.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7597,7 +7598,7 @@ character count requirements.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="get_files_in_folder_with_size">get_files_in_folder_with_size<a class="headerlink" href="#get_files_in_folder_with_size" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L590">Show source in loader.py:590</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L596">Show source in loader.py:596</a></p>
 <p>Returns a list of files in the specified folder and subfolder that
 match the given filename pattern and have a size greater than the
 specified minimum size.</p>
@@ -7621,7 +7622,7 @@ min_size : int, optional
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="keyword_to_index">keyword_to_index<a class="headerlink" href="#keyword_to_index" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L436">Show source in loader.py:436</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L442">Show source in loader.py:442</a></p>
 <p>Convert a keyword representing a column position in the header to
 its index.</p>
 <p>This function processes a keyword that can either be an integer index
@@ -7647,7 +7648,7 @@ and returns its index.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">keyword_to_index</span><span class="p">(</span><span class="n">keyword</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">header</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="load_lake">load_lake<a class="headerlink" href="#load_lake" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L871">Show source in loader.py:871</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L877">Show source in loader.py:877</a></p>
 <p>Load a lake object by loading individual streams from separate pickle files.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7669,7 +7670,7 @@ and returns its index.</p>
 <li><a href="../lake/#lake">Lake</a></li>
 </ul>
 <h2 id="load_stream">load_stream<a class="headerlink" href="#load_stream" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L760">Show source in loader.py:760</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L766">Show source in loader.py:766</a></p>
 <p>Load stream object from a pickle file.</p>
 <h2 id="args">Args<a class="headerlink" href="#args" title="Permanent link">&para;</a></h2>
 <p>path : str
@@ -7691,7 +7692,7 @@ folder : str, optional
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="netcdf_data_1d_load">netcdf_data_1d_load<a class="headerlink" href="#netcdf_data_1d_load" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L982">Show source in loader.py:982</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L988">Show source in loader.py:988</a></p>
 <p>Given a netCDF file path and settings, returns a tuple containing the
 epoch time, header, and data as a numpy array. We do apply the mask to the
 data, and fill the masked values with nan.</p>
@@ -7711,7 +7712,7 @@ header, and data as a numpy array.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="netcdf_data_2d_load">netcdf_data_2d_load<a class="headerlink" href="#netcdf_data_2d_load" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1038">Show source in loader.py:1038</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1044">Show source in loader.py:1044</a></p>
 <p>Given a netCDF file path and settings, returns a tuple containing the
 epoch time, header, and data as a numpy array. We do apply the mask to the
 data, and fill the masked values with nan.</p>
@@ -7731,7 +7732,7 @@ header, and data as a numpy array.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="netcdf_get_epoch_time">netcdf_get_epoch_time<a class="headerlink" href="#netcdf_get_epoch_time" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L956">Show source in loader.py:956</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L962">Show source in loader.py:962</a></p>
 <p>Given a netCDF file path and settings, returns an array of epoch times in
 seconds as a float.</p>
 <p>Currently only uses ARM 1.2 netCDF files (base_time + time_offset)</p>
@@ -7748,7 +7749,7 @@ seconds as a float.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">netcdf_get_epoch_time</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="netcdf_info_print">netcdf_info_print<a class="headerlink" href="#netcdf_info_print" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1087">Show source in loader.py:1087</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1093">Show source in loader.py:1093</a></p>
 <p>Prints information about a netCDF file. Useful for generating settings
 dictionaries.</p>
 <h4 id="arguments_10">Arguments<a class="headerlink" href="#arguments_10" title="Permanent link">&para;</a></h4>
@@ -7765,7 +7766,7 @@ dictionaries.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">netcdf_info_print</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_return</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="non_standard_date_location">non_standard_date_location<a class="headerlink" href="#non_standard_date_location" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L562">Show source in loader.py:562</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L568">Show source in loader.py:568</a></p>
 <p>Extracts the date from a non-standard location in the data.</p>
 <h4 id="arguments_11">Arguments<a class="headerlink" href="#arguments_11" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7789,7 +7790,7 @@ dictionaries.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">non_standard_date_location</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">date_location</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="parse_time_column">parse_time_column<a class="headerlink" href="#parse_time_column" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L158">Show source in loader.py:158</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L164">Show source in loader.py:164</a></p>
 <p>Parse the time column(s) from a data line and return the timestamp.</p>
 <h4 id="arguments_12">Arguments<a class="headerlink" href="#arguments_12" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7821,7 +7822,7 @@ dictionaries.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="sample_data">sample_data<a class="headerlink" href="#sample_data" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L215">Show source in loader.py:215</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L221">Show source in loader.py:221</a></p>
 <p>Extract time and data streams from input data.</p>
 <h4 id="arguments_13">Arguments<a class="headerlink" href="#arguments_13" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7861,7 +7862,7 @@ dictionaries.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="save_lake">save_lake<a class="headerlink" href="#save_lake" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L799">Show source in loader.py:799</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L805">Show source in loader.py:805</a></p>
 <p>Save each stream in the lake as separate pickle files.</p>
 <h4 id="arguments_14">Arguments<a class="headerlink" href="#arguments_14" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7880,7 +7881,7 @@ dictionaries.</p>
 <li><a href="../lake/#lake">Lake</a></li>
 </ul>
 <h2 id="save_stream">save_stream<a class="headerlink" href="#save_stream" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L711">Show source in loader.py:711</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L717">Show source in loader.py:717</a></p>
 <p>Save stream object as a pickle file.</p>
 <h2 id="args_1">Args<a class="headerlink" href="#args_1" title="Permanent link">&para;</a></h2>
 <p>stream : Stream
@@ -7899,7 +7900,7 @@ suffix_name : str, optional
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="save_stream_to_csv">save_stream_to_csv<a class="headerlink" href="#save_stream_to_csv" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L638">Show source in loader.py:638</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L644">Show source in loader.py:644</a></p>
 <p>Save stream object as a CSV file, with an option to include formatted time.</p>
 <h4 id="arguments_15">Arguments<a class="headerlink" href="#arguments_15" title="Permanent link">&para;</a></h4>
 <p>stream : Stream
@@ -7930,7 +7931,7 @@ include_iso_datatime : bool, optional
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>
 <h2 id="sizer_data_formatter">sizer_data_formatter<a class="headerlink" href="#sizer_data_formatter" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L473">Show source in loader.py:473</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L479">Show source in loader.py:479</a></p>
 <p>Format data from a particle sizer into structured arrays.</p>
 <h4 id="arguments_16">Arguments<a class="headerlink" href="#arguments_16" title="Permanent link">&para;</a></h4>
 <ul>
