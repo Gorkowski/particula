@@ -6862,13 +6862,13 @@ by avoiding repeated calculations for the same inputs.</p>
 </ul>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <p>Tuple:
-- <code>-</code> <em>q_ext</em> - Extinction efficiency.
-- <code>-</code> <em>q_sca</em> - Scattering efficiency.
-- <code>-</code> <em>q_abs</em> - Absorption efficiency.
-- <code>-</code> <em>g</em> - Asymmetry factor.
-- <code>-</code> <em>q_pr</em> - Radiation pressure efficiency.
-- <code>-</code> <em>q_back</em> - Backscatter efficiency.
-- <code>-</code> <em>q_ratio</em> - Ratio of backscatter to extinction efficiency.</p>
+    - q_ext, Extinction efficiency.
+    - q_sca, Scattering efficiency.
+    - q_abs, Absorption efficiency.
+    - g, Asymmetry factor.
+    - q_pr, Radiation pressure efficiency.
+    - q_back, Backscatter efficiency.
+    - q_ratio, Ratio of backscatter to extinction efficiency.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">discretize_auto_mieq</span><span class="p">(</span>
@@ -6907,11 +6907,11 @@ by creating a more manageable set of unique calculations.</p>
 </ul>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <p>Tuple:
-- The discretized refractive index (m_sphere).
-- The discretized wavelength.
-- The discretized diameter or array of diameters, suitable for use in
-    Mie scattering calculations with potentially improved performance
-    and reduced computational overhead.</p>
+    - The discretized refractive index (m_sphere).
+    - The discretized wavelength.
+    - The discretized diameter or array of diameters, suitable for use
+        in Mie scattering calculations with potentially improved
+        performance and reduced computational overhead.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">discretize_mie_parameters</span><span class="p">(</span>
     <span class="n">m_sphere</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
@@ -6940,10 +6940,10 @@ by creating a more manageable set of unique calculations.</p>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <p>(dict, Tuple):
     - If <code>as_dict</code> is True, returns a dictionary with the bulk optical
-    properties.
+        properties.
     - If <code>as_dict</code> is False, returns a tuple of the bulk
-    optical properties in the following order,
-    (b_ext, b_sca, b_abs, big_g, b_pr, b_back, b_ratio).</p>
+        optical properties in the following order,
+        (b_ext, b_sca, b_abs, big_g, b_pr, b_back, b_ratio).</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">format_mie_results</span><span class="p">(</span>
     <span class="n">b_ext</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -6992,9 +6992,9 @@ parameters and optional truncation of the scattering efficiency.</p>
 </ul>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <p>(NDArray, dict, Tuple):
-- An array of extinction coefficients if <code>extinction_only</code> is True.
-- A dictionary of computed optical properties if <code>as_dict</code> is True.
-- A tuple of computed optical properties otherwise.</p>
+    - An array of extinction coefficients if <code>extinction_only</code> is True.
+    - A dictionary of computed optical properties if <code>as_dict</code> is True.
+    - A tuple of computed optical properties otherwise.</p>
 <h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>ValueError</code> - If <code>truncation_calculation</code> is True but

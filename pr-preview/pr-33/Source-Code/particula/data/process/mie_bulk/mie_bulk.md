@@ -86,13 +86,13 @@ by avoiding repeated calculations for the same inputs.
 #### Returns
 
 Tuple:
-- `-` *q_ext* - Extinction efficiency.
-- `-` *q_sca* - Scattering efficiency.
-- `-` *q_abs* - Absorption efficiency.
-- `-` *g* - Asymmetry factor.
-- `-` *q_pr* - Radiation pressure efficiency.
-- `-` *q_back* - Backscatter efficiency.
-- `-` *q_ratio* - Ratio of backscatter to extinction efficiency.
+    - q_ext, Extinction efficiency.
+    - q_sca, Scattering efficiency.
+    - q_abs, Absorption efficiency.
+    - g, Asymmetry factor.
+    - q_pr, Radiation pressure efficiency.
+    - q_back, Backscatter efficiency.
+    - q_ratio, Ratio of backscatter to extinction efficiency.
 
 #### Signature
 
@@ -142,11 +142,11 @@ by creating a more manageable set of unique calculations.
 #### Returns
 
 Tuple:
-- The discretized refractive index (m_sphere).
-- The discretized wavelength.
-- The discretized diameter or array of diameters, suitable for use in
-    Mie scattering calculations with potentially improved performance
-    and reduced computational overhead.
+    - The discretized refractive index (m_sphere).
+    - The discretized wavelength.
+    - The discretized diameter or array of diameters, suitable for use
+        in Mie scattering calculations with potentially improved
+        performance and reduced computational overhead.
 
 #### Signature
 
@@ -185,10 +185,10 @@ Format the output results of the Mie scattering calculations.
 
 (dict, Tuple):
     - If `as_dict` is True, returns a dictionary with the bulk optical
-    properties.
+        properties.
     - If `as_dict` is False, returns a tuple of the bulk
-    optical properties in the following order,
-    (b_ext, b_sca, b_abs, big_g, b_pr, b_back, b_ratio).
+        optical properties in the following order,
+        (b_ext, b_sca, b_abs, big_g, b_pr, b_back, b_ratio).
 
 #### Signature
 
@@ -248,9 +248,9 @@ parameters and optional truncation of the scattering efficiency.
 #### Returns
 
 (NDArray, dict, Tuple):
-- An array of extinction coefficients if `extinction_only` is True.
-- A dictionary of computed optical properties if `as_dict` is True.
-- A tuple of computed optical properties otherwise.
+    - An array of extinction coefficients if `extinction_only` is True.
+    - A dictionary of computed optical properties if `as_dict` is True.
+    - A tuple of computed optical properties otherwise.
 
 #### Raises
 
