@@ -32,10 +32,12 @@ def data_raw_loader(file_path: str) -> list:
         list: The raw data read from the file as a list of strings.
 
     Examples:
+        ```
         data = data_raw_loader('my_file.txt')
         Loading data from: my_file.txt
         print(data)
         ['line 1', 'line 2', 'line 3']
+        ```
     """
     try:
         with open(file_path, "r", encoding="utf8", errors="replace") as file:
@@ -70,12 +72,14 @@ def filter_list(data: List[str], char_counts: dict) -> List[str]:
             character(s).
 
     Examples:
-        >>> data = ['apple,banana,orange',
-        >>>         'pear,kiwi,plum', 'grapefruit,lemon']
-        >>> char_counts = {',': 2}
-        >>> filtered_data = filter_list(data, char_counts)
-        >>> print(filtered_data)
+        ```
+        data = ['apple,banana,orange',
+                 'pear,kiwi,plum', 'grapefruit,lemon']
+        char_counts = {',': 2}
+        filtered_data = filter_list(data, char_counts)
+        print(filtered_data)
         ['apple,banana,orange', 'pear,kiwi,plum']
+        ```
     """
     filtered_data = data
     for char, count in char_counts.items():
@@ -107,16 +111,18 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
         TypeError: If `data` is not provided as a list.
 
     Examples:
-        >>> data = ['row 1', 'row 2', 'row 3']
-        >>> data_checks = {
-        ...     "characters": [0, 10],
-        ...     "char_counts": {",": 2, "/": 0, ":": 0},
-        ...     "skip_rows": 0,
-        ...     "skip_end": 0
-        ... }
-        >>> formatted_data = data_format_checks(data, data_checks)
-        >>> print(formatted_data)
+        ```
+        data = ['row 1', 'row 2', 'row 3']
+        data_checks = {
+            "characters": [0, 10],
+            "char_counts": {",": 2, "/": 0, ":": 0},
+            "skip_rows": 0,
+            "skip_end": 0
+        }
+        formatted_data = data_format_checks(data, data_checks)
+        print(formatted_data)
         ['row 2']
+        ```
     """
     if not isinstance(data, list):
         raise TypeError("data must be a list")
