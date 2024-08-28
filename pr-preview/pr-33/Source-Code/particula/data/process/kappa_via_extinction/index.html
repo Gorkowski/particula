@@ -1209,26 +1209,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
+    <nav class="md-nav" aria-label="extinction_ratio_wet_dry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature" class="md-nav__link">
@@ -1251,26 +1251,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
+    <nav class="md-nav" aria-label="fit_extinction_ratio_with_kappa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_1" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_1" class="md-nav__link">
@@ -1293,26 +1293,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+    <nav class="md-nav" aria-label="kappa_from_extinction_looped">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_2" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_2" class="md-nav__link">
@@ -6706,46 +6706,41 @@
 </blockquote>
 <h2 id="extinction_ratio_wet_dry">extinction_ratio_wet_dry<a class="headerlink" href="#extinction_ratio_wet_dry" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L16">Show source in kappa_via_extinction.py:16</a></p>
-<p>Calculates the extinction ratio between wet and dry aerosols, considering
-water uptake through kappa. This function uses Mie theory to determine the
-optical properties of aerosols with varying water content, allowing for
-analysis of hygroscopic growth and its impact on aerosol optical
-characteristics.</p>
-<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
-<p>kappa : Union[float, NDArray[np.float64]]
-    Hygroscopicity parameter, defining water uptake ability of particles.
-number_per_cm3 : NDArray[np.float64]
-    Number concentration of particles per cubic centimeter for each size
-    bin.
-diameters : NDArray[np.float64]
-    Diameters of particles in nanometers for each size bin.
-water_activity_sizer : NDArray[np.float64]
-    Water activity of the aerosol size distribution.
-water_activity_dry : NDArray[np.float64]
-    Water activity for the calculation of 'dry' aerosol properties.
-water_activity_wet : NDArray[np.float64]
-    Water activity for the calculation of 'wet' aerosol properties.
-refractive_index_dry : Union[complex, float, np.float16], optional
-    Refractive index of the dry aerosol particles.
-water_refractive_index : Union[complex, float], optional
-    Refractive index of water.
-wavelength : float, optional
-    Wavelength of the incident light in nanometers.
-discretize : bool, optional
-    If True, discretizes input parameters for Mie calculations to enable
-    caching.
-return_coefficients : bool, optional
-    If True, returns the individual extinction coefficients for wet and
-    dry aerosols instead of their ratio.
-return_all_optics : bool, optional
-    If True, returns all optical properties calculated by Mie theory,
-    not just extinction.</p>
-<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
-<p>Union[float, Tuple[NDArray, NDArray]]
-    By default, returns the ratio of wet to dry aerosol extinction.
-    If <code>return_coefficients</code> is True, returns a tuple of NDArrays
-    containing the extinction coefficients for wet and dry aerosols,
-    respectively.</p>
+<p>Calculate the extinction ratio between wet and dry aerosols, considering
+water uptake through the kappa parameter.</p>
+<p>This function uses Mie theory to determine the optical properties of
+aerosols with varying water content, allowing for analysis of hygroscopic
+growth and its impact on aerosol optical characteristics.</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>kappa</code> - Hygroscopicity parameter, defining the water uptake ability
+    of particles.</li>
+<li><code>number_per_cm3</code> - Number concentration of particles per cubic
+    centimeter for each size bin.</li>
+<li><code>diameters</code> - Diameters of particles in nanometers for each size bin.</li>
+<li><code>water_activity_sizer</code> - Water activity of the aerosol size distribution.</li>
+<li><code>water_activity_dry</code> - Water activity for the calculation of "dry"
+    aerosol properties.</li>
+<li><code>water_activity_wet</code> - Water activity for the calculation of "wet"
+    aerosol properties.</li>
+<li><code>refractive_index_dry</code> - Refractive index of the dry aerosol particles.
+    Default is 1.45.</li>
+<li><code>water_refractive_index</code> - Refractive index of water. Default is 1.33.</li>
+<li><code>wavelength</code> - Wavelength of the incident light in nanometers.
+    Default is 450 nm.</li>
+<li><code>discretize</code> - If True, discretizes input arguments for Mie calculations
+    to enable caching. Default is True.</li>
+<li><code>return_coefficients</code> - If True, returns the individual extinction
+    coefficients for wet and dry aerosols instead of their ratio.
+    Default is False.</li>
+<li><code>return_all_optics</code> - If True, returns all optical properties calculated
+    by Mie theory, not just extinction. Default is False.</li>
+</ul>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<p>By default, returns the ratio of wet to dry aerosol extinction.
+If <code>return_coefficients</code> is True, returns a tuple of NDArrays
+containing the extinction coefficients for wet and dry aerosols,
+respectively.</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">extinction_ratio_wet_dry</span><span class="p">(</span>
     <span class="n">kappa</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
@@ -6763,46 +6758,40 @@ return_all_optics : bool, optional
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="fit_extinction_ratio_with_kappa">fit_extinction_ratio_with_kappa<a class="headerlink" href="#fit_extinction_ratio_with_kappa" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L131">Show source in kappa_via_extinction.py:131</a></p>
-<p>Fits the kappa parameter based on the measured extinction ratios of dry
-and wet aerosols, utilizing Mie theory to account for water uptake
-effects. This method optimizes kappa to minimize the difference between
-the calculated and observed extinction ratio of wet to dry aerosols.</p>
-<h2 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h2>
-<p>b_ext_dry : Union[float, np.float64]
-    The measured extinction of the dry aerosol.
-b_ext_wet : Union[float, np.float64]
-    The measured extinction of the wet aerosol.
-number_per_cm3 : NDArray[np.float64]
-    The number concentration of particles per cubic centimeter for each
-    size bin.
-diameters : NDArray[np.float64]
-    The diameters of particles in nanometers for each size bin.
-water_activity_sizer : NDArray[np.float64]
-    The water activity corresponding to the aerosol size distribution.
-water_activity_dry : NDArray[np.float64]
-    The water activity for the 'dry' aerosol condition.
-water_activity_wet : NDArray[np.float64]
-    The water activity for the 'wet' aerosol condition.
-refractive_index_dry : Union[complex, float, np.float16], optional
-    The refractive index of the dry aerosol particles.
-water_refractive_index : Union[complex, float], optional
-    The refractive index of water.
-wavelength : float, optional
-    The wavelength of incident light in nanometers.
-discretize : bool, optional
-    If True, discretizes input parameters for Mie calculations to enable
-    caching.
-kappa_bounds : Tuple[float, float], optional
-    The bounds within which to fit the kappa parameter.
-kappa_tolerance : float, optional
-    The tolerance level for the optimization of kappa.
-kappa_maxiter : int, optional
-    The maximum number of iterations allowed in the optimization process.</p>
-<h2 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
-<p>Union[float, np.float64]
-    The optimized kappa parameter that best fits the observed extinction
-    ratios.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L123">Show source in kappa_via_extinction.py:123</a></p>
+<p>Fit the kappa parameter based on the measured extinction ratios of dry
+and wet aerosols, considering water uptake effects.</p>
+<p>This method uses Mie theory to optimize kappa by minimizing the difference
+between the calculated and observed extinction ratios of wet to dry
+aerosols.</p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>b_ext_dry</code> - The measured extinction of the dry aerosol.</li>
+<li><code>b_ext_wet</code> - The measured extinction of the wet aerosol.</li>
+<li><code>number_per_cm3</code> - Number concentration of particles per cubic centimeter
+    for each size bin.</li>
+<li><code>diameters</code> - Diameters of particles in nanometers for each size bin.</li>
+<li><code>water_activity_sizer</code> - Water activity corresponding to the aerosol
+    size distribution.</li>
+<li><code>water_activity_dry</code> - Water activity for the "dry" aerosol condition.</li>
+<li><code>water_activity_wet</code> - Water activity for the "wet" aerosol condition.</li>
+<li><code>refractive_index_dry</code> - Refractive index of the dry aerosol particles.
+    Default is 1.45.</li>
+<li><code>water_refractive_index</code> - Refractive index of water. Default is 1.33.</li>
+<li><code>wavelength</code> - Wavelength of incident light in nanometers. Default is
+    450 nm.</li>
+<li><code>discretize</code> - If True, discretizes input arguments for Mie calculations
+    to enable caching. Default is True.</li>
+<li><code>kappa_bounds</code> - Bounds within which to fit the kappa parameter.
+    Default is (0, 1).</li>
+<li><code>kappa_tolerance</code> - Tolerance level for the optimization of kappa.
+    Default is 1e-6.</li>
+<li><code>kappa_maxiter</code> - Maximum number of iterations allowed in the optimization
+    process. Default is 200.</li>
+</ul>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<p>The optimized kappa parameter that best fits the observed extinction
+ratios.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">fit_extinction_ratio_with_kappa</span><span class="p">(</span>
     <span class="n">b_ext_dry</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -6822,40 +6811,36 @@ kappa_maxiter : int, optional
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="kappa_from_extinction_looped">kappa_from_extinction_looped<a class="headerlink" href="#kappa_from_extinction_looped" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L232">Show source in kappa_via_extinction.py:232</a></p>
-<p>Fits the extinction ratio to the kappa value for a given set of
-measurements, looping over time indexes in number_per_cm3. This function
-is tailored for analyzing data from a CAPS (Cavity Attenuated Phase Shift)
-instrument under varying humidities.</p>
-<h2 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h2>
-<p>extinction_dry : NDArray[np.float64]
-    Array of dry aerosol extinction measurements.
-extinction_wet : NDArray[np.float64]
-    Array of wet aerosol extinction measurements.
-number_per_cm3 : NDArray[np.float64]
-    Array of particle number concentrations in #/cm³.
-diameter : NDArray[np.float64]
-    Array of particle diameters.
-water_activity_sizer : NDArray[np.float64]
-    Water activity (relative humidity/100) of the sizing instrument's air.
-water_activity_sample_dry : NDArray[np.float64]
-    Water activity (relative humidity/100) of the air for dry measurements.
-water_activity_sample_wet : NDArray[np.float64]
-    Water activity (relative humidity/100) of the air for wet measurements.
-refractive_index_dry : Union[complex, float], optional
-    Refractive index of dry particles. Default is 1.45.
-water_refractive_index : Union[complex, float], optional
-    Refractive index of water. Default is 1.33.
-wavelength : float, optional
-    Wavelength of the light source in nanometers. Default is 450.
-discretize : bool, optional
-    If True, calculations are performed with discretized parameter values
-    to potentially improve performance. Default is True.</p>
-<h2 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h2>
-<p>NDArray[np.float64]
-    A 2D array where each row corresponds to the time-indexed kappa value,
-    lower and upper bounds of the kappa estimation, structured as
-    [kappa, lower, upper].</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/kappa_via_extinction.py#L215">Show source in kappa_via_extinction.py:215</a></p>
+<p>Fit the extinction ratio to the kappa value for a set of measurements,
+looping over time indexes in <code>number_per_cm3</code>.</p>
+<p>This function is designed for analyzing data from a CAPS (Cavity Attenuated
+Phase Shift) instrument under varying humidities.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>extinction_dry</code> - Array of dry aerosol extinction measurements.</li>
+<li><code>extinction_wet</code> - Array of wet aerosol extinction measurements.</li>
+<li><code>number_per_cm3</code> - Array of particle number concentrations in #/cm³.</li>
+<li><code>diameter</code> - Array of particle diameters in nanometers.</li>
+<li><code>water_activity_sizer</code> - Water activity (relative humidity/100) of the
+    sizing instrument's air.</li>
+<li><code>water_activity_sample_dry</code> - Water activity (relative humidity/100) of
+    the air for dry measurements.</li>
+<li><code>water_activity_sample_wet</code> - Water activity (relative humidity/100) of
+    the air for wet measurements.</li>
+<li><code>refractive_index_dry</code> - Refractive index of dry particles.
+    Default is 1.45.</li>
+<li><code>water_refractive_index</code> - Refractive index of water. Default is 1.33.</li>
+<li><code>wavelength</code> - Wavelength of the light source in nanometers.
+    Default is 450 nm.</li>
+<li><code>discretize</code> - If True, calculations are performed with discretized
+    parameter values to potentially improve performance.
+    Default is True.</li>
+</ul>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<p>A 2D array where each row corresponds to the time-indexed kappa value,
+lower and upper bounds of the kappa estimation, structured as
+[kappa, lower, upper].</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">kappa_from_extinction_looped</span><span class="p">(</span>
     <span class="n">extinction_dry</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>

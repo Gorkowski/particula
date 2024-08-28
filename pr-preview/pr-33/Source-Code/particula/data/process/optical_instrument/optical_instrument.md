@@ -91,30 +91,29 @@ def set_keywords(self, **kwargs: Union[str, float, int, bool]): ...
 
 ## albedo_from_ext_scat
 
-[Show source in optical_instrument.py:221](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L221)
+[Show source in optical_instrument.py:247](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L247)
 
-Calculates the albedo from the extinction and scattering data in Stream.
+Calculate the albedo from the extinction and scattering data in the stream.
 
-The function computes the absorption as the difference between extinction
-and scattering, and the single-scattering albedo as the ratio of
-scattering to extinction. If the extinction values are zero or negative,
-the albedo is set to np.nan. The user can choose to filter out
-zero or negative extinction values before calculation.
+This function computes the absorption as the difference between extinction
+and scattering, and the single-scattering albedo as the ratio of scattering
+to extinction. If the extinction values are zero or negative, the albedo is
+set to `np.nan`.
 
 #### Arguments
 
-- `stream` *Stream* - The datastream containing CAPS data.
-- `extinction_key` *str* - The key for the extinction data in the stream.
-- `scattering_key` *str* - The key for the scattering data in the stream.
-- `new_absorption_key` *str* - The key where the calculated absorption will
+- `stream` - The datastream containing CAPS data.
+- `extinction_key` - The key for the extinction data in the stream.
+- `scattering_key` - The key for the scattering data in the stream.
+- `new_absorption_key` - The key where the calculated absorption will
     be stored.
-- `new_albedo_key` *str* - The key where the calculated albedo will
+- `new_albedo_key` - The key where the calculated albedo will
     be stored.
 
 #### Returns
 
 - `Stream` - The updated datastream with the new absorption and albedo
-    values.
+values.
 
 #### Raises
 
@@ -143,8 +142,20 @@ def albedo_from_ext_scat(
 
 [Show source in optical_instrument.py:102](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L102)
 
-Function to process the CAPS data, and smps for kappa fitting, and then add
-it to the datalake. Also applies truncation corrections to the CAPS data.
+Process CAPS data and SMPS data for kappa fitting, apply truncation
+corrections, and add the results to the caps stream.
+
+#### Arguments
+
+- `stream_size_distribution` - Stream containing size distribution data.
+- `stream_sizer_properties` - Stream containing sizer properties data.
+- `stream_caps` - Stream containing CAPS data.
+- `keywords` - Dictionary containing configuration parameters.
+
+#### Returns
+
+Stream with processed CAPS data, including kappa fitting results
+and truncation corrections.
 
 #### Signature
 
