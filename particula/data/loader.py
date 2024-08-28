@@ -32,7 +32,7 @@ def data_raw_loader(file_path: str) -> list:
         list: The raw data read from the file as a list of strings.
 
     Examples:
-        ``` py title="Load Text Data"
+        ``` py title="Load my_file.txt"
         data = data_raw_loader('my_file.txt')
         Loading data from: my_file.txt
         print(data)
@@ -72,7 +72,7 @@ def filter_list(data: List[str], char_counts: dict) -> List[str]:
             character(s).
 
     Examples:
-        ```
+        ``` py title="Filter rows based on comma counts"
         data = ['apple,banana,orange',
                  'pear,kiwi,plum', 'grapefruit,lemon']
         char_counts = {',': 2}
@@ -111,7 +111,7 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
         TypeError: If `data` is not provided as a list.
 
     Examples:
-        ```
+        ``` py title="Validate line based on counts"
         data = ['row 1', 'row 2', 'row 3']
         data_checks = {
             "characters": [0, 10],
