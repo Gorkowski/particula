@@ -7489,16 +7489,16 @@
 <li><code>TypeError</code> - If <code>data</code> is not provided as a list.</li>
 </ul>
 <h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>data = [&#39;row 1&#39;, &#39;row 2&#39;, &#39;row 3&#39;]
-data_checks = {
-    &quot;characters&quot;: [0, 10],
-    &quot;char_counts&quot;: {&quot;,&quot;: 2, &quot;/&quot;: 0, &quot;:&quot;: 0},
-    &quot;skip_rows&quot;: 0,
-    &quot;skip_end&quot;: 0
-}
-formatted_data = data_format_checks(data, data_checks)
-print(formatted_data)
-[&#39;row 2&#39;]
+<div class="highlight"><span class="filename">Validate line based on counts</span><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;row 1&#39;</span><span class="p">,</span> <span class="s1">&#39;row 2&#39;</span><span class="p">,</span> <span class="s1">&#39;row 3&#39;</span><span class="p">]</span>
+<span class="n">data_checks</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;characters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="s2">&quot;char_counts&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;,&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="s2">&quot;skip_rows&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;skip_end&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+<span class="n">formatted_data</span> <span class="o">=</span> <span class="n">data_format_checks</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data_checks</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">formatted_data</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;row 2&#39;</span><span class="p">]</span>
 </code></pre></div>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">data_format_checks</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">data_checks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
@@ -7517,7 +7517,7 @@ list of strings.</p>
 <li><code>list</code> - The raw data read from the file as a list of strings.</li>
 </ul>
 <h4 id="examples_1">Examples<a class="headerlink" href="#examples_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><span class="filename">Load Text Data</span><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">data_raw_loader</span><span class="p">(</span><span class="s1">&#39;my_file.txt&#39;</span><span class="p">)</span>
+<div class="highlight"><span class="filename">Load my_file.txt</span><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">data_raw_loader</span><span class="p">(</span><span class="s1">&#39;my_file.txt&#39;</span><span class="p">)</span>
 <span class="n">Loading</span> <span class="n">data</span> <span class="n">from</span><span class="p">:</span> <span class="n">my_file</span><span class="o">.</span><span class="n">txt</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="p">[</span><span class="s1">&#39;line 1&#39;</span><span class="p">,</span> <span class="s1">&#39;line 2&#39;</span><span class="p">,</span> <span class="s1">&#39;line 3&#39;</span><span class="p">]</span>
@@ -7548,12 +7548,12 @@ character count requirements.</p>
     character(s).</li>
 </ul>
 <h4 id="examples_2">Examples<a class="headerlink" href="#examples_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>data = [&#39;apple,banana,orange&#39;,
-         &#39;pear,kiwi,plum&#39;, &#39;grapefruit,lemon&#39;]
-char_counts = {&#39;,&#39;: 2}
-filtered_data = filter_list(data, char_counts)
-print(filtered_data)
-[&#39;apple,banana,orange&#39;, &#39;pear,kiwi,plum&#39;]
+<div class="highlight"><span class="filename">Filter rows based on comma counts</span><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple,banana,orange&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;pear,kiwi,plum&#39;</span><span class="p">,</span> <span class="s1">&#39;grapefruit,lemon&#39;</span><span class="p">]</span>
+<span class="n">char_counts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;,&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">filtered_data</span> <span class="o">=</span> <span class="n">filter_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">char_counts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">filtered_data</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;apple,banana,orange&#39;</span><span class="p">,</span> <span class="s1">&#39;pear,kiwi,plum&#39;</span><span class="p">]</span>
 </code></pre></div>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">filter_list</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">char_counts</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>

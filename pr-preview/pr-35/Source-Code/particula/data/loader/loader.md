@@ -26,7 +26,7 @@ A list of strings containing the validated and formatted data.
 
 #### Examples
 
-```
+``` py title="Validate line based on counts"
 data = ['row 1', 'row 2', 'row 3']
 data_checks = {
     "characters": [0, 10],
@@ -66,7 +66,7 @@ list of strings.
 
 #### Examples
 
-``` py title="Load Text Data"
+``` py title="Load my_file.txt"
 data = data_raw_loader('my_file.txt')
 Loading data from: my_file.txt
 print(data)
@@ -111,7 +111,7 @@ character count requirements.
 
 #### Examples
 
-```
+``` py title="Filter rows based on comma counts"
 data = ['apple,banana,orange',
          'pear,kiwi,plum', 'grapefruit,lemon']
 char_counts = {',': 2}
