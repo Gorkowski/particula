@@ -840,16 +840,11 @@ def save_lake(
     """
     Save each stream in the lake as separate pickle files.
 
-    Args
-    ----------
-    path : str
-        Path to save pickle files.
-    lake : Lake
-        Lake object to be saved.
-    suffix_name : str, optional
-        Suffix to add to pickle file names. The default is None.
-    folder : str, optional
-        Folder to save pickle files. The default is 'output'.
+    Arguments:
+        path: Path to save pickle files.
+        lake: Lake object to be saved.
+        suffix_name: Suffix to add to pickle file names. The default is None.
+        folder: Folder to save pickle files. The default is 'output'.
     """
     print("Saving lake...")
 
@@ -862,7 +857,7 @@ def save_lake(
     os.makedirs(output_folder, exist_ok=True)
 
     # Save each stream as a separate file
-    for i, (stream_name, stream) in enumerate(lake.streams.items(), start=1):
+    for i, (stream_name, stream) in enumerate(lake.items(), start=1):
         file_name = (
             f"lake_part{i:02d}_{suffix_name}.pk"
             if suffix_name
@@ -875,15 +870,18 @@ def save_lake(
             print(f"Saved stream '{stream_name}' as '{file_name}'")
         except IOError as e:
             print(
-                f"Failed to save stream '{stream_name}' due to an I/O error: {e}"
+                f"Failed to save stream '{stream_name}' "
+                "due to an I/O error: {e}"
             )
         except pickle.PickleError as e:
             print(
-                f"Failed to save stream '{stream_name}' due to a pickling error: {e}"
+                f"Failed to save stream '{stream_name}' "
+                "due to a pickling error: {e}"
             )
         except Exception as e:
             print(
-                f"An unexpected error occurred while saving stream '{stream_name}': {e}"
+                f"An unexpected error occurred while saving stream"
+                f" '{stream_name}': {e}"
             )
 
     # Save the lake metadata (just the stream names) in a separate file
@@ -908,35 +906,85 @@ def save_lake(
 def load_lake(
     path: str,
     suffix_name: Optional[str] = None,
-    folder: Optional[str] = None,
+    folder: Optional[str] = "output",
 ) -> Lake:
     """
-    Load datalake object from a pickle file.
+    Load a lake object by loading individual streams from separate pickle files.
 
-    Args
-    ----------
-    path : str
-        Path to load pickle file.
+    Arguments:
+        path: Path to load pickle files.
+        suffix_name: Suffix to add to pickle file names. The default is None.
+        folder: Folder to load pickle files from. The default is 'output'.
 
-    Returns
-    -------
-    data_lake : DataLake
-        Loaded DataLake object.
-
-    Notes:
-        spell correction suffix -> suffix
+    Returns:
+        Lake: Reconstructed Lake object.
     """
-    file_name = (
-        f"lake{suffix_name}.pk" if suffix_name is not None else "lake.pk"
+    print("Loading lake...")
+
+    # Validate path
+    if not os.path.isdir(path):
+        raise ValueError(f"Provided path '{path}' is not a directory.")
+
+    # Path to the folder where streams are stored
+    load_folder = os.path.join(path, folder)
+
+    # Load lake metadata (stream names)
+    metadata_file = (
+        f"lake_metadata_{suffix_name}.pk"
+        if suffix_name
+        else "lake_metadata.pk"
     )
-    # path to load pickle file
-    load_folder = os.path.join(path, folder) if folder is not None else path
-    file_path = os.path.join(load_folder, file_name)
+    metadata_path = os.path.join(load_folder, metadata_file)
 
-    # load datalake
-    with open(file_path, "rb") as file:
-        lake = pickle.load(file)
+    try:
+        with open(metadata_path, "rb") as file:
+            stream_names = pickle.load(file)
+        print(f"Loaded lake metadata from '{metadata_file}'")
+    except IOError as e:
+        raise ValueError(
+            f"Failed to load lake metadata due to an I/O error: {e}"
+        )
+    except pickle.PickleError as e:
+        raise ValueError(
+            f"Failed to load lake metadata due to a pickling error: {e}"
+        )
+    except Exception as e:
+        raise ValueError(
+            f"An unexpected error occurred while loading lake metadata: {e}"
+        )
 
+    # Initialize an empty lake
+    lake = Lake()
+
+    # Load each stream and add to the lake
+    for i, stream_name in enumerate(stream_names, start=1):
+        file_name = (
+            f"lake_part{i:02d}_{suffix_name}.pk"
+            if suffix_name
+            else f"lake_part{i:02d}.pk"
+        )
+        file_path = os.path.join(load_folder, file_name)
+
+        try:
+            with open(file_path, "rb") as file:
+                stream = pickle.load(file)
+            lake.add_stream(stream, stream_name)
+            print(f"Loaded stream '{stream_name}' from '{file_name}'")
+        except IOError as e:
+            print(
+                f"Failed to load stream '{stream_name}' "
+                "due to an I/O error: {e}"
+            )
+        except pickle.PickleError as e:
+            print(
+                f"Failed to load stream '{stream_name}' "
+                "due to a pickling error: {e}"
+            )
+        except Exception as e:
+            print(
+                "An unexpected error occurred while loading stream "
+                f"'{stream_name}': {e}"
+            )
     return lake
 
 
