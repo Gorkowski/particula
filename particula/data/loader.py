@@ -32,7 +32,7 @@ def data_raw_loader(file_path: str) -> list:
         list: The raw data read from the file as a list of strings.
 
     Examples:
-        ```
+        ``` py title="Load Text Data"
         data = data_raw_loader('my_file.txt')
         Loading data from: my_file.txt
         print(data)
