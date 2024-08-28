@@ -1230,26 +1230,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
+    <nav class="md-nav" aria-label="assign_scattering_thetas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature" class="md-nav__link">
@@ -1272,26 +1272,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_1" class="md-nav__link">
+    <nav class="md-nav" aria-label="calculate_scattering_angles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_1" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_1" class="md-nav__link">
@@ -1314,26 +1314,26 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#parameters_2" class="md-nav__link">
+    <nav class="md-nav" aria-label="discretize_scattering_angles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Parameters
+      Arguments
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#returns_2" class="md-nav__link">
     <span class="md-ellipsis">
       Returns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Returns">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#signature_2" class="md-nav__link">
@@ -6446,7 +6446,7 @@
         
   
   <span class="md-ellipsis">
-    Coagulation Basic 2 PDF
+    Coagulation Basics 2: PDF Representation
   </span>
   
 
@@ -6467,7 +6467,7 @@
         
   
   <span class="md-ellipsis">
-    Coagulation Basic 3 compared
+    Coagulation Basic 3: PMF vs. PDF
   </span>
   
 
@@ -6488,7 +6488,7 @@
         
   
   <span class="md-ellipsis">
-    Particle Resolved Coagulation
+    Coagulation Basic 4: Particle Resolved
   </span>
   
 
@@ -6509,7 +6509,7 @@
         
   
   <span class="md-ellipsis">
-    Particle Resolved Coagulation Using the Super Droplet Method
+    Coagulation Basic 5: Super Droplet Method
   </span>
   
 
@@ -6705,25 +6705,24 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_angular.py">particula.data.process.mie_angular</a> module.</p>
 </blockquote>
 <h2 id="assign_scattering_thetas">assign_scattering_thetas<a class="headerlink" href="#assign_scattering_thetas" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_angular.py#L110">Show source in mie_angular.py:110</a></p>
-<p>Assigns scattering angles and efficiencies based on the z-axis position
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_angular.py#L99">Show source in mie_angular.py:99</a></p>
+<p>Assign scattering angles and efficiencies based on the z-axis position
 within the CAPS instrument.</p>
-<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
-<p>alpha : float
-    Forward scattering angle in radians.
-beta : float
-    Backward scattering angle in radians.
-q_mie : float
-    The Mie scattering efficiency.
-z_position : Union[float, np.float64]
-    The position along the z-axis (in cm).
-integrate_sphere_diameter_cm : float
-    The diameter of the integrating sphere (in cm).</p>
-<h2 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
-<p>Tuple[float, float, float]
-    A tuple containing the forward scattering angle (theta1), backward
-    scattering angle (theta2), and the ideal scattering efficiency
-    (qsca_ideal) for the given z-axis position.</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>alpha</code> - The forward scattering angle in radians.</li>
+<li><code>beta</code> - The backward scattering angle in radians.</li>
+<li><code>q_mie</code> - The Mie scattering efficiency.</li>
+<li><code>z_position</code> - The position along the z-axis in centimeters (cm).</li>
+<li><code>integrate_sphere_diameter_cm</code> - The diameter of the integrating sphere
+    in centimeters (cm).</li>
+</ul>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- The forward scattering angle (theta1) in radians.
+- The backward scattering angle (theta2) in radians.
+- The ideal scattering efficiency (qsca_ideal) for the given z-axis
+    position.</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">assign_scattering_thetas</span><span class="p">(</span>
     <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -6734,20 +6733,20 @@ integrate_sphere_diameter_cm : float
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="calculate_scattering_angles">calculate_scattering_angles<a class="headerlink" href="#calculate_scattering_angles" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_angular.py#L68">Show source in mie_angular.py:68</a></p>
-<p>Calculates forward and backward scattering angles for a given position
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_angular.py#L61">Show source in mie_angular.py:61</a></p>
+<p>Calculate forward and backward scattering angles for a given position
 along the z-axis within the CAPS instrument geometry.</p>
-<h2 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h2>
-<p>z_position : Union[float, np.float64]
-    The position along the z-axis (in cm).
-integrate_sphere_diameter_cm : float
-    The diameter of the integrating sphere (in cm).
-tube_diameter_cm : float
-    The diameter of the sample tube (in cm).</p>
-<h2 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
-<p>Tuple[float, float]
-    A tuple containing the forward (alpha) and backward (beta)
-    scattering angles in radians.</p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>z_position</code> - The position along the z-axis in centimeters (cm).</li>
+<li><code>integrate_sphere_diameter_cm</code> - The diameter of the integrating sphere
+    in centimeters (cm).</li>
+<li><code>tube_diameter_cm</code> - The diameter of the sample tube in centimeters (cm).</li>
+</ul>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- The forward scattering angle (alpha) in radians.
+- The backward scattering angle (beta) in radians.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_scattering_angles</span><span class="p">(</span>
     <span class="n">z_position</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -6757,34 +6756,30 @@ tube_diameter_cm : float
 </code></pre></div>
 <h2 id="discretize_scattering_angles">discretize_scattering_angles<a class="headerlink" href="#discretize_scattering_angles" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_angular.py#L14">Show source in mie_angular.py:14</a></p>
-<p>Discretizes and caches the scattering function for a spherical particle
-with specified material properties and size. This function aims to optimize
-the performance of scattering calculations by caching results for
-frequently used parameters, reducing the need for repeated calculations.</p>
-<h2 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h2>
-<p>m_sphere : Union[complex, float]
-    The complex or real refractive index of the particle.
-wavelength : float
-    The wavelength of the incident light in nanometers (nm).
-diameter : Union[float, np.float64]
-    The diameter of the particle in nanometers (nm).
-min_angle : float, optional
-    The minimum scattering angle in degrees to be considered in the
-    calculation. Defaults to 0.
-max_angle : float, optional
-    The maximum scattering angle in degrees to be considered in the
-    calculation. Defaults to 180.
-angular_resolution : float, optional
-    The resolution in degrees between calculated scattering angles.
-    Defaults to 1.</p>
-<h2 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h2>
-<p>Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]
-A tuple containing numpy arrays for the scattering function measurements:
-    - measure: The scattering intensity as a function of angle.
-    - parallel: The scattering intensity for parallel polarization.
-    - perpendicular: The scattering intensity for
-        perpendicular polarization.
-    - unpolarized: The unpolarized scattering intensity.</p>
+<p>Discretize and cache the scattering function for a spherical particle
+with specified material properties and size.</p>
+<p>This function optimizes the performance of scattering calculations by
+caching results for frequently used parameters, thereby reducing the
+need for repeated calculations.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>m_sphere</code> - The complex or real refractive index of the particle.</li>
+<li><code>wavelength</code> - The wavelength of the incident light in nanometers (nm).</li>
+<li><code>diameter</code> - The diameter of the particle in nanometers (nm).</li>
+<li><code>min_angle</code> - The minimum scattering angle in degrees to be considered in
+    the calculation. Defaults to 0.</li>
+<li><code>max_angle</code> - The maximum scattering angle in degrees to be considered in
+    the calculation. Defaults to 180.</li>
+<li><code>angular_resolution</code> - The resolution in degrees between calculated
+    scattering angles. Defaults to 1.</li>
+</ul>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<p>Tuple:
+- <code>-</code> <em>measure</em> - The scattering intensity as a function of angle.
+- <code>-</code> <em>parallel</em> - The scattering intensity for parallel polarization.
+- <code>-</code> <em>perpendicular</em> - The scattering intensity for perpendicular
+    polarization.
+- <code>-</code> <em>unpolarized</em> - The unpolarized scattering intensity.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">discretize_scattering_angles</span><span class="p">(</span>

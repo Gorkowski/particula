@@ -6,24 +6,24 @@
 
 ## iterate_merge_distributions
 
-[Show source in size_distribution.py:351](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L351)
+[Show source in size_distribution.py:341](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L341)
 
 Merge two sets of particle size distributions using linear weighting.
 
 #### Arguments
 
-- `concentration_lower` - The concentration of particles in the
-    lower distribution.
-- `diameters_lower` - The diameters corresponding to the
-    lower distribution.
-- `concentration_upper` - The concentration of particles in the
-    upper distribution.
+- `concentration_lower` - The concentration of particles in the lower
+    distribution.
+- `diameters_lower` - The diameters corresponding to the lower distribution.
+- `concentration_upper` - The concentration of particles in the upper
+    distribution.
 - `diameters_upper` - The diameters corresponding to the upper distribution.
 
 #### Returns
 
-A tuple containing the merged diameter distribution and the merged
-    concentration distribution.
+Tuple:
+- The merged diameter distribution.
+- The merged concentration distribution.
 
 #### Signature
 
@@ -42,29 +42,27 @@ def iterate_merge_distributions(
 
 [Show source in size_distribution.py:20](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L20)
 
-Calculates the mean properties of the size distribution.
+Calculate the mean properties of the size distribution.
 
-Args
-----------
-sizer_dndlogdp : List[float]
-    Concentration of particles in each bin.
-sizer_diameter : List[float]
-    Bin centers
-total_concentration : Optional[float], default=None
-    Total concentration of particles in the distribution.
-sizer_limits : Optional[Tuple[float, float]], default=None
-    The lower and upper limits of the size of interest.
+#### Arguments
 
-Returns
--------
-Tuple[float, float, float, float, float, float, float]
-    Total concentration of particles in the distribution.
-    Total mass of particles in the distribution.
-    Mean diameter of the distribution by number.
-    Mean diameter of the distribution by volume.
-    Geometric mean diameter of the distribution.
-    Mode diameter of the distribution by number.
-    Mode diameter of the distribution by volume.
+- `sizer_dndlogdp` - Array of particle concentrations in each bin.
+- `sizer_diameter` - Array of bin center diameters.
+- `total_concentration` - Optional; the total concentration of particles
+    in the distribution. If not provided, it will be calculated.
+- `sizer_limits` - Optional; the lower and upper limits of the size
+    range of interest. If not provided, the full range will be used.
+
+#### Returns
+
+Tuple:
+- Total concentration of particles in the distribution.
+- Total mass of particles in the distribution.
+- Mean diameter of the distribution by number.
+- Mean diameter of the distribution by volume.
+- Geometric mean diameter of the distribution.
+- Mode diameter of the distribution by number.
+- Mode diameter of the distribution by volume.
 
 #### Signature
 
@@ -81,28 +79,29 @@ def mean_properties(
 
 ## merge_distributions
 
-[Show source in size_distribution.py:271](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L271)
+[Show source in size_distribution.py:261](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L261)
 
-Merge two particle size distributions using linear weighting.
+Merge two particle size distributions using linear weighting,
+accounting for mobility versus aerodynamic diameters.
 
 #### Arguments
 
-concentration_lower:
-    The concentration of particles in the lower
+- `concentration_lower` - The concentration of particles in the lower
     distribution.
-diameters_lower:
-    The diameters corresponding to the lower distribution.
-    - `concentration_upper` - The concentration of particles in the upper
+- `diameters_lower` - The diameters corresponding to the lower distribution.
+- `concentration_upper` - The concentration of particles in the upper
     distribution.
-diameters_upper:
-    The diameters corresponding to the upper distribution.
+- `diameters_upper` - The diameters corresponding to the upper distribution.
 
 #### Returns
 
-- `new_2d` - The merged concentration distribution.
-- `new_diameter` - The merged diameter distribution.
+Tuple:
+- `-` *new_2d* - The merged concentration distribution.
+- `-` *new_diameter* - The merged diameter distribution.
 
-add in an acount for the moblity vs aerodynamic diameters
+#### Notes
+
+Add process the moblity vs aerodynamic diameters
 
 #### Signature
 
@@ -119,17 +118,18 @@ def merge_distributions(
 
 ## merge_size_distribution
 
-[Show source in size_distribution.py:397](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L397)
+[Show source in size_distribution.py:387](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L387)
 
-Merge two sets of particle size distributions using linear weighting.
-The concentration should be in dN/dlogDp.
+Merge two particle size distributions using linear weighting.
+The concentrations should be in dN/dlogDp.
 
 #### Arguments
 
-- `stream_smaller` - The stream with lower sizes, e.g. SMPS.
-- `stream_larger` - The stream with larger sizes, e.g. OPS. or APS
-- `lower_units` - The units of the lower distribution. The default is 'nm'.
-- `upper_units` - The units of the upper distribution. The default is 'um'.
+- `stream_lower` - The stream with the lower size range, e.g., from an SMPS.
+- `stream_upper` - The stream with the upper size range, e.g., from an
+    OPS or APS.
+- `lower_units` - The units of the lower distribution. Default is 'nm'.
+- `upper_units` - The units of the upper distribution. Default is 'um'.
 
 #### Returns
 
@@ -154,24 +154,24 @@ def merge_size_distribution(
 
 ## resample_distribution
 
-[Show source in size_distribution.py:437](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L437)
+[Show source in size_distribution.py:428](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L428)
 
-Resample a particle size distribution to a new set of diameters.
-Using np interpolation, and extrapolation is nan.
+Resample a particle size distribution to a new set of diameters using
+numpy interpolation. Extrapolated values will be set to NaN.
 
 #### Arguments
 
-- `stream` - (Stream)
-    The stream to resample.
-- `new_diameters` - (np.ndarry)
-    The new diameters to resample to.
-- `concentration_scale` - (str)
-    The concentration scale of the distribution. Either, 'dn/dlogdp',
-    'dn', 'pms' (which is dn), or 'pdf'.
+- `stream` - The stream object containing the size distribution to resample.
+- `new_diameters` - The new diameters to which the distribution will be
+    resampled.
+- `concentration_scale` - The concentration scale of the distribution.
+    Options are 'dn/dlogdp', 'dn', 'pms'
+    (which is equivalent to 'dn'), or 'pdf'. Default is 'dn/dlogdp'.
+- `clone` - Whether to clone the stream before resampling. Default is False.
 
 #### Returns
 
-- `Stream` - The resampled stream.
+- `Stream` - The resampled stream object.
 
 #### Signature
 
@@ -192,27 +192,24 @@ def resample_distribution(
 
 ## sizer_mean_properties
 
-[Show source in size_distribution.py:116](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L116)
+[Show source in size_distribution.py:112](https://github.com/Gorkowski/particula/blob/main/particula/data/process/size_distribution.py#L112)
 
-Calculates the mean properties of the size distribution, and returns a
-stream.
+Calculate the mean properties of the size distribution and return the
+updated stream.
 
-Args
-----------
-stream : Stream
-    The stream to process.
-sizer_limits : list, optional [in diameter_units]
-    The lower and upper limits of the size of interest. The default is None
-density : float, optional
-    The density of the particles. The default is 1.5 g/cm3.
-diameter_units : str
-    The units of the diameter. The default is 'nm'. This will be converted
-    to nm.
+#### Arguments
 
-Returns
--------
-stream : Stream
-    The stream with the mean properties added.
+- `stream` - The stream containing the size distribution data to process.
+- `sizer_limits` - A list specifying the lower and upper limits of the
+    size range of interest, in the units specified by `diameter_units`.
+    Default is None, which means the full range is used.
+- `density` - The density of the particles in g/cm³. Default is 1.5 g/cm³.
+- `diameter_units` - The units of the diameter. Default is 'nm'. The
+    specified units will be converted to nanometers.
+
+#### Returns
+
+- `Stream` - The updated stream with the mean properties added.
 
 #### Signature
 

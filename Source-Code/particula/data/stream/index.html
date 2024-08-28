@@ -1189,6 +1189,39 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#streampop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stream().pop
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stream().pop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#streamsetitem" class="md-nav__link">
     <span class="md-ellipsis">
       Stream().setitem
@@ -1199,7 +1232,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_1" class="md-nav__link">
+  <a href="#arguments_2" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -1217,7 +1250,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_3" class="md-nav__link">
+  <a href="#signature_4" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1250,7 +1283,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_4" class="md-nav__link">
+  <a href="#signature_5" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1283,7 +1316,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_5" class="md-nav__link">
+  <a href="#signature_6" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1316,7 +1349,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_6" class="md-nav__link">
+  <a href="#signature_7" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1349,7 +1382,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_7" class="md-nav__link">
+  <a href="#signature_8" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1387,7 +1420,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_8" class="md-nav__link">
+  <a href="#signature_9" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1415,7 +1448,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments_2" class="md-nav__link">
+  <a href="#arguments_3" class="md-nav__link">
     <span class="md-ellipsis">
       Arguments
     </span>
@@ -1442,7 +1475,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_9" class="md-nav__link">
+  <a href="#signature_10" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -1475,7 +1508,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_10" class="md-nav__link">
+  <a href="#signature_11" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -6735,7 +6768,7 @@
         
   
   <span class="md-ellipsis">
-    Coagulation Basic 2 PDF
+    Coagulation Basics 2: PDF Representation
   </span>
   
 
@@ -6756,7 +6789,7 @@
         
   
   <span class="md-ellipsis">
-    Coagulation Basic 3 compared
+    Coagulation Basic 3: PMF vs. PDF
   </span>
   
 
@@ -6777,7 +6810,7 @@
         
   
   <span class="md-ellipsis">
-    Particle Resolved Coagulation
+    Coagulation Basic 4: Particle Resolved
   </span>
   
 
@@ -6798,7 +6831,7 @@
         
   
   <span class="md-ellipsis">
-    Particle Resolved Coagulation Using the Super Droplet Method
+    Coagulation Basic 5: Super Droplet Method
   </span>
   
 
@@ -7049,23 +7082,38 @@ argument is allowed. A list of int is allowed.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
+<h3 id="streampop">Stream().<strong>pop</strong><a class="headerlink" href="#streampop" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L108">Show source in stream.py:108</a></p>
+<p>Removes data at a specified index or header name.</p>
+<p>Allows indexing of the data stream using an integer index or a string
+corresponding to the header. If a string is used, the header index is
+retrieved and used to return the data array. Only one str
+argument is allowed. A list of int is allowed.</p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>index</code> - The index or name of the data column to
+    retrieve.</li>
+</ul>
+<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">__pop__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
 <h3 id="streamsetitem">Stream().<strong>setitem</strong><a class="headerlink" href="#streamsetitem" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L73">Show source in stream.py:73</a></p>
 <p>Sets or adds data at a specified index.</p>
 <p>If index is a string and not in headers, it is added. This is used
 to add new data columns to the stream.</p>
-<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>index</code> - The index or name of the data column to set.</li>
 <li><code>value</code> - The data to set at the specified index.</li>
 </ul>
 <h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h4>
 <p>Support setting multiple rows by accepting a list of values.</p>
-<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
+<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamdatetime64">Stream().datetime64<a class="headerlink" href="#streamdatetime64" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L108">Show source in stream.py:108</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L125">Show source in stream.py:125</a></p>
 <p>Converts the epoch time array to a datetime64 for plotting.</p>
 <p>This method converts the time array to a datetime64 array, which
 can be used for plotting time series data. This generally assumes
@@ -7074,29 +7122,29 @@ that the time array is in seconds since the epoch.</p>
 <ul>
 <li><code>np.ndarray</code> - Datetime64 array representing the time stream.</li>
 </ul>
-<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
+<h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">datetime64</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamheader_dict">Stream().header_dict<a class="headerlink" href="#streamheader_dict" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L121">Show source in stream.py:121</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L138">Show source in stream.py:138</a></p>
 <p>Provides a dictionary mapping from index to header names.</p>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>dict</code> - Dictionary with indices as keys and header names as values.</li>
 </ul>
-<h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
+<h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">header_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamheader_float">Stream().header_float<a class="headerlink" href="#streamheader_float" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L130">Show source in stream.py:130</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L147">Show source in stream.py:147</a></p>
 <p>Attempts to convert header names to a float array, where possible.</p>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>np.ndarray</code> - Array of header names converted to floats.</li>
 </ul>
-<h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
+<h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nd">@property</span>
 <span class="k">def</span> <span class="nf">header_float</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
@@ -7107,11 +7155,11 @@ that the time array is in seconds since the epoch.</p>
 <ul>
 <li><code>TypeError</code> - If <a href="#stream">header</a> is not a list.</li>
 </ul>
-<h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
+<h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="streamaveraged">StreamAveraged<a class="headerlink" href="#streamaveraged" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L141">Show source in stream.py:141</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L158">Show source in stream.py:158</a></p>
 <p>Stream Class with Averaged Data and Standard Deviation.</p>
 <p>Extends the Stream class with functionalities specific to handling
 averaged data streams. Mainly adding standard deviation to the data
@@ -7125,7 +7173,7 @@ stream.</p>
 <li><code>standard_deviation</code> - A numpy array storing the standard deviation of
     data streams.</li>
 </ul>
-<h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
+<h4 id="signature_9">Signature<a class="headerlink" href="#signature_9" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">StreamAveraged</span><span class="p">(</span><span class="n">Stream</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
@@ -7133,13 +7181,13 @@ stream.</p>
 <li><a href="#stream">Stream</a></li>
 </ul>
 <h3 id="streamaveragedget_std">StreamAveraged().get_std<a class="headerlink" href="#streamaveragedget_std" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L193">Show source in stream.py:193</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L210">Show source in stream.py:210</a></p>
 <p>Retrieves the standard deviation</p>
 <p>In the averaged data stream, the standard deviation of the data is
 stored in a separate array that mirrors the same indices as the data
 stream. This method allows retrieval of the standard deviation at a
 specified index.</p>
-<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>index</code> - The index or header name of the data stream
 for which standard deviation is needed.</li>
@@ -7152,11 +7200,11 @@ for which standard deviation is needed.</li>
 <ul>
 <li><code>ValueError</code> - If the specified index does not exist in the header.</li>
 </ul>
-<h4 id="signature_9">Signature<a class="headerlink" href="#signature_9" title="Permanent link">&para;</a></h4>
+<h4 id="signature_10">Signature<a class="headerlink" href="#signature_10" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="streamaveragedvalidate_averaging_params">StreamAveraged().validate_averaging_params<a class="headerlink" href="#streamaveragedvalidate_averaging_params" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L168">Show source in stream.py:168</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream.py#L185">Show source in stream.py:185</a></p>
 <p>Ensures that averaging parameters are valid.</p>
 <h4 id="raises_2">Raises<a class="headerlink" href="#raises_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7164,7 +7212,7 @@ for which standard deviation is needed.</li>
 <li><code>ValueError</code> - If <a href="#streamaveraged">start_time</a> or <a href="#streamaveraged">stop_time</a> are not numerical or if
     <a href="#streamaveraged">start_time</a> is greater than or equal to <a href="#streamaveraged">stop_time</a>.</li>
 </ul>
-<h4 id="signature_10">Signature<a class="headerlink" href="#signature_10" title="Permanent link">&para;</a></h4>
+<h4 id="signature_11">Signature<a class="headerlink" href="#signature_11" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">validate_averaging_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 
