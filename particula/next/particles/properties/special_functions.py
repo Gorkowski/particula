@@ -43,7 +43,7 @@ def debye_function(
         ``` py title="Dubye function with n=1 for a single float value"
         out = debye_function(1.0)
         print(out)
-        # Output: 0.8414056604369606
+        # Output: 0.7765038970390566
         ```
 
         ``` py title="Dubye function with n=2 for a single float value"
