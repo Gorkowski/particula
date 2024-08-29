@@ -11,11 +11,7 @@
 Calculate the generalized Debye function for a given variable.
 
 The generalized Debye function is defined as:
-
-$$
-D_n(x) = rac{n}{x^n} \int_0^x rac{t^n}{e^t - 1} dt
-$$
-
+$$D_n(x) = rac{n}{x^n} \int_0^x rac{t^n}{e^t - 1} dt$$
 where `x` is a dimensionless variable and `n` is an integer exponent.
 The function is used in various contexts in physics, including the
 study of phonons and heat capacity of solids. By default, `n` is 1,
