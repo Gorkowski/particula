@@ -13,13 +13,10 @@ def debye_function(
     n: int = 1,
 ) -> Union[float, NDArray[np.float64]]:
     """
-    Calculate the generalized Debye function for a given variable.
+    Calculate the Debye function for a given variable.
 
-    The generalized Debye function is defined as:
-    $$D_n(x) = \frac{n}{x^n} \int_0^x \frac{t^n}{e^t - 1} dt$$
-    where `x` is a dimensionless variable and `n` is an integer exponent.
-    The function is used in various contexts in physics, including the
-    study of phonons and heat capacity of solids. By default, `n` is 1,
+    The generalized Debye function where `x` is a dimensionless variable
+    and `n` is an integer exponent. By default, `n` is 1,
     which corresponds to the most common form of the Debye function.
 
     Arguments:
