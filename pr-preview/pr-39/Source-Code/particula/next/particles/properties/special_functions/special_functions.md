@@ -13,7 +13,7 @@ Calculate the generalized Debye function for a given variable.
 The generalized Debye function is defined as:
 
 $$
-D_n(x) = rac{n}{x^n} \int_0^x rac{t^n}{\exp(t) - 1} \, dt
+D_n(x) = rac{n}{x^n} \int_0^x rac{t^n}{e^t - 1} dt
 $$
 
 where `x` is a dimensionless variable and `n` is an integer exponent.
@@ -41,22 +41,23 @@ an array of the same shape is returned.
 ``` py title="Dubye function with n=1 for a single float value"
 out = debye_function(1.0)
 print(out)
-# Output: 0.8414056604369606
+# Output: 0.7765038970390566
 ```
 
 ``` py title="Dubye function with n=2 for a single float value"
 out = debye_function(1.0, n=2)
 print(out)
 # Output: 0.6007582206816492
-
 ```
 
+``` py title="Dubye function with n=1 for a numpy array"
 out = debye_function(np.array([1.0, 2.0, 3.0]))
 print(out)
-- `#` *Output* - [0.84140566 0.42278434 0.28784241]
-
+# Output: [0.84140566 0.42278434 0.28784241]
 ```
-References:
+
+#### References
+
 - https://en.wikipedia.org/wiki/Debye_function
 - https://mathworld.wolfram.com/DebyeFunctions.html
 

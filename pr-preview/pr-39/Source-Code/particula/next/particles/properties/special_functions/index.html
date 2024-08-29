@@ -3072,6 +3072,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6648,7 +6666,7 @@
 <p>Calculate the generalized Debye function for a given variable.</p>
 <p>The generalized Debye function is defined as:</p>
 <div class="arithmatex">\[
-D_n(x) = rac{n}{x^n} \int_0^x rac{t^n}{\exp(t) - 1} \, dt
+D_n(x) = rac{n}{x^n} \int_0^x rac{t^n}{e^t - 1} dt
 \]</div>
 <p>where <code>x</code> is a dimensionless variable and <code>n</code> is an integer exponent.
 The function is used in various contexts in physics, including the
@@ -6670,27 +6688,27 @@ an array of the same shape is returned.</p>
 <h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
 <div class="highlight"><span class="filename">Dubye function with n=1 for a single float value</span><pre><span></span><code><span class="n">out</span> <span class="o">=</span> <span class="n">debye_function</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-<span class="c1"># Output: 0.8414056604369606</span>
+<span class="c1"># Output: 0.7765038970390566</span>
 </code></pre></div>
 <div class="highlight"><span class="filename">Dubye function with n=2 for a single float value</span><pre><span></span><code><span class="n">out</span> <span class="o">=</span> <span class="n">debye_function</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 <span class="c1"># Output: 0.6007582206816492</span>
 </code></pre></div>
-<p>out = debye_function(np.array([1.0, 2.0, 3.0]))
-print(out)
-- <code>#</code> <em>Output</em> - [0.84140566 0.42278434 0.28784241]</p>
-<div class="highlight"><pre><span></span><code>References:
-- https://en.wikipedia.org/wiki/Debye_function
-- https://mathworld.wolfram.com/DebyeFunctions.html
-
-#### Signature
-
-```python
-def debye_function(
-    variable: Union[float, NDArray[np.float64]],
-    integration_points: int = 1000,
-    n: int = 1,
-) -&gt; Union[float, NDArray[np.float64]]: ...
+<div class="highlight"><span class="filename">Dubye function with n=1 for a numpy array</span><pre><span></span><code><span class="n">out</span> <span class="o">=</span> <span class="n">debye_function</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="c1"># Output: [0.84140566 0.42278434 0.28784241]</span>
+</code></pre></div>
+<h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
+<ul>
+<li>https://en.wikipedia.org/wiki/Debye_function</li>
+<li>https://mathworld.wolfram.com/DebyeFunctions.html</li>
+</ul>
+<h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">debye_function</span><span class="p">(</span>
+    <span class="n">variable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">integration_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 
 
