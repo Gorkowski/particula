@@ -296,11 +296,13 @@ def albedo_from_ext_scat(
     )
 
     # Initialize albedo with NaN
-    albedo = np.full_like(stream[extinction_key], np.nan)
+    albedo = np.full_like(stream.time, np.nan)
 
     # Calculate albedo
     select = stream[extinction_key] > 0
-    albedo = stream[scattering_key][select] / stream[extinction_key][select]
+    albedo[select] = (
+        stream[scattering_key][select] / stream[extinction_key][select]
+    )
 
     # Store albedo in the stream
     stream[new_albedo_key] = albedo
