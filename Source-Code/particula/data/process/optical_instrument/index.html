@@ -1541,6 +1541,66 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#enhancement_ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      enhancement_ratio
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="enhancement_ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raises_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Raises
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -6970,6 +7030,38 @@ and truncation corrections.</p>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_1">See also<a class="headerlink" href="#see-also_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="../../stream/#stream">Stream</a></li>
+</ul>
+<h2 id="enhancement_ratio">enhancement_ratio<a class="headerlink" href="#enhancement_ratio" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L313">Show source in optical_instrument.py:313</a></p>
+<p>Calculate the enhancement ratio from two data keys in the stream.</p>
+<p>This is the ratio between the numerator and the denominator. If the
+denominator is zero, then the ratio is set to <code>np.nan</code>. This function
+is useful for f(RH) calculations.</p>
+<h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>stream</code> - The datastream containing the data.</li>
+<li><code>numerator_key</code> - The key for the numerator data in the stream.</li>
+<li><code>denominator_key</code> - The key for the denominator data in the stream.</li>
+<li><code>new_key</code> - The key where the calculated enhancement ratio will
+    be stored.</li>
+</ul>
+<h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>Stream</code> - The updated datastream with the new enhancement ratio values.</li>
+</ul>
+<h4 id="raises_3">Raises<a class="headerlink" href="#raises_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>KeyError</code> - If the provided numerator or denominator keys are not found
+    in the stream.</li>
+</ul>
+<h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">enhancement_ratio</span><span class="p">(</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span> <span class="n">numerator_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">denominator_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_key</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<h4 id="see-also_2">See also<a class="headerlink" href="#see-also_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../../stream/#stream">Stream</a></li>
 </ul>

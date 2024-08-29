@@ -4162,6 +4162,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#signature_12" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
@@ -7153,27 +7162,28 @@ strategy based on input and output scales. Use the inverse flag in the
 converter to invert the directions of the input and output scales.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>input_scale</code> <em>str</em> - The scale of the input concentration values.
+<li><code>input_scale</code> - The scale of the input concentration values.
     Either 'dn/dlogdp' or 'pms'.</li>
-<li><code>output_scale</code> <em>str</em> - The desired scale of the output concentration
-values. Either 'pms' or 'pdf'. Use inverse flag to invert the input
-and output scales.</li>
+<li><code>output_scale</code> - The desired scale of the output concentration
+    values. Either 'pms' or 'pdf'. Use inverse flag to invert the input
+    and output scales.</li>
 </ul>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="#conversionstrategy">ConversionStrategy</a> - A strategy object capable of converting between
-the specified scales.</li>
+    the specified scales.</li>
 </ul>
 <h4 id="raises_1">Raises<a class="headerlink" href="#raises_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>ValueError</code> - If the input_scale or output_scale is not supported, or
-if the specified conversion is unsupported.</li>
+    if the specified conversion is unsupported.</li>
 </ul>
-<p>Example usage:
-    strategy = get_conversion_strategy('dn/dlogdp', 'pms')
-    converter = Converter(strategy)
-    converted_concentration = converter.convert(
-        diameters, concentration, inverse=False)</p>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
+<div class="highlight"><span class="filename">Convert dn/dlogdp to PMS</span><pre><span></span><code><span class="n">strategy</span> <span class="o">=</span> <span class="n">get_conversion_strategy</span><span class="p">(</span><span class="s1">&#39;dn/dlogdp&#39;</span><span class="p">,</span> <span class="s1">&#39;pms&#39;</span><span class="p">)</span>
+<span class="n">converter</span> <span class="o">=</span> <span class="n">Converter</span><span class="p">(</span><span class="n">strategy</span><span class="p">)</span>
+<span class="n">converted_concentration</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span>
+    <span class="n">diameters</span><span class="p">,</span> <span class="n">concentration</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
 <h4 id="signature_12">Signature<a class="headerlink" href="#signature_12" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_conversion_strategy</span><span class="p">(</span>
     <span class="n">input_scale</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_scale</span><span class="p">:</span> <span class="nb">str</span>

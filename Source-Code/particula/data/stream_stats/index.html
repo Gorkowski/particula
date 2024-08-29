@@ -1301,6 +1301,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#select_time_window" class="md-nav__link">
+    <span class="md-ellipsis">
+      select_time_window
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="select_time_window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -6901,17 +6952,17 @@ replaced with 'replace_with' value.</p>
 <p>Remove a time window from a stream object.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>-</code> <em>stream</em> - The input stream object containing 'data' and 'time'
+<li><code>stream</code> - The input stream object containing 'data' and 'time'
     attributes.</li>
-<li><code>-</code> <em>epoch_start</em> - The start time of the time window to be
+<li><code>epoch_start</code> - The start time of the time window to be
     removed.</li>
-<li><code>-</code> <em>epoch_end</em> - The end time of the time window to be
-    removed. If not provided, the time window is the closest time point to
-    'epoch_start'.</li>
+<li><code>epoch_end</code> - The end time of the time window to be
+    removed. If not provided, the time window is the closest time
+    point to 'epoch_start'.</li>
 </ul>
 <h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>-</code> <em>Stream</em> - The 'stream' object with the specified time window removed.</li>
+<li><code>Stream</code> - The 'stream' object with the specified time window removed.</li>
 </ul>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">remove_time_window</span><span class="p">(</span>
@@ -6921,6 +6972,34 @@ replaced with 'replace_with' value.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_3">See also<a class="headerlink" href="#see-also_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="../stream/#stream">Stream</a></li>
+</ul>
+<h2 id="select_time_window">select_time_window<a class="headerlink" href="#select_time_window" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L211">Show source in stream_stats.py:211</a></p>
+<p>Keep only a specified time window in a stream object and remove all other
+data.</p>
+<h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>stream</code> - The input stream object containing 'data' and 'time'
+    attributes.</li>
+<li><code>epoch_start</code> - The start time of the time window to be kept.</li>
+<li><code>epoch_end</code> - The end time of the time window to be kept. If not provided,
+    only the closest time point to 'epoch_start' will be kept.</li>
+</ul>
+<h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>Stream</code> - The stream object with only the specified time window retained.</li>
+</ul>
+<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">select_time_window</span><span class="p">(</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="n">Stream</span><span class="p">,</span>
+    <span class="n">epoch_start</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+    <span class="n">epoch_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">clone</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Stream</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<h4 id="see-also_4">See also<a class="headerlink" href="#see-also_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../stream/#stream">Stream</a></li>
 </ul>

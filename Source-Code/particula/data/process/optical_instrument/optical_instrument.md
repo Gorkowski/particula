@@ -171,3 +171,44 @@ def caps_processing(
 #### See also
 
 - [Stream](../stream.md#stream)
+
+
+
+## enhancement_ratio
+
+[Show source in optical_instrument.py:313](https://github.com/Gorkowski/particula/blob/main/particula/data/process/optical_instrument.py#L313)
+
+Calculate the enhancement ratio from two data keys in the stream.
+
+This is the ratio between the numerator and the denominator. If the
+denominator is zero, then the ratio is set to `np.nan`. This function
+is useful for f(RH) calculations.
+
+#### Arguments
+
+- `stream` - The datastream containing the data.
+- `numerator_key` - The key for the numerator data in the stream.
+- `denominator_key` - The key for the denominator data in the stream.
+- `new_key` - The key where the calculated enhancement ratio will
+    be stored.
+
+#### Returns
+
+- `Stream` - The updated datastream with the new enhancement ratio values.
+
+#### Raises
+
+- `KeyError` - If the provided numerator or denominator keys are not found
+    in the stream.
+
+#### Signature
+
+```python
+def enhancement_ratio(
+    stream: Stream, numerator_key: str, denominator_key: str, new_key: str
+) -> Stream: ...
+```
+
+#### See also
+
+- [Stream](../stream.md#stream)
