@@ -18,7 +18,7 @@ def debye_function(
     The generalized Debye function is defined as:
 
         $$
-        D_n(x) = \frac{n}{x^n} \int_0^x \frac{t^n}{\exp(t) - 1} \, dt
+        D_n(x) = \frac{n}{x^n} \int_0^x \frac{t^n}{e^t - 1} dt
         $$
 
     where `x` is a dimensionless variable and `n` is an integer exponent.
@@ -50,6 +50,7 @@ def debye_function(
         out = debye_function(1.0, n=2)
         print(out)
         # Output: 0.6007582206816492
+        ```
 
         ``` py title="Dubye function with n=1 for a numpy array"
         out = debye_function(np.array([1.0, 2.0, 3.0]))
