@@ -57,6 +57,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
             - [Particle Process](particula/next/dynamics/particle_process.md#particle-process)
             - [Properties](particula/next/dynamics/properties/index.md#properties)
                 - [Wall Loss Coefficient](particula/next/dynamics/properties/wall_loss_coefficient.md#wall-loss-coefficient)
+            - [Wall Loss Rate](particula/next/dynamics/wall_loss_rate.md#wall-loss-rate)
         - [Gas](particula/next/gas/index.md#gas)
             - [Atmosphere](particula/next/gas/atmosphere.md#atmosphere)
             - [AtmosphereBuilder](particula/next/gas/atmosphere_builder.md#atmospherebuilder)

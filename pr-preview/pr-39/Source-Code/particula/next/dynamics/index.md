@@ -10,3 +10,4 @@
 - [Condensation](./condensation.md)
 - [Particle Process](./particle_process.md)
 - [Properties](properties/index.md)
+- [Wall Loss Rate](./wall_loss_rate.md)
