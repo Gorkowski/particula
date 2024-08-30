@@ -6,7 +6,7 @@
 
 ## dilution_rate
 
-[Show source in dilution_rate.py:50](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/dilution_rate.py#L50)
+[Show source in dilution_rate.py:49](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/dilution_rate.py#L49)
 
 Calculate the dilution rate of a substance.
 
