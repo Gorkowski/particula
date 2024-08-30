@@ -6826,7 +6826,7 @@
     diffusing, in Kelvin. Defaults to 298.15 K.</li>
 <li><code>boltzmann_constant</code> - The Boltzmann constant. Defaults to the
     standard value of 1.380649 x 10^-23 J/K.</li>
-<li><code>particle_aerodynamic_mobility</code> - The aerodynamic mobility of
+<li><code>aerodynamic_mobility</code> - The aerodynamic mobility of
     the particle [m^2/s].</li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
@@ -6834,7 +6834,7 @@
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">particle_diffusion_coefficient</span><span class="p">(</span>
     <span class="n">temperature</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
-    <span class="n">particle_aerodynamic_mobility</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">aerodynamic_mobility</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">boltzmann_constant</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">BOLTZMANN_CONSTANT</span><span class="o">.</span><span class="n">m</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
