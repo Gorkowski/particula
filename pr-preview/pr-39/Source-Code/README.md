@@ -54,6 +54,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
                 - [Super Droplet Method](particula/next/dynamics/coagulation/super_droplet_method.md#super-droplet-method)
                 - [Transition Regime](particula/next/dynamics/coagulation/transition_regime.md#transition-regime)
             - [Condensation](particula/next/dynamics/condensation.md#condensation)
+            - [Dilution Rate](particula/next/dynamics/dilution_rate.md#dilution-rate)
             - [Particle Process](particula/next/dynamics/particle_process.md#particle-process)
             - [Properties](particula/next/dynamics/properties/index.md#properties)
                 - [Wall Loss Coefficient](particula/next/dynamics/properties/wall_loss_coefficient.md#wall-loss-coefficient)
