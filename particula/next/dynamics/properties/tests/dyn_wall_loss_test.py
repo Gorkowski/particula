@@ -40,7 +40,7 @@ def test_rectangle_wall_loss():
     ktp_value = 1.5  # Example value
     diffusion_coefficient_value = 0.01  # Example value
     settling_velocity_value = 0.05  # Example value
-    dimension = [1, 1, 1]  # Example value
+    dimension = (1.0, 1.0, 1.0)  # Example value
 
     expected_output = 0.47312  # This is a hypothetical value.
 
@@ -59,16 +59,16 @@ def test_rectangle_wall_loss():
 def test_spherical_system_state():
     """Test the spherical wall loss coefficient function via system state"""
     # inpust
-    ktp_value = 1.5  # Example value
-    radii = np.array([1e-9, 1e-6, 1e-3])  # Example value
+    wall_eddy = 1.5  # Example value
+    radii1 = np.array([1e-9, 1e-6, 1e-3])  # Example value
     densities = np.array([1000, 1000, 1000])  # Example value
     temperature = 298.15  # Example value
     pressure = 101325  # Example value
     chamber_radius = 2.0  # Example value
 
     result = spherical_wall_loss_coefficient_via_system_state(
-        wall_eddy_diffusivity=ktp_value,
-        particle_radius=radii,
+        wall_eddy_diffusivity=wall_eddy,
+        particle_radius=radii1,
         particle_density=densities,
         temperature=temperature,
         pressure=pressure,
@@ -82,16 +82,16 @@ def test_spherical_system_state():
 def test_rectangle_system_state():
     """Test the rectangular wall loss coefficient function via system state"""
     # inpust
-    ktp_value = 1.5  # Example value
-    radii = np.array([1e-9, 1e-6, 1e-3])  # Example value
+    wall_eddy = 1.5  # Example value
+    radii2 = np.array([1e-9, 1e-6, 1e-3])  # Example value
     densities = np.array([1000, 1000, 1000])  # Example value
     temperature = 298.15  # Example value
     pressure = 101325  # Example value
     dimensions = (1.0, 1.0, 1.0)  # Example value
 
     result = rectangle_wall_loss_coefficient_via_system_state(
-        wall_eddy_diffusivity=ktp_value,
-        particle_radius=radii,
+        wall_eddy_diffusivity=wall_eddy,
+        particle_radius=radii2,
         particle_density=densities,
         temperature=temperature,
         pressure=pressure,

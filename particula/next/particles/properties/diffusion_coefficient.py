@@ -24,7 +24,7 @@ from particula.next.particles.properties.knudsen_number_module import (
 
 def particle_diffusion_coefficient(
     temperature: Union[float, NDArray[np.float64]],
-    particle_aerodynamic_mobility: Union[float, NDArray[np.float64]],
+    aerodynamic_mobility: Union[float, NDArray[np.float64]],
     boltzmann_constant: float = BOLTZMANN_CONSTANT.m,
 ) -> Union[float, NDArray[np.float64]]:
     """
@@ -35,14 +35,14 @@ def particle_diffusion_coefficient(
             diffusing, in Kelvin. Defaults to 298.15 K.
         boltzmann_constant: The Boltzmann constant. Defaults to the
             standard value of 1.380649 x 10^-23 J/K.
-        particle_aerodynamic_mobility: The aerodynamic mobility of
+        aerodynamic_mobility: The aerodynamic mobility of
             the particle [m^2/s].
 
     Returns:
         The diffusion coefficient of the particle [m^2/s].
     """
     return (
-        boltzmann_constant * temperature * particle_aerodynamic_mobility
+        boltzmann_constant * temperature * aerodynamic_mobility
     )
 
 
@@ -64,35 +64,29 @@ def particle_diffusion_coefficient_via_system_state(
         second (m²/s).
     """
 
-    # Step 1: Calculate the dynamic viscosity of the gas
+    # Step 1: Calculate gas properties
     dynamic_viscosity = get_dynamic_viscosity(temperature=temperature)
-
-    # Step 2: Calculate the mean free path of the gas molecules
     mean_free_path = molecule_mean_free_path(
         temperature=temperature,
         pressure=pressure,
         dynamic_viscosity=dynamic_viscosity,
     )
 
-    # Step 3: Calculate the Knudsen number (characterizes flow regime)
+    # Step 2: Particle properties in fluid
     knudsen_number = calculate_knudsen_number(
         mean_free_path=mean_free_path, particle_radius=particle_radius
     )
-
-    # Step 4: Calculate the slip correction factor (Cunningham correction)
     slip_correction_factor = cunningham_slip_correction(
         knudsen_number=knudsen_number,
     )
-
-    # Step 5: Calculate the particle aerodynamic mobility
     aerodynamic_mobility = particle_aerodynamic_mobility(
         radius=particle_radius,
         slip_correction_factor=slip_correction_factor,
         dynamic_viscosity=dynamic_viscosity,
     )
 
-    # Step 6: Calculate the particle diffusion coefficient
+    # Step 3: Calculate the particle diffusion coefficient
     return particle_diffusion_coefficient(
         temperature=temperature,
-        particle_aerodynamic_mobility=aerodynamic_mobility,
+        aerodynamic_mobility=aerodynamic_mobility,
     )
