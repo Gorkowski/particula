@@ -42,7 +42,6 @@ def volume_dilution_coefficient(
         )
         # Returns array([0.01, 0.01, 0.01])
         ```
-
     """
     return input_flow_rate / volume
 
