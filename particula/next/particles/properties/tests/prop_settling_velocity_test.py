@@ -8,23 +8,23 @@ from particula.next.particles.properties.settling_velocity import (
 
 def test_calculate_settling_velocity_with_floats():
     """Test the settling velocity calculation for a single float value."""
-    particle_radius = 0.001
-    particle_density = 1000.0
+    radius = 0.001
+    density = 1000.0
     slip_correction_factor = 0.9
     dynamic_viscosity = 0.001
     gravitational_acceleration = 9.80665
 
     expected_settling_velocity = (
-        (2 * particle_radius) ** 2
-        * particle_density
+        (2 * radius) ** 2
+        * density
         * slip_correction_factor
         * gravitational_acceleration
         / (18 * dynamic_viscosity)
     )
 
     assert particle_settling_velocity(
-        particle_radius,
-        particle_density,
+        radius,
+        density,
         slip_correction_factor,
         dynamic_viscosity,
         gravitational_acceleration
@@ -33,15 +33,15 @@ def test_calculate_settling_velocity_with_floats():
 
 def test_calculate_settling_velocity_with_np_array():
     """Test the settling velocity calculation for a numpy array."""
-    particle_radius = np.array([1e-9, 1e-6, 1e-3])
-    particle_density = np.array([1000.0, 2000.0, 3000.0])
+    radii_array = np.array([1e-9, 1e-6, 1e-3])
+    density_array = np.array([1000.0, 2000.0, 3000.0])
     slip_correction_factor = np.array([0.9, 0.8, 0.7])
     dynamic_viscosity = 0.001
     gravitational_acceleration = 9.80665
 
     expected_settling_velocity = (
-        (2 * particle_radius) ** 2
-        * particle_density
+        (2 * radii_array) ** 2
+        * density_array
         * slip_correction_factor
         * gravitational_acceleration
         / (18 * dynamic_viscosity)
@@ -49,8 +49,8 @@ def test_calculate_settling_velocity_with_np_array():
 
     assert np.allclose(
         particle_settling_velocity(
-            particle_radius,
-            particle_density,
+            radii_array,
+            density_array,
             slip_correction_factor,
             dynamic_viscosity,
             gravitational_acceleration
@@ -61,7 +61,7 @@ def test_calculate_settling_velocity_with_np_array():
 
 def test_calculate_settling_velocity_with_invalid_inputs():
     """Test the settling velocity calculation with invalid inputs."""
-    particle_radius = "invalid"
+    radius_invalid = "invalid"
     particle_density = 1000.0
     slip_correction_factor = 0.9
     dynamic_viscosity = 0.001
@@ -69,7 +69,7 @@ def test_calculate_settling_velocity_with_invalid_inputs():
 
     with pytest.raises(TypeError):
         particle_settling_velocity(
-            particle_radius,
+            radius_invalid,
             particle_density,
             slip_correction_factor,
             dynamic_viscosity,
