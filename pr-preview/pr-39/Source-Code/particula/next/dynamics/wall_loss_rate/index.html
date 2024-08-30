@@ -1820,6 +1820,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Wall Loss Rate
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1829,6 +1840,109 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rectangle_wall_loss_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      rectangle_wall_loss_rate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="rectangle_wall_loss_rate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spherical_wall_loss_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      spherical_wall_loss_rate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="spherical_wall_loss_rate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -6722,6 +6836,76 @@
 <blockquote>
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/wall_loss_rate.py">particula.next.dynamics.wall_loss_rate</a> module.</p>
 </blockquote>
+<h2 id="rectangle_wall_loss_rate">rectangle_wall_loss_rate<a class="headerlink" href="#rectangle_wall_loss_rate" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/wall_loss_rate.py#L65">Show source in wall_loss_rate.py:65</a></p>
+<p>Calculate the wall loss rate of particles in a rectangular chamber.</p>
+<p>This function computes the rate at which particles are lost to the walls
+of a rectangular chamber, based on the system state. It uses the wall eddy
+diffusivity, particle properties (radius, density, concentration), and
+environmental conditions (temperature, pressure) to determine the loss
+rate. The chamber dimensions (length, width, height) are also taken
+into account.</p>
+<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>wall_eddy_diffusivity</code> - The rate of wall eddy diffusivity in inverse
+    seconds (s⁻¹).</li>
+<li><code>particle_radius</code> - The radius of the particle in meters (m).</li>
+<li><code>particle_density</code> - The density of the particle in kilograms per cubic
+    meter (kg/m³).</li>
+<li><code>particle_concentration</code> - The concentration of particles in the chamber
+    in particles per cubic meter (#/m³).</li>
+<li><code>temperature</code> - The temperature of the system in Kelvin (K).</li>
+<li><code>pressure</code> - The pressure of the system in Pascals (Pa).</li>
+<li><code>chamber_dimensions</code> - A tuple containing the length, width, and height
+    of the rectangular chamber in meters (m).</li>
+</ul>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
+<p>The wall loss rate of the particles in the chamber.</p>
+<h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rectangle_wall_loss_rate</span><span class="p">(</span>
+    <span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">particle_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">particle_density</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">particle_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">chamber_dimensions</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+</code></pre></div>
+<h2 id="spherical_wall_loss_rate">spherical_wall_loss_rate<a class="headerlink" href="#spherical_wall_loss_rate" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/wall_loss_rate.py#L16">Show source in wall_loss_rate.py:16</a></p>
+<p>Calculate the wall loss rate of particles in a spherical chamber.</p>
+<p>This function computes the rate at which particles are lost to the walls
+of a spherical chamber, based on the system state. It uses the wall eddy
+diffusivity, particle properties (radius, density, concentration), and
+environmental conditions (temperature, pressure) to determine the loss
+rate.</p>
+<h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>wall_eddy_diffusivity</code> - The rate of wall eddy diffusivity in inverse
+    seconds (s⁻¹).</li>
+<li><code>particle_radius</code> - The radius of the particle in meters (m).</li>
+<li><code>particle_density</code> - The density of the particle in kilograms per cubic
+    meter (kg/m³).</li>
+<li><code>particle_concentration</code> - The concentration of particles in the chamber
+    in particles per cubic meter (#/m³).</li>
+<li><code>temperature</code> - The temperature of the system in Kelvin (K).</li>
+<li><code>pressure</code> - The pressure of the system in Pascals (Pa).</li>
+<li><code>chamber_radius</code> - The radius of the spherical chamber in meters (m).</li>
+</ul>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
+<p>The wall loss rate of the particles in the chamber.</p>
+<h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">spherical_wall_loss_rate</span><span class="p">(</span>
+    <span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">particle_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">particle_density</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">particle_concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">chamber_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+</code></pre></div>
 
 
 
