@@ -65,28 +65,28 @@ def particle_diffusion_coefficient_via_system_state(
     """
 
     # Step 1: Calculate gas properties
-    dynamic_viscosity = get_dynamic_viscosity(temperature=temperature)
-    mean_free_path = molecule_mean_free_path(
+    _dynamic_viscosity = get_dynamic_viscosity(temperature=temperature)
+    mean_free_path_0 = molecule_mean_free_path(
         temperature=temperature,
         pressure=pressure,
-        dynamic_viscosity=dynamic_viscosity,
+        dynamic_viscosity=_dynamic_viscosity,
     )
 
     # Step 2: Particle properties in fluid
-    knudsen_number = calculate_knudsen_number(
-        mean_free_path=mean_free_path, particle_radius=particle_radius
+    _knudsen_number = calculate_knudsen_number(
+        mean_free_path=mean_free_path_0, particle_radius=particle_radius
     )
-    slip_correction_factor = cunningham_slip_correction(
-        knudsen_number=knudsen_number,
+    _slip_correction_factor = cunningham_slip_correction(
+        knudsen_number=_knudsen_number,
     )
-    aerodynamic_mobility = particle_aerodynamic_mobility(
+    _aerodynamic_mobility = particle_aerodynamic_mobility(
         radius=particle_radius,
-        slip_correction_factor=slip_correction_factor,
-        dynamic_viscosity=dynamic_viscosity,
+        slip_correction_factor=_slip_correction_factor,
+        dynamic_viscosity=_dynamic_viscosity,
     )
 
     # Step 3: Calculate the particle diffusion coefficient
     return particle_diffusion_coefficient(
         temperature=temperature,
-        aerodynamic_mobility=aerodynamic_mobility,
+        aerodynamic_mobility=_aerodynamic_mobility,
     )

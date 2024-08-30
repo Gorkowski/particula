@@ -15,19 +15,19 @@ from particula.next.dynamics.properties.wall_loss_coefficient import (
 def test_spherical_wall_loss_coefficient():
     """test the spherical wall loss coefficient function"""
     # Test case with hypothetical values
-    ktp_value = 1.5  # Example value
-    diffusion_coefficient_value = 0.01  # Example value
-    settling_velocity_value = 0.05  # Example value
-    chamber_radius = 2.0  # Example value
+    _ktp_value = 1.5  # Example value
+    _diffusion_coefficient_value = 0.01  # Example value
+    _settling_velocity_value = 0.05  # Example value
+    _chamber_radius = 2.0  # Example value
 
     expected_output = 0.11816  # This is a hypothetical value.
 
     # Call the function with the test case
     calculated_output = spherical_wall_loss_coefficient(
-        ktp_value,
-        diffusion_coefficient_value,
-        settling_velocity_value,
-        chamber_radius,
+        _ktp_value,
+        _diffusion_coefficient_value,
+        _settling_velocity_value,
+        _chamber_radius,
     )
 
     # Assertion to check if the calculated output matches the expected output
