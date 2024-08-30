@@ -6,7 +6,7 @@
 
 ## particle_diffusion_coefficient
 
-[Show source in diffusion_coefficient.py:10](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusion_coefficient.py#L10)
+[Show source in diffusion_coefficient.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusion_coefficient.py#L25)
 
 Calculate the diffusion coefficient of a particle.
 
@@ -30,5 +30,34 @@ def particle_diffusion_coefficient(
     temperature: Union[float, NDArray[np.float64]],
     particle_aerodynamic_mobility: Union[float, NDArray[np.float64]],
     boltzmann_constant: float = BOLTZMANN_CONSTANT.m,
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+
+
+## particle_diffusion_coefficient_via_system_state
+
+[Show source in diffusion_coefficient.py:49](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusion_coefficient.py#L49)
+
+Calculate the diffusion coefficient of a particle.
+
+#### Arguments
+
+- `temperature` - The temperature of the system in Kelvin (K).
+- `particle_radius` - The radius of the particle in meters (m).
+- `pressure` - The pressure of the system in Pascals (Pa).
+
+#### Returns
+
+The diffusion coefficient of the particle in square meters per
+second (m²/s).
+
+#### Signature
+
+```python
+def particle_diffusion_coefficient_via_system_state(
+    particle_radius: Union[float, NDArray[np.float64]],
+    temperature: float,
+    pressure: float,
 ) -> Union[float, NDArray[np.float64]]: ...
 ```

@@ -9,4 +9,4 @@
 - [Coagulation](coagulation/index.md)
 - [Condensation](./condensation.md)
 - [Particle Process](./particle_process.md)
-- [Wall Loss](./wall_loss.md)
+- [Properties](properties/index.md)
