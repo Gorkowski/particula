@@ -38,4 +38,6 @@ ax.set_yscale("log")
 ax.set_xlabel("Particle Size (nm)")
 ax.set_ylabel("Probability Density Function")
 plt.show()
-# %%
+# %% numpy random seed
+np.random.seed(0)
+
