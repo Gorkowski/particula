@@ -51,7 +51,7 @@ print(f"Number of particles: {number_of_particles_guess}")
     mode_guess=mode_values_guess,
     geometric_standard_deviation_guess=geometric_standard_deviation_guess,
     number_of_particles_in_mode_guess=number_of_particles_guess,
-    x_values=x_values,
+    logspace_x=x_values,
     concentration_pdf=concentration_pdf,
 )
 

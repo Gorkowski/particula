@@ -281,7 +281,8 @@ def train_pipeline_with_progress(
 
     # Shuffle data
     x_train, y_train = shuffle(  # type: ignore
-        x_train, y_train, random_state=random_state)  # type: ignore
+        x_train, y_train, random_state=random_state
+    )  # type: ignore
 
     # Initialize the model with warm_start=True to allow incremental learning
     model = pipeline.named_steps["model"]  # type: ignore
@@ -311,7 +312,7 @@ def train_pipeline_with_progress(
 def evaluate_pipeline(
     pipeline: Pipeline,
     x_test: NDArray[np.float64],
-    y_test: NDArray[np.float64]
+    y_test: NDArray[np.float64],
 ) -> None:
     """
     Evaluate the pipeline and print the mean squared error for each target.
@@ -373,9 +374,7 @@ def load_and_cache_pipeline(filename: str) -> Pipeline:
     global _cached_pipeline  # pylint: disable=global-statement
 
     if _cached_pipeline is None:
-        _cached_pipeline = load_pipeline(
-            filename=filename
-        )
+        _cached_pipeline = load_pipeline(filename=filename)
 
     return _cached_pipeline
 
@@ -481,17 +480,19 @@ def lognormal_2mode_ml_guess(
 
     # Interpolate the concentration to match ml_x_values
     interpolator = interp1d(
-        logspace_x, concentration_pdf,
+        logspace_x,
+        concentration_pdf,
         kind="linear",
-        fill_value="extrapolate"  # type: ignore
+        fill_value="extrapolate",  # type: ignore
     )
     interpolated_concentration_pdf = interpolator(ml_x_values)  # type: ignore
 
     # Predict the concentration using the ML pipeline
     predicted_params = np.array(
         ml_pipeline.predict(  # type: ignore
-            interpolated_concentration_pdf.reshape(1, -1)),  # type: ignore
-        dtype=np.float64
+            interpolated_concentration_pdf.reshape(1, -1)
+        ),  # type: ignore
+        dtype=np.float64,
     )
 
     # Extract predicted parameters
@@ -500,9 +501,7 @@ def lognormal_2mode_ml_guess(
     number_of_particles_guess = predicted_params[0, 4:6]
 
     # Rescale mode values
-    mode_index_guess = (
-        mode_guess * X_ARRAY_MAX_INDEX
-    )
+    mode_index_guess = mode_guess * X_ARRAY_MAX_INDEX
     interp_mode = interp1d(
         np.arange(X_ARRAY_MAX_INDEX),
         ml_x_values,
@@ -510,7 +509,8 @@ def lognormal_2mode_ml_guess(
         fill_value="extrapolate",  # type: ignore
     )
     mode_values_guess = np.array(
-        interp_mode(mode_index_guess), dtype=np.float64)
+        interp_mode(mode_index_guess), dtype=np.float64
+    )
 
     # Rescale geometric standard deviations
     geometric_standard_deviation_guess = (
@@ -552,8 +552,8 @@ def lognormal_2mode_cost_function(
     # print(params)
     num_modes = 2
     mode_values = params[:num_modes]
-    geometric_standard_deviation = params[num_modes:2 * num_modes]
-    number_of_particles = params[2 * num_modes:]
+    geometric_standard_deviation = params[num_modes : 2 * num_modes]
+    number_of_particles = params[2 * num_modes :]
 
     # Generate the guessed concentration PDF
     concentration_pdf_guess = lognormal_pdf_distribution(
@@ -621,7 +621,7 @@ def perform_optimization(
             method=method,
             bounds=bounds,
         )
-        result['method'] = method
+        result["method"] = method
         return result  # type: ignore
     except (
         OverflowError,
@@ -638,28 +638,28 @@ def perform_optimization(
 
 def evaluate_fit(
     best_result: dict[str, Any],
-    x_values: NDArray[np.float64],
+    logspace_x: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
 ) -> Tuple[
-    NDArray[np.float64],
-    NDArray[np.float64],
-    NDArray[np.float64],
-    float
+    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], float
 ]:
     """Evaluate the best fit and calculate R² score."""
-    optimized_params = np.array(best_result['x'], dtype=np.float64)
+    optimized_params = np.array(best_result["x"], dtype=np.float64)
     optimized_mode_values = optimized_params[:2]
     optimized_gsd = optimized_params[2:4]
     optimized_number_of_particles = optimized_params[4:]
 
     concentration_pdf_optimized = lognormal_pdf_distribution(
-        x_values=x_values,
+        x_values=logspace_x,
         mode=optimized_mode_values,
         geometric_standard_deviation=optimized_gsd,
         number_of_particles=optimized_number_of_particles,
     )
-    r2 = float(r2_score(  # type: ignore
-        concentration_pdf, concentration_pdf_optimized))
+    r2 = float(
+        r2_score(  # type: ignore
+            concentration_pdf, concentration_pdf_optimized
+        )
+    )
 
     return (
         optimized_mode_values,
@@ -674,7 +674,7 @@ def optimize_lognormal_2mode(
     mode_guess: NDArray[np.float64],
     geometric_standard_deviation_guess: NDArray[np.float64],
     number_of_particles_in_mode_guess: NDArray[np.float64],
-    x_values: NDArray[np.float64],
+    logspace_x: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
     bounds: Optional[List[Tuple[float, Any]]] = None,
     list_of_methods: Optional[List[str]] = None,
@@ -713,11 +713,10 @@ def optimize_lognormal_2mode(
 
     for method in list_of_methods:
         result = perform_optimization(
-            method, initial_guess, bounds, x_values, concentration_pdf
+            method, initial_guess, bounds, logspace_x, concentration_pdf
         )
         if result and (
-            best_result["fun"] is None
-            or result["fun"] < best_result["fun"]
+            best_result["fun"] is None or result["fun"] < best_result["fun"]
         ):
             best_result = result
 
@@ -726,7 +725,7 @@ def optimize_lognormal_2mode(
         raise ValueError("All optimization methods failed")
 
     optimized_mode_values, optimized_gsd, optimized_number_of_particles, r2 = (
-        evaluate_fit(best_result, x_values, concentration_pdf)
+        evaluate_fit(best_result, logspace_x, concentration_pdf)
     )
 
     best_result["r2"] = r2  # type: ignore
@@ -736,4 +735,118 @@ def optimize_lognormal_2mode(
         optimized_number_of_particles,
         r2,
         best_result,
+    )
+
+
+def looped_lognormal_2mode_ml_guess(
+    logspace_x: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
+    """
+    Loop through the concentration PDFs to get the best guess.
+
+    Arguments:
+        logspace_x: Array of x-values (particle sizes).
+        concentration_pdf: Matrix of concentration PDF values.
+
+    Returns:
+        mode_values_guess: Predicted mode values after rescaling.
+        geometric_standard_deviation_guess: Predicted geometric standard
+            deviations after rescaling.
+        number_of_particles_guess: Predicted number of particles after
+            rescaling.
+    """
+    n_rows = concentration_pdf.shape[0]
+    mode_values_guess = np.zeros([n_rows, 2], dtype=np.float64)
+    geometric_standard_deviation_guess = np.zeros(
+        [n_rows, 2], dtype=np.float64
+    )
+    number_of_particles_guess = np.zeros([n_rows, 2], dtype=np.float64)
+
+    for row in range(n_rows):
+        (
+            mode_values_guess[row],
+            geometric_standard_deviation_guess[row],
+            number_of_particles_guess[row],
+        ) = lognormal_2mode_ml_guess(
+            logspace_x=logspace_x,
+            concentration_pdf=concentration_pdf[row],
+        )
+
+    return (
+        mode_values_guess,
+        geometric_standard_deviation_guess,
+        number_of_particles_guess,
+    )
+
+
+def looped_optimize_lognormal_2mode(
+    mode_guess: NDArray[np.float64],
+    geometric_standard_deviation_guess: NDArray[np.float64],
+    number_of_particles_in_mode_guess: NDArray[np.float64],
+    logspace_x: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+    bounds: Optional[List[Tuple[float, Any]]] = None,
+    list_of_methods: Optional[List[str]] = None,
+) -> Tuple[
+    NDArray[np.float64],
+    NDArray[np.float64],
+    NDArray[np.float64],
+    NDArray[np.float64],
+    dict[str, Any],
+]:
+    """
+    Loop through the concentration PDFs to get the best optimization.
+
+    Arguments:
+        mode_guess: Array of mode values.
+        geometric_standard_deviation_guess: Array of geometric standard
+            deviations.
+        number_of_particles_in_mode_guess: Array of number of particles.
+        x_values: Array of x-values (particle sizes).
+        concentration_pdf: Matrix of concentration PDF values.
+        bounds: List of bounds for optimization.
+        list_of_methods: List of optimization methods.
+
+    Returns:
+        optimized_mode_values: Optimized mode values.
+        optimized_gsd: Optimized geometric standard deviations.
+        optimized_number_of_particles: Optimized number of particles.
+        r2: R² score.
+        optimization_results: Dictionary of optimization results.
+    """
+    n_rows = concentration_pdf.shape[0]
+    optimized_mode_values = np.zeros([n_rows, 2], dtype=np.float64)
+    optimized_gsd = np.zeros([n_rows, 2], dtype=np.float64)
+    optimized_number_of_particles = np.zeros([n_rows, 2], dtype=np.float64)
+    r2 = np.zeros(n_rows, dtype=np.float64)
+    optimization_results = {}
+
+    for row in range(n_rows):
+        (
+            optimized_mode_values[row],
+            optimized_gsd[row],
+            optimized_number_of_particles[row],
+            r2[row],
+            optimization_results[row],
+        ) = optimize_lognormal_2mode(
+            mode_guess=mode_guess[row],
+            geometric_standard_deviation_guess=(
+                geometric_standard_deviation_guess[row]
+            ),
+            number_of_particles_in_mode_guess=(
+                number_of_particles_in_mode_guess[row]
+            ),
+            logspace_x=logspace_x,
+            concentration_pdf=concentration_pdf[row],
+            bounds=bounds,
+            list_of_methods=list_of_methods,
+        )
+
+    return (
+        optimized_mode_values,
+        optimized_gsd,
+        optimized_number_of_particles,
+        r2,
+        optimization_results,
     )
