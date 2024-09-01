@@ -577,140 +577,162 @@ def lognormal_2mode_cost_function(
     return float(number_dist_error + total_number_dist_error)
 
 
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-locals
-# pylint: disable=too-complex
-# pylint: disable=unknown-option-value
-def optimize_lognormal_2mode(
+def default_bounds() -> List[Tuple[float, Any]]:
+    """Provide default bounds for optimization parameters."""
+    return [
+        (1e-10, None),  # Mode values bounds
+        (1e-10, None),
+        (1.0001, None),  # Geometric standard deviation bounds
+        (1.0001, None),
+        (0, None),  # Number of particles bounds
+        (0, None),
+    ]
+
+
+def combine_initial_guesses(
     mode_guess: NDArray[np.float64],
     geometric_standard_deviation_guess: NDArray[np.float64],
     number_of_particles_in_mode_guess: NDArray[np.float64],
-    x_values: NDArray[np.float64],
-    concentration_pdf: NDArray[np.float64],
-    bounds: Optional[List[Tuple[float, Any]]] = None,  # type: ignore
-    list_of_methods: List[str] = [
-        "Nelder-Mead",
-        "Powell",
-        "L-BFGS-B",
-        "TNC",
-        "COBYLA",
-        "SLSQP",
-        "trust-constr",
-    ],
-) -> Tuple[
-    NDArray[np.float64],
-    NDArray[np.float64],
-    NDArray[np.float64],
-    float,
-    dict[Any, Any],
-]:
-    """
-    Optimize the lognormal 2-mode distribution parameters using multiple
-    optimization methods.
-
-    Arguments:
-        initial_guess: Initial guess for the optimization parameters.
-        x_values: Array of x-values (particle sizes).
-        concentration_pdf: The actual concentration PDF to fit.
-        bounds: Bounds for the optimization parameters.
-        list_of_methods: List of optimization methods to try.
-
-    Returns:
-        A dictionary with the best optimization results, including:
-            - best_method: The optimization method that gave the best result.
-            - optimized_mode_values: Optimized mode values.
-            - optimized_gsd: Optimized geometric standard deviations.
-            - optimized_number_of_particles: Optimized number of particles.
-            - r2_score: The R² score of the best fit.
-            - best_result: The full result object from scipy.optimize.minimize.
-    """
-    # Define bounds
-    if bounds is None:
-        bounds = [
-            (1e-10, None),
-            (1e-10, None),  # Mode values bounds
-            (1.0001, None),
-            (1.0001, None),  # Geometric standard deviation bounds
-            (0, None),
-            (0, None),  # Number of particles bounds
-        ]
-
-    # Combine initial guesses into a single array
-    initial_guess = np.hstack(
+) -> NDArray[np.float64]:
+    """Combine initial guesses into a single array."""
+    return np.hstack(
         [
             mode_guess,
             geometric_standard_deviation_guess,
             number_of_particles_in_mode_guess,
         ]
     )
-    # Initialize the best result
-    best_result = {}
-    best_method = str()
 
-    for method in list_of_methods:
-        try:
-            # Perform the minimization
-            result = minimize(  # type: ignore
-                fun=lognormal_2mode_cost_function,
-                x0=initial_guess,
-                args=(x_values, concentration_pdf),
-                method=method,
-                bounds=bounds,
-            )  # type: ignore
-            if not best_result or result.fun < best_result.fun:  # type: ignore
-                best_result = result  # type: ignore
-                best_method = method
-        except OverflowError as e:
-            logger.error(
-                "Method %s failed with OverflowError: %s", method, e
-            )
-        except FloatingPointError as e:
-            logger.error(
-                "Method %s failed with FloatingPointError: %s", method, e
-            )
-        except ValueError as e:
-            logger.error("Method %s failed with ValueError: %s", method, e)
-        except RuntimeWarning as e:
-            logger.warning(
-                "Method %s caused a RuntimeWarning: %s", method, e
-            )
-        except UserWarning as e:
-            logger.warning("Method %s caused a UserWarning: %s", method, e)
-    if not best_result:
-        logger.error("All optimization methods failed")
-        raise ValueError("All optimization methods failed")
 
-    # Extract the optimized parameters
-    # best_params = np.array(best_result.x, dtype=np.float64)
-    optimized_mode_values = np.array(
-        best_result.x[:2], dtype=np.float64  # type: ignore
-    )
-    optimized_gsd = np.array(
-        best_result.x[2:4], dtype=np.float64  # type: ignore
-    )
-    optimized_number_of_particles = np.array(
-        best_result.x[4:], dtype=np.float64  # type: ignore
-    )
+def perform_optimization(
+    method: str,
+    initial_guess: NDArray[np.float64],
+    bounds: List[Tuple[float, Any]],
+    x_values: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+) -> Optional[dict[str, Any]]:
+    """Perform the optimization using the specified method."""
+    try:
+        result = minimize(  # type: ignore
+            fun=lognormal_2mode_cost_function,
+            x0=initial_guess,
+            args=(x_values, concentration_pdf),
+            method=method,
+            bounds=bounds,
+        )
+        result['method'] = method
+        return result  # type: ignore
+    except (
+        OverflowError,
+        FloatingPointError,
+        ValueError,
+        RuntimeWarning,
+        UserWarning,
+    ) as e:
+        logger.error(
+            "Method %s failed with %s: %s", method, type(e).__name__, e
+        )
+    return None
 
-    # Evaluate the optimized parameters for R² score
+
+def evaluate_fit(
+    best_result: dict[str, Any],
+    x_values: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+) -> Tuple[
+    NDArray[np.float64],
+    NDArray[np.float64],
+    NDArray[np.float64],
+    float
+]:
+    """Evaluate the best fit and calculate R² score."""
+    optimized_params = np.array(best_result['x'], dtype=np.float64)
+    optimized_mode_values = optimized_params[:2]
+    optimized_gsd = optimized_params[2:4]
+    optimized_number_of_particles = optimized_params[4:]
+
     concentration_pdf_optimized = lognormal_pdf_distribution(
         x_values=x_values,
         mode=optimized_mode_values,
         geometric_standard_deviation=optimized_gsd,
         number_of_particles=optimized_number_of_particles,
     )
-    r2 = float(
-        r2_score(
-            concentration_pdf, concentration_pdf_optimized)  # type: ignore
-        )
-
-    best_result["r2"] = r2
-    best_result["best_method"] = best_method
+    r2 = float(r2_score(  # type: ignore
+        concentration_pdf, concentration_pdf_optimized))
 
     return (
         optimized_mode_values,
         optimized_gsd,
         optimized_number_of_particles,
         r2,
-        best_result,  # type: ignore
+    )
+
+
+# pylint: disable=too-many-arguments
+def optimize_lognormal_2mode(
+    mode_guess: NDArray[np.float64],
+    geometric_standard_deviation_guess: NDArray[np.float64],
+    number_of_particles_in_mode_guess: NDArray[np.float64],
+    x_values: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+    bounds: Optional[List[Tuple[float, Any]]] = None,
+    list_of_methods: Optional[List[str]] = None,
+) -> Tuple[
+    NDArray[np.float64],
+    NDArray[np.float64],
+    NDArray[np.float64],
+    float,
+    dict[str, Any],
+]:
+    """
+    Optimize the lognormal 2-mode distribution parameters using multiple
+    optimization methods.
+    """
+    if bounds is None:
+        bounds = default_bounds()
+
+    if list_of_methods is None:
+        list_of_methods = [
+            "Nelder-Mead",
+            "Powell",
+            "L-BFGS-B",
+            "TNC",
+            "COBYLA",
+            "SLSQP",
+            "trust-constr",
+        ]
+
+    initial_guess = combine_initial_guesses(
+        mode_guess,
+        geometric_standard_deviation_guess,
+        number_of_particles_in_mode_guess,
+    )
+
+    best_result = None
+
+    for method in list_of_methods:
+        result = perform_optimization(
+            method, initial_guess, bounds, x_values, concentration_pdf
+        )
+        if result and (
+            best_result is None  # type: ignore
+            or result["fun"] < best_result["fun"]  # type: ignore
+        ):
+            best_result = result
+
+    if not best_result:
+        logger.error("All optimization methods failed")
+        raise ValueError("All optimization methods failed")
+
+    optimized_mode_values, optimized_gsd, optimized_number_of_particles, r2 = (
+        evaluate_fit(best_result, x_values, concentration_pdf)
+    )
+
+    best_result["r2"] = r2
+    return (
+        optimized_mode_values,
+        optimized_gsd,
+        optimized_number_of_particles,
+        r2,
+        best_result,
     )
