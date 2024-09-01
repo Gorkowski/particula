@@ -7847,7 +7847,7 @@
 </li>
 </ul>
 <h2 id="create_pipeline">create_pipeline<a class="headerlink" href="#create_pipeline" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L174">Show source in generate_and_train_2mode_sizer.py:174</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L177">Show source in generate_and_train_2mode_sizer.py:177</a></p>
 <p>Create a pipeline with normalization and MLPRegressor model.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <p>A scikit-learn Pipeline object.</p>
@@ -7855,7 +7855,7 @@
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">create_pipeline</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Pipeline</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="evaluate_pipeline">evaluate_pipeline<a class="headerlink" href="#evaluate_pipeline" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L295">Show source in generate_and_train_2mode_sizer.py:295</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L310">Show source in generate_and_train_2mode_sizer.py:310</a></p>
 <p>Evaluate the pipeline and print the mean squared error for each target.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7864,10 +7864,12 @@
 <li><code>y_test</code> - The test target array.</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">x_test</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">y_test</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">evaluate_pipeline</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">x_test</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">y_test</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="generate_simulated_data">generate_simulated_data<a class="headerlink" href="#generate_simulated_data" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L41">Show source in generate_and_train_2mode_sizer.py:41</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L44">Show source in generate_and_train_2mode_sizer.py:44</a></p>
 <p>Generate simulated lognormal aerosol particle size distributions.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7906,7 +7908,7 @@
 <span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="load_and_cache_pipeline">load_and_cache_pipeline<a class="headerlink" href="#load_and_cache_pipeline" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L345">Show source in generate_and_train_2mode_sizer.py:345</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L362">Show source in generate_and_train_2mode_sizer.py:362</a></p>
 <p>Load and cache the ML pipeline if not already loaded.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7918,7 +7920,7 @@
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_and_cache_pipeline</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pipeline</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="load_pipeline">load_pipeline<a class="headerlink" href="#load_pipeline" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L332">Show source in generate_and_train_2mode_sizer.py:332</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L349">Show source in generate_and_train_2mode_sizer.py:349</a></p>
 <p>Load a pipeline from a file.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7930,7 +7932,7 @@
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_pipeline</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pipeline</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="lognormal_2mode_cost_function">lognormal_2mode_cost_function<a class="headerlink" href="#lognormal_2mode_cost_function" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L511">Show source in generate_and_train_2mode_sizer.py:511</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L532">Show source in generate_and_train_2mode_sizer.py:532</a></p>
 <p>Cost function for the lognormal distribution with 2 modes.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7940,7 +7942,8 @@
 <li><code>concentration_pdf</code> - The actual concentration PDF to fit.</li>
 </ul>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
-<p>The mean squared error between the actual and guessed concentration PDF.</p>
+<p>The mean squared error between the actual and guessed concentration
+    PDF.</p>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">lognormal_2mode_cost_function</span><span class="p">(</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -7949,7 +7952,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="lognormal_2mode_ml_guess">lognormal_2mode_ml_guess<a class="headerlink" href="#lognormal_2mode_ml_guess" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L431">Show source in generate_and_train_2mode_sizer.py:431</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L448">Show source in generate_and_train_2mode_sizer.py:448</a></p>
 <p>Load the machine learning pipeline, interpolate the concentration PDF,
 and predict lognormal parameters.</p>
 <h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>
@@ -7972,7 +7975,7 @@ and predict lognormal parameters.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="normalize_max">normalize_max<a class="headerlink" href="#normalize_max" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L126">Show source in generate_and_train_2mode_sizer.py:126</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L129">Show source in generate_and_train_2mode_sizer.py:129</a></p>
 <p>Normalize each sample in X by dividing by its maximum value.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7984,7 +7987,7 @@ and predict lognormal parameters.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">normalize_max</span><span class="p">(</span><span class="n">x_input</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="normalize_targets">normalize_targets<a class="headerlink" href="#normalize_targets" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L139">Show source in generate_and_train_2mode_sizer.py:139</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L142">Show source in generate_and_train_2mode_sizer.py:142</a></p>
 <p>Normalize the mode index, GSD, and relative number concentration.</p>
 <h4 id="arguments_7">Arguments<a class="headerlink" href="#arguments_7" title="Permanent link">&para;</a></h4>
 <ul>
@@ -8014,7 +8017,7 @@ and predict lognormal parameters.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="optimize_lognormal_2mode">optimize_lognormal_2mode<a class="headerlink" href="#optimize_lognormal_2mode" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L558">Show source in generate_and_train_2mode_sizer.py:558</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L580">Show source in generate_and_train_2mode_sizer.py:580</a></p>
 <p>Optimize the lognormal 2-mode distribution parameters using multiple
 optimization methods.</p>
 <h4 id="arguments_8">Arguments<a class="headerlink" href="#arguments_8" title="Permanent link">&para;</a></h4>
@@ -8055,7 +8058,7 @@ optimization methods.</p>
 <span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="save_pipeline">save_pipeline<a class="headerlink" href="#save_pipeline" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L321">Show source in generate_and_train_2mode_sizer.py:321</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L338">Show source in generate_and_train_2mode_sizer.py:338</a></p>
 <p>Save the trained pipeline to a file.</p>
 <h4 id="arguments_9">Arguments<a class="headerlink" href="#arguments_9" title="Permanent link">&para;</a></h4>
 <ul>
@@ -8066,12 +8069,13 @@ optimization methods.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">save_pipeline</span><span class="p">(</span><span class="n">pipeline</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="train_network_and_save">train_network_and_save<a class="headerlink" href="#train_network_and_save" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L365">Show source in generate_and_train_2mode_sizer.py:365</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L382">Show source in generate_and_train_2mode_sizer.py:382</a></p>
+<p>Train the neural network and save the pipeline.</p>
 <h4 id="signature_11">Signature<a class="headerlink" href="#signature_11" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">train_network_and_save</span><span class="p">():</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="train_pipeline">train_pipeline<a class="headerlink" href="#train_pipeline" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L201">Show source in generate_and_train_2mode_sizer.py:201</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L204">Show source in generate_and_train_2mode_sizer.py:204</a></p>
 <p>Train the pipeline and return the trained model along with train/test data.</p>
 <h4 id="arguments_10">Arguments<a class="headerlink" href="#arguments_10" title="Permanent link">&para;</a></h4>
 <ul>
@@ -8100,7 +8104,7 @@ X_train, X_test, y_train, y_test: The training and testing data splits.</li>
 <span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="train_pipeline_with_progress">train_pipeline_with_progress<a class="headerlink" href="#train_pipeline_with_progress" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L236">Show source in generate_and_train_2mode_sizer.py:236</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L243">Show source in generate_and_train_2mode_sizer.py:243</a></p>
 <p>Train the pipeline in batches with progress tracking, and return the
 trained model along with train/test data.</p>
 <h4 id="arguments_11">Arguments<a class="headerlink" href="#arguments_11" title="Permanent link">&para;</a></h4>
