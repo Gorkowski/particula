@@ -453,7 +453,7 @@ def calculate_concentration_in_bins(
 
 
 # pylint: disable=too-many-arguments, too-many-locals
-def coagulation_step(
+def super_droplet_coagulation_step(
     particle_radius: NDArray[np.float64],
     particle_concentration: NDArray[np.float64],
     kernel: NDArray[np.float64],
