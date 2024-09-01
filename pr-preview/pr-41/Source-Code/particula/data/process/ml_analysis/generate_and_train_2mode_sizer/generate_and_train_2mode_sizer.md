@@ -265,7 +265,7 @@ def normalize_targets(
 
 ## optimize_lognormal_2mode
 
-[Show source in generate_and_train_2mode_sizer.py:580](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L580)
+[Show source in generate_and_train_2mode_sizer.py:584](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L584)
 
 Optimize the lognormal 2-mode distribution parameters using multiple
 optimization methods.
