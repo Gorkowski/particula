@@ -171,7 +171,7 @@ def event_pairs(
     lower_bin: int,
     upper_bin: int,
     kernel_max: Union[float, NDArray[np.float64]],
-    number_in_bins: NDArray[np.float64 | np.int64],
+    number_in_bins: Union[NDArray[np.float64], NDArray[np.int64]],
 ) -> float: ...
 ```
 
