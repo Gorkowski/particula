@@ -1,18 +1,21 @@
-# lognormal_pipeline.py
+"""
+Prototype for generating and training a neural network to predict the
+parameters of a 2-mode lognormal distribution from a concentration PDF.
+"""
 
 import logging
 import os
 from typing import Tuple, Optional, List, Any
 import numpy as np
 from numpy.typing import NDArray
-import joblib
+import joblib  # type: ignore
 from tqdm import tqdm
 
-from scipy.optimize import minimize
-from scipy.interpolate import interp1d
-from sklearn.utils import shuffle
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
+from scipy.optimize import minimize  # type: ignore
+from scipy.interpolate import interp1d  # type: ignore
+from sklearn.utils import shuffle  # type: ignore
+from sklearn.model_selection import train_test_split  # type: ignore
+from sklearn.metrics import mean_squared_error, r2_score  # type: ignore
 from sklearn.neural_network import MLPRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer
@@ -79,7 +82,7 @@ def generate_simulated_data(
     x_values = np.logspace(0, 3, x_array_max_index)
 
     # Generate random mode indices
-    mode_index_sim = np.random.randint(
+    mode_index_sim = np.random.randint(  # type: ignore
         0, x_array_max_index - 1, [total_number_simulated, number_of_modes_sim]
     )
     mode_index_sim = np.sort(mode_index_sim, axis=1)
@@ -223,12 +226,16 @@ def train_pipeline(
         pipeline: The trained pipeline.
         X_train, X_test, y_train, y_test: The training and testing data splits.
     """
-    x_train, x_test, y_train, y_test = train_test_split(
+    x_train, x_test, y_train, y_test = train_test_split(  # type: ignore
         x_input, y, test_size=test_split_size, random_state=random_state
     )
+    x_train = np.array(x_train, dtype=np.float64)
+    x_test = np.array(x_test, dtype=np.float64)
+    y_train = np.array(y_train, dtype=np.float64)
+    y_test = np.array(y_test, dtype=np.float64)
 
     pipeline = create_pipeline()
-    pipeline.fit(x_train, y_train)
+    pipeline.fit(x_train, y_train)  # type: ignore
 
     return pipeline, x_train, x_test, y_train, y_test
 
@@ -261,39 +268,49 @@ def train_pipeline_with_progress(
         pipeline: The trained pipeline.
         X_train, X_test, y_train, y_test: The training and testing data splits.
     """
-    x_train, x_test, y_train, y_test = train_test_split(
+    x_train, x_test, y_train, y_test = train_test_split(  # type: ignore
         x_input, y, test_size=test_split_size, random_state=random_state
     )
 
     pipeline = create_pipeline()
 
     # Split the data into batches
-    n_samples = x_train.shape[0]
-    batch_size = n_samples // n_batches
+    n_samples = x_train.shape[0]  # type: ignore
+    batch_size = int(n_samples // n_batches)  # type: ignore
 
     # Shuffle data
-    x_train, y_train = shuffle(x_train, y_train, random_state=random_state)
+    x_train, y_train = shuffle(  # type: ignore
+        x_train, y_train, random_state=random_state)  # type: ignore
 
     # Initialize the model with warm_start=True to allow incremental learning
-    model = pipeline.named_steps["model"]
+    model = pipeline.named_steps["model"]  # type: ignore
     model.warm_start = True
 
     for i in tqdm(range(n_batches), desc="Training Progress"):
         start = i * batch_size
-        end = (
+        end = (  # type: ignore
             (i + 1) * batch_size
             if (i + 1) * batch_size < n_samples
             else n_samples
         )
+        end = int(end)  # type: ignore
 
         # Train the model incrementally on each batch
-        pipeline.fit(x_train[start:end], y_train[start:end])
+        pipeline.fit(x_train[start:end], y_train[start:end])  # type: ignore
+
+    # coerce to float64
+    x_train = np.array(x_train, dtype=np.float64)
+    x_test = np.array(x_test, dtype=np.float64)
+    y_train = np.array(y_train, dtype=np.float64)
+    y_test = np.array(y_test, dtype=np.float64)
 
     return pipeline, x_train, x_test, y_train, y_test
 
 
 def evaluate_pipeline(
-    pipeline: Pipeline, x_test: NDArray, y_test: NDArray
+    pipeline: Pipeline,
+    x_test: NDArray[np.float64],
+    y_test: NDArray[np.float64]
 ) -> None:
     """
     Evaluate the pipeline and print the mean squared error for each target.
@@ -303,17 +320,17 @@ def evaluate_pipeline(
         X_test: The test feature array.
         y_test: The test target array.
     """
-    y_pred = pipeline.predict(x_test)
-    mse = mean_squared_error(y_test, y_pred)
+    y_pred = pipeline.predict(x_test)  # type: ignore
+    mse = mean_squared_error(y_test, y_pred)  # type: ignore
     print(f"Overall Mean Squared Error: {mse}")
 
     number_of_modes_sim = y_test.shape[1] // 3
     for i, target_name in enumerate(
         ["Mode Index", "GSD", "Relative Number Concentration"]
     ):
-        target_mse = mean_squared_error(
-            y_test[:, i::number_of_modes_sim],
-            y_pred[:, i::number_of_modes_sim],
+        target_mse = mean_squared_error(  # type: ignore
+            y_test[:, i::number_of_modes_sim],  # type: ignore
+            y_pred[:, i::number_of_modes_sim],  # type: ignore
         )
         print(f"Mean Squared Error for {target_name}: {target_mse}")
 
@@ -326,7 +343,7 @@ def save_pipeline(pipeline: Pipeline, filename: str) -> None:
         pipeline: The trained pipeline.
         filename: The filename to save the pipeline to.
     """
-    joblib.dump(pipeline, filename)
+    joblib.dump(pipeline, filename)  # type: ignore
 
 
 def load_pipeline(filename: str) -> Pipeline:
@@ -339,7 +356,7 @@ def load_pipeline(filename: str) -> Pipeline:
     Returns:
         The loaded pipeline.
     """
-    return joblib.load(filename)
+    return joblib.load(filename)  # type: ignore
 
 
 def load_and_cache_pipeline(filename: str) -> Pipeline:
@@ -352,7 +369,7 @@ def load_and_cache_pipeline(filename: str) -> Pipeline:
     Returns:
         The loaded pipeline.
     """
-    global _cached_pipeline
+    global _cached_pipeline  # pylint: disable=global-statement
 
     if _cached_pipeline is None:
         _cached_pipeline = load_pipeline(
@@ -363,10 +380,9 @@ def load_and_cache_pipeline(filename: str) -> Pipeline:
 
 
 def train_network_and_save():
-    # Generate simulated data
-
+    """Train the neural network and save the pipeline."""
     (
-        x_values,
+        _,
         mode_index_sim,
         geomertic_standard_deviation_sim,
         number_of_particles_sim,
@@ -391,7 +407,7 @@ def train_network_and_save():
     )
 
     # Train the pipeline
-    pipeline, x_train, x_test, y_train, y_test = train_pipeline(
+    pipeline, _, x_test, _, y_test = train_pipeline(
         x_input=number_pdf_sim, y=y
     )
 
@@ -414,9 +430,9 @@ def train_network_and_save():
     # Train the pipeline with noisy data
     (
         pipeline_noisy,
-        x_train_noisy,
+        _,
         x_test_noisy,
-        y_train_noisy,
+        _,
         y_test_noisy,
     ) = train_pipeline(x_input=number_pdf_sim_noisy, y=y)
 
@@ -428,6 +444,7 @@ def train_network_and_save():
     save_pipeline(pipeline, save_path)
 
 
+# pylint: disable=too-many-local-variables
 def lognormal_2mode_ml_guess(
     logspace_x: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
@@ -463,13 +480,17 @@ def lognormal_2mode_ml_guess(
 
     # Interpolate the concentration to match ml_x_values
     interpolator = interp1d(
-        logspace_x, concentration_pdf, kind="linear", fill_value="extrapolate"
+        logspace_x, concentration_pdf,
+        kind="linear",
+        fill_value="extrapolate"  # type: ignore
     )
-    interpolated_concentration_pdf = interpolator(ml_x_values)
+    interpolated_concentration_pdf = interpolator(ml_x_values)  # type: ignore
 
     # Predict the concentration using the ML pipeline
-    predicted_params = ml_pipeline.predict(
-        interpolated_concentration_pdf.reshape(1, -1)
+    predicted_params = np.array(
+        ml_pipeline.predict(  # type: ignore
+            interpolated_concentration_pdf.reshape(1, -1)),  # type: ignore
+        dtype=np.float64
     )
 
     # Extract predicted parameters
@@ -485,10 +506,10 @@ def lognormal_2mode_ml_guess(
         np.arange(X_ARRAY_MAX_INDEX),
         ml_x_values,
         kind="linear",
-        fill_value="extrapolate",
+        fill_value="extrapolate",  # type: ignore
     )
-    mode_values_guess = interp_mode(mode_index_guess)
-    # mode_values_guess = ml_x_values[mode_index_guess.astype(int)]
+    mode_values_guess = np.array(
+        interp_mode(mode_index_guess), dtype=np.float64)
 
     # Rescale geometric standard deviations
     geometric_standard_deviation_guess = (
@@ -523,14 +544,15 @@ def lognormal_2mode_cost_function(
         concentration_pdf: The actual concentration PDF to fit.
 
     Returns:
-        The mean squared error between the actual and guessed concentration PDF.
+        The mean squared error between the actual and guessed concentration
+            PDF.
     """
     # Unpack the parameters
     # print(params)
     num_modes = 2
     mode_values = params[:num_modes]
-    geometric_standard_deviation = params[num_modes : 2 * num_modes]
-    number_of_particles = params[2 * num_modes :]
+    geometric_standard_deviation = params[num_modes:2 * num_modes]
+    number_of_particles = params[2 * num_modes:]
 
     # Generate the guessed concentration PDF
     concentration_pdf_guess = lognormal_pdf_distribution(
@@ -543,7 +565,7 @@ def lognormal_2mode_cost_function(
         print("Nan in concentration_pdf_guess")
         return 1e10
     # The mean squared error
-    number_dist_error = mean_squared_error(
+    number_dist_error = mean_squared_error(  # type: ignore
         concentration_pdf, concentration_pdf_guess
     )
     # The volume distribution error
@@ -552,7 +574,7 @@ def lognormal_2mode_cost_function(
         ** 2
     )
 
-    return number_dist_error + total_number_dist_error
+    return float(number_dist_error + total_number_dist_error)
 
 
 def optimize_lognormal_2mode(
@@ -624,46 +646,46 @@ def optimize_lognormal_2mode(
     for method in list_of_methods:
         try:
             # Perform the minimization
-            result = minimize(
+            result = minimize(  # type: ignore
                 fun=lognormal_2mode_cost_function,
                 x0=initial_guess,
                 args=(x_values, concentration_pdf),
                 method=method,
                 bounds=bounds,
             )
-            if not best_result or result.fun < best_result.fun:
-                best_result = result
+            if not best_result or result.fun < best_result.fun:  # type: ignore
+                best_result = result  # type: ignore
                 best_method = method
         except OverflowError as e:
             logger.error(
-                f"Method {method} failed with OverflowError: {e}"
+                "Method %s failed with OverflowError: %s", method, e
             )
         except FloatingPointError as e:
             logger.error(
-                f"Method {method} failed with FloatingPointError: {e}"
+                "Method %s failed with FloatingPointError: %s", method, e
             )
         except ValueError as e:
-            logger.error(f"Method {method} failed with ValueError: {e}")
+            logger.error("Method %s failed with ValueError: %s", method, e)
         except RuntimeWarning as e:
             logger.warning(
-                f"Method {method} caused a RuntimeWarning: {e}"
+                "Method %s caused a RuntimeWarning: %s", method, e
             )
         except UserWarning as e:
-            logger.warning(f"Method {method} caused a UserWarning: {e}")
-        except Exception as e:
-            # General catch-all for other exceptions
-            logger.exception(
-                f"Method {method} failed with an unexpected error:"
-            )
+            logger.warning("Method %s caused a UserWarning: %s", method, e)
     if not best_result:
+        logger.error("All optimization methods failed")
         raise ValueError("All optimization methods failed")
 
     # Extract the optimized parameters
     # best_params = np.array(best_result.x, dtype=np.float64)
-    optimized_mode_values = np.array(best_result.x[:2], dtype=np.float64)
-    optimized_gsd = np.array(best_result.x[2:4], dtype=np.float64)
+    optimized_mode_values = np.array(
+        best_result.x[:2], dtype=np.float64  # type: ignore
+    )
+    optimized_gsd = np.array(
+        best_result.x[2:4], dtype=np.float64  # type: ignore
+    )
     optimized_number_of_particles = np.array(
-        best_result.x[4:], dtype=np.float64
+        best_result.x[4:], dtype=np.float64  # type: ignore
     )
 
     # Evaluate the optimized parameters for R² score
@@ -673,10 +695,7 @@ def optimize_lognormal_2mode(
         geometric_standard_deviation=optimized_gsd,
         number_of_particles=optimized_number_of_particles,
     )
-    r2 = np.array(
-        r2_score(concentration_pdf, concentration_pdf_optimized),
-        dtype=np.float64,
-    )
+    r2 = float(r2_score(concentration_pdf, concentration_pdf_optimized))
 
     best_result["r2"] = r2
     best_result["best_method"] = best_method
@@ -686,5 +705,5 @@ def optimize_lognormal_2mode(
         optimized_gsd,
         optimized_number_of_particles,
         r2,
-        best_result,
+        best_result,  # type: ignore
     )
