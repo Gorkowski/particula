@@ -444,7 +444,7 @@ def train_network_and_save():
     save_pipeline(pipeline, save_path)
 
 
-# pylint: disable=too-many-local-variables
+# pylint: disable=too-many-locals
 def lognormal_2mode_ml_guess(
     logspace_x: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
