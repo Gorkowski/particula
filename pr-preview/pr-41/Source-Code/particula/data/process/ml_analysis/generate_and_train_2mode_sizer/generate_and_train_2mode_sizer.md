@@ -297,7 +297,7 @@ def optimize_lognormal_2mode(
     number_of_particles_in_mode_guess: NDArray[np.float64],
     x_values: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
-    bounds: Optional[List[Tuple[float, Any]]] = None,
+    bounds: ignore = None,
     list_of_methods: List[str] = [
         "Nelder-Mead",
         "Powell",
