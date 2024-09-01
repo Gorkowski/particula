@@ -577,6 +577,10 @@ def lognormal_2mode_cost_function(
     return float(number_dist_error + total_number_dist_error)
 
 
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-locals
+# pylint: disable=too-complex
+# pylint: disable=unknown-option-value
 def optimize_lognormal_2mode(
     mode_guess: NDArray[np.float64],
     geometric_standard_deviation_guess: NDArray[np.float64],
@@ -652,7 +656,7 @@ def optimize_lognormal_2mode(
                 args=(x_values, concentration_pdf),
                 method=method,
                 bounds=bounds,
-            )
+            )  # type: ignore
             if not best_result or result.fun < best_result.fun:  # type: ignore
                 best_result = result  # type: ignore
                 best_method = method
