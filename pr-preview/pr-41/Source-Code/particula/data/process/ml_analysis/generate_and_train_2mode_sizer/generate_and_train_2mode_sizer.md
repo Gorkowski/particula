@@ -13,7 +13,7 @@
 
 ## combine_initial_guesses
 
-[Show source in generate_and_train_2mode_sizer.py:593](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L593)
+[Show source in generate_and_train_2mode_sizer.py:592](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L592)
 
 Combine initial guesses into a single array.
 
@@ -49,7 +49,7 @@ def create_pipeline() -> Pipeline: ...
 
 ## default_bounds
 
-[Show source in generate_and_train_2mode_sizer.py:581](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L581)
+[Show source in generate_and_train_2mode_sizer.py:580](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L580)
 
 Provide default bounds for optimization parameters.
 
@@ -63,7 +63,7 @@ def default_bounds() -> List[Tuple[float, Any]]: ...
 
 ## evaluate_fit
 
-[Show source in generate_and_train_2mode_sizer.py:639](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L639)
+[Show source in generate_and_train_2mode_sizer.py:638](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L638)
 
 Evaluate the best fit and calculate R² score.
 
@@ -255,7 +255,7 @@ def lognormal_2mode_ml_guess(
 
 ## looped_lognormal_2mode_ml_guess
 
-[Show source in generate_and_train_2mode_sizer.py:741](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L741)
+[Show source in generate_and_train_2mode_sizer.py:740](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L740)
 
 Loop through the concentration PDFs to get the best guess.
 
@@ -284,7 +284,7 @@ def looped_lognormal_2mode_ml_guess(
 
 ## looped_optimize_lognormal_2mode
 
-[Show source in generate_and_train_2mode_sizer.py:783](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L783)
+[Show source in generate_and_train_2mode_sizer.py:782](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L782)
 
 Loop through the concentration PDFs to get the best optimization.
 
@@ -319,11 +319,7 @@ def looped_optimize_lognormal_2mode(
     bounds: Optional[List[Tuple[float, Any]]] = None,
     list_of_methods: Optional[List[str]] = None,
 ) -> Tuple[
-    NDArray[np.float64],
-    NDArray[np.float64],
-    NDArray[np.float64],
-    NDArray[np.float64],
-    dict[str, Any],
+    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]
 ]: ...
 ```
 
@@ -391,7 +387,7 @@ def normalize_targets(
 
 ## optimize_lognormal_2mode
 
-[Show source in generate_and_train_2mode_sizer.py:673](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L673)
+[Show source in generate_and_train_2mode_sizer.py:672](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L672)
 
 Optimize the lognormal 2-mode distribution parameters using multiple
 optimization methods.
@@ -416,7 +412,7 @@ def optimize_lognormal_2mode(
 
 ## perform_optimization
 
-[Show source in generate_and_train_2mode_sizer.py:608](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L608)
+[Show source in generate_and_train_2mode_sizer.py:607](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L607)
 
 Perform the optimization using the specified method.
 
