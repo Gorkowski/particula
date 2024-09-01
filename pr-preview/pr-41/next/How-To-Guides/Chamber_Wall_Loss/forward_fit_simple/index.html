@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../chamber_smps_data/">
+        <link rel="prev" href="../Chamber_Observations/">
       
       
-        <link rel="next" href="../wall_loss_forward_simulation/">
+        <link rel="next" href="../../../Tutorials/Aerosol/Aerosol_Tutorial/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -1908,11 +1908,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../Source-Code/particula/next/dynamics/dilution_rate/" class="md-nav__link">
+      <a href="../../../../Source-Code/particula/next/dynamics/dilution/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Dilution Rate
+    Dilution
   </span>
   
 
@@ -6380,11 +6380,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../chamber_smps_data/" class="md-nav__link">
+      <a href="../Chamber_Forward_Simulation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Summary
+    Chamber Forward Simulation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chamber_Observations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chamber Observations
   </span>
   
 
@@ -6456,9 +6477,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-preparation-loading-and-converting-smps-data" class="md-nav__link">
+  <a href="#data-preparation-smps-data" class="md-nav__link">
     <span class="md-ellipsis">
-      Data Preparation: Loading and Converting SMPS Data
+      Data Preparation: SMPS Data
     </span>
   </a>
   
@@ -6603,27 +6624,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../wall_loss_forward_simulation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Chamber Forward Simulation
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -7913,7 +7913,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">Bounds</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="kn">from</span> <span class="nn">particula</span> <span class="kn">import</span> <span class="n">u</span>
 <span class="kn">from</span> <span class="nn">particula.data</span> <span class="kn">import</span> <span class="n">loader_interface</span><span class="p">,</span> <span class="n">settings_generator</span>
 <span class="kn">from</span> <span class="nn">particula.data.tests.example_data.get_example_data</span> <span class="kn">import</span> <span class="n">get_data_folder</span>
 
@@ -7933,7 +7932,6 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize, Bounds
 from datetime import datetime
 
-from particula import u
 from particula.data import loader_interface, settings_generator
 from particula.data.tests.example_data.get_example_data import get_data_folder
 
@@ -7956,7 +7954,7 @@ from particula.util.convert import distribution_convert_pdf_pms</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="data-preparation-loading-and-converting-smps-data">Data Preparation: Loading and Converting SMPS Data<a class="anchor-link" href="#data-preparation-loading-and-converting-smps-data">¶</a></h2><p>In this section, we focus on preparing the data necessary for our particle simulation and optimization process. This involves setting the data directory, loading the data, and performing initial conversions.</p>
+<h2 id="data-preparation-smps-data">Data Preparation: SMPS Data<a class="anchor-link" href="#data-preparation-smps-data">¶</a></h2><p>In this section, we focus on preparing the data necessary for our particle simulation and optimization process. This involves setting the data directory, loading the data, and performing initial conversions.</p>
 <p><strong>Steps:</strong></p>
 <ul>
 <li>Set Data Directory: We define the path to our data directory. This directory contains all the necessary data files for the simulation.</li>
