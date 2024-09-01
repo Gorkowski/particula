@@ -281,8 +281,8 @@ def train_pipeline_with_progress(
 
     # Shuffle data
     x_train, y_train = shuffle(  # type: ignore
-        x_train, y_train, random_state=random_state
-    )  # type: ignore
+        x_train, y_train, random_state=random_state  # type: ignore
+    )
 
     # Initialize the model with warm_start=True to allow incremental learning
     model = pipeline.named_steps["model"]  # type: ignore
@@ -490,8 +490,8 @@ def lognormal_2mode_ml_guess(
     # Predict the concentration using the ML pipeline
     predicted_params = np.array(
         ml_pipeline.predict(  # type: ignore
-            interpolated_concentration_pdf.reshape(1, -1)
-        ),  # type: ignore
+            interpolated_concentration_pdf.reshape(1, -1)  # type: ignore
+        ),
         dtype=np.float64,
     )
 
@@ -549,11 +549,10 @@ def lognormal_2mode_cost_function(
             PDF.
     """
     # Unpack the parameters
-    # print(params)
     num_modes = 2
     mode_values = params[:num_modes]
-    geometric_standard_deviation = params[num_modes : 2 * num_modes]
-    number_of_particles = params[2 * num_modes :]
+    geometric_standard_deviation = params[num_modes: (2 * num_modes)]
+    number_of_particles = params[(2 * num_modes):]
 
     # Generate the guessed concentration PDF
     concentration_pdf_guess = lognormal_pdf_distribution(
@@ -793,7 +792,6 @@ def looped_optimize_lognormal_2mode(
     NDArray[np.float64],
     NDArray[np.float64],
     NDArray[np.float64],
-    dict[str, Any],
 ]:
     """
     Loop through the concentration PDFs to get the best optimization.
@@ -820,7 +818,6 @@ def looped_optimize_lognormal_2mode(
     optimized_gsd = np.zeros([n_rows, 2], dtype=np.float64)
     optimized_number_of_particles = np.zeros([n_rows, 2], dtype=np.float64)
     r2 = np.zeros(n_rows, dtype=np.float64)
-    optimization_results = {}
 
     for row in range(n_rows):
         (
@@ -828,7 +825,7 @@ def looped_optimize_lognormal_2mode(
             optimized_gsd[row],
             optimized_number_of_particles[row],
             r2[row],
-            optimization_results[row],
+            _,
         ) = optimize_lognormal_2mode(
             mode_guess=mode_guess[row],
             geometric_standard_deviation_guess=(
@@ -848,5 +845,4 @@ def looped_optimize_lognormal_2mode(
         optimized_gsd,
         optimized_number_of_particles,
         r2,
-        optimization_results,
     )
