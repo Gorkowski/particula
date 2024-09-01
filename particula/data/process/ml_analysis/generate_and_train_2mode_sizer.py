@@ -240,6 +240,7 @@ def train_pipeline(
     return pipeline, x_train, x_test, y_train, y_test
 
 
+# pylint: disable=too-many-locals
 def train_pipeline_with_progress(
     x_input: NDArray[np.float64],
     y: NDArray[np.float64],
@@ -708,19 +709,19 @@ def optimize_lognormal_2mode(
         number_of_particles_in_mode_guess,
     )
 
-    best_result = None
+    best_result = {"fun": None}
 
     for method in list_of_methods:
         result = perform_optimization(
             method, initial_guess, bounds, x_values, concentration_pdf
         )
         if result and (
-            best_result is None  # type: ignore
-            or result["fun"] < best_result["fun"]  # type: ignore
+            best_result["fun"] is None
+            or result["fun"] < best_result["fun"]
         ):
             best_result = result
 
-    if not best_result:
+    if not best_result["fun"]:
         logger.error("All optimization methods failed")
         raise ValueError("All optimization methods failed")
 
@@ -728,7 +729,7 @@ def optimize_lognormal_2mode(
         evaluate_fit(best_result, x_values, concentration_pdf)
     )
 
-    best_result["r2"] = r2
+    best_result["r2"] = r2  # type: ignore
     return (
         optimized_mode_values,
         optimized_gsd,
