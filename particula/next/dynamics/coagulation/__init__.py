@@ -1,5 +1,7 @@
-"""Import all the coagulation functions, so they can be accessed from
-particula.next.dynamics.coagulation.
+"""Coagulation functions exposed via __init__.
+
+If you want specific sub functions, import them directly from
+`particula.next.dynamics.coagulation.xxx.xxx` instead.
 """
 
 # later: pytype does not like these imports. These also need to be moved
