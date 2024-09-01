@@ -583,7 +583,7 @@ def optimize_lognormal_2mode(
     number_of_particles_in_mode_guess: NDArray[np.float64],
     x_values: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
-    bounds: Optional[List[Tuple[float, Any]]] = None,
+    bounds: Optional[List[Tuple[float, Any]]] = None,  # type: ignore
     list_of_methods: List[str] = [
         "Nelder-Mead",
         "Powell",
@@ -695,7 +695,10 @@ def optimize_lognormal_2mode(
         geometric_standard_deviation=optimized_gsd,
         number_of_particles=optimized_number_of_particles,
     )
-    r2 = float(r2_score(concentration_pdf, concentration_pdf_optimized))
+    r2 = float(
+        r2_score(
+            concentration_pdf, concentration_pdf_optimized)  # type: ignore
+        )
 
     best_result["r2"] = r2
     best_result["best_method"] = best_method
