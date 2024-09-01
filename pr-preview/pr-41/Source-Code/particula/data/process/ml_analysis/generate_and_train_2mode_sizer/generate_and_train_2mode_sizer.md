@@ -11,6 +11,24 @@
 - `TOTAL_NUMBER_SIMULATED` - Training parameters: 1000000
 
 
+## combine_initial_guesses
+
+[Show source in generate_and_train_2mode_sizer.py:592](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L592)
+
+Combine initial guesses into a single array.
+
+#### Signature
+
+```python
+def combine_initial_guesses(
+    mode_guess: NDArray[np.float64],
+    geometric_standard_deviation_guess: NDArray[np.float64],
+    number_of_particles_in_mode_guess: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
+```
+
+
+
 ## create_pipeline
 
 [Show source in generate_and_train_2mode_sizer.py:177](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L177)
@@ -25,6 +43,38 @@ A scikit-learn Pipeline object.
 
 ```python
 def create_pipeline() -> Pipeline: ...
+```
+
+
+
+## default_bounds
+
+[Show source in generate_and_train_2mode_sizer.py:580](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L580)
+
+Provide default bounds for optimization parameters.
+
+#### Signature
+
+```python
+def default_bounds() -> List[Tuple[float, Any]]: ...
+```
+
+
+
+## evaluate_fit
+
+[Show source in generate_and_train_2mode_sizer.py:638](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L638)
+
+Evaluate the best fit and calculate R² score.
+
+#### Signature
+
+```python
+def evaluate_fit(
+    best_result: dict[str, Any],
+    x_values: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], float]: ...
 ```
 
 
@@ -265,28 +315,10 @@ def normalize_targets(
 
 ## optimize_lognormal_2mode
 
-[Show source in generate_and_train_2mode_sizer.py:584](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L584)
+[Show source in generate_and_train_2mode_sizer.py:672](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L672)
 
 Optimize the lognormal 2-mode distribution parameters using multiple
 optimization methods.
-
-#### Arguments
-
-- `initial_guess` - Initial guess for the optimization parameters.
-- `x_values` - Array of x-values (particle sizes).
-- `concentration_pdf` - The actual concentration PDF to fit.
-- `bounds` - Bounds for the optimization parameters.
-- `list_of_methods` - List of optimization methods to try.
-
-#### Returns
-
-A dictionary with the best optimization results, including:
-    - `-` *best_method* - The optimization method that gave the best result.
-    - `-` *optimized_mode_values* - Optimized mode values.
-    - `-` *optimized_gsd* - Optimized geometric standard deviations.
-    - `-` *optimized_number_of_particles* - Optimized number of particles.
-    - `-` *r2_score* - The R² score of the best fit.
-    - `-` *best_result* - The full result object from scipy.optimize.minimize.
 
 #### Signature
 
@@ -297,19 +329,31 @@ def optimize_lognormal_2mode(
     number_of_particles_in_mode_guess: NDArray[np.float64],
     x_values: NDArray[np.float64],
     concentration_pdf: NDArray[np.float64],
-    bounds: ignore = None,
-    list_of_methods: List[str] = [
-        "Nelder-Mead",
-        "Powell",
-        "L-BFGS-B",
-        "TNC",
-        "COBYLA",
-        "SLSQP",
-        "trust-constr",
-    ],
+    bounds: Optional[List[Tuple[float, Any]]] = None,
+    list_of_methods: Optional[List[str]] = None,
 ) -> Tuple[
-    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], float, dict[Any, Any]
+    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], float, dict[str, Any]
 ]: ...
+```
+
+
+
+## perform_optimization
+
+[Show source in generate_and_train_2mode_sizer.py:607](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L607)
+
+Perform the optimization using the specified method.
+
+#### Signature
+
+```python
+def perform_optimization(
+    method: str,
+    initial_guess: NDArray[np.float64],
+    bounds: List[Tuple[float, Any]],
+    x_values: NDArray[np.float64],
+    concentration_pdf: NDArray[np.float64],
+) -> Optional[dict[str, Any]]: ...
 ```
 
 
