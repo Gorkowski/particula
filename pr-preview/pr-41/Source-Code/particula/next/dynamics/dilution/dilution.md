@@ -42,6 +42,7 @@ dilution_rate(
     concentration=np.array([100, 200, 300]),
 )
 # Returns array([-1., -2., -3.])
+```
 
 #### Signature
 

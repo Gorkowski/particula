@@ -7,6 +7,7 @@
 ## Modules
 
 - [Aerodynamic Convert](./aerodynamic_convert.md)
+- [Chamber Rate Fitting](./chamber_rate_fitting.md)
 - [Kappa Via Extinction](./kappa_via_extinction.md)
 - [Mie Angular](./mie_angular.md)
 - [Mie Bulk](./mie_bulk.md)
