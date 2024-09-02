@@ -3,14 +3,14 @@ Prototype for generating and training a neural network to predict the
 parameters of a 2-mode lognormal distribution from a concentration PDF.
 """
 
-import logging
 import os
+import logging
+import warnings
 from typing import Tuple, Optional
 import numpy as np
 from numpy.typing import NDArray
 import joblib  # type: ignore
 from tqdm import tqdm
-import warnings
 
 
 from scipy.interpolate import interp1d  # type: ignore

@@ -424,10 +424,10 @@ def create_lognormal_2mode_from_fit(
     n_2 = parameters_stream["Opt_N_2"]  # Opt_N_2
 
     # Calculate the fitted PMF for each set of optimized parameters
-    for i in range(len(mode_1)):
+    for i, m1 in enumerate(mode_1):
         fitted_concentration_pmf[i] = lognormal_pmf_distribution(
             x_values=radius_m_values,
-            mode=np.array([mode_1[i], mode_2[i]]),
+            mode=np.array([m1, mode_2[i]]),
             geometric_standard_deviation=np.array([gsd_1[i], gsd_2[i]]),
             number_of_particles=np.array([n_1[i], n_2[i]]),
         )

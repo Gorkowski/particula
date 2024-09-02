@@ -2,12 +2,13 @@
 
 from typing import Optional, Union
 import copy
+
 import numpy as np
+from sklearn.linear_model import LinearRegression
 
 from particula.util import stats
 from particula.data.stream import StreamAveraged, Stream
 from particula.util import time_manage
-from sklearn.linear_model import LinearRegression
 
 
 def drop_masked(stream: Stream, mask: np.ndarray) -> Stream:  # type: ignore

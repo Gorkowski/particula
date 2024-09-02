@@ -17,7 +17,7 @@ from particula.data.stream import Stream
 from particula.next.dynamics import dilution, wall_loss, coagulation
 
 
-# disable=too-many-arguments
+# pylint: disable=too-many-arguments, too-many-locals
 def calculate_pmf_rates(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
@@ -117,6 +117,7 @@ def calculate_pmf_rates(
     )
 
 
+# pylint: disable=too-many-arguments
 def coagulation_rates_cost_function(
     parameters: NDArray[np.float64],
     radius_bins: NDArray[np.float64],
@@ -355,6 +356,7 @@ def calculate_optimized_rates(
     )
 
 
+# pylint: disable=too-many-locals
 def optimize_and_calculate_rates_looped(
     pmf_stream: Stream,
     pmf_derivative_stream: Stream,
