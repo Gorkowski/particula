@@ -2,35 +2,22 @@
 Functions for fitting the chamber rates to the observed rates.
 """
 
-from typing import Tuple
+from typing import Tuple, List, Optional
 import numpy as np
-from scipy.optimize import minimize
-from sklearn.metrics import r2_score
-from functools import partial
-
-
-from sklearn.linear_model import LinearRegression
-from particula.util import convert, time_manage
-
 from numpy.typing import NDArray
+from scipy.optimize import minimize  # type: ignore
+from sklearn.metrics import r2_score, mean_squared_error  # type: ignore
+from sklearn.linear_model import LinearRegression
+from functools import partial
+from tqdm import tqdm
+import copy
 
-import matplotlib.pyplot as plt
-
+from particula.util import time_manage
 from particula.next.particles.properties import (
-    lognormal_pdf_distribution,
     lognormal_pmf_distribution,
 )
 from particula.data.process.ml_analysis import generate_and_train_2mode_sizer
 from particula.data.stream import Stream
-from particula.data import loader
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score  # type: ignore
-from scipy.optimize import minimize  # type: ignore
-
-from particula.util.convert import distribution_convert_pdf_pms
-from particula.next.dynamics import dilution, wall_loss, coagulation
-
-from particula.util.input_handling import convert_units
 
 
 def fit_lognormal_2mode_pdf(
@@ -373,26 +360,89 @@ def coagulation_rates_cost_function(
         dtype=np.float64,
     )
 
+    # peak value
+    peak_error = np.abs(net_rate).max() - np.abs(dN_dt_concentration_pmf).max()
+    peak_error = np.power(peak_error, 2, dtype=np.float64)
+
     if np.isnan(number_cost):
         return 1e34
 
-    return number_cost + total_volume_cost
+    return number_cost + total_volume_cost + peak_error
 
 
+from typing import Tuple, Dict
+import numpy as np
+from scipy.optimize import minimize
+from functools import partial
+from dataclasses import dataclass
+
+
+@dataclass
+class ChamberParameters:
+    temperature: float = 293.15
+    pressure: float = 101325
+    particle_density: float = 1000
+    volume: float = 1
+    input_flow_rate_m3_sec: float = 1e-6
+    chamber_dimensions: Tuple[float, float, float] = (1, 1, 1)
+
+
+def create_guess_and_bounds(
+    guess_eddy_diffusivity: float,
+    guess_alpha_collision_efficiency: float,
+    bounds_eddy_diffusivity: Tuple[float, float],
+    bounds_alpha_collision_efficiency: Tuple[float, float],
+) -> Tuple[NDArray[np.float64], List[Tuple[float, float]]]:
+    """
+    Create the initial guess array and bounds list for the optimization.
+
+    Arguments:
+        guess_eddy_diffusivity: Initial guess for eddy diffusivity.
+        guess_alpha_collision_efficiency: Initial guess for alpha collision
+            efficiency.
+        bounds_eddy_diffusivity: Bounds for eddy diffusivity.
+        bounds_alpha_collision_efficiency: Bounds for alpha collision
+            efficiency.
+
+    Returns:
+        initial_guess: Numpy array of the initial guess values.
+        bounds: List of tuples representing the bounds for each parameter.
+    """
+    initial_guess = np.array(
+        [guess_eddy_diffusivity, guess_alpha_collision_efficiency],
+        dtype=np.float64,
+    )
+    bounds = [bounds_eddy_diffusivity, bounds_alpha_collision_efficiency]
+
+    return initial_guess, bounds
+
+
+def optimize_parameters(
+    cost_function: callable,
+    initial_guess: np.ndarray,
+    bounds: List[Tuple[float, float]],
+    method: str,
+) -> Tuple[float, float]:
+    result = minimize(
+        fun=cost_function,
+        x0=initial_guess,
+        method=method,
+        bounds=bounds,
+    )
+    return result.x[0], result.x[1]
+
+
+# pylint: disable=too-many-arguments
 def optimize_chamber_parameters(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
     dN_dt_concentration_pmf: NDArray[np.float64],
-    guess_eddy_diffusivity: float = 0.1,
-    guess_alpha_collision_efficiency: float = 0.5,
-    bounds_eddy_diffusivity: Tuple[float, float] = (1e-6, 20),
-    bounds_alpha_collision_efficiency: Tuple[float, float] = (1e-2, 2),
-    temperature: float = 293.15,
-    pressure: float = 101325,
-    particle_density: float = 1000,
-    volume: float = 1,
-    input_flow_rate_m3_sec: float = 1e-6,
-    chamber_dimensions: Tuple[float, float, float] = (1, 1, 1),
+    chamber_params: ChamberParameters,
+    fit_guess: NDArray[np.float64] = np.array([0.1, 1]),
+    fit_bounds: List[Tuple[float, float]] = [
+        (0.01, 1),
+        (0.1, 1),
+    ],
     minimize_method: str = "L-BFGS-B",
 ) -> Tuple[float, float]:
     """
@@ -400,61 +450,52 @@ def optimize_chamber_parameters(
 
     Returns:
         wall_eddy_diffusivity_optimized: Optimized wall eddy diffusivity.
-        alpha_collision_efficiency_optimized: Optimized alpha collision efficiency.
+        alpha_collision_efficiency_optimized: Optimized alpha collision
+        efficiency.
     """
-    # Initial guess
-    initial_guess = np.array(
-        [guess_eddy_diffusivity, guess_alpha_collision_efficiency]
-    )
-    # Bounds
-    bounds = [bounds_eddy_diffusivity, bounds_alpha_collision_efficiency]
     # Partial evaluation of the cost function
     partial_cost_function = partial(
         coagulation_rates_cost_function,
         radius_bins=radius_bins,
         concentration_pmf=concentration_pmf,
         dN_dt_concentration_pmf=dN_dt_concentration_pmf,
-        temperature=temperature,
-        pressure=pressure,
-        particle_density=particle_density,
-        volume=volume,
-        input_flow_rate=input_flow_rate_m3_sec,
-        chamber_dimensions=chamber_dimensions,
+        temperature=chamber_params.temperature,
+        pressure=chamber_params.pressure,
+        particle_density=chamber_params.particle_density,
+        volume=chamber_params.volume,
+        input_flow_rate=chamber_params.input_flow_rate_m3_sec,
+        chamber_dimensions=chamber_params.chamber_dimensions,
     )
 
     # Optimize the parameters
-    result = minimize(
-        fun=partial_cost_function,
-        x0=initial_guess,
+    return optimize_parameters(
+        cost_function=partial_cost_function,
+        initial_guess=fit_guess,
+        bounds=fit_bounds,
         method=minimize_method,
-        bounds=bounds,
-    )
-
-    # Extract the optimized values
-    wall_eddy_diffusivity_optimized = result.x[0]
-    alpha_collision_efficiency_optimized = result.x[1]
-
-    return (
-        wall_eddy_diffusivity_optimized,
-        alpha_collision_efficiency_optimized,
     )
 
 
+# pylint: disable=too-many-arguments
 def calculate_optimized_rates(
     radius_bins: np.ndarray,
     concentration_pmf: np.ndarray,
     wall_eddy_diffusivity: float,
     alpha_collision_efficiency: float,
-    temperature: float = 293.15,
-    pressure: float = 78000,
-    particle_density: float = 1600,
-    volume: float = 0.9,
-    input_flow_rate: float = 1.2 * convert_units("L/min", "m^3/s"),
-    chamber_dimensions: Tuple[float, float, float] = (0.739, 0.739, 1.663),
-    dN_dt_concentration_pmf: np.ndarray = None,
+    chamber_params: ChamberParameters,
+    dN_dt_concentration_pmf: Optional[NDArray[np.float64]] = None,
 ) -> Tuple[float, float, float, float, float, float]:
     """
-    Calculate the coagulation rates using the optimized parameters and return the rates and R2 score.
+    Calculate the coagulation rates using the optimized parameters and return
+    the rates and R2 score.
+
+    Arguments:
+        radius_bins: Array of particle radii in meters.
+        concentration_pmf: 2D array of concentration PMF values.
+        wall_eddy_diffusivity: Optimized wall eddy diffusivity.
+        alpha_collision_efficiency: Optimized alpha collision efficiency.
+        chamber_params: ChamberParameters object containing chamber-related parameters.
+        dN_dt_concentration_pmf: Array of observed rate of change of the concentration PMF (optional).
 
     Returns:
         coagulation_loss: Loss rate due to coagulation.
@@ -474,14 +515,14 @@ def calculate_optimized_rates(
     ) = calculate_pmf_rates(
         radius_bins=radius_bins,
         concentration_pmf=concentration_pmf,
-        temperature=temperature,
-        pressure=pressure,
-        particle_density=particle_density,
+        temperature=chamber_params.temperature,
+        pressure=chamber_params.pressure,
+        particle_density=chamber_params.particle_density,
         alpha_collision_efficiency=alpha_collision_efficiency,
-        volume=volume,
-        input_flow_rate=input_flow_rate,
+        volume=chamber_params.volume,
+        input_flow_rate=chamber_params.input_flow_rate_m3_sec,
         wall_eddy_diffusivity=wall_eddy_diffusivity,
-        chamber_dimensions=chamber_dimensions,
+        chamber_dimensions=chamber_params.chamber_dimensions,
     )
 
     coagulation_net = coagulation_gain - coagulation_loss
@@ -495,8 +536,155 @@ def calculate_optimized_rates(
     return (
         coagulation_loss,
         coagulation_gain,
+        coagulation_net,
         dilution_loss,
         wall_loss_rate,
-        coagulation_net,
         r2_value,
+    )
+
+
+def optimize_and_calculate_rates_looped(
+    pmf_stream: Stream,
+    pmf_derivative_stream: Stream,
+    chamber_parameters: ChamberParameters,
+    fit_guess: NDArray[np.float64],
+    fit_bounds: List[Tuple[float, float]],
+) -> Tuple[Stream, Stream, Stream, Stream, Stream, Stream, Stream]:
+    """
+    Perform optimization and calculate rates for each time point in the stream.
+
+    Arguments:
+        pmf_stream: Stream object containing the fitted PMF data.
+        pmf_derivative_stream: Stream object containing the derivative of the PMF data.
+        chamber_parameters: ChamberParameters object containing chamber-related parameters.
+        fit_guess: Initial guess for the optimization.
+        fit_bounds: Bounds for the optimization parameters.
+
+    Returns:
+        result_stream: Stream containing the optimization results for each time point.
+        coagulation_loss_stream: Stream containing coagulation loss rates.
+        coagulation_gain_stream: Stream containing coagulation gain rates.
+        coagulation_net_stream: Stream containing net coagulation rates.
+        dilution_loss_stream: Stream containing dilution loss rates.
+        wall_loss_rate_stream: Stream containing wall loss rates.
+        total_rate_stream: Stream containing total rates.
+    """
+    fit_length = len(pmf_stream.time)
+
+    # Prepare result storage
+    wall_eddy_diffusivity = np.zeros(fit_length)
+    alpha_collision_efficiency = np.zeros(fit_length)
+    r2_value = np.zeros(fit_length)
+    coagulation_loss = np.zeros_like(pmf_stream.data)
+    coagulation_gain = np.zeros_like(pmf_stream.data)
+    coagulation_net = np.zeros_like(pmf_stream.data)
+    dilution_loss = np.zeros_like(pmf_stream.data)
+    wall_loss_rate = np.zeros_like(pmf_stream.data)
+    total_rate = np.zeros_like(pmf_stream.data)
+
+    # Loop through each index and perform optimization and rate calculation
+    for index in tqdm(
+        range(fit_length), desc="Chamber rates", total=fit_length
+    ):
+        # Optimize chamber parameters
+        wall_eddy_diffusivity[index], alpha_collision_efficiency[index] = (
+            optimize_chamber_parameters(
+                radius_bins=pmf_stream.header_float,
+                concentration_pmf=pmf_stream.data[index, :],
+                dN_dt_concentration_pmf=pmf_derivative_stream.data[index, :],
+                chamber_params=chamber_parameters,
+                fit_guess=fit_guess,
+                fit_bounds=fit_bounds,
+            )
+        )
+
+        # Calculate the rates
+        (
+            coagulation_loss[index, :],
+            coagulation_gain[index, :],
+            coagulation_net[index, :],
+            dilution_loss[index, :],
+            wall_loss_rate[index, :],
+            r2_value[index],
+        ) = calculate_optimized_rates(
+            radius_bins=pmf_stream.header_float,
+            concentration_pmf=pmf_stream.data[index, :],
+            wall_eddy_diffusivity=wall_eddy_diffusivity[index],
+            alpha_collision_efficiency=alpha_collision_efficiency[index],
+            chamber_params=chamber_parameters,
+            dN_dt_concentration_pmf=pmf_derivative_stream.data[index, :],
+        )
+
+        # Store the total
+        total_rate[index, :] = (
+            coagulation_net[index, :]
+            + dilution_loss[index, :]
+            + wall_loss_rate[index, :]
+        )
+
+    # Create the result stream
+    result_stream = Stream()
+    result_stream.time = pmf_stream.time
+    result_stream.header = [
+        "wall_eddy_diffusivity_[1/s]",
+        "alpha_collision_efficiency_[-]",
+        "r2_value",
+    ]
+    result_stream.data = np.column_stack(
+        [wall_eddy_diffusivity, alpha_collision_efficiency, r2_value]
+    )
+
+    # Add derived rates to the result stream
+    result_stream["coagulation_loss_[1/m3s]"] = coagulation_loss.sum(axis=1)
+    result_stream["coagulation_gain_[1/m3s]"] = coagulation_gain.sum(axis=1)
+    result_stream["coagulation_net_[1/m3s]"] = coagulation_net.sum(axis=1)
+    result_stream["dilution_loss_[1/m3s]"] = dilution_loss.sum(axis=1)
+    result_stream["wall_loss_rate_[1/m3s]"] = wall_loss_rate.sum(axis=1)
+    result_stream["total_rate_[1/m3s]"] = total_rate.sum(axis=1)
+
+    # Add fractions of the total rate
+    total_rate_sum = total_rate.sum(axis=1)
+    result_stream["coagulation_loss_fraction"] = (
+        coagulation_loss.sum(axis=1) / total_rate_sum
+    )
+    result_stream["coagulation_gain_fraction"] = (
+        coagulation_gain.sum(axis=1) / total_rate_sum
+    )
+    result_stream["coagulation_net_fraction"] = (
+        coagulation_net.sum(axis=1) / total_rate_sum
+    )
+    result_stream["dilution_loss_fraction"] = (
+        dilution_loss.sum(axis=1) / total_rate_sum
+    )
+    result_stream["wall_loss_rate_fraction"] = (
+        wall_loss_rate.sum(axis=1) / total_rate_sum
+    )
+
+    # Create and return additional streams
+    coagulation_loss_stream = copy.deepcopy(pmf_stream)
+    coagulation_loss_stream.data = coagulation_loss
+
+    coagulation_gain_stream = copy.deepcopy(pmf_stream)
+    coagulation_gain_stream.data = coagulation_gain
+
+    coagulation_net_stream = copy.deepcopy(pmf_stream)
+    coagulation_net_stream.data = coagulation_net
+
+    dilution_loss_stream = copy.deepcopy(pmf_stream)
+    dilution_loss_stream.data = dilution_loss
+
+    wall_loss_rate_stream = copy.deepcopy(pmf_stream)
+    wall_loss_rate_stream.data = wall_loss_rate
+
+    total_rate_stream = copy.deepcopy(pmf_stream)
+    total_rate_stream.data = total_rate
+
+    return (
+        result_stream,
+        coagulation_loss_stream,
+        coagulation_gain_stream,
+        coagulation_net_stream,
+        dilution_loss_stream,
+        wall_loss_rate_stream,
+        total_rate_stream,
     )

@@ -825,7 +825,7 @@ def looped_optimize_lognormal_2mode(
     optimized_number_of_particles = np.zeros([n_rows, 2], dtype=np.float64)
     r2 = np.zeros(n_rows, dtype=np.float64)
 
-    for row in tqdm(range(n_rows), desc="Optimizing Fit", total=n_rows):
+    for row in tqdm(range(n_rows), desc="Lognormal 2-mode", total=n_rows):
         (
             optimized_mode_values[row],
             optimized_gsd[row],
