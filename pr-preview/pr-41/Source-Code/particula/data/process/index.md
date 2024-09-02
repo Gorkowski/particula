@@ -9,6 +9,7 @@
 - [Aerodynamic Convert](./aerodynamic_convert.md)
 - [Chamber Rate Fitting](./chamber_rate_fitting.md)
 - [Kappa Via Extinction](./kappa_via_extinction.md)
+- [Lognormal 2mode](./lognormal_2mode.md)
 - [Mie Angular](./mie_angular.md)
 - [Mie Bulk](./mie_bulk.md)
 - [Ml Analysis](ml_analysis/index.md)

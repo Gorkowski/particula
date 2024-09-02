@@ -22,6 +22,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
             - [Aerodynamic Convert](particula/data/process/aerodynamic_convert.md#aerodynamic-convert)
             - [Chamber Rate Fitting](particula/data/process/chamber_rate_fitting.md#chamber-rate-fitting)
             - [Kappa Via Extinction](particula/data/process/kappa_via_extinction.md#kappa-via-extinction)
+            - [Lognormal 2mode](particula/data/process/lognormal_2mode.md#lognormal-2mode)
             - [Mie Angular](particula/data/process/mie_angular.md#mie-angular)
             - [Mie Bulk](particula/data/process/mie_bulk.md#mie-bulk)
             - [Ml Analysis](particula/data/process/ml_analysis/index.md#ml-analysis)

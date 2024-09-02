@@ -6,7 +6,9 @@
 
 ## ChamberParameters
 
-[Show source in chamber_rate_fitting.py:381](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L381)
+[Show source in chamber_rate_fitting.py:171](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L171)
+
+Data class for the chamber parameters.
 
 #### Signature
 
@@ -18,7 +20,7 @@ class ChamberParameters: ...
 
 ## calculate_optimized_rates
 
-[Show source in chamber_rate_fitting.py:480](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L480)
+[Show source in chamber_rate_fitting.py:290](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L290)
 
 Calculate the coagulation rates using the optimized parameters and return
 the rates and R2 score.
@@ -29,8 +31,10 @@ the rates and R2 score.
 - `concentration_pmf` - 2D array of concentration PMF values.
 - `wall_eddy_diffusivity` - Optimized wall eddy diffusivity.
 - `alpha_collision_efficiency` - Optimized alpha collision efficiency.
-- `chamber_params` - ChamberParameters object containing chamber-related parameters.
-- `dN_dt_concentration_pmf` - Array of observed rate of change of the concentration PMF (optional).
+- `chamber_params` - ChamberParameters object containing chamber-related
+    parameters.
+- `time_derivative_concentration_pmf` - Array of observed rate of change
+    of the concentration PMF (optional).
 
 #### Returns
 
@@ -45,12 +49,12 @@ the rates and R2 score.
 
 ```python
 def calculate_optimized_rates(
-    radius_bins: np.ndarray,
-    concentration_pmf: np.ndarray,
+    radius_bins: NDArray[np.float64],
+    concentration_pmf: NDArray[np.float64],
     wall_eddy_diffusivity: float,
     alpha_collision_efficiency: float,
-    chamber_params: ChamberParameters,
-    dN_dt_concentration_pmf: Optional[NDArray[np.float64]] = None,
+    chamber_parameters: ChamberParameters,
+    time_derivative_concentration_pmf: Optional[NDArray[np.float64]] = None,
 ) -> Tuple[float, float, float, float, float, float]: ...
 ```
 
@@ -62,7 +66,7 @@ def calculate_optimized_rates(
 
 ## calculate_pmf_rates
 
-[Show source in chamber_rate_fitting.py:221](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L221)
+[Show source in chamber_rate_fitting.py:21](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L21)
 
 Calculate the coagulation, dilution, and wall loss rates,
 and return the net rate.
@@ -117,7 +121,7 @@ def calculate_pmf_rates(
 
 ## coagulation_rates_cost_function
 
-[Show source in chamber_rate_fitting.py:320](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L320)
+[Show source in chamber_rate_fitting.py:120](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L120)
 
 Cost function for the optimization of the eddy diffusivity
 and alpha collision efficiency.
@@ -129,7 +133,7 @@ def coagulation_rates_cost_function(
     parameters: NDArray[np.float64],
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
-    dN_dt_concentration_pmf: NDArray[np.float64],
+    time_derivative_concentration_pmf: NDArray[np.float64],
     temperature: float = 293.15,
     pressure: float = 101325,
     particle_density: float = 1000,
@@ -143,7 +147,7 @@ def coagulation_rates_cost_function(
 
 ## create_guess_and_bounds
 
-[Show source in chamber_rate_fitting.py:390](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L390)
+[Show source in chamber_rate_fitting.py:181](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L181)
 
 Create the initial guess array and bounds list for the optimization.
 
@@ -174,91 +178,26 @@ def create_guess_and_bounds(
 
 
 
-## create_lognormal_2mode_from_fit
-
-[Show source in chamber_rate_fitting.py:105](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L105)
-
-Create a fitted PMF stream and concentration matrix based on
-optimized parameters.
-
-#### Arguments
-
-- `radius_min` - Log10 of the minimum radius value in meters (default: -9).
-- `radius_max` - Log10 of the maximum radius value in meters (default: -6).
-- `num_radius_bins` - Number of radius bins to create between radius_min and radius_max.
-
-#### Returns
-
-- `fitted_pmf_stream` - A Stream object containing the time and fitted concentration PMF data.
-- `concentration_m3_pmf_fits` - A numpy array with the fitted concentration PMF values.
-
-#### Signature
-
-```python
-def create_lognormal_2mode_from_fit(
-    parameters_stream: Stream,
-    radius_min: float = 1e-09,
-    radius_max: float = 1e-06,
-    num_radius_bins: int = 250,
-) -> Tuple[Stream, NDArray[np.float64]]: ...
-```
-
-#### See also
-
-- [Stream](../stream.md#stream)
-
-
-
-## fit_lognormal_2mode_pdf
-
-[Show source in chamber_rate_fitting.py:23](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L23)
-
-Generate initial guesses using a machine learning model, optimize them,
-and return a Stream object with the results.
-
-#### Arguments
-
-- `experiment_time` - Array of experiment time points.
-- `radius_m` - Array of particle radii in meters.
-- `concentration_m3_pdf` - 2D array of concentration PDFs for each
-    time point.
-
-#### Returns
-
-- `fitted_stream` - A Stream object containing the initial guesses,
-    optimized values, and R² scores.
-
-#### Signature
-
-```python
-def fit_lognormal_2mode_pdf(
-    experiment_time: np.ndarray, radius_m: np.ndarray, concentration_m3_pdf: np.ndarray
-) -> Stream: ...
-```
-
-#### See also
-
-- [Stream](../stream.md#stream)
-
-
-
 ## optimize_and_calculate_rates_looped
 
-[Show source in chamber_rate_fitting.py:546](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L546)
+[Show source in chamber_rate_fitting.py:358](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L358)
 
 Perform optimization and calculate rates for each time point in the stream.
 
 #### Arguments
 
 - `pmf_stream` - Stream object containing the fitted PMF data.
-- `pmf_derivative_stream` - Stream object containing the derivative of the PMF data.
-- `chamber_parameters` - ChamberParameters object containing chamber-related parameters.
+- `pmf_derivative_stream` - Stream object containing the derivative of the
+    PMF data.
+- `chamber_parameters` - ChamberParameters object containing
+    chamber-related parameters.
 - `fit_guess` - Initial guess for the optimization.
 - `fit_bounds` - Bounds for the optimization parameters.
 
 #### Returns
 
-- `result_stream` - Stream containing the optimization results for each time point.
+- `result_stream` - Stream containing the optimization results for
+    each time point.
 - `coagulation_loss_stream` - Stream containing coagulation loss rates.
 - `coagulation_gain_stream` - Stream containing coagulation gain rates.
 - `coagulation_net_stream` - Stream containing net coagulation rates.
@@ -287,15 +226,37 @@ def optimize_and_calculate_rates_looped(
 
 ## optimize_chamber_parameters
 
-[Show source in chamber_rate_fitting.py:436](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L436)
+[Show source in chamber_rate_fitting.py:228](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L228)
 
-Optimize the eddy diffusivity and alpha collision efficiency parameters.
+Optimize the eddy diffusivity and alpha collision efficiency parameters
+for a given particle size distribution and its time derivative.
+
+#### Arguments
+
+- `radius_bins` - Array of particle size bins in meters.
+- `concentration_pmf` - Array of particle mass fractions (PMF)
+    concentrations at each radius bin.
+- `time_derivative_concentration_pmf` - Array of time derivatives of
+    the PMF concentrations, representing the rate of change
+    in concentration over time.
+- `chamber_params` - ChamberParameters object containing the physical
+    properties of the chamber, including temperature, pressure,
+    particle density, volume, input flow rate, and chamber dimensions.
+- `fit_guess` - Initial guess for the optimization parameters
+    (eddy diffusivity and alpha collision efficiency).
+- `fit_bounds` - List of tuples specifying the bounds for the
+    optimization parameters (lower and upper bounds
+    for each parameter).
+- `minimize_method` - Optimization method to be used. Default is "L-BFGS-B".
+    The following methods from `scipy.optimize.minimize` accept bounds,
+    "L-BFGS-B", "TNC", "SLSQP", "Powell", "trust-constr".
 
 #### Returns
 
-- `wall_eddy_diffusivity_optimized` - Optimized wall eddy diffusivity.
-- `alpha_collision_efficiency_optimized` - Optimized alpha collision
-efficiency.
+- `wall_eddy_diffusivity_optimized` - Optimized value of the wall eddy
+    diffusivity (in 1/s).
+- `alpha_collision_efficiency_optimized` - Optimized value of the alpha
+    collision efficiency (dimensionless).
 
 #### Signature
 
@@ -303,10 +264,10 @@ efficiency.
 def optimize_chamber_parameters(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
-    dN_dt_concentration_pmf: NDArray[np.float64],
-    chamber_params: ChamberParameters,
-    fit_guess: NDArray[np.float64] = np.array([0.1, 1]),
-    fit_bounds: List[Tuple[float, float]] = [(0.01, 1), (0.1, 1)],
+    time_derivative_concentration_pmf: NDArray[np.float64],
+    chamber_parameters: ChamberParameters,
+    fit_guess: NDArray[np.float64],
+    fit_bounds: List[Tuple[float, float]],
     minimize_method: str = "L-BFGS-B",
 ) -> Tuple[float, float]: ...
 ```
@@ -319,47 +280,17 @@ def optimize_chamber_parameters(
 
 ## optimize_parameters
 
-[Show source in chamber_rate_fitting.py:420](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L420)
+[Show source in chamber_rate_fitting.py:211](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L211)
+
+Get the optimized parameters using the given cost function.
 
 #### Signature
 
 ```python
 def optimize_parameters(
-    cost_function: callable,
-    initial_guess: np.ndarray,
+    cost_function: ignore,
+    initial_guess: NDArray[np.float64],
     bounds: List[Tuple[float, float]],
     method: str,
 ) -> Tuple[float, float]: ...
 ```
-
-
-
-## time_derivative_of_pmf_fits
-
-[Show source in chamber_rate_fitting.py:161](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L161)
-
-Calculate the rate of change of the concentration PMF over time and
-return a new stream.
-
-#### Arguments
-
-- `pmf_fitted_stream` - Stream object containing the fitted concentration
-    PMF data.
-- `window_size` - Size of the time window for fitting the slope.
-
-#### Returns
-
-- `rate_of_change_stream` - Stream object containing the rate of
-    change of the concentration PMF.
-
-#### Signature
-
-```python
-def time_derivative_of_pmf_fits(
-    pmf_fitted_stream: Stream, liner_slope_window_size: int = 12
-) -> Stream: ...
-```
-
-#### See also
-
-- [Stream](../stream.md#stream)

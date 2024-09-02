@@ -11,27 +11,9 @@
 - `TOTAL_NUMBER_SIMULATED` - Training parameters: 1000000
 
 
-## combine_initial_guesses
-
-[Show source in generate_and_train_2mode_sizer.py:597](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L597)
-
-Combine initial guesses into a single array.
-
-#### Signature
-
-```python
-def combine_initial_guesses(
-    mode_guess: NDArray[np.float64],
-    geometric_standard_deviation_guess: NDArray[np.float64],
-    number_of_particles_in_mode_guess: NDArray[np.float64],
-) -> NDArray[np.float64]: ...
-```
-
-
-
 ## create_pipeline
 
-[Show source in generate_and_train_2mode_sizer.py:182](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L182)
+[Show source in generate_and_train_2mode_sizer.py:181](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L181)
 
 Create a pipeline with normalization and MLPRegressor model.
 
@@ -47,41 +29,9 @@ def create_pipeline() -> Pipeline: ...
 
 
 
-## default_bounds
-
-[Show source in generate_and_train_2mode_sizer.py:585](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L585)
-
-Provide default bounds for optimization parameters.
-
-#### Signature
-
-```python
-def default_bounds() -> List[Tuple[float, Any]]: ...
-```
-
-
-
-## evaluate_fit
-
-[Show source in generate_and_train_2mode_sizer.py:643](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L643)
-
-Evaluate the best fit and calculate R² score.
-
-#### Signature
-
-```python
-def evaluate_fit(
-    best_result: dict[str, Any],
-    logspace_x: NDArray[np.float64],
-    concentration_pdf: NDArray[np.float64],
-) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], float]: ...
-```
-
-
-
 ## evaluate_pipeline
 
-[Show source in generate_and_train_2mode_sizer.py:317](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L317)
+[Show source in generate_and_train_2mode_sizer.py:316](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L316)
 
 Evaluate the pipeline and print the mean squared error for each target.
 
@@ -103,7 +53,7 @@ def evaluate_pipeline(
 
 ## generate_simulated_data
 
-[Show source in generate_and_train_2mode_sizer.py:49](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L49)
+[Show source in generate_and_train_2mode_sizer.py:48](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L48)
 
 Generate simulated lognormal aerosol particle size distributions.
 
@@ -150,7 +100,7 @@ def generate_simulated_data(
 
 ## load_and_cache_pipeline
 
-[Show source in generate_and_train_2mode_sizer.py:369](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L369)
+[Show source in generate_and_train_2mode_sizer.py:368](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L368)
 
 Load and cache the ML pipeline if not already loaded.
 
@@ -172,7 +122,7 @@ def load_and_cache_pipeline(filename: str) -> Pipeline: ...
 
 ## load_pipeline
 
-[Show source in generate_and_train_2mode_sizer.py:356](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L356)
+[Show source in generate_and_train_2mode_sizer.py:355](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L355)
 
 Load a pipeline from a file.
 
@@ -192,39 +142,9 @@ def load_pipeline(filename: str) -> Pipeline: ...
 
 
 
-## lognormal_2mode_cost_function
-
-[Show source in generate_and_train_2mode_sizer.py:538](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L538)
-
-Cost function for the lognormal distribution with 2 modes.
-
-#### Arguments
-
-- `params` - Combined array of mode_values, geometric_standard_deviation,
-    and number_of_particles.
-- `x_values` - The x-values (particle sizes).
-- `concentration_pdf` - The actual concentration PDF to fit.
-
-#### Returns
-
-The mean squared error between the actual and guessed concentration
-    PDF.
-
-#### Signature
-
-```python
-def lognormal_2mode_cost_function(
-    params: NDArray[np.float64],
-    x_values: NDArray[np.float64],
-    concentration_pdf: NDArray[np.float64],
-) -> float: ...
-```
-
-
-
 ## lognormal_2mode_ml_guess
 
-[Show source in generate_and_train_2mode_sizer.py:453](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L453)
+[Show source in generate_and_train_2mode_sizer.py:452](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L452)
 
 Load the machine learning pipeline, interpolate the concentration PDF,
 and predict lognormal parameters.
@@ -255,7 +175,7 @@ def lognormal_2mode_ml_guess(
 
 ## looped_lognormal_2mode_ml_guess
 
-[Show source in generate_and_train_2mode_sizer.py:745](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L745)
+[Show source in generate_and_train_2mode_sizer.py:537](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L537)
 
 Loop through the concentration PDFs to get the best guess.
 
@@ -283,52 +203,9 @@ def looped_lognormal_2mode_ml_guess(
 
 
 
-## looped_optimize_lognormal_2mode
-
-[Show source in generate_and_train_2mode_sizer.py:788](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L788)
-
-Loop through the concentration PDFs to get the best optimization.
-
-#### Arguments
-
-- `mode_guess` - Array of mode values.
-- `geometric_standard_deviation_guess` - Array of geometric standard
-    deviations.
-- `number_of_particles_in_mode_guess` - Array of number of particles.
-- `x_values` - Array of x-values (particle sizes).
-- `concentration_pdf` - Matrix of concentration PDF values.
-- `bounds` - List of bounds for optimization.
-- `list_of_methods` - List of optimization methods.
-
-#### Returns
-
-- `optimized_mode_values` - Optimized mode values.
-- `optimized_gsd` - Optimized geometric standard deviations.
-- `optimized_number_of_particles` - Optimized number of particles.
-- `r2` - R² score.
-- `optimization_results` - Dictionary of optimization results.
-
-#### Signature
-
-```python
-def looped_optimize_lognormal_2mode(
-    mode_guess: NDArray[np.float64],
-    geometric_standard_deviation_guess: NDArray[np.float64],
-    number_of_particles_in_mode_guess: NDArray[np.float64],
-    logspace_x: NDArray[np.float64],
-    concentration_pdf: NDArray[np.float64],
-    bounds: Optional[List[Tuple[float, Any]]] = None,
-    list_of_methods: Optional[List[str]] = None,
-) -> Tuple[
-    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]
-]: ...
-```
-
-
-
 ## normalize_max
 
-[Show source in generate_and_train_2mode_sizer.py:134](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L134)
+[Show source in generate_and_train_2mode_sizer.py:133](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L133)
 
 Normalize each sample in X by dividing by its maximum value.
 
@@ -350,7 +227,7 @@ def normalize_max(x_input: NDArray[np.float64]) -> NDArray[np.float64]: ...
 
 ## normalize_targets
 
-[Show source in generate_and_train_2mode_sizer.py:147](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L147)
+[Show source in generate_and_train_2mode_sizer.py:146](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L146)
 
 Normalize the mode index, GSD, and relative number concentration.
 
@@ -386,54 +263,9 @@ def normalize_targets(
 
 
 
-## optimize_lognormal_2mode
-
-[Show source in generate_and_train_2mode_sizer.py:677](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L677)
-
-Optimize the lognormal 2-mode distribution parameters using multiple
-optimization methods.
-
-#### Signature
-
-```python
-def optimize_lognormal_2mode(
-    mode_guess: NDArray[np.float64],
-    geometric_standard_deviation_guess: NDArray[np.float64],
-    number_of_particles_in_mode_guess: NDArray[np.float64],
-    logspace_x: NDArray[np.float64],
-    concentration_pdf: NDArray[np.float64],
-    bounds: Optional[List[Tuple[float, Any]]] = None,
-    list_of_methods: Optional[List[str]] = None,
-) -> Tuple[
-    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], float, dict[str, Any]
-]: ...
-```
-
-
-
-## perform_optimization
-
-[Show source in generate_and_train_2mode_sizer.py:612](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L612)
-
-Perform the optimization using the specified method.
-
-#### Signature
-
-```python
-def perform_optimization(
-    method: str,
-    initial_guess: NDArray[np.float64],
-    bounds: List[Tuple[float, Any]],
-    x_values: NDArray[np.float64],
-    concentration_pdf: NDArray[np.float64],
-) -> Optional[dict[str, Any]]: ...
-```
-
-
-
 ## save_pipeline
 
-[Show source in generate_and_train_2mode_sizer.py:345](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L345)
+[Show source in generate_and_train_2mode_sizer.py:344](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L344)
 
 Save the trained pipeline to a file.
 
@@ -452,7 +284,7 @@ def save_pipeline(pipeline: Pipeline, filename: str) -> None: ...
 
 ## train_network_and_save
 
-[Show source in generate_and_train_2mode_sizer.py:387](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L387)
+[Show source in generate_and_train_2mode_sizer.py:386](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L386)
 
 Train the neural network and save the pipeline.
 
@@ -466,7 +298,7 @@ def train_network_and_save(): ...
 
 ## train_pipeline
 
-[Show source in generate_and_train_2mode_sizer.py:209](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L209)
+[Show source in generate_and_train_2mode_sizer.py:208](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L208)
 
 Train the pipeline and return the trained model along with train/test data.
 
@@ -503,7 +335,7 @@ def train_pipeline(
 
 ## train_pipeline_with_progress
 
-[Show source in generate_and_train_2mode_sizer.py:249](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L249)
+[Show source in generate_and_train_2mode_sizer.py:248](https://github.com/Gorkowski/particula/blob/main/particula/data/process/ml_analysis/generate_and_train_2mode_sizer.py#L248)
 
 Train the pipeline in batches with progress tracking, and return the
 trained model along with train/test data.
