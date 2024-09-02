@@ -319,77 +319,104 @@ ax.set_title("Bin dN/dt")
 plt.legend()
 # %% optimize eddy diffusivity and alpha collision efficiency
 
+chamber_properties = chamber_rate_fitting.ChamberParameters()
+chamber_properties.temperature = 293.15
+chamber_properties.pressure = 78000
+chamber_properties.particle_density = 1600
+chamber_properties.volume = 0.9
+chamber_properties.input_flow_rate_m3_sec = 1.2 * convert_units("L/min", "m^3/s")
+chamber_properties.chamber_dimensions = (0.739, 0.739, 1.663)
 
-
-
-# %% optimize the eddy diffusivity and alpha collision efficiency
-
-# Initial guess
-initial_guess = np.array([0.1, 0.05])
-
-bounds = [(1e-6, 20), (1e-4, 10)]
-
-# Partial evaluation: fix radius_bins, temperature, pressure, etc.
-partial_cost_function = partial(
-    coagulation_rates_cost_function,
-    radius_bins=radius_m_values,
-    concentration_pmf=concentration_m3_pmf_fits[15, :],
-    dN_dt_concentration_pmf=dC_dt_smooth[15, :],
-    temperature=293.15,
-    pressure=78000,
-    particle_density=1800,
-    volume=0.9,
-    input_flow_rate=1.2 * convert_units("L/min", "m^3/s"),
-    chamber_dimensions=(0.739, 0.739, 1.663),
+fit_guess, fit_bounds = chamber_rate_fitting.create_guess_and_bounds(
+    guess_eddy_diffusivity=0.1,
+    guess_alpha_collision_efficiency=0.05,
+    bounds_eddy_diffusivity=(1e-2, 50),
+    bounds_alpha_collision_efficiency=(0.01, 1),
 )
 
-# Optimize the parameters
-result = minimize(
-    fun=partial_cost_function,
-    x0=initial_guess,
-    method="L-BFGS-B",
-    bounds=bounds,
+# %% fit looped
+
+(
+    result_stream,
+    coagulation_loss_stream,
+    coagulation_gain_stream,
+    coagulation_net_stream,
+    dilution_loss_stream,
+    wall_loss_rate_stream,
+    total_rate_stream,
+) = chamber_rate_fitting.optimize_and_calculate_rates_looped(
+    pmf_stream=fitted_pmf_stream,
+    pmf_derivative_stream=pmf_derivative_stream,
+    chamber_parameters=chamber_properties,
+    fit_guess=fit_guess,
+    fit_bounds=fit_bounds,
 )
 
-# get the optimized values
-wall_eddy_diffusivity_optimized = result.x[0]
-alpha_collision_efficiency_optimized = result.x[1]
-
-# calculate the rates
-coagulation_loss, coagulation_gain, dilution_loss, wall_loss_rate, net_rate = (
-    calculate_pmf_rates(
-        radius_bins=radius_m_values,
-        concentration_pmf=concentration_m3_pmf_fits[15, :],
-        temperature=293.15,
-        pressure=78000,
-        particle_density=1600,
-        alpha_collision_efficiency=alpha_collision_efficiency_optimized,
-        volume=0.9,
-        input_flow_rate=1.2*convert_units("L/min", "m^3/s"),
-        wall_eddy_diffusivity=wall_eddy_diffusivity_optimized,
-        chamber_dimensions=(0.739, 0.739, 1.663),
-    )
-)
-coagulation_net = coagulation_gain - coagulation_loss
-
-r2_value = r2_score(dC_dt_smooth[15, :], net_rate)
-
-# return rates and optimized values and r2
 
 # %% plot the optimized rates
 
-# print the optimized values
-print(f"Wall eddy diffusivity optimized: {wall_eddy_diffusivity_optimized}")
-print(f"Alpha collision efficiency optimized: {alpha_collision_efficiency_optimized}")
+fig, ax = plt.subplots(1, 1)
+ax.plot(experiment_time, result_stream["r2_value"])
+ax.set_xlabel("Time (hours)")
+ax.set_ylabel("R2")
+ax.set_title("R2 from optimization")
+plt.show()
+
+# plot the optimized values
+fig, ax = plt.subplots(1, 1)
+ax.plot(experiment_time, result_stream["wall_eddy_diffusivity_[1/s]"], label="Wall eddy diffusivity")
+ax.set_xlabel("Time (hours)")
+ax.set_ylabel("Wall eddy diffusivity (1/s)")
+ax.set_title("Wall eddy diffusivity")
+plt.legend()
+plt.show()
 
 fig, ax = plt.subplots(1, 1)
-plt.plot(radius_m_values, coagulation_net, label="Coagulation net")
-plt.plot(radius_m_values, dilution_loss, label="Dilution")
-plt.plot(radius_m_values, wall_loss_rate, label="Wall loss")
+ax.plot(experiment_time, result_stream["alpha_collision_efficiency_[-]"],
+        label="Alpha collision efficiency")
+ax.set_xlabel("Time (hours)")
+ax.set_ylabel("Alpha collision efficiency (-)")
+ax.set_title("Alpha collision efficiency")
+plt.legend()
+plt.show()
+
+# plot the rate fractions
+fig, ax = plt.subplots(1, 1)
+ax.plot(experiment_time, result_stream["coagulation_net_fraction"], label="Coagulation net")
+ax.plot(experiment_time, result_stream["dilution_loss_fraction"], label="Dilution loss")
+ax.plot(experiment_time, result_stream["wall_loss_rate_fraction"], label="Wall loss")
+ax.set_xlabel("Time (hours)")
+ax.set_ylabel("Rate fraction")
+ax.set_title("Rate fractions")
+plt.legend()
+plt.show()
+
+# %%
+# % plot the optimized rates
+
+time_index = 5
+# print the optimized values
+
+radius_m_values = fitted_pmf_stream.header_float
+fig, ax = plt.subplots(1, 1)
+plt.plot(radius_m_values,
+         coagulation_net_stream.data[time_index, :],
+         label="Coagulation net")
+plt.plot(radius_m_values,
+         dilution_loss_stream.data[time_index, :],
+         , label="Dilution")
+plt.plot(radius_m_values,
+         wall_loss_rate_stream.data[time_index, :],
+         label="Wall loss")
 # plt.plot(radius_m_values, -concentration_m3_pmf_fits[11, :], label="Measured value",)
-plt.plot(radius_m_values, net_rate, label="Net rate")
-plt.plot(radius_m_values, dC_dt_smooth[15, :], label="Measured rate",
-          linestyle="--")
+plt.plot(radius_m_values,
+         coagulation_net_stream.data[time_index, :], label="Net rate")
+plt.plot(
+    radius_m_values,
+    pmf_derivative_stream.data[time_index, :],
+    label="Measured rate",
+    linestyle="--",
+)
 plt.xscale("log")
 plt.xlabel("Diameter (m)")
 plt.ylabel(r"Rate $\dfrac{1}{m^3 s}$")
