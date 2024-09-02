@@ -6,7 +6,7 @@
 
 ## ChamberParameters
 
-[Show source in chamber_rate_fitting.py:171](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L171)
+[Show source in chamber_rate_fitting.py:172](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L172)
 
 Data class for the chamber parameters.
 
@@ -20,7 +20,7 @@ class ChamberParameters: ...
 
 ## calculate_optimized_rates
 
-[Show source in chamber_rate_fitting.py:290](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L290)
+[Show source in chamber_rate_fitting.py:291](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L291)
 
 Calculate the coagulation rates using the optimized parameters and return
 the rates and R2 score.
@@ -121,7 +121,7 @@ def calculate_pmf_rates(
 
 ## coagulation_rates_cost_function
 
-[Show source in chamber_rate_fitting.py:120](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L120)
+[Show source in chamber_rate_fitting.py:121](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L121)
 
 Cost function for the optimization of the eddy diffusivity
 and alpha collision efficiency.
@@ -147,7 +147,7 @@ def coagulation_rates_cost_function(
 
 ## create_guess_and_bounds
 
-[Show source in chamber_rate_fitting.py:181](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L181)
+[Show source in chamber_rate_fitting.py:182](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L182)
 
 Create the initial guess array and bounds list for the optimization.
 
@@ -180,7 +180,7 @@ def create_guess_and_bounds(
 
 ## optimize_and_calculate_rates_looped
 
-[Show source in chamber_rate_fitting.py:358](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L358)
+[Show source in chamber_rate_fitting.py:360](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L360)
 
 Perform optimization and calculate rates for each time point in the stream.
 
@@ -226,7 +226,7 @@ def optimize_and_calculate_rates_looped(
 
 ## optimize_chamber_parameters
 
-[Show source in chamber_rate_fitting.py:228](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L228)
+[Show source in chamber_rate_fitting.py:229](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L229)
 
 Optimize the eddy diffusivity and alpha collision efficiency parameters
 for a given particle size distribution and its time derivative.
@@ -280,7 +280,7 @@ def optimize_chamber_parameters(
 
 ## optimize_parameters
 
-[Show source in chamber_rate_fitting.py:211](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L211)
+[Show source in chamber_rate_fitting.py:212](https://github.com/Gorkowski/particula/blob/main/particula/data/process/chamber_rate_fitting.py#L212)
 
 Get the optimized parameters using the given cost function.
 
