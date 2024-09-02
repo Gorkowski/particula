@@ -6,7 +6,7 @@
 
 ## DataChecksBuilder
 
-[Show source in loader_setting_builders.py:78](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L78)
+[Show source in loader_setting_builders.py:95](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L95)
 
 Builder class for constructing the data checks dictionary.
 
@@ -15,10 +15,10 @@ Builder class for constructing the data checks dictionary.
 ```python
 class DataChecksBuilder(
     BuilderABC,
-    mixin.ChecksCharactersMixin,
-    mixin.ChecksCharCountsMixin,
-    mixin.ChecksSkipRowsMixin,
-    mixin.ChecksSkipEndMixin,
+    ChecksCharactersMixin,
+    ChecksCharCountsMixin,
+    ChecksSkipRowsMixin,
+    ChecksSkipEndMixin,
 ):
     def __init__(self): ...
 ```
@@ -26,10 +26,14 @@ class DataChecksBuilder(
 #### See also
 
 - [BuilderABC](../next/abc_builder.md#builderabc)
+- [ChecksCharCountsMixin](./mixin.md#checkscharcountsmixin)
+- [ChecksCharactersMixin](./mixin.md#checkscharactersmixin)
+- [ChecksSkipEndMixin](./mixin.md#checksskipendmixin)
+- [ChecksSkipRowsMixin](./mixin.md#checksskiprowsmixin)
 
 ### DataChecksBuilder().build
 
-[Show source in loader_setting_builders.py:100](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L100)
+[Show source in loader_setting_builders.py:117](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L117)
 
 Build and return the data checks dictionary.
 
@@ -43,7 +47,7 @@ def build(self) -> Dict[str, Any]: ...
 
 ## LoaderSetting1DBuilder
 
-[Show source in loader_setting_builders.py:11](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L11)
+[Show source in loader_setting_builders.py:28](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L28)
 
 Builder class for creating settings for loading and checking 1D data
 from CSV files.
@@ -53,18 +57,18 @@ from CSV files.
 ```python
 class LoaderSetting1DBuilder(
     BuilderABC,
-    mixin.RelativeFolderMixin,
-    mixin.FilenameRegexMixin,
-    mixin.FileMinSizeBytesMixin,
-    mixin.HeaderRowMixin,
-    mixin.DataChecksMixin,
-    mixin.DataColumnMixin,
-    mixin.DataHeaderMixin,
-    mixin.TimeColumnMixin,
-    mixin.TimeFormatMixin,
-    mixin.DelimiterMixin,
-    mixin.TimeShiftSecondsMixin,
-    mixin.TimezoneIdentifierMixin,
+    RelativeFolderMixin,
+    FilenameRegexMixin,
+    FileMinSizeBytesMixin,
+    HeaderRowMixin,
+    DataChecksMixin,
+    DataColumnMixin,
+    DataHeaderMixin,
+    TimeColumnMixin,
+    TimeFormatMixin,
+    DelimiterMixin,
+    TimeShiftSecondsMixin,
+    TimezoneIdentifierMixin,
 ):
     def __init__(self): ...
 ```
@@ -72,10 +76,22 @@ class LoaderSetting1DBuilder(
 #### See also
 
 - [BuilderABC](../next/abc_builder.md#builderabc)
+- [DataChecksMixin](./mixin.md#datachecksmixin)
+- [DataColumnMixin](./mixin.md#datacolumnmixin)
+- [DataHeaderMixin](./mixin.md#dataheadermixin)
+- [DelimiterMixin](./mixin.md#delimitermixin)
+- [FileMinSizeBytesMixin](./mixin.md#fileminsizebytesmixin)
+- [FilenameRegexMixin](./mixin.md#filenameregexmixin)
+- [HeaderRowMixin](./mixin.md#headerrowmixin)
+- [RelativeFolderMixin](./mixin.md#relativefoldermixin)
+- [TimeColumnMixin](./mixin.md#timecolumnmixin)
+- [TimeFormatMixin](./mixin.md#timeformatmixin)
+- [TimeShiftSecondsMixin](./mixin.md#timeshiftsecondsmixin)
+- [TimezoneIdentifierMixin](./mixin.md#timezoneidentifiermixin)
 
 ### LoaderSetting1DBuilder().build
 
-[Show source in loader_setting_builders.py:58](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L58)
+[Show source in loader_setting_builders.py:75](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L75)
 
 Build and return the settings dictionary for 1D data loading.
 
