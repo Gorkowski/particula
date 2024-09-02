@@ -1,11 +1,11 @@
 """Fit the lognormal 2-mode distribution to the concentration PDF."""
 
 import logging
+import warnings
 from typing import Tuple, Optional, List, Any
 import numpy as np
 from numpy.typing import NDArray
 from tqdm import tqdm
-import warnings
 
 from scipy.optimize import minimize  # type: ignore
 from sklearn.metrics import mean_squared_error, r2_score  # type: ignore
