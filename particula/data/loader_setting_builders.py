@@ -4,24 +4,41 @@
 
 from typing import Any, Dict
 from particula.next.abc_builder import BuilderABC
-from particula.data import mixin
+from particula.data.mixin import (
+    RelativeFolderMixin,
+    FilenameRegexMixin,
+    FileMinSizeBytesMixin,
+    HeaderRowMixin,
+    DataChecksMixin,
+    DataColumnMixin,
+    DataHeaderMixin,
+    TimeColumnMixin,
+    TimeFormatMixin,
+    DelimiterMixin,
+    TimeShiftSecondsMixin,
+    TimezoneIdentifierMixin,
+    ChecksCharactersMixin,
+    ChecksCharCountsMixin,
+    ChecksSkipRowsMixin,
+    ChecksSkipEndMixin,
+)
 
 
 # pylint: disable=too-many-ancestors
 class LoaderSetting1DBuilder(
     BuilderABC,
-    mixin.RelativeFolderMixin,
-    mixin.FilenameRegexMixin,
-    mixin.FileMinSizeBytesMixin,
-    mixin.HeaderRowMixin,
-    mixin.DataChecksMixin,
-    mixin.DataColumnMixin,
-    mixin.DataHeaderMixin,
-    mixin.TimeColumnMixin,
-    mixin.TimeFormatMixin,
-    mixin.DelimiterMixin,
-    mixin.TimeShiftSecondsMixin,
-    mixin.TimezoneIdentifierMixin,
+    RelativeFolderMixin,
+    FilenameRegexMixin,
+    FileMinSizeBytesMixin,
+    HeaderRowMixin,
+    DataChecksMixin,
+    DataColumnMixin,
+    DataHeaderMixin,
+    TimeColumnMixin,
+    TimeFormatMixin,
+    DelimiterMixin,
+    TimeShiftSecondsMixin,
+    TimezoneIdentifierMixin,
 ):
     """Builder class for creating settings for loading and checking 1D data
     from CSV files."""
@@ -42,18 +59,18 @@ class LoaderSetting1DBuilder(
             "timezone_identifier",
         ]
         BuilderABC.__init__(self, required_parameters)
-        mixin.RelativeFolderMixin.__init__(self)
-        mixin.FilenameRegexMixin.__init__(self)
-        mixin.FileMinSizeBytesMixin.__init__(self)
-        mixin.HeaderRowMixin.__init__(self)
-        mixin.DataChecksMixin.__init__(self)
-        mixin.DataColumnMixin.__init__(self)
-        mixin.DataHeaderMixin.__init__(self)
-        mixin.TimeColumnMixin.__init__(self)
-        mixin.TimeFormatMixin.__init__(self)
-        mixin.DelimiterMixin.__init__(self)
-        mixin.TimeShiftSecondsMixin.__init__(self)
-        mixin.TimezoneIdentifierMixin.__init__(self)
+        RelativeFolderMixin.__init__(self)
+        FilenameRegexMixin.__init__(self)
+        FileMinSizeBytesMixin.__init__(self)
+        HeaderRowMixin.__init__(self)
+        DataChecksMixin.__init__(self)
+        DataColumnMixin.__init__(self)
+        DataHeaderMixin.__init__(self)
+        TimeColumnMixin.__init__(self)
+        TimeFormatMixin.__init__(self)
+        DelimiterMixin.__init__(self)
+        TimeShiftSecondsMixin.__init__(self)
+        TimezoneIdentifierMixin.__init__(self)
 
     def build(self) -> Dict[str, Any]:
         """Build and return the settings dictionary for 1D data loading."""
@@ -77,10 +94,10 @@ class LoaderSetting1DBuilder(
 
 class DataChecksBuilder(
     BuilderABC,
-    mixin.ChecksCharactersMixin,
-    mixin.ChecksCharCountsMixin,
-    mixin.ChecksSkipRowsMixin,
-    mixin.ChecksSkipEndMixin,
+    ChecksCharactersMixin,
+    ChecksCharCountsMixin,
+    ChecksSkipRowsMixin,
+    ChecksSkipEndMixin,
 ):
     """Builder class for constructing the data checks dictionary."""
 
@@ -92,10 +109,10 @@ class DataChecksBuilder(
             "skip_end",
         ]
         BuilderABC.__init__(self, required_parameters)
-        mixin.ChecksCharactersMixin.__init__(self)
-        mixin.ChecksCharCountsMixin.__init__(self)
-        mixin.ChecksSkipRowsMixin.__init__(self)
-        mixin.ChecksSkipEndMixin.__init__(self)
+        ChecksCharactersMixin.__init__(self)
+        ChecksCharCountsMixin.__init__(self)
+        ChecksSkipRowsMixin.__init__(self)
+        ChecksSkipEndMixin.__init__(self)
 
     def build(self) -> Dict[str, Any]:
         """Build and return the data checks dictionary."""
