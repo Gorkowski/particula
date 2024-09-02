@@ -4,7 +4,7 @@
 
 > Auto-generated documentation for [particula.next.dynamics.coagulation.particle_resolved_method](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py) module.
 
-## coagulation_step
+## particle_resolved_coagulation_step
 
 [Show source in particle_resolved_method.py:67](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L67)
 
@@ -32,7 +32,7 @@ based on coagulation events.
 #### Signature
 
 ```python
-def coagulation_step(
+def particle_resolved_coagulation_step(
     particle_radius: NDArray[np.float64],
     kernel: NDArray[np.float64],
     kernel_radius: NDArray[np.float64],

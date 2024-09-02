@@ -6,7 +6,7 @@
 
 ## average_std
 
-[Show source in stream_stats.py:31](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L31)
+[Show source in stream_stats.py:34](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L34)
 
 Calculate the average and standard deviation of data within a given
 'stream' object over specified intervals.
@@ -60,7 +60,7 @@ def average_std(
 
 ## drop_masked
 
-[Show source in stream_stats.py:11](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L11)
+[Show source in stream_stats.py:14](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L14)
 
 Drop rows where mask is false, and return data stream.
 
@@ -79,7 +79,7 @@ object
 #### Signature
 
 ```python
-def drop_masked(stream: Stream, mask: np.ndarray) -> Stream: ...
+def drop_masked(stream: Stream, mask: ignore) -> Stream: ...
 ```
 
 #### See also
@@ -90,7 +90,7 @@ def drop_masked(stream: Stream, mask: np.ndarray) -> Stream: ...
 
 ## filtering
 
-[Show source in stream_stats.py:103](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L103)
+[Show source in stream_stats.py:106](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L106)
 
 Filters the data of the given 'stream' object based on the specified
 bounds or specific value. The filtered data can be either dropped or
@@ -154,7 +154,7 @@ def filtering(
 
 ## remove_time_window
 
-[Show source in stream_stats.py:176](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L176)
+[Show source in stream_stats.py:179](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L179)
 
 Remove a time window from a stream object.
 
@@ -190,7 +190,7 @@ def remove_time_window(
 
 ## select_time_window
 
-[Show source in stream_stats.py:211](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L211)
+[Show source in stream_stats.py:214](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L214)
 
 Keep only a specified time window in a stream object and remove all other
 data.
@@ -215,6 +215,41 @@ def select_time_window(
     epoch_start: Union[float, int],
     epoch_end: Optional[Union[float, int]] = None,
     clone: Optional[bool] = True,
+) -> Stream: ...
+```
+
+#### See also
+
+- [Stream](./stream.md#stream)
+
+
+
+## time_derivative_of_stream
+
+[Show source in stream_stats.py:253](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L253)
+
+Calculate the rate of change of the concentration PMF over time and
+return a new stream.
+
+Uses a linear regression model to fit the slope over a time window.
+The edge cases are handled by using a smaller window size.
+
+#### Arguments
+
+- `pmf_fitted_stream` - Stream object containing the fitted concentration
+    PMF data.
+- `window_size` - Size of the time window for fitting the slope.
+
+#### Returns
+
+- `rate_of_change_stream` - Stream object containing the rate of
+    change of the concentration PMF.
+
+#### Signature
+
+```python
+def time_derivative_of_stream(
+    stream: Stream, liner_slope_window_size: int = 12
 ) -> Stream: ...
 ```
 

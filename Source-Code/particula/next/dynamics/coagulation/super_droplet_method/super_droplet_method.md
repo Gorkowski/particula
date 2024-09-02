@@ -146,52 +146,6 @@ def coagulation_events(
 
 
 
-## coagulation_step
-
-[Show source in super_droplet_method.py:456](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L456)
-
-Perform a single step of the Super Droplet coagulation process.
-
-This function processes particles by sorting them, binning by size,
-computing coagulation events based on the coagulation kernel, and
-updating particle properties accordingly.
-
-#### Arguments
-
-- `particle_radius` - Array of particle radii.
-- `particle_concentration` - Array of particle concentrations
-    corresponding to each radius.
-- `kernel` - 2D array representing the coagulation kernel values between
-    different bins.
-- `kernel_radius` - Array defining the radii corresponding to the
-    kernel bins.
-- `volume` - Volume of the system or relevant scaling factor.
-- `time_step` - Duration of the current time step.
-random_generator : A NumPy random number generator for
-    stochastic processes.
-
-#### Returns
-
-Tuple:
-    - Updated array of particle radii after coagulation.
-    - Updated array of particle concentrations after coagulation.
-
-#### Signature
-
-```python
-def coagulation_step(
-    particle_radius: NDArray[np.float64],
-    particle_concentration: NDArray[np.float64],
-    kernel: NDArray[np.float64],
-    kernel_radius: NDArray[np.float64],
-    volume: float,
-    time_step: float,
-    random_generator: np.random.Generator,
-) -> Tuple[NDArray[np.float64], NDArray[np.float64]]: ...
-```
-
-
-
 ## event_pairs
 
 [Show source in super_droplet_method.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L106)
@@ -217,7 +171,7 @@ def event_pairs(
     lower_bin: int,
     upper_bin: int,
     kernel_max: Union[float, NDArray[np.float64]],
-    number_in_bins: NDArray[np.float64 | np.int64],
+    number_in_bins: Union[NDArray[np.float64], NDArray[np.int64]],
 ) -> float: ...
 ```
 
@@ -385,6 +339,52 @@ def sort_particles(
     particle_radius: NDArray[np.float64],
     particle_concentration: Optional[NDArray[np.float64]] = None,
 ) -> Tuple[NDArray[np.int64], NDArray[np.float64], Optional[NDArray[np.float64]]]: ...
+```
+
+
+
+## super_droplet_coagulation_step
+
+[Show source in super_droplet_method.py:456](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L456)
+
+Perform a single step of the Super Droplet coagulation process.
+
+This function processes particles by sorting them, binning by size,
+computing coagulation events based on the coagulation kernel, and
+updating particle properties accordingly.
+
+#### Arguments
+
+- `particle_radius` - Array of particle radii.
+- `particle_concentration` - Array of particle concentrations
+    corresponding to each radius.
+- `kernel` - 2D array representing the coagulation kernel values between
+    different bins.
+- `kernel_radius` - Array defining the radii corresponding to the
+    kernel bins.
+- `volume` - Volume of the system or relevant scaling factor.
+- `time_step` - Duration of the current time step.
+random_generator : A NumPy random number generator for
+    stochastic processes.
+
+#### Returns
+
+Tuple:
+    - Updated array of particle radii after coagulation.
+    - Updated array of particle concentrations after coagulation.
+
+#### Signature
+
+```python
+def super_droplet_coagulation_step(
+    particle_radius: NDArray[np.float64],
+    particle_concentration: NDArray[np.float64],
+    kernel: NDArray[np.float64],
+    kernel_radius: NDArray[np.float64],
+    volume: float,
+    time_step: float,
+    random_generator: np.random.Generator,
+) -> Tuple[NDArray[np.float64], NDArray[np.float64]]: ...
 ```
 
 

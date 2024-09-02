@@ -8,7 +8,7 @@
 
 - [Coagulation](coagulation/index.md)
 - [Condensation](./condensation.md)
-- [Dilution Rate](./dilution_rate.md)
+- [Dilution](./dilution.md)
 - [Particle Process](./particle_process.md)
 - [Properties](properties/index.md)
-- [Wall Loss Rate](./wall_loss_rate.md)
+- [Wall Loss](./wall_loss.md)

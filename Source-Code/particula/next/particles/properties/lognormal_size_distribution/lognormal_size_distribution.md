@@ -48,7 +48,7 @@ def lognormal_pdf_distribution(
 
 ## lognormal_pmf_distribution
 
-[Show source in lognormal_size_distribution.py:64](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L64)
+[Show source in lognormal_size_distribution.py:67](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L67)
 
 Probability Mass function for lognormal distribution of particles for
 varying modes, geometric standard deviations, and numbers of particles,
@@ -90,7 +90,7 @@ def lognormal_pmf_distribution(
 
 ## lognormal_sample_distribution
 
-[Show source in lognormal_size_distribution.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L114)
+[Show source in lognormal_size_distribution.py:117](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py#L117)
 
 Sample a Probability Density Function for the lognormal distribution.
 
