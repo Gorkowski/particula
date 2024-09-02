@@ -10,6 +10,8 @@ import numpy as np
 from numpy.typing import NDArray
 import joblib  # type: ignore
 from tqdm import tqdm
+import warnings
+
 
 from scipy.optimize import minimize  # type: ignore
 from scipy.interpolate import interp1d  # type: ignore
@@ -27,6 +29,9 @@ from particula.data.process.ml_analysis.get_ml_folder import (
 
 # Set up logging
 logger = logging.getLogger("particula")
+
+# Suppress all warnings
+warnings.filterwarnings("ignore")
 
 # Training parameters
 TOTAL_NUMBER_SIMULATED = 1_000_000
@@ -629,7 +634,7 @@ def perform_optimization(
         RuntimeWarning,
         UserWarning,
     ) as e:
-        logger.error(
+        logger.warning(
             "Method %s failed with %s: %s", method, type(e).__name__, e
         )
     return None
@@ -749,10 +754,11 @@ def looped_lognormal_2mode_ml_guess(
         concentration_pdf: Matrix of concentration PDF values.
 
     Returns:
-        mode_values_guess: Predicted mode values after rescaling.
-        geometric_standard_deviation_guess: Predicted geometric standard
+        Tuple:
+        - mode_values_guess: Predicted mode values after rescaling.
+        - geometric_standard_deviation_guess: Predicted geometric standard
             deviations after rescaling.
-        number_of_particles_guess: Predicted number of particles after
+        - number_of_particles_guess: Predicted number of particles after
             rescaling.
     """
     n_rows = concentration_pdf.shape[0]
@@ -819,7 +825,7 @@ def looped_optimize_lognormal_2mode(
     optimized_number_of_particles = np.zeros([n_rows, 2], dtype=np.float64)
     r2 = np.zeros(n_rows, dtype=np.float64)
 
-    for row in range(n_rows):
+    for row in tqdm(range(n_rows), desc="Optimizing Fit", total=n_rows):
         (
             optimized_mode_values[row],
             optimized_gsd[row],
