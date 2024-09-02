@@ -19,6 +19,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
         - [Loader Interface](particula/data/loader_interface.md#loader-interface)
         - [Loader Setting Builders](particula/data/loader_setting_builders.md#loader-setting-builders)
         - [Merger](particula/data/merger.md#merger)
+        - [Mixin](particula/data/mixin.md#mixin)
         - [Process](particula/data/process/index.md#process)
             - [Aerodynamic Convert](particula/data/process/aerodynamic_convert.md#aerodynamic-convert)
             - [Chamber Rate Fitting](particula/data/process/chamber_rate_fitting.md#chamber-rate-fitting)

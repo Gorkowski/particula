@@ -12,6 +12,7 @@
 - [Loader Interface](./loader_interface.md)
 - [Loader Setting Builders](./loader_setting_builders.md)
 - [Merger](./merger.md)
+- [Mixin](./mixin.md)
 - [Process](process/index.md)
 - [Settings Generator](./settings_generator.md)
 - [Stream](./stream.md)
