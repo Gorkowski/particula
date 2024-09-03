@@ -1092,13 +1092,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#loadersetting1dbuilder" class="md-nav__link">
+  <a href="#loader1dsettingsbuilder" class="md-nav__link">
     <span class="md-ellipsis">
-      LoaderSetting1DBuilder
+      Loader1DSettingsBuilder
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="LoaderSetting1DBuilder">
+    <nav class="md-nav" aria-label="Loader1DSettingsBuilder">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1120,13 +1120,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#loadersetting1dbuilderbuild" class="md-nav__link">
+  <a href="#loader1dsettingsbuilderbuild" class="md-nav__link">
     <span class="md-ellipsis">
-      LoaderSetting1DBuilder().build
+      Loader1DSettingsBuilder().build
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="LoaderSetting1DBuilder().build">
+    <nav class="md-nav" aria-label="Loader1DSettingsBuilder().build">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1149,13 +1149,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#loadersettingsizerbuilder" class="md-nav__link">
+  <a href="#loadersizersettingsbuilder" class="md-nav__link">
     <span class="md-ellipsis">
-      LoaderSettingSizerBuilder
+      LoaderSizerSettingsBuilder
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="LoaderSettingSizerBuilder">
+    <nav class="md-nav" aria-label="LoaderSizerSettingsBuilder">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1177,13 +1177,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#loadersettingsizerbuilderbuild" class="md-nav__link">
+  <a href="#loadersizersettingsbuilderbuild" class="md-nav__link">
     <span class="md-ellipsis">
-      LoaderSettingSizerBuilder().build
+      LoaderSizerSettingsBuilder().build
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="LoaderSettingSizerBuilder().build">
+    <nav class="md-nav" aria-label="LoaderSizerSettingsBuilder().build">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -7620,12 +7620,12 @@
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
-<h2 id="loadersetting1dbuilder">LoaderSetting1DBuilder<a class="headerlink" href="#loadersetting1dbuilder" title="Permanent link">&para;</a></h2>
+<h2 id="loader1dsettingsbuilder">Loader1DSettingsBuilder<a class="headerlink" href="#loader1dsettingsbuilder" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L32">Show source in loader_setting_builders.py:32</a></p>
 <p>Builder class for creating settings for loading and checking 1D data
 from CSV files.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LoaderSetting1DBuilder</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Loader1DSettingsBuilder</span><span class="p">(</span>
     <span class="n">BuilderABC</span><span class="p">,</span>
     <span class="n">RelativeFolderMixin</span><span class="p">,</span>
     <span class="n">FilenameRegexMixin</span><span class="p">,</span>
@@ -7658,18 +7658,18 @@ from CSV files.</p>
 <li><a href="../mixin/#timeshiftsecondsmixin">TimeShiftSecondsMixin</a></li>
 <li><a href="../mixin/#timezoneidentifiermixin">TimezoneIdentifierMixin</a></li>
 </ul>
-<h3 id="loadersetting1dbuilderbuild">LoaderSetting1DBuilder().build<a class="headerlink" href="#loadersetting1dbuilderbuild" title="Permanent link">&para;</a></h3>
+<h3 id="loader1dsettingsbuilderbuild">Loader1DSettingsBuilder().build<a class="headerlink" href="#loader1dsettingsbuilderbuild" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L79">Show source in loader_setting_builders.py:79</a></p>
 <p>Build and return the settings dictionary for 1D data loading.</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
-<h2 id="loadersettingsizerbuilder">LoaderSettingSizerBuilder<a class="headerlink" href="#loadersettingsizerbuilder" title="Permanent link">&para;</a></h2>
+<h2 id="loadersizersettingsbuilder">LoaderSizerSettingsBuilder<a class="headerlink" href="#loadersizersettingsbuilder" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L159">Show source in loader_setting_builders.py:159</a></p>
 <p>Builder class for creating settings for loading and checking sizer
 1D and 2D data from CSV files.</p>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LoaderSettingSizerBuilder</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LoaderSizerSettingsBuilder</span><span class="p">(</span>
     <span class="n">BuilderABC</span><span class="p">,</span>
     <span class="n">RelativeFolderMixin</span><span class="p">,</span>
     <span class="n">FilenameRegexMixin</span><span class="p">,</span>
@@ -7704,8 +7704,8 @@ from CSV files.</p>
 <li><a href="../mixin/#timeshiftsecondsmixin">TimeShiftSecondsMixin</a></li>
 <li><a href="../mixin/#timezoneidentifiermixin">TimezoneIdentifierMixin</a></li>
 </ul>
-<h3 id="loadersettingsizerbuilderbuild">LoaderSettingSizerBuilder().build<a class="headerlink" href="#loadersettingsizerbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L212">Show source in loader_setting_builders.py:212</a></p>
+<h3 id="loadersizersettingsbuilderbuild">LoaderSizerSettingsBuilder().build<a class="headerlink" href="#loadersizersettingsbuilderbuild" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L209">Show source in loader_setting_builders.py:209</a></p>
 <p>Build and return the two dictionaries for 1D and 2D sizer data
 loading .</p>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>

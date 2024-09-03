@@ -7934,7 +7934,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-1">
@@ -7947,25 +7947,30 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Importing necessary libraries</span>
-<span class="kn">import</span> <span class="nn">os</span>  <span class="c1"># For handling file paths and directories</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>  <span class="c1"># For handling file paths and directories</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># For plotting data</span>
 
 <span class="c1"># Importing specific functions from the particula package for data loading</span>
 <span class="c1"># and handling</span>
-<span class="kn">from</span> <span class="nn">particula.data</span> <span class="kn">import</span> <span class="n">loader</span><span class="p">,</span> <span class="n">loader_interface</span><span class="p">,</span> <span class="n">settings_generator</span>
+<span class="kn">from</span> <span class="nn">particula.data</span> <span class="kn">import</span> <span class="n">loader</span><span class="p">,</span> <span class="n">loader_interface</span>
 <span class="kn">from</span> <span class="nn">particula.data.tests.example_data.get_example_data</span> <span class="kn">import</span> <span class="n">get_data_folder</span>
-<span class="kn">from</span> <span class="nn">particula.data.loader_setting_builders</span> <span class="kn">import</span> <span class="p">(</span><span class="n">DataChecksBuilder</span><span class="p">,</span> <span class="n">LoaderSetting1DBuilder</span><span class="p">,)</span>
+<span class="kn">from</span> <span class="nn">particula.data.loader_setting_builders</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DataChecksBuilder</span><span class="p">,</span>
+    <span class="n">Loader1DSettingsBuilder</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1"># Importing necessary libraries
+<div class="clipboard-copy-txt" id="cell-1">
 import os  # For handling file paths and directories
 import matplotlib.pyplot as plt  # For plotting data
 
 # Importing specific functions from the particula package for data loading
 # and handling
-from particula.data import loader, loader_interface, settings_generator
+from particula.data import loader, loader_interface
 from particula.data.tests.example_data.get_example_data import get_data_folder
-from particula.data.loader_setting_builders import (DataChecksBuilder, LoaderSetting1DBuilder,)</div>
+from particula.data.loader_setting_builders import (
+    DataChecksBuilder,
+    Loader1DSettingsBuilder,
+)</div>
 </div>
 </div>
 </div>
@@ -7977,7 +7982,7 @@ from particula.data.loader_setting_builders import (DataChecksBuilder, LoaderSet
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-2">
@@ -8051,7 +8056,7 @@ Path to data folder:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-3">
@@ -8127,7 +8132,7 @@ print(raw_data[:2])</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-4">
@@ -8254,7 +8259,7 @@ There was 26 lines removed from the data
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-5">
@@ -8366,7 +8371,7 @@ First 5 data entries: [[3.3510e+04 1.7000e+01]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-6">
@@ -8476,7 +8481,7 @@ fig.tight_layout()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-7">
@@ -8492,7 +8497,7 @@ fig.tight_layout()</div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Using the LoaderSetting1DBuilder class to generate the settings dictionary</span>
 
 <span class="n">settings</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">LoaderSetting1DBuilder</span><span class="p">()</span>
+    <span class="n">Loader1DSettingsBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">set_relative_data_folder</span><span class="p">(</span><span class="s2">"CPC_3010_data"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_filename_regex</span><span class="p">(</span><span class="s2">"*.csv"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_header_row</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -8514,7 +8519,7 @@ fig.tight_layout()</div>
 <div class="clipboard-copy-txt" id="cell-7"># Using the LoaderSetting1DBuilder class to generate the settings dictionary
 
 settings = (
-    LoaderSetting1DBuilder()
+    Loader1DSettingsBuilder()
     .set_relative_data_folder("CPC_3010_data")
     .set_filename_regex("*.csv")
     .set_header_row(0)
@@ -8588,7 +8593,7 @@ timezone_identifier: UTC
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-8">
@@ -8745,7 +8750,7 @@ data_stream = loader_interface.load_files_interface(
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-9">
@@ -8904,7 +8909,7 @@ Names of the Source Files for the Data Stream:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-10">
@@ -9054,7 +9059,7 @@ Using the help function is an excellent habit to develop. It enhances your learn
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy for="cell-11">

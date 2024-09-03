@@ -45,7 +45,7 @@ def build(self) -> Dict[str, Any]: ...
 
 
 
-## LoaderSetting1DBuilder
+## Loader1DSettingsBuilder
 
 [Show source in loader_setting_builders.py:32](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L32)
 
@@ -55,7 +55,7 @@ from CSV files.
 #### Signature
 
 ```python
-class LoaderSetting1DBuilder(
+class Loader1DSettingsBuilder(
     BuilderABC,
     RelativeFolderMixin,
     FilenameRegexMixin,
@@ -89,7 +89,7 @@ class LoaderSetting1DBuilder(
 - [TimeShiftSecondsMixin](./mixin.md#timeshiftsecondsmixin)
 - [TimezoneIdentifierMixin](./mixin.md#timezoneidentifiermixin)
 
-### LoaderSetting1DBuilder().build
+### Loader1DSettingsBuilder().build
 
 [Show source in loader_setting_builders.py:79](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L79)
 
@@ -103,7 +103,7 @@ def build(self) -> Dict[str, Any]: ...
 
 
 
-## LoaderSettingSizerBuilder
+## LoaderSizerSettingsBuilder
 
 [Show source in loader_setting_builders.py:159](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L159)
 
@@ -113,7 +113,7 @@ Builder class for creating settings for loading and checking sizer
 #### Signature
 
 ```python
-class LoaderSettingSizerBuilder(
+class LoaderSizerSettingsBuilder(
     BuilderABC,
     RelativeFolderMixin,
     FilenameRegexMixin,
@@ -149,9 +149,9 @@ class LoaderSettingSizerBuilder(
 - [TimeShiftSecondsMixin](./mixin.md#timeshiftsecondsmixin)
 - [TimezoneIdentifierMixin](./mixin.md#timezoneidentifiermixin)
 
-### LoaderSettingSizerBuilder().build
+### LoaderSizerSettingsBuilder().build
 
-[Show source in loader_setting_builders.py:212](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L212)
+[Show source in loader_setting_builders.py:209](https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L209)
 
 Build and return the two dictionaries for 1D and 2D sizer data
 loading .

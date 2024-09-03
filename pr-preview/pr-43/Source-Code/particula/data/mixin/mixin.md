@@ -137,7 +137,7 @@ skip_end = 10
 #### Signature
 
 ```python
-def set_skip_end(self, skip_end: int): ...
+def set_skip_end(self, skip_end: int = 0): ...
 ```
 
 
@@ -176,7 +176,7 @@ skip_rows = 2
 #### Signature
 
 ```python
-def set_skip_rows(self, skip_rows: int): ...
+def set_skip_rows(self, skip_rows: int = 0): ...
 ```
 
 
@@ -396,7 +396,7 @@ Set the minimum file size in bytes for the data files to load.
 #### Signature
 
 ```python
-def set_file_min_size_bytes(self, size: int): ...
+def set_file_min_size_bytes(self, size: int = 10000): ...
 ```
 
 
@@ -588,7 +588,7 @@ convert_from = "pmf"
 #### Signature
 
 ```python
-def set_sizer_concentration_convert_from(self, convert_from: str): ...
+def set_sizer_concentration_convert_from(self, convert_from: str = None): ...
 ```
 
 
@@ -830,7 +830,7 @@ https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-cod
 #### Signature
 
 ```python
-def set_time_format(self, time_format_str: str): ...
+def set_time_format(self, time_format_str: str = "%Y-%m-%dT%H:%M:%S"): ...
 ```
 
 
@@ -876,7 +876,7 @@ shift = 86400
 #### Signature
 
 ```python
-def set_time_shift_seconds(self, shift: int): ...
+def set_time_shift_seconds(self, shift: int = 0): ...
 ```
 
 
@@ -928,5 +928,5 @@ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 #### Signature
 
 ```python
-def set_timezone_identifier(self, timezone: str): ...
+def set_timezone_identifier(self, timezone: str = "UTC"): ...
 ```

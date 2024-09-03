@@ -8766,7 +8766,7 @@ be considered valid, and proceed with data parsing.</p>
 <span class="c1"># Skip the last 10 row of the file.</span>
 </code></pre></div>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_skip_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_end</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_skip_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_end</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="checksskiprowsmixin">ChecksSkipRowsMixin<a class="headerlink" href="#checksskiprowsmixin" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L463">Show source in mixin.py:463</a></p>
@@ -8788,7 +8788,7 @@ be considered valid, and proceed with data parsing.</p>
 <span class="c1"># Skip the first 2 rows of the file.</span>
 </code></pre></div>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_skip_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_rows</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_skip_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="datachecksmixin">DataChecksMixin<a class="headerlink" href="#datachecksmixin" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L120">Show source in mixin.py:120</a></p>
@@ -8917,7 +8917,7 @@ that will be written to the output file or csv.</p>
 <li><code>size</code> <em>int</em> - Minimum file size in bytes. Default is 10000 bytes.</li>
 </ul>
 <h4 id="signature_17">Signature<a class="headerlink" href="#signature_17" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_file_min_size_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_file_min_size_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="filenameregexmixin">FilenameRegexMixin<a class="headerlink" href="#filenameregexmixin" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L37">Show source in mixin.py:37</a></p>
@@ -9029,7 +9029,7 @@ dN/dlogDp scale.</p>
 <span class="c1"># Ignored, no conversion is performed, when loading the sizer data.</span>
 </code></pre></div>
 <h4 id="signature_25">Signature<a class="headerlink" href="#signature_25" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_sizer_concentration_convert_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">convert_from</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_sizer_concentration_convert_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">convert_from</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="sizerdatareadermixin">SizerDataReaderMixin<a class="headerlink" href="#sizerdatareadermixin" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L601">Show source in mixin.py:601</a></p>
@@ -9174,7 +9174,7 @@ used to convert the time data to an Unix-Epoch timestamp.</p>
 <li><a href="https://strftime.org/">Python Time Format</a></li>
 </ul>
 <h4 id="signature_35">Signature<a class="headerlink" href="#signature_35" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_time_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_time_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_format_str</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S&quot;</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="timeshiftsecondsmixin">TimeShiftSecondsMixin<a class="headerlink" href="#timeshiftsecondsmixin" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L329">Show source in mixin.py:329</a></p>
@@ -9201,7 +9201,7 @@ shift is applied to all files loaded with this builder.</p>
 <span class="c1"># Shift the time data by 1 day (86400 seconds).</span>
 </code></pre></div>
 <h4 id="signature_37">Signature<a class="headerlink" href="#signature_37" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_time_shift_seconds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shift</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_time_shift_seconds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shift</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="timezoneidentifiermixin">TimezoneIdentifierMixin<a class="headerlink" href="#timezoneidentifiermixin" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L359">Show source in mixin.py:359</a></p>
@@ -9229,7 +9229,7 @@ The timezone shift is handled by the pytz library.</p>
 <h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
 <p><a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">List of Timezones</a></p>
 <h4 id="signature_39">Signature<a class="headerlink" href="#signature_39" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_timezone_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timezone</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_timezone_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timezone</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;UTC&quot;</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 
 
