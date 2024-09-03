@@ -588,14 +588,14 @@ convert_from = "pmf"
 #### Signature
 
 ```python
-def set_sizer_concentration_convert_from(self, convert_from: str = None): ...
+def set_sizer_concentration_convert_from(self, convert_from: Optional[str] = None): ...
 ```
 
 
 
 ## SizerDataReaderMixin
 
-[Show source in mixin.py:601](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L601)
+[Show source in mixin.py:604](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L604)
 
 Mixin class for the dictionary of the sizer data reader settings.
 
@@ -608,7 +608,7 @@ class SizerDataReaderMixin:
 
 ### SizerDataReaderMixin().set_data_sizer_reader
 
-[Show source in mixin.py:607](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L607)
+[Show source in mixin.py:610](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L610)
 
 Dictionary of the sizer data reader settings for the data files.
 Build with `SizerDataReaderBuilder`.
