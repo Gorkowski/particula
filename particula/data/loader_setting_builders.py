@@ -29,7 +29,7 @@ from particula.data.mixin import (
 
 
 # pylint: disable=too-many-ancestors
-class LoaderSetting1DBuilder(
+class Loader1DSettingsBuilder(
     BuilderABC,
     RelativeFolderMixin,
     FilenameRegexMixin,
@@ -138,8 +138,8 @@ class SizerDataReaderBuilder(
 
     def __init__(self):
         required_parameters = [
-            "sizer_start_key",
-            "sizer_end_key",
+            "sizer_start_keyword",
+            "sizer_end_keyword",
         ]
         BuilderABC.__init__(self, required_parameters)
         SizerConcentrationConvertFromMixin.__init__(self)
@@ -156,7 +156,7 @@ class SizerDataReaderBuilder(
         }
 
 
-class LoaderSettingSizerBuilder(
+class LoaderSizerSettingsBuilder(
     BuilderABC,
     RelativeFolderMixin,
     FilenameRegexMixin,
@@ -184,9 +184,6 @@ class LoaderSettingSizerBuilder(
             "data_checks",
             "data_column",
             "data_header",
-            "sizer_start_key",
-            "sizer_end_key",
-            "sizer_concentration_convert_from",
             "time_column",
             "time_format",
             "delimiter",
@@ -217,7 +214,7 @@ class LoaderSettingSizerBuilder(
             "relative_data_folder": self.relative_data_folder,
             "filename_regex": self.filename_regex,
             "MIN_SIZE_BYTES": self.file_min_size_bytes,
-            "data_loading_function": "general_2d_load",
+            "data_loading_function": "general_1d_load",
             "header_row": self.header_row,
             "data_checks": self.data_checks,
             "data_column": self.data_column,
@@ -235,7 +232,7 @@ class LoaderSettingSizerBuilder(
             "data_loading_function": "general_2d_load",
             "header_row": self.header_row,
             "data_checks": self.data_checks,
-            "data_size_reader": self.data_sizer_reader,
+            "data_sizer_reader": self.data_sizer_reader,
             "data_header": self.data_header,
             "time_column": self.time_column,
             "time_format": self.time_format,

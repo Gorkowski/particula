@@ -77,7 +77,7 @@ class FileMinSizeBytesMixin:
     def __init__(self):
         self.file_min_size_bytes = 10000
 
-    def set_file_min_size_bytes(self, size: int):
+    def set_file_min_size_bytes(self, size: int = 10000):
         """Set the minimum file size in bytes for the data files to load.
 
         Args:
@@ -248,7 +248,7 @@ class TimeFormatMixin:
     def __init__(self):
         self.time_format = "%Y-%m-%dT%H:%M:%S"
 
-    def set_time_format(self, time_format_str: str):
+    def set_time_format(self, time_format_str: str = "%Y-%m-%dT%H:%M:%S"):
         """Set the time format for the time data in the data files.
 
         Args:
@@ -332,7 +332,7 @@ class TimeShiftSecondsMixin:
     def __init__(self):
         self.time_shift_seconds = 0
 
-    def set_time_shift_seconds(self, shift: int):
+    def set_time_shift_seconds(self, shift: int = 0):
         """Set the time shift in seconds for the time data in the data files.
         This is helpful to match the time stamps of two data folders. This
         shift is applied to all files loaded with this builder.
@@ -362,7 +362,7 @@ class TimezoneIdentifierMixin:
     def __init__(self):
         self.timezone_identifier = "UTC"
 
-    def set_timezone_identifier(self, timezone: str):
+    def set_timezone_identifier(self, timezone: str = "UTC"):
         """Set the timezone identifier for the time data in the data files.
         The timezone shift is handled by the pytz library.
 
@@ -466,7 +466,7 @@ class ChecksSkipRowsMixin:
     def __init__(self):
         self.skip_rows = 0
 
-    def set_skip_rows(self, skip_rows: int):
+    def set_skip_rows(self, skip_rows: int = 0):
         """Set the number of rows to skip at the beginning of the file.
 
         Args:
@@ -489,7 +489,7 @@ class ChecksSkipEndMixin:
     def __init__(self):
         self.skip_end = 0
 
-    def set_skip_end(self, skip_end: int):
+    def set_skip_end(self, skip_end: int = 0):
         """Set the number of rows to skip at the end of the file.
 
         Args:
@@ -574,7 +574,7 @@ class SizerConcentrationConvertFromMixin:
     def __init__(self):
         self.sizer_concentration_convert_from = None
 
-    def set_sizer_concentration_convert_from(self, convert_from: str):
+    def set_sizer_concentration_convert_from(self, convert_from: str = None):
         """Set to convert the sizer concentration from dw or (pmf) scale to
         dN/dlogDp scale.
 
