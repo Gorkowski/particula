@@ -165,7 +165,9 @@ class TimeFormatMixin:
 
         Args:
             time_format_str (str): Time format string for the time data in the
-                data files. Default is ISO "%Y-%m-%dT%H:%M:%S".
+                data files. Default is ISO "%Y-%m-%dT%H:%M:%S", list "epoch"
+                if the time data is in Unix-Epoch format. Use the Python time
+                format codes otherwise,
                 e.g. "%Y-%m-%dT%H:%M:%S" for '2021-01-01T12:00:00'.
 
         Examples:
