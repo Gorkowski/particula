@@ -19,6 +19,16 @@ class RelativeFolderMixin:
                 e.g. 'data_folder'. Where the data folder is located in
                 project_path/data_folder.
 
+        Examples:
+            ``` py title="Set data folder"
+            folder = "data_folder"
+            # Set the data folder to 'data_folder'.
+            ```
+
+            ``` py title="Set a subfolder"
+            folder = "subfolder/data_folder"
+            # Set the data folder to 'subfolder/data_folder'.
+            ```
         """
         self.relative_data_folder = folder
         return self
@@ -36,6 +46,22 @@ class FilenameRegexMixin:
         Args:
             regex (str): Regular expression for the filenames, e.g.
                 'data_*.csv'.
+
+        Examples:
+            ``` py title="Match all files"
+            regex = ".*"
+            # Match all files in the folder.
+            ```
+
+            ``` py title="Match CSV files"
+            regex = ".*.csv"
+            # Match all CSV files in the folder.
+            ```
+
+            ``` py title="Match specific files"
+            regex = "data_*.csv"
+            # Match files starting with 'data_' and ending with '.csv'.
+            ```
 
         References:
             [Explore Regex](https://regex101.com/)
@@ -73,6 +99,19 @@ class HeaderRowMixin:
         Args:
             row (int): Row number for the header row in the data file, indexed
                 from 0.
+
+        Examples:
+        ``` py title="Header row at the top"
+        row = 0
+        # line 0: 'Time, Temp, data 1, data 2, data 3'
+        ```
+
+        ``` py title="Header is third row"
+        row = 2
+        # line 0: "Experiment 1"
+        # line 1: "Date: 2021-01-01"
+        # line 2: 'Time, Temp, data 1, data 2, data 3'
+        ```
         """
         self.header_row = row
         return self
@@ -110,6 +149,31 @@ class DataColumnMixin:
             data_columns: List of column numbers or names for the data columns
                 to load from the data files. The columns are indexed from 0.
                 e.g. [3, 5] or ['data 1', 'data 3'].
+
+        Examples:
+        ``` py title="Single data column, index"
+        data_columns = [3]
+        # header: 'Time, Temp, data 1, data 2, data 3'
+        # line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 1.2
+        ```
+
+        ``` py title="Single data column, name"
+        data_columns = ['data 1']
+        # header: 'Time, Temp, data 1, data 3, data 5'
+        # line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 25.8
+        ```
+
+        ``` py title="Multiple data columns, index"
+        data_columns = [1, 3]
+        # header: 'Time, Temp, data 1, data 3, data 5'
+        # line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 25.8, 3.4
+        ```
+
+        ``` py title="Multiple data columns, name"
+        data_columns = ['Temp', 'data 3']
+        # header: 'Time, Temp, data 1, data 3, data 5'
+        # line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 25.8, 3.4
+        ```
         """
         self.data_column = data_columns
         return self
@@ -130,6 +194,17 @@ class DataHeaderMixin:
         Args:
             headers: List of headers corresponding to the data
                 columns to load. e.g. ['data-1[m/s]', 'data_3[L]'].
+
+        Examples:
+        ``` py title="Single header"
+        headers = ['data-1[m/s]']
+        # Name the only data column as 'data-1[m/s]'.
+        ```
+
+        ``` py title="Multiple headers"
+        headers = ['data-1[m/s]', 'data-3[L]']
+        # Name the data columns as 'data-1[m/s]' and 'data-3[L]'.
+        ```
         """
         self.data_header = headers
         return self
@@ -149,6 +224,19 @@ class TimeColumnMixin:
             columns: List of column indexes for the time columns to
                 load from the data files. The columns are indexed from 0.
                 e.g. [0] or [1, 2] to combine 1 and 2 columns.
+
+        Examples:
+        ``` py title="Single time column"
+        columns = [0]
+        # Load the time data from the first column.
+        # line: '2021-01-01T12:00:00, 1.2, 3.4'
+        ```
+
+        ``` py title="Multiple time columns"
+        columns = [1, 2]
+        # Load the time data from the second and third columns.
+        # line: '1.2, 2021-01-01, 12:00:00'
+        ```
         """
         self.time_column = columns
         return self
@@ -217,6 +305,22 @@ class DelimiterMixin:
         Args:
             delimiter (str): Delimiter for the data columns in the data files.
                 e.g. ',' for CSV files or '\t' for tab-separated files.
+
+        Examples:
+            ``` py title="CSV delimiter"
+            delimiter = ","
+            # CSV file with columns separated by commas.
+            ```
+
+            ``` py title="Tab delimiter"
+            delimiter = "\t"
+            # Tab-separated file with columns separated by tabs.
+            ```
+
+            ``` py title="Space delimiter"
+            delimiter = " "
+            # Space-separated file with columns separated by spaces.
+            ```
         """
         self.delimiter = delimiter
         return self
@@ -236,6 +340,17 @@ class TimeShiftSecondsMixin:
         Args:
             shift (int): Time shift in seconds for the time data in the data
                 files. Default is 0 seconds.
+
+        Examples:
+            ``` py title="Shift by 1 hour"
+            shift = 3600
+            # Shift the time data by 1 hour (3600 seconds).
+            ```
+
+            ``` py title="Shift by 1 day"
+            shift = 86400
+            # Shift the time data by 1 day (86400 seconds).
+            ```
         """
         self.time_shift_seconds = shift
         return self
@@ -293,6 +408,20 @@ class ChecksCharactersMixin:
                 maximum) number of characters expected in a line of the data
                 file. e.g. [10, 100] for 10 to 100 characters. or [10] for
                 10 or more characters.
+
+        Examples:
+        ``` py title="Set minimum characters"
+        characters = [5]
+        # valid line: '1,2,3,4,5'
+        # invalid line: '1,2'
+        ```
+
+        ``` py title="Set range of characters"
+        characters = [5, 10]
+        # valid line: '1,2,3,4,5'
+        # invalid line: '1,2,3,4,5,6,7,8,9,10,11'
+        # invalid line: '1,2'
+        ```
         """
         self.characters = characters
         return self
@@ -343,6 +472,12 @@ class ChecksSkipRowsMixin:
         Args:
             skip_rows (int): Number of rows to skip at the beginning of the
                 file.
+
+        Examples:
+        ``` py title="Skip the first 2 rows"
+        skip_rows = 2
+        # Skip the first 2 rows of the file.
+        ```
         """
         self.skip_rows = skip_rows
         return self
@@ -359,6 +494,124 @@ class ChecksSkipEndMixin:
 
         Args:
             skip_end (int): Number of rows to skip at the end of the file.
+
+        Examples:
+        ``` py title="Skip last row"
+        skip_end = 10
+        # Skip the last 10 row of the file.
+        ```
         """
         self.skip_end = skip_end
+        return self
+
+
+class SizerStartKeywordMixin:
+    """Mixin class for setting the start key for the sizer data."""
+
+    def __init__(self):
+        self.sizer_start_keyword = None
+
+    def set_sizer_start_keyword(self, start_key: Union[str, int]):
+        """Set the start keyword for the sizer data, to identify the start of
+        the sizer data block in the data files. This can be a string or an
+        integer (column index) to identify the start of the sizer data block.
+
+        Args:
+            start_keyword: Start key for the sizer data in the data files.
+                e.g. '25.8' or 3 for the 4th column
+
+        Examples:
+        ``` py title="Start key as a string"
+        start_key = "35.8"
+        # header: 'Time, Temp, 35.8, 36.0, 36.2, ...'
+        ```
+
+        ``` py title="Start key as a column index"
+        start_key = 2
+        # header: 'Time, Temp, 35.8, 36.0, 36.2, ...'
+        ```
+
+        """
+        self.sizer_start_keyword = start_key
+        return self
+
+
+class SizerEndKeywordMixin:
+    """Mixin class for setting the end key for the sizer data."""
+
+    def __init__(self):
+        self.sizer_end_keyword = None
+
+    def set_sizer_end_keyword(self, end_key: Union[str, int]):
+        """Set the end keyword for the sizer data, to identify the end of
+        the sizer data block in the data files. This can be a string or an
+        integer (column index) to identify the end of the sizer data block.
+
+        Args:
+            end_keyword: End key for the sizer data in the data files.
+                e.g. '789.3' or -3 for the 3rd column from the end.
+
+        Examples:
+        ``` py title="End key as a string"
+        end_key = "789.3"
+        # header: '... 689.1, 750.2, 789.3, Total Conc, Comments'
+        ```
+
+        ``` py title="End key as a column index"
+        end_key = -3
+        # header: '... 689.1, 750.2, 789.3, Total Conc, Comments'
+        ```
+
+        """
+        self.sizer_end_keyword = end_key
+        return self
+
+
+class SizerConcentrationConvertFromMixin:
+    """Mixin class for setting to convert the sizer concentration to
+    a different scale."""
+
+    def __init__(self):
+        self.sizer_concentration_convert_from = None
+
+    def set_sizer_concentration_convert_from(self, convert_from: str):
+        """Set to convert the sizer concentration from dw or (pmf) scale to
+        dN/dlogDp scale.
+
+        Args:
+            convert_from: Conversion flag to convert the sizer concentration
+                from dw or (pmf) scale to dN/dlogDp scale. The option is only
+                "dw" all other values are ignored.
+
+        Examples:
+        ``` py title="Convert from dw scale"
+        convert_from = "dw"
+        # Convert the sizer concentration from dw scale to dN/dlogDp scale.
+        ```
+
+        ``` py title="Convert Ignored"
+        convert_from = "pmf"
+        # Ignored, no conversion is performed, when loading the sizer data.
+        ```
+        """
+        self.sizer_concentration_convert_from = convert_from
+        return self
+
+
+class SizerDataReaderMixin:
+    """Mixin class for the dictionary of the sizer data reader settings."""
+
+    def __init__(self):
+        self.data_sizer_reader = None
+
+    def set_data_sizer_reader(self, data_sizer_reader: Dict[str, Any]):
+        """Dictionary of the sizer data reader settings for the data files.
+        Build with `SizerDataReaderBuilder`.
+
+        Args:
+            data_sizer_reader: Dictionary of the sizer data reader settings
+                for the data files. The keys are the names of the settings,
+                and the values are the parameters for the settings.
+        """
+        self.data_sizer_reader = data_sizer_reader
         return self
