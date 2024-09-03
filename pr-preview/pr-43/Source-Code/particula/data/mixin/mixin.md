@@ -6,7 +6,7 @@
 
 ## ChecksCharCountsMixin
 
-[Show source in mixin.py:301](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L301)
+[Show source in mixin.py:430](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L430)
 
 Mixin class for setting the character counts for data checks.
 
@@ -19,7 +19,7 @@ class ChecksCharCountsMixin:
 
 ### ChecksCharCountsMixin().set_char_counts
 
-[Show source in mixin.py:307](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L307)
+[Show source in mixin.py:436](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L436)
 
 Set the required character counts for the data checks. This is
 the number of times a character should appear in a line of the data
@@ -55,7 +55,7 @@ def set_char_counts(self, char_counts: dict[str, int]): ...
 
 ## ChecksCharactersMixin
 
-[Show source in mixin.py:280](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L280)
+[Show source in mixin.py:395](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L395)
 
 Mixin class for setting the character length range for data checks.
 
@@ -68,7 +68,7 @@ class ChecksCharactersMixin:
 
 ### ChecksCharactersMixin().set_characters
 
-[Show source in mixin.py:286](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L286)
+[Show source in mixin.py:401](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L401)
 
 Set the character length range for the data checks. This is
 how many characters are expected a line of the data file, for it to
@@ -81,6 +81,21 @@ be considered valid, and proceed with data parsing.
     file. e.g. [10, 100] for 10 to 100 characters. or [10] for
     10 or more characters.
 
+#### Examples
+
+``` py title="Set minimum characters"
+characters = [5]
+# valid line: '1,2,3,4,5'
+# invalid line: '1,2'
+```
+
+``` py title="Set range of characters"
+characters = [5, 10]
+# valid line: '1,2,3,4,5'
+# invalid line: '1,2,3,4,5,6,7,8,9,10,11'
+# invalid line: '1,2'
+```
+
 #### Signature
 
 ```python
@@ -91,7 +106,7 @@ def set_characters(self, characters: list[int]): ...
 
 ## ChecksSkipEndMixin
 
-[Show source in mixin.py:351](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L351)
+[Show source in mixin.py:486](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L486)
 
 Mixin class for setting the number of rows to skip at the end.
 
@@ -104,13 +119,20 @@ class ChecksSkipEndMixin:
 
 ### ChecksSkipEndMixin().set_skip_end
 
-[Show source in mixin.py:357](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L357)
+[Show source in mixin.py:492](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L492)
 
 Set the number of rows to skip at the end of the file.
 
 #### Arguments
 
 - `skip_end` *int* - Number of rows to skip at the end of the file.
+
+#### Examples
+
+``` py title="Skip last row"
+skip_end = 10
+# Skip the last 10 row of the file.
+```
 
 #### Signature
 
@@ -122,7 +144,7 @@ def set_skip_end(self, skip_end: int): ...
 
 ## ChecksSkipRowsMixin
 
-[Show source in mixin.py:334](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L334)
+[Show source in mixin.py:463](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L463)
 
 Mixin class for setting the number of rows to skip at the beginning.
 
@@ -135,7 +157,7 @@ class ChecksSkipRowsMixin:
 
 ### ChecksSkipRowsMixin().set_skip_rows
 
-[Show source in mixin.py:340](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L340)
+[Show source in mixin.py:469](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L469)
 
 Set the number of rows to skip at the beginning of the file.
 
@@ -143,6 +165,13 @@ Set the number of rows to skip at the beginning of the file.
 
 - `skip_rows` *int* - Number of rows to skip at the beginning of the
     file.
+
+#### Examples
+
+``` py title="Skip the first 2 rows"
+skip_rows = 2
+# Skip the first 2 rows of the file.
+```
 
 #### Signature
 
@@ -154,7 +183,7 @@ def set_skip_rows(self, skip_rows: int): ...
 
 ## DataChecksMixin
 
-[Show source in mixin.py:81](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L81)
+[Show source in mixin.py:120](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L120)
 
 Mixin class for setting the data checks.
 
@@ -167,7 +196,7 @@ class DataChecksMixin:
 
 ### DataChecksMixin().set_data_checks
 
-[Show source in mixin.py:87](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L87)
+[Show source in mixin.py:126](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L126)
 
 Dictionary of data checks to perform on the loaded data.
 
@@ -187,7 +216,7 @@ def set_data_checks(self, data_checks: Dict[str, Any]): ...
 
 ## DataColumnMixin
 
-[Show source in mixin.py:99](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L99)
+[Show source in mixin.py:138](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L138)
 
 Mixin class for setting the data column.
 
@@ -200,7 +229,7 @@ class DataColumnMixin:
 
 ### DataColumnMixin().set_data_column
 
-[Show source in mixin.py:105](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L105)
+[Show source in mixin.py:144](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L144)
 
 The data columns for the data files to load. Build with
 `DataChecksBuilder`.
@@ -210,6 +239,32 @@ The data columns for the data files to load. Build with
 - `data_columns` - List of column numbers or names for the data columns
     to load from the data files. The columns are indexed from 0.
     e.g. [3, 5] or ['data 1', 'data 3'].
+
+#### Examples
+
+``` py title="Single data column, index"
+data_columns = [3]
+# header: 'Time, Temp, data 1, data 2, data 3'
+# line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 1.2
+```
+
+``` py title="Single data column, name"
+data_columns = ['data 1']
+# header: 'Time, Temp, data 1, data 3, data 5'
+# line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 25.8
+```
+
+``` py title="Multiple data columns, index"
+data_columns = [1, 3]
+# header: 'Time, Temp, data 1, data 3, data 5'
+# line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 25.8, 3.4
+```
+
+``` py title="Multiple data columns, name"
+data_columns = ['Temp', 'data 3']
+# header: 'Time, Temp, data 1, data 3, data 5'
+# line: '2021-01-01T12:00:00, 25.8, 1.2, 3.4' # load 25.8, 3.4
+```
 
 #### Signature
 
@@ -221,7 +276,7 @@ def set_data_column(self, data_columns: Union[List[str], List[int]]): ...
 
 ## DataHeaderMixin
 
-[Show source in mixin.py:118](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L118)
+[Show source in mixin.py:182](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L182)
 
 Mixin class for setting the data header for the Stream.
 
@@ -234,7 +289,7 @@ class DataHeaderMixin:
 
 ### DataHeaderMixin().set_data_header
 
-[Show source in mixin.py:124](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L124)
+[Show source in mixin.py:188](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L188)
 
 Set the Stream headers corresponding to the data columns. This is
 to improve the readability of the Stream data. The headers should be
@@ -246,6 +301,18 @@ that will be written to the output file or csv.
 - `headers` - List of headers corresponding to the data
     columns to load. e.g. ['data-1[m/s]', 'data_3[L]'].
 
+#### Examples
+
+``` py title="Single header"
+headers = ['data-1[m/s]']
+# Name the only data column as 'data-1[m/s]'.
+```
+
+``` py title="Multiple headers"
+headers = ['data-1[m/s]', 'data-3[L]']
+# Name the data columns as 'data-1[m/s]' and 'data-3[L]'.
+```
+
 #### Signature
 
 ```python
@@ -256,7 +323,7 @@ def set_data_header(self, headers: List[str]): ...
 
 ## DelimiterMixin
 
-[Show source in mixin.py:208](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L208)
+[Show source in mixin.py:296](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L296)
 
 Mixin class for setting the delimiter.
 
@@ -269,7 +336,7 @@ class DelimiterMixin:
 
 ### DelimiterMixin().set_delimiter
 
-[Show source in mixin.py:214](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L214)
+[Show source in mixin.py:302](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L302)
 
 Set the delimiter for the data files to load.
 
@@ -277,6 +344,23 @@ Set the delimiter for the data files to load.
 
 - `delimiter` *str* - Delimiter for the data columns in the data files.
     e.g. ',' for CSV files or '	' for tab-separated files.
+
+#### Examples
+
+``` py title="CSV delimiter"
+delimiter = ","
+# CSV file with columns separated by commas.
+```
+
+``` py title="Tab delimiter"
+delimiter = "	"
+# Tab-separated file with columns separated by tabs.
+```
+
+``` py title="Space delimiter"
+delimiter = " "
+# Space-separated file with columns separated by spaces.
+```
 
 #### Signature
 
@@ -288,7 +372,7 @@ def set_delimiter(self, delimiter: str): ...
 
 ## FileMinSizeBytesMixin
 
-[Show source in mixin.py:48](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L48)
+[Show source in mixin.py:74](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L74)
 
 Mixin class for setting the minimum file size in bytes.
 
@@ -301,7 +385,7 @@ class FileMinSizeBytesMixin:
 
 ### FileMinSizeBytesMixin().set_file_min_size_bytes
 
-[Show source in mixin.py:54](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L54)
+[Show source in mixin.py:80](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L80)
 
 Set the minimum file size in bytes for the data files to load.
 
@@ -319,7 +403,7 @@ def set_file_min_size_bytes(self, size: int): ...
 
 ## FilenameRegexMixin
 
-[Show source in mixin.py:27](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L27)
+[Show source in mixin.py:37](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L37)
 
 Mixin class for setting the filename regex.
 
@@ -332,7 +416,7 @@ class FilenameRegexMixin:
 
 ### FilenameRegexMixin().set_filename_regex
 
-[Show source in mixin.py:33](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L33)
+[Show source in mixin.py:43](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L43)
 
 Set the filename regex for the data files to load.
 
@@ -340,6 +424,23 @@ Set the filename regex for the data files to load.
 
 - `regex` *str* - Regular expression for the filenames, e.g.
     'data_*.csv'.
+
+#### Examples
+
+``` py title="Match all files"
+regex = ".*"
+# Match all files in the folder.
+```
+
+``` py title="Match CSV files"
+regex = ".*.csv"
+# Match all CSV files in the folder.
+```
+
+``` py title="Match specific files"
+regex = "data_*.csv"
+# Match files starting with 'data_' and ending with '.csv'.
+```
 
 #### References
 
@@ -356,7 +457,7 @@ def set_filename_regex(self, regex: str): ...
 
 ## HeaderRowMixin
 
-[Show source in mixin.py:64](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L64)
+[Show source in mixin.py:90](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L90)
 
 Mixin class for setting the header row.
 
@@ -369,7 +470,7 @@ class HeaderRowMixin:
 
 ### HeaderRowMixin().set_header_row
 
-[Show source in mixin.py:70](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L70)
+[Show source in mixin.py:96](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L96)
 
 Set the header row for the data files to load.
 
@@ -377,6 +478,20 @@ Set the header row for the data files to load.
 
 - `row` *int* - Row number for the header row in the data file, indexed
     from 0.
+
+#### Examples
+
+``` py title="Header row at the top"
+row = 0
+# line 0: 'Time, Temp, data 1, data 2, data 3'
+```
+
+``` py title="Header is third row"
+row = 2
+# line 0: "Experiment 1"
+# line 1: "Date: 2021-01-01"
+# line 2: 'Time, Temp, data 1, data 2, data 3'
+```
 
 #### Signature
 
@@ -411,6 +526,18 @@ Set the relative data folder for the folder with the data loading.
     e.g. 'data_folder'. Where the data folder is located in
     project_path/data_folder.
 
+#### Examples
+
+``` py title="Set data folder"
+folder = "data_folder"
+# Set the data folder to 'data_folder'.
+```
+
+``` py title="Set a subfolder"
+folder = "subfolder/data_folder"
+# Set the data folder to 'subfolder/data_folder'.
+```
+
 #### Signature
 
 ```python
@@ -419,9 +546,182 @@ def set_relative_data_folder(self, folder: str): ...
 
 
 
+## SizerConcentrationConvertFromMixin
+
+[Show source in mixin.py:570](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L570)
+
+Mixin class for setting to convert the sizer concentration to
+a different scale.
+
+#### Signature
+
+```python
+class SizerConcentrationConvertFromMixin:
+    def __init__(self): ...
+```
+
+### SizerConcentrationConvertFromMixin().set_sizer_concentration_convert_from
+
+[Show source in mixin.py:577](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L577)
+
+Set to convert the sizer concentration from dw or (pmf) scale to
+dN/dlogDp scale.
+
+#### Arguments
+
+- `convert_from` - Conversion flag to convert the sizer concentration
+    from dw or (pmf) scale to dN/dlogDp scale. The option is only
+    "dw" all other values are ignored.
+
+#### Examples
+
+``` py title="Convert from dw scale"
+convert_from = "dw"
+# Convert the sizer concentration from dw scale to dN/dlogDp scale.
+```
+
+``` py title="Convert Ignored"
+convert_from = "pmf"
+# Ignored, no conversion is performed, when loading the sizer data.
+```
+
+#### Signature
+
+```python
+def set_sizer_concentration_convert_from(self, convert_from: str): ...
+```
+
+
+
+## SizerDataReaderMixin
+
+[Show source in mixin.py:601](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L601)
+
+Mixin class for the dictionary of the sizer data reader settings.
+
+#### Signature
+
+```python
+class SizerDataReaderMixin:
+    def __init__(self): ...
+```
+
+### SizerDataReaderMixin().set_data_sizer_reader
+
+[Show source in mixin.py:607](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L607)
+
+Dictionary of the sizer data reader settings for the data files.
+Build with `SizerDataReaderBuilder`.
+
+#### Arguments
+
+- `data_sizer_reader` - Dictionary of the sizer data reader settings
+    for the data files. The keys are the names of the settings,
+    and the values are the parameters for the settings.
+
+#### Signature
+
+```python
+def set_data_sizer_reader(self, data_sizer_reader: Dict[str, Any]): ...
+```
+
+
+
+## SizerEndKeywordMixin
+
+[Show source in mixin.py:539](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L539)
+
+Mixin class for setting the end key for the sizer data.
+
+#### Signature
+
+```python
+class SizerEndKeywordMixin:
+    def __init__(self): ...
+```
+
+### SizerEndKeywordMixin().set_sizer_end_keyword
+
+[Show source in mixin.py:545](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L545)
+
+Set the end keyword for the sizer data, to identify the end of
+the sizer data block in the data files. This can be a string or an
+integer (column index) to identify the end of the sizer data block.
+
+#### Arguments
+
+- `end_keyword` - End key for the sizer data in the data files.
+    e.g. '789.3' or -3 for the 3rd column from the end.
+
+#### Examples
+
+``` py title="End key as a string"
+end_key = "789.3"
+# header: '... 689.1, 750.2, 789.3, Total Conc, Comments'
+```
+
+``` py title="End key as a column index"
+end_key = -3
+# header: '... 689.1, 750.2, 789.3, Total Conc, Comments'
+```
+
+#### Signature
+
+```python
+def set_sizer_end_keyword(self, end_key: Union[str, int]): ...
+```
+
+
+
+## SizerStartKeywordMixin
+
+[Show source in mixin.py:508](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L508)
+
+Mixin class for setting the start key for the sizer data.
+
+#### Signature
+
+```python
+class SizerStartKeywordMixin:
+    def __init__(self): ...
+```
+
+### SizerStartKeywordMixin().set_sizer_start_keyword
+
+[Show source in mixin.py:514](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L514)
+
+Set the start keyword for the sizer data, to identify the start of
+the sizer data block in the data files. This can be a string or an
+integer (column index) to identify the start of the sizer data block.
+
+#### Arguments
+
+- `start_keyword` - Start key for the sizer data in the data files.
+    e.g. '25.8' or 3 for the 4th column
+
+#### Examples
+
+``` py title="Start key as a string"
+start_key = "35.8"
+# header: 'Time, Temp, 35.8, 36.0, 36.2, ...'
+```
+
+``` py title="Start key as a column index"
+start_key = 2
+# header: 'Time, Temp, 35.8, 36.0, 36.2, ...'
+```
+
+#### Signature
+
+```python
+def set_sizer_start_keyword(self, start_key: Union[str, int]): ...
+```
+
+
+
 ## TimeColumnMixin
 
-[Show source in mixin.py:138](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L138)
+[Show source in mixin.py:213](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L213)
 
 Mixin class for setting the time column.
 
@@ -434,7 +734,7 @@ class TimeColumnMixin:
 
 ### TimeColumnMixin().set_time_column
 
-[Show source in mixin.py:144](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L144)
+[Show source in mixin.py:219](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L219)
 
 The time column for the data files to load. The time column is
 used to convert the time data to an Unix-Epoch timestamp.
@@ -444,6 +744,20 @@ used to convert the time data to an Unix-Epoch timestamp.
 - `columns` - List of column indexes for the time columns to
     load from the data files. The columns are indexed from 0.
     e.g. [0] or [1, 2] to combine 1 and 2 columns.
+
+#### Examples
+
+``` py title="Single time column"
+columns = [0]
+# Load the time data from the first column.
+# line: '2021-01-01T12:00:00, 1.2, 3.4'
+```
+
+``` py title="Multiple time columns"
+columns = [1, 2]
+# Load the time data from the second and third columns.
+# line: '1.2, 2021-01-01, 12:00:00'
+```
 
 #### Signature
 
@@ -455,7 +769,7 @@ def set_time_column(self, columns: List[int]): ...
 
 ## TimeFormatMixin
 
-[Show source in mixin.py:157](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L157)
+[Show source in mixin.py:245](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L245)
 
 Mixin class for setting the time format.
 
@@ -468,7 +782,7 @@ class TimeFormatMixin:
 
 ### TimeFormatMixin().set_time_format
 
-[Show source in mixin.py:163](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L163)
+[Show source in mixin.py:251](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L251)
 
 Set the time format for the time data in the data files.
 
@@ -523,7 +837,7 @@ def set_time_format(self, time_format_str: str): ...
 
 ## TimeShiftSecondsMixin
 
-[Show source in mixin.py:225](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L225)
+[Show source in mixin.py:329](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L329)
 
 Mixin class for setting the time shift in seconds.
 
@@ -536,7 +850,7 @@ class TimeShiftSecondsMixin:
 
 ### TimeShiftSecondsMixin().set_time_shift_seconds
 
-[Show source in mixin.py:231](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L231)
+[Show source in mixin.py:335](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L335)
 
 Set the time shift in seconds for the time data in the data files.
 This is helpful to match the time stamps of two data folders. This
@@ -546,6 +860,18 @@ shift is applied to all files loaded with this builder.
 
 - `shift` *int* - Time shift in seconds for the time data in the data
     files. Default is 0 seconds.
+
+#### Examples
+
+``` py title="Shift by 1 hour"
+shift = 3600
+# Shift the time data by 1 hour (3600 seconds).
+```
+
+``` py title="Shift by 1 day"
+shift = 86400
+# Shift the time data by 1 day (86400 seconds).
+```
 
 #### Signature
 
@@ -557,7 +883,7 @@ def set_time_shift_seconds(self, shift: int): ...
 
 ## TimezoneIdentifierMixin
 
-[Show source in mixin.py:244](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L244)
+[Show source in mixin.py:359](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L359)
 
 Mixin class for setting the timezone identifier.
 
@@ -570,7 +896,7 @@ class TimezoneIdentifierMixin:
 
 ### TimezoneIdentifierMixin().set_timezone_identifier
 
-[Show source in mixin.py:250](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L250)
+[Show source in mixin.py:365](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L365)
 
 Set the timezone identifier for the time data in the data files.
 The timezone shift is handled by the pytz library.
