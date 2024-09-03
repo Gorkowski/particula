@@ -6,7 +6,7 @@
 
 ## ChecksCharCountsMixin
 
-[Show source in mixin.py:299](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L299)
+[Show source in mixin.py:301](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L301)
 
 Mixin class for setting the character counts for data checks.
 
@@ -19,7 +19,7 @@ class ChecksCharCountsMixin:
 
 ### ChecksCharCountsMixin().set_char_counts
 
-[Show source in mixin.py:305](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L305)
+[Show source in mixin.py:307](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L307)
 
 Set the required character counts for the data checks. This is
 the number of times a character should appear in a line of the data
@@ -55,7 +55,7 @@ def set_char_counts(self, char_counts: dict[str, int]): ...
 
 ## ChecksCharactersMixin
 
-[Show source in mixin.py:278](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L278)
+[Show source in mixin.py:280](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L280)
 
 Mixin class for setting the character length range for data checks.
 
@@ -68,7 +68,7 @@ class ChecksCharactersMixin:
 
 ### ChecksCharactersMixin().set_characters
 
-[Show source in mixin.py:284](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L284)
+[Show source in mixin.py:286](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L286)
 
 Set the character length range for the data checks. This is
 how many characters are expected a line of the data file, for it to
@@ -91,7 +91,7 @@ def set_characters(self, characters: list[int]): ...
 
 ## ChecksSkipEndMixin
 
-[Show source in mixin.py:349](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L349)
+[Show source in mixin.py:351](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L351)
 
 Mixin class for setting the number of rows to skip at the end.
 
@@ -104,7 +104,7 @@ class ChecksSkipEndMixin:
 
 ### ChecksSkipEndMixin().set_skip_end
 
-[Show source in mixin.py:355](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L355)
+[Show source in mixin.py:357](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L357)
 
 Set the number of rows to skip at the end of the file.
 
@@ -122,7 +122,7 @@ def set_skip_end(self, skip_end: int): ...
 
 ## ChecksSkipRowsMixin
 
-[Show source in mixin.py:332](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L332)
+[Show source in mixin.py:334](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L334)
 
 Mixin class for setting the number of rows to skip at the beginning.
 
@@ -135,7 +135,7 @@ class ChecksSkipRowsMixin:
 
 ### ChecksSkipRowsMixin().set_skip_rows
 
-[Show source in mixin.py:338](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L338)
+[Show source in mixin.py:340](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L340)
 
 Set the number of rows to skip at the beginning of the file.
 
@@ -256,7 +256,7 @@ def set_data_header(self, headers: List[str]): ...
 
 ## DelimiterMixin
 
-[Show source in mixin.py:206](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L206)
+[Show source in mixin.py:208](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L208)
 
 Mixin class for setting the delimiter.
 
@@ -269,7 +269,7 @@ class DelimiterMixin:
 
 ### DelimiterMixin().set_delimiter
 
-[Show source in mixin.py:212](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L212)
+[Show source in mixin.py:214](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L214)
 
 Set the delimiter for the data files to load.
 
@@ -475,7 +475,9 @@ Set the time format for the time data in the data files.
 #### Arguments
 
 - `time_format_str` *str* - Time format string for the time data in the
-    data files. Default is ISO "%Y-%m-%dT%H:%M:%S".
+    data files. Default is ISO "%Y-%m-%dT%H:%M:%S", list "epoch"
+    if the time data is in Unix-Epoch format. Use the Python time
+    format codes otherwise,
     e.g. "%Y-%m-%dT%H:%M:%S" for '2021-01-01T12:00:00'.
 
 #### Examples
@@ -521,7 +523,7 @@ def set_time_format(self, time_format_str: str): ...
 
 ## TimeShiftSecondsMixin
 
-[Show source in mixin.py:223](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L223)
+[Show source in mixin.py:225](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L225)
 
 Mixin class for setting the time shift in seconds.
 
@@ -534,7 +536,7 @@ class TimeShiftSecondsMixin:
 
 ### TimeShiftSecondsMixin().set_time_shift_seconds
 
-[Show source in mixin.py:229](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L229)
+[Show source in mixin.py:231](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L231)
 
 Set the time shift in seconds for the time data in the data files.
 This is helpful to match the time stamps of two data folders. This
@@ -555,7 +557,7 @@ def set_time_shift_seconds(self, shift: int): ...
 
 ## TimezoneIdentifierMixin
 
-[Show source in mixin.py:242](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L242)
+[Show source in mixin.py:244](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L244)
 
 Mixin class for setting the timezone identifier.
 
@@ -568,7 +570,7 @@ class TimezoneIdentifierMixin:
 
 ### TimezoneIdentifierMixin().set_timezone_identifier
 
-[Show source in mixin.py:248](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L248)
+[Show source in mixin.py:250](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L250)
 
 Set the timezone identifier for the time data in the data files.
 The timezone shift is handled by the pytz library.
