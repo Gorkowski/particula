@@ -2,7 +2,7 @@
 
 # pylint: disable=too-few-public-methods
 
-from typing import Union, List, Dict, Any
+from typing import Union, List, Dict, Any, Optional
 
 
 class RelativeFolderMixin:
@@ -574,7 +574,10 @@ class SizerConcentrationConvertFromMixin:
     def __init__(self):
         self.sizer_concentration_convert_from = None
 
-    def set_sizer_concentration_convert_from(self, convert_from: str = None):
+    def set_sizer_concentration_convert_from(
+        self,
+        convert_from: Optional[str] = None
+    ):
         """Set to convert the sizer concentration from dw or (pmf) scale to
         dN/dlogDp scale.
 
