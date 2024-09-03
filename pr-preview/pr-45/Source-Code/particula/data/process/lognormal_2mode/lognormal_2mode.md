@@ -41,7 +41,7 @@ def cost_function(
 
 ## create_lognormal_2mode_from_fit
 
-[Show source in lognormal_2mode.py:384](https://github.com/Gorkowski/particula/blob/main/particula/data/process/lognormal_2mode.py#L384)
+[Show source in lognormal_2mode.py:383](https://github.com/Gorkowski/particula/blob/main/particula/data/process/lognormal_2mode.py#L383)
 
 Create a fitted PMF stream and concentration matrix based on
 optimized parameters.
@@ -130,7 +130,7 @@ def get_initial_guesses(
 
 ## guess_and_optimize_looped
 
-[Show source in lognormal_2mode.py:302](https://github.com/Gorkowski/particula/blob/main/particula/data/process/lognormal_2mode.py#L302)
+[Show source in lognormal_2mode.py:301](https://github.com/Gorkowski/particula/blob/main/particula/data/process/lognormal_2mode.py#L301)
 
 Generate initial guesses using a machine learning model, optimize them,
 and return a Stream object with the results.
@@ -190,7 +190,7 @@ def optimize_fit(
 
 ## optimize_fit_looped
 
-[Show source in lognormal_2mode.py:233](https://github.com/Gorkowski/particula/blob/main/particula/data/process/lognormal_2mode.py#L233)
+[Show source in lognormal_2mode.py:232](https://github.com/Gorkowski/particula/blob/main/particula/data/process/lognormal_2mode.py#L232)
 
 Loop through the concentration PDFs to get the best optimization.
 
