@@ -2,7 +2,7 @@
 
 ## Particle Resolved
 
-- [ ] Coagulation needs to be implemented
+- [x] Coagulation needs to be implemented
 - [ ] check equilibrium for condensation and evaporation
 
 ## Continuous Particle PDF and PMF
