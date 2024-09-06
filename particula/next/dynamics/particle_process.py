@@ -61,7 +61,7 @@ class MassCondensation(Runnable):
                         concentration = particle.concentration[:, np.newaxis]
                     else:
                         concentration = particle.concentration
-                    # mass rate per particle * time step * particle concentration
+                    # mass rate per particle * concentration * dt
                     mass_gain_per_bin = (
                         mass_rate * concentration * time_step / sub_steps
                     )
