@@ -21,7 +21,7 @@ allows for flexibility in representing particles.
 - `activity` - The activity strategy for the partial pressure calculations.
 - `surface` - The surface strategy for surface tension and Kelvin effect.
 - `distribution` - The distribution data for the particles, which could
-represent sizes, masses, or another relevant metric.
+    represent sizes, masses, or another relevant metric.
 - `density` - The density of the material from which the particles are made.
 - `concentration` - The concentration of particles within the distribution.
 - `charge` - The charge on each particle.
@@ -57,7 +57,7 @@ Adds concentration to the particle distribution.
 #### Arguments
 
 - `added_concentration` - The concentration to be
-added per distribution bin.
+    added per distribution bin.
 
 #### Signature
 
@@ -74,12 +74,28 @@ Adds mass to the particle distribution, and updates parameters.
 #### Arguments
 
 - `added_mass` - The mass to be added per
-distribution bin.
+    distribution bin.
 
 #### Signature
 
 ```python
 def add_mass(self, added_mass: NDArray[np.float64]) -> None: ...
+```
+
+### ParticleRepresentation().collide_pairs
+
+[Show source in representation.py:110](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L110)
+
+Collide pairs of indices, used for ParticleResolved Strategies.
+
+#### Arguments
+
+- `indices` - The indices to collide.
+
+#### Signature
+
+```python
+def collide_pairs(self, indices: NDArray[np.int64]) -> None: ...
 ```
 
 ### ParticleRepresentation().get_charge

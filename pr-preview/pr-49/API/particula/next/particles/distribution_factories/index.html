@@ -2275,6 +2275,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../dynamics/coagulation/strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strategy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../dynamics/coagulation/super_droplet_method/" class="md-nav__link">
         
   
@@ -7248,7 +7269,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py">particula.next.particles.distribution_factories</a> module.</p>
 </blockquote>
 <h2 id="distributionfactory">DistributionFactory<a class="headerlink" href="#distributionfactory" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L15">Show source in distribution_factories.py:15</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L17">Show source in distribution_factories.py:17</a></p>
 <p>Factory class to create distribution strategy from builders.</p>
 <p>Used for calculating particle distributions based on the specified
 representation type.</p>
@@ -7259,13 +7280,14 @@ instances.</li>
 <li><code>get_strategy(strategy_type,</code> <em>parameters)</em> - Gets the strategy instance
 for the specified strategy type.<ul>
 <li><code>strategy_type</code> - Type of distribution strategy to use, can be
-'mass_based_moving_bin', 'radii_based_moving_bin', or
-'speciated_mass_moving_bin'.
+'mass_based_moving_bin', 'radii_based_moving_bin',
+'speciated_mass_moving_bin', 'particle_resolved_speciated_mass'.
 parameters(Dict[str, Any], optional): Parameters required for the
 builder, dependent on the chosen strategy type.<ul>
 <li><code>mass_based_moving_bin</code> - None</li>
 <li><code>radii_based_moving_bin</code> - None</li>
 <li><code>speciated_mass_moving_bin</code> - None</li>
+<li><code>particle_resolved_speciated_mass</code> - None</li>
 </ul>
 </li>
 </ul>
@@ -7289,8 +7311,14 @@ pre_build_check, or if trying to set an invalid parameter.</li>
             <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span>
             <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
             <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+            <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="n">Union</span><span class="p">[</span><span class="n">MassBasedMovingBin</span><span class="p">,</span> <span class="n">RadiiBasedMovingBin</span><span class="p">,</span> <span class="n">SpeciatedMassMovingBin</span><span class="p">],</span>
+        <span class="n">Union</span><span class="p">[</span>
+            <span class="n">MassBasedMovingBin</span><span class="p">,</span>
+            <span class="n">RadiiBasedMovingBin</span><span class="p">,</span>
+            <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+            <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+        <span class="p">],</span>
     <span class="p">]</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
@@ -7298,13 +7326,15 @@ pre_build_check, or if trying to set an invalid parameter.</li>
 <ul>
 <li><a href="../distribution_builders/#massbasedmovingbinbuilder">MassBasedMovingBinBuilder</a></li>
 <li><a href="../distribution_strategies/#massbasedmovingbin">MassBasedMovingBin</a></li>
+<li><a href="../distribution_builders/#particleresolvedspeciatedmassbuilder">ParticleResolvedSpeciatedMassBuilder</a></li>
+<li><a href="../distribution_strategies/#particleresolvedspeciatedmass">ParticleResolvedSpeciatedMass</a></li>
 <li><a href="../distribution_builders/#radiibasedmovingbinbuilder">RadiiBasedMovingBinBuilder</a></li>
 <li><a href="../distribution_strategies/#radiibasedmovingbin">RadiiBasedMovingBin</a></li>
 <li><a href="../distribution_builders/#speciatedmassmovingbinbuilder">SpeciatedMassMovingBinBuilder</a></li>
 <li><a href="../distribution_strategies/#speciatedmassmovingbin">SpeciatedMassMovingBin</a></li>
 </ul>
 <h3 id="distributionfactoryget_builders">DistributionFactory().get_builders<a class="headerlink" href="#distributionfactoryget_builders" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L57">Show source in distribution_factories.py:57</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L62">Show source in distribution_factories.py:62</a></p>
 <p>Returns the mapping of strategy types to builder instances.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>

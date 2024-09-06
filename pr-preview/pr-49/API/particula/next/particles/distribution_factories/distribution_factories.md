@@ -6,7 +6,7 @@
 
 ## DistributionFactory
 
-[Show source in distribution_factories.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L15)
+[Show source in distribution_factories.py:17](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L17)
 
 Factory class to create distribution strategy from builders.
 
@@ -20,13 +20,14 @@ instances.
 - `get_strategy(strategy_type,` *parameters)* - Gets the strategy instance
 for the specified strategy type.
     - `strategy_type` - Type of distribution strategy to use, can be
-    'mass_based_moving_bin', 'radii_based_moving_bin', or
-    'speciated_mass_moving_bin'.
+    'mass_based_moving_bin', 'radii_based_moving_bin',
+    'speciated_mass_moving_bin', 'particle_resolved_speciated_mass'.
     parameters(Dict[str, Any], optional): Parameters required for the
     builder, dependent on the chosen strategy type.
         - `mass_based_moving_bin` - None
         - `radii_based_moving_bin` - None
         - `speciated_mass_moving_bin` - None
+        - `particle_resolved_speciated_mass` - None
 
 #### Returns
 
@@ -48,8 +49,14 @@ class DistributionFactory(
             MassBasedMovingBinBuilder,
             RadiiBasedMovingBinBuilder,
             SpeciatedMassMovingBinBuilder,
+            ParticleResolvedSpeciatedMassBuilder,
         ],
-        Union[MassBasedMovingBin, RadiiBasedMovingBin, SpeciatedMassMovingBin],
+        Union[
+            MassBasedMovingBin,
+            RadiiBasedMovingBin,
+            SpeciatedMassMovingBin,
+            ParticleResolvedSpeciatedMass,
+        ],
     ]
 ): ...
 ```
@@ -58,6 +65,8 @@ class DistributionFactory(
 
 - [MassBasedMovingBinBuilder](./distribution_builders.md#massbasedmovingbinbuilder)
 - [MassBasedMovingBin](./distribution_strategies.md#massbasedmovingbin)
+- [ParticleResolvedSpeciatedMassBuilder](./distribution_builders.md#particleresolvedspeciatedmassbuilder)
+- [ParticleResolvedSpeciatedMass](./distribution_strategies.md#particleresolvedspeciatedmass)
 - [RadiiBasedMovingBinBuilder](./distribution_builders.md#radiibasedmovingbinbuilder)
 - [RadiiBasedMovingBin](./distribution_strategies.md#radiibasedmovingbin)
 - [SpeciatedMassMovingBinBuilder](./distribution_builders.md#speciatedmassmovingbinbuilder)
@@ -65,7 +74,7 @@ class DistributionFactory(
 
 ### DistributionFactory().get_builders
 
-[Show source in distribution_factories.py:57](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L57)
+[Show source in distribution_factories.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_factories.py#L62)
 
 Returns the mapping of strategy types to builder instances.
 

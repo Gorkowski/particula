@@ -2275,6 +2275,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../dynamics/coagulation/strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strategy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../dynamics/coagulation/super_droplet_method/" class="md-nav__link">
         
   
@@ -3109,6 +3130,39 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#particlerepresentationcollide_pairs" class="md-nav__link">
+    <span class="md-ellipsis">
+      ParticleRepresentation().collide_pairs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ParticleRepresentation().collide_pairs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arguments_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arguments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#particlerepresentationget_charge" class="md-nav__link">
     <span class="md-ellipsis">
       ParticleRepresentation().get_charge
@@ -3128,7 +3182,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_3" class="md-nav__link">
+  <a href="#signature_4" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -3161,7 +3215,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_4" class="md-nav__link">
+  <a href="#signature_5" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -3194,7 +3248,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_5" class="md-nav__link">
+  <a href="#signature_6" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -3227,7 +3281,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#signature_6" class="md-nav__link">
+  <a href="#signature_7" class="md-nav__link">
     <span class="md-ellipsis">
       Signature
     </span>
@@ -7407,7 +7461,7 @@ allows for flexibility in representing particles.</p>
 <li><code>activity</code> - The activity strategy for the partial pressure calculations.</li>
 <li><code>surface</code> - The surface strategy for surface tension and Kelvin effect.</li>
 <li><code>distribution</code> - The distribution data for the particles, which could
-represent sizes, masses, or another relevant metric.</li>
+    represent sizes, masses, or another relevant metric.</li>
 <li><code>density</code> - The density of the material from which the particles are made.</li>
 <li><code>concentration</code> - The concentration of particles within the distribution.</li>
 <li><code>charge</code> - The charge on each particle.</li>
@@ -7437,7 +7491,7 @@ represent sizes, masses, or another relevant metric.</li>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>added_concentration</code> - The concentration to be
-added per distribution bin.</li>
+    added per distribution bin.</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
@@ -7448,17 +7502,27 @@ added per distribution bin.</li>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>added_mass</code> - The mass to be added per
-distribution bin.</li>
+    distribution bin.</li>
 </ul>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_mass</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<h3 id="particlerepresentationcollide_pairs">ParticleRepresentation().collide_pairs<a class="headerlink" href="#particlerepresentationcollide_pairs" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L110">Show source in representation.py:110</a></p>
+<p>Collide pairs of indices, used for ParticleResolved Strategies.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>indices</code> - The indices to collide.</li>
+</ul>
+<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">collide_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_charge">ParticleRepresentation().get_charge<a class="headerlink" href="#particlerepresentationget_charge" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L67">Show source in representation.py:67</a></p>
 <p>Returns the charge per particle.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <p>The charge of the particles.</p>
-<h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
+<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_mass">ParticleRepresentation().get_mass<a class="headerlink" href="#particlerepresentationget_mass" title="Permanent link">&para;</a></h3>
@@ -7466,7 +7530,7 @@ distribution bin.</li>
 <p>Returns the mass of the particles as calculated by the strategy.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <p>The mass of the particles.</p>
-<h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
+<h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_radius">ParticleRepresentation().get_radius<a class="headerlink" href="#particlerepresentationget_radius" title="Permanent link">&para;</a></h3>
@@ -7474,7 +7538,7 @@ distribution bin.</li>
 <p>Returns the radius of the particles as calculated by the strategy.</p>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <p>The radius of the particles.</p>
-<h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
+<h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_total_mass">ParticleRepresentation().get_total_mass<a class="headerlink" href="#particlerepresentationget_total_mass" title="Permanent link">&para;</a></h3>
@@ -7486,7 +7550,7 @@ the distribution and concentration.</p>
 <ul>
 <li><code>np.float64</code> - The total mass of the particles.</li>
 </ul>
-<h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
+<h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_total_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 

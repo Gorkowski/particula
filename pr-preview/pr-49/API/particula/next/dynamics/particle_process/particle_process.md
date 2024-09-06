@@ -29,6 +29,7 @@ class Coagulation(Runnable):
 
 #### See also
 
+- [CoagulationStrategy](coagulation/strategy.md#coagulationstrategy)
 - [Runnable](../runnable.md#runnable)
 
 ### Coagulation().execute
