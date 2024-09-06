@@ -40,38 +40,19 @@ class MassCondensation(Runnable):
         """
         # loop over gas species
         for gas_species in aerosol.iterate_gas():
-
             # check if gas species is condensable
             if not gas_species.condensable:
                 continue
             # loop over particles to apply condensation
             for particle in aerosol.iterate_particle():
                 for _ in range(sub_steps):
-                    # add check for same species somewhere to ensure this works
-                    # calculate the rate of condensation
-                    mass_rate = self.condensation_strategy.mass_transfer_rate(
+                    # calculate the condensation step for strategy
+                    particle, gas_species = self.condensation_strategy.step(
                         particle=particle,
                         gas_species=gas_species,
                         temperature=aerosol.atmosphere.temperature,
                         pressure=aerosol.atmosphere.total_pressure,
-                    )
-
-                    # Multiply mass rate by particle concentration
-                    if mass_rate.ndim == 2:
-                        concentration = particle.concentration[:, np.newaxis]
-                    else:
-                        concentration = particle.concentration
-                    # mass rate per particle * concentration * dt
-                    mass_gain_per_bin = (
-                        mass_rate * concentration * time_step / sub_steps
-                    )
-                    # apply the mass change
-                    particle.add_mass(added_mass=mass_gain_per_bin)
-                    # remove mass from gas phase concentration
-                    if mass_rate.ndim == 2:
-                        mass_gain_per_bin = np.sum(mass_gain_per_bin, axis=0)
-                    gas_species.add_concentration(
-                        added_concentration=-mass_gain_per_bin
+                        time_step=time_step/sub_steps,
                     )
         return aerosol
 
@@ -94,19 +75,16 @@ class MassCondensation(Runnable):
                 continue
             # Loop over particles to apply condensation
             for particle in aerosol.iterate_particle():
+                print(gas_species.name)
                 # Calculate the rate of condensation
-                mass_rate = self.condensation_strategy.mass_transfer_rate(
+                mass_rate = self.condensation_strategy.rate(
                     particle=particle,
                     gas_species=gas_species,
                     temperature=aerosol.atmosphere.temperature,
                     pressure=aerosol.atmosphere.total_pressure,
                 )
-                # Multiply mass rate by particle concentration
-                if mass_rate.ndim == 2:
-                    concentration = particle.concentration[:, np.newaxis]
-                else:
-                    concentration = particle.concentration
-                rates = np.append(rates, mass_rate * concentration)
+                print(f"Mass rate shape: {mass_rate.shape}")
+                rates = np.append(rates, mass_rate)
         return rates
 
 
