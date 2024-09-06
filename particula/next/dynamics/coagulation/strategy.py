@@ -706,12 +706,12 @@ class ParticleResolved(CoagulationStrategy):
         logger.error(message)
         raise NotImplementedError(message)
 
-    def step(
-        self,
-        particle: ParticleRepresentation,
-        temperature: float,
-        pressure: float,
-        time_step: float,
-    ) -> ParticleRepresentation:
+    # def step(
+    #     self,
+    #     particle: ParticleRepresentation,
+    #     temperature: float,
+    #     pressure: float,
+    #     time_step: float,
+    # ) -> ParticleRepresentation:
 
-    # need to add the particle resolved coagulation step
+    # # need to add the particle resolved coagulation step
