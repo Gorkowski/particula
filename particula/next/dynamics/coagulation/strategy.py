@@ -338,8 +338,12 @@ class DiscreteSimple(CoagulationStrategy):
         kernel = self.kernel(
             particle=particle, temperature=temperature, pressure=pressure
         )
-        loss_rate = self.loss_rate(particle=particle, kernel=kernel)
-        gain_rate = self.gain_rate(particle=particle, kernel=kernel)
+        loss_rate = self.loss_rate(
+            particle=particle, kernel=kernel  # type: ignore
+        )
+        gain_rate = self.gain_rate(
+            particle=particle, kernel=kernel  # type: ignore
+        )
         return gain_rate - loss_rate
 
     def step(
@@ -458,8 +462,12 @@ class DiscreteGeneral(CoagulationStrategy):
         kernel = self.kernel(
             particle=particle, temperature=temperature, pressure=pressure
         )
-        loss_rate = self.loss_rate(particle=particle, kernel=kernel)
-        gain_rate = self.gain_rate(particle=particle, kernel=kernel)
+        loss_rate = self.loss_rate(
+            particle=particle, kernel=kernel  # type: ignore
+        )
+        gain_rate = self.gain_rate(
+            particle=particle, kernel=kernel  # type: ignore
+        )
         return gain_rate - loss_rate
 
     def step(
@@ -573,8 +581,12 @@ class ContinuousGeneralPDF(CoagulationStrategy):
         kernel = self.kernel(
             particle=particle, temperature=temperature, pressure=pressure
         )
-        loss_rate = self.loss_rate(particle=particle, kernel=kernel)
-        gain_rate = self.gain_rate(particle=particle, kernel=kernel)
+        loss_rate = self.loss_rate(
+            particle=particle, kernel=kernel  # type: ignore
+        )
+        gain_rate = self.gain_rate(
+            particle=particle, kernel=kernel  # type: ignore
+        )
         return gain_rate - loss_rate
 
     def step(
@@ -620,7 +632,7 @@ class ParticleResolved(CoagulationStrategy):
     def get_kernel_radius(
             self,
             particle: ParticleRepresentation
-    ) -> Optional[NDArray[np.float64]]:
+    ) -> NDArray[np.float64]:
         """Get the binning for the kernel radius.
 
         If the kernel radius is not set, it will be calculated based on the
@@ -669,8 +681,8 @@ class ParticleResolved(CoagulationStrategy):
         mass_bins = 4 / 3 * np.pi * np.power(  # type: ignore
             x1=radius_bins, x2=3) * 1000
         return brownian_coagulation_kernel_via_system_state(
-            radius_particle=radius_bins,
-            mass_particle=mass_bins,
+            radius_particle=radius_bins,  # type: ignore
+            mass_particle=mass_bins,  # type: ignore
             temperature=temperature,
             pressure=pressure,
         )
@@ -706,12 +718,24 @@ class ParticleResolved(CoagulationStrategy):
         logger.error(message)
         raise NotImplementedError(message)
 
-    # def step(
-    #     self,
-    #     particle: ParticleRepresentation,
-    #     temperature: float,
-    #     pressure: float,
-    #     time_step: float,
-    # ) -> ParticleRepresentation:
+    def step(
+        self,
+        particle: ParticleRepresentation,
+        temperature: float,
+        pressure: float,
+        time_step: float,
+    ) -> ParticleRepresentation:
 
-    # # need to add the particle resolved coagulation step
+        # need to add the particle resolved coagulation step
+        _, _, _, indices = particle_resolved_coagulation_step(
+            particle_radius=particle.get_radius(),
+            kernel=self.kernel(  # type: ignore
+                particle=particle, temperature=temperature, pressure=pressure
+            ),
+            kernel_radius=self.get_kernel_radius(particle),
+            volume=particle.volume,
+            time_step=time_step,
+            random_generator=np.random.default_rng(),
+        )
+        particle.collide_pairs(indices)
+        return particle

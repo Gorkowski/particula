@@ -28,6 +28,8 @@ class ParticleRepresentation:
         density: The density of the material from which the particles are made.
         concentration: The concentration of particles within the distribution.
         charge: The charge on each particle.
+        volume: The air volume for simulation of particles in the air,
+            default is 1 m^3. This is only used in ParticleResolved Strategies.
     """
 
     def __init__(
@@ -39,6 +41,7 @@ class ParticleRepresentation:
         density: NDArray[np.float64],
         concentration: NDArray[np.float64],
         charge: NDArray[np.float64],
+        volume: float = 1,
     ):  # pylint: disable=too-many-arguments
         self.strategy = strategy
         self.activity = activity
@@ -47,6 +50,7 @@ class ParticleRepresentation:
         self.density = density
         self.concentration = concentration
         self.charge = charge
+        self.volume = volume
 
     def get_mass(self) -> NDArray[np.float64]:
         """Returns the mass of the particles as calculated by the strategy.
