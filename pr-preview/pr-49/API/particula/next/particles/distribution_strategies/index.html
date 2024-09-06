@@ -8216,7 +8216,7 @@ bins when adding mass to the distribution.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="particleresolvedspeciatedmass">ParticleResolvedSpeciatedMass<a class="headerlink" href="#particleresolvedspeciatedmass" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L316">Show source in distribution_strategies.py:316</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L319">Show source in distribution_strategies.py:319</a></p>
 <p>Strategy for resolved particles via speciated mass.</p>
 <p>Strategy for resolved particles with speciated mass.
 Particles may have different densities and their mass is
@@ -8231,7 +8231,7 @@ the particle concentration.</p>
 <li><a href="#distributionstrategy">DistributionStrategy</a></li>
 </ul>
 <h3 id="particleresolvedspeciatedmassadd_mass">ParticleResolvedSpeciatedMass().add_mass<a class="headerlink" href="#particleresolvedspeciatedmassadd_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L352">Show source in distribution_strategies.py:352</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L355">Show source in distribution_strategies.py:355</a></p>
 <h4 id="signature_13">Signature<a class="headerlink" href="#signature_13" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_mass</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8242,7 +8242,7 @@ the particle concentration.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particleresolvedspeciatedmasscollide_pairs">ParticleResolvedSpeciatedMass().collide_pairs<a class="headerlink" href="#particleresolvedspeciatedmasscollide_pairs" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L371">Show source in distribution_strategies.py:371</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L374">Show source in distribution_strategies.py:374</a></p>
 <h4 id="signature_14">Signature<a class="headerlink" href="#signature_14" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">collide_pairs</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8253,21 +8253,21 @@ the particle concentration.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particleresolvedspeciatedmassget_mass">ParticleResolvedSpeciatedMass().get_mass<a class="headerlink" href="#particleresolvedspeciatedmassget_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L326">Show source in distribution_strategies.py:326</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L329">Show source in distribution_strategies.py:329</a></p>
 <h4 id="signature_15">Signature<a class="headerlink" href="#signature_15" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_mass</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">distribution</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particleresolvedspeciatedmassget_radius">ParticleResolvedSpeciatedMass().get_radius<a class="headerlink" href="#particleresolvedspeciatedmassget_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L334">Show source in distribution_strategies.py:334</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L337">Show source in distribution_strategies.py:337</a></p>
 <h4 id="signature_16">Signature<a class="headerlink" href="#signature_16" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_radius</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">distribution</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particleresolvedspeciatedmassget_total_mass">ParticleResolvedSpeciatedMass().get_total_mass<a class="headerlink" href="#particleresolvedspeciatedmassget_total_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L341">Show source in distribution_strategies.py:341</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L344">Show source in distribution_strategies.py:344</a></p>
 <h4 id="signature_17">Signature<a class="headerlink" href="#signature_17" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_total_mass</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8300,7 +8300,7 @@ the particle's radius, number concentration, and density.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="radiibasedmovingbincollide_pairs">RadiiBasedMovingBin().collide_pairs<a class="headerlink" href="#radiibasedmovingbincollide_pairs" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L227">Show source in distribution_strategies.py:227</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L230">Show source in distribution_strategies.py:230</a></p>
 <h4 id="signature_20">Signature<a class="headerlink" href="#signature_20" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">collide_pairs</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8335,7 +8335,7 @@ the particle's radius, number concentration, and density.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="speciatedmassmovingbin">SpeciatedMassMovingBin<a class="headerlink" href="#speciatedmassmovingbin" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L242">Show source in distribution_strategies.py:242</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L245">Show source in distribution_strategies.py:245</a></p>
 <p>Strategy for particles with speciated mass distribution.</p>
 <p>Strategy for particles with speciated mass distribution.
 Some particles may have different densities and their mass is
@@ -8350,7 +8350,7 @@ the particle concentration.</p>
 <li><a href="#distributionstrategy">DistributionStrategy</a></li>
 </ul>
 <h3 id="speciatedmassmovingbinadd_mass">SpeciatedMassMovingBin().add_mass<a class="headerlink" href="#speciatedmassmovingbinadd_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L277">Show source in distribution_strategies.py:277</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L280">Show source in distribution_strategies.py:280</a></p>
 <h4 id="signature_25">Signature<a class="headerlink" href="#signature_25" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_mass</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8361,7 +8361,7 @@ the particle concentration.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="speciatedmassmovingbincollide_pairs">SpeciatedMassMovingBin().collide_pairs<a class="headerlink" href="#speciatedmassmovingbincollide_pairs" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L301">Show source in distribution_strategies.py:301</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L304">Show source in distribution_strategies.py:304</a></p>
 <h4 id="signature_26">Signature<a class="headerlink" href="#signature_26" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">collide_pairs</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8372,21 +8372,21 @@ the particle concentration.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="speciatedmassmovingbinget_mass">SpeciatedMassMovingBin().get_mass<a class="headerlink" href="#speciatedmassmovingbinget_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L252">Show source in distribution_strategies.py:252</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L255">Show source in distribution_strategies.py:255</a></p>
 <h4 id="signature_27">Signature<a class="headerlink" href="#signature_27" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_mass</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">distribution</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="speciatedmassmovingbinget_radius">SpeciatedMassMovingBin().get_radius<a class="headerlink" href="#speciatedmassmovingbinget_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L260">Show source in distribution_strategies.py:260</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L263">Show source in distribution_strategies.py:263</a></p>
 <h4 id="signature_28">Signature<a class="headerlink" href="#signature_28" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_radius</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">distribution</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="speciatedmassmovingbinget_total_mass">SpeciatedMassMovingBin().get_total_mass<a class="headerlink" href="#speciatedmassmovingbinget_total_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L267">Show source in distribution_strategies.py:267</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L270">Show source in distribution_strategies.py:270</a></p>
 <h4 id="signature_29">Signature<a class="headerlink" href="#signature_29" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_total_mass</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
