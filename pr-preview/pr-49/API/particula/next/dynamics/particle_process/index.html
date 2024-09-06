@@ -7464,7 +7464,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py">particula.next.dynamics.particle_process</a> module.</p>
 </blockquote>
 <h2 id="coagulation">Coagulation<a class="headerlink" href="#coagulation" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L108">Show source in particle_process.py:108</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L113">Show source in particle_process.py:113</a></p>
 <p>A class for running a coagulation strategy.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7486,21 +7486,21 @@
 <li><a href="../../runnable/#runnable">Runnable</a></li>
 </ul>
 <h3 id="coagulationexecute">Coagulation().execute<a class="headerlink" href="#coagulationexecute" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L124">Show source in particle_process.py:124</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L129">Show source in particle_process.py:129</a></p>
 <p>Execute the coagulation process.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>aerosol</code> <em>Aerosol</em> - The aerosol instance to modify.</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aerosol</span><span class="p">:</span> <span class="n">Aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Aerosol</span><span class="p">:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aerosol</span><span class="p">:</span> <span class="n">Aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sub_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Aerosol</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_1">See also<a class="headerlink" href="#see-also_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../../aerosol/#aerosol">Aerosol</a></li>
 </ul>
 <h3 id="coagulationrate">Coagulation().rate<a class="headerlink" href="#coagulationrate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L143">Show source in particle_process.py:143</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L157">Show source in particle_process.py:157</a></p>
 <p>Calculate the rate of coagulation for each particle.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7548,14 +7548,14 @@
 <li><code>aerosol</code> <em>Aerosol</em> - The aerosol instance to modify.</li>
 </ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aerosol</span><span class="p">:</span> <span class="n">Aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Aerosol</span><span class="p">:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aerosol</span><span class="p">:</span> <span class="n">Aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sub_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Aerosol</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_4">See also<a class="headerlink" href="#see-also_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../../aerosol/#aerosol">Aerosol</a></li>
 </ul>
 <h3 id="masscondensationrate">MassCondensation().rate<a class="headerlink" href="#masscondensationrate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L73">Show source in particle_process.py:73</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L78">Show source in particle_process.py:78</a></p>
 <p>Calculate the rate of mass condensation for each particle due to
 each condensable gas species.</p>
 <h4 id="arguments_5">Arguments<a class="headerlink" href="#arguments_5" title="Permanent link">&para;</a></h4>

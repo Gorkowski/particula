@@ -7465,6 +7465,8 @@ allows for flexibility in representing particles.</p>
 <li><code>density</code> - The density of the material from which the particles are made.</li>
 <li><code>concentration</code> - The concentration of particles within the distribution.</li>
 <li><code>charge</code> - The charge on each particle.</li>
+<li><code>volume</code> - The air volume for simulation of particles in the air,
+    default is 1 m^3. This is only used in ParticleResolved Strategies.</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ParticleRepresentation</span><span class="p">:</span>
@@ -7477,6 +7479,7 @@ allows for flexibility in representing particles.</p>
         <span class="n">density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
         <span class="n">concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
         <span class="n">charge</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+        <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
@@ -7486,7 +7489,7 @@ allows for flexibility in representing particles.</p>
 <li><a href="../surface_strategies/#surfacestrategy">SurfaceStrategy</a></li>
 </ul>
 <h3 id="particlerepresentationadd_concentration">ParticleRepresentation().add_concentration<a class="headerlink" href="#particlerepresentationadd_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L99">Show source in representation.py:99</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L103">Show source in representation.py:103</a></p>
 <p>Adds concentration to the particle distribution.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7497,7 +7500,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationadd_mass">ParticleRepresentation().add_mass<a class="headerlink" href="#particlerepresentationadd_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L88">Show source in representation.py:88</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L92">Show source in representation.py:92</a></p>
 <p>Adds mass to the particle distribution, and updates parameters.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7508,7 +7511,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_mass</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationcollide_pairs">ParticleRepresentation().collide_pairs<a class="headerlink" href="#particlerepresentationcollide_pairs" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L110">Show source in representation.py:110</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L114">Show source in representation.py:114</a></p>
 <p>Collide pairs of indices, used for ParticleResolved Strategies.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7518,7 +7521,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">collide_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_charge">ParticleRepresentation().get_charge<a class="headerlink" href="#particlerepresentationget_charge" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L67">Show source in representation.py:67</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L71">Show source in representation.py:71</a></p>
 <p>Returns the charge per particle.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <p>The charge of the particles.</p>
@@ -7526,7 +7529,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_charge</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_mass">ParticleRepresentation().get_mass<a class="headerlink" href="#particlerepresentationget_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L51">Show source in representation.py:51</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L55">Show source in representation.py:55</a></p>
 <p>Returns the mass of the particles as calculated by the strategy.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <p>The mass of the particles.</p>
@@ -7534,7 +7537,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_radius">ParticleRepresentation().get_radius<a class="headerlink" href="#particlerepresentationget_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L59">Show source in representation.py:59</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L63">Show source in representation.py:63</a></p>
 <p>Returns the radius of the particles as calculated by the strategy.</p>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <p>The radius of the particles.</p>
@@ -7542,7 +7545,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_total_mass">ParticleRepresentation().get_total_mass<a class="headerlink" href="#particlerepresentationget_total_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L75">Show source in representation.py:75</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L79">Show source in representation.py:79</a></p>
 <p>Returns the total mass of the particles.</p>
 <p>The total mass is as calculated by the strategy, taking into account
 the distribution and concentration.</p>

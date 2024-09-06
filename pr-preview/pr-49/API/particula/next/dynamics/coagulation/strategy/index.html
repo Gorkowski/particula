@@ -3762,6 +3762,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#particleresolvedstep" class="md-nav__link">
+    <span class="md-ellipsis">
+      ParticleResolved().step
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ParticleResolved().step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signature_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      See also
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -8854,7 +8887,7 @@ distribution, and the coagulation kernel.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h2 id="continuousgeneralpdf">ContinuousGeneralPDF<a class="headerlink" href="#continuousgeneralpdf" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L480">Show source in strategy.py:480</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L488">Show source in strategy.py:488</a></p>
 <p>Continuous PDF coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
 strategy is passed as an argument to the class, should use a dimensionless
@@ -8876,7 +8909,7 @@ kernel representation.</p>
 <li><a href="../kernel/#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="continuousgeneralpdfdimensionless_kernel">ContinuousGeneralPDF().dimensionless_kernel<a class="headerlink" href="#continuousgeneralpdfdimensionless_kernel" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L497">Show source in strategy.py:497</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L505">Show source in strategy.py:505</a></p>
 <h4 id="signature_11">Signature<a class="headerlink" href="#signature_11" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless_kernel</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8885,7 +8918,7 @@ kernel representation.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="continuousgeneralpdfgain_rate">ContinuousGeneralPDF().gain_rate<a class="headerlink" href="#continuousgeneralpdfgain_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L554">Show source in strategy.py:554</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L562">Show source in strategy.py:562</a></p>
 <h4 id="signature_12">Signature<a class="headerlink" href="#signature_12" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">gain_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -8896,7 +8929,7 @@ kernel representation.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="continuousgeneralpdfkernel">ContinuousGeneralPDF().kernel<a class="headerlink" href="#continuousgeneralpdfkernel" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L507">Show source in strategy.py:507</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L515">Show source in strategy.py:515</a></p>
 <h4 id="signature_13">Signature<a class="headerlink" href="#signature_13" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span>
@@ -8907,7 +8940,7 @@ kernel representation.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="continuousgeneralpdfloss_rate">ContinuousGeneralPDF().loss_rate<a class="headerlink" href="#continuousgeneralpdfloss_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L542">Show source in strategy.py:542</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L550">Show source in strategy.py:550</a></p>
 <h4 id="signature_14">Signature<a class="headerlink" href="#signature_14" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -8918,7 +8951,7 @@ kernel representation.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="continuousgeneralpdfnet_rate">ContinuousGeneralPDF().net_rate<a class="headerlink" href="#continuousgeneralpdfnet_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L566">Show source in strategy.py:566</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L574">Show source in strategy.py:574</a></p>
 <h4 id="signature_15">Signature<a class="headerlink" href="#signature_15" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">net_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span>
@@ -8929,7 +8962,7 @@ kernel representation.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="continuousgeneralpdfstep">ContinuousGeneralPDF().step<a class="headerlink" href="#continuousgeneralpdfstep" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L580">Show source in strategy.py:580</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L592">Show source in strategy.py:592</a></p>
 <h4 id="signature_16">Signature<a class="headerlink" href="#signature_16" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8944,7 +8977,7 @@ kernel representation.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h2 id="discretegeneral">DiscreteGeneral<a class="headerlink" href="#discretegeneral" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L360">Show source in strategy.py:360</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L364">Show source in strategy.py:364</a></p>
 <p>Discrete general coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
 strategy is passed as an argument to the class, to use a dimensionless
@@ -8973,7 +9006,7 @@ the KernelStrategy class.</li>
 <li><a href="../kernel/#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="discretegeneraldimensionless_kernel">DiscreteGeneral().dimensionless_kernel<a class="headerlink" href="#discretegeneraldimensionless_kernel" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L383">Show source in strategy.py:383</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L387">Show source in strategy.py:387</a></p>
 <h4 id="signature_18">Signature<a class="headerlink" href="#signature_18" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless_kernel</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -8982,7 +9015,7 @@ the KernelStrategy class.</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="discretegeneralgain_rate">DiscreteGeneral().gain_rate<a class="headerlink" href="#discretegeneralgain_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L439">Show source in strategy.py:439</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L443">Show source in strategy.py:443</a></p>
 <h4 id="signature_19">Signature<a class="headerlink" href="#signature_19" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">gain_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -8993,7 +9026,7 @@ the KernelStrategy class.</li>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="discretegeneralkernel">DiscreteGeneral().kernel<a class="headerlink" href="#discretegeneralkernel" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L393">Show source in strategy.py:393</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L397">Show source in strategy.py:397</a></p>
 <h4 id="signature_20">Signature<a class="headerlink" href="#signature_20" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span>
@@ -9004,7 +9037,7 @@ the KernelStrategy class.</li>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="discretegeneralloss_rate">DiscreteGeneral().loss_rate<a class="headerlink" href="#discretegeneralloss_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L428">Show source in strategy.py:428</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L432">Show source in strategy.py:432</a></p>
 <h4 id="signature_21">Signature<a class="headerlink" href="#signature_21" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -9015,7 +9048,7 @@ the KernelStrategy class.</li>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="discretegeneralnet_rate">DiscreteGeneral().net_rate<a class="headerlink" href="#discretegeneralnet_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L451">Show source in strategy.py:451</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L455">Show source in strategy.py:455</a></p>
 <h4 id="signature_22">Signature<a class="headerlink" href="#signature_22" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">net_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span>
@@ -9026,7 +9059,7 @@ the KernelStrategy class.</li>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="discretegeneralstep">DiscreteGeneral().step<a class="headerlink" href="#discretegeneralstep" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L465">Show source in strategy.py:465</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L473">Show source in strategy.py:473</a></p>
 <h4 id="signature_23">Signature<a class="headerlink" href="#signature_23" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -9113,7 +9146,7 @@ methods defined in the CoagulationStrategy abstract class.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="discretesimplestep">DiscreteSimple().step<a class="headerlink" href="#discretesimplestep" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L345">Show source in strategy.py:345</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L349">Show source in strategy.py:349</a></p>
 <h4 id="signature_30">Signature<a class="headerlink" href="#signature_30" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -9128,7 +9161,7 @@ methods defined in the CoagulationStrategy abstract class.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h2 id="particleresolved">ParticleResolved<a class="headerlink" href="#particleresolved" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L595">Show source in strategy.py:595</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L607">Show source in strategy.py:607</a></p>
 <p>Particle-resolved coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
 strategy is passed as an argument to the class, should use a dimensionless
@@ -9156,7 +9189,7 @@ kernel representation.</p>
 <li><a href="../kernel/#kernelstrategy">KernelStrategy</a></li>
 </ul>
 <h3 id="particleresolveddimensionless_kernel">ParticleResolved().dimensionless_kernel<a class="headerlink" href="#particleresolveddimensionless_kernel" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L648">Show source in strategy.py:648</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L660">Show source in strategy.py:660</a></p>
 <h4 id="signature_32">Signature<a class="headerlink" href="#signature_32" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">dimensionless_kernel</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -9165,7 +9198,7 @@ kernel representation.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particleresolvedgain_rate">ParticleResolved().gain_rate<a class="headerlink" href="#particleresolvedgain_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L688">Show source in strategy.py:688</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L700">Show source in strategy.py:700</a></p>
 <h4 id="signature_33">Signature<a class="headerlink" href="#signature_33" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">gain_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -9176,7 +9209,7 @@ kernel representation.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="particleresolvedget_kernel_radius">ParticleResolved().get_kernel_radius<a class="headerlink" href="#particleresolvedget_kernel_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L620">Show source in strategy.py:620</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L632">Show source in strategy.py:632</a></p>
 <p>Get the binning for the kernel radius.</p>
 <p>If the kernel radius is not set, it will be calculated based on the
 particle radius.</p>
@@ -9188,16 +9221,14 @@ particle radius.</p>
 <h4 id="returns_9">Returns<a class="headerlink" href="#returns_9" title="Permanent link">&para;</a></h4>
 <p>The kernel radius for the particle [m].</p>
 <h4 id="signature_34">Signature<a class="headerlink" href="#signature_34" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_kernel_radius</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_kernel_radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_28">See also<a class="headerlink" href="#see-also_28" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="particleresolvedkernel">ParticleResolved().kernel<a class="headerlink" href="#particleresolvedkernel" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L661">Show source in strategy.py:661</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L673">Show source in strategy.py:673</a></p>
 <h4 id="signature_35">Signature<a class="headerlink" href="#signature_35" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span>
@@ -9208,7 +9239,7 @@ particle radius.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="particleresolvedloss_rate">ParticleResolved().loss_rate<a class="headerlink" href="#particleresolvedloss_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L678">Show source in strategy.py:678</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L690">Show source in strategy.py:690</a></p>
 <h4 id="signature_36">Signature<a class="headerlink" href="#signature_36" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">loss_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
@@ -9219,13 +9250,28 @@ particle radius.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="particleresolvednet_rate">ParticleResolved().net_rate<a class="headerlink" href="#particleresolvednet_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L698">Show source in strategy.py:698</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L710">Show source in strategy.py:710</a></p>
 <h4 id="signature_37">Signature<a class="headerlink" href="#signature_37" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">net_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also_31">See also<a class="headerlink" href="#see-also_31" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
+</ul>
+<h3 id="particleresolvedstep">ParticleResolved().step<a class="headerlink" href="#particleresolvedstep" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L721">Show source in strategy.py:721</a></p>
+<h4 id="signature_38">Signature<a class="headerlink" href="#signature_38" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParticleRepresentation</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<h4 id="see-also_32">See also<a class="headerlink" href="#see-also_32" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
