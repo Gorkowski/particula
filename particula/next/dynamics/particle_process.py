@@ -17,15 +17,13 @@ class MassCondensation(Runnable):
     A class for running a mass condensation process.
 
     Args:
-    -----
-    - condensation_strategy (CondensationStrategy): The condensation strategy
-    to use.
+        condensation_strategy (CondensationStrategy): The condensation strategy
+            to use.
 
     Methods:
-    --------
-    - execute: Execute the mass condensation process.
-    - rate: Calculate the rate of mass condensation for each particle due to
-    each condensable gas species.
+        execute: Execute the mass condensation process.
+        rate: Calculate the rate of mass condensation for each particle due to
+            each condensable gas species.
     """
 
     def __init__(self, condensation_strategy: CondensationStrategy):
@@ -36,8 +34,7 @@ class MassCondensation(Runnable):
         Execute the mass condensation process.
 
         Args:
-        -----
-        - aerosol (Aerosol): The aerosol instance to modify.
+            aerosol (Aerosol): The aerosol instance to modify.
         """
         # loop over gas species
         for gas_species in aerosol.iterate_gas():
@@ -79,12 +76,10 @@ class MassCondensation(Runnable):
         each condensable gas species.
 
         Args:
-        -----
-        - aerosol (Aerosol): The aerosol instance to modify.
+            aerosol (Aerosol): The aerosol instance to modify.
 
         Returns:
-        --------
-        - np.ndarray: An array of condensation rates for each particle.
+            np.ndarray: An array of condensation rates for each particle.
         """
         rates = np.array([], dtype=np.float64)
         # Loop over gas species in the aerosol
@@ -115,14 +110,12 @@ class Coagulation(Runnable):
     A class for running a coagulation strategy.
 
     Args:
-    -----
-    - coagulation_strategy (CoagulationStrategy): The coagulation strategy to
-    use.
+        coagulation_strategy (CoagulationStrategy): The coagulation strategy to
+            use.
 
     Methods:
-    --------
-    - execute: Execute the coagulation process.
-    - rate: Calculate the rate of coagulation for each particle.
+        execute: Execute the coagulation process.
+        rate: Calculate the rate of coagulation for each particle.
     """
 
     def __init__(self, coagulation_strategy: CoagulationStrategy):
@@ -133,8 +126,7 @@ class Coagulation(Runnable):
         Execute the coagulation process.
 
         Args:
-        -----
-        - aerosol (Aerosol): The aerosol instance to modify.
+            aerosol (Aerosol): The aerosol instance to modify.
         """
         # Loop over particles
         for particle in aerosol.iterate_particle():
@@ -153,12 +145,10 @@ class Coagulation(Runnable):
         Calculate the rate of coagulation for each particle.
 
         Args:
-        -----
-        - aerosol (Aerosol): The aerosol instance to modify.
+            aerosol (Aerosol): The aerosol instance to modify.
 
         Returns:
-        --------
-        - np.ndarray: An array of coagulation rates for each particle.
+            np.ndarray: An array of coagulation rates for each particle.
         """
         rates = np.array([], dtype=np.float64)
         # Loop over particles
