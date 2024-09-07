@@ -13,7 +13,10 @@ from numpy.typing import NDArray
 import numpy as np
 
 from particula.next.gas.properties.concentration_function import (
-    calculate_concentration
+    calculate_concentration,
+)
+from particula.next.gas.properties.partial_pressure_function import (
+    calculate_partial_pressure,
 )
 from particula.constants import GAS_CONSTANT
 
