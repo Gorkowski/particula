@@ -7979,6 +7979,7 @@ particle representation object with resolved masses.</p>
 <li><code>number_concentration</code> - Set the number concentration of the
     distribution. Default is np.array([1e4 1e6, 1e3 1e6])
     particles/m^3.</li>
+<li><code>particle_resolved_count</code> - Set the number of resolved particles.</li>
 </ul>
 <h4 id="signature_8">Signature<a class="headerlink" href="#signature_8" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PresetResolvedParticleMassBuilder</span><span class="p">(</span>
@@ -8007,7 +8008,7 @@ particle representation object with resolved masses.</p>
 <li><a href="../../abc_builder/#buildervolumemixin">BuilderVolumeMixin</a></li>
 </ul>
 <h3 id="presetresolvedparticlemassbuilderbuild">PresetResolvedParticleMassBuilder().build<a class="headerlink" href="#presetresolvedparticlemassbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L444">Show source in representation_builders.py:444</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L446">Show source in representation_builders.py:446</a></p>
 <p>Validate and return the ParticleRepresentation object.</p>
 <p>This will build a distribution of particles with a lognormal size
 distribution, before returning the ParticleRepresentation object.</p>

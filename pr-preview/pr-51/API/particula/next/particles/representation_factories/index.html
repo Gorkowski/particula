@@ -7386,14 +7386,13 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py">particula.next.particles.representation_factories</a> module.</p>
 </blockquote>
 <h2 id="particlerepresentationfactory">ParticleRepresentationFactory<a class="headerlink" href="#particlerepresentationfactory" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L15">Show source in representation_factories.py:15</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L17">Show source in representation_factories.py:17</a></p>
 <p>Factory class to create particle representation builders.</p>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>get_builders</code> <em>()</em> - Returns the mapping of strategy types to builder
-instances.
-get_strategy (strategy_type, parameters): Gets the strategy instance
-for the specified strategy type.<ul>
+<li><code>get_builders</code> - Returns the mapping of strategy types to builder
+    instances.</li>
+<li><code>get_strategy</code> - Gets the strategy instance for the specified strategy.<ul>
 <li><code>strategy_type</code> - Type of particle representation strategy to use,
 can be 'radius' (default) or 'mass'.</li>
 <li><code>parameters</code> - Parameters required for
@@ -7410,7 +7409,7 @@ ParticleRepresentation.</li>
 <ul>
 <li><code>ValueError</code> - If an unknown strategy type is provided.</li>
 <li><code>ValueError</code> - If any required key is missing during check_keys or
-pre_build_check, or if trying to set an invalid parameter.</li>
+    pre_build_check, or if trying to set an invalid parameter.</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ParticleRepresentationFactory</span><span class="p">(</span>
@@ -7419,6 +7418,8 @@ pre_build_check, or if trying to set an invalid parameter.</li>
             <span class="n">ParticleMassRepresentationBuilder</span><span class="p">,</span>
             <span class="n">ParticleRadiusRepresentationBuilder</span><span class="p">,</span>
             <span class="n">PresetParticleRadiusBuilder</span><span class="p">,</span>
+            <span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">,</span>
+            <span class="n">PresetResolvedParticleMassBuilder</span><span class="p">,</span>
         <span class="p">],</span>
         <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="p">]</span>
@@ -7430,9 +7431,11 @@ pre_build_check, or if trying to set an invalid parameter.</li>
 <li><a href="../representation_builders/#particleradiusrepresentationbuilder">ParticleRadiusRepresentationBuilder</a></li>
 <li><a href="../representation/#particlerepresentation">ParticleRepresentation</a></li>
 <li><a href="../representation_builders/#presetparticleradiusbuilder">PresetParticleRadiusBuilder</a></li>
+<li><a href="../representation_builders/#presetresolvedparticlemassbuilder">PresetResolvedParticleMassBuilder</a></li>
+<li><a href="../representation_builders/#resolvedparticlemassrepresentationbuilder">ResolvedParticleMassRepresentationBuilder</a></li>
 </ul>
 <h3 id="particlerepresentationfactoryget_builders">ParticleRepresentationFactory().get_builders<a class="headerlink" href="#particlerepresentationfactoryget_builders" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L47">Show source in representation_factories.py:47</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_factories.py#L50">Show source in representation_factories.py:50</a></p>
 <p>Returns the mapping of strategy types to builder instances.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7440,6 +7443,9 @@ pre_build_check, or if trying to set an invalid parameter.</li>
 the builder instances as values.</li>
 <li><code>-</code> <em>'mass'</em> - MassParticleRepresentationBuilder</li>
 <li><code>-</code> <em>'radius'</em> - RadiusParticleRepresentationBuilder</li>
+<li><code>-</code> <em>'preset_radius'</em> - LimitedRadiusParticleBuilder</li>
+<li><code>-</code> <em>'resolved_mass'</em> - ResolvedMassParticleRepresentationBuilder</li>
+<li><code>-</code> <em>'preset_resolved_mass'</em> - PresetResolvedMassParticleBuilder</li>
 </ul>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_builders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>

@@ -7680,7 +7680,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py">particula.next.particles.activity_strategies</a> module.</p>
 </blockquote>
 <h2 id="activitystrategy">ActivityStrategy<a class="headerlink" href="#activitystrategy" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L19">Show source in activity_strategies.py:19</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L20">Show source in activity_strategies.py:20</a></p>
 <p>Abstract base class for vapor pressure strategies.</p>
 <p>This interface is used for implementing strategies based on particle
 activity calculations, specifically for calculating vapor pressures.</p>
@@ -7694,7 +7694,7 @@ activity calculations, specifically for calculating vapor pressures.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ActivityStrategy</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="activitystrategyactivity">ActivityStrategy().activity<a class="headerlink" href="#activitystrategyactivity" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L31">Show source in activity_strategies.py:31</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L32">Show source in activity_strategies.py:32</a></p>
 <p>Calculate the activity of a species based on its mass concentration.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7709,7 +7709,7 @@ activity calculations, specifically for calculating vapor pressures.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="activitystrategypartial_pressure">ActivityStrategy().partial_pressure<a class="headerlink" href="#activitystrategypartial_pressure" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L44">Show source in activity_strategies.py:44</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L45">Show source in activity_strategies.py:45</a></p>
 <p>Calculate the vapor pressure of species in the particle phase.</p>
 <p>This method computes the vapor pressure based on the species' activity
 considering its pure vapor pressure and mass concentration.</p>
@@ -7733,7 +7733,7 @@ in pascals (Pa).</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="idealactivitymass">IdealActivityMass<a class="headerlink" href="#idealactivitymass" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L110">Show source in activity_strategies.py:110</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L111">Show source in activity_strategies.py:111</a></p>
 <p>Calculate ideal activity based on mass fractions.</p>
 <p>This strategy utilizes mass fractions to determine the activity, consistent
 with the principles outlined in Raoult's Law.</p>
@@ -7747,7 +7747,7 @@ with the principles outlined in Raoult's Law.</p>
 <li><a href="#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h3 id="idealactivitymassactivity">IdealActivityMass().activity<a class="headerlink" href="#idealactivitymassactivity" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L120">Show source in activity_strategies.py:120</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L121">Show source in activity_strategies.py:121</a></p>
 <p>Calculate the activity of a species based on mass concentration.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7765,7 +7765,7 @@ unitless.</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="idealactivitymolar">IdealActivityMolar<a class="headerlink" href="#idealactivitymolar" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L68">Show source in activity_strategies.py:68</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L69">Show source in activity_strategies.py:69</a></p>
 <p>Calculate ideal activity based on mole fractions.</p>
 <p>This strategy uses mole fractions to compute the activity, adhering to
 the principles of Raoult's Law.</p>
@@ -7784,7 +7784,7 @@ is provided.</p>
 <li><a href="#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h3 id="idealactivitymolaractivity">IdealActivityMolar().activity<a class="headerlink" href="#idealactivitymolaractivity" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L86">Show source in activity_strategies.py:86</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L87">Show source in activity_strategies.py:87</a></p>
 <p>Calculate the activity of a species based on mass concentration.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7802,7 +7802,7 @@ unitless.</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="kappaparameteractivity">KappaParameterActivity<a class="headerlink" href="#kappaparameteractivity" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L141">Show source in activity_strategies.py:141</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L142">Show source in activity_strategies.py:142</a></p>
 <p>Non-ideal activity strategy based on the kappa hygroscopic parameter.</p>
 <p>This strategy calculates the activity using the kappa hygroscopic
 parameter, a measure of hygroscopicity. The activity is determined by the
@@ -7832,7 +7832,7 @@ species' mass concentration along with the hygroscopic parameter.</p>
 <li><a href="#activitystrategy">ActivityStrategy</a></li>
 </ul>
 <h3 id="kappaparameteractivityactivity">KappaParameterActivity().activity<a class="headerlink" href="#kappaparameteractivityactivity" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L170">Show source in activity_strategies.py:170</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L171">Show source in activity_strategies.py:171</a></p>
 <p>Calculate the activity of a species based on mass concentration.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <ul>

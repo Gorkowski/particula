@@ -270,6 +270,7 @@ particle representation object with resolved masses.
 - `number_concentration` - Set the number concentration of the
     distribution. Default is np.array([1e4 1e6, 1e3 1e6])
     particles/m^3.
+- `particle_resolved_count` - Set the number of resolved particles.
 
 #### Signature
 
@@ -302,7 +303,7 @@ class PresetResolvedParticleMassBuilder(
 
 ### PresetResolvedParticleMassBuilder().build
 
-[Show source in representation_builders.py:444](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L444)
+[Show source in representation_builders.py:446](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L446)
 
 Validate and return the ParticleRepresentation object.
 
