@@ -6,7 +6,7 @@
 
 ## BuilderABC
 
-[Show source in abc_builder.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L32)
+[Show source in abc_builder.py:23](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L23)
 
 Abstract base class for builders with common methods to check keys and
 set parameters from a dictionary.
@@ -46,7 +46,7 @@ class BuilderABC(ABC):
 
 ### BuilderABC().build
 
-[Show source in abc_builder.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L142)
+[Show source in abc_builder.py:133](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L133)
 
 Build and return the strategy object with the set parameters.
 
@@ -63,7 +63,7 @@ def build(self) -> Any: ...
 
 ### BuilderABC().check_keys
 
-[Show source in abc_builder.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L62)
+[Show source in abc_builder.py:53](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L53)
 
 Check if the keys are present and valid.
 
@@ -84,7 +84,7 @@ def check_keys(self, parameters: dict[str, Any]): ...
 
 ### BuilderABC().pre_build_check
 
-[Show source in abc_builder.py:127](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L127)
+[Show source in abc_builder.py:118](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L118)
 
 Check if all required attribute parameters are set before building.
 
@@ -100,7 +100,7 @@ def pre_build_check(self): ...
 
 ### BuilderABC().set_parameters
 
-[Show source in abc_builder.py:99](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L99)
+[Show source in abc_builder.py:90](https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L90)
 
 Set parameters from a dictionary including optional suffix for
 units as '_units'.

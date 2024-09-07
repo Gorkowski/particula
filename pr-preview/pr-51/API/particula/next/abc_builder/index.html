@@ -7615,7 +7615,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py">particula.next.abc_builder</a> module.</p>
 </blockquote>
 <h2 id="builderabc">BuilderABC<a class="headerlink" href="#builderabc" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L32">Show source in abc_builder.py:32</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L23">Show source in abc_builder.py:23</a></p>
 <p>Abstract base class for builders with common methods to check keys and
 set parameters from a dictionary.</p>
 <h4 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h4>
@@ -7647,7 +7647,7 @@ some optional method to be used in the Builder classes.
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">required_parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabcbuild">BuilderABC().build<a class="headerlink" href="#builderabcbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L142">Show source in abc_builder.py:142</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L133">Show source in abc_builder.py:133</a></p>
 <p>Build and return the strategy object with the set parameters.</p>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7658,7 +7658,7 @@ some optional method to be used in the Builder classes.
 <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabccheck_keys">BuilderABC().check_keys<a class="headerlink" href="#builderabccheck_keys" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L62">Show source in abc_builder.py:62</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L53">Show source in abc_builder.py:53</a></p>
 <p>Check if the keys are present and valid.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7673,7 +7673,7 @@ invalid parameter.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">check_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabcpre_build_check">BuilderABC().pre_build_check<a class="headerlink" href="#builderabcpre_build_check" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L127">Show source in abc_builder.py:127</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L118">Show source in abc_builder.py:118</a></p>
 <p>Check if all required attribute parameters are set before building.</p>
 <h4 id="raises_2">Raises<a class="headerlink" href="#raises_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -7683,7 +7683,7 @@ invalid parameter.</li>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pre_build_check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="builderabcset_parameters">BuilderABC().set_parameters<a class="headerlink" href="#builderabcset_parameters" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L99">Show source in abc_builder.py:99</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/abc_builder.py#L90">Show source in abc_builder.py:90</a></p>
 <p>Set parameters from a dictionary including optional suffix for
 units as '_units'.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
