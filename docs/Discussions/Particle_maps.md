@@ -1,8 +1,6 @@
 # Relational Maps
 
-## Particle Maps
-
-
+## Particles
 
 ``` mermaid
 mindmap
