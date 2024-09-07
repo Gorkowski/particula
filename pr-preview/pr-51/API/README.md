@@ -52,6 +52,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
         - [Abc Builder](particula/next/abc_builder.md#abc-builder)
         - [Abc Factory](particula/next/abc_factory.md#abc-factory)
         - [Aerosol](particula/next/aerosol.md#aerosol)
+        - [Builder Mixin](particula/next/builder_mixin.md#builder-mixin)
         - [Dynamics](particula/next/dynamics/index.md#dynamics)
             - [Coagulation](particula/next/dynamics/coagulation/index.md#coagulation)
                 - [Brownian Kernel](particula/next/dynamics/coagulation/brownian_kernel.md#brownian-kernel)

@@ -6,7 +6,7 @@
 
 ## AtmosphereBuilder
 
-[Show source in atmosphere_builders.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L16)
+[Show source in atmosphere_builders.py:17](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L17)
 
 Builder class for creating Atmosphere objects using a fluent interface.
 
@@ -39,12 +39,12 @@ class AtmosphereBuilder(BuilderABC, BuilderTemperatureMixin, BuilderPressureMixi
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderPressureMixin](../abc_builder.md#builderpressuremixin)
-- [BuilderTemperatureMixin](../abc_builder.md#buildertemperaturemixin)
+- [BuilderPressureMixin](../builder_mixin.md#builderpressuremixin)
+- [BuilderTemperatureMixin](../builder_mixin.md#buildertemperaturemixin)
 
 ### AtmosphereBuilder().add_species
 
-[Show source in atmosphere_builders.py:48](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L48)
+[Show source in atmosphere_builders.py:49](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L49)
 
 Adds a GasSpecies object to the gas mixture.
 
@@ -68,7 +68,7 @@ def add_species(self, species: GasSpecies) -> "AtmosphereBuilder": ...
 
 ### AtmosphereBuilder().build
 
-[Show source in atmosphere_builders.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L60)
+[Show source in atmosphere_builders.py:61](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L61)
 
 Validates the configuration and constructs the Atmosphere object.
 

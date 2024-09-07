@@ -6,7 +6,7 @@
 
 ## ParticleMassRepresentationBuilder
 
-[Show source in representation_builders.py:54](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L54)
+[Show source in representation_builders.py:56](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L56)
 
 General ParticleRepresentation objects with mass-based bins.
 
@@ -40,17 +40,17 @@ class ParticleMassRepresentationBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderMassMixin](../abc_builder.md#buildermassmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderConcentrationMixin](../builder_mixin.md#builderconcentrationmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderMassMixin](../builder_mixin.md#buildermassmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
 
 ### ParticleMassRepresentationBuilder().build
 
-[Show source in representation_builders.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L96)
+[Show source in representation_builders.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L98)
 
 Validate and return the ParticleRepresentation object.
 
@@ -72,7 +72,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ## ParticleRadiusRepresentationBuilder
 
-[Show source in representation_builders.py:114](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L114)
+[Show source in representation_builders.py:116](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L116)
 
 General ParticleRepresentation objects with radius-based bins.
 
@@ -106,17 +106,17 @@ class ParticleRadiusRepresentationBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderRadiusMixin](../abc_builder.md#builderradiusmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderConcentrationMixin](../builder_mixin.md#builderconcentrationmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderRadiusMixin](../builder_mixin.md#builderradiusmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
 
 ### ParticleRadiusRepresentationBuilder().build
 
-[Show source in representation_builders.py:156](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L156)
+[Show source in representation_builders.py:158](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L158)
 
 Validate and return the ParticleRepresentation object.
 
@@ -138,7 +138,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ## PresetParticleRadiusBuilder
 
-[Show source in representation_builders.py:174](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L174)
+[Show source in representation_builders.py:176](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L176)
 
 General ParticleRepresentation objects with radius-based bins.
 
@@ -173,18 +173,18 @@ class PresetParticleRadiusBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderLognormalMixin](../abc_builder.md#builderlognormalmixin)
-- [BuilderRadiusMixin](../abc_builder.md#builderradiusmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderConcentrationMixin](../builder_mixin.md#builderconcentrationmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderLognormalMixin](../builder_mixin.md#builderlognormalmixin)
+- [BuilderRadiusMixin](../builder_mixin.md#builderradiusmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
 
 ### PresetParticleRadiusBuilder().build
 
-[Show source in representation_builders.py:264](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L264)
+[Show source in representation_builders.py:266](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L266)
 
 Validate and return the ParticleRepresentation object.
 
@@ -207,7 +207,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ### PresetParticleRadiusBuilder().set_distribution_type
 
-[Show source in representation_builders.py:245](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L245)
+[Show source in representation_builders.py:247](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L247)
 
 Set the distribution type for the particle representation.
 
@@ -225,7 +225,7 @@ def set_distribution_type(
 
 ### PresetParticleRadiusBuilder().set_radius_bins
 
-[Show source in representation_builders.py:228](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L228)
+[Show source in representation_builders.py:230](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L230)
 
 Set the radius bins for the distribution
 
@@ -245,7 +245,7 @@ def set_radius_bins(
 
 ## PresetResolvedParticleMassBuilder
 
-[Show source in representation_builders.py:378](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L378)
+[Show source in representation_builders.py:380](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L380)
 
 General ParticleRepresentation objects with particle resolved masses.
 
@@ -292,18 +292,18 @@ class PresetResolvedParticleMassBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderLognormalMixin](../abc_builder.md#builderlognormalmixin)
-- [BuilderParticleResolvedCountMixin](../abc_builder.md#builderparticleresolvedcountmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
-- [BuilderVolumeMixin](../abc_builder.md#buildervolumemixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderLognormalMixin](../builder_mixin.md#builderlognormalmixin)
+- [BuilderParticleResolvedCountMixin](../builder_mixin.md#builderparticleresolvedcountmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
+- [BuilderVolumeMixin](../builder_mixin.md#buildervolumemixin)
 
 ### PresetResolvedParticleMassBuilder().build
 
-[Show source in representation_builders.py:446](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L446)
+[Show source in representation_builders.py:448](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L448)
 
 Validate and return the ParticleRepresentation object.
 
@@ -328,7 +328,7 @@ def build(self) -> ParticleRepresentation: ...
 
 ## ResolvedParticleMassRepresentationBuilder
 
-[Show source in representation_builders.py:304](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L304)
+[Show source in representation_builders.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L306)
 
 Builder class for constructing ParticleRepresentation objects with
 resolved masses.
@@ -366,17 +366,17 @@ class ResolvedParticleMassRepresentationBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderMassMixin](../abc_builder.md#buildermassmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
-- [BuilderVolumeMixin](../abc_builder.md#buildervolumemixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderMassMixin](../builder_mixin.md#buildermassmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
+- [BuilderVolumeMixin](../builder_mixin.md#buildervolumemixin)
 
 ### ResolvedParticleMassRepresentationBuilder().build
 
-[Show source in representation_builders.py:351](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L351)
+[Show source in representation_builders.py:353](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L353)
 
 Validate and return a ParticleRepresentation object.
 
