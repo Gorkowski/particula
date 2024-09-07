@@ -550,7 +550,6 @@ class CondensationIsothermal(CondensationStrategy):
             partial_pressure_particle=partial_pressure_particle,
             kelvin_term=kelvin_term,
         )
-        print(f"Pressure delta shape: {pressure_delta.shape}")
         # Calculate the mass transfer rate per particle
         return mass_transfer_rate(
             pressure_delta=pressure_delta,

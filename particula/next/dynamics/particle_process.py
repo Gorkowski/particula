@@ -75,7 +75,7 @@ class MassCondensation(Runnable):
                 continue
             # Loop over particles to apply condensation
             for particle in aerosol.iterate_particle():
-                print(gas_species.name)
+                # print(gas_species.name)
                 # Calculate the rate of condensation
                 mass_rate = self.condensation_strategy.rate(
                     particle=particle,
@@ -83,7 +83,6 @@ class MassCondensation(Runnable):
                     temperature=aerosol.atmosphere.temperature,
                     pressure=aerosol.atmosphere.total_pressure,
                 )
-                print(f"Mass rate shape: {mass_rate.shape}")
                 rates = np.append(rates, mass_rate)
         return rates
 

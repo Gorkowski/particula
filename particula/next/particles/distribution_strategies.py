@@ -217,14 +217,11 @@ class RadiiBasedMovingBin(DistributionStrategy):
             added_mass / concentration,
             0
         )
-        print(mass_per_particle.shape)
         # Step 2: Calculate new volumes
         initial_volumes = (4 / 3) * np.pi * np.power(distribution, 3)
         new_volumes = initial_volumes + mass_per_particle / density
         # Step 3: Convert new volumes back to radii
-        print(new_volumes.shape)
         new_radii = np.power(3 * new_volumes / (4 * np.pi), 1 / 3)
-        print(new_radii.shape)
         return (new_radii, concentration)
 
     def collide_pairs(
