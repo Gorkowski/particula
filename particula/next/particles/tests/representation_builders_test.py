@@ -3,22 +3,22 @@
 import numpy as np
 
 from particula.next.particles.representation_builders import (
-    MassParticleRepresentationBuilder,
-    RadiusParticleRepresentationBuilder,
-    LimitedRadiusParticleBuilder,
+    ParticleMassRepresentationBuilder,
+    ParticleRadiusRepresentationBuilder,
+    PresetParticleRadiusBuilder,
+    ResolvedParticleMassRepresentationBuilder
 )
 from particula.next.particles.representation import ParticleRepresentation
 from particula.next.particles.distribution_strategies import (
-    RadiiBasedMovingBin,
+    RadiiBasedMovingBin, ParticleResolvedSpeciatedMass,
 )
 from particula.next.particles.surface_strategies import SurfaceStrategyVolume
 from particula.next.particles.activity_strategies import IdealActivityMass
 
 
 def test_mass_particle_representation_builder():
-    """Test MassParticleRepresentationBuilder Builds.
-    """
-    builder = MassParticleRepresentationBuilder()
+    """Test MassParticleRepresentationBuilder Builds."""
+    builder = ParticleMassRepresentationBuilder()
     builder.set_distribution_strategy(RadiiBasedMovingBin())
     builder.set_activity_strategy(IdealActivityMass())
     builder.set_surface_strategy(SurfaceStrategyVolume())
@@ -31,9 +31,8 @@ def test_mass_particle_representation_builder():
 
 
 def test_radius_particle_representation_builder():
-    """Test RadiusParticleRepresentationBuilder Builds.
-    """
-    builder = RadiusParticleRepresentationBuilder()
+    """Test RadiusParticleRepresentationBuilder Builds."""
+    builder = ParticleRadiusRepresentationBuilder()
     builder.set_distribution_strategy(RadiiBasedMovingBin())
     builder.set_activity_strategy(IdealActivityMass())
     builder.set_surface_strategy(SurfaceStrategyVolume())
@@ -46,17 +45,16 @@ def test_radius_particle_representation_builder():
 
 
 def test_limited_radius_particle_builder():
-    """Test LimitedRadiusParticleBuilder Builds.
-    """
+    """Test LimitedRadiusParticleBuilder Builds."""
     # default values
-    builder = LimitedRadiusParticleBuilder()
+    builder = PresetParticleRadiusBuilder()
     particle_representation_defaults = builder.build()
     assert isinstance(particle_representation_defaults, ParticleRepresentation)
 
     # set values
-    builder = LimitedRadiusParticleBuilder()
-    builder.set_mode(np.array([100, 2000]), 'nm')
+    builder = PresetParticleRadiusBuilder()
+    builder.set_mode(np.array([100, 2000]), "nm")
     builder.set_geometric_standard_deviation(np.array([1.4, 1.5]))
-    builder.set_number_concentration(np.array([1e3, 1e3]), 'cm^-3')
+    builder.set_number_concentration(np.array([1e3, 1e3]), "1/cm^3")
     particle_representation = builder.build()
     assert isinstance(particle_representation, ParticleRepresentation)

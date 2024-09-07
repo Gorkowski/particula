@@ -5,9 +5,9 @@ This module contains the representation factories for the particles.
 from typing import Union
 from particula.next.abc_factory import StrategyFactory
 from particula.next.particles.representation_builders import (
-    MassParticleRepresentationBuilder,
-    RadiusParticleRepresentationBuilder,
-    LimitedRadiusParticleBuilder,
+    ParticleMassRepresentationBuilder,
+    ParticleRadiusRepresentationBuilder,
+    PresetParticleRadiusBuilder,
 )
 from particula.next.particles.representation import ParticleRepresentation
 
@@ -15,9 +15,9 @@ from particula.next.particles.representation import ParticleRepresentation
 class ParticleRepresentationFactory(
     StrategyFactory[
         Union[
-            MassParticleRepresentationBuilder,
-            RadiusParticleRepresentationBuilder,
-            LimitedRadiusParticleBuilder,
+            ParticleMassRepresentationBuilder,
+            ParticleRadiusRepresentationBuilder,
+            PresetParticleRadiusBuilder,
         ],
         ParticleRepresentation,
     ]
@@ -54,7 +54,7 @@ class ParticleRepresentationFactory(
             - 'radius': RadiusParticleRepresentationBuilder
         """
         return {
-            "mass": MassParticleRepresentationBuilder(),
-            "radius": RadiusParticleRepresentationBuilder(),
-            "limited_radius": LimitedRadiusParticleBuilder(),
+            "mass": ParticleMassRepresentationBuilder(),
+            "radius": ParticleRadiusRepresentationBuilder(),
+            "limited_radius": PresetParticleRadiusBuilder(),
         }

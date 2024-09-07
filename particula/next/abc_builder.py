@@ -339,6 +339,38 @@ class BuilderMassMixin:
         return self
 
 
+class BuilderVolumeMixin:
+    """Mixin class for Builder classes to set volume and volume_units.
+
+    Methods:
+        set_volume: Set the volume attribute and units.
+    """
+
+    def __init__(self):
+        self.volume = None
+
+    def set_volume(
+        self,
+        volume: Union[float, NDArray[np.float64]],
+        volume_units: Optional[str] = "m^3",
+    ):
+        """Set the volume in m^3.
+
+        Args:
+            volume: Volume.
+            volume_units: Units of the volume. Default is *m^3*.
+
+        Raises:
+            ValueError: If volume is negative
+        """
+        if np.any(volume < 0):
+            error_message = "Volume must be a positive value."
+            logger.error(error_message)
+            raise ValueError(error_message)
+        self.volume = volume * convert_units(volume_units, "m^3")
+        return self
+
+
 class BuilderRadiusMixin:
     """Mixin class for Builder classes to set radius and radius_units.
 
@@ -525,4 +557,125 @@ class BuilderDistributionStrategyMixin:
                 "Ignoring units for distribution strategy parameter."
             )
         self.distribution_strategy = distribution_strategy
+        return self
+
+
+class BuilderLognormalMixin:
+    """Mixin class for Builder classes to set lognormal distributions.
+
+    Methods:
+        set_mode: Set the mode attribute and units.
+        set_geometric_standard_deviation: Set the geometric standard deviation
+            attribute and units.
+        set_number_concentration: Set the number concentration attribute and
+            units.
+    """
+
+    def __init__(self):
+        self.mode = None
+        self.number_concentration = None
+        self.geometric_standard_deviation = None
+
+    def set_mode(
+        self,
+        mode: NDArray[np.float64],
+        mode_units: str = "m",
+    ):
+        """Set the mode for distribution.
+
+        Args:
+            mode: The modes for the radius.
+            mode_units: The units for the modes, default is 'm'.
+
+        Raises:
+            ValueError: If mode is negative.
+        """
+        if np.any(mode < 0):
+            message = "The mode must be positive."
+            logger.error(message)
+            raise ValueError(message)
+        self.mode = mode * convert_units(mode_units, "m")
+        return self
+
+    def set_geometric_standard_deviation(
+        self,
+        geometric_standard_deviation: NDArray[np.float64],
+        geometric_standard_deviation_units: Optional[str] = None,
+    ):
+        """Set the geometric standard deviation for the distribution.
+
+        Args:
+            geometric_standard_deviation: The geometric standard deviation for
+                the radius.
+            geometric_standard_deviation_units: Optional, ignored units for
+                geometric standard deviation [dimensionless].
+
+        Raises:
+            ValueError: If geometric standard deviation is negative.
+        """
+        if np.any(geometric_standard_deviation < 0):
+            message = "The geometric standard deviation must be positive."
+            logger.error(message)
+            raise ValueError(message)
+        if geometric_standard_deviation_units is not None:
+            logger.warning("Ignoring units for surface strategy parameter.")
+        self.geometric_standard_deviation = geometric_standard_deviation
+        return self
+
+    def set_number_concentration(
+        self,
+        number_concentration: NDArray[np.float64],
+        number_concentration_units: str = "1/m^3",
+    ):
+        """Set the number concentration for the distribution.
+
+        Args:
+            number_concentration: The number concentration for the radius.
+            number_concentration_units: The units for the number concentration,
+                default is '1/m^3'.
+
+        Raises:
+            ValueError: If number concentration is negative.
+        """
+        if np.any(number_concentration < 0):
+            message = "The number concentration must be positive."
+            logger.error(message)
+            raise ValueError(message)
+        self.number_concentration = number_concentration * convert_units(
+            number_concentration_units, "1/m^3"
+        )
+        return self
+
+
+class BuilderParticleResolvedCountMixin:
+    """Mixin class for Builder classes to set particle_resolved_count.
+
+    Methods:
+        set_particle_resolved_count: Set the number of particles to resolve.
+    """
+
+    def __init__(self):
+        self.particle_resolved_count = None
+
+    def set_particle_resolved_count(
+        self,
+        particle_resolved_count: int,
+        particle_resolved_count_units: Optional[str] = None,
+    ):
+        """Set the number of particles to resolve.
+
+        Args:
+            particle_resolved_count: The number of particles to resolve.
+            particle_resolved_count_units: Ignored units for particle resolved.
+
+        Raises:
+            ValueError: If particle_resolved_count is negative.
+        """
+        if particle_resolved_count < 0:
+            message = "The number of particles must be positive."
+            logger.error(message)
+            raise ValueError(message)
+        if particle_resolved_count_units is not None:
+            logger.warning("Ignoring units for particle resolved count.")
+        self.particle_resolved_count = particle_resolved_count
         return self
