@@ -6,7 +6,7 @@
 
 ## CondensationIsothermal
 
-[Show source in condensation.py:494](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L494)
+[Show source in condensation.py:506](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L506)
 
 Condensation strategy for isothermal conditions.
 
@@ -33,7 +33,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:515](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L515)
+[Show source in condensation.py:527](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L527)
 
 #### Signature
 
@@ -55,7 +55,7 @@ def mass_transfer_rate(
 
 ### CondensationIsothermal().rate
 
-[Show source in condensation.py:561](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L561)
+[Show source in condensation.py:573](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L573)
 
 #### Signature
 
@@ -76,23 +76,7 @@ def rate(
 
 ### CondensationIsothermal().step
 
-[Show source in condensation.py:589](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L589)
-
-Execute the condensation process for a given time step.
-
-#### Arguments
-
-- `particle` *ParticleRepresentation* - The particle to modify.
-- `gas_species` *GasSpecies* - The gas species to condense onto the
-    particle.
-- `temperature` *float* - The temperature of the system in Kelvin.
-- `pressure` *float* - The pressure of the system in Pascals.
-- `time_step` *float* - The time step for the process in seconds.
-
-#### Returns
-
-- `ParticleRepresentation` - The modified particle instance.
-- `GasSpecies` - The modified gas species instance.
+[Show source in condensation.py:602](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L602)
 
 #### Signature
 
@@ -116,7 +100,7 @@ def step(
 
 ## CondensationStrategy
 
-[Show source in condensation.py:272](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L272)
+[Show source in condensation.py:278](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L278)
 
 Condensation strategy abstract class.
 
@@ -149,7 +133,7 @@ class CondensationStrategy(ABC):
 
 ### CondensationStrategy().first_order_mass_transport
 
-[Show source in condensation.py:366](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L366)
+[Show source in condensation.py:372](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L372)
 
 First-order mass transport coefficient per particle.
 
@@ -190,7 +174,7 @@ def first_order_mass_transport(
 
 ### CondensationStrategy().knudsen_number
 
-[Show source in condensation.py:331](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L331)
+[Show source in condensation.py:337](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L337)
 
 The Knudsen number for a particle.
 
@@ -228,7 +212,7 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation.py:410](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L410)
+[Show source in condensation.py:416](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L416)
 
 Mass transfer rate for a particle.
 
@@ -272,7 +256,7 @@ def mass_transfer_rate(
 
 ### CondensationStrategy().mean_free_path
 
-[Show source in condensation.py:300](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L300)
+[Show source in condensation.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L306)
 
 Calculate the mean free path of the gas molecules based on the
 temperature, pressure, and dynamic viscosity of the gas.
@@ -304,7 +288,7 @@ def mean_free_path(
 
 ### CondensationStrategy().rate
 
-[Show source in condensation.py:440](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L440)
+[Show source in condensation.py:446](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L446)
 
 Calculate the rate of mass condensation for each particle due to
 each condensable gas species.
@@ -350,18 +334,23 @@ def rate(
 
 ### CondensationStrategy().step
 
-[Show source in condensation.py:472](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L472)
+[Show source in condensation.py:479](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L479)
 
 Execute the condensation process for a given time step.
 
 #### Arguments
 
-- `aerosol` *Aerosol* - The aerosol instance to modify.
+- `particle` *ParticleRepresentation* - The particle to modify.
+- `gas_species` *GasSpecies* - The gas species to condense onto the
+    particle.
+- `temperature` *float* - The temperature of the system in Kelvin.
+- `pressure` *float* - The pressure of the system in Pascals.
 - `time_step` *float* - The time step for the process in seconds.
 
 #### Returns
 
-- `Aerosol` - The modified aerosol instance.
+- `ParticleRepresentation` - The modified particle instance.
+- `GasSpecies` - The modified gas species instance.
 
 #### Signature
 
@@ -386,7 +375,7 @@ def step(
 
 ## calculate_mass_transfer
 
-[Show source in condensation.py:126](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L126)
+[Show source in condensation.py:129](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L129)
 
 Helper function that routes the mass transfer calculation to either the
 single-species or multi-species calculation functions based on the input
@@ -421,7 +410,7 @@ def calculate_mass_transfer(
 
 ## calculate_mass_transfer_multiple_species
 
-[Show source in condensation.py:211](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L211)
+[Show source in condensation.py:214](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L214)
 
 Calculate mass transfer for multiple gas species.
 
@@ -455,7 +444,7 @@ def calculate_mass_transfer_multiple_species(
 
 ## calculate_mass_transfer_single_species
 
-[Show source in condensation.py:167](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L167)
+[Show source in condensation.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L170)
 
 Calculate mass transfer for a single gas species (m=1).
 
@@ -527,7 +516,7 @@ def first_order_mass_transport_k(
 
 ## mass_transfer_rate
 
-[Show source in condensation.py:90](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L90)
+[Show source in condensation.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L93)
 
 Calculate the mass transfer rate for a particle.
 
