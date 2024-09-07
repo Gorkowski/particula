@@ -358,7 +358,7 @@ class ResolvedParticleMassRepresentationBuilder(
         Returns:
             ParticleRepresentation: A validated particle representation object.
         """
-        number_concentration = np.ones(  # type: ignore
+        number_concentration = np.ones_like(  # type: ignore
             self.mass, dtype=np.float64  # type: ignore
         )
 
@@ -408,6 +408,7 @@ class PresetResolvedParticleMassBuilder(
         number_concentration: Set the number concentration of the
             distribution. Default is np.array([1e4 1e6, 1e3 1e6])
             particles/m^3.
+        particle_resolved_count: Set the number of resolved particles.
     """
 
     def __init__(self):
@@ -440,6 +441,7 @@ class PresetResolvedParticleMassBuilder(
         )
         self.set_density(1000, "kg/m^3")
         self.set_charge(0)
+        self.set_volume(1)
 
     def build(self) -> ParticleRepresentation:
         """Validate and return the ParticleRepresentation object.
@@ -461,8 +463,8 @@ class PresetResolvedParticleMassBuilder(
         resolved_masses = np.float64(
             4 / 3 * np.pi * resolved_radii**3 * self.density  # type: ignore
         )
-        number_concentration = np.ones(
-            self.particle_resolved_count, dtype=np.float64
+        number_concentration = np.ones_like(
+            resolved_masses, dtype=np.float64
         )
 
         self.pre_build_check()

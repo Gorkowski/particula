@@ -8,6 +8,8 @@ from particula.next.particles.representation_builders import (
     ParticleMassRepresentationBuilder,
     ParticleRadiusRepresentationBuilder,
     PresetParticleRadiusBuilder,
+    ResolvedParticleMassRepresentationBuilder,
+    PresetResolvedParticleMassBuilder,
 )
 from particula.next.particles.representation import ParticleRepresentation
 
@@ -18,6 +20,8 @@ class ParticleRepresentationFactory(
             ParticleMassRepresentationBuilder,
             ParticleRadiusRepresentationBuilder,
             PresetParticleRadiusBuilder,
+            ResolvedParticleMassRepresentationBuilder,
+            PresetResolvedParticleMassBuilder,
         ],
         ParticleRepresentation,
     ]
@@ -25,10 +29,9 @@ class ParticleRepresentationFactory(
     """Factory class to create particle representation builders.
 
     Methods:
-        get_builders (): Returns the mapping of strategy types to builder
-        instances.
-        get_strategy (strategy_type, parameters): Gets the strategy instance
-        for the specified strategy type.
+        get_builders: Returns the mapping of strategy types to builder
+            instances.
+        get_strategy: Gets the strategy instance for the specified strategy.
             strategy_type: Type of particle representation strategy to use,
             can be 'radius' (default) or 'mass'.
             parameters: Parameters required for
@@ -41,7 +44,7 @@ class ParticleRepresentationFactory(
     Raises:
         ValueError: If an unknown strategy type is provided.
         ValueError: If any required key is missing during check_keys or
-        pre_build_check, or if trying to set an invalid parameter.
+            pre_build_check, or if trying to set an invalid parameter.
     """
 
     def get_builders(self):
@@ -52,9 +55,14 @@ class ParticleRepresentationFactory(
             the builder instances as values.
             - 'mass': MassParticleRepresentationBuilder
             - 'radius': RadiusParticleRepresentationBuilder
+            - 'preset_radius': LimitedRadiusParticleBuilder
+            - 'resolved_mass': ResolvedMassParticleRepresentationBuilder
+            - 'preset_resolved_mass': PresetResolvedMassParticleBuilder
         """
         return {
             "mass": ParticleMassRepresentationBuilder(),
             "radius": ParticleRadiusRepresentationBuilder(),
-            "limited_radius": PresetParticleRadiusBuilder(),
+            "preset_radius": PresetParticleRadiusBuilder(),
+            "resolved_mass": ResolvedParticleMassRepresentationBuilder(),
+            "preset_resolved_mass": PresetResolvedParticleMassBuilder(),
         }

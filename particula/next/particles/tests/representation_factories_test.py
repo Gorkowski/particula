@@ -11,6 +11,7 @@ from particula.next.particles.representation_factories import (
 from particula.next.particles.distribution_strategies import (
     MassBasedMovingBin,
     RadiiBasedMovingBin,
+    ParticleResolvedSpeciatedMass,
 )
 from particula.next.particles.representation import ParticleRepresentation
 from particula.next.particles.activity_strategies import IdealActivityMass
@@ -53,7 +54,7 @@ def test_limited_radius_build():
     """Test factory and build for LimitedRadiusParticleBuilder."""
     # default values
     particle_rep = ParticleRepresentationFactory().get_strategy(
-        "limited_radius")
+        "preset_radius")
     assert isinstance(particle_rep, ParticleRepresentation)
 
     # set values
@@ -63,7 +64,42 @@ def test_limited_radius_build():
         'number_concentration': np.array([1e3, 1e3])
     }
     particle_rep = ParticleRepresentationFactory().get_strategy(
-        "limited_radius", parameters)
+        "preset_radius", parameters)
+    assert isinstance(particle_rep, ParticleRepresentation)
+
+
+def test_resolved_mass_build():
+    """Test factory and build for ResolvedMassParticleRepresentationBuilder."""
+    parameters = {
+        'distribution_strategy': ParticleResolvedSpeciatedMass(),
+        'activity_strategy': IdealActivityMass(),
+        'surface_strategy': SurfaceStrategyVolume(),
+        'mass': np.array([1.0, 2.0, 3.0]),
+        'density': np.array([1.0, 2.0, 3.0]),
+        'charge': 1.0,
+        'volume': 1,
+    }
+    particle_rep = ParticleRepresentationFactory().get_strategy(
+        "resolved_mass", parameters)
+    assert isinstance(particle_rep, ParticleRepresentation)
+
+
+def test_preset_resolved_mass_build():
+    """Test factory and build for PresetResolvedMassParticleBuilder."""
+    # default values
+    particle_rep = ParticleRepresentationFactory().get_strategy(
+        "preset_resolved_mass")
+    assert isinstance(particle_rep, ParticleRepresentation)
+
+    parameters = {
+        'volume': 1,
+        'mode': np.array([100, 2000]),
+        'geometric_standard_deviation': np.array([1.4, 1.5]),
+        'number_concentration': np.array([1e3, 1e3]),
+        'particle_resolved_count': 1000
+    }
+    particle_rep = ParticleRepresentationFactory().get_strategy(
+        "preset_resolved_mass", parameters)
     assert isinstance(particle_rep, ParticleRepresentation)
 
 
