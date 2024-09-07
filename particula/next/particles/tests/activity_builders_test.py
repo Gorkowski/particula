@@ -17,7 +17,7 @@ def test_build_ideal_activity_mass():
     """Test building an IdealActivityMass object."""
     builder = ActivityIdealMassBuilder()
     activity = builder.build()
-    assert activity.__class__.__name__ == "IdealActivityMass"
+    assert activity.__class__.__name__ == "ActivityIdealMass"
 
 
 def test_build_ideal_activity_molar_parameter():
@@ -55,7 +55,7 @@ def test_build_ideal_activity_molar_dict():
 
     # build the object
     activity = builder_dict.build()
-    assert activity.__class__.__name__ == "IdealActivityMolar"
+    assert activity.__class__.__name__ == "ActivityIdealMolar"
 
 
 def test_build_ideal_activity_molar_missing_parameters():
@@ -168,7 +168,7 @@ def test_build_kappa_parameter_activity_dict():
 
     # build the object
     activity = builder_dict.build()
-    assert activity.__class__.__name__ == "KappaParameterActivity"
+    assert activity.__class__.__name__ == "ActivityKappaParameter"
 
     # test missing parameters
     builder_missing2 = ActivityKappaParameterBuilder()
