@@ -1,12 +1,12 @@
-# AtmosphereBuilder
+# Atmosphere Builders
 
-[Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Gas](./index.md#gas) / AtmosphereBuilder
+[Particula Index](../../../README.md#particula-index) / [Particula](../../index.md#particula) / [Next](../index.md#next) / [Gas](./index.md#gas) / Atmosphere Builders
 
-> Auto-generated documentation for [particula.next.gas.atmosphere_builder](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py) module.
+> Auto-generated documentation for [particula.next.gas.atmosphere_builders](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py) module.
 
 ## AtmosphereBuilder
 
-[Show source in atmosphere_builder.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L16)
+[Show source in atmosphere_builders.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L16)
 
 Builder class for creating Atmosphere objects using a fluent interface.
 
@@ -44,7 +44,7 @@ class AtmosphereBuilder(BuilderABC, BuilderTemperatureMixin, BuilderPressureMixi
 
 ### AtmosphereBuilder().add_species
 
-[Show source in atmosphere_builder.py:48](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L48)
+[Show source in atmosphere_builders.py:48](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L48)
 
 Adds a GasSpecies object to the gas mixture.
 
@@ -68,7 +68,7 @@ def add_species(self, species: GasSpecies) -> "AtmosphereBuilder": ...
 
 ### AtmosphereBuilder().build
 
-[Show source in atmosphere_builder.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builder.py#L60)
+[Show source in atmosphere_builders.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/atmosphere_builders.py#L60)
 
 Validates the configuration and constructs the Atmosphere object.
 

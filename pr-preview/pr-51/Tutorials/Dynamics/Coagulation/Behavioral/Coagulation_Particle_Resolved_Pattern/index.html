@@ -2509,11 +2509,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../API/particula/next/gas/atmosphere_builder/" class="md-nav__link">
+      <a href="../../../../../API/particula/next/gas/atmosphere_builders/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    AtmosphereBuilder
+    Atmosphere Builders
   </span>
   
 
@@ -2717,6 +2717,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../API/particula/next/gas/properties/concentration_function/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concentration Function
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../API/particula/next/gas/properties/dynamic_viscosity/" class="md-nav__link">
         
   
@@ -2743,6 +2764,27 @@
   
   <span class="md-ellipsis">
     Mean Free Path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../API/particula/next/gas/properties/partial_pressure_function/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Partial Pressure Function
   </span>
   
 
@@ -7741,8 +7783,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </style>
 <!-- End of mermaid configuration --><div class="jupyter-wrapper">
 <div class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7766,11 +7808,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 <span class="c1"># particula imports</span>
 <span class="kn">from</span> <span class="nn">particula.next</span> <span class="kn">import</span> <span class="n">particles</span>
-
-<span class="kn">from</span> <span class="nn">particula.next.gas.atmosphere_builder</span> <span class="kn">import</span> <span class="n">AtmosphereBuilder</span>
-<span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_factories</span> <span class="kn">import</span> <span class="n">VaporPressureFactory</span>
-<span class="kn">from</span> <span class="nn">particula.next.gas.species_builder</span> <span class="kn">import</span> <span class="n">GasSpeciesBuilder</span>
+<span class="kn">from</span> <span class="nn">particula.next</span> <span class="kn">import</span> <span class="n">gas</span>
 <span class="kn">from</span> <span class="nn">particula.next.aerosol</span> <span class="kn">import</span> <span class="n">Aerosol</span>
+
 <span class="kn">from</span> <span class="nn">particula.next.dynamics</span> <span class="kn">import</span> <span class="n">particle_process</span>
 <span class="kn">from</span> <span class="nn">particula.next.dynamics.condensation</span> <span class="kn">import</span> <span class="n">CondensationIsothermal</span>
 <span class="kn">from</span> <span class="nn">particula.next.dynamics</span> <span class="kn">import</span> <span class="n">coagulation</span>
@@ -7782,14 +7822,163 @@ import matplotlib.pyplot as plt
 
 # particula imports
 from particula.next import particles
-
-from particula.next.gas.atmosphere_builder import AtmosphereBuilder
-from particula.next.gas.vapor_pressure_factories import VaporPressureFactory
-from particula.next.gas.species_builder import GasSpeciesBuilder
+from particula.next import gas
 from particula.next.aerosol import Aerosol
+
 from particula.next.dynamics import particle_process
 from particula.next.dynamics.condensation import CondensationIsothermal
 from particula.next.dynamics import coagulation</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">ImportError</span>                               Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[1], line 6</span>
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">matplotlib</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">pyplot</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">plt</span>
+<span class="ansi-green-fg">      5</span> <span style="color: rgb(95,135,135)"># particula imports</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 6</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> particles
+<span class="ansi-green-fg">      7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> gas
+<span class="ansi-green-fg">      8</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">aerosol</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Aerosol
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\particles\__init__.py:16</span>
+<span class="ansi-green-fg">      6</span> <span style="color: rgb(95,135,135)"># pylint: disable=unused-import</span>
+<span class="ansi-green-fg">      7</span> <span style="color: rgb(95,135,135)"># flake8: noqa</span>
+<span class="ansi-green-fg">      8</span> <span style="color: rgb(95,135,135)"># pyright: basic</span>
+<span class="ansi-green-fg">     10</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distribution_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     11</span>     MassBasedMovingBin,
+<span class="ansi-green-fg">     12</span>     RadiiBasedMovingBin,
+<span class="ansi-green-fg">     13</span>     SpeciatedMassMovingBin,
+<span class="ansi-green-fg">     14</span>     ParticleResolvedSpeciatedMass,
+<span class="ansi-green-fg">     15</span> )
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 16</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distribution_builders</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     17</span>     MassBasedMovingBinBuilder,
+<span class="ansi-green-fg">     18</span>     RadiiBasedMovingBinBuilder,
+<span class="ansi-green-fg">     19</span>     SpeciatedMassMovingBinBuilder,
+<span class="ansi-green-fg">     20</span>     ParticleResolvedSpeciatedMassBuilder,
+<span class="ansi-green-fg">     21</span> )
+<span class="ansi-green-fg">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distribution_factories</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     23</span>     DistributionFactory,
+<span class="ansi-green-fg">     24</span> )
+<span class="ansi-green-fg">     25</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">activity_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     26</span>     ActivityIdealMass,
+<span class="ansi-green-fg">     27</span>     ActivityIdealMolar,
+<span class="ansi-green-fg">     28</span>     ActivityKappaParameter,
+<span class="ansi-green-fg">     29</span> )
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\particles\distribution_builders.py:11</span>
+<span class="ansi-green-fg">      1</span> <span style="color: rgb(175,0,0)">"""Builds distributions strategies based on the specified representation.</span>
+<span class="ansi-green-fg">      2</span> 
+<span class="ansi-green-fg">      3</span> <span style="color: rgb(175,0,0)">Currently, there are no parameters to set, but this is used for consistency</span>
+<span class="ansi-green-fg">      4</span> <span style="color: rgb(175,0,0)">with other builder patterns in the codebase.</span>
+<span class="ansi-green-fg">      5</span> <span style="color: rgb(175,0,0)">"""</span>
+<span class="ansi-green-fg">      7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distribution_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">      8</span>     MassBasedMovingBin, RadiiBasedMovingBin, SpeciatedMassMovingBin,
+<span class="ansi-green-fg">      9</span>     ParticleResolvedSpeciatedMass,
+<span class="ansi-green-fg">     10</span> )
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">abc_builder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> BuilderABC
+<span class="ansi-green-fg">     14</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">MassBasedMovingBinBuilder</span>(BuilderABC):
+<span class="ansi-green-fg">     15</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">"""Builds a MassBasedMovingBin instance."""</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\abc_builder.py:23</span>
+<span class="ansi-green-fg">     20</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">numpy</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">np</span>
+<span class="ansi-green-fg">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">util</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">input_handling</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> convert_units  <span style="color: rgb(95,135,135)"># type: ignore</span>
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">surface_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> SurfaceStrategy
+<span class="ansi-green-fg">     24</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">activity_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> ActivityStrategy
+<span class="ansi-green-fg">     25</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">distribution_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     26</span>     DistributionStrategy,
+<span class="ansi-green-fg">     27</span> )
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\particles\surface_strategies.py:15</span>
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">numpy</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> <span class="ansi-bold" style="color: rgb(0,0,255)">np</span>
+<span class="ansi-green-fg">     11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">util</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">convert</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     12</span>     mass_concentration_to_mole_fraction,
+<span class="ansi-green-fg">     13</span>     mass_concentration_to_volume_fraction,
+<span class="ansi-green-fg">     14</span> )
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 15</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> kelvin_radius, kelvin_term
+<span class="ansi-green-fg">     18</span> <span class="ansi-bold" style="color: rgb(0,135,0)">class</span> <span class="ansi-bold" style="color: rgb(0,0,255)">SurfaceStrategy</span>(ABC):
+<span class="ansi-green-fg">     19</span> <span style="color: rgb(188,188,188)">    </span><span style="color: rgb(175,0,0)">"""ABC class for Surface Strategies.</span>
+<span class="ansi-green-fg">     20</span> 
+<span class="ansi-green-fg">     21</span> <span style="color: rgb(175,0,0)">    Abstract class for implementing strategies to calculate surface tension</span>
+<span class="ansi-green-intense-fg ansi-bold">   (...)</span>
+<span class="ansi-green-fg">     32</span> <span style="color: rgb(175,0,0)">        particle curvature on vapor pressure.</span>
+<span class="ansi-green-fg">     33</span> <span style="color: rgb(175,0,0)">    """</span>
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\particles\properties\__init__.py:51</span>
+<span class="ansi-green-fg">     44</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">kelvin_effect_module</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     45</span>     kelvin_radius,
+<span class="ansi-green-fg">     46</span>     kelvin_term,
+<span class="ansi-green-fg">     47</span> )
+<span class="ansi-green-fg">     48</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">special_functions</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     49</span>     debye_function,
+<span class="ansi-green-fg">     50</span> )
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 51</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">settling_velocity</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     52</span>     particle_settling_velocity,
+<span class="ansi-green-fg">     53</span>     particle_settling_velocity_via_system_state,
+<span class="ansi-green-fg">     54</span> )
+<span class="ansi-green-fg">     55</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">diffusion_coefficient</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     56</span>     particle_diffusion_coefficient,
+<span class="ansi-green-fg">     57</span>     particle_diffusion_coefficient_via_system_state,
+<span class="ansi-green-fg">     58</span> )
+<span class="ansi-green-fg">     59</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">lognormal_size_distribution</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     60</span>     lognormal_pdf_distribution,
+<span class="ansi-green-fg">     61</span>     lognormal_pmf_distribution,
+<span class="ansi-green-fg">     62</span>     lognormal_sample_distribution,
+<span class="ansi-green-fg">     63</span> )
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\particles\properties\settling_velocity.py:8</span>
+<span class="ansi-green-fg">      5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">numpy</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">typing</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> NDArray
+<span class="ansi-green-fg">      7</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">constants</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> STANDARD_GRAVITY
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 8</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">dynamic_viscosity</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">      9</span>     get_dynamic_viscosity,
+<span class="ansi-green-fg">     10</span> )
+<span class="ansi-green-fg">     11</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">mean_free_path</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     12</span>     molecule_mean_free_path,
+<span class="ansi-green-fg">     13</span> )
+<span class="ansi-green-fg">     14</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">particles</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">properties</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">slip_correction_module</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     15</span>     cunningham_slip_correction,
+<span class="ansi-green-fg">     16</span> )
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\gas\__init__.py:15</span>
+<span class="ansi-green-fg">      5</span> <span style="color: rgb(95,135,135)"># pylint: disable=unused-import</span>
+<span class="ansi-green-fg">      6</span> <span style="color: rgb(95,135,135)"># flake8: noqa</span>
+<span class="ansi-green-fg">      7</span> <span style="color: rgb(95,135,135)"># pyright: basic</span>
+<span class="ansi-green-fg">      9</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">vapor_pressure_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     10</span>     ConstantVaporPressureStrategy,
+<span class="ansi-green-fg">     11</span>     AntoineVaporPressureStrategy,
+<span class="ansi-green-fg">     12</span>     ClausiusClapeyronStrategy,
+<span class="ansi-green-fg">     13</span>     WaterBuckStrategy,
+<span class="ansi-green-fg">     14</span> )
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 15</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">vapor_pressure_builders</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">     16</span>     ConstantBuilder,
+<span class="ansi-green-fg">     17</span>     AntoineBuilder,
+<span class="ansi-green-fg">     18</span>     ClausiusClapeyronBuilder,
+<span class="ansi-green-fg">     19</span>     WaterBuckBuilder,
+<span class="ansi-green-fg">     20</span> )
+<span class="ansi-green-fg">     21</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">vapor_pressure_factories</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> VaporPressureFactory
+<span class="ansi-green-fg">     22</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">species</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> GasSpecies
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\next\gas\vapor_pressure_builders.py:5</span>
+<span class="ansi-green-fg">      3</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">typing</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Optional
+<span class="ansi-green-fg">      4</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> <span class="ansi-bold" style="color: rgb(0,0,255)">logging</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 5</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">abc_builder</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> BuilderABC
+<span class="ansi-green-fg">      6</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">next</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">gas</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">vapor_pressure_strategies</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> (
+<span class="ansi-green-fg">      7</span>     AntoineVaporPressureStrategy,
+<span class="ansi-green-fg">      8</span>     ClausiusClapeyronStrategy,
+<span class="ansi-green-fg">      9</span>     WaterBuckStrategy,
+<span class="ansi-green-fg">     10</span>     ConstantVaporPressureStrategy
+<span class="ansi-green-fg">     11</span> )
+<span class="ansi-green-fg">     12</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">particula</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">util</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">input_handling</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> convert_units  <span style="color: rgb(95,135,135)"># type: ignore</span>
+
+<span class="ansi-red-intense-fg ansi-bold">ImportError</span>: cannot import name 'BuilderABC' from partially initialized module 'particula.next.abc_builder' (most likely due to a circular import) (C:\GitHub\particula\particula\next\abc_builder.py)</pre>
 </div>
 </div>
 </div>
@@ -7824,7 +8013,7 @@ from particula.next.dynamics import coagulation</div>
     <span class="s2">"pressure_initial"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s2">"pressure_initial_units"</span><span class="p">:</span> <span class="s2">"mmHg"</span><span class="p">,</span>
 <span class="p">}</span>
-<span class="n">vapor_pressure_strategy</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+<span class="n">vapor_pressure_strategy</span> <span class="o">=</span> <span class="n">gas</span><span class="o">.</span><span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
     <span class="s2">"clausius_clapeyron"</span><span class="p">,</span> <span class="n">parameters_clausius</span>
 <span class="p">)</span>
 
@@ -7835,7 +8024,7 @@ from particula.next.dynamics import coagulation</div>
 
 <span class="n">sat_factor</span> <span class="o">=</span> <span class="mf">0.50</span>  <span class="c1"># 50% of saturation concentration</span>
 <span class="n">glycerol_gas</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">GasSpeciesBuilder</span><span class="p">()</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">GasSpeciesBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">set_molar_mass</span><span class="p">(</span><span class="n">molar_mass_glycerol</span><span class="p">,</span> <span class="s2">"kg/mol"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_vapor_pressure_strategy</span><span class="p">(</span><span class="n">vapor_pressure_strategy</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_concentration</span><span class="p">(</span><span class="n">sat_concentration</span> <span class="o">*</span> <span class="n">sat_factor</span><span class="p">,</span> <span class="s2">"kg/m^3"</span><span class="p">)</span>
@@ -7845,7 +8034,7 @@ from particula.next.dynamics import coagulation</div>
 <span class="p">)</span>
 
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">AtmosphereBuilder</span><span class="p">()</span>
+    <span class="n">gas</span><span class="o">.</span><span class="n">AtmosphereBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">glycerol_gas</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_temperature</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">temperature_units</span><span class="o">=</span><span class="s2">"degC"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_pressure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pressure_units</span><span class="o">=</span><span class="s2">"atm"</span><span class="p">)</span>
@@ -7890,7 +8079,7 @@ parameters_clausius = {
     "pressure_initial": 1,
     "pressure_initial_units": "mmHg",
 }
-vapor_pressure_strategy = VaporPressureFactory().get_strategy(
+vapor_pressure_strategy = gas.VaporPressureFactory().get_strategy(
     "clausius_clapeyron", parameters_clausius
 )
 
@@ -7901,7 +8090,7 @@ print(f"Saturation concentration: {sat_concentration:.2e} kg/m^3")
 
 sat_factor = 0.50  # 50% of saturation concentration
 glycerol_gas = (
-    GasSpeciesBuilder()
+    gas.GasSpeciesBuilder()
     .set_molar_mass(molar_mass_glycerol, "kg/mol")
     .set_vapor_pressure_strategy(vapor_pressure_strategy)
     .set_concentration(sat_concentration * sat_factor, "kg/m^3")
@@ -7911,7 +8100,7 @@ glycerol_gas = (
 )
 
 atmosphere = (
-    AtmosphereBuilder()
+    gas.AtmosphereBuilder()
     .add_species(glycerol_gas)
     .set_temperature(25, temperature_units="degC")
     .set_pressure(1, pressure_units="atm")

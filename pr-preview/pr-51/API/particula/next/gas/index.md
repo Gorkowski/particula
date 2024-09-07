@@ -7,7 +7,7 @@
 ## Modules
 
 - [Atmosphere](./atmosphere.md)
-- [AtmosphereBuilder](./atmosphere_builder.md)
+- [Atmosphere Builders](./atmosphere_builders.md)
 - [Properties](properties/index.md)
 - [Species](./species.md)
 - [Species Builders](./species_builders.md)
