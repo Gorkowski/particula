@@ -75,7 +75,8 @@ def particle_resolved_coagulation_step(
     NDArray[np.float64],
     NDArray[np.float64],
     NDArray[np.float64],
-    NDArray[np.int64]]:
+    NDArray[np.int64]
+]:
     """
     Perform a single step of particle coagulation, updating particle radii
     based on coagulation events.

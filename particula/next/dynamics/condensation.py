@@ -632,5 +632,4 @@ class CondensationIsothermal(CondensationStrategy):
         gas_species.add_concentration(
             added_concentration=-mass_transfer.sum(axis=0)
         )
-
         return particle, gas_species
