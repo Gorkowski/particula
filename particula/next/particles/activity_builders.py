@@ -9,6 +9,8 @@ from numpy.typing import NDArray
 import numpy as np
 from particula.next.abc_builder import (
     BuilderABC,
+)
+from particula.next.builder_mixin import (
     BuilderMolarMassMixin,
     BuilderDensityMixin,
 )

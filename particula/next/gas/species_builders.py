@@ -10,8 +10,10 @@ from numpy.typing import NDArray
 import numpy as np
 from particula.next.abc_builder import (
     BuilderABC,
+)
+from particula.next.builder_mixin import (
     BuilderMolarMassMixin,
-    BuilderConcentrationMixin,
+    BuilderConcentrationMixin
 )
 from particula.next.gas.species import GasSpecies
 from particula.next.gas.vapor_pressure_strategies import (

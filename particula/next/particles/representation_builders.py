@@ -19,6 +19,8 @@ from particula.util.input_handling import convert_units
 
 from particula.next.abc_builder import (
     BuilderABC,
+)
+from particula.next.builder_mixin import (
     BuilderDistributionStrategyMixin,
     BuilderSurfaceStrategyMixin,
     BuilderActivityStrategyMixin,
