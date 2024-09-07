@@ -11,6 +11,7 @@ from particula.next.particles.distribution_strategies import (
 )
 
 
+# pylint: disable=too-many-instance-attributes
 class ParticleRepresentation:
     """Everything needed to represent a particle or a collection of particles.
 
