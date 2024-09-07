@@ -6,21 +6,19 @@
 
 ## Coagulation
 
-[Show source in particle_process.py:113](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L113)
+[Show source in particle_process.py:90](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L90)
 
 A class for running a coagulation strategy.
 
 #### Arguments
 
------
-- coagulation_strategy (CoagulationStrategy): The coagulation strategy to
-use.
+- `coagulation_strategy` *CoagulationStrategy* - The coagulation strategy to
+    use.
 
 #### Methods
 
---------
-- `-` *execute* - Execute the coagulation process.
-- `-` *rate* - Calculate the rate of coagulation for each particle.
+- `execute` - Execute the coagulation process.
+- `rate` - Calculate the rate of coagulation for each particle.
 
 #### Signature
 
@@ -36,19 +34,18 @@ class Coagulation(Runnable):
 
 ### Coagulation().execute
 
-[Show source in particle_process.py:131](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L131)
+[Show source in particle_process.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L106)
 
 Execute the coagulation process.
 
 #### Arguments
 
------
-- aerosol (Aerosol): The aerosol instance to modify.
+- `aerosol` *Aerosol* - The aerosol instance to modify.
 
 #### Signature
 
 ```python
-def execute(self, aerosol: Aerosol, time_step: float) -> Aerosol: ...
+def execute(self, aerosol: Aerosol, time_step: float, sub_steps: int = 1) -> Aerosol: ...
 ```
 
 #### See also
@@ -57,19 +54,17 @@ def execute(self, aerosol: Aerosol, time_step: float) -> Aerosol: ...
 
 ### Coagulation().rate
 
-[Show source in particle_process.py:151](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L151)
+[Show source in particle_process.py:134](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L134)
 
 Calculate the rate of coagulation for each particle.
 
 #### Arguments
 
------
-- aerosol (Aerosol): The aerosol instance to modify.
+- `aerosol` *Aerosol* - The aerosol instance to modify.
 
 #### Returns
 
---------
-- `-` *np.ndarray* - An array of coagulation rates for each particle.
+- `np.ndarray` - An array of coagulation rates for each particle.
 
 #### Signature
 
@@ -91,16 +86,14 @@ A class for running a mass condensation process.
 
 #### Arguments
 
------
-- condensation_strategy (CondensationStrategy): The condensation strategy
-to use.
+- `condensation_strategy` *CondensationStrategy* - The condensation strategy
+    to use.
 
 #### Methods
 
---------
-- `-` *execute* - Execute the mass condensation process.
-- `-` *rate* - Calculate the rate of mass condensation for each particle due to
-each condensable gas species.
+- `execute` - Execute the mass condensation process.
+- `rate` - Calculate the rate of mass condensation for each particle due to
+    each condensable gas species.
 
 #### Signature
 
@@ -116,19 +109,18 @@ class MassCondensation(Runnable):
 
 ### MassCondensation().execute
 
-[Show source in particle_process.py:34](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L34)
+[Show source in particle_process.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L32)
 
 Execute the mass condensation process.
 
 #### Arguments
 
------
-- aerosol (Aerosol): The aerosol instance to modify.
+- `aerosol` *Aerosol* - The aerosol instance to modify.
 
 #### Signature
 
 ```python
-def execute(self, aerosol: Aerosol, time_step: float) -> Aerosol: ...
+def execute(self, aerosol: Aerosol, time_step: float, sub_steps: int = 1) -> Aerosol: ...
 ```
 
 #### See also
@@ -137,20 +129,18 @@ def execute(self, aerosol: Aerosol, time_step: float) -> Aerosol: ...
 
 ### MassCondensation().rate
 
-[Show source in particle_process.py:76](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L76)
+[Show source in particle_process.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L59)
 
 Calculate the rate of mass condensation for each particle due to
 each condensable gas species.
 
 #### Arguments
 
------
-- aerosol (Aerosol): The aerosol instance to modify.
+- `aerosol` *Aerosol* - The aerosol instance to modify.
 
 #### Returns
 
---------
-- `-` *np.ndarray* - An array of condensation rates for each particle.
+- `np.ndarray` - An array of condensation rates for each particle.
 
 #### Signature
 

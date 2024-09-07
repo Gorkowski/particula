@@ -39,7 +39,9 @@ def particle_resolved_coagulation_step(
     volume: float,
     time_step: float,
     random_generator: np.random.Generator,
-) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
+) -> Tuple[
+    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.int64]
+]: ...
 ```
 
 

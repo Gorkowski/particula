@@ -6,20 +6,19 @@
 
 ## CoagulationStrategy
 
-[Show source in strategy.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L20)
+[Show source in strategy.py:26](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L26)
 
 Abstract class for defining a coagulation strategy. This class defines the
 methods that must be implemented by any coagulation strategy.
 
 #### Methods
 
---------
-- kernel (abstractmethod): Calculate the coagulation kernel.
-- `-` *loss_rate* - Calculate the coagulation loss rate.
-- `-` *gain_rate* - Calculate the coagulation gain rate.
-- `-` *net_rate* - Calculate the net coagulation rate.
-- `-` *diffusive_knudsen* - Calculate the diffusive Knudsen number.
-- `-` *coulomb_potential_ratio* - Calculate the Coulomb potential ratio.
+- `kernel` - Calculate the coagulation kernel.
+- `loss_rate` - Calculate the coagulation loss rate.
+- `gain_rate` - Calculate the coagulation gain rate.
+- `net_rate` - Calculate the net coagulation rate.
+- `diffusive_knudsen` - Calculate the diffusive Knudsen number.
+- `coulomb_potential_ratio` - Calculate the Coulomb potential ratio.
 
 #### Signature
 
@@ -29,23 +28,21 @@ class CoagulationStrategy(ABC): ...
 
 ### CoagulationStrategy().coulomb_potential_ratio
 
-[Show source in strategy.py:198](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L198)
+[Show source in strategy.py:205](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L205)
 
 Calculate the Coulomb potential ratio based on the particle properties
 and temperature.
 
 #### Arguments
 
------
-- particle (Particle class): The particles for which the Coulomb
-potential ratio is to be calculated.
-- temperature (float): The temperature of the gas phase [K].
+- `particle` - The particles for which the Coulomb
+    potential ratio is to be calculated.
+- `temperature` - The temperature of the gas phase [K].
 
 #### Returns
 
---------
-- `-` *NDArray[np.float64]* - The Coulomb potential ratio for the particle
-[dimensionless].
+The Coulomb potential ratio for the particle
+    [dimensionless].
 
 #### Signature
 
@@ -61,24 +58,22 @@ def coulomb_potential_ratio(
 
 ### CoagulationStrategy().diffusive_knudsen
 
-[Show source in strategy.py:160](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L160)
+[Show source in strategy.py:169](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L169)
 
 Calculate the diffusive Knudsen number based on the particle
 properties, temperature, and pressure.
 
 #### Arguments
 
------
-- particle (Particle class): The particle for which the diffusive
-Knudsen number is to be calculated.
-- temperature (float): The temperature of the gas phase [K].
-- pressure (float): The pressure of the gas phase [Pa].
+- `particle` - The particle for which the diffusive
+    Knudsen number is to be calculated.
+- `temperature` - The temperature of the gas phase [K].
+- `pressure` - The pressure of the gas phase [Pa].
 
 #### Returns
 
---------
-- `-` *NDArray[np.float64]* - The diffusive Knudsen number for the particle
-[dimensionless].
+- `NDArray[np.float64]` - The diffusive Knudsen number for the particle
+    [dimensionless].
 
 #### Signature
 
@@ -94,7 +89,7 @@ def diffusive_knudsen(
 
 ### CoagulationStrategy().dimensionless_kernel
 
-[Show source in strategy.py:35](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L35)
+[Show source in strategy.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L40)
 
 Calculate the dimensionless coagulation kernel based on the particle
 properties interactions,
@@ -102,17 +97,15 @@ diffusive Knudsen number and Coulomb potential
 
 #### Arguments
 
------
-- diffusive_knudsen (NDArray[np.float64]): The diffusive Knudsen number
-for the particle [dimensionless].
-- coulomb_potential_ratio (NDArray[np.float64]): The Coulomb potential
-ratio for the particle [dimensionless].
+- [CoagulationStrategy().diffusive_knudsen](#coagulationstrategydiffusive_knudsen) - The diffusive Knudsen number
+    for the particle [dimensionless].
+- [CoagulationStrategy().coulomb_potential_ratio](#coagulationstrategycoulomb_potential_ratio) - The Coulomb potential
+    ratio for the particle [dimensionless].
 
 #### Returns
 
---------
-- `-` *NDArray[np.float64]* - The dimensionless coagulation kernel for the
-particle [dimensionless].
+The dimensionless coagulation kernel for the particle
+    [dimensionless].
 
 #### Signature
 
@@ -127,24 +120,21 @@ def dimensionless_kernel(
 
 ### CoagulationStrategy().friction_factor
 
-[Show source in strategy.py:222](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L222)
+[Show source in strategy.py:227](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L227)
 
 Calculate the friction factor based on the particle properties,
 temperature, and pressure.
 
 #### Arguments
 
------
-- particle (Particle class): The particle for which the friction factor
-is to be calculated.
-- temperature (float): The temperature of the gas phase [K].
-- pressure (float): The pressure of the gas phase [Pa].
+- `particle` - The particle for which the friction factor
+    is to be calculated.
+- `temperature` - The temperature of the gas phase [K].
+- `pressure` - The pressure of the gas phase [Pa].
 
 #### Returns
 
---------
-- `-` *NDArray[np.float64]* - The friction factor for the particle
-[dimensionless].
+The friction factor for the particle [dimensionless].
 
 #### Signature
 
@@ -160,29 +150,25 @@ def friction_factor(
 
 ### CoagulationStrategy().gain_rate
 
-[Show source in strategy.py:104](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L104)
+[Show source in strategy.py:102](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L102)
 
 Calculate the coagulation gain rate based on the particle radius,
 distribution, and the coagulation kernel.
 
 #### Arguments
 
------
-- particle (Particle class): The particle for which the coagulation
-gain rate is to be calculated.
-- kernel (NDArray[np.float64]): The coagulation kernel.
+- `particle` - The particle for which the coagulation
+    gain rate is to be calculated.
+- [CoagulationStrategy().kernel](#coagulationstrategykernel) - The coagulation kernel.
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float64]]: The coagulation gain rate for the
-particle [kg/s].
+The coagulation gain rate for the particle [kg/s].
 
 #### Notes
 
-------
 May be abstracted to a separate module when different coagulation
-strategies are implemented (super droplet).
+    strategies are implemented (super droplet).
 
 #### Signature
 
@@ -199,23 +185,21 @@ def gain_rate(
 
 ### CoagulationStrategy().kernel
 
-[Show source in strategy.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L59)
+[Show source in strategy.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L62)
 
 Calculate the coagulation kernel based on the particle properties,
 temperature, and pressure.
 
 #### Arguments
 
------
-- particle (Particle class): The particle for which the coagulation
-kernel is to be calculated.
-- temperature (float): The temperature of the gas phase [K].
-- pressure (float): The pressure of the gas phase [Pa].
+- `particle` - The particle for which the coagulation
+    kernel is to be calculated.
+- `temperature` - The temperature of the gas phase [K].
+- `pressure` - The pressure of the gas phase [Pa].
 
 #### Returns
 
---------
-- `-` *NDArray[np.float64]* - The coagulation kernel for the particle [m^3/s].
+The coagulation kernel for the particle [m^3/s].
 
 #### Signature
 
@@ -232,23 +216,20 @@ def kernel(
 
 ### CoagulationStrategy().loss_rate
 
-[Show source in strategy.py:82](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L82)
+[Show source in strategy.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L83)
 
 Calculate the coagulation loss rate based on the particle radius,
 distribution, and the coagulation kernel.
 
 #### Arguments
 
------
-- particle (Particle class): The particle for which the coagulation
-loss rate is to be calculated.
-- kernel (NDArray[np.float64]): The coagulation kernel.
+- `particle` - The particle for which the coagulation
+    loss rate is to be calculated.
+- [CoagulationStrategy().kernel](#coagulationstrategykernel) - The coagulation kernel.
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float64]]: The coagulation loss rate for the
-particle [kg/s].
+The coagulation loss rate for the particle [kg/s].
 
 #### Signature
 
@@ -265,31 +246,65 @@ def loss_rate(
 
 ### CoagulationStrategy().net_rate
 
-[Show source in strategy.py:131](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L131)
+[Show source in strategy.py:125](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L125)
 
 Calculate the net coagulation rate based on the particle radius,
 distribution, and the coagulation kernel.
 
 #### Arguments
 
------
-- particle (Particle class): The particle class for which the
-coagulation net rate is to be calculated.
-- temperature (float): The temperature of the gas phase [K].
-- pressure (float): The pressure of the gas phase [Pa].
+- `particle` - The particle class for which the
+    coagulation net rate is to be calculated.
+- `temperature` - The temperature of the gas phase [K].
+- `pressure` - The pressure of the gas phase [Pa].
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float64]]: The net coagulation rate for the
-particle [kg/s].
+- `Union[float,` *NDArray[np.float64]]* - The net coagulation rate for the
+    particle [kg/s].
 
 #### Signature
 
 ```python
+@abstractmethod
 def net_rate(
     self, particle: ParticleRepresentation, temperature: float, pressure: float
 ) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### CoagulationStrategy().step
+
+[Show source in strategy.py:147](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L147)
+
+Perform a single step of the coagulation process.
+
+#### Arguments
+
+- `particle` - The particle for which the coagulation step
+    is to be performed.
+- `temperature` - The temperature of the gas phase [K].
+- `pressure` - The pressure of the gas phase [Pa].
+- `time_step` - The time step for the coagulation process [s].
+
+#### Returns
+
+- `ParticleRepresentation` - The particle after the coagulation step.
+
+#### Signature
+
+```python
+@abstractmethod
+def step(
+    self,
+    particle: ParticleRepresentation,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> ParticleRepresentation: ...
 ```
 
 #### See also
@@ -300,7 +315,7 @@ def net_rate(
 
 ## ContinuousGeneralPDF
 
-[Show source in strategy.py:421](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L421)
+[Show source in strategy.py:488](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L488)
 
 Continuous PDF coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
@@ -328,7 +343,7 @@ class ContinuousGeneralPDF(CoagulationStrategy):
 
 ### ContinuousGeneralPDF().dimensionless_kernel
 
-[Show source in strategy.py:438](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L438)
+[Show source in strategy.py:505](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L505)
 
 #### Signature
 
@@ -342,7 +357,7 @@ def dimensionless_kernel(
 
 ### ContinuousGeneralPDF().gain_rate
 
-[Show source in strategy.py:495](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L495)
+[Show source in strategy.py:562](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L562)
 
 #### Signature
 
@@ -358,7 +373,7 @@ def gain_rate(
 
 ### ContinuousGeneralPDF().kernel
 
-[Show source in strategy.py:448](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L448)
+[Show source in strategy.py:515](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L515)
 
 #### Signature
 
@@ -374,7 +389,7 @@ def kernel(
 
 ### ContinuousGeneralPDF().loss_rate
 
-[Show source in strategy.py:483](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L483)
+[Show source in strategy.py:550](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L550)
 
 #### Signature
 
@@ -388,11 +403,47 @@ def loss_rate(
 
 - [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
 
+### ContinuousGeneralPDF().net_rate
+
+[Show source in strategy.py:574](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L574)
+
+#### Signature
+
+```python
+def net_rate(
+    self, particle: ParticleRepresentation, temperature: float, pressure: float
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### ContinuousGeneralPDF().step
+
+[Show source in strategy.py:592](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L592)
+
+#### Signature
+
+```python
+def step(
+    self,
+    particle: ParticleRepresentation,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> ParticleRepresentation: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
 
 
 ## DiscreteGeneral
 
-[Show source in strategy.py:329](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L329)
+[Show source in strategy.py:364](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L364)
 
 Discrete general coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class. The kernel
@@ -427,7 +478,7 @@ class DiscreteGeneral(CoagulationStrategy):
 
 ### DiscreteGeneral().dimensionless_kernel
 
-[Show source in strategy.py:352](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L352)
+[Show source in strategy.py:387](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L387)
 
 #### Signature
 
@@ -441,7 +492,7 @@ def dimensionless_kernel(
 
 ### DiscreteGeneral().gain_rate
 
-[Show source in strategy.py:408](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L408)
+[Show source in strategy.py:443](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L443)
 
 #### Signature
 
@@ -457,7 +508,7 @@ def gain_rate(
 
 ### DiscreteGeneral().kernel
 
-[Show source in strategy.py:362](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L362)
+[Show source in strategy.py:397](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L397)
 
 #### Signature
 
@@ -473,7 +524,7 @@ def kernel(
 
 ### DiscreteGeneral().loss_rate
 
-[Show source in strategy.py:397](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L397)
+[Show source in strategy.py:432](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L432)
 
 #### Signature
 
@@ -487,11 +538,47 @@ def loss_rate(
 
 - [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
 
+### DiscreteGeneral().net_rate
+
+[Show source in strategy.py:455](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L455)
+
+#### Signature
+
+```python
+def net_rate(
+    self, particle: ParticleRepresentation, temperature: float, pressure: float
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### DiscreteGeneral().step
+
+[Show source in strategy.py:473](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L473)
+
+#### Signature
+
+```python
+def step(
+    self,
+    particle: ParticleRepresentation,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> ParticleRepresentation: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
 
 
 ## DiscreteSimple
 
-[Show source in strategy.py:267](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L267)
+[Show source in strategy.py:269](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L269)
 
 Discrete Brownian coagulation strategy class. This class implements the
 methods defined in the CoagulationStrategy abstract class.
@@ -516,7 +603,7 @@ class DiscreteSimple(CoagulationStrategy): ...
 
 ### DiscreteSimple().dimensionless_kernel
 
-[Show source in strategy.py:280](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L280)
+[Show source in strategy.py:282](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L282)
 
 #### Signature
 
@@ -530,7 +617,7 @@ def dimensionless_kernel(
 
 ### DiscreteSimple().gain_rate
 
-[Show source in strategy.py:316](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L316)
+[Show source in strategy.py:319](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L319)
 
 #### Signature
 
@@ -546,7 +633,7 @@ def gain_rate(
 
 ### DiscreteSimple().kernel
 
-[Show source in strategy.py:291](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L291)
+[Show source in strategy.py:294](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L294)
 
 #### Signature
 
@@ -562,7 +649,7 @@ def kernel(
 
 ### DiscreteSimple().loss_rate
 
-[Show source in strategy.py:305](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L305)
+[Show source in strategy.py:308](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L308)
 
 #### Signature
 
@@ -570,6 +657,204 @@ def kernel(
 def loss_rate(
     self, particle: ParticleRepresentation, kernel: NDArray[np.float64]
 ) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### DiscreteSimple().net_rate
+
+[Show source in strategy.py:331](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L331)
+
+#### Signature
+
+```python
+def net_rate(
+    self, particle: ParticleRepresentation, temperature: float, pressure: float
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### DiscreteSimple().step
+
+[Show source in strategy.py:349](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L349)
+
+#### Signature
+
+```python
+def step(
+    self,
+    particle: ParticleRepresentation,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> ParticleRepresentation: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+
+
+## ParticleResolved
+
+[Show source in strategy.py:607](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L607)
+
+Particle-resolved coagulation strategy class. This class implements the
+methods defined in the CoagulationStrategy abstract class. The kernel
+strategy is passed as an argument to the class, should use a dimensionless
+kernel representation.
+
+#### Methods
+
+- `kernel` - Calculate the coagulation kernel.
+- `loss_rate` - Not implemented.
+- `gain_rate` - Not implemented.
+- `net_rate` - Not implemented.
+- `step` - Perform a single step of the coagulation process.
+
+#### Signature
+
+```python
+class ParticleResolved(CoagulationStrategy):
+    def __init__(
+        self,
+        kernel_strategy: KernelStrategy,
+        kernel_radius: Optional[NDArray[np.float64]] = None,
+        kernel_bins_number: int = 100,
+    ): ...
+```
+
+#### See also
+
+- [CoagulationStrategy](#coagulationstrategy)
+- [KernelStrategy](./kernel.md#kernelstrategy)
+
+### ParticleResolved().dimensionless_kernel
+
+[Show source in strategy.py:660](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L660)
+
+#### Signature
+
+```python
+def dimensionless_kernel(
+    self,
+    diffusive_knudsen: NDArray[np.float64],
+    coulomb_potential_ratio: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
+```
+
+### ParticleResolved().gain_rate
+
+[Show source in strategy.py:700](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L700)
+
+#### Signature
+
+```python
+def gain_rate(
+    self, particle: ParticleRepresentation, kernel: NDArray[np.float64]
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### ParticleResolved().get_kernel_radius
+
+[Show source in strategy.py:632](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L632)
+
+Get the binning for the kernel radius.
+
+If the kernel radius is not set, it will be calculated based on the
+particle radius.
+
+#### Arguments
+
+- `particle` - The particle for which the kernel radius is to be
+    calculated.
+
+#### Returns
+
+The kernel radius for the particle [m].
+
+#### Signature
+
+```python
+def get_kernel_radius(self, particle: ParticleRepresentation) -> NDArray[np.float64]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### ParticleResolved().kernel
+
+[Show source in strategy.py:673](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L673)
+
+#### Signature
+
+```python
+def kernel(
+    self, particle: ParticleRepresentation, temperature: float, pressure: float
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### ParticleResolved().loss_rate
+
+[Show source in strategy.py:690](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L690)
+
+#### Signature
+
+```python
+def loss_rate(
+    self, particle: ParticleRepresentation, kernel: NDArray[np.float64]
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### ParticleResolved().net_rate
+
+[Show source in strategy.py:710](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L710)
+
+#### Signature
+
+```python
+def net_rate(
+    self, particle: ParticleRepresentation, temperature: float, pressure: float
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](../../particles/representation.md#particlerepresentation)
+
+### ParticleResolved().step
+
+[Show source in strategy.py:721](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L721)
+
+#### Signature
+
+```python
+def step(
+    self,
+    particle: ParticleRepresentation,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> ParticleRepresentation: ...
 ```
 
 #### See also

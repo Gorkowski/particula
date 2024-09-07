@@ -6,7 +6,7 @@
 
 ## CondensationIsothermal
 
-[Show source in condensation.py:295](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L295)
+[Show source in condensation.py:506](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L506)
 
 Condensation strategy for isothermal conditions.
 
@@ -33,7 +33,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation.py:316](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L316)
+[Show source in condensation.py:527](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L527)
 
 #### Signature
 
@@ -53,11 +53,54 @@ def mass_transfer_rate(
 - [GasSpecies](../gas/species.md#gasspecies)
 - [ParticleRepresentation](../particles/representation.md#particlerepresentation)
 
+### CondensationIsothermal().rate
+
+[Show source in condensation.py:573](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L573)
+
+#### Signature
+
+```python
+def rate(
+    self,
+    particle: ParticleRepresentation,
+    gas_species: GasSpecies,
+    temperature: float,
+    pressure: float,
+) -> NDArray[np.float64]: ...
+```
+
+#### See also
+
+- [GasSpecies](../gas/species.md#gasspecies)
+- [ParticleRepresentation](../particles/representation.md#particlerepresentation)
+
+### CondensationIsothermal().step
+
+[Show source in condensation.py:602](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L602)
+
+#### Signature
+
+```python
+def step(
+    self,
+    particle: ParticleRepresentation,
+    gas_species: GasSpecies,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> Tuple[ParticleRepresentation, GasSpecies]: ...
+```
+
+#### See also
+
+- [GasSpecies](../gas/species.md#gasspecies)
+- [ParticleRepresentation](../particles/representation.md#particlerepresentation)
+
 
 
 ## CondensationStrategy
 
-[Show source in condensation.py:125](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L125)
+[Show source in condensation.py:278](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L278)
 
 Condensation strategy abstract class.
 
@@ -90,7 +133,7 @@ class CondensationStrategy(ABC):
 
 ### CondensationStrategy().first_order_mass_transport
 
-[Show source in condensation.py:219](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L219)
+[Show source in condensation.py:372](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L372)
 
 First-order mass transport coefficient per particle.
 
@@ -131,7 +174,7 @@ def first_order_mass_transport(
 
 ### CondensationStrategy().knudsen_number
 
-[Show source in condensation.py:184](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L184)
+[Show source in condensation.py:337](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L337)
 
 The Knudsen number for a particle.
 
@@ -169,7 +212,7 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L263)
+[Show source in condensation.py:416](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L416)
 
 Mass transfer rate for a particle.
 
@@ -213,7 +256,7 @@ def mass_transfer_rate(
 
 ### CondensationStrategy().mean_free_path
 
-[Show source in condensation.py:153](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L153)
+[Show source in condensation.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L306)
 
 Calculate the mean free path of the gas molecules based on the
 temperature, pressure, and dynamic viscosity of the gas.
@@ -241,6 +284,192 @@ Mean Free Path:
 def mean_free_path(
     self, temperature: float, pressure: float, dynamic_viscosity: Optional[float] = None
 ) -> Union[float, NDArray[np.float64]]: ...
+```
+
+### CondensationStrategy().rate
+
+[Show source in condensation.py:446](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L446)
+
+Calculate the rate of mass condensation for each particle due to
+each condensable gas species.
+
+The rate of condensation is determined based on the mass transfer rate,
+which is a function of particle properties, gas species properties,
+temperature, and pressure. This rate is then scaled by the
+concentration of particles in the system to get the overall
+condensation rate for each particle or bin.
+
+#### Arguments
+
+- `particle` *ParticleRepresentation* - Representation of the particles,
+    including properties such as size, concentration, and mass.
+- `gas_species` *GasSpecies* - The species of gas condensing onto the
+    particles.
+- `temperature` *float* - The temperature of the system in Kelvin.
+- `pressure` *float* - The pressure of the system in Pascals.
+
+#### Returns
+
+An array of condensation rates for each particle,
+scaled by
+particle concentration.
+
+#### Signature
+
+```python
+@abstractmethod
+def rate(
+    self,
+    particle: ParticleRepresentation,
+    gas_species: GasSpecies,
+    temperature: float,
+    pressure: float,
+) -> NDArray[np.float64]: ...
+```
+
+#### See also
+
+- [GasSpecies](../gas/species.md#gasspecies)
+- [ParticleRepresentation](../particles/representation.md#particlerepresentation)
+
+### CondensationStrategy().step
+
+[Show source in condensation.py:479](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L479)
+
+Execute the condensation process for a given time step.
+
+#### Arguments
+
+- `particle` *ParticleRepresentation* - The particle to modify.
+- `gas_species` *GasSpecies* - The gas species to condense onto the
+    particle.
+- `temperature` *float* - The temperature of the system in Kelvin.
+- `pressure` *float* - The pressure of the system in Pascals.
+- `time_step` *float* - The time step for the process in seconds.
+
+#### Returns
+
+- `ParticleRepresentation` - The modified particle instance.
+- `GasSpecies` - The modified gas species instance.
+
+#### Signature
+
+```python
+@abstractmethod
+def step(
+    self,
+    particle: ParticleRepresentation,
+    gas_species: GasSpecies,
+    temperature: float,
+    pressure: float,
+    time_step: float,
+) -> Tuple[ParticleRepresentation, GasSpecies]: ...
+```
+
+#### See also
+
+- [GasSpecies](../gas/species.md#gasspecies)
+- [ParticleRepresentation](../particles/representation.md#particlerepresentation)
+
+
+
+## calculate_mass_transfer
+
+[Show source in condensation.py:129](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L129)
+
+Helper function that routes the mass transfer calculation to either the
+single-species or multi-species calculation functions based on the input
+dimensions of gas_mass.
+
+#### Arguments
+
+- `mass_rate` - The rate of mass transfer per particle (kg/s).
+- `time_step` - The time step for the mass transfer calculation (seconds).
+- `gas_mass` - The available mass of gas species (kg).
+- `particle_mass` - The mass of each particle (kg).
+- `particle_concentration` - The concentration of particles (number/m^3).
+
+#### Returns
+
+The amount of mass transferred, accounting for gas and particle
+    limitations.
+
+#### Signature
+
+```python
+def calculate_mass_transfer(
+    mass_rate: NDArray[np.float64],
+    time_step: float,
+    gas_mass: NDArray[np.float64],
+    particle_mass: NDArray[np.float64],
+    particle_concentration: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
+```
+
+
+
+## calculate_mass_transfer_multiple_species
+
+[Show source in condensation.py:214](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L214)
+
+Calculate mass transfer for multiple gas species.
+
+#### Arguments
+
+- `mass_rate` - The rate of mass transfer per particle for each gas species
+    (kg/s).
+- `time_step` - The time step for the mass transfer calculation (seconds).
+- `gas_mass` - The available mass of each gas species (kg).
+- `particle_mass` - The mass of each particle for each gas species (kg).
+- `particle_concentration` - The concentration of particles for each gas
+    species (number/m^3).
+
+#### Returns
+
+The amount of mass transferred for multiple gas species.
+
+#### Signature
+
+```python
+def calculate_mass_transfer_multiple_species(
+    mass_rate: NDArray[np.float64],
+    time_step: float,
+    gas_mass: NDArray[np.float64],
+    particle_mass: NDArray[np.float64],
+    particle_concentration: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
+```
+
+
+
+## calculate_mass_transfer_single_species
+
+[Show source in condensation.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L170)
+
+Calculate mass transfer for a single gas species (m=1).
+
+#### Arguments
+
+- `mass_rate` - The rate of mass transfer per particle (number*kg/s).
+- `time_step` - The time step for the mass transfer calculation (seconds).
+- `gas_mass` - The available mass of gas species (kg).
+- `particle_mass` - The mass of each particle (kg).
+- `particle_concentration` - The concentration of particles (number/m^3).
+
+#### Returns
+
+The amount of mass transferred for a single gas species.
+
+#### Signature
+
+```python
+def calculate_mass_transfer_single_species(
+    mass_rate: NDArray[np.float64],
+    time_step: float,
+    gas_mass: NDArray[np.float64],
+    particle_mass: NDArray[np.float64],
+    particle_concentration: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
 ```
 
 
@@ -287,7 +516,7 @@ def first_order_mass_transport_k(
 
 ## mass_transfer_rate
 
-[Show source in condensation.py:88](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L88)
+[Show source in condensation.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L93)
 
 Calculate the mass transfer rate for a particle.
 

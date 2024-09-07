@@ -26,7 +26,7 @@ class Runnable(ABC): ...
 
 ### Runnable().__or__
 
-[Show source in runnable.py:36](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L36)
+[Show source in runnable.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L45)
 
 Chain this process with another process using the | operator.
 
@@ -44,14 +44,17 @@ Execute the process and modify the aerosol instance.
 
 #### Arguments
 
-- aerosol (Aerosol): The aerosol instance to modify.
-- time_step (float): The time step for the process in seconds.
+- `aerosol` *Aerosol* - The aerosol instance to modify.
+- `time_step` *float* - The time step for the process in seconds.
+- `sub_steps` *int* - The number of sub-steps to use for the process,
+    default is 1. Which means the full time step is used. A value
+    of 2 would mean the time step is divided into two sub-steps.
 
 #### Signature
 
 ```python
 @abstractmethod
-def execute(self, aerosol: Aerosol, time_step: float) -> Aerosol: ...
+def execute(self, aerosol: Aerosol, time_step: float, sub_steps: int = 1) -> Aerosol: ...
 ```
 
 #### See also
@@ -83,7 +86,7 @@ def rate(self, aerosol: Aerosol) -> Any: ...
 
 ## RunnableSequence
 
-[Show source in runnable.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L45)
+[Show source in runnable.py:54](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L54)
 
 A sequence of processes to be executed in order.
 
@@ -106,7 +109,7 @@ class RunnableSequence:
 
 ### RunnableSequence().__or__
 
-[Show source in runnable.py:70](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L70)
+[Show source in runnable.py:79](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L79)
 
 Add a runnable to the sequence using the | operator.
 
@@ -122,7 +125,7 @@ def __or__(self, process: Runnable): ...
 
 ### RunnableSequence().add_process
 
-[Show source in runnable.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L59)
+[Show source in runnable.py:68](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L68)
 
 Add a process to the sequence.
 
@@ -138,7 +141,7 @@ def add_process(self, process: Runnable): ...
 
 ### RunnableSequence().execute
 
-[Show source in runnable.py:63](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L63)
+[Show source in runnable.py:72](https://github.com/Gorkowski/particula/blob/main/particula/next/runnable.py#L72)
 
 Execute the sequence of runnables on an aerosol instance.
 
