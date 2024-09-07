@@ -2570,11 +2570,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../species_builder/" class="md-nav__link">
+      <a href="../species_builders/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Species Builder
+    Species Builders
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../species_factories/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Species Factories
   </span>
   
 
@@ -2808,10 +2829,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_13_7_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_13_7_10" >
         
           
-          <label class="md-nav__link" for="__nav_2_2_13_7_9" id="__nav_2_2_13_7_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_2_13_7_10" id="__nav_2_2_13_7_10_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -2822,8 +2843,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_13_7_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2_13_7_9">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_13_7_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_13_7_10">
             <span class="md-nav__icon md-icon"></span>
             Properties
           </label>
@@ -4751,6 +4772,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../Discussions/Particle_maps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../Discussions/dynamic_viscosity/" class="md-nav__link">
         
   
@@ -6171,11 +6213,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Tutorials/Dynamics/Coagulation/Behavioral/Particle_Resolved_Pattern/" class="md-nav__link">
+      <a href="../../../../../Tutorials/Dynamics/Coagulation/Behavioral/Coagulation_Particle_Resolved_Pattern/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Particle Resolved Pattern
+    Coagulation Particle Resolved Pattern
   </span>
   
 
@@ -7462,16 +7504,11 @@ builder, dependent on the chosen strategy type.<ul>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L68">Show source in vapor_pressure_factories.py:68</a></p>
 <p>Returns the mapping of strategy types to builder instances.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<ul>
-<li><code>Dict[str,</code> <em>Any]</em> - A dictionary mapping strategy types to builder
-    instances.<ul>
-<li><code>constant</code> - ConstantBuilder</li>
-<li><code>antoine</code> - AntoineBuilder</li>
-<li><code>clausius_clapeyron</code> - ClausiusClapeyronBuilder</li>
-<li><code>water_buck</code> - WaterBuckBuilder</li>
-</ul>
-</li>
-</ul>
+<p>A dictionary mapping strategy types to builder instances.
+    - <code>-</code> <em>constant</em> - ConstantBuilder
+    - <code>-</code> <em>antoine</em> - AntoineBuilder
+    - <code>-</code> <em>clausius_clapeyron</em> - ClausiusClapeyronBuilder
+    - <code>-</code> <em>water_buck</em> - WaterBuckBuilder</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_builders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span>
 </code></pre></div>

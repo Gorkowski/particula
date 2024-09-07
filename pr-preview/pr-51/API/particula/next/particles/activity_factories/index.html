@@ -2568,11 +2568,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../../gas/species_builder/" class="md-nav__link">
+      <a href="../../gas/species_builders/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Species Builder
+    Species Builders
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gas/species_factories/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Species Factories
   </span>
   
 
@@ -2664,10 +2685,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_13_7_9" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_13_7_10" >
         
           
-          <label class="md-nav__link" for="__nav_2_2_13_7_9" id="__nav_2_2_13_7_9_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_2_13_7_10" id="__nav_2_2_13_7_10_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -2678,8 +2699,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_13_7_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2_13_7_9">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_13_7_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_13_7_10">
             <span class="md-nav__icon md-icon"></span>
             Properties
           </label>
@@ -4751,6 +4772,27 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../Discussions/Particle_maps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../Discussions/dynamic_viscosity/" class="md-nav__link">
         
   
@@ -6171,11 +6213,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../Tutorials/Dynamics/Coagulation/Behavioral/Particle_Resolved_Pattern/" class="md-nav__link">
+      <a href="../../../../../Tutorials/Dynamics/Coagulation/Behavioral/Coagulation_Particle_Resolved_Pattern/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Particle Resolved Pattern
+    Coagulation Particle Resolved Pattern
   </span>
   
 
@@ -7395,7 +7437,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py">particula.next.particles.activity_factories</a> module.</p>
 </blockquote>
 <h2 id="activityfactory">ActivityFactory<a class="headerlink" href="#activityfactory" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L19">Show source in activity_factories.py:19</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L20">Show source in activity_factories.py:20</a></p>
 <p>Factory class to create activity strategy builders</p>
 <p>Factory class to create activity strategy builders for calculating
 activity and partial pressure of species in a mixture of liquids.</p>
@@ -7435,25 +7477,25 @@ water_index</li>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ActivityFactory</span><span class="p">(</span>
     <span class="n">StrategyFactory</span><span class="p">[</span>
         <span class="n">Union</span><span class="p">[</span>
-            <span class="n">IdealActivityMassBuilder</span><span class="p">,</span>
-            <span class="n">IdealActivityMolarBuilder</span><span class="p">,</span>
-            <span class="n">KappaParameterActivityBuilder</span><span class="p">,</span>
+            <span class="n">ActivityIdealMassBuilder</span><span class="p">,</span>
+            <span class="n">ActivityIdealMolarBuilder</span><span class="p">,</span>
+            <span class="n">ActivityKappaParameterBuilder</span><span class="p">,</span>
         <span class="p">],</span>
-        <span class="n">Union</span><span class="p">[</span><span class="n">IdealActivityMass</span><span class="p">,</span> <span class="n">IdealActivityMolar</span><span class="p">,</span> <span class="n">KappaParameterActivity</span><span class="p">],</span>
+        <span class="n">Union</span><span class="p">[</span><span class="n">ActivityIdealMass</span><span class="p">,</span> <span class="n">ActivityIdealMolar</span><span class="p">,</span> <span class="n">ActivityKappaParameter</span><span class="p">],</span>
     <span class="p">]</span>
 <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h4 id="see-also">See also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h4>
 <ul>
-<li><a href="../activity_builders/#idealactivitymassbuilder">IdealActivityMassBuilder</a></li>
-<li><a href="../activity_strategies/#idealactivitymass">IdealActivityMass</a></li>
-<li><a href="../activity_builders/#idealactivitymolarbuilder">IdealActivityMolarBuilder</a></li>
-<li><a href="../activity_strategies/#idealactivitymolar">IdealActivityMolar</a></li>
-<li><a href="../activity_builders/#kappaparameteractivitybuilder">KappaParameterActivityBuilder</a></li>
-<li><a href="../activity_strategies/#kappaparameteractivity">KappaParameterActivity</a></li>
+<li><a href="../activity_builders/#activityidealmassbuilder">ActivityIdealMassBuilder</a></li>
+<li><a href="../activity_strategies/#activityidealmass">ActivityIdealMass</a></li>
+<li><a href="../activity_builders/#activityidealmolarbuilder">ActivityIdealMolarBuilder</a></li>
+<li><a href="../activity_strategies/#activityidealmolar">ActivityIdealMolar</a></li>
+<li><a href="../activity_builders/#activitykappaparameterbuilder">ActivityKappaParameterBuilder</a></li>
+<li><a href="../activity_strategies/#activitykappaparameter">ActivityKappaParameter</a></li>
 </ul>
 <h3 id="activityfactoryget_builders">ActivityFactory().get_builders<a class="headerlink" href="#activityfactoryget_builders" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L63">Show source in activity_factories.py:63</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L61">Show source in activity_factories.py:61</a></p>
 <p>Returns the mapping of strategy types to builder instances.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
 <ul>
