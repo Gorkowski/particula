@@ -6,7 +6,7 @@
 
 ## SurfaceStrategyMassBuilder
 
-[Show source in surface_builders.py:60](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L60)
+[Show source in surface_builders.py:65](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L65)
 
 Builder class for SurfaceStrategyMass objects.
 
@@ -32,12 +32,12 @@ class SurfaceStrategyMassBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderSurfaceTensionMixin](../abc_builder.md#buildersurfacetensionmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderSurfaceTensionMixin](../builder_mixin.md#buildersurfacetensionmixin)
 
 ### SurfaceStrategyMassBuilder().build
 
-[Show source in surface_builders.py:83](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L83)
+[Show source in surface_builders.py:88](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L88)
 
 Validate and return the SurfaceStrategyMass object.
 
@@ -59,7 +59,7 @@ def build(self) -> SurfaceStrategyMass: ...
 
 ## SurfaceStrategyMolarBuilder
 
-[Show source in surface_builders.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L19)
+[Show source in surface_builders.py:24](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L24)
 
 Builder class for SurfaceStrategyMolar objects.
 
@@ -87,13 +87,13 @@ class SurfaceStrategyMolarBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderMolarMassMixin](../abc_builder.md#buildermolarmassmixin)
-- [BuilderSurfaceTensionMixin](../abc_builder.md#buildersurfacetensionmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderMolarMassMixin](../builder_mixin.md#buildermolarmassmixin)
+- [BuilderSurfaceTensionMixin](../builder_mixin.md#buildersurfacetensionmixin)
 
 ### SurfaceStrategyMolarBuilder().build
 
-[Show source in surface_builders.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L46)
+[Show source in surface_builders.py:51](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L51)
 
 Validate and return the SurfaceStrategyMass object.
 
@@ -115,7 +115,7 @@ def build(self) -> SurfaceStrategyMolar: ...
 
 ## SurfaceStrategyVolumeBuilder
 
-[Show source in surface_builders.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L96)
+[Show source in surface_builders.py:101](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L101)
 
 Builder class for SurfaceStrategyVolume objects.
 
@@ -141,12 +141,12 @@ class SurfaceStrategyVolumeBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderSurfaceTensionMixin](../abc_builder.md#buildersurfacetensionmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderSurfaceTensionMixin](../builder_mixin.md#buildersurfacetensionmixin)
 
 ### SurfaceStrategyVolumeBuilder().build
 
-[Show source in surface_builders.py:119](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L119)
+[Show source in surface_builders.py:124](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/surface_builders.py#L124)
 
 Validate and return the SurfaceStrategyVolume object.
 

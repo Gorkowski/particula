@@ -82,12 +82,11 @@ Returns the mapping of strategy types to builder instances.
 
 #### Returns
 
-- `Dict[str,` *Any]* - A dictionary mapping strategy types to builder
-    instances.
-    - `constant` - ConstantBuilder
-    - `antoine` - AntoineBuilder
-    - `clausius_clapeyron` - ClausiusClapeyronBuilder
-    - `water_buck` - WaterBuckBuilder
+A dictionary mapping strategy types to builder instances.
+    - `-` *constant* - ConstantBuilder
+    - `-` *antoine* - AntoineBuilder
+    - `-` *clausius_clapeyron* - ClausiusClapeyronBuilder
+    - `-` *water_buck* - WaterBuckBuilder
 
 #### Signature
 

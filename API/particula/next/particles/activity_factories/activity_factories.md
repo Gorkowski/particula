@@ -6,7 +6,7 @@
 
 ## ActivityFactory
 
-[Show source in activity_factories.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L19)
+[Show source in activity_factories.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L20)
 
 Factory class to create activity strategy builders
 
@@ -50,27 +50,27 @@ for the specified strategy type.
 class ActivityFactory(
     StrategyFactory[
         Union[
-            IdealActivityMassBuilder,
-            IdealActivityMolarBuilder,
-            KappaParameterActivityBuilder,
+            ActivityIdealMassBuilder,
+            ActivityIdealMolarBuilder,
+            ActivityKappaParameterBuilder,
         ],
-        Union[IdealActivityMass, IdealActivityMolar, KappaParameterActivity],
+        Union[ActivityIdealMass, ActivityIdealMolar, ActivityKappaParameter],
     ]
 ): ...
 ```
 
 #### See also
 
-- [IdealActivityMassBuilder](./activity_builders.md#idealactivitymassbuilder)
-- [IdealActivityMass](./activity_strategies.md#idealactivitymass)
-- [IdealActivityMolarBuilder](./activity_builders.md#idealactivitymolarbuilder)
-- [IdealActivityMolar](./activity_strategies.md#idealactivitymolar)
-- [KappaParameterActivityBuilder](./activity_builders.md#kappaparameteractivitybuilder)
-- [KappaParameterActivity](./activity_strategies.md#kappaparameteractivity)
+- [ActivityIdealMassBuilder](./activity_builders.md#activityidealmassbuilder)
+- [ActivityIdealMass](./activity_strategies.md#activityidealmass)
+- [ActivityIdealMolarBuilder](./activity_builders.md#activityidealmolarbuilder)
+- [ActivityIdealMolar](./activity_strategies.md#activityidealmolar)
+- [ActivityKappaParameterBuilder](./activity_builders.md#activitykappaparameterbuilder)
+- [ActivityKappaParameter](./activity_strategies.md#activitykappaparameter)
 
 ### ActivityFactory().get_builders
 
-[Show source in activity_factories.py:63](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L63)
+[Show source in activity_factories.py:61](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_factories.py#L61)
 
 Returns the mapping of strategy types to builder instances.
 

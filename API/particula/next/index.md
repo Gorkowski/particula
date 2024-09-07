@@ -9,6 +9,7 @@
 - [Abc Builder](./abc_builder.md)
 - [Abc Factory](./abc_factory.md)
 - [Aerosol](./aerosol.md)
+- [Builder Mixin](./builder_mixin.md)
 - [Dynamics](dynamics/index.md)
 - [Gas](gas/index.md)
 - [Particles](particles/index.md)

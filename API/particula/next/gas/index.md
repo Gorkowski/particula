@@ -7,10 +7,11 @@
 ## Modules
 
 - [Atmosphere](./atmosphere.md)
-- [AtmosphereBuilder](./atmosphere_builder.md)
+- [Atmosphere Builders](./atmosphere_builders.md)
 - [Properties](properties/index.md)
 - [Species](./species.md)
-- [Species Builder](./species_builder.md)
+- [Species Builders](./species_builders.md)
+- [Species Factories](./species_factories.md)
 - [Vapor Pressure Builders](./vapor_pressure_builders.md)
 - [Vapor Pressure Factories](./vapor_pressure_factories.md)
 - [Vapor Pressure Strategies](./vapor_pressure_strategies.md)

@@ -4,9 +4,9 @@
 
 > Auto-generated documentation for [particula.next.particles.activity_builders](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py) module.
 
-## IdealActivityMassBuilder
+## ActivityIdealMassBuilder
 
-[Show source in activity_builders.py:25](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L25)
+[Show source in activity_builders.py:27](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L27)
 
 Builder class for IdealActivityMass objects. No additional parameters.
 
@@ -17,7 +17,7 @@ Builder class for IdealActivityMass objects. No additional parameters.
 #### Signature
 
 ```python
-class IdealActivityMassBuilder(BuilderABC):
+class ActivityIdealMassBuilder(BuilderABC):
     def __init__(self): ...
 ```
 
@@ -25,9 +25,9 @@ class IdealActivityMassBuilder(BuilderABC):
 
 - [BuilderABC](../abc_builder.md#builderabc)
 
-### IdealActivityMassBuilder().build
+### ActivityIdealMassBuilder().build
 
-[Show source in activity_builders.py:36](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L36)
+[Show source in activity_builders.py:38](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L38)
 
 Validate and return the IdealActivityMass object.
 
@@ -47,9 +47,9 @@ def build(self) -> ActivityStrategy: ...
 
 
 
-## IdealActivityMolarBuilder
+## ActivityIdealMolarBuilder
 
-[Show source in activity_builders.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L45)
+[Show source in activity_builders.py:47](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L47)
 
 Builder class for IdealActivityMolar objects.
 
@@ -64,18 +64,18 @@ Builder class for IdealActivityMolar objects.
 #### Signature
 
 ```python
-class IdealActivityMolarBuilder(BuilderABC, BuilderMolarMassMixin):
+class ActivityIdealMolarBuilder(BuilderABC, BuilderMolarMassMixin):
     def __init__(self): ...
 ```
 
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderMolarMassMixin](../abc_builder.md#buildermolarmassmixin)
+- [BuilderMolarMassMixin](../builder_mixin.md#buildermolarmassmixin)
 
-### IdealActivityMolarBuilder().build
+### ActivityIdealMolarBuilder().build
 
-[Show source in activity_builders.py:61](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L61)
+[Show source in activity_builders.py:63](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L63)
 
 Validate and return the IdealActivityMolar object.
 
@@ -95,9 +95,9 @@ def build(self) -> ActivityStrategy: ...
 
 
 
-## KappaParameterActivityBuilder
+## ActivityKappaParameterBuilder
 
-[Show source in activity_builders.py:71](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L71)
+[Show source in activity_builders.py:73](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L73)
 
 Builder class for KappaParameterActivity objects.
 
@@ -116,7 +116,7 @@ Builder class for KappaParameterActivity objects.
 #### Signature
 
 ```python
-class KappaParameterActivityBuilder(
+class ActivityKappaParameterBuilder(
     BuilderABC, BuilderDensityMixin, BuilderMolarMassMixin
 ):
     def __init__(self): ...
@@ -125,12 +125,12 @@ class KappaParameterActivityBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderMolarMassMixin](../abc_builder.md#buildermolarmassmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderMolarMassMixin](../builder_mixin.md#buildermolarmassmixin)
 
-### KappaParameterActivityBuilder().build
+### ActivityKappaParameterBuilder().build
 
-[Show source in activity_builders.py:134](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L134)
+[Show source in activity_builders.py:136](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L136)
 
 Validate and return the KappaParameterActivity object.
 
@@ -148,9 +148,9 @@ def build(self) -> ActivityStrategy: ...
 
 - [ActivityStrategy](./activity_strategies.md#activitystrategy)
 
-### KappaParameterActivityBuilder().set_kappa
+### ActivityKappaParameterBuilder().set_kappa
 
-[Show source in activity_builders.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L96)
+[Show source in activity_builders.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L98)
 
 Set the kappa parameter for the activity calculation.
 
@@ -167,9 +167,9 @@ def set_kappa(
 ): ...
 ```
 
-### KappaParameterActivityBuilder().set_water_index
+### ActivityKappaParameterBuilder().set_water_index
 
-[Show source in activity_builders.py:116](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L116)
+[Show source in activity_builders.py:118](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_builders.py#L118)
 
 Set the array index of the species.
 

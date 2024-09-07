@@ -4,31 +4,93 @@
 
 > Auto-generated documentation for [particula.next.particles.representation_builders](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py) module.
 
-## LimitedRadiusParticleBuilder
+## ParticleMassRepresentationBuilder
 
-[Show source in representation_builders.py:173](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L173)
+[Show source in representation_builders.py:56](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L56)
 
-General ParticleRepresentation objects with radius-based bins.
+General ParticleRepresentation objects with mass-based bins.
 
-#### Methods
+#### Attributes
 
-- `set_mode(mode,mode_units)` - Set the mode(s) of the distribution.
-    Default is np.array([100e-9, 1e-6]) meters.
-set_geometric_standard_deviation(
-    geometric_standard_deviation,geometric_standard_deviation_units):
-        Set the geometric standard deviation(s) of the distribution.
-        Default is np.array([1.2, 1.4]).
-set_number_concentration(
-    - `number_concentration,number_concentration_units)` - Set the
-        number concentration of the distribution. Default is
-        np.array([1e4*1e6, 1e3*1e6]) particles/m**3.
-- `set_radius_bins(radius_bins,radius_bins_units)` - Set the radius bins
-    of the distribution. Default is np.logspace(-9, -4, 250), meters.
+- `distribution_strategy` - Set the DistributionStrategy.
+- `activity_strategy` - Set the ActivityStrategy.
+- `surface_strategy` - Set the SurfaceStrategy.
+- `mass` - Set the mass of the particles. Default units are 'kg'.
+- `density` - Set the density of the particles. Default units are 'kg/m^3'.
+- `concentration` - Set the concentration of the particles.
+    Default units are '1/m^3'.
+- `charge` - Set the number of charges.
 
 #### Signature
 
 ```python
-class LimitedRadiusParticleBuilder(
+class ParticleMassRepresentationBuilder(
+    BuilderABC,
+    BuilderDistributionStrategyMixin,
+    BuilderActivityStrategyMixin,
+    BuilderSurfaceStrategyMixin,
+    BuilderMassMixin,
+    BuilderDensityMixin,
+    BuilderConcentrationMixin,
+    BuilderChargeMixin,
+):
+    def __init__(self): ...
+```
+
+#### See also
+
+- [BuilderABC](../abc_builder.md#builderabc)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderConcentrationMixin](../builder_mixin.md#builderconcentrationmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderMassMixin](../builder_mixin.md#buildermassmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
+
+### ParticleMassRepresentationBuilder().build
+
+[Show source in representation_builders.py:98](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L98)
+
+Validate and return the ParticleRepresentation object.
+
+#### Returns
+
+The validated ParticleRepresentation object.
+
+#### Signature
+
+```python
+def build(self) -> ParticleRepresentation: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](./representation.md#particlerepresentation)
+
+
+
+## ParticleRadiusRepresentationBuilder
+
+[Show source in representation_builders.py:116](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L116)
+
+General ParticleRepresentation objects with radius-based bins.
+
+#### Attributes
+
+- `distribution_strategy` - Set the DistributionStrategy.
+- `activity_strategy` - Set the ActivityStrategy.
+- `surface_strategy` - Set the SurfaceStrategy.
+- `radius` - Set the radius of the particles. Default units are 'm'.
+- `density` - Set the density of the particles. Default units are 'kg/m**3'.
+- `concentration` - Set the concentration of the particles. Default units
+    are '1/m^3'.
+- `charge` - Set the number of charges.
+
+#### Signature
+
+```python
+class ParticleRadiusRepresentationBuilder(
     BuilderABC,
     BuilderDistributionStrategyMixin,
     BuilderActivityStrategyMixin,
@@ -44,17 +106,85 @@ class LimitedRadiusParticleBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderRadiusMixin](../abc_builder.md#builderradiusmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderConcentrationMixin](../builder_mixin.md#builderconcentrationmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderRadiusMixin](../builder_mixin.md#builderradiusmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
 
-### LimitedRadiusParticleBuilder().build
+### ParticleRadiusRepresentationBuilder().build
 
-[Show source in representation_builders.py:322](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L322)
+[Show source in representation_builders.py:158](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L158)
+
+Validate and return the ParticleRepresentation object.
+
+#### Returns
+
+The validated ParticleRepresentation object.
+
+#### Signature
+
+```python
+def build(self) -> ParticleRepresentation: ...
+```
+
+#### See also
+
+- [ParticleRepresentation](./representation.md#particlerepresentation)
+
+
+
+## PresetParticleRadiusBuilder
+
+[Show source in representation_builders.py:176](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L176)
+
+General ParticleRepresentation objects with radius-based bins.
+
+#### Attributes
+
+- `mode` - Set the mode(s) of the distribution.
+    Default is np.array([100e-9, 1e-6]) meters.
+- `geometric_standard_deviation` - Set the geometric standard deviation(s)
+    of the distribution. Default is np.array([1.2, 1.4]).
+- `number_concentration` - Set the number concentration of the distribution.
+    Default is np.array([1e4x1e6, 1e3x1e6]) particles/m^3.
+- `radius_bins` - Set the radius bins of the distribution. Default is
+    np.logspace(-9, -4, 250), meters.
+
+#### Signature
+
+```python
+class PresetParticleRadiusBuilder(
+    BuilderABC,
+    BuilderDistributionStrategyMixin,
+    BuilderActivityStrategyMixin,
+    BuilderSurfaceStrategyMixin,
+    BuilderRadiusMixin,
+    BuilderDensityMixin,
+    BuilderConcentrationMixin,
+    BuilderChargeMixin,
+    BuilderLognormalMixin,
+):
+    def __init__(self): ...
+```
+
+#### See also
+
+- [BuilderABC](../abc_builder.md#builderabc)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderConcentrationMixin](../builder_mixin.md#builderconcentrationmixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderLognormalMixin](../builder_mixin.md#builderlognormalmixin)
+- [BuilderRadiusMixin](../builder_mixin.md#builderradiusmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
+
+### PresetParticleRadiusBuilder().build
+
+[Show source in representation_builders.py:266](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L266)
 
 Validate and return the ParticleRepresentation object.
 
@@ -75,9 +205,9 @@ def build(self) -> ParticleRepresentation: ...
 
 - [ParticleRepresentation](./representation.md#particlerepresentation)
 
-### LimitedRadiusParticleBuilder().set_distribution_type
+### PresetParticleRadiusBuilder().set_distribution_type
 
-[Show source in representation_builders.py:303](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L303)
+[Show source in representation_builders.py:247](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L247)
 
 Set the distribution type for the particle representation.
 
@@ -93,67 +223,9 @@ def set_distribution_type(
 ): ...
 ```
 
-### LimitedRadiusParticleBuilder().set_geometric_standard_deviation
+### PresetParticleRadiusBuilder().set_radius_bins
 
-[Show source in representation_builders.py:247](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L247)
-
-Set the geometric standard deviation for the distribution
-
-#### Arguments
-
-- `geometric_standard_deviation` - The geometric standard deviation for
-the radius.
-
-#### Signature
-
-```python
-def set_geometric_standard_deviation(
-    self,
-    geometric_standard_deviation: NDArray[np.float64],
-    geometric_standard_deviation_units: Optional[str] = None,
-): ...
-```
-
-### LimitedRadiusParticleBuilder().set_mode
-
-[Show source in representation_builders.py:229](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L229)
-
-Set the modes for distribution
-
-#### Arguments
-
-- `modes` - The modes for the radius.
-- `modes_units` - The units for the modes.
-
-#### Signature
-
-```python
-def set_mode(self, mode: NDArray[np.float64], mode_units: str = "m"): ...
-```
-
-### LimitedRadiusParticleBuilder().set_number_concentration
-
-[Show source in representation_builders.py:267](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L267)
-
-Set the number concentration for the distribution
-
-#### Arguments
-
-- `number_concentration` - The number concentration for the radius.
-
-#### Signature
-
-```python
-def set_number_concentration(
-    self,
-    number_concentration: NDArray[np.float64],
-    number_concentration_units: str = "1/m^3",
-): ...
-```
-
-### LimitedRadiusParticleBuilder().set_radius_bins
-
-[Show source in representation_builders.py:286](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L286)
+[Show source in representation_builders.py:230](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L230)
 
 Set the radius bins for the distribution
 
@@ -171,37 +243,48 @@ def set_radius_bins(
 
 
 
-## MassParticleRepresentationBuilder
+## PresetResolvedParticleMassBuilder
 
-[Show source in representation_builders.py:49](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L49)
+[Show source in representation_builders.py:380](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L380)
 
-General ParticleRepresentation objects with mass-based bins.
+General ParticleRepresentation objects with particle resolved masses.
 
-#### Methods
+This class has preset values for all the attributes, and allows you to
+override them as needed. This is useful when you want to quickly
+particle representation object with resolved masses.
 
-- `set_distribution_strategy(strategy)` - Set the DistributionStrategy.
-- `set_activity_strategy(strategy)` - Set the ActivityStrategy.
-- `set_surface_strategy(strategy)` - Set the SurfaceStrategy.
-- `set_mass(mass,` *mass_units)* - Set the mass of the particles. Default
+#### Attributes
+
+- `distribution_strategy` - Set the DistributionStrategy.
+- `activity_strategy` - Set the ActivityStrategy.
+- `surface_strategy` - Set the SurfaceStrategy.
+- `mass` - Set the mass of the particles Default
     units are 'kg'.
-- `set_density(density,` *density_units)* - Set the density of the particles.
-    Default units are 'kg/m**3'.
-- `set_concentration(concentration,` *concentration_units)* - Set the
-    concentration of the particles. Default units are '/m**3'.
-- `set_charge(charge,` *charge_units)* - Set the number of charges.
+- `density` - Set the density of the particles.
+    Default units are 'kg/m^3'.
+- `charge` - Set the number of charges.
+- `mode` - Set the mode(s) of the distribution.
+    Default is np.array([100e-9, 1e-6]) meters.
+- `geometric_standard_deviation` - Set the geometric standard
+    deviation(s) of the distribution. Default is np.array([1.2, 1.4]).
+- `number_concentration` - Set the number concentration of the
+    distribution. Default is np.array([1e4 1e6, 1e3 1e6])
+    particles/m^3.
+- `particle_resolved_count` - Set the number of resolved particles.
 
 #### Signature
 
 ```python
-class MassParticleRepresentationBuilder(
+class PresetResolvedParticleMassBuilder(
     BuilderABC,
     BuilderDistributionStrategyMixin,
     BuilderActivityStrategyMixin,
     BuilderSurfaceStrategyMixin,
-    BuilderMassMixin,
     BuilderDensityMixin,
-    BuilderConcentrationMixin,
     BuilderChargeMixin,
+    BuilderLognormalMixin,
+    BuilderVolumeMixin,
+    BuilderParticleResolvedCountMixin,
 ):
     def __init__(self): ...
 ```
@@ -209,19 +292,23 @@ class MassParticleRepresentationBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderMassMixin](../abc_builder.md#buildermassmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderLognormalMixin](../builder_mixin.md#builderlognormalmixin)
+- [BuilderParticleResolvedCountMixin](../builder_mixin.md#builderparticleresolvedcountmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
+- [BuilderVolumeMixin](../builder_mixin.md#buildervolumemixin)
 
-### MassParticleRepresentationBuilder().build
+### PresetResolvedParticleMassBuilder().build
 
-[Show source in representation_builders.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L93)
+[Show source in representation_builders.py:448](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L448)
 
 Validate and return the ParticleRepresentation object.
+
+This will build a distribution of particles with a lognormal size
+distribution, before returning the ParticleRepresentation object.
 
 #### Returns
 
@@ -239,37 +326,39 @@ def build(self) -> ParticleRepresentation: ...
 
 
 
-## RadiusParticleRepresentationBuilder
+## ResolvedParticleMassRepresentationBuilder
 
-[Show source in representation_builders.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L111)
+[Show source in representation_builders.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L306)
 
-General ParticleRepresentation objects with radius-based bins.
+Builder class for constructing ParticleRepresentation objects with
+resolved masses.
 
-#### Methods
+This class allows you to set various attributes for a particle
+representation, such as distribution strategy, mass, density, charge,
+volume, and more. These attributes are validated and there a no presets.
 
-- `set_distribution_strategy(strategy)` - Set the DistributionStrategy.
-- `set_activity_strategy(strategy)` - Set the ActivityStrategy.
-- `set_surface_strategy(strategy)` - Set the SurfaceStrategy.
-- `set_radius(radius,` *radius_units)* - Set the radius of the particles.
-    Default units are 'm'.
-- `set_density(density,` *density_units)* - Set the density of the particles.
-    Default units are 'kg/m**3'.
-- `set_concentration(concentration,` *concentration_units)* - Set the
-    concentration of the particles. Default units are '1/m^3'.
-- `set_charge(charge,` *charge_units)* - Set the number of charges.
+#### Attributes
+
+- `distribution_strategy` - Set the distribution strategy for particles.
+- `activity_strategy` - Set the activity strategy for the particles.
+- `surface_strategy` - Set the surface strategy for the particles.
+- `mass` - Set the particle mass. Defaults to 'kg'.
+- `density` - Set the particle density. Defaults to 'kg/m^3'.
+- `charge` - Set the particle charge.
+- `volume` - Set the particle volume. Defaults to 'm^3'.
 
 #### Signature
 
 ```python
-class RadiusParticleRepresentationBuilder(
+class ResolvedParticleMassRepresentationBuilder(
     BuilderABC,
     BuilderDistributionStrategyMixin,
     BuilderActivityStrategyMixin,
     BuilderSurfaceStrategyMixin,
-    BuilderRadiusMixin,
     BuilderDensityMixin,
-    BuilderConcentrationMixin,
     BuilderChargeMixin,
+    BuilderVolumeMixin,
+    BuilderMassMixin,
 ):
     def __init__(self): ...
 ```
@@ -277,23 +366,26 @@ class RadiusParticleRepresentationBuilder(
 #### See also
 
 - [BuilderABC](../abc_builder.md#builderabc)
-- [BuilderActivityStrategyMixin](../abc_builder.md#builderactivitystrategymixin)
-- [BuilderChargeMixin](../abc_builder.md#builderchargemixin)
-- [BuilderConcentrationMixin](../abc_builder.md#builderconcentrationmixin)
-- [BuilderDensityMixin](../abc_builder.md#builderdensitymixin)
-- [BuilderDistributionStrategyMixin](../abc_builder.md#builderdistributionstrategymixin)
-- [BuilderRadiusMixin](../abc_builder.md#builderradiusmixin)
-- [BuilderSurfaceStrategyMixin](../abc_builder.md#buildersurfacestrategymixin)
+- [BuilderActivityStrategyMixin](../builder_mixin.md#builderactivitystrategymixin)
+- [BuilderChargeMixin](../builder_mixin.md#builderchargemixin)
+- [BuilderDensityMixin](../builder_mixin.md#builderdensitymixin)
+- [BuilderDistributionStrategyMixin](../builder_mixin.md#builderdistributionstrategymixin)
+- [BuilderMassMixin](../builder_mixin.md#buildermassmixin)
+- [BuilderSurfaceStrategyMixin](../builder_mixin.md#buildersurfacestrategymixin)
+- [BuilderVolumeMixin](../builder_mixin.md#buildervolumemixin)
 
-### RadiusParticleRepresentationBuilder().build
+### ResolvedParticleMassRepresentationBuilder().build
 
-[Show source in representation_builders.py:155](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L155)
+[Show source in representation_builders.py:353](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L353)
 
-Validate and return the ParticleRepresentation object.
+Validate and return a ParticleRepresentation object.
+
+This method validates all the required attributes and builds a particle
+representation with a lognormal size distribution.
 
 #### Returns
 
-The validated ParticleRepresentation object.
+- `ParticleRepresentation` - A validated particle representation object.
 
 #### Signature
 

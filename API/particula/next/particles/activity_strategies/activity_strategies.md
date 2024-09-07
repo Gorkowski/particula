@@ -4,86 +4,9 @@
 
 > Auto-generated documentation for [particula.next.particles.activity_strategies](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py) module.
 
-## ActivityStrategy
+## ActivityIdealMass
 
-[Show source in activity_strategies.py:19](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L19)
-
-Abstract base class for vapor pressure strategies.
-
-This interface is used for implementing strategies based on particle
-activity calculations, specifically for calculating vapor pressures.
-
-#### Methods
-
-- `activity` - Calculate the activity of a species.
-- `partial_pressure` - Calculate the partial pressure of a species in
-    the mixture.
-
-#### Signature
-
-```python
-class ActivityStrategy(ABC): ...
-```
-
-### ActivityStrategy().activity
-
-[Show source in activity_strategies.py:31](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L31)
-
-Calculate the activity of a species based on its mass concentration.
-
-#### Arguments
-
-- `mass_concentration` - Concentration of the species [kg/m^3]
-
-#### Returns
-
-float or NDArray[float]: Activity of the particle, unitless.
-
-#### Signature
-
-```python
-@abstractmethod
-def activity(
-    self, mass_concentration: Union[float, NDArray[np.float64]]
-) -> Union[float, NDArray[np.float64]]: ...
-```
-
-### ActivityStrategy().partial_pressure
-
-[Show source in activity_strategies.py:44](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L44)
-
-Calculate the vapor pressure of species in the particle phase.
-
-This method computes the vapor pressure based on the species' activity
-considering its pure vapor pressure and mass concentration.
-
-#### Arguments
-
-- `pure_vapor_pressure` - Pure vapor pressure of the species in
-pascals (Pa).
-- `mass_concentration` - Concentration of the species in kilograms per
-cubic meter (kg/m^3).
-
-#### Returns
-
-- `Union[float,` *NDArray[np.float64]]* - Vapor pressure of the particle
-in pascals (Pa).
-
-#### Signature
-
-```python
-def partial_pressure(
-    self,
-    pure_vapor_pressure: Union[float, NDArray[np.float64]],
-    mass_concentration: Union[float, NDArray[np.float64]],
-) -> Union[float, NDArray[np.float64]]: ...
-```
-
-
-
-## IdealActivityMass
-
-[Show source in activity_strategies.py:110](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L110)
+[Show source in activity_strategies.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L111)
 
 Calculate ideal activity based on mass fractions.
 
@@ -97,16 +20,16 @@ Mass Based [Raoult's Law](https://en.wikipedia.org/wiki/Raoult%27s_law)
 #### Signature
 
 ```python
-class IdealActivityMass(ActivityStrategy): ...
+class ActivityIdealMass(ActivityStrategy): ...
 ```
 
 #### See also
 
 - [ActivityStrategy](#activitystrategy)
 
-### IdealActivityMass().activity
+### ActivityIdealMass().activity
 
-[Show source in activity_strategies.py:120](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L120)
+[Show source in activity_strategies.py:121](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L121)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -130,9 +53,9 @@ def activity(
 
 
 
-## IdealActivityMolar
+## ActivityIdealMolar
 
-[Show source in activity_strategies.py:68](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L68)
+[Show source in activity_strategies.py:69](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L69)
 
 Calculate ideal activity based on mole fractions.
 
@@ -152,7 +75,7 @@ Molar [Raoult's Law](https://en.wikipedia.org/wiki/Raoult%27s_law)
 #### Signature
 
 ```python
-class IdealActivityMolar(ActivityStrategy):
+class ActivityIdealMolar(ActivityStrategy):
     def __init__(self, molar_mass: Union[float, NDArray[np.float64]] = 0.0): ...
 ```
 
@@ -160,9 +83,9 @@ class IdealActivityMolar(ActivityStrategy):
 
 - [ActivityStrategy](#activitystrategy)
 
-### IdealActivityMolar().activity
+### ActivityIdealMolar().activity
 
-[Show source in activity_strategies.py:86](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L86)
+[Show source in activity_strategies.py:87](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L87)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -186,9 +109,9 @@ def activity(
 
 
 
-## KappaParameterActivity
+## ActivityKappaParameter
 
-[Show source in activity_strategies.py:141](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L141)
+[Show source in activity_strategies.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L142)
 
 Non-ideal activity strategy based on the kappa hygroscopic parameter.
 
@@ -209,7 +132,7 @@ species' mass concentration along with the hygroscopic parameter.
 #### Signature
 
 ```python
-class KappaParameterActivity(ActivityStrategy):
+class ActivityKappaParameter(ActivityStrategy):
     def __init__(
         self,
         kappa: NDArray[np.float64] = np.array([0.0], dtype=np.float64),
@@ -223,9 +146,9 @@ class KappaParameterActivity(ActivityStrategy):
 
 - [ActivityStrategy](#activitystrategy)
 
-### KappaParameterActivity().activity
+### ActivityKappaParameter().activity
 
-[Show source in activity_strategies.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L170)
+[Show source in activity_strategies.py:171](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L171)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -251,5 +174,82 @@ activity. Atmospheric Chemistry and Physics, 7(8), 1961-1971.
 ```python
 def activity(
     self, mass_concentration: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+
+
+## ActivityStrategy
+
+[Show source in activity_strategies.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L20)
+
+Abstract base class for vapor pressure strategies.
+
+This interface is used for implementing strategies based on particle
+activity calculations, specifically for calculating vapor pressures.
+
+#### Methods
+
+- `activity` - Calculate the activity of a species.
+- `partial_pressure` - Calculate the partial pressure of a species in
+    the mixture.
+
+#### Signature
+
+```python
+class ActivityStrategy(ABC): ...
+```
+
+### ActivityStrategy().activity
+
+[Show source in activity_strategies.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L32)
+
+Calculate the activity of a species based on its mass concentration.
+
+#### Arguments
+
+- `mass_concentration` - Concentration of the species [kg/m^3]
+
+#### Returns
+
+float or NDArray[float]: Activity of the particle, unitless.
+
+#### Signature
+
+```python
+@abstractmethod
+def activity(
+    self, mass_concentration: Union[float, NDArray[np.float64]]
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+### ActivityStrategy().partial_pressure
+
+[Show source in activity_strategies.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L45)
+
+Calculate the vapor pressure of species in the particle phase.
+
+This method computes the vapor pressure based on the species' activity
+considering its pure vapor pressure and mass concentration.
+
+#### Arguments
+
+- `pure_vapor_pressure` - Pure vapor pressure of the species in
+pascals (Pa).
+- `mass_concentration` - Concentration of the species in kilograms per
+cubic meter (kg/m^3).
+
+#### Returns
+
+- `Union[float,` *NDArray[np.float64]]* - Vapor pressure of the particle
+in pascals (Pa).
+
+#### Signature
+
+```python
+def partial_pressure(
+    self,
+    pure_vapor_pressure: Union[float, NDArray[np.float64]],
+    mass_concentration: Union[float, NDArray[np.float64]],
 ) -> Union[float, NDArray[np.float64]]: ...
 ```
