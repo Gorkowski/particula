@@ -55,7 +55,7 @@ def mass_transfer_rate(
 
 ### CondensationIsothermal().rate
 
-[Show source in condensation.py:562](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L562)
+[Show source in condensation.py:561](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L561)
 
 #### Signature
 
@@ -76,7 +76,7 @@ def rate(
 
 ### CondensationIsothermal().step
 
-[Show source in condensation.py:590](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L590)
+[Show source in condensation.py:589](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation.py#L589)
 
 Execute the condensation process for a given time step.
 
