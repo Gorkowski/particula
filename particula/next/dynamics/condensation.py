@@ -43,7 +43,7 @@ import numpy as np
 # particula imports
 from particula.next.particles.representation import ParticleRepresentation
 from particula.next.gas.species import GasSpecies
-from particula.constants import GAS_CONSTANT
+from particula.constants import GAS_CONSTANT  # type: ignore
 from particula.next.particles.properties import (
     calculate_knudsen_number,
     vapor_transition_correction,
@@ -83,8 +83,11 @@ def first_order_mass_transport_k(
         and vapor_transition.dtype == np.float64
         and vapor_transition.ndim == 2
        ):  # extent radius
-        radius = radius[:, np.newaxis]
-    return 4 * np.pi * radius * diffusion_coefficient * vapor_transition
+        radius = radius[:, np.newaxis]  # type: ignore
+    return (
+        4 * np.pi * radius
+        * diffusion_coefficient * vapor_transition
+    )  # type: ignore
 
 
 def mass_transfer_rate(
@@ -230,7 +233,8 @@ def calculate_mass_transfer_multiple_species(
     Returns:
         The amount of mass transferred for multiple gas species.
     """
-    # Step 1: Calculate the total mass to change (considering particle concentration)
+    # Step 1: Calculate the total mass to change
+    # (considering particle concentration)
     mass_to_change = (
         mass_rate * time_step * particle_concentration[:, np.newaxis]
     )
@@ -238,7 +242,8 @@ def calculate_mass_transfer_multiple_species(
     # Step 2: Total requested mass for each gas species (sum over particles)
     total_requested_mass = mass_to_change.sum(axis=0)
 
-    # Step 3: Create scaling factors where requested mass exceeds available gas mass
+    # Step 3: Create scaling factors where requested mass exceeds available
+    # gas mass
     scaling_factors = np.ones_like(mass_to_change)
     scaling_mask = total_requested_mass > gas_mass
 
@@ -258,7 +263,8 @@ def calculate_mass_transfer_multiple_species(
         mass_to_change, -particle_mass * particle_concentration[:, np.newaxis]
     )
 
-    # Step 7: Determine the final transferable mass (condensation or evaporation)
+    # Step 7: Determine the final transferable mass
+    # (condensation or evaporation)
     transferable_mass = np.where(
         mass_to_change > 0,  # Condensation scenario
         condensible_mass_transfer,  # Limited by gas mass
@@ -469,6 +475,7 @@ class CondensationStrategy(ABC):
             particle concentration.
         """
 
+    # pylint: disable=too-many-arguments
     @abstractmethod
     def step(
         self,
@@ -482,11 +489,16 @@ class CondensationStrategy(ABC):
         Execute the condensation process for a given time step.
 
         Args:
-            aerosol (Aerosol): The aerosol instance to modify.
+            particle (ParticleRepresentation): The particle to modify.
+            gas_species (GasSpecies): The gas species to condense onto the
+                particle.
+            temperature (float): The temperature of the system in Kelvin.
+            pressure (float): The pressure of the system in Pascals.
             time_step (float): The time step for the process in seconds.
 
         Returns:
-            Aerosol: The modified aerosol instance.
+            ParticleRepresentation: The modified particle instance.
+            GasSpecies: The modified gas species instance.
         """
 
 
@@ -575,7 +587,7 @@ class CondensationIsothermal(CondensationStrategy):
         )
 
         # Step 2: Reshape the particle concentration if necessary
-        if mass_rate.ndim == 2:  # Multiple gas species
+        if mass_rate.ndim == 2:  # Multiple gas species  # type: ignore
             concentration = particle.concentration[:, np.newaxis]
         else:
             concentration = particle.concentration
@@ -586,6 +598,7 @@ class CondensationIsothermal(CondensationStrategy):
 
         return rates
 
+    # pylint: disable=too-many-arguments
     def step(
         self,
         particle: ParticleRepresentation,
@@ -594,21 +607,6 @@ class CondensationIsothermal(CondensationStrategy):
         pressure: float,
         time_step: float,
     ) -> Tuple[ParticleRepresentation, GasSpecies]:
-        """
-        Execute the condensation process for a given time step.
-
-        Args:
-            particle (ParticleRepresentation): The particle to modify.
-            gas_species (GasSpecies): The gas species to condense onto the
-                particle.
-            temperature (float): The temperature of the system in Kelvin.
-            pressure (float): The pressure of the system in Pascals.
-            time_step (float): The time step for the process in seconds.
-
-        Returns:
-            ParticleRepresentation: The modified particle instance.
-            GasSpecies: The modified gas species instance.
-        """
 
         # Calculate the mass transfer rate
         mass_rate = self.mass_transfer_rate(
