@@ -2,6 +2,8 @@
 
 ## Particle Maps
 
+
+
 ``` mermaid
 mindmap
   root((*particula.next.particles*))
