@@ -11,17 +11,18 @@ from particula.next.particles.representation_builders import (
 )
 from particula.next.particles.representation import ParticleRepresentation
 from particula.next.particles.distribution_strategies import (
-    RadiiBasedMovingBin, ParticleResolvedSpeciatedMass,
+    RadiiBasedMovingBin,
+    ParticleResolvedSpeciatedMass,
 )
 from particula.next.particles.surface_strategies import SurfaceStrategyVolume
-from particula.next.particles.activity_strategies import IdealActivityMass
+from particula.next.particles.activity_strategies import ActivityIdealMass
 
 
 def test_mass_particle_representation_builder():
     """Test MassParticleRepresentationBuilder Builds."""
     builder = ParticleMassRepresentationBuilder()
     builder.set_distribution_strategy(RadiiBasedMovingBin())
-    builder.set_activity_strategy(IdealActivityMass())
+    builder.set_activity_strategy(ActivityIdealMass())
     builder.set_surface_strategy(SurfaceStrategyVolume())
     builder.set_mass(np.array([1.0, 2.0, 3.0]))
     builder.set_density(np.array([1.0, 2.0, 3.0]))
@@ -35,7 +36,7 @@ def test_radius_particle_representation_builder():
     """Test RadiusParticleRepresentationBuilder Builds."""
     builder = ParticleRadiusRepresentationBuilder()
     builder.set_distribution_strategy(RadiiBasedMovingBin())
-    builder.set_activity_strategy(IdealActivityMass())
+    builder.set_activity_strategy(ActivityIdealMass())
     builder.set_surface_strategy(SurfaceStrategyVolume())
     builder.set_radius(np.array([1.0, 2.0, 3.0]))
     builder.set_density(np.array([1.0, 2.0, 3.0]))
@@ -65,7 +66,7 @@ def test_resolved_mass_particle_representation_builder():
     """Test ResolvedMassParticleRepresentationBuilder Builds."""
     builder = ResolvedParticleMassRepresentationBuilder()
     builder.set_distribution_strategy(ParticleResolvedSpeciatedMass())
-    builder.set_activity_strategy(IdealActivityMass())
+    builder.set_activity_strategy(ActivityIdealMass())
     builder.set_surface_strategy(SurfaceStrategyVolume())
     builder.set_mass(np.array([1.0, 2.0, 3.0]))
     builder.set_density(np.array([1.0, 2.0, 3.0]))

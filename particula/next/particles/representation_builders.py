@@ -36,7 +36,7 @@ from particula.next.particles.distribution_strategies import (
     ParticleResolvedSpeciatedMass,
 )
 from particula.next.particles.activity_strategies import (
-    IdealActivityMass,
+    ActivityIdealMass,
 )
 from particula.next.particles.surface_strategies import (
     SurfaceStrategyVolume,
@@ -217,7 +217,7 @@ class PresetParticleRadiusBuilder(
         self.number_concentration = np.array([1e4 * 1e6, 1e3 * 1e6])
         self.radius_bins = np.logspace(-9, -4, 250)
         self.set_distribution_strategy(RadiiBasedMovingBin())
-        self.set_activity_strategy(IdealActivityMass())
+        self.set_activity_strategy(ActivityIdealMass())
         self.set_surface_strategy(
             SurfaceStrategyVolume(surface_tension=0.072, density=1000)
         )
@@ -435,7 +435,7 @@ class PresetResolvedParticleMassBuilder(
         self.number_concentration = np.array([1e4 * 1e6, 1e3 * 1e6])
         self.particle_resolved_count = int(10_000)
         self.set_distribution_strategy(ParticleResolvedSpeciatedMass())
-        self.set_activity_strategy(IdealActivityMass())
+        self.set_activity_strategy(ActivityIdealMass())
         self.set_surface_strategy(
             SurfaceStrategyVolume(surface_tension=0.072, density=1000)
         )
@@ -463,9 +463,7 @@ class PresetResolvedParticleMassBuilder(
         resolved_masses = np.float64(
             4 / 3 * np.pi * resolved_radii**3 * self.density  # type: ignore
         )
-        number_concentration = np.ones_like(
-            resolved_masses, dtype=np.float64
-        )
+        number_concentration = np.ones_like(resolved_masses, dtype=np.float64)
 
         self.pre_build_check()
         return ParticleRepresentation(
