@@ -14,17 +14,8 @@ it would be harder to trace the inheritance chain.
 # pylint: disable=too-few-public-methods
 
 from abc import ABC, abstractmethod
-from typing import Any, Optional, Union
+from typing import Any, Optional
 import logging
-from numpy.typing import NDArray
-import numpy as np
-
-from particula.util.input_handling import convert_units  # type: ignore
-from particula.next.particles.surface_strategies import SurfaceStrategy
-from particula.next.particles.activity_strategies import ActivityStrategy
-from particula.next.particles.distribution_strategies import (
-    DistributionStrategy,
-)
 
 logger = logging.getLogger("particula")
 
