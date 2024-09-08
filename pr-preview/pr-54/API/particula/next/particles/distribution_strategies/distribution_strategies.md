@@ -14,6 +14,7 @@ particle representations.
 
 #### Methods
 
+- `get_name` - Returns the type of the distribution strategy.
 - `get_mass` - Calculates the mass of particles.
 - `get_radius` - Calculates the radius of particles.
 - `get_total_mass` - Calculates the total mass of particles.
@@ -27,7 +28,7 @@ class DistributionStrategy(ABC): ...
 
 ### DistributionStrategy().add_mass
 
-[Show source in distribution_strategies.py:73](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L73)
+[Show source in distribution_strategies.py:78](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L78)
 
 Adds mass to the distribution of particles.
 
@@ -59,7 +60,7 @@ def add_mass(
 
 ### DistributionStrategy().collide_pairs
 
-[Show source in distribution_strategies.py:95](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L95)
+[Show source in distribution_strategies.py:100](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L100)
 
 Collides index pairs.
 
@@ -91,7 +92,7 @@ def collide_pairs(
 
 ### DistributionStrategy().get_mass
 
-[Show source in distribution_strategies.py:26](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L26)
+[Show source in distribution_strategies.py:31](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L31)
 
 Calculates the mass of the particles.
 
@@ -113,9 +114,21 @@ def get_mass(
 ) -> NDArray[np.float64]: ...
 ```
 
+### DistributionStrategy().get_name
+
+[Show source in distribution_strategies.py:27](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L27)
+
+Return the type of the distribution strategy.
+
+#### Signature
+
+```python
+def get_name(self) -> str: ...
+```
+
 ### DistributionStrategy().get_radius
 
-[Show source in distribution_strategies.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L40)
+[Show source in distribution_strategies.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L45)
 
 Calculates the radius of the particles.
 
@@ -139,7 +152,7 @@ def get_radius(
 
 ### DistributionStrategy().get_total_mass
 
-[Show source in distribution_strategies.py:54](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L54)
+[Show source in distribution_strategies.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L59)
 
 Calculates the total mass of particles.
 
@@ -170,7 +183,7 @@ def get_total_mass(
 
 ## MassBasedMovingBin
 
-[Show source in distribution_strategies.py:118](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L118)
+[Show source in distribution_strategies.py:123](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L123)
 
 A strategy for particles represented by their mass distribution.
 
@@ -190,7 +203,7 @@ class MassBasedMovingBin(DistributionStrategy): ...
 
 ### MassBasedMovingBin().add_mass
 
-[Show source in distribution_strategies.py:150](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L150)
+[Show source in distribution_strategies.py:155](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L155)
 
 #### Signature
 
@@ -206,7 +219,7 @@ def add_mass(
 
 ### MassBasedMovingBin().collide_pairs
 
-[Show source in distribution_strategies.py:160](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L160)
+[Show source in distribution_strategies.py:165](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L165)
 
 #### Signature
 
@@ -222,7 +235,7 @@ def collide_pairs(
 
 ### MassBasedMovingBin().get_mass
 
-[Show source in distribution_strategies.py:126](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L126)
+[Show source in distribution_strategies.py:131](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L131)
 
 #### Signature
 
@@ -234,7 +247,7 @@ def get_mass(
 
 ### MassBasedMovingBin().get_radius
 
-[Show source in distribution_strategies.py:132](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L132)
+[Show source in distribution_strategies.py:137](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L137)
 
 #### Signature
 
@@ -246,7 +259,7 @@ def get_radius(
 
 ### MassBasedMovingBin().get_total_mass
 
-[Show source in distribution_strategies.py:140](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L140)
+[Show source in distribution_strategies.py:145](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L145)
 
 #### Signature
 
@@ -263,7 +276,7 @@ def get_total_mass(
 
 ## ParticleResolvedSpeciatedMass
 
-[Show source in distribution_strategies.py:316](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L316)
+[Show source in distribution_strategies.py:321](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L321)
 
 Strategy for resolved particles via speciated mass.
 
@@ -285,7 +298,7 @@ class ParticleResolvedSpeciatedMass(DistributionStrategy): ...
 
 ### ParticleResolvedSpeciatedMass().add_mass
 
-[Show source in distribution_strategies.py:355](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L355)
+[Show source in distribution_strategies.py:360](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L360)
 
 #### Signature
 
@@ -301,7 +314,7 @@ def add_mass(
 
 ### ParticleResolvedSpeciatedMass().collide_pairs
 
-[Show source in distribution_strategies.py:374](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L374)
+[Show source in distribution_strategies.py:379](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L379)
 
 #### Signature
 
@@ -317,7 +330,7 @@ def collide_pairs(
 
 ### ParticleResolvedSpeciatedMass().get_mass
 
-[Show source in distribution_strategies.py:326](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L326)
+[Show source in distribution_strategies.py:331](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L331)
 
 #### Signature
 
@@ -329,7 +342,7 @@ def get_mass(
 
 ### ParticleResolvedSpeciatedMass().get_radius
 
-[Show source in distribution_strategies.py:334](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L334)
+[Show source in distribution_strategies.py:339](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L339)
 
 #### Signature
 
@@ -341,7 +354,7 @@ def get_radius(
 
 ### ParticleResolvedSpeciatedMass().get_total_mass
 
-[Show source in distribution_strategies.py:344](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L344)
+[Show source in distribution_strategies.py:349](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L349)
 
 #### Signature
 
@@ -358,7 +371,7 @@ def get_total_mass(
 
 ## RadiiBasedMovingBin
 
-[Show source in distribution_strategies.py:175](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L175)
+[Show source in distribution_strategies.py:180](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L180)
 
 A strategy for particles represented by their radius.
 
@@ -377,7 +390,7 @@ class RadiiBasedMovingBin(DistributionStrategy): ...
 
 ### RadiiBasedMovingBin().add_mass
 
-[Show source in distribution_strategies.py:207](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L207)
+[Show source in distribution_strategies.py:212](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L212)
 
 #### Signature
 
@@ -393,7 +406,7 @@ def add_mass(
 
 ### RadiiBasedMovingBin().collide_pairs
 
-[Show source in distribution_strategies.py:227](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L227)
+[Show source in distribution_strategies.py:232](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L232)
 
 #### Signature
 
@@ -409,7 +422,7 @@ def collide_pairs(
 
 ### RadiiBasedMovingBin().get_mass
 
-[Show source in distribution_strategies.py:182](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L182)
+[Show source in distribution_strategies.py:187](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L187)
 
 #### Signature
 
@@ -421,7 +434,7 @@ def get_mass(
 
 ### RadiiBasedMovingBin().get_radius
 
-[Show source in distribution_strategies.py:189](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L189)
+[Show source in distribution_strategies.py:194](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L194)
 
 #### Signature
 
@@ -433,7 +446,7 @@ def get_radius(
 
 ### RadiiBasedMovingBin().get_total_mass
 
-[Show source in distribution_strategies.py:196](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L196)
+[Show source in distribution_strategies.py:201](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L201)
 
 #### Signature
 
@@ -450,7 +463,7 @@ def get_total_mass(
 
 ## SpeciatedMassMovingBin
 
-[Show source in distribution_strategies.py:242](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L242)
+[Show source in distribution_strategies.py:247](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L247)
 
 Strategy for particles with speciated mass distribution.
 
@@ -472,7 +485,7 @@ class SpeciatedMassMovingBin(DistributionStrategy): ...
 
 ### SpeciatedMassMovingBin().add_mass
 
-[Show source in distribution_strategies.py:277](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L277)
+[Show source in distribution_strategies.py:282](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L282)
 
 #### Signature
 
@@ -488,7 +501,7 @@ def add_mass(
 
 ### SpeciatedMassMovingBin().collide_pairs
 
-[Show source in distribution_strategies.py:301](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L301)
+[Show source in distribution_strategies.py:306](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L306)
 
 #### Signature
 
@@ -504,7 +517,7 @@ def collide_pairs(
 
 ### SpeciatedMassMovingBin().get_mass
 
-[Show source in distribution_strategies.py:252](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L252)
+[Show source in distribution_strategies.py:257](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L257)
 
 #### Signature
 
@@ -516,7 +529,7 @@ def get_mass(
 
 ### SpeciatedMassMovingBin().get_radius
 
-[Show source in distribution_strategies.py:260](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L260)
+[Show source in distribution_strategies.py:265](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L265)
 
 #### Signature
 
@@ -528,7 +541,7 @@ def get_radius(
 
 ### SpeciatedMassMovingBin().get_total_mass
 
-[Show source in distribution_strategies.py:267](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L267)
+[Show source in distribution_strategies.py:272](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L272)
 
 #### Signature
 
