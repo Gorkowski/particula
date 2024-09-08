@@ -17,11 +17,16 @@ class DistributionStrategy(ABC):
     particle representations.
 
     Methods:
+        get_name: Returns the type of the distribution strategy.
         get_mass: Calculates the mass of particles.
         get_radius: Calculates the radius of particles.
         get_total_mass: Calculates the total mass of particles.
         add_mass: Adds mass to the distribution of particles.
     """
+
+    def get_name(self) -> str:
+        """Return the type of the distribution strategy."""
+        return self.__class__.__name__
 
     @abstractmethod
     def get_mass(
