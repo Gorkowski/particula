@@ -242,7 +242,7 @@ def get_distribution(self, clone: bool = False) -> NDArray[np.float64]: ...
 
 ### ParticleRepresentation().get_mass
 
-[Show source in representation.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L204)
+[Show source in representation.py:219](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L219)
 
 Returns the mass of the particles as calculated by the strategy.
 
@@ -262,7 +262,7 @@ def get_mass(self, clone: bool = False) -> NDArray[np.float64]: ...
 
 ### ParticleRepresentation().get_radius
 
-[Show source in representation.py:234](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L234)
+[Show source in representation.py:256](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L256)
 
 Returns the radius of the particles as calculated by the strategy.
 
@@ -282,7 +282,7 @@ def get_radius(self, clone: bool = False) -> NDArray[np.float64]: ...
 
 ### ParticleRepresentation().get_species_mass
 
-[Show source in representation.py:219](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L219)
+[Show source in representation.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L204)
 
 Returns the masses per species in the particles.
 
@@ -385,7 +385,7 @@ def get_surface_name(self) -> str: ...
 
 ### ParticleRepresentation().get_total_mass
 
-[Show source in representation.py:248](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L248)
+[Show source in representation.py:234](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L234)
 
 Returns the total mass of the particles.
 
