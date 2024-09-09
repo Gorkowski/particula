@@ -61,10 +61,12 @@ class ParticleRepresentation:
             str: A string representation of the particle representation.
         """
         return (
-            f"Particle Representation (strategy={self.get_strategy_name()}, "
-            f"activity={self.get_activity_name()}, "
-            f"surface={self.get_surface_name()}, "
-            f"total mass={self.get_total_mass()}) "
+            f"Particle Representation:\n"
+            f"\tStrategy: {self.get_strategy_name()}\n"
+            f"\tActivity: {self.get_activity_name()}\n"
+            f"\tSurface: {self.get_surface_name()}\n"
+            f"\tMass Concentration: "
+            f"{self.get_mass_concentration():.3e} [kg/m^3]"
         )
 
     def get_strategy(self, clone: bool = False) -> DistributionStrategy:
@@ -251,6 +253,32 @@ class ParticleRepresentation:
             )
         return self.strategy.get_total_mass(
             self.distribution, self.concentration, self.density
+        )
+
+    def get_mass_concentration(
+        self, clone: bool = False
+    ) -> np.float64:
+        """Returns the total mass / volume simulated.
+
+        The mass concentration is as calculated by the strategy, taking into
+        account the distribution and concentration.
+
+        Args:
+            clone: If True, then return a copy of the mass concentration.
+
+        Returns:
+            np.float64: The mass concentration of the particles, kg/m^3.
+        """
+        if clone:
+            return deepcopy(
+                self.strategy.get_total_mass(
+                    self.distribution, self.concentration, self.density
+                ) / self.volume
+            )
+        return (
+            self.strategy.get_total_mass(
+                self.distribution, self.concentration, self.density
+            ) / self.volume
         )
 
     def get_radius(self, clone: bool = False) -> NDArray[np.float64]:

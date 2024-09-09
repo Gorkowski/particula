@@ -546,14 +546,14 @@ class CondensationIsothermal(CondensationStrategy):
             pure_vapor_pressure=gas_species.get_pure_vapor_pressure(
                 temperature
             ),
-            mass_concentration=particle.get_mass(),
+            mass_concentration=particle.get_species_mass(),
         )
         partial_pressure_gas = gas_species.get_partial_pressure(temperature)
         # calculate the kelvin term
         kelvin_term = particle.surface.kelvin_term(
             radius=particle.get_radius(),
             molar_mass=self.molar_mass,
-            mass_concentration=particle.get_mass(),
+            mass_concentration=particle.get_species_mass(),
             temperature=temperature,
         )
         # calculate the pressure delta accounting for the kelvin term
