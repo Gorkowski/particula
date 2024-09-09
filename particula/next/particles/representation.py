@@ -201,21 +201,6 @@ class ParticleRepresentation:
             return deepcopy(self.volume)
         return self.volume
 
-    def get_mass(self, clone: bool = False) -> NDArray[np.float64]:
-        """Returns the mass of the particles as calculated by the strategy.
-
-        Args:
-            clone: If True, then return a copy of the mass array.
-
-        Returns:
-            The mass of the particles.
-        """
-        if clone:
-            return np.copy(
-                self.strategy.get_mass(self.distribution, self.density)
-            )
-        return self.strategy.get_mass(self.distribution, self.density)
-
     def get_species_mass(self, clone: bool = False) -> NDArray[np.float64]:
         """Returns the masses per species in the particles.
 
@@ -231,19 +216,20 @@ class ParticleRepresentation:
             )
         return self.strategy.get_species_mass(self.distribution, self.density)
 
-    def get_radius(self, clone: bool = False) -> NDArray[np.float64]:
-        """Returns the radius of the particles as calculated by the strategy.
+    def get_mass(self, clone: bool = False) -> NDArray[np.float64]:
+        """Returns the mass of the particles as calculated by the strategy.
 
         Args:
-            clone: If True, then return a copy of the radius array
+            clone: If True, then return a copy of the mass array.
+
         Returns:
-            The radius of the particles.
+            The mass of the particles.
         """
         if clone:
             return np.copy(
-                self.strategy.get_radius(self.distribution, self.density)
+                self.strategy.get_mass(self.distribution, self.density)
             )
-        return self.strategy.get_radius(self.distribution, self.density)
+        return self.strategy.get_mass(self.distribution, self.density)
 
     def get_total_mass(self, clone: bool = False) -> np.float64:
         """Returns the total mass of the particles.
@@ -266,6 +252,20 @@ class ParticleRepresentation:
         return self.strategy.get_total_mass(
             self.distribution, self.concentration, self.density
         )
+
+    def get_radius(self, clone: bool = False) -> NDArray[np.float64]:
+        """Returns the radius of the particles as calculated by the strategy.
+
+        Args:
+            clone: If True, then return a copy of the radius array
+        Returns:
+            The radius of the particles.
+        """
+        if clone:
+            return np.copy(
+                self.strategy.get_radius(self.distribution, self.density)
+            )
+        return self.strategy.get_radius(self.distribution, self.density)
 
     def add_mass(self, added_mass: NDArray[np.float64]) -> None:
         """Adds mass to the particle distribution, and updates parameters.
