@@ -620,8 +620,8 @@ class CondensationIsothermal(CondensationStrategy):
             mass_rate=mass_rate,  # type: ignore
             time_step=time_step,
             gas_mass=gas_species.get_concentration(),  # type: ignore
-            particle_mass=particle.get_mass(),
-            particle_concentration=particle.concentration,
+            particle_mass=particle.get_species_mass(),
+            particle_concentration=particle.get_concentration(),
         )
 
         # apply the mass change

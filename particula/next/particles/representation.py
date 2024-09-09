@@ -54,6 +54,19 @@ class ParticleRepresentation:
         self.charge = charge
         self.volume = volume
 
+    def __str__(self) -> str:
+        """Returns a string representation of the particle representation.
+
+        Returns:
+            str: A string representation of the particle representation.
+        """
+        return (
+            f"Particle Representation (strategy={self.get_strategy_name()}, "
+            f"activity={self.get_activity_name()}, "
+            f"surface={self.get_surface_name()}, "
+            f"total mass={self.get_total_mass()}) "
+        )
+
     def get_strategy(self, clone: bool = False) -> DistributionStrategy:
         """Returns the strategy used for particle representation.
 
@@ -203,6 +216,21 @@ class ParticleRepresentation:
             )
         return self.strategy.get_mass(self.distribution, self.density)
 
+    def get_species_mass(self, clone: bool = False) -> NDArray[np.float64]:
+        """Returns the masses per species in the particles.
+
+        Args:
+            clone: If True, then return a copy of the mass array.
+
+        Returns:
+            The mass of the particles per species.
+        """
+        if clone:
+            return np.copy(
+                self.strategy.get_species_mass(self.distribution, self.density)
+            )
+        return self.strategy.get_species_mass(self.distribution, self.density)
+
     def get_radius(self, clone: bool = False) -> NDArray[np.float64]:
         """Returns the radius of the particles as calculated by the strategy.
 
@@ -261,9 +289,7 @@ class ParticleRepresentation:
         """
         self.concentration += added_concentration
 
-    def collide_pairs(
-        self, indices: NDArray[np.int64]
-    ) -> None:
+    def collide_pairs(self, indices: NDArray[np.int64]) -> None:
         """Collide pairs of indices, used for ParticleResolved Strategies.
 
         Args:
