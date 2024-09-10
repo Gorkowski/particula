@@ -187,6 +187,11 @@ def particle_resolved_coagulation_step(
             particle_radius[small_index], particle_radius[large_index]
         )
 
+        print(f"Events : {num_particle_events}")
+        print(f"Small index: {lower_indices.size}")
+        print(f"Total pairs: {small_index.size}")
+        print(f"Number in lower bin: {number_in_bins[lower_bin]}")
+        print(f"Number in upper bin: {number_in_bins[upper_bin]}")
         # Determine which coagulation events actually occur based on
         # interpolated kernel probabilities
         small_index, large_index = coagulation_events(

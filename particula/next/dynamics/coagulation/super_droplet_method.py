@@ -4,7 +4,7 @@ Super droplet method for coagulation dynamics.
 Need to validate the code.
 """
 
-from itertools import combinations
+from itertools import combinations_with_replacement
 from typing import Tuple, Union, Optional
 import numpy as np
 from numpy.typing import NDArray
@@ -422,7 +422,7 @@ def get_bin_pairs(
         Unique bin pairs for vectorized operations.
     """
     unique_bins = np.unique(bin_indices)
-    return list(combinations(unique_bins, 2))
+    return list(combinations_with_replacement(unique_bins, 2))
 
 
 def calculate_concentration_in_bins(
