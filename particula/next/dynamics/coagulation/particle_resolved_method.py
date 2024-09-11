@@ -139,13 +139,15 @@ def particle_resolved_coagulation_step(
 
         # Sample the number of coagulation events from a Poisson distribution
         events_exact = particle_events / volume * time_step
-        num_particle_events = round(events_exact)
-        # num_particle_events = sample_events(
-        #     events=particle_events,
-        #     volume=volume,
-        #     time_step=time_step,
-        #     generator=random_generator,
-        # )
+        num_particle_events_full = round(events_exact)
+        num_particle_events_poisson = sample_events(
+            events=particle_events,
+            volume=volume,
+            time_step=time_step,
+            generator=random_generator,
+        )
+        num_particle_events = np.max([
+            num_particle_events_full, num_particle_events_poisson])
 
         # Skip to the next bin pair if no events are expected
         if num_particle_events == 0:
