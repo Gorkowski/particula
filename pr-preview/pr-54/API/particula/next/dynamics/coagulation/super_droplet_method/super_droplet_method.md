@@ -6,7 +6,7 @@
 
 ## bin_particles
 
-[Show source in super_droplet_method.py:385](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L385)
+[Show source in super_droplet_method.py:445](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L445)
 
 Bin particles by size and return the number of particles in each bin.
 
@@ -33,7 +33,7 @@ def bin_particles(
 
 ## bin_to_particle_indices
 
-[Show source in super_droplet_method.py:211](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L211)
+[Show source in super_droplet_method.py:271](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L271)
 
 Convert bin indices to actual particle indices in the particle array.
 
@@ -75,7 +75,7 @@ def bin_to_particle_indices(
 
 ## calculate_concentration_in_bins
 
-[Show source in super_droplet_method.py:428](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L428)
+[Show source in super_droplet_method.py:488](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L488)
 
 Calculate the concentration of particles in each bin.
 
@@ -103,7 +103,7 @@ def calculate_concentration_in_bins(
 
 ## coagulation_events
 
-[Show source in super_droplet_method.py:299](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L299)
+[Show source in super_droplet_method.py:359](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L359)
 
 Calculate coagulation probabilities and filter events based on them.
 
@@ -179,7 +179,7 @@ def event_pairs(
 
 ## filter_valid_indices
 
-[Show source in super_droplet_method.py:253](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L253)
+[Show source in super_droplet_method.py:313](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L313)
 
 Filter particles indices based on particle radius and event counters.
 
@@ -218,7 +218,7 @@ def filter_valid_indices(
 
 ## get_bin_pairs
 
-[Show source in super_droplet_method.py:412](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L412)
+[Show source in super_droplet_method.py:472](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L472)
 
 Pre-compute the unique bin pairs for vectorized operations.
 
@@ -234,6 +234,64 @@ Unique bin pairs for vectorized operations.
 
 ```python
 def get_bin_pairs(bin_indices: NDArray[np.int64]) -> list[Tuple[int, int]]: ...
+```
+
+
+
+## random_choice_indices
+
+[Show source in super_droplet_method.py:171](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L171)
+
+Filter valid indices and select random indices for coagulation events.
+
+This function filters particle indices based on bin indices and ensures
+the selected particles have a positive radius. It then randomly selects
+indices from both a lower bin and an upper bin for a given number of
+events.
+
+#### Arguments
+
+- `lower_bin` - The index of the lower bin to filter particles from.
+- `upper_bin` - The index of the upper bin to filter particles from.
+- `events` - Number of events (indices) to sample for each bin.
+- `particle_radius` - A NumPy array of particle radii. Only particles with
+    radius > 0 are considered.
+- `bin_indices` - A NumPy array of bin indices corresponding to each
+    particle.
+- `generator` - A NumPy random generator used to sample indices.
+
+#### Returns
+
+Tuple:
+    - Indices of particles from the lower bin.
+    - Indices of particles from the upper bin.
+
+#### Examples
+
+``` py title="Example choice indices (update)"
+rng = np.random.default_rng()
+particle_radius = np.array([0.5, 0.0, 1.2, 0.3, 0.9])
+bin_indices = np.array([1, 1, 1, 2, 2])
+lower_bin = 1
+upper_bin = 2
+events = 2
+lower_indices, upper_indices = random_choice_indices(
+    lower_bin, upper_bin, events, particle_radius, bin_indices, rng)
+# lower_indices: array([0, 4])
+# upper_indices: array([0, 1])
+```
+
+#### Signature
+
+```python
+def random_choice_indices(
+    lower_bin: int,
+    upper_bin: int,
+    events: int,
+    particle_radius: NDArray[np.float64],
+    bin_indices: NDArray[np.int64],
+    generator: np.random.Generator,
+) -> Tuple[NDArray[np.int64], NDArray[np.int64]]: ...
 ```
 
 
@@ -273,7 +331,7 @@ def sample_events(
 
 ## select_random_indices
 
-[Show source in super_droplet_method.py:170](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L170)
+[Show source in super_droplet_method.py:230](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L230)
 
 Select random indices for particles involved in coagulation events.
 
@@ -313,7 +371,7 @@ def select_random_indices(
 
 ## sort_particles
 
-[Show source in super_droplet_method.py:345](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L345)
+[Show source in super_droplet_method.py:405](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L405)
 
 Sort particles by size and optionally sort their concentrations.
 
@@ -345,7 +403,7 @@ def sort_particles(
 
 ## super_droplet_coagulation_step
 
-[Show source in super_droplet_method.py:456](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L456)
+[Show source in super_droplet_method.py:516](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L516)
 
 Perform a single step of the Super Droplet coagulation process.
 
