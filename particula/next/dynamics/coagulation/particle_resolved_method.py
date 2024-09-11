@@ -9,12 +9,11 @@ from particula.next.dynamics.coagulation.super_droplet_method import (
     sort_particles,
     bin_particles,
     get_bin_pairs,
-    select_random_indices,
     filter_valid_indices,
     sample_events,
     event_pairs,
-    bin_to_particle_indices,
     coagulation_events,
+    random_choice_indices,
 )
 
 
@@ -99,13 +98,13 @@ def particle_resolved_coagulation_step(
     """
 
     # Step 1: Sort particles by size and obtain indices to revert sorting later
-    unsort_indices, sorted_radius, _ = sort_particles(
+    unsort_indices, particle_radius, _ = sort_particles(
         particle_radius=particle_radius,
     )
 
     # Step 2: Bin particles by size using the provided kernel radius bins
     number_in_bins, bin_indices = bin_particles(
-        particle_radius=sorted_radius, radius_bins=kernel_radius
+        particle_radius=particle_radius, radius_bins=kernel_radius
     )
 
     # Step 3: Precompute unique bin pairs for efficient coagulation
@@ -139,12 +138,14 @@ def particle_resolved_coagulation_step(
         )
 
         # Sample the number of coagulation events from a Poisson distribution
-        num_particle_events = sample_events(
-            events=particle_events,
-            volume=volume,
-            time_step=time_step,
-            generator=random_generator,
-        )
+        events_exact = particle_events / volume * time_step
+        num_particle_events = round(events_exact)
+        # num_particle_events = sample_events(
+        #     events=particle_events,
+        #     volume=volume,
+        #     time_step=time_step,
+        #     generator=random_generator,
+        # )
 
         # Skip to the next bin pair if no events are expected
         if num_particle_events == 0:
@@ -152,22 +153,13 @@ def particle_resolved_coagulation_step(
 
         # Randomly select indices of particles involved in the coagulation
         # events within the current bins
-        lower_indices, upper_indices = select_random_indices(
+        small_index, large_index = random_choice_indices(
             lower_bin=lower_bin,
             upper_bin=upper_bin,
             events=num_particle_events,
-            number_in_bins=number_in_bins,
-            generator=random_generator,
-        )
-
-        # Convert bin-relative indices to actual particle indices in the
-        # sorted arrays
-        small_index, large_index = bin_to_particle_indices(
-            lower_indices=lower_indices,
-            upper_indices=upper_indices,
-            lower_bin=lower_bin,
-            upper_bin=upper_bin,
+            particle_radius=particle_radius,
             bin_indices=bin_indices,
+            generator=random_generator
         )
 
         # Filter out invalid particle pairs based on their radii and event
@@ -187,11 +179,6 @@ def particle_resolved_coagulation_step(
             particle_radius[small_index], particle_radius[large_index]
         )
 
-        print(f"Events : {num_particle_events}")
-        print(f"Small index: {lower_indices.size}")
-        print(f"Total pairs: {small_index.size}")
-        print(f"Number in lower bin: {number_in_bins[lower_bin]}")
-        print(f"Number in upper bin: {number_in_bins[upper_bin]}")
         # Determine which coagulation events actually occur based on
         # interpolated kernel probabilities
         small_index, large_index = coagulation_events(
@@ -201,6 +188,10 @@ def particle_resolved_coagulation_step(
             kernel_max=kernel_max,
             generator=random_generator,
         )
+        # Remove duplicates in small_index
+        small_index, unique_indices = np.unique(small_index, return_index=True)
+        # Use unique_indices to remove corresponding elements in large
+        large_index = large_index[unique_indices]
 
         # Evaluate the coagulation events and update particle radii,
         # loss, and gain
