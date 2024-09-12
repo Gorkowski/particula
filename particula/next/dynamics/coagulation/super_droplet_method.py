@@ -130,7 +130,7 @@ def event_pairs(
         )
     return (
         kernel_max
-        * 0.5
+        # * 0.5
         * number_in_bins[lower_bin]
         * (number_in_bins[upper_bin] - 1)
     )
