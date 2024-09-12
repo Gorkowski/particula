@@ -9205,36 +9205,6 @@ Resolved number final: 5.84e+10, PMF number final: 5.80e+10
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>m(b, i) is the mass vector of the i-th particle in bin b
-Kmax(b1, b2) is a precomputed upper bound on the kernel</p>
-<p>for any particles from bins b1 and b2
-Dt is the timestep</p>
-<p>for all bin pairs (b1, b2) do:</p>
-<pre><code>Nevent = Np(b1)Np(b2)/2
-Ntest =[Kmax(b1, b2) DtNevent /V]
-
-for Ntest repetitions do:
-    randomly choose particles i1 and i2 uniformly
-    in bins b1 and b2
-    K12 = K(~m(b1, i1), ~m(b2, i2))
-    randomly choose r uniformly in [0, 1]
-    
-    if r &lt; K12 DtNevent/(NtestV) then:
-        coagulate the two particles, updating the
-        arrays N (b) and ~m(b, i)
-        end if
-end for</code></pre>
-<p>end for</p>
-</div>
-</div>
-</div>
-</div>
 </div> <!-- jp-Notebook -->
 </div> <!-- jupyter-wrapper -->
 
