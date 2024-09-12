@@ -8244,7 +8244,8 @@
 </blockquote>
 <h2 id="calculate_probabilities">calculate_probabilities<a class="headerlink" href="#calculate_probabilities" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L32">Show source in particle_resolved_method.py:32</a></p>
-<p>Calculate coagulation probabilities based on kernel values and system parameters.</p>
+<p>Calculate coagulation probabilities based on kernel values and system
+parameters.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>kernel_values</code> <em>float</em> - Interpolated kernel value for a particle pair.</li>
@@ -8259,8 +8260,12 @@
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">calculate_probabilities</span><span class="p">(</span>
-    <span class="n">kernel_values</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">events</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">tests</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span> <span class="o">...</span>
+    <span class="n">kernel_values</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">time_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">events</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">tests</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">volume</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="interpolate_kernel">interpolate_kernel<a class="headerlink" href="#interpolate_kernel" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L14">Show source in particle_resolved_method.py:14</a></p>
@@ -8281,7 +8286,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RectBivariateSpline</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="particle_resolved_coagulation_step">particle_resolved_coagulation_step<a class="headerlink" href="#particle_resolved_coagulation_step" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L135">Show source in particle_resolved_method.py:135</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L139">Show source in particle_resolved_method.py:139</a></p>
 <p>Perform a single step of particle coagulation, updating particle radii
 based on coagulation events.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
@@ -8314,7 +8319,7 @@ based on coagulation events.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="particle_resolved_update_step">particle_resolved_update_step<a class="headerlink" href="#particle_resolved_update_step" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L89">Show source in particle_resolved_method.py:89</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L93">Show source in particle_resolved_method.py:93</a></p>
 <p>Update the particle radii and concentrations after coagulation events.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -8340,8 +8345,9 @@ based on coagulation events.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="resolve_final_coagulation_state">resolve_final_coagulation_state<a class="headerlink" href="#resolve_final_coagulation_state" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L54">Show source in particle_resolved_method.py:54</a></p>
-<p>Resolve the final state of particles that have undergone multiple coagulation events.</p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L56">Show source in particle_resolved_method.py:56</a></p>
+<p>Resolve the final state of particles that have undergone multiple
+coagulation events.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>small_indices</code> <em>NDArray[np.int64]</em> - Indices of smaller particles.</li>
@@ -8350,7 +8356,8 @@ based on coagulation events.</p>
 </ul>
 <h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>Tuple[NDArray[np.int64],</code> <em>NDArray[np.int64]]</em> - Updated small and large indices.</li>
+<li><code>Tuple[NDArray[np.int64],</code> <em>NDArray[np.int64]]</em> - Updated small and large
+indices.</li>
 </ul>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">resolve_final_coagulation_state</span><span class="p">(</span>
@@ -8417,8 +8424,10 @@ based on coagulation events.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
-    <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../../../assets/javascripts/bundle.56dfad97.min.js"></script>

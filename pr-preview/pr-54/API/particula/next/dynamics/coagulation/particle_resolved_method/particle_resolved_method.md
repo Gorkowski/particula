@@ -8,7 +8,8 @@
 
 [Show source in particle_resolved_method.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L32)
 
-Calculate coagulation probabilities based on kernel values and system parameters.
+Calculate coagulation probabilities based on kernel values and system
+parameters.
 
 #### Arguments
 
@@ -26,8 +27,12 @@ Calculate coagulation probabilities based on kernel values and system parameters
 
 ```python
 def calculate_probabilities(
-    kernel_values: float, time_step: float, events: int, tests: int, volume: float
-) -> float: ...
+    kernel_values: Union[float, NDArray[np.float64]],
+    time_step: float,
+    events: int,
+    tests: int,
+    volume: float,
+) -> Union[float, NDArray[np.float64]]: ...
 ```
 
 
@@ -60,7 +65,7 @@ def interpolate_kernel(
 
 ## particle_resolved_coagulation_step
 
-[Show source in particle_resolved_method.py:135](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L135)
+[Show source in particle_resolved_method.py:139](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L139)
 
 Perform a single step of particle coagulation, updating particle radii
 based on coagulation events.
@@ -101,7 +106,7 @@ def particle_resolved_coagulation_step(
 
 ## particle_resolved_update_step
 
-[Show source in particle_resolved_method.py:89](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L89)
+[Show source in particle_resolved_method.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L93)
 
 Update the particle radii and concentrations after coagulation events.
 
@@ -135,9 +140,10 @@ def particle_resolved_update_step(
 
 ## resolve_final_coagulation_state
 
-[Show source in particle_resolved_method.py:54](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L54)
+[Show source in particle_resolved_method.py:56](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L56)
 
-Resolve the final state of particles that have undergone multiple coagulation events.
+Resolve the final state of particles that have undergone multiple
+coagulation events.
 
 #### Arguments
 
@@ -147,7 +153,8 @@ Resolve the final state of particles that have undergone multiple coagulation ev
 
 #### Returns
 
-- `Tuple[NDArray[np.int64],` *NDArray[np.int64]]* - Updated small and large indices.
+- `Tuple[NDArray[np.int64],` *NDArray[np.int64]]* - Updated small and large
+indices.
 
 #### Signature
 
