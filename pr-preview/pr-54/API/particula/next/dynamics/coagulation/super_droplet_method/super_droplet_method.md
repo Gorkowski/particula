@@ -6,7 +6,7 @@
 
 ## bin_particles
 
-[Show source in super_droplet_method.py:445](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L445)
+[Show source in super_droplet_method.py:451](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L451)
 
 Bin particles by size and return the number of particles in each bin.
 
@@ -33,7 +33,7 @@ def bin_particles(
 
 ## bin_to_particle_indices
 
-[Show source in super_droplet_method.py:271](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L271)
+[Show source in super_droplet_method.py:275](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L275)
 
 Convert bin indices to actual particle indices in the particle array.
 
@@ -75,7 +75,7 @@ def bin_to_particle_indices(
 
 ## calculate_concentration_in_bins
 
-[Show source in super_droplet_method.py:488](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L488)
+[Show source in super_droplet_method.py:494](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L494)
 
 Calculate the concentration of particles in each bin.
 
@@ -103,7 +103,7 @@ def calculate_concentration_in_bins(
 
 ## coagulation_events
 
-[Show source in super_droplet_method.py:359](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L359)
+[Show source in super_droplet_method.py:363](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L363)
 
 Calculate coagulation probabilities and filter events based on them.
 
@@ -179,7 +179,7 @@ def event_pairs(
 
 ## filter_valid_indices
 
-[Show source in super_droplet_method.py:313](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L313)
+[Show source in super_droplet_method.py:317](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L317)
 
 Filter particles indices based on particle radius and event counters.
 
@@ -218,7 +218,7 @@ def filter_valid_indices(
 
 ## get_bin_pairs
 
-[Show source in super_droplet_method.py:472](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L472)
+[Show source in super_droplet_method.py:478](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L478)
 
 Pre-compute the unique bin pairs for vectorized operations.
 
@@ -331,7 +331,7 @@ def sample_events(
 
 ## select_random_indices
 
-[Show source in super_droplet_method.py:230](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L230)
+[Show source in super_droplet_method.py:234](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L234)
 
 Select random indices for particles involved in coagulation events.
 
@@ -371,7 +371,7 @@ def select_random_indices(
 
 ## sort_particles
 
-[Show source in super_droplet_method.py:405](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L405)
+[Show source in super_droplet_method.py:411](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L411)
 
 Sort particles by size and optionally sort their concentrations.
 
@@ -403,7 +403,7 @@ def sort_particles(
 
 ## super_droplet_coagulation_step
 
-[Show source in super_droplet_method.py:516](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L516)
+[Show source in super_droplet_method.py:522](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L522)
 
 Perform a single step of the Super Droplet coagulation process.
 
