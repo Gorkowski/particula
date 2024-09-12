@@ -6,15 +6,84 @@ from numpy.typing import NDArray
 from scipy.interpolate import RectBivariateSpline  # type: ignore
 
 from particula.next.dynamics.coagulation.super_droplet_method import (
-    sort_particles,
     bin_particles,
     get_bin_pairs,
-    filter_valid_indices,
-    sample_events,
-    event_pairs,
-    coagulation_events,
-    random_choice_indices,
 )
+
+
+def interpolate_kernel(
+    kernel: NDArray[np.float64],
+    kernel_radius: NDArray[np.float64],
+) -> RectBivariateSpline:
+    """
+    Create a 2D interpolation function for the coagulation kernel.
+
+    Args:
+        kernel (NDArray[np.float64]): Coagulation kernel.
+        kernel_radius (NDArray[np.float64]): Radii corresponding to kernel
+            bins.
+
+    Returns:
+        RectBivariateSpline: Interpolated kernel function.
+    """
+    return RectBivariateSpline(x=kernel_radius, y=kernel_radius, z=kernel)
+
+
+def calculate_probabilities(
+    kernel_values: float,
+    time_step: float,
+    events: int,
+    tests: int,
+    volume: float,
+) -> float:
+    """
+    Calculate coagulation probabilities based on kernel values and system parameters.
+
+    Args:
+        kernel_values (float): Interpolated kernel value for a particle pair.
+        time_step (float): The time step over which coagulation occurs.
+        events (int): Number of possible coagulation events.
+        tests (int): Number of tests (or trials) for coagulation.
+        volume (float): Volume of the system.
+
+    Returns:
+        float: Coagulation probability.
+    """
+    return kernel_values * time_step * events / (tests * volume)
+
+def resolve_final_coagulation_state(
+    small_indices: NDArray[np.int64],
+    large_indices: NDArray[np.int64],
+    particle_radius: NDArray[np.float64],
+) -> Tuple[NDArray[np.int64], NDArray[np.int64]]:
+    """
+    Resolve the final state of particles that have undergone multiple coagulation events.
+
+    Args:
+        small_indices (NDArray[np.int64]): Indices of smaller particles.
+        large_indices (NDArray[np.int64]): Indices of larger particles.
+        particle_radius (NDArray[np.float64]): Radii of particles.
+
+    Returns:
+        Tuple[NDArray[np.int64], NDArray[np.int64]]: Updated small and large indices.
+    """
+    # Find common indices that appear in both small and large arrays
+    commons, small_common, large_common = np.intersect1d(
+        small_indices, large_indices, return_indices=True
+    )
+    # Sort particles by radius to resolve final states in the correct order
+    sorted_args = np.argsort(particle_radius[commons])
+    commons = commons[sorted_args]
+    small_common = small_common[sorted_args]
+    large_common = large_common[sorted_args]
+
+    # Remap to the largest particle in common to resolve the final state
+    for i, common in enumerate(commons):
+        final_value = large_indices[small_common[i]]
+        remap_index = np.flatnonzero(large_indices == common)
+        large_indices[remap_index] = final_value
+
+    return small_indices, large_indices
 
 
 def particle_resolved_update_step(
@@ -70,12 +139,7 @@ def particle_resolved_coagulation_step(
     volume: float,
     time_step: float,
     random_generator: np.random.Generator,
-) -> Tuple[
-    NDArray[np.float64],
-    NDArray[np.float64],
-    NDArray[np.float64],
-    NDArray[np.int64],
-]:
+) -> NDArray[np.int64]:
     """
     Perform a single step of particle coagulation, updating particle radii
     based on coagulation events.
@@ -93,52 +157,60 @@ def particle_resolved_coagulation_step(
             stochastic processes.
 
     Returns:
-        Tuple: Updated particle radii, and arrays representing the loss and
-            gain in particle counts due to coagulation events.
+        NDArray[np.int64]: Array of indices corresponding to the coagulation
+            events, where each element is a pair of indices corresponding to
+            the coagulating particles [loss, gain].
     """
 
-    _, bin_indices = bin_particles(
-        particle_radius, kernel_radius
-    )
-    # Step 3: Precompute unique bin pairs for efficient coagulation
+    # Step 1: Bin the particles based on their radii into corresponding kernel
+    # bins
+    _, bin_indices = bin_particles(particle_radius, kernel_radius)
+
+    # Step 2: Precompute unique bin pairs for efficient coagulation
     pair_indices = get_bin_pairs(bin_indices=bin_indices)
 
-    interp_kernel = RectBivariateSpline(
-        x=kernel_radius, y=kernel_radius, z=kernel
-    )
+    # Step 3: Interpolate the coagulation kernel for efficient lookups during
+    # the coagulation process
+    interp_kernel = interpolate_kernel(kernel, kernel_radius)
 
-    small_index_total0 = np.array([], dtype=np.int64)
-    large_index_total0 = np.array([], dtype=np.int64)
-    loss = np.zeros_like(particle_radius, dtype=np.float64)
-    gain = np.zeros_like(particle_radius, dtype=np.float64)
+    # Create output arrays to store the indices of small and large particles
+    # involved in coagulation events
+    small_index_total = np.array([], dtype=np.int64)
+    large_index_total = np.array([], dtype=np.int64)
 
-    # Iterate over each bin pair to calculate potential coagulation events
+    # Step 4: Iterate over each bin pair to calculate potential coagulation
+    # events
     for lower_bin, upper_bin in pair_indices:
-        # get raidius indexes and filter out zeros
+        # Get indices of particles in the current bin and filter out any that
+        # have already coagulated
         small_indices = np.flatnonzero(
             (bin_indices == lower_bin) & (particle_radius > 0)
         )
-        # filter small indices that are in small indices total
-        small_indices = np.setdiff1d(small_indices, small_index_total0)
+        small_indices = np.setdiff1d(small_indices, small_index_total)
 
         large_indices = np.flatnonzero(
             (bin_indices == upper_bin) & (particle_radius > 0)
         )
-        if np.size(small_indices) == 0 or np.size(large_indices) == 0:
-            continue  # Skip to the next bin pair if no particles are present
-        small_count = np.size(small_indices)
-        large_count = np.size(large_indices)
 
-        # Retrieve the maximum kernel value for the current bin pair
+        # Skip to the next bin pair if there are no particles in one or
+        # both bins
+        if len(small_indices) == 0 or len(large_indices) == 0:
+            continue
+
+        # Step 5: Retrieve the maximum kernel value for the current bin pair
         kernel_values = interp_kernel.ev(
             np.min(particle_radius[small_indices]),
             np.max(particle_radius[large_indices]),
         )
 
-        # Number of coagulation events
-        events = small_count * large_count
+        # Step 6: Calculate the number of possible coagulation events
+        # between small and large particles
+        events = len(small_indices) * len(large_indices)
         if lower_bin == upper_bin:
-            events = small_count * (large_count - 1) / 2
+            events = len(small_indices) * (len(large_indices) - 1) / 2
+
+        # Step 7: Determine the number of coagulation tests to run based
+        # on kernel value and system parameters
         tests = np.ceil(kernel_values * time_step * events / volume).astype(
             int
         )
@@ -146,85 +218,56 @@ def particle_resolved_coagulation_step(
         if tests == 0 or events == 0:
             continue
 
-        # Randomly select indices of particles involved in the coagulation
-        small_replace = False if small_count > tests else True
+        # Step 8: Randomly select small and large particle pairs for
+        # coagulation tests
+        replace_in_pool = tests > len(small_indices)
         small_index = random_generator.choice(
-            small_indices, tests, replace=small_replace
+            small_indices, size=tests, replace=replace_in_pool
         )
         large_index = random_generator.choice(large_indices, tests)
+
+        # Step 9: Calculate the kernel value for the selected particle pairs
         kernel_value = interp_kernel.ev(
             particle_radius[small_index], particle_radius[large_index]
         )
-        # select diagonal
+
+        # Handle diagonal elements if necessary (for single pair coagulation)
         if kernel_value.ndim > 1:
             kernel_value = np.diagonal(kernel_value)
-        # print(f"kernel value: {kernel_value}")
 
-        # Determine which coagulation events actually occur based on
-        # interpolated kernel probabilities
-        coagulation_probabilities = (
-            kernel_value * time_step * events / (tests * volume)
+        # Step 10: Calculate coagulation probabilities for each selected pair
+        coagulation_probabilities = calculate_probabilities(
+            kernel_value, time_step, events, tests, volume
         )
-        # random number
-        r = random_generator.uniform(size=tests)
-        valid_indices = np.flatnonzero(r < coagulation_probabilities)
-        # check if any valid indices are duplicate in small index
-        # error of same small particle going to two different large particles
+
+        # Step 11: Determine which coagulation events occur based on
+        # random uniform sampling
+        valid_indices = np.flatnonzero(
+            random_generator.uniform(size=tests) < coagulation_probabilities
+        )
+
+        # Step 12: Ensure each small particle only coagulates with one large
+        # particle
         _, unique_index = np.unique(
             small_index[valid_indices], return_index=True
         )
+        # Valid and unique indices are selected for coagulation,
+        # non-unique indices should happen rarely.
         small_index = small_index[valid_indices][unique_index]
         large_index = large_index[valid_indices][unique_index]
 
-        # save the coagulation events
-        small_index_total0 = np.append(small_index_total0, small_index)
-        large_index_total0 = np.append(large_index_total0, large_index)
+        # Step 13: Save the coagulation events
+        small_index_total = np.append(small_index_total, small_index)
+        large_index_total = np.append(large_index_total, large_index)
 
-        # for i in range(tests):
-        #     if np.size(small_indices) == 0 or np.size(large_indices) == 0:
-        #         continue  # Skip to the next bin pair if no particles are present
-        #     # Randomly select indices of particles involved in the coagulation
-        #     # events within the current bins
-        #     small_index = random_generator.choice(small_indices, 1)
-        #     large_index = random_generator.choice(large_indices, 1)
-
-        #     # Interpolate kernel values for the selected particle pairs
-        #     kernel_value = interp_kernel.ev(
-        #         particle_radius[small_index], particle_radius[large_index]
-        #     )
-
-        #     # Determine which coagulation events actually occur based on
-        #     # interpolated kernel probabilities
-        #     coagulation_probabilities = (
-        #         kernel_value[0] * time_step * events / (tests * volume)
-        #     )
-        #     # random number
-        #     r = random_generator.uniform()
-        #     # print(f"propbability: {coagulation_probabilities}, random: {r}")
-
-        #     if r < coagulation_probabilities:
-        #         small_index_total0 = np.append(small_index_total0, small_index)
-        #         large_index_total0 = np.append(large_index_total0, large_index)
-        #         # pop out small indices
-        #         small_indices = np.delete(
-        #             small_indices, small_indices == small_index
-        #         )
-
-    commons, small_index_in_common, large_index_in_common = np.intersect1d(
-        small_index_total0, large_index_total0, return_indices=True
+    # Step 14: Resolve any series of coagulation events that involve the same
+    # particles multiple times
+    small_index_total, large_index_total = resolve_final_coagulation_state(
+        small_index_total, large_index_total, particle_radius
     )
-    # sort based on radius
-    radius_argsort = np.argsort(particle_radius[commons])
-    commons = commons[radius_argsort]
-    small_index_in_common = small_index_in_common[radius_argsort]
-    large_index_in_common = large_index_in_common[radius_argsort]
 
-    # remap to largest particle in common
-    for i, common in enumerate(commons):
-        final_value = large_index_total0[small_index_in_common[i]]
-        remap_index = np.flatnonzero(large_index_total0 == common)
-        large_index_total0[remap_index] = final_value
+    # Step 15: Combine small and large indices into pairs representing the
+    # loss and gain events
+    loss_gain_index = np.column_stack([small_index_total, large_index_total])
 
-    loss_gain_index = np.column_stack([small_index_total0, large_index_total0])
-
-    return particle_radius, loss, gain, loss_gain_index
+    return loss_gain_index

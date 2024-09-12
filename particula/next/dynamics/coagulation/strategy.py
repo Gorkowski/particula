@@ -739,7 +739,7 @@ class ParticleResolved(CoagulationStrategy):
     ) -> ParticleRepresentation:
 
         # need to add the particle resolved coagulation step
-        _, _, _, indices = particle_resolved_coagulation_step(
+        loss_gain_indices = particle_resolved_coagulation_step(
             particle_radius=particle.get_radius(),
             kernel=self.kernel(  # type: ignore
                 particle=particle, temperature=temperature, pressure=pressure
@@ -749,5 +749,5 @@ class ParticleResolved(CoagulationStrategy):
             time_step=time_step,
             random_generator=np.random.default_rng(),
         )
-        particle.collide_pairs(indices)
+        particle.collide_pairs(loss_gain_indices)
         return particle
