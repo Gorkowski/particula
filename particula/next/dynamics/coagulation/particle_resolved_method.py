@@ -1,6 +1,6 @@
 """Particle resolved method for coagulation.
 """
-from typing import Tuple
+from typing import Tuple, Union
 import numpy as np
 from numpy.typing import NDArray
 from scipy.interpolate import RectBivariateSpline  # type: ignore
@@ -30,14 +30,15 @@ def interpolate_kernel(
 
 
 def calculate_probabilities(
-    kernel_values: float,
+    kernel_values: Union[float, NDArray[np.float64]],
     time_step: float,
     events: int,
     tests: int,
     volume: float,
-) -> float:
+) -> Union[float, NDArray[np.float64]]:
     """
-    Calculate coagulation probabilities based on kernel values and system parameters.
+    Calculate coagulation probabilities based on kernel values and system
+    parameters.
 
     Args:
         kernel_values (float): Interpolated kernel value for a particle pair.
@@ -51,13 +52,15 @@ def calculate_probabilities(
     """
     return kernel_values * time_step * events / (tests * volume)
 
+
 def resolve_final_coagulation_state(
     small_indices: NDArray[np.int64],
     large_indices: NDArray[np.int64],
     particle_radius: NDArray[np.float64],
 ) -> Tuple[NDArray[np.int64], NDArray[np.int64]]:
     """
-    Resolve the final state of particles that have undergone multiple coagulation events.
+    Resolve the final state of particles that have undergone multiple
+    coagulation events.
 
     Args:
         small_indices (NDArray[np.int64]): Indices of smaller particles.
@@ -65,7 +68,8 @@ def resolve_final_coagulation_state(
         particle_radius (NDArray[np.float64]): Radii of particles.
 
     Returns:
-        Tuple[NDArray[np.int64], NDArray[np.int64]]: Updated small and large indices.
+        Tuple[NDArray[np.int64], NDArray[np.int64]]: Updated small and large
+        indices.
     """
     # Find common indices that appear in both small and large arrays
     commons, small_common, large_common = np.intersect1d(
@@ -198,7 +202,7 @@ def particle_resolved_coagulation_step(
             continue
 
         # Step 5: Retrieve the maximum kernel value for the current bin pair
-        kernel_values = interp_kernel.ev(
+        kernel_values = interp_kernel.ev(  # type: ignore
             np.min(particle_radius[small_indices]),
             np.max(particle_radius[large_indices]),
         )
@@ -208,12 +212,11 @@ def particle_resolved_coagulation_step(
         events = len(small_indices) * len(large_indices)
         if lower_bin == upper_bin:
             events = len(small_indices) * (len(large_indices) - 1) / 2
+        events = int(np.ceil(events))
 
         # Step 7: Determine the number of coagulation tests to run based
         # on kernel value and system parameters
-        tests = np.ceil(kernel_values * time_step * events / volume).astype(
-            int
-        )
+        tests = int(np.ceil(kernel_values * time_step * events / volume))
 
         if tests == 0 or events == 0:
             continue
@@ -221,13 +224,13 @@ def particle_resolved_coagulation_step(
         # Step 8: Randomly select small and large particle pairs for
         # coagulation tests
         replace_in_pool = tests > len(small_indices)
-        small_index = random_generator.choice(
-            small_indices, size=tests, replace=replace_in_pool
+        small_index = random_generator.choice(  # type: ignore
+            small_indices, size=tests, replace=bool(replace_in_pool)
         )
         large_index = random_generator.choice(large_indices, tests)
 
         # Step 9: Calculate the kernel value for the selected particle pairs
-        kernel_value = interp_kernel.ev(
+        kernel_value = interp_kernel.ev(  # type: ignore
             particle_radius[small_index], particle_radius[large_index]
         )
 
@@ -242,7 +245,7 @@ def particle_resolved_coagulation_step(
 
         # Step 11: Determine which coagulation events occur based on
         # random uniform sampling
-        valid_indices = np.flatnonzero(
+        valid_indices = np.flatnonzero(  # type: ignore
             random_generator.uniform(size=tests) < coagulation_probabilities
         )
 
