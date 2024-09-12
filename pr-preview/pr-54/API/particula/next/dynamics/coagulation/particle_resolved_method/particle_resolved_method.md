@@ -6,7 +6,7 @@
 
 ## particle_resolved_coagulation_step
 
-[Show source in particle_resolved_method.py:239](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L239)
+[Show source in particle_resolved_method.py:66](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L66)
 
 Perform a single step of particle coagulation, updating particle radii
 based on coagulation events.
