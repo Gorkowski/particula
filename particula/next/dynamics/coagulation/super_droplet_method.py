@@ -213,17 +213,21 @@ def random_choice_indices(
         # upper_indices: array([0, 1])
         ```
     """
-    # Directly find the indices where the condition is True
-    lower_indices = generator.choice(
-        np.flatnonzero((bin_indices == lower_bin) & (particle_radius > 0)),
-        events,
-        replace=True,
-    )
-    upper_indices = generator.choice(
-        np.flatnonzero((bin_indices == upper_bin) & (particle_radius > 0)),
-        events,
-        replace=True,
-    )
+    try:
+        # Directly find the indices where the condition is True
+        lower_indices = generator.choice(
+            np.flatnonzero((bin_indices == lower_bin) & (particle_radius > 0)),
+            events,
+            replace=True,
+        )
+        upper_indices = generator.choice(
+            np.flatnonzero((bin_indices == upper_bin) & (particle_radius > 0)),
+            events,
+            replace=True,
+        )
+    except ValueError:
+        # If no valid indices are found, return empty arrays
+        return np.array([], dtype=np.int64), np.array([], dtype=np.int64)
     return lower_indices, upper_indices
 
 
@@ -391,12 +395,14 @@ def coagulation_events(
     """
     # Calculate the coagulation probabilities for each particle pair
     coagulation_probabilities = kernel_values / kernel_max
+    # coagulation_probabilities = kernel_values * kernel_max
 
     # Determine which events occur based on these probabilities
     coagulation_occurs = (
-        generator.random(len(coagulation_probabilities))
+        generator.uniform(low=0, high=1, size=len(coagulation_probabilities))
         < coagulation_probabilities
     )
+    # coagulation_occurs = coagulation_probabilities>0
 
     # Return the indices of particles that underwent coagulation
     return small_index[coagulation_occurs], large_index[coagulation_occurs]

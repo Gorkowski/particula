@@ -101,6 +101,9 @@ def particle_resolved_coagulation_step(
     unsort_indices, particle_radius, _ = sort_particles(
         particle_radius=particle_radius,
     )
+    # remove particles with zero radius
+    count_zero = np.count_nonzero(particle_radius == 0)
+    particle_radius = particle_radius[particle_radius > 0]
 
     # Step 2: Bin particles by size using the provided kernel radius bins
     number_in_bins, bin_indices = bin_particles(
@@ -138,16 +141,16 @@ def particle_resolved_coagulation_step(
         )
 
         # Sample the number of coagulation events from a Poisson distribution
-        events_exact = particle_events / volume * time_step
-        num_particle_events_full = round(events_exact)
-        num_particle_events_poisson = sample_events(
+        # events_exact = particle_events * time_step / volume
+        # num_particle_events_full = round(events_exact)
+        num_particle_events = sample_events(
             events=particle_events,
             volume=volume,
             time_step=time_step,
             generator=random_generator,
         )
-        num_particle_events = np.max([
-            num_particle_events_full, num_particle_events_poisson])
+        # num_particle_events = np.max([
+        #     num_particle_events_full, num_particle_events_poisson])
 
         # Skip to the next bin pair if no events are expected
         if num_particle_events == 0:
@@ -183,6 +186,10 @@ def particle_resolved_coagulation_step(
 
         # Determine which coagulation events actually occur based on
         # interpolated kernel probabilities
+        # K12 Dt Nevent/(Ntest V)
+        # n_event = number_in_bins[lower_bin] * number_in_bins[upper_bin]
+        # n_test = particle_events
+        # k_sub = time_step * n_event / (n_test * volume)
         small_index, large_index = coagulation_events(
             small_index=small_index,
             large_index=large_index,
@@ -209,13 +216,20 @@ def particle_resolved_coagulation_step(
 
     # Unsort the particle radii and loss/gain arrays to match the original
     # order
+    # add zeros to beginning of arrays
+    particle_radius = np.insert(particle_radius, 0, np.zeros(count_zero))
+    loss = np.insert(loss, 0, np.zeros(count_zero))
+    gain = np.insert(gain, 0, np.zeros(count_zero))
+    loss_index = loss_index + count_zero
+    gain_index = gain_index + count_zero
+    loss_index = unsort_indices[loss_index]
+    gain_index = unsort_indices[gain_index]
+
     particle_radius = particle_radius[unsort_indices]
-    loss = loss[unsort_indices]
-    gain = gain[unsort_indices]
     loss_gain_index = np.column_stack(
         [loss_index, gain_index])
-    loss_gain_index = loss_gain_index[unsort_indices]
+    # loss_gain_index = loss_gain_index[unsort_indices]
     # remove particles with zero radius
-    loss_gain_index = loss_gain_index[loss_gain_index.sum(axis=1) > 0]
+    # loss_gain_index = loss_gain_index[loss_gain_index.sum(axis=1) > 0]
 
     return particle_radius, loss, gain, loss_gain_index
