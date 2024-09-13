@@ -8129,52 +8129,42 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py">particula.next.particles.properties.coulomb_enhancement</a> module.</p>
 </blockquote>
 <h2 id="continuum">continuum<a class="headerlink" href="#continuum" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L96">Show source in coulomb_enhancement.py:96</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L89">Show source in coulomb_enhancement.py:89</a></p>
 <p>Calculates the Coulombic enhancement continuum limit. For all particle-
 particle interactions.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>coulomb_potential</em> - The Coulomb potential ratio [dimensionless].</li>
+<li><code>coulomb_potential</code> - The Coulomb potential ratio [dimensionless].</li>
 </ul>
 <h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h4>
-<hr />
-<ul>
-<li>The Coulomb enhancement for the continuum limit [dimensionless].</li>
-</ul>
+<p>The Coulomb enhancement for the continuum limit [dimensionless].</p>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
-<hr />
-<p>Equation 6b in:
-Gopalakrishnan, R., &amp; Hogan, C. J. (2012). Coulomb-influenced collisions
-in aerosols and dusty plasmas. Physical Review E - Statistical, Nonlinear,
+<p>Equation 6b in: Gopalakrishnan, R., &amp; Hogan, C. J. (2012).
+Coulomb-influenced collisions in aerosols and dusty plasmas.
+Physical Review E - Statistical, Nonlinear,
 and Soft Matter Physics, 85(2).
-https://doi.org/10.1103/PhysRevE.85.026410</p>
+(https://doi.org/10.1103/PhysRevE.85.026410)</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">continuum</span><span class="p">(</span>
     <span class="n">coulomb_potential</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="kinetic">kinetic<a class="headerlink" href="#kinetic" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L65">Show source in coulomb_enhancement.py:65</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L61">Show source in coulomb_enhancement.py:61</a></p>
 <p>Calculates the Coulombic enhancement kinetic limit. For all particle-
 particle interactions.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>coulomb_potential</em> - The Coulomb potential ratio [dimensionless].</li>
+<li><code>coulomb_potential</code> - The Coulomb potential ratio [dimensionless].</li>
 </ul>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<hr />
-<ul>
-<li>The Coulomb enhancement for the kinetic limit [dimensionless].</li>
-</ul>
+<p>The Coulomb enhancement for the kinetic limit [dimensionless].</p>
 <h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
-<hr />
-<p>Equation 6d and 6e in:
-Gopalakrishnan, R., &amp; Hogan, C. J. (2012). Coulomb-influenced collisions
-in aerosols and dusty plasmas. Physical Review E - Statistical, Nonlinear,
+<p>Equation 6d and 6e in, Gopalakrishnan, R., &amp; Hogan, C. J. (2012).
+Coulomb-influenced collisions in aerosols and dusty plasmas.
+Physical Review E - Statistical, Nonlinear,
 and Soft Matter Physics, 85(2).
-https://doi.org/10.1103/PhysRevE.85.026410</p>
+(https://doi.org/10.1103/PhysRevE.85.026410)</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">kinetic</span><span class="p">(</span>
     <span class="n">coulomb_potential</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
@@ -8185,22 +8175,20 @@ https://doi.org/10.1103/PhysRevE.85.026410</p>
 <p>Calculates the Coulomb potential ratio, phi_E. For all particle-
 particle interactions.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
-<hr />
 <ul>
-<li><code>-</code> <em>radius</em> - The radius of the particle [m].</li>
-<li><code>-</code> <em>charge</em> - The number of charges on the particle [dimensionless].</li>
-<li><code>-</code> <em>temperature</em> - The temperature of the system [K].</li>
+<li><code>radius</code> - The radius of the particle [m].</li>
+<li><code>charge</code> - The number of charges on the particle [dimensionless].</li>
+<li><code>temperature</code> - The temperature of the system [K].</li>
 </ul>
 <h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
-<hr />
 <p>The Coulomb potential ratio [dimensionless].</p>
 <h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
-<hr />
-<p>Equation 7 in:
-Gopalakrishnan, R., &amp; Hogan, C. J. (2012). Coulomb-influenced collisions
-in aerosols and dusty plasmas. Physical Review E - Statistical, Nonlinear,
-and Soft Matter Physics, 85(2).
-https://doi.org/10.1103/PhysRevE.85.026410</p>
+<ul>
+<li><code>Equation</code> <em>7</em> - Gopalakrishnan, R., &amp; Hogan, C. J. (2012).
+    Coulomb-influenced collisions in aerosols and dusty plasmas.
+    Physical Review E - Statistical, Nonlinear, and Soft Matter
+    Physics, 85(2). (https://doi.org/10.1103/PhysRevE.85.026410)</li>
+</ul>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">ratio</span><span class="p">(</span>
     <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>

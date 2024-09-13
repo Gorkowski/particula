@@ -6,29 +6,26 @@
 
 ## continuum
 
-[Show source in coulomb_enhancement.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L96)
+[Show source in coulomb_enhancement.py:89](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L89)
 
 Calculates the Coulombic enhancement continuum limit. For all particle-
 particle interactions.
 
 #### Arguments
 
------
-- `-` *coulomb_potential* - The Coulomb potential ratio [dimensionless].
+- `coulomb_potential` - The Coulomb potential ratio [dimensionless].
 
 #### Returns
 
--------
-- The Coulomb enhancement for the continuum limit [dimensionless].
+The Coulomb enhancement for the continuum limit [dimensionless].
 
 #### References
 
-----------
-Equation 6b in:
-Gopalakrishnan, R., & Hogan, C. J. (2012). Coulomb-influenced collisions
-in aerosols and dusty plasmas. Physical Review E - Statistical, Nonlinear,
+Equation 6b in: Gopalakrishnan, R., & Hogan, C. J. (2012).
+Coulomb-influenced collisions in aerosols and dusty plasmas.
+Physical Review E - Statistical, Nonlinear,
 and Soft Matter Physics, 85(2).
-https://doi.org/10.1103/PhysRevE.85.026410
+(https://doi.org/10.1103/PhysRevE.85.026410)
 
 #### Signature
 
@@ -42,29 +39,26 @@ def continuum(
 
 ## kinetic
 
-[Show source in coulomb_enhancement.py:65](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L65)
+[Show source in coulomb_enhancement.py:61](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py#L61)
 
 Calculates the Coulombic enhancement kinetic limit. For all particle-
 particle interactions.
 
 #### Arguments
 
------
-- `-` *coulomb_potential* - The Coulomb potential ratio [dimensionless].
+- `coulomb_potential` - The Coulomb potential ratio [dimensionless].
 
 #### Returns
 
--------
-- The Coulomb enhancement for the kinetic limit [dimensionless].
+The Coulomb enhancement for the kinetic limit [dimensionless].
 
 #### References
 
-----------
-Equation 6d and 6e in:
-Gopalakrishnan, R., & Hogan, C. J. (2012). Coulomb-influenced collisions
-in aerosols and dusty plasmas. Physical Review E - Statistical, Nonlinear,
+Equation 6d and 6e in, Gopalakrishnan, R., & Hogan, C. J. (2012).
+Coulomb-influenced collisions in aerosols and dusty plasmas.
+Physical Review E - Statistical, Nonlinear,
 and Soft Matter Physics, 85(2).
-https://doi.org/10.1103/PhysRevE.85.026410
+(https://doi.org/10.1103/PhysRevE.85.026410)
 
 #### Signature
 
@@ -85,24 +79,20 @@ particle interactions.
 
 #### Arguments
 
------
-- `-` *radius* - The radius of the particle [m].
-- `-` *charge* - The number of charges on the particle [dimensionless].
-- `-` *temperature* - The temperature of the system [K].
+- `radius` - The radius of the particle [m].
+- `charge` - The number of charges on the particle [dimensionless].
+- `temperature` - The temperature of the system [K].
 
 #### Returns
 
--------
 The Coulomb potential ratio [dimensionless].
 
 #### References
 
-----------
-Equation 7 in:
-Gopalakrishnan, R., & Hogan, C. J. (2012). Coulomb-influenced collisions
-in aerosols and dusty plasmas. Physical Review E - Statistical, Nonlinear,
-and Soft Matter Physics, 85(2).
-https://doi.org/10.1103/PhysRevE.85.026410
+- `Equation` *7* - Gopalakrishnan, R., & Hogan, C. J. (2012).
+    Coulomb-influenced collisions in aerosols and dusty plasmas.
+    Physical Review E - Statistical, Nonlinear, and Soft Matter
+    Physics, 85(2). (https://doi.org/10.1103/PhysRevE.85.026410)
 
 #### Signature
 
