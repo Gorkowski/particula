@@ -165,7 +165,11 @@ class ParticleRepresentation:
         return self.density
 
     def get_concentration(self, clone: bool = False) -> NDArray[np.float64]:
-        """Returns the concentration of the particles.
+        """Returns the volume concentration of the particles.
+
+        For ParticleResolved Strategies, the concentration is the number of
+        particles per self.volume to get concentration/m^3. For other
+        Strategies, the concentration is the already per 1/m^3.
 
         Args:
             clone: If True, then return a copy of the concentration array.
@@ -174,8 +178,8 @@ class ParticleRepresentation:
             The concentration of the particles.
         """
         if clone:
-            return np.copy(self.concentration)
-        return self.concentration
+            return np.copy(self.concentration / self.volume)
+        return self.concentration / self.volume
 
     def get_charge(self, clone: bool = False) -> NDArray[np.float64]:
         """Returns the charge per particle.

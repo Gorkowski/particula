@@ -108,7 +108,7 @@ class DistributionStrategy(ABC):
         Args:
             distribution: The distribution of particle sizes or masses.
             concentration: The concentration of each particle size or mass in
-            the distribution.
+                the distribution.
             density: The density of the particles.
             added_mass: The mass to be added per distribution bin.
 
