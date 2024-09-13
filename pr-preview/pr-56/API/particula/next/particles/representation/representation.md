@@ -69,7 +69,7 @@ def __str__(self) -> str: ...
 
 ### ParticleRepresentation().add_concentration
 
-[Show source in representation.py:313](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L313)
+[Show source in representation.py:332](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L332)
 
 Adds concentration to the particle distribution.
 
@@ -86,7 +86,7 @@ def add_concentration(self, added_concentration: NDArray[np.float64]) -> None: .
 
 ### ParticleRepresentation().add_mass
 
-[Show source in representation.py:302](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L302)
+[Show source in representation.py:317](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L317)
 
 Adds mass to the particle distribution, and updates parameters.
 
@@ -103,7 +103,7 @@ def add_mass(self, added_mass: NDArray[np.float64]) -> None: ...
 
 ### ParticleRepresentation().collide_pairs
 
-[Show source in representation.py:324](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L324)
+[Show source in representation.py:343](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L343)
 
 Collide pairs of indices, used for ParticleResolved Strategies.
 
@@ -162,7 +162,7 @@ def get_activity_name(self) -> str: ...
 
 ### ParticleRepresentation().get_charge
 
-[Show source in representation.py:184](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L184)
+[Show source in representation.py:195](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L195)
 
 Returns the charge per particle.
 
@@ -246,7 +246,7 @@ def get_distribution(self, clone: bool = False) -> NDArray[np.float64]: ...
 
 ### ParticleRepresentation().get_mass
 
-[Show source in representation.py:225](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L225)
+[Show source in representation.py:236](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L236)
 
 Returns the mass of the particles as calculated by the strategy.
 
@@ -266,7 +266,7 @@ def get_mass(self, clone: bool = False) -> NDArray[np.float64]: ...
 
 ### ParticleRepresentation().get_mass_concentration
 
-[Show source in representation.py:262](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L262)
+[Show source in representation.py:273](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L273)
 
 Returns the total mass / volume simulated.
 
@@ -289,7 +289,7 @@ def get_mass_concentration(self, clone: bool = False) -> np.float64: ...
 
 ### ParticleRepresentation().get_radius
 
-[Show source in representation.py:288](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L288)
+[Show source in representation.py:303](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L303)
 
 Returns the radius of the particles as calculated by the strategy.
 
@@ -309,7 +309,7 @@ def get_radius(self, clone: bool = False) -> NDArray[np.float64]: ...
 
 ### ParticleRepresentation().get_species_mass
 
-[Show source in representation.py:210](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L210)
+[Show source in representation.py:221](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L221)
 
 Returns the masses per species in the particles.
 
@@ -410,9 +410,29 @@ Kelvin effect.
 def get_surface_name(self) -> str: ...
 ```
 
+### ParticleRepresentation().get_total_concentration
+
+[Show source in representation.py:184](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L184)
+
+Returns the total concentration of the particles.
+
+#### Arguments
+
+- `clone` - If True, then return a copy of the concentration array.
+
+#### Returns
+
+The concentration of the particles.
+
+#### Signature
+
+```python
+def get_total_concentration(self, clone: bool = False) -> np.float64: ...
+```
+
 ### ParticleRepresentation().get_total_mass
 
-[Show source in representation.py:240](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L240)
+[Show source in representation.py:251](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L251)
 
 Returns the total mass of the particles.
 
@@ -435,7 +455,7 @@ def get_total_mass(self, clone: bool = False) -> np.float64: ...
 
 ### ParticleRepresentation().get_volume
 
-[Show source in representation.py:197](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L197)
+[Show source in representation.py:208](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L208)
 
 Returns the volume of the particles.
 

@@ -321,7 +321,7 @@ def add_mass(
 
 ### ParticleResolvedSpeciatedMass().collide_pairs
 
-[Show source in distribution_strategies.py:347](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L347)
+[Show source in distribution_strategies.py:348](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L348)
 
 #### Signature
 

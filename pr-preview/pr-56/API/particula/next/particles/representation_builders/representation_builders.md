@@ -245,7 +245,7 @@ def set_radius_bins(
 
 ## PresetResolvedParticleMassBuilder
 
-[Show source in representation_builders.py:380](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L380)
+[Show source in representation_builders.py:382](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L382)
 
 General ParticleRepresentation objects with particle resolved masses.
 
@@ -303,7 +303,7 @@ class PresetResolvedParticleMassBuilder(
 
 ### PresetResolvedParticleMassBuilder().build
 
-[Show source in representation_builders.py:448](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L448)
+[Show source in representation_builders.py:450](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation_builders.py#L450)
 
 Validate and return the ParticleRepresentation object.
 
