@@ -6411,6 +6411,8 @@
       
         
       
+        
+      
     
     
       
@@ -6451,7 +6453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Behavioral/Coagulation_PMF_Pattern/" class="md-nav__link">
+      <a href="../../Behavioral/Coagulation_1_PMF_Pattern/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -6472,11 +6474,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Behavioral/Coagulation_Particle_Resolved_Pattern/" class="md-nav__link">
+      <a href="../../Behavioral/Coagulation_3_Particle_Resolved_Pattern/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Coagulation Patterns: Particle-Resolved Approach
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Behavioral/Coagulation_4_Compared/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coagulation Patterns: Comparison of Number and Mass
   </span>
   
 
@@ -6694,6 +6717,15 @@
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to-be-revise-below" class="md-nav__link">
+    <span class="md-ellipsis">
+      To be revise below
     </span>
   </a>
   
@@ -7853,6 +7885,15 @@
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#to-be-revise-below" class="md-nav__link">
+    <span class="md-ellipsis">
+      To be revise below
     </span>
   </a>
   
@@ -9043,6 +9084,360 @@ plt.show()</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="to-be-revise-below">To be revise below<a class="anchor-link" href="#to-be-revise-below">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="sd">"""coagulation rewirte"""</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">particula.next</span> <span class="kn">import</span> <span class="n">particles</span>
+<span class="kn">from</span> <span class="nn">particula.next.dynamics</span> <span class="kn">import</span> <span class="n">coagulation</span>
+<span class="kn">from</span> <span class="nn">particula.next.dynamics.coagulation</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">particle_resolved_method</span><span class="p">,</span>
+    <span class="n">super_droplet_method</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">RectBivariateSpline</span>
+<span class="kn">from</span> <span class="nn">particula.util.input_handling</span> <span class="kn">import</span> <span class="n">convert_units</span>
+
+<span class="c1"># %%</span>
+
+
+<span class="n">particle_radius</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">lognormal_sample_distribution</span><span class="p">(</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">100e-9</span><span class="p">]),</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.3</span><span class="p">]),</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="n">number_of_samples</span><span class="o">=</span><span class="mi">100_000</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">kernel_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+
+<span class="c1"># calc mass of particle from density 1000</span>
+<span class="n">mass_particles</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">kernel_radius</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">coagulation</span><span class="o">.</span><span class="n">brownian_coagulation_kernel_via_system_state</span><span class="p">(</span>
+    <span class="n">radius_particle</span><span class="o">=</span><span class="n">kernel_radius</span><span class="p">,</span>
+    <span class="n">mass_particle</span><span class="o">=</span><span class="n">mass_particles</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">pressure</span><span class="o">=</span><span class="mi">101325</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># Step 4: Initialize a bivariate spline for interpolating kernel</span>
+<span class="c1"># values between bin radii</span>
+<span class="n">interp_kernel</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">kernel_radius</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">kernel_radius</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">kernel</span><span class="p">)</span>
+
+<span class="n">random_generator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+
+<span class="n">volume</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">convert_units</span><span class="p">(</span><span class="s2">"cm^3"</span><span class="p">,</span> <span class="s2">"m^3"</span><span class="p">)</span>
+<span class="n">time_step</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="c1"># %%</span>
+
+<span class="n">total_steps</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"total time: </span><span class="si">{</span><span class="n">total_steps</span><span class="o">*</span><span class="n">time_step</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">gain_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">loss_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">time_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_steps</span><span class="p">):</span>
+    <span class="n">number_in_bins</span><span class="p">,</span> <span class="n">bin_indices</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">bin_particles</span><span class="p">(</span>
+        <span class="n">particle_radius</span><span class="p">,</span> <span class="n">kernel_radius</span>
+    <span class="p">)</span>
+    <span class="c1"># Step 3: Precompute unique bin pairs for efficient coagulation</span>
+    <span class="n">pair_indices</span> <span class="o">=</span> <span class="n">super_droplet_method</span><span class="o">.</span><span class="n">get_bin_pairs</span><span class="p">(</span><span class="n">bin_indices</span><span class="o">=</span><span class="n">bin_indices</span><span class="p">)</span>
+
+    <span class="n">small_index_total0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">large_index_total0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+    <span class="c1"># Iterate over each bin pair to calculate potential coagulation events</span>
+    <span class="k">for</span> <span class="n">lower_bin</span><span class="p">,</span> <span class="n">upper_bin</span> <span class="ow">in</span> <span class="n">pair_indices</span><span class="p">:</span>
+        <span class="c1"># get raidius indexes and filter out zeros</span>
+        <span class="n">small_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="n">lower_bin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">particle_radius</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># filter small indices that are in small indices total</span>
+        <span class="n">small_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">setdiff1d</span><span class="p">(</span><span class="n">small_indices</span><span class="p">,</span> <span class="n">small_index_total0</span><span class="p">)</span>
+
+        <span class="n">large_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">bin_indices</span> <span class="o">==</span> <span class="n">upper_bin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">particle_radius</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">small_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">large_indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>  <span class="c1"># Skip to the next bin pair if no particles are present</span>
+        <span class="n">small_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">small_indices</span><span class="p">)</span>
+        <span class="n">large_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">large_indices</span><span class="p">)</span>
+        <span class="c1"># print(f"small count: {small_count}, large count: {large_count}")</span>
+
+        <span class="c1"># Retrieve the maximum kernel value for the current bin pair</span>
+        <span class="n">kernel_values</span> <span class="o">=</span> <span class="n">interp_kernel</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">small_indices</span><span class="p">]),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">large_indices</span><span class="p">]),</span>
+        <span class="p">)</span>
+        <span class="c1"># print(f"kernel max values: {kernel_values}")</span>
+
+        <span class="c1"># Number of coagulation events</span>
+        <span class="k">if</span> <span class="n">lower_bin</span> <span class="o">==</span> <span class="n">upper_bin</span><span class="p">:</span>
+            <span class="n">events</span> <span class="o">=</span> <span class="n">small_count</span> <span class="o">*</span> <span class="p">(</span><span class="n">large_count</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="n">small_count</span> <span class="o">*</span> <span class="n">large_count</span>
+
+        <span class="c1"># events = random_generator.poisson(events)</span>
+        <span class="n">tests</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">kernel_values</span> <span class="o">*</span> <span class="n">time_step</span> <span class="o">*</span> <span class="n">events</span> <span class="o">/</span> <span class="n">volume</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+            <span class="nb">int</span>
+        <span class="p">)</span>
+        <span class="c1"># print(f"events: {events}, tests: {tests}")</span>
+
+        <span class="k">if</span> <span class="n">tests</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Randomly select indices of particles involved in the coagulation</span>
+        <span class="n">small_replace</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="n">small_count</span> <span class="o">&gt;</span> <span class="n">tests</span> <span class="k">else</span> <span class="kc">True</span>
+        <span class="n">small_index</span> <span class="o">=</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span>
+            <span class="n">small_indices</span><span class="p">,</span> <span class="n">tests</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">small_replace</span>
+        <span class="p">)</span>
+        <span class="n">large_index</span> <span class="o">=</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">large_indices</span><span class="p">,</span> <span class="n">tests</span><span class="p">)</span>
+        <span class="n">kernel_value</span> <span class="o">=</span> <span class="n">interp_kernel</span><span class="o">.</span><span class="n">ev</span><span class="p">(</span>
+            <span class="n">particle_radius</span><span class="p">[</span><span class="n">small_index</span><span class="p">],</span> <span class="n">particle_radius</span><span class="p">[</span><span class="n">large_index</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="c1"># select diagonal</span>
+        <span class="k">if</span> <span class="n">kernel_value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">kernel_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">kernel_value</span><span class="p">)</span>
+        <span class="c1"># print(f"kernel value: {kernel_value}")</span>
+
+        <span class="c1"># Determine which coagulation events actually occur based on</span>
+        <span class="c1"># interpolated kernel probabilities</span>
+        <span class="n">coagulation_probabilities</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">kernel_value</span> <span class="o">*</span> <span class="n">time_step</span> <span class="o">*</span> <span class="n">events</span> <span class="o">/</span> <span class="p">(</span><span class="n">tests</span> <span class="o">*</span> <span class="n">volume</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="c1"># random number</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">tests</span><span class="p">)</span>
+        <span class="n">valid_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">r</span> <span class="o">&lt;</span> <span class="n">coagulation_probabilities</span><span class="p">)</span>
+        <span class="c1"># check if any valid indices are duplicate in small index</span>
+        <span class="c1"># error of same small particle going to two different large particles</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">unique_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+            <span class="n">small_index</span><span class="p">[</span><span class="n">valid_indices</span><span class="p">],</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">small_index</span> <span class="o">=</span> <span class="n">small_index</span><span class="p">[</span><span class="n">valid_indices</span><span class="p">][</span><span class="n">unique_index</span><span class="p">]</span>
+        <span class="n">large_index</span> <span class="o">=</span> <span class="n">large_index</span><span class="p">[</span><span class="n">valid_indices</span><span class="p">][</span><span class="n">unique_index</span><span class="p">]</span>
+
+        <span class="c1"># save the coagulation events</span>
+        <span class="n">small_index_total0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">small_index_total0</span><span class="p">,</span> <span class="n">small_index</span><span class="p">)</span>
+        <span class="n">large_index_total0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">large_index_total0</span><span class="p">,</span> <span class="n">large_index</span><span class="p">)</span>
+
+    <span class="n">commons</span><span class="p">,</span> <span class="n">small_index_in_common</span><span class="p">,</span> <span class="n">large_index_in_common</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span>
+        <span class="n">small_index_total0</span><span class="p">,</span> <span class="n">large_index_total0</span><span class="p">,</span> <span class="n">return_indices</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="c1"># sort based on radius</span>
+    <span class="n">radius_argsort</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">[</span><span class="n">commons</span><span class="p">])</span>
+    <span class="n">commons</span> <span class="o">=</span> <span class="n">commons</span><span class="p">[</span><span class="n">radius_argsort</span><span class="p">]</span>
+    <span class="n">small_index_in_common</span> <span class="o">=</span> <span class="n">small_index_in_common</span><span class="p">[</span><span class="n">radius_argsort</span><span class="p">]</span>
+    <span class="n">large_index_in_common</span> <span class="o">=</span> <span class="n">large_index_in_common</span><span class="p">[</span><span class="n">radius_argsort</span><span class="p">]</span>
+
+    <span class="c1"># remap to largest particle in common</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">common</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">commons</span><span class="p">):</span>
+        <span class="n">final_value</span> <span class="o">=</span> <span class="n">large_index_total0</span><span class="p">[</span><span class="n">small_index_in_common</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="n">remap_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">large_index_total0</span> <span class="o">==</span> <span class="n">common</span><span class="p">)</span>
+        <span class="n">large_index_total0</span><span class="p">[</span><span class="n">remap_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_value</span>
+
+    <span class="c1"># update particle radius</span>
+    <span class="n">particle_radius</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">particle_resolved_method</span><span class="o">.</span><span class="n">particle_resolved_update_step</span><span class="p">(</span>
+            <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle_radius</span><span class="p">,</span>
+            <span class="n">gain</span><span class="o">=</span><span class="n">gain_radius</span><span class="p">,</span>
+            <span class="n">loss</span><span class="o">=</span><span class="n">loss_radius</span><span class="p">,</span>
+            <span class="n">small_index</span><span class="o">=</span><span class="n">small_index_total0</span><span class="p">,</span>
+            <span class="n">large_index</span><span class="o">=</span><span class="n">large_index_total0</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"concenration: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">number_in_bins</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">volume</span><span class="si">:</span><span class="s2">.4e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-11">"""coagulation rewirte"""
+
+import numpy as np
+
+from particula.next import particles
+from particula.next.dynamics import coagulation
+from particula.next.dynamics.coagulation import (
+    particle_resolved_method,
+    super_droplet_method,
+)
+from scipy.interpolate import RectBivariateSpline
+from particula.util.input_handling import convert_units
+
+# %%
+
+
+particle_radius = particles.properties.lognormal_sample_distribution(
+    mode=np.array([100e-9]),
+    geometric_standard_deviation=np.array([1.3]),
+    number_of_particles=np.array([1]),
+    number_of_samples=100_000,
+)
+
+kernel_radius = np.logspace(-8, -6, 50)
+
+
+# calc mass of particle from density 1000
+mass_particles = 4 / 3 * np.pi * kernel_radius**3 * 1000
+kernel = coagulation.brownian_coagulation_kernel_via_system_state(
+    radius_particle=kernel_radius,
+    mass_particle=mass_particles,
+    temperature=300,
+    pressure=101325,
+)
+# Step 4: Initialize a bivariate spline for interpolating kernel
+# values between bin radii
+interp_kernel = RectBivariateSpline(x=kernel_radius, y=kernel_radius, z=kernel)
+
+random_generator = np.random.default_rng()
+
+volume = 1 * convert_units("cm^3", "m^3")
+time_step = 100
+# %%
+
+total_steps = 100
+print(f"total time: {total_steps*time_step:.2f}")
+
+gain_radius = np.zeros_like(particle_radius, dtype=np.float64)
+loss_radius = np.zeros_like(particle_radius, dtype=np.float64)
+for time_i in range(total_steps):
+    number_in_bins, bin_indices = super_droplet_method.bin_particles(
+        particle_radius, kernel_radius
+    )
+    # Step 3: Precompute unique bin pairs for efficient coagulation
+    pair_indices = super_droplet_method.get_bin_pairs(bin_indices=bin_indices)
+
+    small_index_total0 = np.array([], dtype=np.int64)
+    large_index_total0 = np.array([], dtype=np.int64)
+
+    # Iterate over each bin pair to calculate potential coagulation events
+    for lower_bin, upper_bin in pair_indices:
+        # get raidius indexes and filter out zeros
+        small_indices = np.flatnonzero(
+            (bin_indices == lower_bin) &amp; (particle_radius &gt; 0)
+        )
+        # filter small indices that are in small indices total
+        small_indices = np.setdiff1d(small_indices, small_index_total0)
+
+        large_indices = np.flatnonzero(
+            (bin_indices == upper_bin) &amp; (particle_radius &gt; 0)
+        )
+        if np.size(small_indices) == 0 or np.size(large_indices) == 0:
+            continue  # Skip to the next bin pair if no particles are present
+        small_count = np.size(small_indices)
+        large_count = np.size(large_indices)
+        # print(f"small count: {small_count}, large count: {large_count}")
+
+        # Retrieve the maximum kernel value for the current bin pair
+        kernel_values = interp_kernel.ev(
+            np.min(particle_radius[small_indices]),
+            np.max(particle_radius[large_indices]),
+        )
+        # print(f"kernel max values: {kernel_values}")
+
+        # Number of coagulation events
+        if lower_bin == upper_bin:
+            events = small_count * (large_count) / 2
+        events = small_count * large_count
+
+        # events = random_generator.poisson(events)
+        tests = np.ceil(kernel_values * time_step * events / volume).astype(
+            int
+        )
+        # print(f"events: {events}, tests: {tests}")
+
+        if tests == 0:
+            continue
+
+        # Randomly select indices of particles involved in the coagulation
+        small_replace = False if small_count &gt; tests else True
+        small_index = random_generator.choice(
+            small_indices, tests, replace=small_replace
+        )
+        large_index = random_generator.choice(large_indices, tests)
+        kernel_value = interp_kernel.ev(
+            particle_radius[small_index], particle_radius[large_index]
+        )
+        # select diagonal
+        if kernel_value.ndim &gt; 1:
+            kernel_value = np.diagonal(kernel_value)
+        # print(f"kernel value: {kernel_value}")
+
+        # Determine which coagulation events actually occur based on
+        # interpolated kernel probabilities
+        coagulation_probabilities = (
+            kernel_value * time_step * events / (tests * volume)
+        )
+        # random number
+        r = random_generator.uniform(size=tests)
+        valid_indices = np.flatnonzero(r &lt; coagulation_probabilities)
+        # check if any valid indices are duplicate in small index
+        # error of same small particle going to two different large particles
+        _, unique_index = np.unique(
+            small_index[valid_indices], return_index=True
+        )
+        small_index = small_index[valid_indices][unique_index]
+        large_index = large_index[valid_indices][unique_index]
+
+        # save the coagulation events
+        small_index_total0 = np.append(small_index_total0, small_index)
+        large_index_total0 = np.append(large_index_total0, large_index)
+
+    commons, small_index_in_common, large_index_in_common = np.intersect1d(
+        small_index_total0, large_index_total0, return_indices=True
+    )
+    # sort based on radius
+    radius_argsort = np.argsort(particle_radius[commons])
+    commons = commons[radius_argsort]
+    small_index_in_common = small_index_in_common[radius_argsort]
+    large_index_in_common = large_index_in_common[radius_argsort]
+
+    # remap to largest particle in common
+    for i, common in enumerate(commons):
+        final_value = large_index_total0[small_index_in_common[i]]
+        remap_index = np.flatnonzero(large_index_total0 == common)
+        large_index_total0[remap_index] = final_value
+
+    # update particle radius
+    particle_radius, _, _ = (
+        particle_resolved_method.particle_resolved_update_step(
+            particle_radius=particle_radius,
+            gain=gain_radius,
+            loss=loss_radius,
+            small_index=small_index_total0,
+            large_index=large_index_total0,
+        )
+    )
+
+print(f"concenration: {np.sum(number_in_bins) / volume:.4e}")</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div> <!-- jp-Notebook -->
 </div> <!-- jupyter-wrapper -->
 
@@ -9108,8 +9503,10 @@ plt.show()</div>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../../../../assets/javascripts/bundle.56dfad97.min.js"></script>

@@ -6,7 +6,7 @@
 
 ## ActivityIdealMass
 
-[Show source in activity_strategies.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L111)
+[Show source in activity_strategies.py:116](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L116)
 
 Calculate ideal activity based on mass fractions.
 
@@ -29,7 +29,7 @@ class ActivityIdealMass(ActivityStrategy): ...
 
 ### ActivityIdealMass().activity
 
-[Show source in activity_strategies.py:121](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L121)
+[Show source in activity_strategies.py:126](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L126)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -55,7 +55,7 @@ def activity(
 
 ## ActivityIdealMolar
 
-[Show source in activity_strategies.py:69](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L69)
+[Show source in activity_strategies.py:74](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L74)
 
 Calculate ideal activity based on mole fractions.
 
@@ -85,7 +85,7 @@ class ActivityIdealMolar(ActivityStrategy):
 
 ### ActivityIdealMolar().activity
 
-[Show source in activity_strategies.py:87](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L87)
+[Show source in activity_strategies.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L92)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -111,7 +111,7 @@ def activity(
 
 ## ActivityKappaParameter
 
-[Show source in activity_strategies.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L142)
+[Show source in activity_strategies.py:147](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L147)
 
 Non-ideal activity strategy based on the kappa hygroscopic parameter.
 
@@ -148,7 +148,7 @@ class ActivityKappaParameter(ActivityStrategy):
 
 ### ActivityKappaParameter().activity
 
-[Show source in activity_strategies.py:171](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L171)
+[Show source in activity_strategies.py:176](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L176)
 
 Calculate the activity of a species based on mass concentration.
 
@@ -190,6 +190,7 @@ activity calculations, specifically for calculating vapor pressures.
 
 #### Methods
 
+- `get_name` - Return the type of the activity strategy.
 - `activity` - Calculate the activity of a species.
 - `partial_pressure` - Calculate the partial pressure of a species in
     the mixture.
@@ -202,7 +203,7 @@ class ActivityStrategy(ABC): ...
 
 ### ActivityStrategy().activity
 
-[Show source in activity_strategies.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L32)
+[Show source in activity_strategies.py:33](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L33)
 
 Calculate the activity of a species based on its mass concentration.
 
@@ -223,9 +224,21 @@ def activity(
 ) -> Union[float, NDArray[np.float64]]: ...
 ```
 
+### ActivityStrategy().get_name
+
+[Show source in activity_strategies.py:46](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L46)
+
+Return the type of the activity strategy.
+
+#### Signature
+
+```python
+def get_name(self) -> str: ...
+```
+
 ### ActivityStrategy().partial_pressure
 
-[Show source in activity_strategies.py:45](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L45)
+[Show source in activity_strategies.py:50](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/activity_strategies.py#L50)
 
 Calculate the vapor pressure of species in the particle phase.
 

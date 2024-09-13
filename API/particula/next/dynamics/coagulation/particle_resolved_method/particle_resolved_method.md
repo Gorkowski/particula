@@ -4,9 +4,68 @@
 
 > Auto-generated documentation for [particula.next.dynamics.coagulation.particle_resolved_method](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py) module.
 
+## calculate_probabilities
+
+[Show source in particle_resolved_method.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L32)
+
+Calculate coagulation probabilities based on kernel values and system
+parameters.
+
+#### Arguments
+
+- `kernel_values` *float* - Interpolated kernel value for a particle pair.
+- `time_step` *float* - The time step over which coagulation occurs.
+- `events` *int* - Number of possible coagulation events.
+- `tests` *int* - Number of tests (or trials) for coagulation.
+- `volume` *float* - Volume of the system.
+
+#### Returns
+
+- `float` - Coagulation probability.
+
+#### Signature
+
+```python
+def calculate_probabilities(
+    kernel_values: Union[float, NDArray[np.float64]],
+    time_step: float,
+    events: int,
+    tests: int,
+    volume: float,
+) -> Union[float, NDArray[np.float64]]: ...
+```
+
+
+
+## interpolate_kernel
+
+[Show source in particle_resolved_method.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L14)
+
+Create a 2D interpolation function for the coagulation kernel.
+
+#### Arguments
+
+- `kernel` *NDArray[np.float64]* - Coagulation kernel.
+- `kernel_radius` *NDArray[np.float64]* - Radii corresponding to kernel
+    bins.
+
+#### Returns
+
+- `RectBivariateSpline` - Interpolated kernel function.
+
+#### Signature
+
+```python
+def interpolate_kernel(
+    kernel: NDArray[np.float64], kernel_radius: NDArray[np.float64]
+) -> RectBivariateSpline: ...
+```
+
+
+
 ## particle_resolved_coagulation_step
 
-[Show source in particle_resolved_method.py:67](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L67)
+[Show source in particle_resolved_method.py:139](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L139)
 
 Perform a single step of particle coagulation, updating particle radii
 based on coagulation events.
@@ -26,8 +85,9 @@ based on coagulation events.
 
 #### Returns
 
-- `Tuple` - Updated particle radii, and arrays representing the loss and
-    gain in particle counts due to coagulation events.
+- `NDArray[np.int64]` - Array of indices corresponding to the coagulation
+    events, where each element is a pair of indices corresponding to
+    the coagulating particles [loss, gain].
 
 #### Signature
 
@@ -39,16 +99,14 @@ def particle_resolved_coagulation_step(
     volume: float,
     time_step: float,
     random_generator: np.random.Generator,
-) -> Tuple[
-    NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.int64]
-]: ...
+) -> NDArray[np.int64]: ...
 ```
 
 
 
 ## particle_resolved_update_step
 
-[Show source in particle_resolved_method.py:21](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L21)
+[Show source in particle_resolved_method.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L93)
 
 Update the particle radii and concentrations after coagulation events.
 
@@ -76,4 +134,34 @@ def particle_resolved_update_step(
     small_index: NDArray[np.int64],
     large_index: NDArray[np.int64],
 ) -> Tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]: ...
+```
+
+
+
+## resolve_final_coagulation_state
+
+[Show source in particle_resolved_method.py:56](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L56)
+
+Resolve the final state of particles that have undergone multiple
+coagulation events.
+
+#### Arguments
+
+- `small_indices` *NDArray[np.int64]* - Indices of smaller particles.
+- `large_indices` *NDArray[np.int64]* - Indices of larger particles.
+- `particle_radius` *NDArray[np.float64]* - Radii of particles.
+
+#### Returns
+
+- `Tuple[NDArray[np.int64],` *NDArray[np.int64]]* - Updated small and large
+indices.
+
+#### Signature
+
+```python
+def resolve_final_coagulation_state(
+    small_indices: NDArray[np.int64],
+    large_indices: NDArray[np.int64],
+    particle_radius: NDArray[np.float64],
+) -> Tuple[NDArray[np.int64], NDArray[np.int64]]: ...
 ```
