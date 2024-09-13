@@ -623,7 +623,6 @@ class CondensationIsothermal(CondensationStrategy):
             particle_mass=particle.get_species_mass(),
             particle_concentration=particle.get_concentration(),
         )
-
         # apply the mass change
         particle.add_mass(added_mass=mass_transfer)
         # remove mass from gas phase concentration

@@ -210,12 +210,26 @@ class ActivityKappaParameter(ActivityStrategy):
             )
             # kappa activity parameterization, EQ 2 Petters and Kreidenweis
             # (2007)
-            water_activity = np.where(
-                water_volume_fraction <= 10 * MIN_POSITIVE_VALUE,
-                0,
-                (1 + kappa_weighted * solute_volume / water_volume_fraction)
-                ** -1,
+            # water_activity = np.where(
+            #     water_volume_fraction <= 10 * MIN_POSITIVE_VALUE,
+            #     0,
+            #     (1 + kappa_weighted * solute_volume / water_volume_fraction)
+            #     ** -1,
+            # )
+            numerator = kappa_weighted * solute_volume
+            denominator = water_volume_fraction
+            volume_term = np.divide(
+                numerator,
+                denominator,
+                out=np.zeros_like(denominator),  # Set where the condition fail
+                where=denominator > MIN_POSITIVE_VALUE
             )
+            water_activity = np.where(
+                water_volume_fraction <= MIN_POSITIVE_VALUE,
+                0,
+                (1 + volume_term) ** -1,
+            )
+
             # other species activity based on mole fraction
             activity = mass_concentration_to_mole_fraction(
                 mass_concentrations=mass_concentration,

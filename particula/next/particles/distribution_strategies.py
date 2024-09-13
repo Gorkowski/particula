@@ -338,6 +338,7 @@ class ParticleResolvedSpeciatedMass(DistributionStrategy):
             concentration_expand = concentration[:, np.newaxis]
         else:
             concentration_expand = concentration
+
         new_mass = (
             np.maximum(distribution * concentration_expand + added_mass, 0)
             / concentration_expand
