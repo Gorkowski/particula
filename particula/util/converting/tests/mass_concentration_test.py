@@ -29,7 +29,7 @@ from particula.util.converting import convert_mass_concentration
         (
             np.array([[100, 200], [50, 150]]),  # 2D input
             np.array([10, 20]),  # 1D molar masses, broadcast across rows
-            np.array([[0.5, 0.5], [0.5, 0.5]]),
+            np.array([[0.5, 0.5], [0.4, 0.6]]),
         ),  # Expected 2D mole fractions
     ],
 )
