@@ -123,7 +123,7 @@ A full list of [Particula](https://github.com/Gorkowski/particula) project modul
         - [Condensation Force](particula/util/condensation_force.md#condensation-force)
         - [Convert](particula/util/convert.md#convert)
         - [Converting](particula/util/converting/index.md#converting)
-            - [Mass Concentration](particula/util/converting/mass_concentration.md#mass-concentration)
+            - [Convert Mass Concentration](particula/util/converting/convert_mass_concentration.md#convert-mass-concentration)
         - [CoulombEnhancement](particula/util/coulomb_enhancement.md#coulombenhancement)
         - [Debye Function](particula/util/debye_function.md#debye-function)
         - [Diffusion Coefficient](particula/util/diffusion_coefficient.md#diffusion-coefficient)
