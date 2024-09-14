@@ -4,6 +4,41 @@
 
 > Auto-generated documentation for [particula.util.converting.convert_mass_concentration](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/convert_mass_concentration.py) module.
 
+## to_mass_fraction
+
+[Show source in convert_mass_concentration.py:97](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/convert_mass_concentration.py#L97)
+
+Convert mass concentrations to mass fractions for N components.
+
+If inputs are one-dimensional or float, the summation is done over the
+entire array. If mass_concentration is a 2D array, the summation is done
+row-wise.
+
+#### Arguments
+
+- `mass_concentrations` - A list or ndarray of mass concentrations
+    (SI, kg/m^3).
+
+#### Returns
+
+An ndarray of mass fractions.
+
+Reference:
+    The mass fraction of a component is calculated by dividing the mass
+    concentration of that component by the total mass concentration of
+    all components.
+    - https://en.wikipedia.org/wiki/Mass_fraction_(chemistry)
+
+#### Signature
+
+```python
+def to_mass_fraction(
+    mass_concentrations: NDArray[np.float64],
+) -> NDArray[np.float64]: ...
+```
+
+
+
 ## to_mole_fraction
 
 [Show source in convert_mass_concentration.py:7](https://github.com/Gorkowski/particula/blob/main/particula/util/converting/convert_mass_concentration.py#L7)

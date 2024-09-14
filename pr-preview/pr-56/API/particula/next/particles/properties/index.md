@@ -6,6 +6,7 @@
 
 ## Modules
 
+- [Activity Module](./activity_module.md)
 - [Aerodynamic Mobility Module](./aerodynamic_mobility_module.md)
 - [Aerodynamic Size](./aerodynamic_size.md)
 - [Coulomb Enhancement](./coulomb_enhancement.md)
