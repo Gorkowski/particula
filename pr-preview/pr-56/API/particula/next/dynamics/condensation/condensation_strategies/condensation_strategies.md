@@ -22,7 +22,7 @@ class CondensationIsothermal(CondensationStrategy):
     def __init__(
         self,
         molar_mass: Union[float, NDArray[np.float64]],
-        diffusion_coefficient: Union[float, NDArray[np.float64]] = 2 * 1e-09,
+        diffusion_coefficient: Union[float, NDArray[np.float64]] = 2e-05,
         accommodation_coefficient: Union[float, NDArray[np.float64]] = 1.0,
         update_gases: bool = True,
     ): ...
