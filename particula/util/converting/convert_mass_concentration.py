@@ -92,3 +92,45 @@ def to_volume_fraction(
     # Calculate volume fractions by dividing the volume of each component by
     # the total volume
     return volumes / total_volume
+
+
+def to_mass_fraction(
+    mass_concentrations: NDArray[np.float64],
+) -> NDArray[np.float64]:
+    """
+    Convert mass concentrations to mass fractions for N components.
+
+    If inputs are one-dimensional or float, the summation is done over the
+    entire array. If mass_concentration is a 2D array, the summation is done
+    row-wise.
+
+    Args:
+        mass_concentrations: A list or ndarray of mass concentrations
+            (SI, kg/m^3).
+
+    Returns:
+        An ndarray of mass fractions.
+
+    Reference:
+        The mass fraction of a component is calculated by dividing the mass
+        concentration of that component by the total mass concentration of
+        all components.
+        - https://en.wikipedia.org/wiki/Mass_fraction_(chemistry)
+    """
+    # check for negative values
+    if np.any(mass_concentrations < 0):
+        raise ValueError("Mass concentrations must be positive")
+
+    # Calculate total mass of the mixture
+    # Check if the input is 1D or 2D
+    if mass_concentrations.ndim == 1:
+        # For 1D input, sum over the entire array
+        total_mass = np.sum(mass_concentrations)
+    elif mass_concentrations.ndim == 2:
+        # For 2D input, sum row-wise
+        total_mass = np.sum(mass_concentrations, axis=1, keepdims=True)
+    else:
+        raise ValueError("mass_concentrations must be either 1D or 2D")
+
+    # Calculate mass fractions by dividing each component by the total mass
+    return mass_concentrations / total_mass

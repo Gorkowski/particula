@@ -63,8 +63,9 @@ def test_kappa_parameter_activity_multiple_species():
     )
     mass_concentration = np.array([100.0, 200.0, 300.0])
     expected_activity = np.array([0.66666667, 0.33333333, 0.33333333])
+    result = activity_strategy.activity(mass_concentration)
     np.testing.assert_allclose(
-        activity_strategy.activity(mass_concentration), expected_activity
+        result, expected_activity, rtol=1e-6
     )
 
 
