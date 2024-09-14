@@ -6,7 +6,7 @@
 
 ## AntoineVaporPressureStrategy
 
-[Show source in vapor_pressure_strategies.py:168](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L168)
+[Show source in vapor_pressure_strategies.py:164](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L164)
 
 Concrete implementation of the VaporPressureStrategy using the
 Antoine equation for vapor pressure calculations.
@@ -29,29 +29,25 @@ class AntoineVaporPressureStrategy(VaporPressureStrategy):
 
 ### AntoineVaporPressureStrategy().pure_vapor_pressure
 
-[Show source in vapor_pressure_strategies.py:184](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L184)
+[Show source in vapor_pressure_strategies.py:180](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L180)
 
-Calculate the pure (saturation) vapor pressure using the Antoine
-equation.
+Calculate vapor pressure using the Antoine equation.
 
 #### Arguments
 
-----
-- temperature (float or NDArray[np.float64]): Temperature in Kelvin.
+a, b, c: Antoine equation parameters.
+- `temperature` - Temperature in Kelvin.
 
 #### Returns
 
--------
-- vapor_pressure (float or NDArray[np.float64]): The vapor pressure in
-Pascals.
+Vapor pressure in Pascals.
 
 #### References
 
-----------
 - `-` *Equation* - log10(P) = a - b / (T - c)
 - https://en.wikipedia.org/wiki/Antoine_equation (but in Kelvin)
 - Kelvin form:
-https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118135341.app1
+    https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118135341.app1
 
 #### Signature
 
@@ -65,7 +61,7 @@ def pure_vapor_pressure(
 
 ## ClausiusClapeyronStrategy
 
-[Show source in vapor_pressure_strategies.py:214](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L214)
+[Show source in vapor_pressure_strategies.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L204)
 
 Concrete implementation of the VaporPressureStrategy using the
 Clausius-Clapeyron equation for vapor pressure calculations.
@@ -88,31 +84,25 @@ class ClausiusClapeyronStrategy(VaporPressureStrategy):
 
 ### ClausiusClapeyronStrategy().pure_vapor_pressure
 
-[Show source in vapor_pressure_strategies.py:243](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L243)
+[Show source in vapor_pressure_strategies.py:233](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L233)
 
-Calculate the vapor pressure at a new temperature using the
-Clausius-Clapeyron equation. For ideal gases at low temperatures.
+Calculate vapor pressure using Clausius-Clapeyron equation.
 
 #### Arguments
 
-----
-- temperature_initial (float or NDArray[np.float64]): Initial
-temperature in Kelvin.
-- pressure_initial (float or NDArray[np.float64]): Initial vapor
-pressure in Pascals.
-- temperature_final (float or NDArray[np.float64]): Final temperature
-in Kelvin.
+- `latent_heat` - Latent heat of vaporization in J/mol.
+- `temperature_initial` - Initial temperature in Kelvin.
+- `pressure_initial` - Initial vapor pressure in Pascals.
+- `temperature` - Final temperature in Kelvin.
+- `gas_constant` - gas constant (default is 8.314 J/(mol·K)).
 
 #### Returns
 
-- vapor_pressure_final (float or NDArray[np.float64]): Final vapor
-pressure in Pascals.
+Pure vapor pressure in Pascals.
 
 #### References
 
-----------
 - https://en.wikipedia.org/wiki/Clausius%E2%80%93Clapeyron_relation
-Ideal_gas_approximation_at_low_temperatures
 
 #### Signature
 
@@ -126,7 +116,7 @@ def pure_vapor_pressure(
 
 ## ConstantVaporPressureStrategy
 
-[Show source in vapor_pressure_strategies.py:142](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L142)
+[Show source in vapor_pressure_strategies.py:138](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L138)
 
 Concrete implementation of the VaporPressureStrategy using a constant
 vapor pressure value.
@@ -144,7 +134,7 @@ class ConstantVaporPressureStrategy(VaporPressureStrategy):
 
 ### ConstantVaporPressureStrategy().pure_vapor_pressure
 
-[Show source in vapor_pressure_strategies.py:149](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L149)
+[Show source in vapor_pressure_strategies.py:145](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L145)
 
 Return the constant vapor pressure value.
 
@@ -171,7 +161,7 @@ def pure_vapor_pressure(
 
 ## VaporPressureStrategy
 
-[Show source in vapor_pressure_strategies.py:24](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L24)
+[Show source in vapor_pressure_strategies.py:30](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L30)
 
 Abstract class for vapor pressure calculations. The methods
 defined here must be implemented by subclasses below.
@@ -184,24 +174,20 @@ class VaporPressureStrategy(ABC): ...
 
 ### VaporPressureStrategy().concentration
 
-[Show source in vapor_pressure_strategies.py:55](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L55)
+[Show source in vapor_pressure_strategies.py:58](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L58)
 
 Calculate the concentration of the gas at a given pressure and
 temperature.
 
 #### Arguments
 
-----
-- partial_pressure (float or NDArray[np.float64]): Pressure in Pascals.
-- molar_mass (float or NDArray[np.float64]): Molar mass of the gas in
-kg/mol.
-- temperature (float or NDArray[np.float64]): Temperature in Kelvin.
+- [VaporPressureStrategy().partial_pressure](#vaporpressurestrategypartial_pressure) - Pressure in Pascals.
+- `molar_mass` - Molar mass of the gas in kg/mol.
+- `temperature` - Temperature in Kelvin.
 
 #### Returns
 
--------
-- concentration (float or NDArray[np.float64]): The concentration of the
-gas in kg/m^3.
+- `concentration` - The concentration of the gas in kg/m^3.
 
 #### Signature
 
@@ -216,25 +202,22 @@ def concentration(
 
 ### VaporPressureStrategy().partial_pressure
 
-[Show source in vapor_pressure_strategies.py:28](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L28)
+[Show source in vapor_pressure_strategies.py:34](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L34)
 
 Calculate the partial pressure of the gas from its concentration, molar
 mass, and temperature.
 
 #### Arguments
 
-----
-- concentration (float or NDArray[np.float64]): Concentration of the gas
-in kg/m^3.
-- molar_mass (float or NDArray[np.float64]): Molar mass of the gas in
-kg/mol.
-- temperature (float or NDArray[np.float64]): Temperature in Kelvin.
+concentration (float or NDArray[np.float64]): Concentration of the
+    gas in kg/m^3.
+molar_mass (float or NDArray[np.float64]): Molar mass of the gas in
+    kg/mol.
+temperature (float or NDArray[np.float64]): Temperature in Kelvin.
 
 #### Returns
 
--------
-- partial_pressure (float or NDArray[np.float64]): Partial pressure of
-the gas in Pascals.
+- `partial_pressure` - Partial pressure of the gas in Pascals.
 
 #### Signature
 
@@ -249,7 +232,7 @@ def partial_pressure(
 
 ### VaporPressureStrategy().pure_vapor_pressure
 
-[Show source in vapor_pressure_strategies.py:130](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L130)
+[Show source in vapor_pressure_strategies.py:126](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L126)
 
 Calculate the pure (saturation) vapor pressure at a given
 temperature. Units are in Pascals Pa=kg/(m·s²).
@@ -269,7 +252,7 @@ def pure_vapor_pressure(
 
 ### VaporPressureStrategy().saturation_concentration
 
-[Show source in vapor_pressure_strategies.py:105](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L105)
+[Show source in vapor_pressure_strategies.py:101](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L101)
 
 Calculate the saturation concentration of the gas at a given
 temperature.
@@ -299,22 +282,19 @@ def saturation_concentration(
 
 ### VaporPressureStrategy().saturation_ratio
 
-[Show source in vapor_pressure_strategies.py:81](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L81)
+[Show source in vapor_pressure_strategies.py:80](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L80)
 
 Calculate the saturation ratio of the gas at a given pressure and
 temperature.
 
 #### Arguments
 
-----
-- pressure (float or NDArray[np.float64]): Pressure in Pascals.
-- temperature (float or NDArray[np.float64]): Temperature in Kelvin.
+- `pressure` - Pressure in Pascals.
+- `temperature` - Temperature in Kelvin.
 
 #### Returns
 
--------
-- saturation_ratio (float or NDArray[np.float64]): The saturation ratio
-of the gas.
+- `saturation_ratio` - The saturation ratio of the gas.
 
 #### Signature
 
@@ -331,7 +311,7 @@ def saturation_ratio(
 
 ## WaterBuckStrategy
 
-[Show source in vapor_pressure_strategies.py:274](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L274)
+[Show source in vapor_pressure_strategies.py:260](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L260)
 
 Concrete implementation of the VaporPressureStrategy using the
 Buck equation for water vapor pressure calculations.
@@ -348,30 +328,24 @@ class WaterBuckStrategy(VaporPressureStrategy): ...
 
 ### WaterBuckStrategy().pure_vapor_pressure
 
-[Show source in vapor_pressure_strategies.py:278](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L278)
+[Show source in vapor_pressure_strategies.py:264](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_strategies.py#L264)
 
-Calculate the pure (saturation) vapor pressure using the Buck
-equation for water vapor.
+Calculate vapor pressure using the Buck equation for water vapor.
 
 #### Arguments
 
-----
-- temperature (float or NDArray[np.float64]): Temperature in Kelvin.
+- `temperature` - Temperature in Kelvin.
 
 #### Returns
 
--------
-- vapor_pressure (float or NDArray[np.float64]): The vapor pressure in
-Pascals.
+Vapor pressure in Pascals.
 
 #### References
 
-----------
-Buck, A. L., 1981: New Equations for Computing Vapor Pressure and
-Enhancement Factor. J. Appl. Meteor. Climatol., 20, 1527-1532,
-https://doi.org/10.1175/1520-0450(1981)020<1527:NEFCVP>2.0.CO;2.
-
-https://en.wikipedia.org/wiki/Arden_Buck_equation
+- Buck, A. L., 1981: New Equations for Computing Vapor Pressure and
+    Enhancement Factor. J. Appl. Meteor. Climatol., 20, 1527-1532,
+    https://doi.org/10.1175/1520-0450(1981)020<1527:NEFCVP>2.0.CO;2.
+- https://en.wikipedia.org/wiki/Arden_Buck_equation
 
 #### Signature
 

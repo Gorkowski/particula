@@ -7,7 +7,7 @@
 ## Modules
 
 - [Coagulation](coagulation/index.md)
-- [Condensation](./condensation.md)
+- [Condensation](condensation/index.md)
 - [Dilution](./dilution.md)
 - [Particle Process](./particle_process.md)
 - [Properties](properties/index.md)

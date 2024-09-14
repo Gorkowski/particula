@@ -6,7 +6,7 @@
 
 ## Coagulation
 
-[Show source in particle_process.py:90](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L90)
+[Show source in particle_process.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L92)
 
 A class for running a coagulation strategy.
 
@@ -34,7 +34,7 @@ class Coagulation(Runnable):
 
 ### Coagulation().execute
 
-[Show source in particle_process.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L106)
+[Show source in particle_process.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L108)
 
 Execute the coagulation process.
 
@@ -54,7 +54,7 @@ def execute(self, aerosol: Aerosol, time_step: float, sub_steps: int = 1) -> Aer
 
 ### Coagulation().rate
 
-[Show source in particle_process.py:134](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L134)
+[Show source in particle_process.py:136](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L136)
 
 Calculate the rate of coagulation for each particle.
 
@@ -80,7 +80,7 @@ def rate(self, aerosol: Aerosol) -> Any: ...
 
 ## MassCondensation
 
-[Show source in particle_process.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L15)
+[Show source in particle_process.py:17](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L17)
 
 A class for running a mass condensation process.
 
@@ -104,12 +104,12 @@ class MassCondensation(Runnable):
 
 #### See also
 
-- [CondensationStrategy](./condensation.md#condensationstrategy)
+- [CondensationStrategy](condensation/condensation_strategies.md#condensationstrategy)
 - [Runnable](../runnable.md#runnable)
 
 ### MassCondensation().execute
 
-[Show source in particle_process.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L32)
+[Show source in particle_process.py:34](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L34)
 
 Execute the mass condensation process.
 
@@ -129,7 +129,7 @@ def execute(self, aerosol: Aerosol, time_step: float, sub_steps: int = 1) -> Aer
 
 ### MassCondensation().rate
 
-[Show source in particle_process.py:59](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L59)
+[Show source in particle_process.py:61](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/particle_process.py#L61)
 
 Calculate the rate of mass condensation for each particle due to
 each condensable gas species.
