@@ -298,10 +298,12 @@ class CondensationStrategy(ABC):
         molar_mass: Union[float, NDArray[np.float64]],
         diffusion_coefficient: Union[float, NDArray[np.float64]] = 2 * 1e-9,
         accommodation_coefficient: Union[float, NDArray[np.float64]] = 1.0,
+        update_gases: bool = True,
     ):
         self.molar_mass = molar_mass
         self.diffusion_coefficient = diffusion_coefficient
         self.accommodation_coefficient = accommodation_coefficient
+        self.update_gases = update_gases
 
     def mean_free_path(
         self,
@@ -517,11 +519,13 @@ class CondensationIsothermal(CondensationStrategy):
         molar_mass: Union[float, NDArray[np.float64]],
         diffusion_coefficient: Union[float, NDArray[np.float64]] = 2 * 1e-9,
         accommodation_coefficient: Union[float, NDArray[np.float64]] = 1.0,
+        update_gases: bool = True,
     ):
         super().__init__(
             molar_mass=molar_mass,
             diffusion_coefficient=diffusion_coefficient,
             accommodation_coefficient=accommodation_coefficient,
+            update_gases=update_gases,
         )
 
     def mass_transfer_rate(
@@ -625,8 +629,9 @@ class CondensationIsothermal(CondensationStrategy):
         )
         # apply the mass change
         particle.add_mass(added_mass=mass_transfer)
-        # remove mass from gas phase concentration
-        gas_species.add_concentration(
-            added_concentration=-mass_transfer.sum(axis=0)
-        )
+        if self.update_gases:
+            # remove mass from gas phase concentration
+            gas_species.add_concentration(
+                added_concentration=-mass_transfer.sum(axis=0)
+            )
         return particle, gas_species

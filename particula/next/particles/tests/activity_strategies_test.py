@@ -79,7 +79,7 @@ def test_kappa_parameter_activity_multi_particles():
     mass_concentration = np.array(
         [[100.0, 100.0], [500.0, 100.0], [100.0, 500.0]])
     expected_activity = np.array(
-        [[0.5, 0.01456311], [0.9375, 0.01456311]]
+        [[0.8, 0.08256881], [0.95238095, 0.01768173], [0.44444444, 0.31034483]]
     )
     result = activity_strategy.activity(mass_concentration)
     np.testing.assert_allclose(

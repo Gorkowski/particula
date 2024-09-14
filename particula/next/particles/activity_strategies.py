@@ -200,15 +200,21 @@ class ActivityKappaParameter(ActivityStrategy):
             solute_volume_fractions = np.delete(
                 volume_fractions, self.water_index, axis=1
             )
-            solute_volume = 1 - water_volume_fraction
-            print(f"solute shape: {solute_volume.shape}")
-            print(f"water shape: {water_volume_fraction.shape}")
             # volume weighted kappa, EQ 7 Petters and Kreidenweis (2007)
-            kappa_weighted = np.sum(
-                solute_volume_fractions / solute_volume * self.kappa, axis=1
-            )
+            if solute_volume_fractions.shape[1] == 1:
+                kappa_weighted = np.full_like(
+                    water_volume_fraction, self.kappa)
+            else:
+                solute_volume_fractions = np.divide(
+                    solute_volume_fractions,
+                    np.sum(solute_volume_fractions, axis=1)
+                )
+                kappa_weighted = np.sum(
+                    solute_volume_fractions * self.kappa, axis=1
+                )
             # kappa activity parameterization, EQ 2 Petters and Kreidenweis
             # (2007)
+            solute_volume = 1 - water_volume_fraction
             numerator = kappa_weighted * solute_volume
             denominator = water_volume_fraction
             volume_term = np.divide(
@@ -231,8 +237,8 @@ class ActivityKappaParameter(ActivityStrategy):
             # replace water activity with kappa activity
             activity[:, self.water_index] = water_activity
 
-            print(f"mean water activity: {np.max(activity)}")
             return activity
+        print("Mass concentration must be updated first")
         # single species
         water_volume_fraction = volume_fractions[self.water_index]
         solute_volume_fractions = np.delete(volume_fractions, self.water_index)

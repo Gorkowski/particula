@@ -6,14 +6,33 @@ import pytest
 from particula.util.converting import convert_mass_concentration
 
 
-@pytest.mark.parametrize("mass_concentrations, molar_masses, expected", [
-    (np.array([100, 200]), np.array([10, 20]),
-     np.array([0.5, 0.5])),
-    (np.array([50, 150, 200]), np.array([10, 30, 40]),
-     np.array([0.333333, 0.333333, 0.333333])),
-    (np.array([1, 1]), np.array([1, 1]), np.array(
-        [0.5, 0.5]))  # Equal masses and molar masses
-])
+@pytest.mark.parametrize(
+    "mass_concentrations, molar_masses, expected",
+    [
+        (
+            np.array([100, 200]),
+            np.array([10, 20]),  # 1D input
+            np.array([0.5, 0.5]),
+        ),
+        (
+            np.array([50, 150, 200]),
+            np.array([10, 30, 40]),  # 1D input
+            np.array([0.333333, 0.333333, 0.333333]),
+        ),
+        (
+            np.array([1, 1]),
+            np.array([1, 1]),
+            np.array(  # 1D input with equal masses and molar masses
+                [0.5, 0.5]
+            ),
+        ),
+        (
+            np.array([[100, 200], [50, 150]]),  # 2D input
+            np.array([10, 20]),  # 1D molar masses, broadcast across rows
+            np.array([[0.5, 0.5], [0.5, 0.5]]),
+        ),  # Expected 2D mole fractions
+    ],
+)
 def test_mass_concentration_to_mole_fraction(
         mass_concentrations, molar_masses, expected):
     """Test mass_concentration_to_mole_fraction function"""
