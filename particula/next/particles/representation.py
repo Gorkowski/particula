@@ -66,7 +66,9 @@ class ParticleRepresentation:
             f"\tActivity: {self.get_activity_name()}\n"
             f"\tSurface: {self.get_surface_name()}\n"
             f"\tMass Concentration: "
-            f"{self.get_mass_concentration():.3e} [kg/m^3]"
+            f"{self.get_mass_concentration():.3e} [kg/m^3]\n"
+            f"\tNumber Concentration: "
+            f"{self.get_total_concentration():.3e} [#/m^3]"
         )
 
     def get_strategy(self, clone: bool = False) -> DistributionStrategy:
@@ -247,28 +249,6 @@ class ParticleRepresentation:
                 self.strategy.get_mass(self.distribution, self.density)
             )
         return self.strategy.get_mass(self.distribution, self.density)
-
-    def get_total_mass(self, clone: bool = False) -> np.float64:
-        """Returns the total mass of the particles.
-
-        The total mass is as calculated by the strategy, taking into account
-        the distribution and concentration.
-
-        Args:
-            clone: If True, then return a copy of the total mass.
-
-        Returns:
-            np.float64: The total mass of the particles.
-        """
-        if clone:
-            return deepcopy(
-                self.strategy.get_total_mass(
-                    self.distribution, self.concentration, self.density
-                )
-            )
-        return self.strategy.get_total_mass(
-            self.distribution, self.concentration, self.density
-        )
 
     def get_mass_concentration(
         self, clone: bool = False

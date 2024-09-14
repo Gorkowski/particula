@@ -46,6 +46,11 @@ class MassCondensation(Runnable):
             # loop over particles to apply condensation
             for particle in aerosol.iterate_particle():
                 for _ in range(sub_steps):
+
+                    sat_ratio = gas_species.get_saturation_ratio(
+                        temperature=aerosol.atmosphere.temperature,
+                    )
+                    print(f"Saturation ratio: {sat_ratio}")
                     # calculate the condensation step for strategy
                     particle, gas_species = self.condensation_strategy.step(
                         particle=particle,

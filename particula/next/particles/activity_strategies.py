@@ -10,10 +10,7 @@ from abc import ABC, abstractmethod
 from typing import Union
 from numpy.typing import NDArray
 import numpy as np
-from particula.util.convert import (
-    mass_concentration_to_mole_fraction,
-    mass_concentration_to_volume_fraction,
-)
+from particula.util.converting import convert_mass_concentration
 from particula.util.machine_limit import MIN_POSITIVE_VALUE
 
 
@@ -107,7 +104,7 @@ class ActivityIdealMolar(ActivityStrategy):
         if isinstance(mass_concentration, float):
             return 1.0
         # multiple species, calculate mole fractions
-        return mass_concentration_to_mole_fraction(
+        return convert_mass_concentration.to_mole_fraction(
             mass_concentrations=mass_concentration,
             molar_masses=self.molar_mass,
         )
@@ -193,7 +190,7 @@ class ActivityKappaParameter(ActivityStrategy):
             [DOI](https://doi.org/10.5194/acp-7-1961-2007), see EQ 2 and 7.
         """
 
-        volume_fractions = mass_concentration_to_volume_fraction(
+        volume_fractions = convert_mass_concentration.to_volume_fraction(
             mass_concentrations=mass_concentration, densities=self.density
         )
         if isinstance(mass_concentration, np.ndarray) and (
@@ -204,24 +201,20 @@ class ActivityKappaParameter(ActivityStrategy):
                 volume_fractions, self.water_index, axis=1
             )
             solute_volume = 1 - water_volume_fraction
+            print(f"solute shape: {solute_volume.shape}")
+            print(f"water shape: {water_volume_fraction.shape}")
             # volume weighted kappa, EQ 7 Petters and Kreidenweis (2007)
             kappa_weighted = np.sum(
                 solute_volume_fractions / solute_volume * self.kappa, axis=1
             )
             # kappa activity parameterization, EQ 2 Petters and Kreidenweis
             # (2007)
-            # water_activity = np.where(
-            #     water_volume_fraction <= 10 * MIN_POSITIVE_VALUE,
-            #     0,
-            #     (1 + kappa_weighted * solute_volume / water_volume_fraction)
-            #     ** -1,
-            # )
             numerator = kappa_weighted * solute_volume
             denominator = water_volume_fraction
             volume_term = np.divide(
                 numerator,
                 denominator,
-                out=np.zeros_like(denominator),  # Set where the condition fail
+                out=np.zeros_like(denominator),  # Set when the condition fails
                 where=denominator > MIN_POSITIVE_VALUE
             )
             water_activity = np.where(
@@ -231,12 +224,14 @@ class ActivityKappaParameter(ActivityStrategy):
             )
 
             # other species activity based on mole fraction
-            activity = mass_concentration_to_mole_fraction(
+            activity = convert_mass_concentration.to_mole_fraction(
                 mass_concentrations=mass_concentration,
                 molar_masses=self.molar_mass,
             )
             # replace water activity with kappa activity
             activity[:, self.water_index] = water_activity
+
+            print(f"mean water activity: {np.max(activity)}")
             return activity
         # single species
         water_volume_fraction = volume_fractions[self.water_index]
@@ -251,7 +246,7 @@ class ActivityKappaParameter(ActivityStrategy):
             1 + kappa_weighted * solute_volume / water_volume_fraction
         ) ** (-1)
         # other species activity based on mole fraction
-        activity = mass_concentration_to_mole_fraction(
+        activity = convert_mass_concentration.to_mole_fraction(
             mass_concentrations=mass_concentration,
             molar_masses=self.molar_mass,
         )
