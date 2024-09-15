@@ -11,6 +11,11 @@ pip install particula
 ```
 
 [Setup Particula](How-To-Guides/Setup_Particula/index.md){ .md-button .md-button--primary }
+[How to Guides](How-To-Guides/index.md){ .md-button }
+[Tutorials](Tutorials/index.md){ .md-button }
+[API Reference](API){ .md-button }
+
+</div>
 
 ## Contributing to `Particula`
 
