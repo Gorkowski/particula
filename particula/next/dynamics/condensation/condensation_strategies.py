@@ -66,19 +66,19 @@ class CondensationStrategy(ABC):
 
     Args:
         molar_mass: The molar mass of the species [kg/mol]. If a single value
-        is provided, it will be used for all species.
+            is provided, it will be used for all species.
         diffusion_coefficient: The diffusion coefficient of the species
-        [m^2/s]. If a single value is provided, it will be used for all
-        species. Default is 2*1e-9 m^2/s for air.
+            [m^2/s]. If a single value is provided, it will be used for all
+            species. Default is 2e-5 m^2/s for air.
         accommodation_coefficient: The mass accommodation coefficient of the
-        species. If a single value is provided, it will be used for all
-        species. Default is 1.0.
+            species. If a single value is provided, it will be used for all
+            species. Default is 1.0.
     """
 
     def __init__(
         self,
         molar_mass: Union[float, NDArray[np.float64]],
-        diffusion_coefficient: Union[float, NDArray[np.float64]] = 2 * 1e-9,
+        diffusion_coefficient: Union[float, NDArray[np.float64]] = 2e-5,
         accommodation_coefficient: Union[float, NDArray[np.float64]] = 1.0,
         update_gases: bool = True,
     ):
@@ -105,7 +105,7 @@ class CondensationStrategy(ABC):
 
         Returns:
             Union[float, NDArray[np.float64]]: The mean free path of the gas
-            molecules in meters (m).
+                molecules in meters (m).
 
         References:
             Mean Free Path:
@@ -135,11 +135,11 @@ class CondensationStrategy(ABC):
             temperature: The temperature of the gas [K].
             pressure: The pressure of the gas [Pa].
             dynamic_viscosity: The dynamic viscosity of the gas [Pa*s]. If
-            not provided, it will be calculated based on the temperature
+                not provided, it will be calculated based on the temperature
 
         Returns:
-            Union[float, NDArray[np.float64]]: The Knudsen number, which is the
-            ratio of the mean free path to the particle radius.
+            The Knudsen number, which is the ratio of the mean free path to
+                the particle radius.
 
         References:
             [Knudsen Number](https://en.wikipedia.org/wiki/Knudsen_number)
@@ -175,12 +175,11 @@ class CondensationStrategy(ABC):
             provided, it will be calculated based on the temperature
 
         Returns:
-            Union[float, NDArray[np.float64]]: The first-order mass transport
-            coefficient per particle (m^3/s).
+            The first-order mass transport coefficient per particle (m^3/s).
 
         References:
-            Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
-            number)
+            - Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
+                number)
         """
         vapor_transition = vapor_transition_correction(
             knudsen_number=self.knudsen_number(
@@ -214,17 +213,16 @@ class CondensationStrategy(ABC):
 
         Args:
             particle: The particle for which the mass transfer rate is to be
-            calculated.
+                calculated.
             gas_species: The gas species with which the particle is in contact.
             temperature: The temperature at which the mass transfer rate
-            is to be calculated.
+                is to be calculated.
             pressure: The pressure of the gas phase.
             dynamic_viscosity: The dynamic viscosity of the gas [Pa*s]. If not
-            provided, it will be calculated based on the temperature
+                provided, it will be calculated based on the temperature
 
         Returns:
-            Union[float, NDArray[np.float64]]: The mass transfer rate for the
-            particle [kg/s].
+            The mass transfer rate for the particle [kg/s].
         """
 
     @abstractmethod
@@ -254,9 +252,8 @@ class CondensationStrategy(ABC):
             pressure (float): The pressure of the system in Pascals.
 
         Returns:
-            An array of condensation rates for each particle,
-            scaled by
-            particle concentration.
+            An array of condensation rates for each particle, scaled by
+                particle concentration.
         """
 
     # pylint: disable=too-many-arguments
@@ -281,8 +278,8 @@ class CondensationStrategy(ABC):
             time_step (float): The time step for the process in seconds.
 
         Returns:
-            ParticleRepresentation: The modified particle instance.
-            GasSpecies: The modified gas species instance.
+            (ParticleRepresentation, GasSpecies): The modified particle
+                instance and the modified gas species instance.
         """
 
 
