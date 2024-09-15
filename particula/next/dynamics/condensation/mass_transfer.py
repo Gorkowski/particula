@@ -132,9 +132,9 @@ def radius_transfer_rate(
     Returns:
         The radius growth rate for the particle [m/s].
     """
-    if mass_rate.ndim == 2:
+    if isinstance(mass_rate, np.ndarray) and mass_rate.ndim == 2:
         radius = radius[:, np.newaxis]  # type: ignore
-    return mass_rate / (density * 4 * np.pi * radius ** 2)
+    return mass_rate / (density * 4 * np.pi * radius ** 2)  # type: ignore
 
 
 def calculate_mass_transfer(
