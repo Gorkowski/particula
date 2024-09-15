@@ -14,7 +14,7 @@
 
     ---
 
-    [Dynamics](Dynamics/index.md) is a collection of classes that processes for the `Aerosol` objects.
+    [Dynamics](Dynamics/index.md) is a collection of classes that processes for the `Aerosol` objects, to perform coagulation, condensation, and other processes.
 
     [:octicons-arrow-right-24: Tutorial](Dynamics/index.md)
 
@@ -22,7 +22,7 @@
 
     ---
 
-    Learn about how to represent the [Gas Phase](Gas_Phase/index.md), including vapor pressures and atmospheric properties.
+    Learn how to represent the [Gas Phase](Gas_Phase/index.md), including vapor pressures and atmospheric properties.
 
     [:octicons-arrow-right-24: Tutorial](Gas_Phase/index.md)
 
@@ -30,7 +30,7 @@
 
     ---
 
-    Learn about how to represent the [Particle Phase](Particle_Phase/index.md), including different particle representations.
+    Learn about how to represent the [Particle Phase](Particle_Phase/index.md), including different particle representations; radius bins, speciated mass bins, and particle resolved.
 
     [:octicons-arrow-right-24: Tutorial](Particle_Phase/index.md)
 
