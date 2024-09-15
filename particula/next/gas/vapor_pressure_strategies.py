@@ -24,8 +24,6 @@ from particula.next.gas.properties.vapor_pressure_module import (
     clausius_clapeyron_vapor_pressure,
 )
 
-from particula.constants import GAS_CONSTANT
-
 
 class VaporPressureStrategy(ABC):
     """Abstract class for vapor pressure calculations. The methods
