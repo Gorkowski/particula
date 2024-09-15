@@ -9230,7 +9230,7 @@ plt.show()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [69]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [72]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
@@ -9262,9 +9262,6 @@ plt.show()</div>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">])</span>  <span class="c1"># Set limits for y-axis</span>
 
 <span class="c1"># Set axis labels</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span>
-    <span class="s2">"linear"</span>
-<span class="p">)</span>  <span class="c1"># Time on x-axis is usually linear, but change to log if needed</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">)</span>  <span class="c1"># Log scale for particle radius on y-axis</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Time (s)"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Particle radius (m)"</span><span class="p">)</span>
@@ -9290,9 +9287,6 @@ cbar.set_label("Number concentration (m^-3)")
 ax.set_ylim([1e-8, 1e-5])  # Set limits for y-axis
 
 # Set axis labels
-ax.set_xscale(
-    "linear"
-)  # Time on x-axis is usually linear, but change to log if needed
 ax.set_yscale("log")  # Log scale for particle radius on y-axis
 ax.set_xlabel("Time (s)")
 ax.set_ylabel("Particle radius (m)")
@@ -9309,7 +9303,7 @@ plt.show()</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\kkgor\AppData\Local\Temp\ipykernel_26752\3578961921.py:9: UserWarning: Log scale: values of z &lt;= 0 have been masked
+<pre>C:\Users\kkgor\AppData\Local\Temp\ipykernel_26752\1847830080.py:9: UserWarning: Log scale: values of z &lt;= 0 have been masked
   contour = ax.contourf(
 </pre>
 </div>
