@@ -76,10 +76,10 @@ pip install particula
 ### or Install the main repository
 
 ```bash
-pip install git+https://github.com/Gorkowski/particula.git
+pip install git+https://github.com/uncscode/particula.git
 ```
 
-### or Install the **Gorkowski** fork
+### or Install the *Gorkowski* fork
 
 ```bash
 pip install git+https://github.com/Gorkowski/particula.git
