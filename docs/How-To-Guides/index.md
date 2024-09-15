@@ -47,7 +47,7 @@
 
     ---
 
-    *in BETA*:material-progress-clock: How to organize and analyze data multiple instrument files using `Streams` and `Lakes` data organization. Useful for bulk and repeatable data analysis.
+    *in BETA*:material-progress-clock: How to organize and analyze data from multiple instruments using `Streams` and `Lakes` organization. Useful for bulk and repeatable data analysis.
 
     [:octicons-arrow-right-24: Tutorial](Data_Streams_and_Lakes/index.md)
 
