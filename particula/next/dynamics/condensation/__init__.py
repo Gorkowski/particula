@@ -17,7 +17,6 @@ from particula.next.dynamics.condensation.condensation_strategies import (
 from particula.next.dynamics.condensation.mass_transfer import (
     mass_transfer_rate,
     first_order_mass_transport_k,
-    mass_transfer_rate,
     radius_transfer_rate,
     calculate_mass_transfer,
 )
