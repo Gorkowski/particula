@@ -10,7 +10,7 @@ Next is the next iteration of the particula simulation model. It is a complete r
 
 ## Continuous Particle PDF and PMF
 
-- [ ] Bin Remapping after condensation and evaporation is needed
+- [ ] Bin Remapping after condensation and evaporation is needed, or dr/dt method
 - [x] Coagulation needs to be checked for PMF vs PDF handling
 - [x] ODE solver for both needs to be implemented
 
