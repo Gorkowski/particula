@@ -6,7 +6,7 @@
 
 ## CondensationIsothermal
 
-[Show source in condensation_strategies.py:290](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L290)
+[Show source in condensation_strategies.py:287](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L287)
 
 Condensation strategy for isothermal conditions.
 
@@ -34,7 +34,7 @@ class CondensationIsothermal(CondensationStrategy):
 
 ### CondensationIsothermal().mass_transfer_rate
 
-[Show source in condensation_strategies.py:313](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L313)
+[Show source in condensation_strategies.py:310](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L310)
 
 #### Signature
 
@@ -56,7 +56,7 @@ def mass_transfer_rate(
 
 ### CondensationIsothermal().rate
 
-[Show source in condensation_strategies.py:359](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L359)
+[Show source in condensation_strategies.py:356](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L356)
 
 #### Signature
 
@@ -77,7 +77,7 @@ def rate(
 
 ### CondensationIsothermal().step
 
-[Show source in condensation_strategies.py:388](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L388)
+[Show source in condensation_strategies.py:385](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L385)
 
 #### Signature
 
@@ -112,13 +112,13 @@ specific mass transfer strategies.
 #### Arguments
 
 - `molar_mass` - The molar mass of the species [kg/mol]. If a single value
-is provided, it will be used for all species.
+    is provided, it will be used for all species.
 - `diffusion_coefficient` - The diffusion coefficient of the species
-[m^2/s]. If a single value is provided, it will be used for all
-species. Default is 2*1e-9 m^2/s for air.
+    [m^2/s]. If a single value is provided, it will be used for all
+    species. Default is 2e-5 m^2/s for air.
 - `accommodation_coefficient` - The mass accommodation coefficient of the
-species. If a single value is provided, it will be used for all
-species. Default is 1.0.
+    species. If a single value is provided, it will be used for all
+    species. Default is 1.0.
 
 #### Signature
 
@@ -127,7 +127,7 @@ class CondensationStrategy(ABC):
     def __init__(
         self,
         molar_mass: Union[float, NDArray[np.float64]],
-        diffusion_coefficient: Union[float, NDArray[np.float64]] = 2 * 1e-09,
+        diffusion_coefficient: Union[float, NDArray[np.float64]] = 2e-05,
         accommodation_coefficient: Union[float, NDArray[np.float64]] = 1.0,
         update_gases: bool = True,
     ): ...
@@ -154,13 +154,12 @@ provided, it will be calculated based on the temperature
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float64]]* - The first-order mass transport
-coefficient per particle (m^3/s).
+The first-order mass transport coefficient per particle (m^3/s).
 
 #### References
 
-Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
-number)
+- Aerosol Modeling, Chapter 2, Equation 2.49 (excluding particle
+    number)
 
 #### Signature
 
@@ -189,12 +188,12 @@ molecules and the radius of the particle.
 - `temperature` - The temperature of the gas [K].
 - `pressure` - The pressure of the gas [Pa].
 - `dynamic_viscosity` - The dynamic viscosity of the gas [Pa*s]. If
-not provided, it will be calculated based on the temperature
+    not provided, it will be calculated based on the temperature
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float64]]* - The Knudsen number, which is the
-ratio of the mean free path to the particle radius.
+The Knudsen number, which is the ratio of the mean free path to
+    the particle radius.
 
 #### References
 
@@ -214,7 +213,7 @@ def knudsen_number(
 
 ### CondensationStrategy().mass_transfer_rate
 
-[Show source in condensation_strategies.py:200](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L200)
+[Show source in condensation_strategies.py:199](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L199)
 
 Mass transfer rate for a particle.
 
@@ -224,18 +223,17 @@ pressure and the first-order mass transport coefficient.
 #### Arguments
 
 - `particle` - The particle for which the mass transfer rate is to be
-calculated.
+    calculated.
 - `gas_species` - The gas species with which the particle is in contact.
 - `temperature` - The temperature at which the mass transfer rate
-is to be calculated.
+    is to be calculated.
 - `pressure` - The pressure of the gas phase.
 - `dynamic_viscosity` - The dynamic viscosity of the gas [Pa*s]. If not
-provided, it will be calculated based on the temperature
+    provided, it will be calculated based on the temperature
 
 #### Returns
 
-- `Union[float,` *NDArray[np.float64]]* - The mass transfer rate for the
-particle [kg/s].
+The mass transfer rate for the particle [kg/s].
 
 #### Signature
 
@@ -273,7 +271,7 @@ provided, it will be calculated based on the temperature
 #### Returns
 
 - `Union[float,` *NDArray[np.float64]]* - The mean free path of the gas
-molecules in meters (m).
+    molecules in meters (m).
 
 #### References
 
@@ -290,7 +288,7 @@ def mean_free_path(
 
 ### CondensationStrategy().rate
 
-[Show source in condensation_strategies.py:230](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L230)
+[Show source in condensation_strategies.py:228](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L228)
 
 Calculate the rate of mass condensation for each particle due to
 each condensable gas species.
@@ -312,9 +310,8 @@ condensation rate for each particle or bin.
 
 #### Returns
 
-An array of condensation rates for each particle,
-scaled by
-particle concentration.
+An array of condensation rates for each particle, scaled by
+    particle concentration.
 
 #### Signature
 
@@ -336,7 +333,7 @@ def rate(
 
 ### CondensationStrategy().step
 
-[Show source in condensation_strategies.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L263)
+[Show source in condensation_strategies.py:260](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L260)
 
 Execute the condensation process for a given time step.
 
@@ -351,8 +348,8 @@ Execute the condensation process for a given time step.
 
 #### Returns
 
-- `ParticleRepresentation` - The modified particle instance.
-- `GasSpecies` - The modified gas species instance.
+- `(ParticleRepresentation,` *GasSpecies)* - The modified particle
+    instance and the modified gas species instance.
 
 #### Signature
 
