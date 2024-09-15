@@ -2,7 +2,7 @@
 
 Particula is python-based aerosol particle simulator. The goal is to have a robust aerosol (gas phase *and* particle phase) simulation that can be used to answer scientific questions that arise in experiments and research endeavors.
 
-## Setup Instructions
+## PIP Installation
 
 If your python environment is already set up, you can install `Particula` via pip using the following command:
 
@@ -15,7 +15,6 @@ pip install particula
 [Tutorials](Tutorials/index.md){ .md-button }
 [API Reference](API){ .md-button }
 
-</div>
 
 ## Contributing to `Particula`
 
