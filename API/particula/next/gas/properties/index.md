@@ -9,5 +9,6 @@
 - [Concentration Function](./concentration_function.md)
 - [Dynamic Viscosity](./dynamic_viscosity.md)
 - [Mean Free Path](./mean_free_path.md)
-- [Partial Pressure Function](./partial_pressure_function.md)
+- [Pressure Function](./pressure_function.md)
 - [Thermal Conductivity](./thermal_conductivity.md)
+- [Vapor Pressure Module](./vapor_pressure_module.md)

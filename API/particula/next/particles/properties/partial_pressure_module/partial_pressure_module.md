@@ -14,19 +14,17 @@ of change of mass of an aerosol particle.
 
 #### Arguments
 
------
-- partial_pressure_gas (Union[float, NDArray[np.float64]]): The partial
-pressure of the species in the gas phase.
-- partial_pressure_particle (Union[float, NDArray[np.float64]]): The partial
-pressure of the species in the particle phase.
-- kelvin_term (Union[float, NDArray[np.float64]]): Kelvin effect to account
-for the curvature of the particle.
+- `partial_pressure_gas` - The partial pressure of the species in the
+    gas phase.
+- `partial_pressure_particle` - The partial pressure of the species in
+    the particle phase.
+- `kelvin_term` - Kelvin effect to account for the curvature of
+    the particle.
 
 #### Returns
 
---------
-- Union[float, NDArray[np.float64]]: The difference in partial pressure
-between the gas phase and the particle phase.
+The difference in partial pressure between the gas phase and the
+    particle phase.
 
 #### Signature
 

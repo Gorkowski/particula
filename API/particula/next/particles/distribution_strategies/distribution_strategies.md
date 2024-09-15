@@ -36,7 +36,7 @@ Adds mass to the distribution of particles.
 
 - `distribution` - The distribution of particle sizes or masses.
 - `concentration` - The concentration of each particle size or mass in
-the distribution.
+    the distribution.
 - `density` - The density of the particles.
 - `added_mass` - The mass to be added per distribution bin.
 
@@ -321,7 +321,7 @@ def add_mass(
 
 ### ParticleResolvedSpeciatedMass().collide_pairs
 
-[Show source in distribution_strategies.py:347](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L347)
+[Show source in distribution_strategies.py:348](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L348)
 
 #### Signature
 
