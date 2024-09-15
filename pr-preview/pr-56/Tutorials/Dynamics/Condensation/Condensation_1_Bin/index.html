@@ -6926,18 +6926,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#core-concepts" class="md-nav__link">
+  <a href="#setup-aerosol" class="md-nav__link">
     <span class="md-ellipsis">
-      Core Concepts:
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aerosol-object" class="md-nav__link">
-    <span class="md-ellipsis">
-      Aerosol Object
+      Setup Aerosol
     </span>
   </a>
   
@@ -8077,18 +8068,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#core-concepts" class="md-nav__link">
+  <a href="#setup-aerosol" class="md-nav__link">
     <span class="md-ellipsis">
-      Core Concepts:
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aerosol-object" class="md-nav__link">
-    <span class="md-ellipsis">
-      Aerosol Object
+      Setup Aerosol
     </span>
   </a>
   
@@ -8573,7 +8555,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="condensation-tutorial-radius-bin">Condensation Tutorial: Radius Bin<a class="anchor-link" href="#condensation-tutorial-radius-bin">¶</a></h1><p><em>Work in progress, probably split into multiple notebooks, need to find a model system to test this on</em></p>
 <p>Condensation, is the first process where this framework we have been building up is applied. Here we need to account for the gas phase, and the particle phase. Then ensure that the partial pressures of species at the surface of the particle are equal to the partial pressure in the gas.</p>
-<h3 id="core-concepts">Core Concepts:<a class="anchor-link" href="#core-concepts">¶</a></h3><ul>
+<p><strong>Core Concepts:</strong></p>
+<ul>
 <li><strong>Runnable</strong>: An abstract base class defining the interface for aerosol transformation processes.<ul>
 <li>Here and aerosol object is passed to the process, and the process is expected to modify the aerosol object in place, returning the modified object.</li>
 </ul>
@@ -8602,8 +8585,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># particula imports</span>
@@ -8615,8 +8597,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <span class="kn">from</span> <span class="nn">particula.next.dynamics.particle_process</span> <span class="kn">import</span> <span class="n">MassCondensation</span>
 <span class="kn">from</span> <span class="nn">particula.next.dynamics.condensation.condensation_strategies</span> <span class="kn">import</span> <span class="n">CondensationIsothermal</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">from copy import copy
-import numpy as np
+<div class="clipboard-copy-txt" id="cell-1">import numpy as np
 import matplotlib.pyplot as plt
 
 # particula imports
@@ -8639,7 +8620,7 @@ from particula.next.dynamics.condensation.condensation_strategies import Condens
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="aerosol-object">Aerosol Object<a class="anchor-link" href="#aerosol-object">¶</a></h2><p>First we will repeat the aerosol object that we have been using in the previous notebooks. This object will be passed to the <code>Runnable</code> processes <code>MassCondensation</code>, and modified in place.</p>
+<h2 id="setup-aerosol">Setup Aerosol<a class="anchor-link" href="#setup-aerosol">¶</a></h2><p>First we will repeat the aerosol object that we have been using in the previous notebooks. This object will be passed to the <code>Runnable</code> processes <code>MassCondensation</code>, and modified in place.</p>
 </div>
 </div>
 </div>
