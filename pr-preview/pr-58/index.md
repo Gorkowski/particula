@@ -4,9 +4,9 @@ Particula is python-based aerosol particle simulator. The goal is to have a robu
 
 ## PIP Installation
 
-If your python environment is already set up, you can install `Particula` via pip using the following command:
+If your python environment is already set up, you can install [`Particula` via pip](https://pypi.org/project/particula/) using the following command:
 
-```bash
+``` bash
 pip install particula
 ```
 
