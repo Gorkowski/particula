@@ -10,7 +10,7 @@ If your python environment is already set up, you can install `Particula` via pi
 pip install particula
 ```
 
-If you want a more detailed setup guide go to [Setup Particula](How-To-Guides/Setup_Particula/index.md).
+[Setup Particula](How-To-Guides/Setup_Particula/index.md){ .md-button .md-button--primary }
 
 ## Contributing to `Particula`
 
