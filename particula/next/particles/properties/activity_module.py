@@ -117,6 +117,7 @@ def ideal_activity_mass(
     )
 
 
+# pylint: disable=too-many-locals
 def kappa_activity(
     mass_concentration: NDArray[np.float64],
     kappa: NDArray[np.float64],
