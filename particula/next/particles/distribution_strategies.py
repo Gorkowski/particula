@@ -219,7 +219,7 @@ class MassBasedMovingBin(DistributionStrategy):
         if concentration.shape != added_concentration.shape:
             message = (
                 "When adding concentration to MassBasedMovingBin,"
-                + " the concentration and added concentration should have "
+                " the concentration and added concentration should have "
                 "the same shape. The current concentration shape is "
                 f"{concentration.shape} and the added concentration shape is "
                 f"{added_concentration.shape}."
@@ -298,7 +298,7 @@ class RadiiBasedMovingBin(DistributionStrategy):
         ):
             message = (
                 "When adding concentration to RadiiBasedMovingBin,"
-                + " the distribution and added distribution should have "
+                " the distribution and added distribution should have "
                 "the same elements. The current distribution shape is "
                 f"{distribution.shape} and the added distribution shape is "
                 f"{added_distribution.shape}."
@@ -309,7 +309,7 @@ class RadiiBasedMovingBin(DistributionStrategy):
         if concentration.shape != added_concentration.shape:
             message = (
                 "When adding concentration to RadiiBasedMovingBin,"
-                + " the concentration and added concentration should have "
+                " the concentration and added concentration should have "
                 "the same shape. The current concentration shape is "
                 f"{concentration.shape} and the added concentration shape is "
                 f"{added_concentration.shape}."
@@ -392,7 +392,7 @@ class SpeciatedMassMovingBin(DistributionStrategy):
         ):
             message = (
                 "When adding concentration to SpeciatedMassMovingBin,"
-                + " the distribution and added distribution should have "
+                " the distribution and added distribution should have "
                 "the same elements. The current distribution shape is "
                 f"{distribution.shape} and the added distribution shape is "
                 f"{added_distribution.shape}."
@@ -403,7 +403,7 @@ class SpeciatedMassMovingBin(DistributionStrategy):
         if concentration.shape != added_concentration.shape:
             message = (
                 "When adding concentration to SpeciatedMassMovingBin,"
-                + " the concentration and added concentration should have "
+                " the concentration and added concentration should have "
                 "the same shape. The current concentration shape is "
                 f"{concentration.shape} and the added concentration shape is "
                 f"{added_concentration.shape}."
