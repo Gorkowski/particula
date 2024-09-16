@@ -486,7 +486,8 @@ class ParticleResolvedSpeciatedMass(DistributionStrategy):
         if np.all(added_concentration == 1):
             rescaled = True
         if (
-            np.all(added_concentration == np.max(concentration)) or
+            np.allclose(
+                added_concentration, np.max(concentration), atol=1e-2) or
             np.all(concentration == 0)
            ):
             # then rescale the added concentration
@@ -500,6 +501,15 @@ class ParticleResolvedSpeciatedMass(DistributionStrategy):
             )
             logger.error(message)
             raise ValueError(message)
+
+        # replace concentration with ones, as it is not defined by volume,
+        # when it is stored in the class
+        concentration = np.divide(
+            concentration,
+            concentration,
+            out=np.zeros_like(concentration),
+            where=concentration != 0
+        )
 
         # find empty distribution bins
         empty_bins = np.flatnonzero(np.all(concentration == 0))

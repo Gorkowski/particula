@@ -321,7 +321,9 @@ class ParticleRepresentation:
             added_concentration: The concentration to be
                 added per distribution bin.
         """
+        # if added_distribution is None, then it will be calculated
         if added_distribution is None:
+            print("None distribution")
             added_distribution = self.get_distribution()
         # self.concentration += added_concentration
         (self.distribution, self.concentration) = (
