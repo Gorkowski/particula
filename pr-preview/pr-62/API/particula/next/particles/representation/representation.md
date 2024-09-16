@@ -107,7 +107,7 @@ def add_mass(self, added_mass: NDArray[np.float64]) -> None: ...
 
 ### ParticleRepresentation().collide_pairs
 
-[Show source in representation.py:336](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L336)
+[Show source in representation.py:338](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L338)
 
 Collide pairs of indices, used for ParticleResolved Strategies.
 
