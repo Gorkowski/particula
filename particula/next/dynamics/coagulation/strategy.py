@@ -658,6 +658,7 @@ class ParticleResolved(CoagulationStrategy):
                 dtype=np.float64
             )
         # else kernel bins per decade
+        print(f"min_radius: {min_radius}, max_radius: {max_radius}")
         num = np.ceil(
             self.kernel_bins_per_decade * np.log10(max_radius / min_radius),
         )
