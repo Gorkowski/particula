@@ -56,7 +56,7 @@ def mass_transfer_rate(
 
 ### CondensationIsothermal().rate
 
-[Show source in condensation_strategies.py:356](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L356)
+[Show source in condensation_strategies.py:364](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L364)
 
 #### Signature
 
@@ -77,7 +77,7 @@ def rate(
 
 ### CondensationIsothermal().step
 
-[Show source in condensation_strategies.py:385](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L385)
+[Show source in condensation_strategies.py:393](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L393)
 
 #### Signature
 

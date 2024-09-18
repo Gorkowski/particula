@@ -353,7 +353,7 @@ class ParticleResolvedSpeciatedMass(DistributionStrategy): ...
 
 ### ParticleResolvedSpeciatedMass().add_concentration
 
-[Show source in distribution_strategies.py:477](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L477)
+[Show source in distribution_strategies.py:479](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L479)
 
 #### Signature
 
@@ -385,7 +385,7 @@ def add_mass(
 
 ### ParticleResolvedSpeciatedMass().collide_pairs
 
-[Show source in distribution_strategies.py:539](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L539)
+[Show source in distribution_strategies.py:541](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/distribution_strategies.py#L541)
 
 #### Signature
 

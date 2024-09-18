@@ -736,7 +736,7 @@ class ParticleResolved(CoagulationStrategy):
 
 ### ParticleResolved().dimensionless_kernel
 
-[Show source in strategy.py:673](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L673)
+[Show source in strategy.py:672](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L672)
 
 #### Signature
 
@@ -750,7 +750,7 @@ def dimensionless_kernel(
 
 ### ParticleResolved().gain_rate
 
-[Show source in strategy.py:713](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L713)
+[Show source in strategy.py:712](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L712)
 
 #### Signature
 
@@ -794,7 +794,7 @@ def get_kernel_radius(self, particle: ParticleRepresentation) -> NDArray[np.floa
 
 ### ParticleResolved().kernel
 
-[Show source in strategy.py:686](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L686)
+[Show source in strategy.py:685](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L685)
 
 #### Signature
 
@@ -810,7 +810,7 @@ def kernel(
 
 ### ParticleResolved().loss_rate
 
-[Show source in strategy.py:703](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L703)
+[Show source in strategy.py:702](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L702)
 
 #### Signature
 
@@ -826,7 +826,7 @@ def loss_rate(
 
 ### ParticleResolved().net_rate
 
-[Show source in strategy.py:723](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L723)
+[Show source in strategy.py:722](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L722)
 
 #### Signature
 
@@ -842,7 +842,7 @@ def net_rate(
 
 ### ParticleResolved().step
 
-[Show source in strategy.py:734](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L734)
+[Show source in strategy.py:733](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/strategy.py#L733)
 
 #### Signature
 
