@@ -6,7 +6,7 @@
 
 ## phi
 
-[Show source in vapor_flux.py:14](https://github.com/Gorkowski/particula/blob/main/particula/util/vapor_flux.py#L14)
+[Show source in vapor_flux.py:18](https://github.com/Gorkowski/particula/blob/main/particula/util/vapor_flux.py#L18)
 
 vapor flux
 

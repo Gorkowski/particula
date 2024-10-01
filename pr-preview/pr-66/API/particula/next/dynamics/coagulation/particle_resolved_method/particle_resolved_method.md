@@ -6,7 +6,7 @@
 
 ## calculate_probabilities
 
-[Show source in particle_resolved_method.py:32](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L32)
+[Show source in particle_resolved_method.py:33](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L33)
 
 Calculate coagulation probabilities based on kernel values and system
 parameters.
@@ -39,7 +39,7 @@ def calculate_probabilities(
 
 ## interpolate_kernel
 
-[Show source in particle_resolved_method.py:14](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L14)
+[Show source in particle_resolved_method.py:15](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L15)
 
 Create a 2D interpolation function for the coagulation kernel.
 
@@ -65,7 +65,7 @@ def interpolate_kernel(
 
 ## particle_resolved_coagulation_step
 
-[Show source in particle_resolved_method.py:139](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L139)
+[Show source in particle_resolved_method.py:140](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L140)
 
 Perform a single step of particle coagulation, updating particle radii
 based on coagulation events.
@@ -106,7 +106,7 @@ def particle_resolved_coagulation_step(
 
 ## particle_resolved_update_step
 
-[Show source in particle_resolved_method.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L93)
+[Show source in particle_resolved_method.py:94](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L94)
 
 Update the particle radii and concentrations after coagulation events.
 
@@ -140,7 +140,7 @@ def particle_resolved_update_step(
 
 ## resolve_final_coagulation_state
 
-[Show source in particle_resolved_method.py:56](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L56)
+[Show source in particle_resolved_method.py:57](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/particle_resolved_method.py#L57)
 
 Resolve the final state of particles that have undergone multiple
 coagulation events.

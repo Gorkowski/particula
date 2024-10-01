@@ -69,7 +69,7 @@ def __str__(self) -> str: ...
 
 ### ParticleRepresentation().add_concentration
 
-[Show source in representation.py:313](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L313)
+[Show source in representation.py:309](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L309)
 
 Adds concentration to the particle distribution.
 
@@ -90,7 +90,7 @@ def add_concentration(
 
 ### ParticleRepresentation().add_mass
 
-[Show source in representation.py:298](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L298)
+[Show source in representation.py:294](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L294)
 
 Adds mass to the particle distribution, and updates parameters.
 
@@ -107,7 +107,7 @@ def add_mass(self, added_mass: NDArray[np.float64]) -> None: ...
 
 ### ParticleRepresentation().collide_pairs
 
-[Show source in representation.py:338](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L338)
+[Show source in representation.py:334](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L334)
 
 Collide pairs of indices, used for ParticleResolved Strategies.
 
@@ -293,7 +293,7 @@ def get_mass_concentration(self, clone: bool = False) -> np.float64: ...
 
 ### ParticleRepresentation().get_radius
 
-[Show source in representation.py:284](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L284)
+[Show source in representation.py:280](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L280)
 
 Returns the radius of the particles as calculated by the strategy.
 

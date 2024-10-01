@@ -6,7 +6,7 @@
 
 ## get_properties_for_liquid_vapor_partitioning
 
-[Show source in partitioning.py:180](https://github.com/Gorkowski/particula/blob/main/particula/equilibria/partitioning.py#L180)
+[Show source in partitioning.py:210](https://github.com/Gorkowski/particula/blob/main/particula/equilibria/partitioning.py#L210)
 
 Get properties for liquid-vapor partitioning.
 
@@ -45,7 +45,7 @@ def liquid_vapor_obj_function(
 
 ## liquid_vapor_partitioning
 
-[Show source in partitioning.py:128](https://github.com/Gorkowski/particula/blob/main/particula/equilibria/partitioning.py#L128)
+[Show source in partitioning.py:157](https://github.com/Gorkowski/particula/blob/main/particula/equilibria/partitioning.py#L157)
 
 Thermodynamic equilibrium between liquid and vapor phase.
 with activity coefficients,

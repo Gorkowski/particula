@@ -6,7 +6,7 @@
 
 ## for_general_1d_load
 
-[Show source in settings_generator.py:13](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L13)
+[Show source in settings_generator.py:14](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L14)
 
 Generate a settings dictionary for loading and checking 1D data from CSV
 files.
@@ -69,7 +69,7 @@ def for_general_1d_load(
 
 ## for_general_sizer_1d_2d_load
 
-[Show source in settings_generator.py:88](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L88)
+[Show source in settings_generator.py:89](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L89)
 
 Generate settings for the 1D general file loader and the 2D general sizer
     file loader.
@@ -135,7 +135,7 @@ def for_general_sizer_1d_2d_load(
 
 ## load_settings_for_lake
 
-[Show source in settings_generator.py:261](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L261)
+[Show source in settings_generator.py:260](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L260)
 
 Load settings for Lake data from a JSON file. The settings file is
 a dictionary of stream settings dictionaries.
@@ -173,7 +173,7 @@ def load_settings_for_lake(
 
 ## load_settings_for_stream
 
-[Show source in settings_generator.py:185](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L185)
+[Show source in settings_generator.py:186](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L186)
 
 Load settings for Stream data from a JSON file.
 
@@ -242,7 +242,7 @@ def save_settings_for_lake(
 
 ## save_settings_for_stream
 
-[Show source in settings_generator.py:230](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L230)
+[Show source in settings_generator.py:232](https://github.com/Gorkowski/particula/blob/main/particula/data/settings_generator.py#L232)
 
 Save settings for lake data to a JSON file.
 
