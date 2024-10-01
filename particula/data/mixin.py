@@ -505,6 +505,44 @@ class ChecksSkipEndMixin:
         return self
 
 
+class ChecksStripCharsMixin:
+    """Mixin class for setting the characters to strip from the data lines."""
+
+    def __init__(self):
+        self.strip_chars = None
+
+    def set_strip_chars(self, strip_chars: str):
+        """Set the characters to strip from the data lines.
+
+        This is useful to remove unwanted characters from the data lines
+        before converting the data to the required format. The order of the
+        characters in the strip_chars is not important. The strip is applied
+        per character, not as a whole string. This uses the Python str.strip
+        method.
+
+        Args:
+            strip_chars (str): Characters to strip from the data lines before
+                performing the data checks. e.g. ' \n' to strip spaces and
+                newlines.
+
+        Examples:
+        ``` py title="Strip brackets"
+        strip_chars = "]["
+        # data: '[1], [2], [3]' -> '1, 2, 3'
+        ```
+
+        ``` py title="Strip spaces and newlines"
+        strip_chars = " \n"
+        # data: ' 1, 2, 3\n' -> '1,2,3'
+        ```
+
+        References:
+            [Python str.strip](https://docs.python.org/3/library/stdtypes.html#str.strip)
+        """
+        self.strip_chars = strip_chars
+        return self
+
+
 class SizerStartKeywordMixin:
     """Mixin class for setting the start key for the sizer data."""
 
