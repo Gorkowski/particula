@@ -44,8 +44,8 @@ def cost_function(
     # Unpack the parameters
     num_modes = 2
     mode_values = params[:num_modes]
-    geometric_standard_deviation = params[num_modes : (2 * num_modes)]
-    number_of_particles = params[(2 * num_modes) :]
+    geometric_standard_deviation = params[num_modes: (2 * num_modes)]
+    number_of_particles = params[(2 * num_modes):]
 
     # Generate the guessed concentration PDF
     concentration_pdf_guess = lognormal_pdf_distribution(

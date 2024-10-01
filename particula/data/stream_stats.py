@@ -234,8 +234,8 @@ def select_time_window(
 
     if epoch_end is None:
         # If no end time provided, keep only the closest time point
-        stream.time = stream.time[index_start : index_start + 1]
-        stream.data = stream.data[index_start : index_start + 1, :]
+        stream.time = stream.time[index_start: index_start + 1]
+        stream.data = stream.data[index_start: index_start + 1, :]
     else:
         # Get index of end time
         index_end = np.argmin(np.abs(stream.time - epoch_end)) + 1
