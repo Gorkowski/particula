@@ -136,7 +136,7 @@ def particle_resolved_update_step(
     return particle_radius, loss, gain
 
 
-# pylint: disable=too-many-positional-arguments, too-many-locals
+# pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
 def particle_resolved_coagulation_step(
     particle_radius: NDArray[np.float64],
     kernel: NDArray[np.float64],

@@ -135,7 +135,7 @@ def _cost_physical_radius(
     return (new_aerodynamic_radius - aerodynamic_radius) ** 2
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def convert_aerodynamic_to_physical_radius(
     aerodynamic_radius: Union[float, NDArray[np.float64]],
     pressure: float,
@@ -193,7 +193,7 @@ def convert_aerodynamic_to_physical_radius(
     return optimal_physical_radius  # type: ignore
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def convert_physical_to_aerodynamic_radius(
     physical_radius: Union[float, NDArray[np.float64]],
     pressure: float,

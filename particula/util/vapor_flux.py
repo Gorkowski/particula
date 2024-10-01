@@ -15,7 +15,7 @@ from particula.util.particle_surface import area
 from particula.util.rms_speed import cbar
 
 
-def phi(  # pylint: disable=too-many-positional-arguments
+def phi(  # pylint: disable=too-many-positional-arguments, too-many-arguments
     particle_area=None,
     molecular_enhancement=None,
     vapor_attachment=1,

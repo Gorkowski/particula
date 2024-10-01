@@ -3,7 +3,7 @@
 # pyright: reportReturnType=false, reportAssignmentType=false
 # pyright: reportIndexIssue=false
 # pyright: reportArgumentType=false, reportOperatorIssue=false
-# pylint: disable=too-many-positional-arguments, too-many-locals
+# pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
 
 
 from typing import Union, Tuple

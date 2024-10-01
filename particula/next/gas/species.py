@@ -46,7 +46,7 @@ class GasSpecies:
     - add_concentration: Add concentration to the gas species.
     """
 
-    def __init__(  # pylint: disable=too-many-positional-arguments
+    def __init__(  # pylint: disable=too-many-positional-arguments, too-many-arguments
         self,
         name: Union[str, NDArray[np.str_]],
         molar_mass: Union[float, NDArray[np.float64]],

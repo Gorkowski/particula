@@ -17,7 +17,7 @@ from particula.data.stream import Stream
 from particula.next.dynamics import dilution, wall_loss, coagulation
 
 
-# pylint: disable=too-many-positional-arguments, too-many-locals
+# pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
 def calculate_pmf_rates(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
@@ -117,7 +117,7 @@ def calculate_pmf_rates(
     )
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def coagulation_rates_cost_function(
     parameters: NDArray[np.float64],
     radius_bins: NDArray[np.float64],
@@ -227,7 +227,7 @@ def optimize_parameters(
     return result.x[0], result.x[1]  # type: ignore
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def optimize_chamber_parameters(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
@@ -289,7 +289,7 @@ def optimize_chamber_parameters(
     )
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def calculate_optimized_rates(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],

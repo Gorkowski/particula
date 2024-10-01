@@ -161,7 +161,7 @@ def sample_events(
     return generator.poisson(events_exact * time_step)
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def random_choice_indices(
     lower_bin: int,
     upper_bin: int,
@@ -516,7 +516,7 @@ def calculate_concentration_in_bins(
     return concentration_in_bins
 
 
-# pylint: disable=too-many-positional-arguments, too-many-locals
+# pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
 def super_droplet_coagulation_step(
     particle_radius: NDArray[np.float64],
     particle_concentration: NDArray[np.float64],

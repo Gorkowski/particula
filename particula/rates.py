@@ -111,7 +111,7 @@ class Rates:
         nucleation=True,
         dilution=False,
         wall_loss=False,
-    ):  # pylint: disable=too-many-positional-arguments
+    ):  # pylint: disable=too-many-positional-arguments, too-many-arguments
         """Sum rates, with options to disable individual rate terms.
 
         Args:

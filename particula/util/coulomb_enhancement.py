@@ -32,7 +32,7 @@ class CoulombEnhancement:  # pylint: disable=too-many-instance-attributes
         temperature     (float) [K]             (default: 298)
     """
 
-    def __init__(  # pylint: disable=too-many-positional-arguments
+    def __init__(  # pylint: disable=too-many-positional-arguments, too-many-arguments
         self,
         radius=None,
         other_radius=None,

@@ -100,7 +100,7 @@ def average_std(
     )
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def filtering(
     stream: Stream,
     bottom: Optional[float] = None,
@@ -154,9 +154,8 @@ def filtering(
         stream = copy.copy(stream)
     # Get the data to be filtered
     data_is = (
-        stream[header]  # type: ignore
-        if header is not None else stream.data
-      )
+        stream[header] if header is not None else stream.data  # type: ignore
+    )
     # Create a mask for the data that should be retained or replaced
     mask = stats.mask_outliers(
         data=data_is, bottom=bottom, top=top, value=value, invert=invert
@@ -235,8 +234,8 @@ def select_time_window(
 
     if epoch_end is None:
         # If no end time provided, keep only the closest time point
-        stream.time = stream.time[index_start: index_start + 1]
-        stream.data = stream.data[index_start: index_start + 1, :]
+        stream.time = stream.time[index_start : index_start + 1]
+        stream.data = stream.data[index_start : index_start + 1, :]
     else:
         # Get index of end time
         index_end = np.argmin(np.abs(stream.time - epoch_end)) + 1

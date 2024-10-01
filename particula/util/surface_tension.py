@@ -1,6 +1,6 @@
 """ calculating the surface tension of a mixture of solutes and water """
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 
 import numpy as np
 from particula.util.input_handling import (
@@ -60,7 +60,7 @@ def dry_mixing(volume_fractions, surface_tensions):
     return np.sum(volume_fractions * surface_tensions)
 
 
-# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments
 def wet_mixing(
     volume_solute,
     volume_water,

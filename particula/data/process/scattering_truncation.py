@@ -1,6 +1,6 @@
 """Scattering Truncation Correction Functions"""
 
-# pylint: disable=too-many-positional-arguments, too-many-locals
+# pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals
 
 from typing import Union, Tuple
 from functools import lru_cache

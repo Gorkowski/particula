@@ -20,7 +20,7 @@ def combine_data(
     time_new: np.ndarray,
     header_new: list,
 ) -> Tuple[np.ndarray, list]:
-    # pylint: disable=too-many-positional-arguments
+    # pylint: disable=too-many-positional-arguments, too-many-arguments
     """ "
     Merge or adds processed data together. Accounts for data shape
     miss matches and duplicate timestamps. If the data is a different shape

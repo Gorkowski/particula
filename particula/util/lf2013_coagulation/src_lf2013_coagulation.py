@@ -7,8 +7,8 @@ import numpy as np
 
 
 # flake8: noqa: C901
-# pylint: disable=too-many-positional-arguments, too-many-locals, too-many-branches
-# pylint: disable=possibly-used-before-assignment, too-many-positional-arguments
+# pylint: disable=too-many-positional-arguments, too-many-arguments, too-many-locals, too-many-branches
+# pylint: disable=possibly-used-before-assignment, too-many-positional-arguments, too-many-arguments
 
 
 def lf2013_coag_full(
