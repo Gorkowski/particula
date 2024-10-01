@@ -213,11 +213,8 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
         data = filter_list(data, char_counts)
     if "replace_chars" in data_checks:
         replace_dict = data_checks.get("replace_chars", {})
-        print(f"replace dict: {replace_dict}")
         data = replace_list(data, replace_dict)
     if data := [x.strip() for x in data]:
-        print("Data formatted successfully")
-        print(data[0])
         return data
     else:
         raise ValueError("No data left in file")
