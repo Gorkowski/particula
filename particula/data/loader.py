@@ -4,6 +4,7 @@ from typing import Union, List
 from typing import List, Union, Tuple, Dict, Any, Optional
 from datetime import datetime, timezone
 import warnings
+import codecs
 import glob
 import os
 import pickle
@@ -23,7 +24,8 @@ def data_raw_loader(file_path: str) -> list:
     """Loads raw data from file.
 
     Load raw data from a file at the specified file path and return it as a
-    list of strings.
+    list of strings. Attempts to handle UTF-8, UTF-16, and UTF-32 encodings.
+    Defaults to UTF-8 if no byte order mark (BOM) is found.
 
     Args:
         file_path (str): The file path of the file to read.
@@ -40,11 +42,30 @@ def data_raw_loader(file_path: str) -> list:
         ```
     """
     try:
-        with open(file_path, "r", encoding="utf8", errors="replace") as file:
+        # Read a small part of the file to detect BOM (byte order mark)
+        with open(file_path, "rb") as f:
+            raw_bytes = f.read(4)
+
+        # Determine encoding based on BOM
+        if raw_bytes.startswith(codecs.BOM_UTF16_LE) or raw_bytes.startswith(
+            codecs.BOM_UTF16_BE
+        ):
+            encoding = "utf-16"
+        elif raw_bytes.startswith(codecs.BOM_UTF32_LE) or raw_bytes.startswith(
+            codecs.BOM_UTF32_BE
+        ):
+            encoding = "utf-32"
+        else:
+            encoding = "utf8"  # Default to utf-8 if no BOM is found
+
+        # Read file with the detected encoding
+        with open(file_path, "r", encoding=encoding, errors="replace") as file:
             data = [line.rstrip() for line in file]
+
     except FileNotFoundError:
         print(f"File not found: {file_path}")
         data = []
+
     return data
 
 
