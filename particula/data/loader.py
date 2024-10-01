@@ -246,7 +246,7 @@ def parse_time_column(
         )
     raise ValueError(
         f"Invalid time column or format: {time_column}, {time_format}"
-        f"{line[time_column]}"
+        f"{line}"
     )
 
 
