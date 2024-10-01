@@ -177,7 +177,7 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
         char_counts = data_checks.get("char_counts", {})
         data = filter_list(data, char_counts)
     if "strip_chars" in data_checks:
-        strip_chars = data_checks.get("char_strip", "")
+        strip_chars = data_checks.get("strip_chars", "")
         data = [x.strip(strip_chars) for x in data]
     if data := [x.strip() for x in data]:
         return data
