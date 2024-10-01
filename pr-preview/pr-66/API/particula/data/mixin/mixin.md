@@ -181,6 +181,64 @@ def set_skip_rows(self, skip_rows: int = 0): ...
 
 
 
+## ChecksStripCharsMixin
+
+[Show source in mixin.py:508](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L508)
+
+Mixin class for setting the characters to strip from the data lines.
+
+#### Signature
+
+```python
+class ChecksStripCharsMixin:
+    def __init__(self): ...
+```
+
+### ChecksStripCharsMixin().set_strip_chars
+
+[Show source in mixin.py:514](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L514)
+
+Set the characters to strip from the data lines.
+
+This is useful to remove unwanted characters from the data lines
+before converting the data to the required format. The order of the
+characters in the strip_chars is not important. The strip is applied
+per character, not as a whole string. This uses the Python str.strip
+method.
+
+#### Arguments
+
+            - `strip_chars` *str* - Characters to strip from the data lines before
+                performing the data checks. e.g. '
+' to strip spaces and
+                newlines.
+
+#### Examples
+
+``` py title="Strip brackets"
+strip_chars = "]["
+# data: '[1], [2], [3]' -> '1, 2, 3'
+```
+
+``` py title="Strip spaces and newlines"
+strip_chars = "
+"
+# data: ' 1, 2, 3
+' -> '1,2,3'
+```
+
+#### References
+
+[Python str.strip](https://docs.python.org/3/library/stdtypes.html#str.strip)
+
+#### Signature
+
+```python
+def set_strip_chars(self, strip_chars: str): ...
+```
+
+
+
 ## DataChecksMixin
 
 [Show source in mixin.py:120](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L120)
@@ -548,7 +606,7 @@ def set_relative_data_folder(self, folder: str): ...
 
 ## SizerConcentrationConvertFromMixin
 
-[Show source in mixin.py:570](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L570)
+[Show source in mixin.py:608](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L608)
 
 Mixin class for setting to convert the sizer concentration to
 a different scale.
@@ -562,7 +620,7 @@ class SizerConcentrationConvertFromMixin:
 
 ### SizerConcentrationConvertFromMixin().set_sizer_concentration_convert_from
 
-[Show source in mixin.py:577](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L577)
+[Show source in mixin.py:615](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L615)
 
 Set to convert the sizer concentration from dw or (pmf) scale to
 dN/dlogDp scale.
@@ -595,7 +653,7 @@ def set_sizer_concentration_convert_from(self, convert_from: Optional[str] = Non
 
 ## SizerDataReaderMixin
 
-[Show source in mixin.py:604](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L604)
+[Show source in mixin.py:642](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L642)
 
 Mixin class for the dictionary of the sizer data reader settings.
 
@@ -608,7 +666,7 @@ class SizerDataReaderMixin:
 
 ### SizerDataReaderMixin().set_data_sizer_reader
 
-[Show source in mixin.py:610](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L610)
+[Show source in mixin.py:648](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L648)
 
 Dictionary of the sizer data reader settings for the data files.
 Build with `SizerDataReaderBuilder`.
@@ -629,7 +687,7 @@ def set_data_sizer_reader(self, data_sizer_reader: Dict[str, Any]): ...
 
 ## SizerEndKeywordMixin
 
-[Show source in mixin.py:539](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L539)
+[Show source in mixin.py:577](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L577)
 
 Mixin class for setting the end key for the sizer data.
 
@@ -642,7 +700,7 @@ class SizerEndKeywordMixin:
 
 ### SizerEndKeywordMixin().set_sizer_end_keyword
 
-[Show source in mixin.py:545](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L545)
+[Show source in mixin.py:583](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L583)
 
 Set the end keyword for the sizer data, to identify the end of
 the sizer data block in the data files. This can be a string or an
@@ -675,7 +733,7 @@ def set_sizer_end_keyword(self, end_key: Union[str, int]): ...
 
 ## SizerStartKeywordMixin
 
-[Show source in mixin.py:508](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L508)
+[Show source in mixin.py:546](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L546)
 
 Mixin class for setting the start key for the sizer data.
 
@@ -688,7 +746,7 @@ class SizerStartKeywordMixin:
 
 ### SizerStartKeywordMixin().set_sizer_start_keyword
 
-[Show source in mixin.py:514](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L514)
+[Show source in mixin.py:552](https://github.com/Gorkowski/particula/blob/main/particula/data/mixin.py#L552)
 
 Set the start keyword for the sizer data, to identify the start of
 the sizer data block in the data files. This can be a string or an

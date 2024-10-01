@@ -8949,13 +8949,14 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py">particula.data.loader_setting_builders</a> module.</p>
 </blockquote>
 <h2 id="datachecksbuilder">DataChecksBuilder<a class="headerlink" href="#datachecksbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L99">Show source in loader_setting_builders.py:99</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L100">Show source in loader_setting_builders.py:100</a></p>
 <p>Builder class for constructing the data checks dictionary.</p>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DataChecksBuilder</span><span class="p">(</span>
     <span class="n">BuilderABC</span><span class="p">,</span>
     <span class="n">ChecksCharactersMixin</span><span class="p">,</span>
     <span class="n">ChecksCharCountsMixin</span><span class="p">,</span>
+    <span class="n">ChecksStripCharsMixin</span><span class="p">,</span>
     <span class="n">ChecksSkipRowsMixin</span><span class="p">,</span>
     <span class="n">ChecksSkipEndMixin</span><span class="p">,</span>
 <span class="p">):</span>
@@ -8968,15 +8969,16 @@
 <li><a href="../mixin/#checkscharactersmixin">ChecksCharactersMixin</a></li>
 <li><a href="../mixin/#checksskipendmixin">ChecksSkipEndMixin</a></li>
 <li><a href="../mixin/#checksskiprowsmixin">ChecksSkipRowsMixin</a></li>
+<li><a href="../mixin/#checksstripcharsmixin">ChecksStripCharsMixin</a></li>
 </ul>
 <h3 id="datachecksbuilderbuild">DataChecksBuilder().build<a class="headerlink" href="#datachecksbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L121">Show source in loader_setting_builders.py:121</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L125">Show source in loader_setting_builders.py:125</a></p>
 <p>Build and return the data checks dictionary.</p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="loader1dsettingsbuilder">Loader1DSettingsBuilder<a class="headerlink" href="#loader1dsettingsbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L32">Show source in loader_setting_builders.py:32</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L33">Show source in loader_setting_builders.py:33</a></p>
 <p>Builder class for creating settings for loading and checking 1D data
 from CSV files.</p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
@@ -9014,13 +9016,13 @@ from CSV files.</p>
 <li><a href="../mixin/#timezoneidentifiermixin">TimezoneIdentifierMixin</a></li>
 </ul>
 <h3 id="loader1dsettingsbuilderbuild">Loader1DSettingsBuilder().build<a class="headerlink" href="#loader1dsettingsbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L79">Show source in loader_setting_builders.py:79</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L80">Show source in loader_setting_builders.py:80</a></p>
 <p>Build and return the settings dictionary for 1D data loading.</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="loadersizersettingsbuilder">LoaderSizerSettingsBuilder<a class="headerlink" href="#loadersizersettingsbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L159">Show source in loader_setting_builders.py:159</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L164">Show source in loader_setting_builders.py:164</a></p>
 <p>Builder class for creating settings for loading and checking sizer
 1D and 2D data from CSV files.</p>
 <h4 id="signature_4">Signature<a class="headerlink" href="#signature_4" title="Permanent link">&para;</a></h4>
@@ -9060,14 +9062,14 @@ from CSV files.</p>
 <li><a href="../mixin/#timezoneidentifiermixin">TimezoneIdentifierMixin</a></li>
 </ul>
 <h3 id="loadersizersettingsbuilderbuild">LoaderSizerSettingsBuilder().build<a class="headerlink" href="#loadersizersettingsbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L209">Show source in loader_setting_builders.py:209</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L214">Show source in loader_setting_builders.py:214</a></p>
 <p>Build and return the two dictionaries for 1D and 2D sizer data
 loading .</p>
 <h4 id="signature_5">Signature<a class="headerlink" href="#signature_5" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="sizerdatareaderbuilder">SizerDataReaderBuilder<a class="headerlink" href="#sizerdatareaderbuilder" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L131">Show source in loader_setting_builders.py:131</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L136">Show source in loader_setting_builders.py:136</a></p>
 <p>Builder class for constructing the sizer data reader dictionary.</p>
 <h4 id="signature_6">Signature<a class="headerlink" href="#signature_6" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SizerDataReaderBuilder</span><span class="p">(</span>
@@ -9086,7 +9088,7 @@ loading .</p>
 <li><a href="../mixin/#sizerstartkeywordmixin">SizerStartKeywordMixin</a></li>
 </ul>
 <h3 id="sizerdatareaderbuilderbuild">SizerDataReaderBuilder().build<a class="headerlink" href="#sizerdatareaderbuilderbuild" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L149">Show source in loader_setting_builders.py:149</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/loader_setting_builders.py#L154">Show source in loader_setting_builders.py:154</a></p>
 <p>Build and return the sizer data reader dictionary.</p>
 <h4 id="signature_7">Signature<a class="headerlink" href="#signature_7" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span> <span class="o">...</span>

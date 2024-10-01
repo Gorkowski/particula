@@ -131,7 +131,7 @@ def filter_list(data: List[str], char_counts: dict) -> List[str]: ...
 
 ## general_data_formatter
 
-[Show source in loader.py:412](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L412)
+[Show source in loader.py:415](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L415)
 
 Format and sample data to extract time and data streams.
 
@@ -180,7 +180,7 @@ def general_data_formatter(
 
 ## get_files_in_folder_with_size
 
-[Show source in loader.py:628](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L628)
+[Show source in loader.py:631](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L631)
 
 Returns a list of files in the specified folder and subfolder that
 match the given filename pattern and have a size greater than the
@@ -216,7 +216,7 @@ def get_files_in_folder_with_size(
 
 ## keyword_to_index
 
-[Show source in loader.py:474](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L474)
+[Show source in loader.py:477](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L477)
 
 Convert a keyword representing a column position in the header to
 its index.
@@ -253,7 +253,7 @@ def keyword_to_index(keyword: Union[str, int], header: List[str]) -> int: ...
 
 ## load_lake
 
-[Show source in loader.py:909](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L909)
+[Show source in loader.py:912](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L912)
 
 Load a lake object by loading individual streams from separate pickle files.
 
@@ -283,7 +283,7 @@ def load_lake(
 
 ## load_stream
 
-[Show source in loader.py:798](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L798)
+[Show source in loader.py:801](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L801)
 
 Load stream object from a pickle file.
 
@@ -317,7 +317,7 @@ def load_stream(
 
 ## netcdf_data_1d_load
 
-[Show source in loader.py:1020](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1020)
+[Show source in loader.py:1023](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1023)
 
 Given a netCDF file path and settings, returns a tuple containing the
 epoch time, header, and data as a numpy array. We do apply the mask to the
@@ -348,7 +348,7 @@ def netcdf_data_1d_load(
 
 ## netcdf_data_2d_load
 
-[Show source in loader.py:1076](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1076)
+[Show source in loader.py:1079](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1079)
 
 Given a netCDF file path and settings, returns a tuple containing the
 epoch time, header, and data as a numpy array. We do apply the mask to the
@@ -379,7 +379,7 @@ def netcdf_data_2d_load(
 
 ## netcdf_get_epoch_time
 
-[Show source in loader.py:994](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L994)
+[Show source in loader.py:997](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L997)
 
 Given a netCDF file path and settings, returns an array of epoch times in
 seconds as a float.
@@ -405,7 +405,7 @@ def netcdf_get_epoch_time(file_path: str, settings: dict) -> np.ndarray: ...
 
 ## netcdf_info_print
 
-[Show source in loader.py:1125](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1125)
+[Show source in loader.py:1128](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L1128)
 
 Prints information about a netCDF file. Useful for generating settings
 dictionaries.
@@ -430,7 +430,7 @@ def netcdf_info_print(file_path, file_return=False): ...
 
 ## non_standard_date_location
 
-[Show source in loader.py:600](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L600)
+[Show source in loader.py:603](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L603)
 
 Extracts the date from a non-standard location in the data.
 
@@ -462,7 +462,7 @@ def non_standard_date_location(data: list, date_location: dict) -> str: ...
 
 ## parse_time_column
 
-[Show source in loader.py:185](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L185)
+[Show source in loader.py:188](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L188)
 
 Parse the time column(s) from a data line and return the timestamp.
 
@@ -504,7 +504,7 @@ def parse_time_column(
 
 ## sample_data
 
-[Show source in loader.py:253](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L253)
+[Show source in loader.py:256](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L256)
 
 Extract time and data streams from input data.
 
@@ -554,7 +554,7 @@ def sample_data(
 
 ## save_lake
 
-[Show source in loader.py:837](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L837)
+[Show source in loader.py:840](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L840)
 
 Save each stream in the lake as separate pickle files.
 
@@ -581,7 +581,7 @@ def save_lake(
 
 ## save_stream
 
-[Show source in loader.py:749](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L749)
+[Show source in loader.py:752](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L752)
 
 Save stream object as a pickle file.
 
@@ -610,7 +610,7 @@ def save_stream(
 
 ## save_stream_to_csv
 
-[Show source in loader.py:676](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L676)
+[Show source in loader.py:679](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L679)
 
 Save stream object as a CSV file, with an option to include formatted time.
 
@@ -651,7 +651,7 @@ def save_stream_to_csv(
 
 ## sizer_data_formatter
 
-[Show source in loader.py:511](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L511)
+[Show source in loader.py:514](https://github.com/Gorkowski/particula/blob/main/particula/data/loader.py#L514)
 
 Format data from a particle sizer into structured arrays.
 
