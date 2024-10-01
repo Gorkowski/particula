@@ -291,7 +291,7 @@ def sample_data(
             if no matching data value is found.
     """
     # flake8: noqa
-    # pylint disable: too-many-arguments
+    # pylint disable: too-many-positional-arguments
     epoch_time = np.zeros(len(data))
     epoch_time = np.zeros(len(data))
     data_array = np.zeros((len(data), len(data_columns)))
@@ -529,9 +529,9 @@ def sizer_data_formatter(
     Arguments:
         data: List of raw data strings to be formatted.
         data_checks: Dictionary specifying validation rules for the data.
-        data_sizer_reader: Dictionary containing mappings for interpreting 
+        data_sizer_reader: Dictionary containing mappings for interpreting
             the sizer data format.
-        time_column: Index or list of indices indicating the position of 
+        time_column: Index or list of indices indicating the position of
             the time column(s) in the data.
         time_format: Format string for parsing time information in the data.
         delimiter: Delimiter used to separate values in the data.

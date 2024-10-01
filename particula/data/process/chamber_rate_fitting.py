@@ -17,7 +17,7 @@ from particula.data.stream import Stream
 from particula.next.dynamics import dilution, wall_loss, coagulation
 
 
-# pylint: disable=too-many-arguments, too-many-locals
+# pylint: disable=too-many-positional-arguments, too-many-locals
 def calculate_pmf_rates(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
@@ -117,7 +117,7 @@ def calculate_pmf_rates(
     )
 
 
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 def coagulation_rates_cost_function(
     parameters: NDArray[np.float64],
     radius_bins: NDArray[np.float64],
@@ -153,7 +153,8 @@ def coagulation_rates_cost_function(
 
     # Calculate the cost
     number_cost = mean_squared_error(  # type: ignore
-        time_derivative_concentration_pmf, net_rate)
+        time_derivative_concentration_pmf, net_rate
+    )
 
     # total_volume comparison
     total_volume_cost = np.power(
@@ -171,6 +172,7 @@ def coagulation_rates_cost_function(
 @dataclass
 class ChamberParameters:
     """Data class for the chamber parameters."""
+
     temperature: float = 293.15
     pressure: float = 101325
     particle_density: float = 1000
@@ -225,7 +227,7 @@ def optimize_parameters(
     return result.x[0], result.x[1]  # type: ignore
 
 
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 def optimize_chamber_parameters(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
@@ -287,7 +289,7 @@ def optimize_chamber_parameters(
     )
 
 
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 def calculate_optimized_rates(
     radius_bins: NDArray[np.float64],
     concentration_pmf: NDArray[np.float64],
@@ -409,7 +411,8 @@ def optimize_and_calculate_rates_looped(
                 radius_bins=pmf_stream.header_float,
                 concentration_pmf=pmf_stream.data[index, :],
                 time_derivative_concentration_pmf=(
-                    pmf_derivative_stream.data[index, :]),
+                    pmf_derivative_stream.data[index, :]
+                ),
                 chamber_parameters=chamber_parameters,
                 fit_guess=fit_guess,
                 fit_bounds=fit_bounds,
@@ -431,7 +434,8 @@ def optimize_and_calculate_rates_looped(
             alpha_collision_efficiency=alpha_collision_efficiency[index],
             chamber_parameters=chamber_parameters,
             time_derivative_concentration_pmf=(
-                pmf_derivative_stream.data[index, :]),
+                pmf_derivative_stream.data[index, :]
+            ),
         )
 
         # Store the total
