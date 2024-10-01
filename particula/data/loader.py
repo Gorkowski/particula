@@ -186,7 +186,7 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
 
 
 def parse_time_column(
-    time_column: List[int],
+    time_column: Union[int, List[int]],
     time_format: str,
     line: np.ndarray,
     date_offset: Optional[str] = None,
