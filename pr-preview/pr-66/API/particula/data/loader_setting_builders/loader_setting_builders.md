@@ -17,7 +17,7 @@ class DataChecksBuilder(
     BuilderABC,
     ChecksCharactersMixin,
     ChecksCharCountsMixin,
-    ChecksStripCharsMixin,
+    ChecksReplaceCharsMixin,
     ChecksSkipRowsMixin,
     ChecksSkipEndMixin,
 ):
@@ -29,9 +29,9 @@ class DataChecksBuilder(
 - [BuilderABC](../next/abc_builder.md#builderabc)
 - [ChecksCharCountsMixin](./mixin.md#checkscharcountsmixin)
 - [ChecksCharactersMixin](./mixin.md#checkscharactersmixin)
+- [ChecksReplaceCharsMixin](./mixin.md#checksreplacecharsmixin)
 - [ChecksSkipEndMixin](./mixin.md#checksskipendmixin)
 - [ChecksSkipRowsMixin](./mixin.md#checksskiprowsmixin)
-- [ChecksStripCharsMixin](./mixin.md#checksstripcharsmixin)
 
 ### DataChecksBuilder().build
 
