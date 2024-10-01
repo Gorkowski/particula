@@ -116,6 +116,41 @@ def filter_list(data: List[str], char_counts: dict) -> List[str]:
     return filtered_data
 
 
+def replace_list(data: List[str], replace_dict: Dict[str, str]) -> List[str]:
+    """
+    Replace characters in each string of a list based on a replacement
+    dictionary.
+
+    Each character specified in the `replace_dict` will be replaced with the
+    corresponding value in every string in the input list.
+
+    Arguments:
+        data: A list of strings in which the characters will be replaced.
+        replace_dict: A dictionary specifying character replacements.
+            The keys are the characters to be replaced, and the values are the
+            replacement characters or strings.
+
+    Returns:
+        A new list of strings with the replacements applied.
+
+    Examples:
+        ``` py title="Replace characters in a list of strings"
+        data = ['apple[banana]orange', '[pear] kiwi plum']
+        replace_dict = {'[': '', ']': ''}
+        replaced_data = replace_list(data, replace_dict)
+        print(replaced_data)
+        ['applebananaorange', 'pear kiwi plum']
+        ```
+    """
+    replaced_data = []
+    for row in data:
+        modified_row = row
+        for old_char, new_char in replace_dict.items():
+            modified_row = modified_row.replace(old_char, new_char)
+        replaced_data.append(modified_row)
+    return replaced_data
+
+
 def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
     """
     Validate and format raw data according to specified checks.
@@ -176,10 +211,13 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
     if "char_counts" in data_checks:
         char_counts = data_checks.get("char_counts", {})
         data = filter_list(data, char_counts)
-    if "strip_chars" in data_checks:
-        strip_chars = data_checks.get("strip_chars", "")
-        data = [x.strip(strip_chars) for x in data]
+    if "replace_chars" in data_checks:
+        replace_dict = data_checks.get("replace_chars", {})
+        print(f"replace dict: {replace_dict}")
+        data = replace_list(data, replace_dict)
     if data := [x.strip() for x in data]:
+        print("Data formatted successfully")
+        print(data[0])
         return data
     else:
         raise ValueError("No data left in file")
@@ -353,6 +391,10 @@ def sample_data(
                     "yES",
                     "y",
                     "Y",
+                    "OK",
+                    "ok",
+                    "Ok",
+                    "Okay",
                 ]
                 false_match = [
                     "OFF",
