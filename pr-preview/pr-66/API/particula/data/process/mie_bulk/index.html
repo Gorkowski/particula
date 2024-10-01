@@ -8933,7 +8933,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py">particula.data.process.mie_bulk</a> module.</p>
 </blockquote>
 <h2 id="compute_bulk_optics">compute_bulk_optics<a class="headerlink" href="#compute_bulk_optics" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L128">Show source in mie_bulk.py:128</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L129">Show source in mie_bulk.py:129</a></p>
 <p>Compute bulk optical properties from size-dependent efficiency factors for
 a size distribution.</p>
 <p>This function calculates various bulk optical properties such as
@@ -8974,7 +8974,7 @@ the input flags.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="o">...</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="discretize_auto_mieq">discretize_auto_mieq<a class="headerlink" href="#discretize_auto_mieq" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L18">Show source in mie_bulk.py:18</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L19">Show source in mie_bulk.py:19</a></p>
 <p>Compute Mie coefficients for a spherical particle based on its material
 properties, size, and the properties of the surrounding medium.</p>
 <p>This function uses the PyMieScatt library to calculate various Mie
@@ -9014,7 +9014,7 @@ by avoiding repeated calculations for the same inputs.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="discretize_mie_parameters">discretize_mie_parameters<a class="headerlink" href="#discretize_mie_parameters" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L63">Show source in mie_bulk.py:63</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L64">Show source in mie_bulk.py:64</a></p>
 <p>Discretize the refractive index, wavelength, and diameters for Mie
 scattering calculations.</p>
 <p>This function improves numerical stability and performance by discretizing
@@ -9058,7 +9058,7 @@ by creating a more manageable set of unique calculations.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">complex</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="format_mie_results">format_mie_results<a class="headerlink" href="#format_mie_results" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L193">Show source in mie_bulk.py:193</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L194">Show source in mie_bulk.py:194</a></p>
 <p>Format the output results of the Mie scattering calculations.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -9092,7 +9092,7 @@ by creating a more manageable set of unique calculations.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="o">...</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h2 id="mie_size_distribution">mie_size_distribution<a class="headerlink" href="#mie_size_distribution" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L238">Show source in mie_bulk.py:238</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L239">Show source in mie_bulk.py:239</a></p>
 <p>Calculate Mie scattering parameters for a size distribution of spherical
 particles.</p>
 <p>This function computes optical properties such as extinction, scattering,

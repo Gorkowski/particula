@@ -6,7 +6,7 @@
 
 ## compute_bulk_optics
 
-[Show source in mie_bulk.py:128](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L128)
+[Show source in mie_bulk.py:129](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L129)
 
 Compute bulk optical properties from size-dependent efficiency factors for
 a size distribution.
@@ -58,7 +58,7 @@ def compute_bulk_optics(
 
 ## discretize_auto_mieq
 
-[Show source in mie_bulk.py:18](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L18)
+[Show source in mie_bulk.py:19](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L19)
 
 Compute Mie coefficients for a spherical particle based on its material
 properties, size, and the properties of the surrounding medium.
@@ -110,7 +110,7 @@ def discretize_auto_mieq(
 
 ## discretize_mie_parameters
 
-[Show source in mie_bulk.py:63](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L63)
+[Show source in mie_bulk.py:64](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L64)
 
 Discretize the refractive index, wavelength, and diameters for Mie
 scattering calculations.
@@ -165,7 +165,7 @@ def discretize_mie_parameters(
 
 ## format_mie_results
 
-[Show source in mie_bulk.py:193](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L193)
+[Show source in mie_bulk.py:194](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L194)
 
 Format the output results of the Mie scattering calculations.
 
@@ -209,7 +209,7 @@ def format_mie_results(
 
 ## mie_size_distribution
 
-[Show source in mie_bulk.py:238](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L238)
+[Show source in mie_bulk.py:239](https://github.com/Gorkowski/particula/blob/main/particula/data/process/mie_bulk.py#L239)
 
 Calculate Mie scattering parameters for a size distribution of spherical
 particles.

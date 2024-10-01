@@ -491,7 +491,7 @@ A float representing the timestamp in seconds since the epoch.
 
 ```python
 def parse_time_column(
-    time_column: List[int],
+    time_column: Union[int, List[int]],
     time_format: str,
     line: np.ndarray,
     date_offset: Optional[str] = None,
