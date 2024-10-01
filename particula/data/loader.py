@@ -183,7 +183,7 @@ def data_format_checks(data: List[str], data_checks: dict) -> List[str]:
 
 
 def parse_time_column(
-    time_column: Union[int, List[int]],
+    time_column: List[int],
     time_format: str,
     line: np.ndarray,
     date_offset: Optional[str] = None,
@@ -215,15 +215,22 @@ def parse_time_column(
         return float(line[time_column]) + seconds_shift
     if date_offset:
         # if the time is in one column, and the date is fixed
-        time_str = f"{date_offset} {line[time_column]}"
+        time_str = f"{date_offset} {line[time_column[0]]}"
         return (
             time_str_to_epoch(time_str, time_format, timezone_identifier)
             + seconds_shift
         )
-    if isinstance(time_column, int):
+    # if isinstance(time_column, int):
+    #     return (
+    #         time_str_to_epoch(
+    #             line[time_column], time_format, timezone_identifier
+    #         )
+    #         + seconds_shift
+    #     )
+    if isinstance(time_column, list) and len(time_column) == 1:
         return (
             time_str_to_epoch(
-                line[time_column], time_format, timezone_identifier
+                line[time_column[0]], time_format, timezone_identifier
             )
             + seconds_shift
         )
@@ -236,6 +243,7 @@ def parse_time_column(
         )
     raise ValueError(
         f"Invalid time column or format: {time_column}, {time_format}"
+        f"{line[time_column]}"
     )
 
 
