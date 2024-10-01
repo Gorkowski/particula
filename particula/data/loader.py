@@ -215,18 +215,21 @@ def parse_time_column(
         return float(line[time_column]) + seconds_shift
     if date_offset:
         # if the time is in one column, and the date is fixed
-        time_str = f"{date_offset} {line[time_column[0]]}"
+        if isinstance(time_column, int):
+            time_str = f"{date_offset} {line[time_column]}"
+        else:
+            time_str = f"{date_offset} {line[time_column[0]]}"
         return (
             time_str_to_epoch(time_str, time_format, timezone_identifier)
             + seconds_shift
         )
-    # if isinstance(time_column, int):
-    #     return (
-    #         time_str_to_epoch(
-    #             line[time_column], time_format, timezone_identifier
-    #         )
-    #         + seconds_shift
-    #     )
+    if isinstance(time_column, int):
+        return (
+            time_str_to_epoch(
+                line[time_column], time_format, timezone_identifier
+            )
+            + seconds_shift
+        )
     if isinstance(time_column, list) and len(time_column) == 1:
         return (
             time_str_to_epoch(
