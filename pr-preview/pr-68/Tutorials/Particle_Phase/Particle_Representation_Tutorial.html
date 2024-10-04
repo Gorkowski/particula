@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Particle Representation &#8212; Particula Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tutorials/Particle_Phase/Particle_Representation_Tutorial';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/placeholder.png" class="logo__image only-light" alt="Particula Book - Home"/>
+    <script>document.write(`<img src="../../_static/placeholder.png" class="logo__image only-dark" alt="Particula Book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Getting started
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tour</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../tour/part-tour.html">Particula tour</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/environment.html">The <code class="docutils literal notranslate"><span class="pre">Environment</span></code> Class</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dilution_loss.html"><code class="docutils literal notranslate"><span class="pre">dilution_loss</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dynamic_viscosity.html"><code class="docutils literal notranslate"><span class="pre">dynamic_viscosity</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/mean_free_path.html">Mean Free Path</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/vapor.html">The <code class="docutils literal notranslate"><span class="pre">Vapor</span></code> Class</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/particle.html">The <code class="docutils literal notranslate"><span class="pre">Particle</span></code> Classes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/distribution_discretization.html"><code class="docutils literal notranslate"><span class="pre">distribution_discretization</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/radius_cutoff.html"><code class="docutils literal notranslate"><span class="pre">radius_cutoff</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/particle_mass.html"><code class="docutils literal notranslate"><span class="pre">particle_mass</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/knudsen_number.html"><code class="docutils literal notranslate"><span class="pre">knudsen_number</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/slip_correction.html"><code class="docutils literal notranslate"><span class="pre">slip_correction</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/friction_factor.html"><code class="docutils literal notranslate"><span class="pre">friction_factor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dimensionless_coagulation.html"><code class="docutils literal notranslate"><span class="pre">dimensionless_coagulation</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/utilities/utilities_overview.html">Utilities Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/convert_size_dist_scales.html">Converting Size Distributions</a></li>
+
+
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Strategic Plan</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../strategic_plan/strategic_planning_FY24.html">FY24 Plan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../strategic_plan/Aerosol_patterns.html">Program Outline Revision Draft</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Next Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/next/next_vapor_pressure.html">Vapor Pressure</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contributor Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/uncscode/particula/v0.0.10?urlpath=lab/tree/docs/Tutorials/Particle_Phase/Particle_Representation_Tutorial.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/uncscode/particula/blob/v0.0.10/docs/Tutorials/Particle_Phase/Particle_Representation_Tutorial.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/edit/v0.0.10/docs/Tutorials/Particle_Phase/Particle_Representation_Tutorial.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/issues/new?title=Issue%20on%20page%20%2FTutorials/Particle_Phase/Particle_Representation_Tutorial.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Tutorials/Particle_Phase/Particle_Representation_Tutorial.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Particle Representation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#builder-particle-representation">Builder: Particle Representation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#factory-particle-representation-implementation">Factory: Particle Representation Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limited-representation-builder">Limited Representation Builder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="particle-representation">
+<h1>Particle Representation<a class="headerlink" href="#particle-representation" title="Link to this heading">#</a></h1>
+<p>With the different aspects of particles laid out in the previous sections, we can now focus on how to represent them in a simulation. The representation of particles is crucial for having a unified way to handle particles in a system. This section will discuss building a particle representation that can be used in simulations and analyses.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">particula.next</span> <span class="kn">import</span> <span class="n">particles</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">particula.next</span> <span class="kn">import</span> <span class="n">particles</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">particles</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">MassBasedMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">RadiiBasedMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_factories</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">DistributionFactory</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">particula.next.particles.activity_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">ActivityIdealMass</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">ActivityIdealMolar</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">ActivityKappaParameter</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="kn">from</span> <span class="nn">particula.next.particles.activity_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">ActivityIdealMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">ActivityIdealMolarBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">ActivityKappaParameterBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">particles</span><span class="o">/</span><span class="n">distribution_factories</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Factory Classes for selecting the distribution strategy.</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">particula.next.abc_factory</span> <span class="kn">import</span> <span class="n">StrategyFactory</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">MassBasedMovingBin</span><span class="p">,</span> <span class="n">RadiiBasedMovingBin</span><span class="p">,</span> <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span> <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;particula.next.abc_factory&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="builder-particle-representation">
+<h2>Builder: Particle Representation<a class="headerlink" href="#builder-particle-representation" title="Link to this heading">#</a></h2>
+<p>In this section, we will demonstrate how to create a particle distribution using specific particle properties such as radius, density, and concentration. This example will help illustrate the practical application of object-oriented programming in simulating and analyzing particle systems in scientific research. We’ll utilize a builder pattern to construct an instance of a Particle class, allowing for flexible configuration of particle characteristics and behaviors.</p>
+<p>Key Components:</p>
+<ul class="simple">
+<li><p>Radius and Concentration: Define the size and number of particles in nanometers and their concentration per cubic centimeter, respectively.
+Density and Surface Tension: Specify the material’s density and the surface tension for the particles, which are critical for calculating various physical and chemical properties.</p></li>
+<li><p>Builder Pattern: Use a builder pattern for creating a particle representation, which facilitates the step-by-step configuration of different strategies for distribution, activity, and surface approximations.</p></li>
+</ul>
+<p>The code snippet below sets up a particle distribution with defined properties using multiple factory methods to specify behavior strategies for distribution, activity, and surface interactions. The use of a builder pattern enhances readability and maintainability of the code by separating the construction of a complex object from its representation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating particle distribution examples</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>  <span class="c1"># in nm</span>
+<span class="n">density</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e2</span><span class="p">,</span> <span class="mf">1e3</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+<span class="c1"># parameters</span>
+<span class="n">sufrace_tension_strategy</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyMassBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_surface_tension</span><span class="p">(</span><span class="mf">0.072</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="s2">&quot;g/cm^3&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Create a Particle instance using the RadiusParticleRepresentationBuilder</span>
+<span class="n">particle_rep_mass</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">particles</span><span class="o">.</span><span class="n">ParticleRadiusRepresentationBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">RadiiBasedMovingBin</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">sufrace_tension_strategy</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_concentration</span><span class="p">(</span><span class="n">concentration</span><span class="o">=</span><span class="n">concentration</span><span class="p">,</span> <span class="n">concentration_units</span><span class="o">=</span><span class="s2">&quot;1/cm^3&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span> <span class="n">density_units</span><span class="o">=</span><span class="s2">&quot;g/cm^3&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_radius</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span> <span class="n">radius_units</span><span class="o">=</span><span class="s2">&quot;nm&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_charge</span><span class="p">(</span><span class="n">charge</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1">#Accessing calculated properties</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mass of particles:&quot;</span><span class="p">,</span> <span class="n">particle_rep_mass</span><span class="o">.</span><span class="n">get_mass</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Radius of particles:&quot;</span><span class="p">,</span> <span class="n">particle_rep_mass</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total mass of the particle distribution:&quot;</span><span class="p">,</span> <span class="n">particle_rep_mass</span><span class="o">.</span><span class="n">get_mass_concentration</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mass of particles: [1.04719755e-17 8.37758041e-17 2.82743339e-16]
+Radius of particles: [1.e-07 2.e-07 3.e-07]
+Total mass of the particle distribution: 2.912256389877738e-06
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="factory-particle-representation-implementation">
+<h2>Factory: Particle Representation Implementation<a class="headerlink" href="#factory-particle-representation-implementation" title="Link to this heading">#</a></h2>
+<p>The factory pattern plays a crucial role in the flexibility and extensibility of particle property computations, such as mass, radius, and total mass, within different computational models. It allows for dynamic selection of computational strategies based on the scenario, facilitating accurate and tailored simulations of real-world conditions.</p>
+<p>In this section, we’ll demonstrate how to use a factory to construct speciated particles characterized by varied properties, enhancing our ability to simulate diverse environmental scenarios. Initially, it’s beneficial to directly manipulate builders to familiarize yourself with various strategies. Subsequently, parameters can be saved in JSON format. In future iterations, these saved configurations can be rapidly deployed through the factory, streamlining particle creation and modification.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generating random properties for speciated particles</span>
+<span class="n">mass_distribution</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">concentration</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span>
+<span class="p">)</span>
+
+<span class="c1"># Defining surface tension parameters</span>
+<span class="n">surface_tension_parameter</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;surface_tension&quot;</span><span class="p">:</span> <span class="mf">0.072</span><span class="p">,</span>  <span class="c1"># in N/m</span>
+    <span class="s2">&quot;density&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span>  <span class="c1"># Density in g/cm^3</span>
+    <span class="s2">&quot;density_units&quot;</span><span class="p">:</span> <span class="s2">&quot;g/cm^3&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">surface_strategy</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">SurfaceFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span><span class="s1">&#39;mass&#39;</span><span class="p">,</span> <span class="n">surface_tension_parameter</span><span class="p">)</span>
+<span class="n">distribution_strategy</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">DistributionFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span><span class="s1">&#39;speciated_mass_moving_bin&#39;</span><span class="p">)</span>
+<span class="n">activity_strategy</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">ActivityFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span><span class="s1">&#39;mass_ideal&#39;</span><span class="p">)</span>
+
+<span class="c1"># Setting up parameters for the particle representation factory</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;distribution_strategy&quot;</span><span class="p">:</span> <span class="n">distribution_strategy</span><span class="p">,</span>
+    <span class="s2">&quot;activity_strategy&quot;</span><span class="p">:</span> <span class="n">activity_strategy</span><span class="p">,</span>
+    <span class="s2">&quot;surface_strategy&quot;</span><span class="p">:</span> <span class="n">surface_strategy</span><span class="p">,</span>
+    <span class="s2">&quot;density&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span>
+    <span class="s2">&quot;density_units&quot;</span><span class="p">:</span> <span class="s2">&quot;g/cm^3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;concentration&quot;</span><span class="p">:</span> <span class="n">concentration</span><span class="p">,</span>
+    <span class="s2">&quot;concentration_units&quot;</span><span class="p">:</span> <span class="s2">&quot;1/cm^3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mass&quot;</span><span class="p">:</span> <span class="n">mass_distribution</span><span class="p">,</span>
+    <span class="s2">&quot;mass_units&quot;</span><span class="p">:</span> <span class="s2">&quot;pg&quot;</span><span class="p">,</span>  <span class="c1"># picograms</span>
+    <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Using the factory to create a speciated particle representation</span>
+<span class="n">speciated_mass_rep</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">ParticleRepresentationFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+    <span class="s2">&quot;mass&quot;</span><span class="p">,</span> <span class="n">parameters</span>
+<span class="p">)</span>
+
+<span class="c1"># Outputting the total mass of the particle distribution</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Total mass of the particle distribution: </span><span class="si">{</span><span class="n">speciated_mass_rep</span><span class="o">.</span><span class="n">get_mass_concentration</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot histogram of the mass distribution and number distribution vs radius</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">speciated_mass_rep</span><span class="o">.</span><span class="n">get_radius</span><span class="p">()</span>
+<span class="n">masses</span> <span class="o">=</span> <span class="n">speciated_mass_rep</span><span class="o">.</span><span class="n">get_mass</span><span class="p">()</span>
+<span class="n">concentration</span> <span class="o">=</span> <span class="n">speciated_mass_rep</span><span class="o">.</span><span class="n">get_concentration</span><span class="p">(</span><span class="n">clone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">masses</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Mass (ug)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Number of Super Particles (Droplets)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Mass Distribution of Super Particles&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">radius</span><span class="o">*</span><span class="mf">1e9</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration (1/m^3)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Radius (nm)&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Number Distribution of Super Particles&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total mass of the particle distribution: 0.18691117766964574
+</pre></div>
+</div>
+<img alt="../../_images/63bcd528522e6465bb3ee3d1647b6afaca8d44c968f3b5c9dbd8e061bcf43c92.png" src="../../_images/63bcd528522e6465bb3ee3d1647b6afaca8d44c968f3b5c9dbd8e061bcf43c92.png" />
+<img alt="../../_images/3b7ee6ad0021becd0dd944fa39a0cb3b4a6ec412067d49e0d079d23bb855684a.png" src="../../_images/3b7ee6ad0021becd0dd944fa39a0cb3b4a6ec412067d49e0d079d23bb855684a.png" />
+</div>
+</div>
+</section>
+<section id="limited-representation-builder">
+<h2>Limited Representation Builder<a class="headerlink" href="#limited-representation-builder" title="Link to this heading">#</a></h2>
+<p>The last representation, is a modification of the radii builder, where we can specify a lognomal distribution parameters. This is useful when we want a to start a simulation quick and are not trying to explicitly reproduce a specific system.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lognormal_rep</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">particles</span><span class="o">.</span><span class="n">PresetParticleRadiusBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_mode</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2000</span><span class="p">]),</span> <span class="s2">&quot;nm&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_geometric_standard_deviation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]))</span>
+    <span class="o">.</span><span class="n">set_number_concentration</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e4</span><span class="p">,</span> <span class="mf">1e4</span><span class="p">]),</span> <span class="s2">&quot;1/cm^3&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_distribution_type</span><span class="p">(</span><span class="s2">&quot;pmf&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">lognormal_rep</span><span class="o">.</span><span class="n">get_radius</span><span class="p">(),</span> <span class="n">lognormal_rep</span><span class="o">.</span><span class="n">get_concentration</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Number Distribution&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Radius (m)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration (1/m^3)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Number Distribution of Particles&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9ab91372c892385ef6d5e2ee340d4e5befddea30f916e0c4d7f97e64fc471957.png" src="../../_images/9ab91372c892385ef6d5e2ee340d4e5befddea30f916e0c4d7f97e64fc471957.png" />
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>In this notebook, we have discussed the importance of particle representation in simulations and analyses. We have demonstrated how to create a particle distribution using specific particle properties such as radius, density, and concentration. We have also shown how to use a builder pattern to construct an instance of a Particle class, allowing for flexible configuration of particle characteristics and behaviors. Finally, we have discussed the factory pattern and how it can be used to construct speciated particles characterized by varied properties.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "uncscode/particula",
+            ref: "v0.0.10",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Tutorials/Particle_Phase"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#builder-particle-representation">Builder: Particle Representation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#factory-particle-representation-implementation">Factory: Particle Representation Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limited-representation-builder">Limited Representation Builder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By particula contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

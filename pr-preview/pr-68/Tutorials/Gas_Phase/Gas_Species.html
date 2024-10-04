@@ -1,0 +1,957 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gas Species Tutorial &#8212; Particula Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tutorials/Gas_Phase/Gas_Species';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/placeholder.png" class="logo__image only-light" alt="Particula Book - Home"/>
+    <script>document.write(`<img src="../../_static/placeholder.png" class="logo__image only-dark" alt="Particula Book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Getting started
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tour</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../tour/part-tour.html">Particula tour</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/environment.html">The <code class="docutils literal notranslate"><span class="pre">Environment</span></code> Class</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dilution_loss.html"><code class="docutils literal notranslate"><span class="pre">dilution_loss</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dynamic_viscosity.html"><code class="docutils literal notranslate"><span class="pre">dynamic_viscosity</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/mean_free_path.html">Mean Free Path</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/vapor.html">The <code class="docutils literal notranslate"><span class="pre">Vapor</span></code> Class</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/particle.html">The <code class="docutils literal notranslate"><span class="pre">Particle</span></code> Classes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/distribution_discretization.html"><code class="docutils literal notranslate"><span class="pre">distribution_discretization</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/radius_cutoff.html"><code class="docutils literal notranslate"><span class="pre">radius_cutoff</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/particle_mass.html"><code class="docutils literal notranslate"><span class="pre">particle_mass</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/knudsen_number.html"><code class="docutils literal notranslate"><span class="pre">knudsen_number</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/slip_correction.html"><code class="docutils literal notranslate"><span class="pre">slip_correction</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/friction_factor.html"><code class="docutils literal notranslate"><span class="pre">friction_factor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dimensionless_coagulation.html"><code class="docutils literal notranslate"><span class="pre">dimensionless_coagulation</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/utilities/utilities_overview.html">Utilities Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/convert_size_dist_scales.html">Converting Size Distributions</a></li>
+
+
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Strategic Plan</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../strategic_plan/strategic_planning_FY24.html">FY24 Plan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../strategic_plan/Aerosol_patterns.html">Program Outline Revision Draft</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Next Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/next/next_vapor_pressure.html">Vapor Pressure</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contributor Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/uncscode/particula/v0.0.10?urlpath=lab/tree/docs/Tutorials/Gas_Phase/Gas_Species.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/uncscode/particula/blob/v0.0.10/docs/Tutorials/Gas_Phase/Gas_Species.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/edit/v0.0.10/docs/Tutorials/Gas_Phase/Gas_Species.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/issues/new?title=Issue%20on%20page%20%2FTutorials/Gas_Phase/Gas_Species.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Tutorials/Gas_Phase/Gas_Species.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Gas Species Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Gas Species Tutorial</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-classes">Key Classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-vapor-pressure-strategies">Define Vapor Pressure Strategies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strategy-assignment">Strategy Assignment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gasspeciesbuilder-to-construct-gas-species">Using <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code> to Construct Gas Species</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-water-gas-species">Building the Water Gas Species</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-gas-species-for-organics">Building Gas Species for Organics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pure-vapor-pressures">Pure Vapor Pressures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saturation-ratios">Saturation Ratios</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#future-exploration">Future Exploration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gas-species-tutorial">
+<h1>Gas Species Tutorial<a class="headerlink" href="#gas-species-tutorial" title="Link to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">GasSpecies</span></code> is a class that represents a gas species in a simulation or calculation. It includes properties such as the species’ name, molar mass, vapor pressure, and whether it is condensable. The class provides methods to set and retrieve these properties, ensuring that each species is fully defined and manageable within simulations.</p>
+<p>In this notebook, we will demonstrate how to use the <code class="docutils literal notranslate"><span class="pre">GasSpecies</span></code> class to create and manage gas species. This includes creating new species, setting their properties, and retrieving vapor pressure, concentration, and other properties.</p>
+<section id="key-classes">
+<h2>Key Classes<a class="headerlink" href="#key-classes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GasSpecies</span></code>: Represents a gas species in a simulation or calculation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code>: A builder class that constructs instances of <code class="docutils literal notranslate"><span class="pre">GasSpecies</span></code> with well-defined properties.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Particula imports</span>
+<span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_factories</span> <span class="kn">import</span> <span class="n">VaporPressureFactory</span>
+<span class="kn">from</span> <span class="nn">particula.next.gas.species</span> <span class="kn">import</span> <span class="n">GasSpecies</span>
+<span class="kn">from</span> <span class="nn">particula.next.gas.species_builder</span> <span class="kn">import</span> <span class="n">GasSpeciesBuilder</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Particula imports</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_factories</span> <span class="kn">import</span> <span class="n">VaporPressureFactory</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">particula.next.gas.species</span> <span class="kn">import</span> <span class="n">GasSpecies</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">particula.next.gas.species_builder</span> <span class="kn">import</span> <span class="n">GasSpeciesBuilder</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">gas</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">ConstantVaporPressureStrategy</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">AntoineVaporPressureStrategy</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">ClausiusClapeyronStrategy</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">WaterBuckStrategy</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># from particula.next.gas.vapor_pressure_builders import (</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="c1">#     ConstantBuilder,</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="c1">#     AntoineBuilder,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="c1"># )</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="c1"># from particula.next.gas.vapor_pressure_factories import VaporPressureFactory</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">particula.next.gas.species</span> <span class="kn">import</span> <span class="n">GasSpecies</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="c1"># from particula.next.gas.species_builders import (</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="c1">#     GasSpeciesBuilder, PresetGasSpeciesBuilder,</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="c1"># )</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="c1"># from particula.next.gas.species_factories import GasSpeciesFactory</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="kn">from</span> <span class="nn">particula.next.gas.atmosphere</span> <span class="kn">import</span> <span class="n">Atmosphere</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">gas</span><span class="o">/</span><span class="n">species</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">34</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="kn">from</span> <span class="nn">particula.next.gas.vapor_pressure_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span>     <span class="n">VaporPressureStrategy</span><span class="p">,</span> <span class="n">ConstantVaporPressureStrategy</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="nd">@dataclass</span>
+<span class="ne">---&gt; </span><span class="mi">34</span> <span class="k">class</span> <span class="nc">GasSpecies</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span><span class="sd">     Represents a single species of gas, including its properties such as</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span><span class="sd">     name, mass, vapor pressure, and whether it is condensable.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span><span class="sd">     - add_concentration: Add concentration to the gas species.</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-arguments</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span>         <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">66</span>         <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">]],</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>         <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages/particula/next/gas/species.py:66,</span> in <span class="ni">GasSpecies</span><span class="nt">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="nd">@dataclass</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="k">class</span> <span class="nc">GasSpecies</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span><span class="sd">     Represents a single species of gas, including its properties such as</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span><span class="sd">     name, mass, vapor pressure, and whether it is condensable.</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span><span class="sd">     - add_concentration: Add concentration to the gas species.</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># pylint: disable=too-many-arguments</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span>         <span class="bp">self</span><span class="p">,</span>
+<span class="ne">---&gt; </span><span class="mi">66</span>         <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">]],</span>
+<span class="g g-Whitespace">     </span><span class="mi">67</span>         <span class="n">molar_mass</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]],</span>
+<span class="g g-Whitespace">     </span><span class="mi">68</span>         <span class="n">vapor_pressure_strategy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+<span class="g g-Whitespace">     </span><span class="mi">69</span>             <span class="n">VaporPressureStrategy</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">VaporPressureStrategy</span><span class="p">]</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span>             <span class="p">]</span> <span class="o">=</span> <span class="n">ConstantVaporPressureStrategy</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span>         <span class="n">condensable</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>         <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>         <span class="bp">self</span><span class="o">.</span><span class="n">molar_mass</span> <span class="o">=</span> <span class="n">molar_mass</span>
+
+<span class="ne">NameError</span>: name &#39;Union&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-vapor-pressure-strategies">
+<h2>Define Vapor Pressure Strategies<a class="headerlink" href="#define-vapor-pressure-strategies" title="Link to this heading">#</a></h2>
+<p>In this section, we’ll focus on defining vapor pressure strategies for gas species, specifically Butanol, Styrene, and Water, which were used in our previous examples. To streamline our analysis, we will group Butanol and Styrene into a single organic category, and consider Water separately.</p>
+<section id="strategy-assignment">
+<h3>Strategy Assignment<a class="headerlink" href="#strategy-assignment" title="Link to this heading">#</a></h3>
+<p>For calculating vapor pressures:</p>
+<ul class="simple">
+<li><p><strong>Organics (Butanol and Styrene)</strong>: We will utilize the Antoine equation, a widely recognized method for estimating the vapor pressure of organic compounds based on temperature.</p></li>
+<li><p><strong>Water</strong>: We will apply the Buck equation, which is specifically tailored to accurately calculate the vapor pressure of water across a range of temperatures.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the coefficients for Butanol using the Antoine equation.</span>
+<span class="c1"># &#39;a&#39;, &#39;b&#39;, and &#39;c&#39; are coefficients specific to the Antoine equation used to calculate vapor pressure.</span>
+<span class="n">butanol_coefficients</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mf">7.838</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mf">1558.19</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mf">196.881</span><span class="p">}</span>
+<span class="c1"># Create a vapor pressure strategy for Butanol using the Antoine equation.</span>
+<span class="n">butanol_antione</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+    <span class="n">strategy_type</span><span class="o">=</span><span class="s1">&#39;antoine&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">butanol_coefficients</span><span class="p">)</span>
+
+<span class="c1"># Define the coefficients for Styrene, similar to Butanol, using the</span>
+<span class="c1"># Antoine equation.</span>
+<span class="n">styrene_coefficients</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mf">6.924</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">1420</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">226</span><span class="p">}</span>
+<span class="c1"># Create a vapor pressure strategy for Styrene using the Antoine equation.</span>
+<span class="n">styrene_antione</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+    <span class="n">strategy_type</span><span class="o">=</span><span class="s1">&#39;antoine&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">styrene_coefficients</span><span class="p">)</span>
+
+<span class="c1"># Water uses a different model for vapor pressure calculation called the Buck equation.</span>
+<span class="c1"># The Buck equation is particularly suited for water vapor calculations.</span>
+<span class="c1"># No additional parameters are required to be passed for the Buck equation</span>
+<span class="c1"># in this instance.</span>
+<span class="n">water_buck</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+    <span class="n">strategy_type</span><span class="o">=</span><span class="s1">&#39;water_buck&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="using-gasspeciesbuilder-to-construct-gas-species">
+<h2>Using <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code> to Construct Gas Species<a class="headerlink" href="#using-gasspeciesbuilder-to-construct-gas-species" title="Link to this heading">#</a></h2>
+<p>Now that we have defined the appropriate vapor pressure strategies for our gas species, we can proceed to construct the individual species using the <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code>. This builder simplifies the process of defining and validating the properties of each gas species before their creation. We’ll begin with Water, as it involves a straightforward application of the Buck equation.</p>
+<section id="building-the-water-gas-species">
+<h3>Building the Water Gas Species<a class="headerlink" href="#building-the-water-gas-species" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code> facilitates a structured approach to setting up a gas species. To build a Water gas species, the builder requires the following properties to be set:</p>
+<ol class="arabic simple">
+<li><p><strong>Name</strong>: Identifies the species, which in this case is “Water”.</p></li>
+<li><p><strong>Molar Mass</strong>: The molar mass of water, essential for calculations involving mass and moles.</p></li>
+<li><p><strong>Vapor Pressure Strategy</strong>: The specific strategy used to calculate vapor pressure; for Water, we use the Buck equation.</p></li>
+<li><p><strong>Condensability</strong>: Indicates whether the species can condense under certain atmospheric conditions. For Water, this is typically true.</p></li>
+<li><p><strong>Concentration</strong>: The initial concentration of Water in the mixture, which could vary based on the scenario.</p></li>
+</ol>
+<p>Here is how you can use the <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code> to set up Water:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configure the builder with the necessary properties</span>
+<span class="n">water_species</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">GasSpeciesBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s2">&quot;Water&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_molar_mass</span><span class="p">(</span><span class="mf">18.01528</span><span class="p">,</span> <span class="n">molar_mass_units</span><span class="o">=</span><span class="s2">&quot;g/mol&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_vapor_pressure_strategy</span><span class="p">(</span><span class="n">water_buck</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_condensable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_concentration</span><span class="p">(</span><span class="mf">1e2</span><span class="p">,</span> <span class="n">concentration_units</span><span class="o">=</span><span class="s2">&quot;ug/m^3&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+
+
+<span class="c1"># molar mass in kg/mol, concentration in kg/m3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">water_species</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Notice the units of the concentration are now in kg/m^3: </span><span class="si">{</span><span class="n">water_species</span><span class="o">.</span><span class="n">concentration</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Also the units of the molar mass are now in kg/mol: </span><span class="si">{</span><span class="n">water_species</span><span class="o">.</span><span class="n">molar_mass</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Water
+Notice the units of the concentration are now in kg/m^3: 1.0000000000000001e-07
+Also the units of the molar mass are now in kg/mol: 0.01801528
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="building-gas-species-for-organics">
+<h3>Building Gas Species for Organics<a class="headerlink" href="#building-gas-species-for-organics" title="Link to this heading">#</a></h3>
+<p>Following Water, you can apply a similar process to build gas species for Organics like Butanol and Styrene. Each will have its set of properties based on the chemical’s nature and the desired simulation context.</p>
+<p>When calling <code class="docutils literal notranslate"><span class="pre">.build()</span></code>, it checks that all required properties are set correctly, raising an error if any essential attribute is missing or improperly configured. This ensures that each <code class="docutils literal notranslate"><span class="pre">GasSpecies</span></code> instance is valid and ready usage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define molar masses for organic species (Butanol and Styrene) in kilograms per mole (kg/mol).</span>
+<span class="n">organic_molar_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.074121</span><span class="p">,</span> <span class="mf">104.15e-3</span><span class="p">])</span>  <span class="c1"># Molar mass for Butanol and Styrene respectively.</span>
+
+<span class="c1"># List of vapor pressure strategies assigned to each organic species.</span>
+<span class="n">organic_vapor_pressure</span> <span class="o">=</span> <span class="p">[</span><span class="n">butanol_antione</span><span class="p">,</span> <span class="n">styrene_antione</span><span class="p">]</span>  <span class="c1"># Using Antoine&#39;s equation for both.</span>
+
+<span class="c1"># Define concentrations for each organic species in the mixture, in kilograms per cubic meter (kg/m^3).</span>
+<span class="n">organic_concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2e-6</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">])</span>  <span class="c1"># Concentration values for Butanol and Styrene respectively.</span>
+
+<span class="c1"># Names of the organic species.</span>
+<span class="n">organic_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;butanol&quot;</span><span class="p">,</span> <span class="s2">&quot;styrene&quot;</span><span class="p">])</span>
+
+<span class="c1"># Using GasSpeciesBuilder to construct a GasSpecies object for organics.</span>
+<span class="c1"># Notice how we can directly use arrays to set properties for multiple species.</span>
+<span class="n">organic_species</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">GasSpeciesBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">organic_names</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_molar_mass</span><span class="p">(</span><span class="n">organic_molar_mass</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_vapor_pressure_strategy</span><span class="p">(</span><span class="n">organic_vapor_pressure</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_condensable</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">set_concentration</span><span class="p">(</span><span class="n">organic_concentration</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># The `build()` method validates all the properties are set and returns the constructed GasSpecies object(s).</span>
+<span class="c1"># Here, organic_species will contain the built GasSpecies instances for Butanol and Styrene.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">organic_species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;butanol&#39; &#39;styrene&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pure-vapor-pressures">
+<h2>Pure Vapor Pressures<a class="headerlink" href="#pure-vapor-pressures" title="Link to this heading">#</a></h2>
+<p>With the gas species defined, we can now calculate the pure vapor pressures of Butanol, Styrene, and Water using the respective strategies we assigned earlier. This will help us understand the vapor pressure behavior of each species individually, which is crucial for predicting their behavior in mixtures and under varying conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">273.15</span><span class="p">,</span> <span class="mf">373.15</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Temperature range from 0 to 100 degrees Celsius.</span>
+
+<span class="n">organic_pure_vapor_pressure</span> <span class="o">=</span> <span class="n">organic_species</span><span class="o">.</span><span class="n">get_pure_vapor_pressure</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">)</span>
+<span class="n">water_pure_vapor_pressure</span> <span class="o">=</span> <span class="n">water_species</span><span class="o">.</span><span class="n">get_pure_vapor_pressure</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">)</span>
+
+<span class="c1"># Plotting the vapor pressure curves for the organic species.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">organic_names</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">,</span> <span class="n">organic_pure_vapor_pressure</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">organic_names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">,</span> <span class="n">water_pure_vapor_pressure</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Water&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature (K)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Vapor Pressure (Pa)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/392d7cb292fa6455c7c975ed58e1333d1ba7b28ada23915e807990f6508ac12d.png" src="../../_images/392d7cb292fa6455c7c975ed58e1333d1ba7b28ada23915e807990f6508ac12d.png" />
+</div>
+</div>
+</section>
+<section id="saturation-ratios">
+<h2>Saturation Ratios<a class="headerlink" href="#saturation-ratios" title="Link to this heading">#</a></h2>
+<p>Now that we have established the concentration of each gas species within the mixture, we can proceed to calculate the saturation ratio for each species. The saturation ratio is an essential parameter in determining the condensation behavior of gas species within a mixture.</p>
+<ul class="simple">
+<li><p><strong>Above 1</strong>: A saturation ratio greater than 1 indicates that the species is supersaturated and is likely to condense.</p></li>
+<li><p><strong>Below 1</strong>: Conversely, a saturation ratio below 1 suggests that the species will likely remain in the gas phase.</p></li>
+</ul>
+<section id="future-exploration">
+<h3>Future Exploration<a class="headerlink" href="#future-exploration" title="Link to this heading">#</a></h3>
+<p>In subsequent sections of this notebook series, we will delve deeper into how these saturation ratios reach equilibrium with a liquid phase, enhancing our understanding of the phase behavior under different conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saturation ratio calculation</span>
+<span class="n">organic_saturation_ratio</span> <span class="o">=</span> <span class="n">organic_species</span><span class="o">.</span><span class="n">get_saturation_ratio</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">)</span>
+<span class="n">water_saturation_ratio</span> <span class="o">=</span> <span class="n">water_species</span><span class="o">.</span><span class="n">get_saturation_ratio</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">)</span>
+
+<span class="c1"># Plotting the saturation ratio curves for the organic species.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">organic_names</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">,</span> <span class="n">organic_saturation_ratio</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">organic_names</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">temperature_range</span><span class="p">,</span> <span class="n">water_saturation_ratio</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Water&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature (K)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Saturation Ratio&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ea63e5921811f856e09cef944bce6b34f9e9a254ea17fc8c466765593c8d5eae.png" src="../../_images/ea63e5921811f856e09cef944bce6b34f9e9a254ea17fc8c466765593c8d5eae.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">GasSpecies</span></code> module, along with the <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code>, provides a robust framework for defining and managing gas species within a mixture. By assigning specific vapor pressure strategies and other essential properties, we can accurately model the behavior of individual species and their interactions in various scenarios. This module serves as a foundational component for more advanced simulations and analyses involving gas mixtures, condensation, and phase equilibrium.</p>
+<p>The next section is one more layer of abstraction, where we will define the <code class="docutils literal notranslate"><span class="pre">GasMixture</span></code> class to manage multiple gas species within a single mixture. This class will enable us to handle complex gas mixtures effectively and efficiently, paving the way particle to gas interactions.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "uncscode/particula",
+            ref: "v0.0.10",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Tutorials/Gas_Phase"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Gas Species Tutorial</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-classes">Key Classes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#define-vapor-pressure-strategies">Define Vapor Pressure Strategies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strategy-assignment">Strategy Assignment</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-gasspeciesbuilder-to-construct-gas-species">Using <code class="docutils literal notranslate"><span class="pre">GasSpeciesBuilder</span></code> to Construct Gas Species</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-water-gas-species">Building the Water Gas Species</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-gas-species-for-organics">Building Gas Species for Organics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pure-vapor-pressures">Pure Vapor Pressures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#saturation-ratios">Saturation Ratios</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#future-exploration">Future Exploration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By particula contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

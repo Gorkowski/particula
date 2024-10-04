@@ -1,0 +1,961 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Fitting Lognormal PDFs: 2 Modes &#8212; Particula Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tutorials/Data_Analysis/Fitting_lognormal_PDFs_2modes';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/placeholder.png" class="logo__image only-light" alt="Particula Book - Home"/>
+    <script>document.write(`<img src="../../_static/placeholder.png" class="logo__image only-dark" alt="Particula Book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Getting started
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tour</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../tour/part-tour.html">Particula tour</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/environment.html">The <code class="docutils literal notranslate"><span class="pre">Environment</span></code> Class</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dilution_loss.html"><code class="docutils literal notranslate"><span class="pre">dilution_loss</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dynamic_viscosity.html"><code class="docutils literal notranslate"><span class="pre">dynamic_viscosity</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/mean_free_path.html">Mean Free Path</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/vapor.html">The <code class="docutils literal notranslate"><span class="pre">Vapor</span></code> Class</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/particle.html">The <code class="docutils literal notranslate"><span class="pre">Particle</span></code> Classes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/distribution_discretization.html"><code class="docutils literal notranslate"><span class="pre">distribution_discretization</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/radius_cutoff.html"><code class="docutils literal notranslate"><span class="pre">radius_cutoff</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/particle_mass.html"><code class="docutils literal notranslate"><span class="pre">particle_mass</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/knudsen_number.html"><code class="docutils literal notranslate"><span class="pre">knudsen_number</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/slip_correction.html"><code class="docutils literal notranslate"><span class="pre">slip_correction</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/friction_factor.html"><code class="docutils literal notranslate"><span class="pre">friction_factor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/dimensionless_coagulation.html"><code class="docutils literal notranslate"><span class="pre">dimensionless_coagulation</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../documentation/utilities/utilities_overview.html">Utilities Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../documentation/utilities/convert_size_dist_scales.html">Converting Size Distributions</a></li>
+
+
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Strategic Plan</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../strategic_plan/strategic_planning_FY24.html">FY24 Plan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../strategic_plan/Aerosol_patterns.html">Program Outline Revision Draft</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Next Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/next/next_vapor_pressure.html">Vapor Pressure</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contributor Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/uncscode/particula/v0.0.10?urlpath=lab/tree/docs/Tutorials/Data_Analysis/Fitting_lognormal_PDFs_2modes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/uncscode/particula/blob/v0.0.10/docs/Tutorials/Data_Analysis/Fitting_lognormal_PDFs_2modes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/edit/v0.0.10/docs/Tutorials/Data_Analysis/Fitting_lognormal_PDFs_2modes.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/issues/new?title=Issue%20on%20page%20%2FTutorials/Data_Analysis/Fitting_lognormal_PDFs_2modes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Tutorials/Data_Analysis/Fitting_lognormal_PDFs_2modes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fitting Lognormal PDFs: 2 Modes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-simulated-data">Generate Simulated Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guess-using-neural-network">Guess Using Neural Network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimize-the-lognormal-fit">Optimize the Lognormal Fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-fits">Additional Fits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fitting-lognormal-pdfs-2-modes">
+<h1>Fitting Lognormal PDFs: 2 Modes<a class="headerlink" href="#fitting-lognormal-pdfs-2-modes" title="Link to this heading">#</a></h1>
+<p>This notebook demonstrates how to use a neural network to obtain an initial guess for fitting a lognormal probability density function (PDF) with two modes. It also shows how to optimize the initial guess using a cost function and visualize the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">particula.next.particles.properties</span> <span class="kn">import</span> <span class="n">lognormal_pdf_distribution</span>
+<span class="kn">from</span> <span class="nn">particula.data.process.ml_analysis</span> <span class="kn">import</span> <span class="n">generate_and_train_2mode_sizer</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">particula.next.particles.properties</span> <span class="kn">import</span> <span class="n">lognormal_pdf_distribution</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">particula.data.process.ml_analysis</span> <span class="kn">import</span> <span class="n">generate_and_train_2mode_sizer</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">particles</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">MassBasedMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">RadiiBasedMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_factories</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">DistributionFactory</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">particula.next.particles.activity_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">ActivityIdealMass</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">ActivityIdealMolar</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">ActivityKappaParameter</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="kn">from</span> <span class="nn">particula.next.particles.activity_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">ActivityIdealMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">ActivityIdealMolarBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">ActivityKappaParameterBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">particles</span><span class="o">/</span><span class="n">distribution_factories</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Factory Classes for selecting the distribution strategy.</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">particula.next.abc_factory</span> <span class="kn">import</span> <span class="n">StrategyFactory</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">MassBasedMovingBin</span><span class="p">,</span> <span class="n">RadiiBasedMovingBin</span><span class="p">,</span> <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span> <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;particula.next.abc_factory&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section id="generate-simulated-data">
+<h2>Generate Simulated Data<a class="headerlink" href="#generate-simulated-data" title="Link to this heading">#</a></h2>
+<p>We start by generating simulated lognormal data for two modes. The data includes some noise to simulate real-world conditions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate x-values (particle sizes)</span>
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+
+<span class="c1"># Generate lognormal PDF with noise</span>
+<span class="n">concentration_pdf</span> <span class="o">=</span> <span class="n">lognormal_pdf_distribution</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">x_values</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">80</span><span class="p">,</span> <span class="mi">150</span><span class="p">]),</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">]),</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="c1"># Introduce noise to the data</span>
+<span class="n">concentration_pdf</span> <span class="o">=</span> <span class="n">concentration_pdf</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+    <span class="n">low</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">concentration_pdf</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot the noisy data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">concentration_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Noisy Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Size&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Simulated Lognormal Data with Noise&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5edbac701f95bfd0c732591519d16d25df5e08a6d230964148f146e06bc07986.png" src="../../_images/5edbac701f95bfd0c732591519d16d25df5e08a6d230964148f146e06bc07986.png" />
+</div>
+</div>
+</section>
+<section id="guess-using-neural-network">
+<h2>Guess Using Neural Network<a class="headerlink" href="#guess-using-neural-network" title="Link to this heading">#</a></h2>
+<p>Next, we use a pre-trained neural network model to get an initial guess for the lognormal parameters (mode, geometric standard deviation, and number of particles).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get initial guess from the ML model</span>
+<span class="p">(</span>
+    <span class="n">mode_values_guess</span><span class="p">,</span>
+    <span class="n">geometric_standard_deviation_guess</span><span class="p">,</span>
+    <span class="n">number_of_particles_guess</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">generate_and_train_2mode_sizer</span><span class="o">.</span><span class="n">lognormal_2mode_ml_guess</span><span class="p">(</span>
+    <span class="n">logspace_x</span><span class="o">=</span><span class="n">x_values</span><span class="p">,</span>
+    <span class="n">concentration_pdf</span><span class="o">=</span><span class="n">concentration_pdf</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Display the initial guess results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial Guess:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mode: </span><span class="si">{</span><span class="n">mode_values_guess</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GSD: </span><span class="si">{</span><span class="n">geometric_standard_deviation_guess</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of particles: </span><span class="si">{</span><span class="n">number_of_particles_guess</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initial Guess:
+Mode: [ 86.74944005 143.84229739]
+GSD: [1.44827329 1.52694663]
+Number of particles: [ 69.09804885 647.14554209]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="optimize-the-lognormal-fit">
+<h2>Optimize the Lognormal Fit<a class="headerlink" href="#optimize-the-lognormal-fit" title="Link to this heading">#</a></h2>
+<p>With the initial guess obtained, we now optimize the parameters using a cost function to minimize the difference between the actual data and the fitted lognormal distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">mode_values_optimized</span><span class="p">,</span>
+    <span class="n">gsd_optimized</span><span class="p">,</span>
+    <span class="n">number_of_particles_optimized</span><span class="p">,</span>
+    <span class="n">r2_optimized</span><span class="p">,</span>
+    <span class="n">optimization_results</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">generate_and_train_2mode_sizer</span><span class="o">.</span><span class="n">optimize_lognormal_2mode</span><span class="p">(</span>
+    <span class="n">mode_guess</span><span class="o">=</span><span class="n">mode_values_guess</span><span class="p">,</span>
+    <span class="n">geometric_standard_deviation_guess</span><span class="o">=</span><span class="n">geometric_standard_deviation_guess</span><span class="p">,</span>
+    <span class="n">number_of_particles_in_mode_guess</span><span class="o">=</span><span class="n">number_of_particles_guess</span><span class="p">,</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">x_values</span><span class="p">,</span>
+    <span class="n">concentration_pdf</span><span class="o">=</span><span class="n">concentration_pdf</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display the optimized results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optimized Fit:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized mode values: </span><span class="si">{</span><span class="n">mode_values_optimized</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized GSD: </span><span class="si">{</span><span class="n">gsd_optimized</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized number of particles: </span><span class="si">{</span><span class="n">number_of_particles_optimized</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized R²: </span><span class="si">{</span><span class="n">r2_optimized</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best optimization method: </span><span class="si">{</span><span class="n">optimization_results</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimized Fit:
+Optimized mode values: [ 77.92048882 146.4391948 ]
+Optimized GSD: [1.19264682 1.30742154]
+Optimized number of particles: [175.92002921 544.65291938]
+Optimized R²: 0.9736896055718199
+Best optimization method: trust-constr
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Link to this heading">#</a></h2>
+<p>Finally, we compare the original data, the initial guess from the neural network, and the optimized fit. This step helps us understand how close the initial guess was and how much improvement was achieved through optimization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate concentration PDFs for guess and optimized values</span>
+<span class="n">concentration_pdf_guess</span> <span class="o">=</span> <span class="n">lognormal_pdf_distribution</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">x_values</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">mode_values_guess</span><span class="p">,</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">geometric_standard_deviation_guess</span><span class="p">,</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">number_of_particles_guess</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">concentration_pdf_optimized</span> <span class="o">=</span> <span class="n">lognormal_pdf_distribution</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">x_values</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">mode_values_optimized</span><span class="p">,</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">gsd_optimized</span><span class="p">,</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">number_of_particles_optimized</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot the original, guess, and optimized PDFs</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">concentration_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original Data&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">concentration_pdf_guess</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ML Guess&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="p">,</span>
+    <span class="n">concentration_pdf_optimized</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimized Fit&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Size&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparison of Original, ML Guess, and Optimized Fit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f11d76f820dc44e4b501a4e0c7b39409d470c48d0c4404c24641ce61126c902b.png" src="../../_images/f11d76f820dc44e4b501a4e0c7b39409d470c48d0c4404c24641ce61126c902b.png" />
+</div>
+</div>
+</section>
+<section id="additional-fits">
+<h2>Additional Fits<a class="headerlink" href="#additional-fits" title="Link to this heading">#</a></h2>
+<p>Let’s try different initial conditions to see how the optimization behaves with varying data sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">x_values_example1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">concentration_pdf_example1</span> <span class="o">=</span> <span class="n">lognormal_pdf_distribution</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">x_values_example1</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">800</span><span class="p">]),</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]),</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">300</span><span class="p">,</span> <span class="mi">800</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="c1"># Add noise</span>
+<span class="n">concentration_pdf_example1</span> <span class="o">=</span> <span class="n">concentration_pdf_example1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+    <span class="n">low</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">concentration_pdf_example1</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="c1"># Obtain initial guess</span>
+<span class="n">mode_guess1</span><span class="p">,</span> <span class="n">gsd_guess1</span><span class="p">,</span> <span class="n">particles_guess1</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">generate_and_train_2mode_sizer</span><span class="o">.</span><span class="n">lognormal_2mode_ml_guess</span><span class="p">(</span>
+        <span class="n">logspace_x</span><span class="o">=</span><span class="n">x_values_example1</span><span class="p">,</span>
+        <span class="n">concentration_pdf</span><span class="o">=</span><span class="n">concentration_pdf_example1</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Optimize</span>
+<span class="n">mode_opt1</span><span class="p">,</span> <span class="n">gsd_opt1</span><span class="p">,</span> <span class="n">particles_opt1</span><span class="p">,</span> <span class="n">r2_opt1</span><span class="p">,</span> <span class="n">results1</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">generate_and_train_2mode_sizer</span><span class="o">.</span><span class="n">optimize_lognormal_2mode</span><span class="p">(</span>
+        <span class="n">mode_guess</span><span class="o">=</span><span class="n">mode_guess1</span><span class="p">,</span>
+        <span class="n">geometric_standard_deviation_guess</span><span class="o">=</span><span class="n">gsd_guess1</span><span class="p">,</span>
+        <span class="n">number_of_particles_in_mode_guess</span><span class="o">=</span><span class="n">particles_guess1</span><span class="p">,</span>
+        <span class="n">x_values</span><span class="o">=</span><span class="n">x_values_example1</span><span class="p">,</span>
+        <span class="n">concentration_pdf</span><span class="o">=</span><span class="n">concentration_pdf_example1</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display and plot</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Example 1:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initial Guess:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mode: </span><span class="si">{</span><span class="n">mode_guess1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GSD: </span><span class="si">{</span><span class="n">gsd_guess1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of particles: </span><span class="si">{</span><span class="n">particles_guess1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized mode values: </span><span class="si">{</span><span class="n">mode_opt1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized GSD: </span><span class="si">{</span><span class="n">gsd_opt1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized number of particles: </span><span class="si">{</span><span class="n">particles_opt1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimized R²: </span><span class="si">{</span><span class="n">r2_opt1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best optimization method: </span><span class="si">{</span><span class="n">results1</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values_example1</span><span class="p">,</span> <span class="n">concentration_pdf_example1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">x_values_example1</span><span class="p">,</span>
+    <span class="n">lognormal_pdf_distribution</span><span class="p">(</span>
+        <span class="n">x_values</span><span class="o">=</span><span class="n">x_values_example1</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="n">mode_opt1</span><span class="p">,</span>
+        <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">gsd_opt1</span><span class="p">,</span>
+        <span class="n">number_of_particles</span><span class="o">=</span><span class="n">particles_opt1</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Optimized Fit&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Size&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Example 1:
+Initial Guess:
+Mode: [149.48451487 739.05747291]
+GSD: [1.18937477 1.07885284]
+Number of particles: [350.00811131 776.51103601]
+Optimized mode values: [ 99.38098192 795.02739947]
+Optimized GSD: [1.10427722 1.09958701]
+Optimized number of particles: [284.06490163 819.18581964]
+Optimized R²: 0.9779916485645566
+Best optimization method: Powell
+</pre></div>
+</div>
+<img alt="../../_images/fa321bfc40fdcc2a20834757f208bce2ff0ce1b69d75359e8294d3b90db85c91.png" src="../../_images/fa321bfc40fdcc2a20834757f208bce2ff0ce1b69d75359e8294d3b90db85c91.png" />
+</div>
+</div>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>This notebook demonstrated the use of a neural network for generating an initial guess for fitting a lognormal PDF with two modes. The initial guess was then optimized to improve the fit, and the results were visualized to compare the original data, the initial guess, and the optimized fit.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "uncscode/particula",
+            ref: "v0.0.10",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Tutorials/Data_Analysis"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-simulated-data">Generate Simulated Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#guess-using-neural-network">Guess Using Neural Network</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimize-the-lognormal-fit">Optimize the Lognormal Fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-fits">Additional Fits</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By particula contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
