@@ -179,6 +179,7 @@ class GasSpecies:
                 ],
                 dtype=np.float64,
             )
+        #
         # Calculate partial pressure using a single strategy
         return self.pure_vapor_pressure_strategy.partial_pressure(
             concentration=self.concentration,
