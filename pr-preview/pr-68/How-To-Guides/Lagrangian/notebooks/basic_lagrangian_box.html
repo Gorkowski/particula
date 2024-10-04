@@ -706,26 +706,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Start the simulation</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_iterations</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> 
-<span class="g g-Whitespace">      </span><span class="mi">7</span> 
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="c1"># Calculate pairwise distances between particles</span>
-<span class="ne">----&gt; </span><span class="mi">9</span>     <span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">particle_pairs</span><span class="o">.</span><span class="n">calculate_pairwise_distance</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>         <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="c1"># Adjust distances for the radius of each particle (surface-to-surface</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="c1"># distance)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">radius</span> <span class="o">=</span> <span class="n">particle_property</span><span class="o">.</span><span class="n">radius_calculation</span><span class="p">(</span><span class="n">mass</span><span class="o">=</span><span class="n">mass</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages/particula/lagrangian/particle_pairs.py:76,</span> in <span class="ni">calculate_pairwise_distance</span><span class="nt">(position)</span>
-<span class="g g-Whitespace">     </span><span class="mi">74</span> <span class="n">detla_position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">position</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span> <span class="c1"># Compute pairwise Euclidean distances</span>
-<span class="ne">---&gt; </span><span class="mi">76</span> <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">detla_position</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total wall time: 29.50087285041809 seconds
+Ratio of wall time to simulation time: 0.2950087285041809
 </pre></div>
 </div>
 </div>
@@ -787,10 +769,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of particles at the end: 56
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of particles at the end: 64
 </pre></div>
 </div>
-<img alt="../../../_images/d3447394b9eed654024103bc6f1ae66ff652b69cd7da4856002110f635a36c1a.png" src="../../../_images/d3447394b9eed654024103bc6f1ae66ff652b69cd7da4856002110f635a36c1a.png" />
+<img alt="../../../_images/4cc91746190a17170edecd434747641e101c5824746e0097d680684fa91e7784.png" src="../../../_images/4cc91746190a17170edecd434747641e101c5824746e0097d680684fa91e7784.png" />
 </div>
 </div>
 </section>
@@ -833,7 +815,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/98e908f23f9e2df5e7528bf2cfbfff8895e9b236ab700b49d53c6ce706242382.png" src="../../../_images/98e908f23f9e2df5e7528bf2cfbfff8895e9b236ab700b49d53c6ce706242382.png" />
+<img alt="../../../_images/0249e5aa7fa1c603b4d8792b90d293039aba06400494e378b9171f2b4c029999.png" src="../../../_images/0249e5aa7fa1c603b4d8792b90d293039aba06400494e378b9171f2b4c029999.png" />
 </div>
 </div>
 </section>
