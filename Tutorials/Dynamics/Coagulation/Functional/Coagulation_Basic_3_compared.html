@@ -1,0 +1,1482 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Coagulation Basic 3: PMF vs. PDF &#8212; Particula Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tutorials/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/placeholder.png" class="logo__image only-light" alt="Particula Book - Home"/>
+    <script>document.write(`<img src="../../../../_static/placeholder.png" class="logo__image only-dark" alt="Particula Book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Getting started
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tour</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../tour/part-tour.html">Particula tour</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../documentation/environment.html">The <code class="docutils literal notranslate"><span class="pre">Environment</span></code> Class</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/dilution_loss.html"><code class="docutils literal notranslate"><span class="pre">dilution_loss</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/dynamic_viscosity.html"><code class="docutils literal notranslate"><span class="pre">dynamic_viscosity</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/mean_free_path.html">Mean Free Path</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/vapor.html">The <code class="docutils literal notranslate"><span class="pre">Vapor</span></code> Class</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../documentation/particle.html">The <code class="docutils literal notranslate"><span class="pre">Particle</span></code> Classes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/distribution_discretization.html"><code class="docutils literal notranslate"><span class="pre">distribution_discretization</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/radius_cutoff.html"><code class="docutils literal notranslate"><span class="pre">radius_cutoff</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/particle_mass.html"><code class="docutils literal notranslate"><span class="pre">particle_mass</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/knudsen_number.html"><code class="docutils literal notranslate"><span class="pre">knudsen_number</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/slip_correction.html"><code class="docutils literal notranslate"><span class="pre">slip_correction</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/friction_factor.html"><code class="docutils literal notranslate"><span class="pre">friction_factor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/dimensionless_coagulation.html"><code class="docutils literal notranslate"><span class="pre">dimensionless_coagulation</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../documentation/utilities/utilities_overview.html">Utilities Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../documentation/utilities/convert_size_dist_scales.html">Converting Size Distributions</a></li>
+
+
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Strategic Plan</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../strategic_plan/strategic_planning_FY24.html">FY24 Plan</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../strategic_plan/Aerosol_patterns.html">Program Outline Revision Draft</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Next Development</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/next/next_vapor_pressure.html">Vapor Pressure</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Community</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../CONTRIBUTING.html">Contributor Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/uncscode/particula/v0.0.10?urlpath=lab/tree/docs/Tutorials/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../../../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/uncscode/particula/blob/v0.0.10/docs/Tutorials/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/edit/v0.0.10/docs/Tutorials/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/uncscode/particula/issues/new?title=Issue%20on%20page%20%2FTutorials/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../../_sources/Tutorials/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Coagulation Basic 3: PMF vs. PDF</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-mass-function-pmf-vs-probability-density-function-pdf">Probability Mass Function (PMF) vs. Probability Density Function (PDF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-objectives">Comparison Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-and-visualizing">Setting Up and Visualizing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rescaling-pdf">Rescaling PDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rescaling-pmf">Rescaling PMF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-number-concentration">Verifying Number Concentration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#small-errors">Small Errors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brownian-coagulation-kernel">Brownian Coagulation Kernel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#volume-conservation">Volume Conservation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gain-and-loss-rates-comparison">Gain and Loss Rates Comparison</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-pdf-coagulation">Simulating PDF Coagulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-pmf-simulation-comparison-and-summary">Add PMF simulation, comparison, and summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="coagulation-basic-3-pmf-vs-pdf">
+<h1>Coagulation Basic 3: PMF vs. PDF<a class="headerlink" href="#coagulation-basic-3-pmf-vs-pdf" title="Link to this heading">#</a></h1>
+<p>In this section, we will compare two fundamental approaches to modeling aerosol particle coagulation: the Probability Mass Function (PMF) and the Probability Density Function (PDF) methods. Both methods offer different perspectives on representing particle size distributions and calculating coagulation rates, which are critical for understanding how particles in aerosols interact and evolve over time.</p>
+<section id="probability-mass-function-pmf-vs-probability-density-function-pdf">
+<h2>Probability Mass Function (PMF) vs. Probability Density Function (PDF)<a class="headerlink" href="#probability-mass-function-pmf-vs-probability-density-function-pdf" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>PMF Representation</strong>: The PMF method discretizes the particle size distribution into distinct bins, each representing a specific particle size or mass. This approach counts the number of particles within each bin, making it a straightforward method for tracking how particle populations change due to coagulation. PMF is particularly useful when dealing with discrete particle sizes or when particle number concentrations are of primary interest.</p></li>
+<li><p><strong>PDF Representation</strong>: In contrast, the PDF method provides a continuous representation of the particle size distribution. Instead of counting particles in discrete bins, PDF describes the likelihood of finding particles within a given size range. This approach is well-suited for scenarios where a smooth distribution of particle sizes is expected or when dealing with very fine size resolutions.</p></li>
+</ul>
+</section>
+<section id="comparison-objectives">
+<h2>Comparison Objectives<a class="headerlink" href="#comparison-objectives" title="Link to this heading">#</a></h2>
+<p>The objective of this comparison is to demonstrate how the choice between PMF and PDF representations affects the calculation of coagulation rates and the resulting particle size distributions. By applying both methods to a lognormal size distribution, we will analyze the differences in how each method handles the evolution of particle populations during coagulation.</p>
+<p>To facilitate this comparison, we will:</p>
+<ol class="arabic simple">
+<li><p><strong>Initialize Lognormal Distributions</strong>: Generate lognormal particle size distributions using both PMF and PDF methods, ensuring that both distributions share the same initial parameters (e.g., mode, geometric standard deviation, and total particle concentration).</p></li>
+<li><p><strong>Calculate Coagulation Kernel</strong>: Compute the Brownian coagulation kernel using identical environmental conditions (e.g., temperature, pressure, collision efficiency) for both methods. This will allow us to isolate the effect of the distribution representation on the coagulation rates.</p></li>
+<li><p><strong>Simulate Coagulation</strong>: Simulate the coagulation process over several time steps for both PMF and PDF representations, tracking how the particle size distributions evolve and comparing the results.</p></li>
+</ol>
+<p>By the end of this section, we aim to highlight the strengths and limitations of each method, providing insights into when and why one approach might be preferred over the other in aerosol research and modeling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1"># For numerical operations and array manipulations</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># For plotting graphs and visualizations</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>  <span class="c1"># For data manipulation and analysis</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">trapezoid</span><span class="p">,</span>
+<span class="p">)</span>  <span class="c1"># For numerical integration using the trapezoidal rule</span>
+
+<span class="c1"># Import specific modules from the particula package</span>
+<span class="kn">from</span> <span class="nn">particula.next.dynamics.coagulation</span> <span class="kn">import</span> <span class="n">brownian_kernel</span><span class="p">,</span> <span class="n">rate</span>
+
+<span class="c1"># The &#39;brownian_kernel&#39; module calculates the Brownian coagulation kernel,</span>
+<span class="c1"># which is used to determine coagulation rates between particles.</span>
+<span class="c1"># The &#39;rate&#39; module includes functions for calculating gain and loss rates during coagulation.</span>
+<span class="kn">from</span> <span class="nn">particula.next.particles.properties.lognormal_size_distribution</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">lognormal_pmf_distribution</span><span class="p">,</span>
+    <span class="n">lognormal_pdf_distribution</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># The &#39;lognormal_pmf_distribution&#39; function generates a lognormal distribution</span>
+<span class="c1"># represented as a Probability Mass Function (PMF).</span>
+<span class="c1"># The &#39;lognormal_pdf_distribution&#39; function generates a lognormal distribution</span>
+<span class="c1"># represented as a Probability Density Function (PDF).</span>
+<span class="kn">from</span> <span class="nn">particula.util.convert</span> <span class="kn">import</span> <span class="n">distribution_convert_pdf_pms</span>
+
+<span class="c1"># The &#39;distribution_convert_pdf_pms&#39; function is used to convert PDF distributions</span>
+<span class="c1"># to PMS (Particle Mass Spectrum) or vice versa for comparison purposes.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">trapezoid</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="p">)</span>  <span class="c1"># For numerical integration using the trapezoidal rule</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># Import specific modules from the particula package</span>
+<span class="ne">---&gt; </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">particula.next.dynamics.coagulation</span> <span class="kn">import</span> <span class="n">brownian_kernel</span><span class="p">,</span> <span class="n">rate</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="c1"># The &#39;brownian_kernel&#39; module calculates the Brownian coagulation kernel,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="c1"># which is used to determine coagulation rates between particles.</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># The &#39;rate&#39; module includes functions for calculating gain and loss rates during coagulation.</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">particula.next.particles.properties.lognormal_size_distribution</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">lognormal_pmf_distribution</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">lognormal_pdf_distribution</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">dynamics</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">14</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Condensation dynamics exposed via __init__.</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="sd"> </span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span><span class="sd"> If you want specific sub functions, import them directly from</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span><span class="sd"> `particula.next.dynamics.condensation.xxx.xxx` instead.</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># later: pytype does not like these imports.</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># pylint: disable=unused-import, disable=line-too-long</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># flake8: noqa</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1"># pyright: basic</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># pytype: skip-file</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">particula.next.dynamics</span> <span class="kn">import</span> <span class="n">condensation</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="kn">from</span> <span class="nn">particula.next.dynamics</span> <span class="kn">import</span> <span class="n">coagulation</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">particula.next.dynamics</span> <span class="kn">import</span> <span class="n">properties</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">dynamics</span><span class="o">/</span><span class="n">condensation</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">14</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Condensation dynamics exposed via __init__.</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="sd"> </span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span><span class="sd"> If you want specific sub functions, import them directly from</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span><span class="sd"> `particula.next.dynamics.condensation.xxx.xxx` instead.</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># later: pytype does not like these imports.</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># pylint: disable=unused-import, disable=line-too-long</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="c1"># flake8: noqa</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1"># pyright: basic</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="c1"># pytype: skip-file</span>
+<span class="ne">---&gt; </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">particula.next.dynamics.condensation.condensation_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">CondensationIsothermal</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="kn">from</span> <span class="nn">particula.next.dynamics.condensation.mass_transfer</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">mass_transfer_rate</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">first_order_mass_transport_k</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="n">radius_transfer_rate</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="n">calculate_mass_transfer</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">dynamics</span><span class="o">/</span><span class="n">condensation</span><span class="o">/</span><span class="n">condensation_strategies</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">44</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span> <span class="c1"># particula imports</span>
+<span class="ne">---&gt; </span><span class="mi">44</span> <span class="kn">from</span> <span class="nn">particula.next.particles.representation</span> <span class="kn">import</span> <span class="n">ParticleRepresentation</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="kn">from</span> <span class="nn">particula.next.gas.species</span> <span class="kn">import</span> <span class="n">GasSpecies</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="kn">from</span> <span class="nn">particula.next.particles.properties</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>     <span class="n">calculate_knudsen_number</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>     <span class="n">vapor_transition_correction</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span>     <span class="n">partial_pressure_delta</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">50</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">particles</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">22</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">MassBasedMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">RadiiBasedMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>     <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_factories</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">DistributionFactory</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">particula.next.particles.activity_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">ActivityIdealMass</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">ActivityIdealMolar</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">ActivityKappaParameter</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="kn">from</span> <span class="nn">particula.next.particles.activity_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="n">ActivityIdealMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span>     <span class="n">ActivityIdealMolarBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">33</span>     <span class="n">ActivityKappaParameterBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="p">)</span>
+
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.11.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">particula</span><span class="o">/</span><span class="nb">next</span><span class="o">/</span><span class="n">particles</span><span class="o">/</span><span class="n">distribution_factories</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Factory Classes for selecting the distribution strategy.</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">particula.next.abc_factory</span> <span class="kn">import</span> <span class="n">StrategyFactory</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_strategies</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">MassBasedMovingBin</span><span class="p">,</span> <span class="n">RadiiBasedMovingBin</span><span class="p">,</span> <span class="n">SpeciatedMassMovingBin</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">ParticleResolvedSpeciatedMass</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">particula.next.particles.distribution_builders</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">MassBasedMovingBinBuilder</span><span class="p">,</span> <span class="n">RadiiBasedMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">SpeciatedMassMovingBinBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">ParticleResolvedSpeciatedMassBuilder</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;particula.next.abc_factory&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setting-up-and-visualizing">
+<h2>Setting Up and Visualizing<a class="headerlink" href="#setting-up-and-visualizing" title="Link to this heading">#</a></h2>
+<p>In this section, we define the parameters for a lognormal particle size distribution and generate both Probability Density Function (PDF) and Probability Mass Function (PMF) representations. We then visualize these distributions to compare how each method represents particle concentrations across different size ranges.</p>
+<p><strong>Distribution Parameters</strong></p>
+<p>We start by defining the key parameters for the lognormal distribution:</p>
+<ul class="simple">
+<li><p><strong>Mode</strong>: The most probable particle size is set to 200 nanometers (200 nm or (200 \times 10^{-9}) meters).</p></li>
+<li><p><strong>Geometric Standard Deviation</strong>: The spread of the distribution is controlled by a geometric standard deviation of 1.5.</p></li>
+<li><p><strong>Total Number Concentration</strong>: The total concentration of particles is (1 \times 10^6) particles per cubic centimeter (cm³), which we convert to (1 \times 10^{12}) particles per cubic meter (m³) for our calculations.</p></li>
+</ul>
+<p>We also define the radius bins, which span a wide range from 1 nanometer to 10 micrometers, using a logarithmic scale to capture the distribution across different particle sizes.</p>
+<p><strong>Explanation</strong></p>
+<ul class="simple">
+<li><p><strong>Parameter Definitions</strong>: The mode, geometric standard deviation, and number concentration are clearly defined to set up the lognormal distribution.</p></li>
+<li><p><strong>Distribution Creation</strong>: We generate both PDF and PMF representations of the distribution using the defined parameters and radius bins. This allows us to see how each method captures the particle concentrations.</p></li>
+<li><p><strong>Visualization</strong>: The plot compares the PDF and PMF distributions on a logarithmic scale, which is essential for accurately displaying the wide range of particle sizes and concentrations. The use of log scales on both axes helps to highlight the differences between the two methods.</p></li>
+</ul>
+<p>By visualizing these distributions side by side, we gain a better understanding of how the PDF and PMF methods differ in representing aerosol particle sizes and concentrations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define distribution parameters</span>
+<span class="n">mode</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">200e-9</span><span class="p">])</span>  <span class="c1"># Mode of the distribution (200 nm)</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">])</span>  <span class="c1"># Geometric standard deviation</span>
+<span class="n">number</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e6</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1e6</span>  <span class="c1"># 1e6 particles per cm^3 converted to m^3</span>
+
+<span class="c1"># Define radius bins on a logarithmic scale from 1 nm to 10 μm</span>
+<span class="n">radius_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">start</span><span class="o">=-</span><span class="mi">9</span><span class="p">,</span> <span class="n">stop</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Create the lognormal PDF distribution</span>
+<span class="n">distribution_pdf</span> <span class="o">=</span> <span class="n">lognormal_pdf_distribution</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">std</span><span class="p">,</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Create the lognormal PMF distribution</span>
+<span class="n">distribution_pmf</span> <span class="o">=</span> <span class="n">lognormal_pmf_distribution</span><span class="p">(</span>
+    <span class="n">x_values</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+    <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">std</span><span class="p">,</span>
+    <span class="n">number_of_particles</span><span class="o">=</span><span class="n">number</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot the PDF and PMF distributions for comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution_pmf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PMF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Radius [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Concentration $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3}$ or $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 \cdot m}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span>
+    <span class="s2">&quot;log&quot;</span>
+<span class="p">)</span>  <span class="c1"># Logarithmic scale for the x-axis to capture wide size range</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span>
+    <span class="s2">&quot;log&quot;</span>
+<span class="p">)</span>  <span class="c1"># Logarithmic scale for the y-axis to highlight distribution differences</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/bdfd040fbf18ef3042435410cc28e6219b30754d429ba9ca0fc4f87c7d8a32aa.png" src="../../../../_images/bdfd040fbf18ef3042435410cc28e6219b30754d429ba9ca0fc4f87c7d8a32aa.png" />
+</div>
+</div>
+</section>
+<section id="rescaling-pdf">
+<h2>Rescaling PDF<a class="headerlink" href="#rescaling-pdf" title="Link to this heading">#</a></h2>
+<p>In this section, we convert the previously generated Probability Density Function (PDF) into a Probability Mass Function (PMF) to directly compare it with the original PMF distribution. This rescaling is necessary because PDF and PMF represent the distribution in different ways, and aligning them allows for a more accurate comparison.</p>
+<p><strong>Rescaling the PDF</strong></p>
+<p>The conversion from PDF to PMF involves rescaling the distribution so that the integral of the PDF over each bin corresponds to the particle count in that bin, similar to what is represented in the PMF. This is done using the <code class="docutils literal notranslate"><span class="pre">distribution_convert_pdf_pms</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rescale the PDF to PMF</span>
+<span class="n">distribution_pdf_rescaled</span> <span class="o">=</span> <span class="n">distribution_convert_pdf_pms</span><span class="p">(</span>
+    <span class="n">x_array</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="n">distribution_pdf</span><span class="p">,</span>
+    <span class="n">to_pdf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Convert PDF to PMF</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot the rescaled PDF and the original PMF for comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution_pdf_rescaled</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PDF Rescaled to PMF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution_pmf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PMF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Radius [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>  <span class="c1"># Use a logarithmic scale for the x-axis</span>
+<span class="c1"># plt.yscale(&#39;log&#39;)  # Optionally use a logarithmic scale for the y-axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/c24a8a36c5bafbeca9987bf57dad22d5b81c750f8d6978105199d5a7346edcb9.png" src="../../../../_images/c24a8a36c5bafbeca9987bf57dad22d5b81c750f8d6978105199d5a7346edcb9.png" />
+</div>
+</div>
+</section>
+<section id="rescaling-pmf">
+<h2>Rescaling PMF<a class="headerlink" href="#rescaling-pmf" title="Link to this heading">#</a></h2>
+<p>After converting the PDF to a PMF for direct comparison, we now perform the reverse operation: rescaling the PMF to a PDF. This allows us to compare the original PDF with the PMF that has been adjusted to match the continuous representation of particle concentrations.</p>
+<p><strong>Rescaling the PMF</strong></p>
+<p>To rescale the PMF to a PDF, we use the <code class="docutils literal notranslate"><span class="pre">distribution_convert_pdf_pms</span></code> function. This conversion ensures that the PMF, which originally represented discrete particle counts in each bin, is transformed into a continuous probability density function, aligning it with the original PDF format.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rescale the PMF to PDF</span>
+<span class="n">distribution_pmf_rescaled</span> <span class="o">=</span> <span class="n">distribution_convert_pdf_pms</span><span class="p">(</span>
+    <span class="n">x_array</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="n">distribution_pmf</span><span class="p">,</span>
+    <span class="n">to_pdf</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Convert PMF to PDF</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot the original PDF and the rescaled PMF for comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution_pmf_rescaled</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PMF Rescaled to PDF&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Radius [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Concentration $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 \cdot m}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>  <span class="c1"># Logarithmic scale for the x-axis to capture size range</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/405a94f1e5a9eb2a913fae21a9d61fe644bf06de61fa8c78f1b8e11762b38465.png" src="../../../../_images/405a94f1e5a9eb2a913fae21a9d61fe644bf06de61fa8c78f1b8e11762b38465.png" />
+</div>
+</div>
+</section>
+<section id="verifying-number-concentration">
+<h2>Verifying Number Concentration<a class="headerlink" href="#verifying-number-concentration" title="Link to this heading">#</a></h2>
+<p>In this section, we validate the consistency of the number concentration across different representations (PDF and PMF) by performing numerical integrations and summations. This step ensures that the transformations between PDF and PMF maintain the expected total particle concentrations.</p>
+<p><strong>Integrating Number Concentration for PDF</strong></p>
+<p>We first integrate the original PDF distribution and the PMF that has been rescaled to a PDF to check if they yield the same total number concentration. The trapezoidal rule is used for this integration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Integrate the original PDF to calculate the total number concentration</span>
+<span class="n">number_concentration_pdf</span> <span class="o">=</span> <span class="n">trapezoid</span><span class="p">(</span><span class="n">distribution_pdf</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
+
+<span class="c1"># Integrate the PMF rescaled to PDF to calculate the total number concentration</span>
+<span class="n">number_concentration_pmf_rescaled</span> <span class="o">=</span> <span class="n">trapezoid</span><span class="p">(</span>
+    <span class="n">distribution_pmf_rescaled</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span>
+<span class="p">)</span>
+
+<span class="c1"># Print the results to compare</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number concentration from PDF: </span><span class="si">{</span><span class="n">number_concentration_pdf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number concentration from PMF rescaled to PDF: </span><span class="si">{</span><span class="n">number_concentration_pmf_rescaled</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number concentration from PDF: 1000000000000.0
+Number concentration from PMF rescaled to PDF: 988596064185.8999
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Verifying Number Concentration for PMF</strong></p>
+<p>Next, we sum the original PMF distribution and the PDF that has been rescaled to a PMF. Summing these values directly gives the total number concentration, allowing us to verify consistency across the different representations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sum the original PMF to calculate the total number concentration</span>
+<span class="n">number_concentration_pmf</span> <span class="o">=</span> <span class="n">distribution_pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Sum the PDF rescaled to PMF to calculate the total number concentration</span>
+<span class="n">number_concentration_pdf_rescaled</span> <span class="o">=</span> <span class="n">distribution_pdf_rescaled</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Print the results to compare</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number concentration from PMF: </span><span class="si">{</span><span class="n">number_concentration_pmf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Number concentration from PDF rescaled to PMF: </span><span class="si">{</span><span class="n">number_concentration_pdf_rescaled</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number concentration from PMF: 1000000000000.0
+Number concentration from PDF rescaled to PMF: 1011535485753.2141
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="small-errors">
+<h2>Small Errors<a class="headerlink" href="#small-errors" title="Link to this heading">#</a></h2>
+<p>When comparing the total number concentrations derived from the PDF and PMF representations, as well as their rescaled versions, we observe small discrepancies between the values.</p>
+<p><strong>Sources of Error</strong></p>
+<p>These small differences arise from several factors inherent in the process of transforming and integrating discrete and continuous distributions:</p>
+<ol class="arabic simple">
+<li><p><strong>Numerical Approximation</strong>:</p>
+<ul class="simple">
+<li><p>The integration of the PDF and the summation of the PMF involve numerical approximations, which can introduce small errors. The trapezoidal rule, used for integrating the PDF, is an approximation method that may not perfectly capture the area under the curve, especially when dealing with finely spaced bins or distributions that change rapidly in certain regions.</p></li>
+</ul>
+</li>
+<li><p><strong>Discretization of Continuous Distributions</strong>:</p>
+<ul class="simple">
+<li><p>When rescaling a PDF to a PMF or vice versa, we are essentially converting a continuous function into a discrete one, or vice versa. This discretization process can lead to slight inconsistencies because the continuous distribution is approximated by a finite number of bins. The exact alignment of these bins with the underlying distribution is rarely perfect, leading to small errors.</p></li>
+</ul>
+</li>
+<li><p><strong>Cumulative Effect of Small Differences</strong>:</p>
+<ul class="simple">
+<li><p>Small differences across many bins can accumulate, resulting in a noticeable discrepancy when summing or integrating over the entire distribution. Even if each individual difference is minute, the total error can be more significant when considering the entire size range.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Significance of the Errors</strong></p>
+<p>While these errors are small relative to the total number concentration (less than 1% in this case), they are important to acknowledge when performing precision calculations. In practical applications, these discrepancies are often considered acceptable, but they highlight the importance of understanding the limitations of numerical methods and transformations between different types of distributions.</p>
+<p><strong>Mitigating the Errors</strong></p>
+<ul class="simple">
+<li><p><strong>Increasing the Number of Bins</strong>: Using a higher resolution (more bins) can help reduce the error by more closely approximating the continuous distribution.</p></li>
+<li><p><strong>Refining the Interpolation Method</strong>: More sophisticated interpolation methods may provide better alignment between the PDF and PMF during the rescaling process, further minimizing errors.</p></li>
+<li><p><strong>Error Analysis</strong>: Incorporating error analysis into the calculations can help quantify and understand the impact of these discrepancies on the overall results.</p></li>
+</ul>
+<p>Overall, these small errors are a natural consequence of the numerical techniques used and do not significantly detract from the accuracy of the coagulation modeling. However, being aware of their existence is crucial for interpreting results with a full understanding of the underlying processes.</p>
+</section>
+<section id="brownian-coagulation-kernel">
+<h2>Brownian Coagulation Kernel<a class="headerlink" href="#brownian-coagulation-kernel" title="Link to this heading">#</a></h2>
+<p>Before comparing the coagulation rates between the Probability Mass Function (PMF) and Probability Density Function (PDF) representations, it is essential to calculate the Brownian coagulation kernel. The kernel quantifies the rate at which particles of different sizes collide and coagulate due to Brownian motion. This matrix is a key component in determining how quickly particles in an aerosol system merge to form larger particles.</p>
+<p><strong>Calculation of Particle Masses</strong></p>
+<p>To calculate the coagulation kernel, we first need to determine the mass of particles in each size bin. The mass of a particle is calculated using the formula for the volume of a sphere:</p>
+<div class="math notranslate nohighlight">
+\[
+m = \frac{4}{3} \pi r^3 \times 1000 \, \text{kg/m}^3
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(r\)</span>  is the particle radius and 1000 kg/m³ is the assumed density of the particles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the mass of particles for each size bin</span>
+<span class="n">mass_bins</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="mf">1e3</span>  <span class="c1"># kg</span>
+
+<span class="c1"># Calculate the Brownian coagulation kernel matrix</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">brownian_kernel</span><span class="o">.</span><span class="n">brownian_coagulation_kernel_via_system_state</span><span class="p">(</span>
+    <span class="n">radius_particle</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">mass_particle</span><span class="o">=</span><span class="n">mass_bins</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">293.15</span><span class="p">,</span>  <span class="c1"># Temperature in Kelvin (20°C)</span>
+    <span class="n">pressure</span><span class="o">=</span><span class="mi">101325</span><span class="p">,</span>  <span class="c1"># Pressure in Pascals (1 atm)</span>
+    <span class="n">alpha_collision_efficiency</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>  <span class="c1"># Assume perfect collision efficiency</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="volume-conservation">
+<h2>Volume Conservation<a class="headerlink" href="#volume-conservation" title="Link to this heading">#</a></h2>
+<p>In aerosol coagulation processes, one check is to ensure that the total particle volume is conserved. While the number of particles decreases as they coagulate to form larger particles, the total volume of material should remain constant (assuming no other processes such as condensation or evaporation are occurring).</p>
+<p>In this section, we calculate the gain, loss, and net coagulation rates using the PDF representation and verify that the total volume remains consistent.</p>
+<p><strong>Calculating Coagulation Rates</strong></p>
+<p>We start by calculating the gain, loss, and net coagulation rates based on the initial PDF concentration. These rates describe how particles in different size bins gain or lose mass due to coagulation.</p>
+<p>**Converting to Volume Distribution
+**
+To verify volume conservation, we convert the particle concentration rates (gain, loss, and net) into volume rates by multiplying them by the volume of particles in each size bin. The volume of a particle is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+V = \frac{4}{3} \pi r^3
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">concentration_0</span> <span class="o">=</span> <span class="n">distribution_pdf</span>
+
+<span class="c1"># Calculate gain and loss rates for the PDF</span>
+<span class="n">gain_pdf</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">continuous_gain</span><span class="p">(</span>
+    <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">concentration</span><span class="o">=</span><span class="n">concentration_0</span><span class="p">,</span>
+    <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">loss_pdf</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">continuous_loss</span><span class="p">(</span>
+    <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="n">concentration_0</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+<span class="p">)</span>
+<span class="n">net_pdf</span> <span class="o">=</span> <span class="n">gain_pdf</span> <span class="o">-</span> <span class="n">loss_pdf</span>
+
+<span class="c1"># Convert gain, loss, and net rates to volume distribution</span>
+<span class="n">gain_volume</span> <span class="o">=</span> <span class="n">gain_pdf</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">loss_volume</span> <span class="o">=</span> <span class="n">loss_pdf</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">net_volume</span> <span class="o">=</span> <span class="n">net_pdf</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="c1"># Integrate the gain, loss, and net rates to get the total volume</span>
+<span class="n">gain_total_volume</span> <span class="o">=</span> <span class="n">trapezoid</span><span class="p">(</span><span class="n">gain_volume</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
+<span class="n">loss_total_volume</span> <span class="o">=</span> <span class="n">trapezoid</span><span class="p">(</span><span class="n">loss_volume</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
+<span class="n">net_total_volume</span> <span class="o">=</span> <span class="n">trapezoid</span><span class="p">(</span><span class="n">net_volume</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">)</span>
+
+<span class="c1"># Print the results to verify volume conservation</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gain total volume: </span><span class="si">{</span><span class="n">gain_total_volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loss total volume: </span><span class="si">{</span><span class="n">loss_total_volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Net total volume: </span><span class="si">{</span><span class="n">net_total_volume</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gain total volume: 6.75165104833036e-11
+Loss total volume: 6.752244952802652e-11
+Net total volume: -5.9390447229141716e-15
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Ensuring Volume Conservation in Coagulation Rates for PMF</strong></p>
+<p>Similar to the PDF representation, it is essential to ensure that the total particle volume is conserved in the PMF (Probability Mass Function) representation during the coagulation process. The number of particles may decrease as they coagulate into larger particles, but the total volume of particles should remain constant if no other processes (like condensation or evaporation) are involved.</p>
+<p><strong>Calculating Coagulation Rates for PMF</strong></p>
+<p>We calculate the gain, loss, and net coagulation rates for the initial PMF concentration. These rates describe how particle concentrations change in each size bin due to coagulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial concentration for the PMF distribution</span>
+<span class="n">concentration_0_pmf</span> <span class="o">=</span> <span class="n">distribution_pmf</span>
+
+<span class="c1"># Calculate gain and loss rates for the PMF</span>
+<span class="n">gain_pmf</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">discrete_gain</span><span class="p">(</span>
+    <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">concentration</span><span class="o">=</span><span class="n">concentration_0_pmf</span><span class="p">,</span>
+    <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">loss_pmf</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">discrete_loss</span><span class="p">(</span><span class="n">concentration</span><span class="o">=</span><span class="n">concentration_0_pmf</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">)</span>
+<span class="n">net_pmf</span> <span class="o">=</span> <span class="n">gain_pmf</span> <span class="o">-</span> <span class="n">loss_pmf</span>
+
+<span class="c1"># Convert gain, loss, and net rates to volume distribution</span>
+<span class="n">gain_volume_pmf</span> <span class="o">=</span> <span class="n">gain_pmf</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">loss_volume_pmf</span> <span class="o">=</span> <span class="n">loss_pmf</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">net_volume_pmf</span> <span class="o">=</span> <span class="n">net_pmf</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius_bins</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="c1"># Sum the gain, loss, and net volumes</span>
+<span class="n">gain_total_volume_pmf</span> <span class="o">=</span> <span class="n">gain_volume_pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">loss_total_volume_pmf</span> <span class="o">=</span> <span class="n">loss_volume_pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">net_total_volume_pmf</span> <span class="o">=</span> <span class="n">net_volume_pmf</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Print the results to verify volume conservation</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gain total volume PMF: </span><span class="si">{</span><span class="n">gain_total_volume_pmf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loss total volume PMF: </span><span class="si">{</span><span class="n">loss_total_volume_pmf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Net total volume PMF: </span><span class="si">{</span><span class="n">net_total_volume_pmf</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gain total volume PMF: 6.674655653136e-11
+Loss total volume PMF: 6.75224495280265e-11
+Net total volume PMF: -7.758929966665061e-13
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="gain-and-loss-rates-comparison">
+<h2>Gain and Loss Rates Comparison<a class="headerlink" href="#gain-and-loss-rates-comparison" title="Link to this heading">#</a></h2>
+<p>To understand the differences and similarities between the PDF and PMF representations in the context of particle coagulation, we convert the PMF gain and loss rates to their corresponding PDF forms. This allows for a direct comparison of how each representation handles particle concentration changes across different size ranges.</p>
+<p><strong>Converting PMF to PDF</strong></p>
+<p>The gain and loss rates calculated for the PMF representation are converted to PDF using the <code class="docutils literal notranslate"><span class="pre">distribution_convert_pdf_pms</span></code> function. This conversion enables us to plot and compare the results on the same scale and with the same units as the original PDF.</p>
+<p><strong>Explanation</strong></p>
+<ul class="simple">
+<li><p><strong>Comparison of Gain and Loss Rates</strong>: The first plot compares the gain and loss rates between the original PDF and the converted PMF. By plotting these on the same axes, we can observe how closely the PMF (when converted to PDF) matches the behavior of the original PDF. The solid lines represent the PDF results, while the dashed lines represent the PMF converted to PDF.</p></li>
+<li><p><strong>Comparison of Net Rates</strong>: The second plot focuses on the net gain and loss rates, which are calculated as the difference between the gain and loss rates. This plot helps in understanding whether the differences in the gain and loss rates between the PDF and converted PMF lead to any significant discrepancies in the overall net rate of particle concentration change.</p></li>
+</ul>
+<p><strong>Interpretation</strong></p>
+<ul class="simple">
+<li><p><strong>Matching Behavior</strong>: Ideally, the converted PMF should closely match the original PDF, indicating that both representations handle coagulation rates similarly. Any differences observed in the plots can provide insights into the nuances of each method, such as how they handle small particle sizes or how numerical approximations might affect the results.</p></li>
+<li><p><strong>Significance of Differences</strong>: While small differences between the PDF and converted PMF may arise due to numerical methods, these differences can highlight the strengths and limitations of each approach in representing particle size distributions and their evolution during coagulation.</p></li>
+</ul>
+<p><strong>PMF Gain Error</strong></p>
+<p>The PMF gain rate is slightly off, and we are still looking into the issue. We will update this section once we have resolved the discrepancy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert PMF gain and loss rates to PDF</span>
+<span class="n">gain_pmf_to_pdf</span> <span class="o">=</span> <span class="n">distribution_convert_pdf_pms</span><span class="p">(</span>
+    <span class="n">x_array</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="n">gain_pmf</span><span class="p">,</span> <span class="n">to_pdf</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">loss_pmf_to_pdf</span> <span class="o">=</span> <span class="n">distribution_convert_pdf_pms</span><span class="p">(</span>
+    <span class="n">x_array</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="n">loss_pmf</span><span class="p">,</span> <span class="n">to_pdf</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">net_pmf_to_pdf</span> <span class="o">=</span> <span class="n">gain_pmf_to_pdf</span> <span class="o">-</span> <span class="n">loss_pmf_to_pdf</span>
+
+<span class="c1"># Plot the gain and loss rates for both PDF and converted PMF</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">gain_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Gain (PDF)&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">loss_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Loss (PDF)&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">gain_pmf_to_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Gain (PMF to PDF)&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">radius_bins</span><span class="p">,</span>
+    <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">loss_pmf_to_pdf</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Loss (PMF to PDF)&quot;</span><span class="p">,</span>
+    <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Radius [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rate $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 s \cdot m}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PDF: Gain and Loss Comparison&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Plot the net gain and loss rates for both PDF and converted PMF</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">net_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Net (PDF)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">net_pmf_to_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Net (PMF to PDF)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Particle Radius [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rate $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 s \cdot m}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PDF: Net Gain and Loss Comparison&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/6896bcfb5f4ef4d9639294dce49916acc27e7e8ed3e95f706802a024141baffa.png" src="../../../../_images/6896bcfb5f4ef4d9639294dce49916acc27e7e8ed3e95f706802a024141baffa.png" />
+<img alt="../../../../_images/d61e34b378bf3c96cec8562fe735910bd838ff4484bee2116456c90c167b926a.png" src="../../../../_images/d61e34b378bf3c96cec8562fe735910bd838ff4484bee2116456c90c167b926a.png" />
+</div>
+</div>
+</section>
+<section id="simulating-pdf-coagulation">
+<h2>Simulating PDF Coagulation<a class="headerlink" href="#simulating-pdf-coagulation" title="Link to this heading">#</a></h2>
+<p>In this section, we simulate the evolution of a particle size distribution over time as particles undergo coagulation, using the Probability Density Function (PDF) representation. The simulation tracks how the distribution changes at different time steps, providing insight into how the particle population evolves under the influence of Brownian coagulation.</p>
+<p><strong>Simulation Setup</strong></p>
+<ul class="simple">
+<li><p><strong>Initial Distribution</strong>: The simulation begins with the initial particle size distribution (<code class="docutils literal notranslate"><span class="pre">distribution_0</span></code>), which is based on the PDF calculated earlier.</p></li>
+<li><p><strong>Time Array</strong>: The simulation runs over a time span from 0 to 1000 seconds, with 50 discrete time steps. The time interval between each step is calculated to update the distribution as coagulation progresses.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial distribution for the simulation</span>
+<span class="n">distribution_0</span> <span class="o">=</span> <span class="n">distribution_pdf</span>
+<span class="n">distribution_i</span> <span class="o">=</span> <span class="n">distribution_0</span>
+
+<span class="c1"># Define the time array for the simulation</span>
+<span class="n">time_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+    <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>  <span class="c1"># Time span of 1000 seconds</span>
+<span class="n">time_interval</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">time_array</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">time_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>  <span class="c1"># Time interval between each step</span>
+
+<span class="c1"># Array to store the distribution at each time step</span>
+<span class="n">distribution_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">time_array</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">distribution_0</span><span class="p">)])</span>
+
+<span class="c1"># Simulate the coagulation process over time</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dpa</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">time_array</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Calculate coagulation gain and loss at the current time step</span>
+        <span class="n">coag_gain_i</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">continuous_gain</span><span class="p">(</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span>
+            <span class="n">concentration</span><span class="o">=</span><span class="n">distribution_i</span><span class="p">,</span>
+            <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">coag_loss_i</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">continuous_loss</span><span class="p">(</span>
+            <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="n">distribution_i</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Calculate the net change in distribution due to coagulation</span>
+        <span class="n">net_change</span> <span class="o">=</span> <span class="p">(</span><span class="n">coag_gain_i</span> <span class="o">-</span> <span class="n">coag_loss_i</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_interval</span>
+        <span class="n">distribution_i</span> <span class="o">=</span> <span class="n">distribution_i</span> <span class="o">+</span> <span class="n">net_change</span>
+
+        <span class="c1"># Ensure no negative concentrations (set to zero if less than zero)</span>
+        <span class="n">distribution_i</span><span class="p">[</span><span class="n">distribution_i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Store the updated distribution for the current time step</span>
+    <span class="n">distribution_time</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">distribution_i</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Visualizing the Evolution of the Particle Size Distribution</strong></p>
+<p>After simulating the coagulation process over time, we can visualize how the particle size distribution evolves at different time steps. This plot compares the initial distribution with the distribution at a mid-point and at the end of the simulation, highlighting the changes that occur due to coagulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up the plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="c1"># Define the radius bins</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">radius_bins</span>
+
+<span class="c1"># Plot the initial distribution, mid-point distribution, and final distribution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_0</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial&quot;</span>
+<span class="p">)</span>  <span class="c1"># Initial distribution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_time</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;t-step=25&quot;</span>
+<span class="p">)</span>  <span class="c1"># Mid-point</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;t=end&quot;</span>
+<span class="p">)</span>  <span class="c1"># Final distribution</span>
+
+<span class="c1"># Set the limits for the x-axis to focus on the relevant size range</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">2e-8</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">])</span>
+
+<span class="c1"># Add legend to distinguish between different time steps</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Label the y-axis to indicate concentration units</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Concentration $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 \cdot m}$&quot;</span><span class="p">)</span>
+
+<span class="c1"># Label the x-axis for particle radius</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Radius [m]&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add grid lines for better readability</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/c2af81aa1ee8021dea2d96a0a741a0ec0f7d0efab304ed871b09aee04a7cadea.png" src="../../../../_images/c2af81aa1ee8021dea2d96a0a741a0ec0f7d0efab304ed871b09aee04a7cadea.png" />
+</div>
+</div>
+<p><strong>Visualizing Particle Size Distribution Evolution Over Time</strong></p>
+<p>To further understand how the particle size distribution evolves during the coagulation process, we can create a 2D image plot. In this plot, time is represented on the x-axis, particle size (radius) on the y-axis, and the concentration is color-coded. This type of plot provides a comprehensive view of how both small and large particles change in concentration over the entire simulation period.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up the plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Create an image plot (2D histogram) with time on the x-axis, radius on the y-axis, and concentration as color</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
+    <span class="n">time_array</span><span class="p">,</span>
+    <span class="n">radius_bins</span><span class="p">,</span>
+    <span class="n">distribution_time</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Set the y-axis to a logarithmic scale to capture the wide range of particle sizes</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">5e-8</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+
+<span class="c1"># Label the axes</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Particle Radius (m)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add a color bar to indicate the concentration levels</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Concentration $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 \cdot m}$&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add a title to the plot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Evolution of Particle Size Distribution Over Time&quot;</span><span class="p">)</span>
+
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/6ff58b6f42e4b9464df9242aae667c70488555ac596048c897a9943e12554961.png" src="../../../../_images/6ff58b6f42e4b9464df9242aae667c70488555ac596048c897a9943e12554961.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="c1"># Define the coagulation ODE system</span>
+<span class="k">def</span> <span class="nf">coagulation_ode</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">radius_bins</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">rate</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the derivative of the distribution with respect to time</span>
+<span class="sd">    (i.e., the rate of change due to coagulation).</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        t: Time variable (not used explicitly here, but required by solve_ivp).</span>
+<span class="sd">        distribution: The current particle size distribution (array).</span>
+<span class="sd">        radius_bins: The bins for the particle radius.</span>
+<span class="sd">        kernel: The coagulation kernel.</span>
+<span class="sd">        rate: The object with methods for calculating coagulation gain and loss.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The time derivative of the particle distribution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">coag_gain</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">continuous_gain</span><span class="p">(</span>
+        <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="n">distribution</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+    <span class="p">)</span>
+    <span class="n">coag_loss</span> <span class="o">=</span> <span class="n">rate</span><span class="o">.</span><span class="n">continuous_loss</span><span class="p">(</span>
+        <span class="n">radius</span><span class="o">=</span><span class="n">radius_bins</span><span class="p">,</span> <span class="n">concentration</span><span class="o">=</span><span class="n">distribution</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Net change in distribution due to coagulation</span>
+    <span class="n">net_change</span> <span class="o">=</span> <span class="n">coag_gain</span> <span class="o">-</span> <span class="n">coag_loss</span>
+
+    <span class="k">return</span> <span class="n">net_change</span>
+
+
+<span class="c1"># Initial distribution for the simulation</span>
+<span class="n">distribution_0</span> <span class="o">=</span> <span class="n">distribution_pdf</span>
+
+<span class="c1"># Define the time array for the simulation</span>
+<span class="n">time_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+    <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>  <span class="c1"># Time span of 1000 seconds</span>
+
+<span class="c1"># Use scipy&#39;s solve_ivp to solve the ODE system</span>
+<span class="n">solution</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
+    <span class="n">fun</span><span class="o">=</span><span class="n">coagulation_ode</span><span class="p">,</span>  <span class="c1"># ODE function</span>
+    <span class="n">t_span</span><span class="o">=</span><span class="p">(</span><span class="n">time_array</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">time_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>  <span class="c1"># Time span</span>
+    <span class="n">y0</span><span class="o">=</span><span class="n">distribution_0</span><span class="p">,</span>  <span class="c1"># Initial distribution</span>
+    <span class="n">t_eval</span><span class="o">=</span><span class="n">time_array</span><span class="p">,</span>  <span class="c1"># Time points to store the solution</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">radius_bins</span><span class="p">,</span>
+        <span class="n">kernel</span><span class="p">,</span>
+        <span class="n">rate</span><span class="p">,</span>
+    <span class="p">),</span>  <span class="c1"># Additional arguments to coagulation_ode</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;BDF&quot;</span><span class="p">,</span>  <span class="c1"># Integration method (default)</span>
+    <span class="n">min_step</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
+    <span class="n">max_step</span><span class="o">=</span><span class="mf">1e2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># The solution is stored in solution.y (each column is a time step)</span>
+<span class="n">distribution_solver</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># Transpose to match original format</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="add-pmf-simulation-comparison-and-summary">
+<h2>Add PMF simulation, comparison, and summary<a class="headerlink" href="#add-pmf-simulation-comparison-and-summary" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up the plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="c1"># Define the radius bins</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">radius_bins</span>
+
+<span class="c1"># Plot the initial distribution, mid-point distribution, and final distribution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_solver</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial&quot;</span>
+<span class="p">)</span>  <span class="c1"># Initial distribution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_solver</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;t-step=25&quot;</span>
+<span class="p">)</span>  <span class="c1"># Mid-point</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_solver</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;t=end&quot;</span>
+<span class="p">)</span>  <span class="c1"># Final distribution</span>
+
+<span class="c1"># Plot the initial distribution, mid-point distribution, and final distribution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_0</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Initial-loop&quot;</span>
+<span class="p">)</span>  <span class="c1"># Initial distribution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_time</span><span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;t-step=25 loop&quot;</span>
+<span class="p">)</span>  <span class="c1"># Mid-point</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">,</span> <span class="n">distribution_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;t=end loop&quot;</span>
+<span class="p">)</span>  <span class="c1"># Final distribution</span>
+
+<span class="c1"># Set the limits for the x-axis to focus on the relevant size range</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">2e-8</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">])</span>
+
+<span class="c1"># Add legend to distinguish between different time steps</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Label the y-axis to indicate concentration units</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Concentration $\dfrac</span><span class="si">{1}</span><span class="s2">{m^3 \cdot m}$&quot;</span><span class="p">)</span>
+
+<span class="c1"># Label the x-axis for particle radius</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Radius [m]&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add grid lines for better readability</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/6cdaa12ce664d6d73a93971e0811708535e86d0a3adc5760c76007aef4deca82.png" src="../../../../_images/6cdaa12ce664d6d73a93971e0811708535e86d0a3adc5760c76007aef4deca82.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "uncscode/particula",
+            ref: "v0.0.10",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Tutorials/Dynamics/Coagulation/Functional"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-mass-function-pmf-vs-probability-density-function-pdf">Probability Mass Function (PMF) vs. Probability Density Function (PDF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-objectives">Comparison Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-and-visualizing">Setting Up and Visualizing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rescaling-pdf">Rescaling PDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rescaling-pmf">Rescaling PMF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-number-concentration">Verifying Number Concentration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#small-errors">Small Errors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brownian-coagulation-kernel">Brownian Coagulation Kernel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#volume-conservation">Volume Conservation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gain-and-loss-rates-comparison">Gain and Loss Rates Comparison</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-pdf-coagulation">Simulating PDF Coagulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#add-pmf-simulation-comparison-and-summary">Add PMF simulation, comparison, and summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By particula contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
