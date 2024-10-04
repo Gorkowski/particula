@@ -4,29 +4,19 @@
 
 > Auto-generated documentation for [particula.next.gas.vapor_pressure_factories](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py) module.
 
-## VaporPressureFactory
+## vapor_pressure_factory
 
-[Show source in vapor_pressure_factories.py:20](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L20)
+[Show source in vapor_pressure_factories.py:9](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L9)
 
-Factory class to create vapor pressure strategy builders
+Factory method to create a concrete VaporPressureStrategy object using
+builders.
 
-Factory class to create vapor pressure strategy builders for calculating
-vapor pressure of gas species.
+#### Arguments
 
-#### Methods
-
-- `get_builders()` - Returns the mapping of strategy types to builder
-instances.
-- `get_strategy(strategy_type,` *parameters)* - Gets the strategy instance
-for the specified strategy type.
-    - `strategy_type` - Type of vapor pressure strategy to use, can be
-    'constant', 'antoine', 'clausius_clapeyron', or 'water_buck'.
-    parameters(Dict[str, Any], optional): Parameters required for the
-    builder, dependent on the chosen strategy type.
-        - `-` *constant* - constant_vapor_pressure
-        - `-` *antoine* - A, B, C
-        - `-` *clausius_clapeyron* - A, B, C
-        - `-` *water_buck* - No parameters are required.
+----
+- strategy (str): The strategy to use for vapor pressure calculations.
+  - `Options` - "constant", "antoine", "clausius_clapeyron", "water_buck".
+- `-` ***kwargs* - Additional keyword arguments required for the strategy.
 
 #### Returns
 
@@ -48,48 +38,11 @@ for the specified strategy type.
 #### Signature
 
 ```python
-class VaporPressureFactory(
-    StrategyFactory[
-        Union[
-            ConstantBuilder, AntoineBuilder, ClausiusClapeyronBuilder, WaterBuckBuilder
-        ],
-        Union[
-            ConstantVaporPressureStrategy,
-            AntoineVaporPressureStrategy,
-            ClausiusClapeyronStrategy,
-            WaterBuckStrategy,
-        ],
-    ]
-): ...
+def vapor_pressure_factory(
+    strategy: str, parameters: ignore = None
+) -> VaporPressureStrategy: ...
 ```
 
 #### See also
 
-- [AntoineBuilder](./vapor_pressure_builders.md#antoinebuilder)
-- [AntoineVaporPressureStrategy](./vapor_pressure_strategies.md#antoinevaporpressurestrategy)
-- [ClausiusClapeyronBuilder](./vapor_pressure_builders.md#clausiusclapeyronbuilder)
-- [ClausiusClapeyronStrategy](./vapor_pressure_strategies.md#clausiusclapeyronstrategy)
-- [ConstantBuilder](./vapor_pressure_builders.md#constantbuilder)
-- [ConstantVaporPressureStrategy](./vapor_pressure_strategies.md#constantvaporpressurestrategy)
-- [WaterBuckBuilder](./vapor_pressure_builders.md#waterbuckbuilder)
-- [WaterBuckStrategy](./vapor_pressure_strategies.md#waterbuckstrategy)
-
-### VaporPressureFactory().get_builders
-
-[Show source in vapor_pressure_factories.py:68](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_factories.py#L68)
-
-Returns the mapping of strategy types to builder instances.
-
-#### Returns
-
-A dictionary mapping strategy types to builder instances.
-    - `-` *constant* - ConstantBuilder
-    - `-` *antoine* - AntoineBuilder
-    - `-` *clausius_clapeyron* - ClausiusClapeyronBuilder
-    - `-` *water_buck* - WaterBuckBuilder
-
-#### Signature
-
-```python
-def get_builders(self): ...
-```
+- [VaporPressureStrategy](./vapor_pressure_strategies.md#vaporpressurestrategy)

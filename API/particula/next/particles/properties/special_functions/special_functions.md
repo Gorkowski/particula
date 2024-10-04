@@ -1,6 +1,6 @@
 # Special Functions
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Special Functions
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Special Functions
 
 > Auto-generated documentation for [particula.next.particles.properties.special_functions](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/special_functions.py) module.
 

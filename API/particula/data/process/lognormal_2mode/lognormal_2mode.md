@@ -72,10 +72,6 @@ def create_lognormal_2mode_from_fit(
 ) -> Tuple[Stream, NDArray[np.float64]]: ...
 ```
 
-#### See also
-
-- [Stream](../stream.md#stream)
-
 
 
 ## evaluate_fit
@@ -156,10 +152,6 @@ def guess_and_optimize_looped(
     concentration_m3_pdf: NDArray[np.float64],
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](../stream.md#stream)
 
 
 

@@ -1,6 +1,6 @@
 # Vapor Correction Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Vapor Correction Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Vapor Correction Module
 
 > Auto-generated documentation for [particula.next.particles.properties.vapor_correction_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/vapor_correction_module.py) module.
 

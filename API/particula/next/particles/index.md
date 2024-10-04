@@ -12,7 +12,6 @@
 - [Distribution Builders](./distribution_builders.md)
 - [Distribution Factories](./distribution_factories.md)
 - [Distribution Strategies](./distribution_strategies.md)
-- [Properties](properties/index.md)
 - [Representation](./representation.md)
 - [Representation Builders](./representation_builders.md)
 - [Representation Factories](./representation_factories.md)

@@ -1,6 +1,6 @@
 # Settling Velocity
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Settling Velocity
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Settling Velocity
 
 > Auto-generated documentation for [particula.next.particles.properties.settling_velocity](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/settling_velocity.py) module.
 

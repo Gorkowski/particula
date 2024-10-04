@@ -6,20 +6,17 @@
 
 ## GasSpecies
 
-[Show source in species.py:17](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L17)
+[Show source in species.py:34](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L34)
 
-GasSpecies represents an individual or array of gas species with
-properties like name, molar mass, vapor pressure, and condensability.
+Represents a single species of gas, including its properties such as
+name, mass, vapor pressure, and whether it is condensable.
 
 #### Attributes
 
-------------
 - name (str): The name of the gas species.
-- molar_mass (float): The molar mass of the gas species.
-- pure_vapor_pressure_strategy (VaporPressureStrategy): The strategy for
-    calculating the pure vapor pressure of the gas species. Can be a single
-    strategy or a list of strategies. Default is a constant vapor pressure
-    strategy with a vapor pressure of 0.0 Pa.
+- mass (float): The mass of the gas species.
+- vapor_pressure (Optional[float]): The vapor pressure of the gas
+    species. None if not applicable.
 - condensable (bool): Indicates whether the gas species is condensable.
     Default is True.
 - concentration (float): The concentration of the gas species in the
@@ -47,12 +44,12 @@ class GasSpecies:
     def __init__(
         self,
         name: Union[str, NDArray[np.str_]],
-        molar_mass: Union[float, NDArray[np.float64]],
+        molar_mass: Union[float, NDArray[np.float_]],
         vapor_pressure_strategy: Union[
             VaporPressureStrategy, list[VaporPressureStrategy]
         ] = ConstantVaporPressureStrategy(0.0),
         condensable: Union[bool, NDArray[np.bool_]] = True,
-        concentration: Union[float, NDArray[np.float64]] = 0.0,
+        concentration: Union[float, NDArray[np.float_]] = 0.0,
     ) -> None: ...
 ```
 
@@ -62,7 +59,7 @@ class GasSpecies:
 
 ### GasSpecies().__len__
 
-[Show source in species.py:70](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L70)
+[Show source in species.py:84](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L84)
 
 Return the number of gas species.
 
@@ -74,7 +71,7 @@ def __len__(self): ...
 
 ### GasSpecies().__str__
 
-[Show source in species.py:66](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L66)
+[Show source in species.py:80](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L80)
 
 Return a string representation of the GasSpecies object.
 
@@ -86,7 +83,7 @@ def __str__(self): ...
 
 ### GasSpecies().add_concentration
 
-[Show source in species.py:272](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L272)
+[Show source in species.py:281](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L281)
 
 Add concentration to the gas species.
 
@@ -98,29 +95,29 @@ Add concentration to the gas species.
 #### Signature
 
 ```python
-def add_concentration(self, added_concentration: Union[float, NDArray[np.float64]]): ...
+def add_concentration(self, added_concentration: Union[float, NDArray[np.float_]]): ...
 ```
 
 ### GasSpecies().get_concentration
 
-[Show source in species.py:101](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L101)
+[Show source in species.py:116](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L116)
 
 Get the concentration of the gas species in the mixture, in kg/m^3.
 
 #### Returns
 
-- concentration (float or NDArray[np.float64]): The concentration of
-    the gas species in the mixture.
+- concentration (float or NDArray[np.float_]): The concentration of the
+    gas species in the mixture.
 
 #### Signature
 
 ```python
-def get_concentration(self) -> Union[float, NDArray[np.float64]]: ...
+def get_concentration(self) -> Union[float, NDArray[np.float_]]: ...
 ```
 
 ### GasSpecies().get_condensable
 
-[Show source in species.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L93)
+[Show source in species.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L108)
 
 Check if the gas species is condensable or not.
 
@@ -137,30 +134,30 @@ def get_condensable(self) -> Union[bool, NDArray[np.bool_]]: ...
 
 ### GasSpecies().get_molar_mass
 
-[Show source in species.py:85](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L85)
+[Show source in species.py:100](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L100)
 
 Get the molar mass of the gas species in kg/mol.
 
 #### Returns
 
-- molar_mass (float or NDArray[np.float64]): The molar mass of the gas
+- molar_mass (float or NDArray[np.float_]): The molar mass of the gas
     species, in kg/mol.
 
 #### Signature
 
 ```python
-def get_molar_mass(self) -> Union[float, NDArray[np.float64]]: ...
+def get_molar_mass(self) -> Union[float, NDArray[np.float_]]: ...
 ```
 
 ### GasSpecies().get_name
 
-[Show source in species.py:78](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L78)
+[Show source in species.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L92)
 
 Get the name of the gas species.
 
 #### Returns
 
-- name (str or NDArray[np.str_]): The name of the gas species.
+- `np.float64` - The mass of the gas species.
 
 #### Signature
 
@@ -170,7 +167,7 @@ def get_name(self) -> Union[str, NDArray[np.str_]]: ...
 
 ### GasSpecies().get_partial_pressure
 
-[Show source in species.py:146](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L146)
+[Show source in species.py:157](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L157)
 
 Calculate the partial pressure of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
@@ -179,12 +176,12 @@ the corresponding concentration and molar mass.
 
 #### Arguments
 
-- temperature (float or NDArray[np.float64]): The temperature in
+- temperature (float or NDArray[np.float_]): The temperature in
 Kelvin at which to calculate the partial pressure.
 
 #### Returns
 
-- partial_pressure (float or NDArray[np.float64]): Partial pressure
+- partial_pressure (float or NDArray[np.float_]): Partial pressure
 of the gas in Pascals.
 
 #### Raises
@@ -195,13 +192,13 @@ of the gas in Pascals.
 
 ```python
 def get_partial_pressure(
-    self, temperature: Union[float, NDArray[np.float64]]
-) -> Union[float, NDArray[np.float64]]: ...
+    self, temperature: Union[float, NDArray[np.float_]]
+) -> Union[float, NDArray[np.float_]]: ...
 ```
 
 ### GasSpecies().get_pure_vapor_pressure
 
-[Show source in species.py:110](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L110)
+[Show source in species.py:124](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L124)
 
 Calculate the pure vapor pressure of the gas species at a given
 temperature in Kelvin.
@@ -211,12 +208,12 @@ for calculating vapor pressure.
 
 #### Arguments
 
-- temperature (float or NDArray[np.float64]): The temperature in
+- temperature (float or NDArray[np.float_]): The temperature in
 Kelvin at which to calculate vapor pressure.
 
 #### Returns
 
-- vapor_pressure (float or NDArray[np.float64]): The calculated pure
+- vapor_pressure (float or NDArray[np.float_]): The calculated pure
 vapor pressure in Pascals.
 
 #### Raises
@@ -227,44 +224,45 @@ vapor pressure in Pascals.
 
 ```python
 def get_pure_vapor_pressure(
-    self, temperature: Union[float, NDArray[np.float64]]
-) -> Union[float, NDArray[np.float64]]: ...
+    self, temperature: Union[float, NDArray[np.float_]]
+) -> Union[float, NDArray[np.float_]]: ...
 ```
 
 ### GasSpecies().get_saturation_concentration
 
-[Show source in species.py:232](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L232)
+[Show source in species.py:241](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L241)
 
-Calculate the saturation concentration of the gas based on the vapor
-pressure strategy. This method accounts for multiple strategies if
-assigned and calculates saturation concentration for each strategy
-based on the molar mass.
+Returns the mass of a specific condensable species or the masses of
+all condensable species in the gas mixture as an np.ndarray. If a name
+is provided, only the mass of that specific condensable species is
+returned.
 
 #### Arguments
 
-- temperature (float or NDArray[np.float64]): The temperature in
+- temperature (float or NDArray[np.float_]): The temperature in
 Kelvin at which to calculate the partial pressure.
 
 #### Returns
 
-- saturation_concentration (float or NDArray[np.float64]): The
+- saturation_concentration (float or NDArray[np.float_]): The
 saturation concentration of the gas
 
 #### Raises
 
-- `-` *ValueError* - If the vapor pressure strategy is not set.
+- `ValueError` - If a specific species name is provided but not found
+in the mixture, or if it's not condensable.
 
 #### Signature
 
 ```python
 def get_saturation_concentration(
-    self, temperature: Union[float, NDArray[np.float64]]
-) -> Union[float, NDArray[np.float64]]: ...
+    self, temperature: Union[float, NDArray[np.float_]]
+) -> Union[float, NDArray[np.float_]]: ...
 ```
 
 ### GasSpecies().get_saturation_ratio
 
-[Show source in species.py:189](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L189)
+[Show source in species.py:199](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L199)
 
 Calculate the saturation ratio of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
@@ -273,22 +271,22 @@ the corresponding concentration and molar mass.
 
 #### Arguments
 
-- temperature (float or NDArray[np.float64]): The temperature in
+- temperature (float or NDArray[np.float_]): The temperature in
 Kelvin at which to calculate the partial pressure.
 
 #### Returns
 
-- saturation_ratio (float or NDArray[np.float64]): The saturation ratio
+- saturation_ratio (float or NDArray[np.float_]): The saturation ratio
 of the gas
 
 #### Raises
 
-- `-` *ValueError* - If the vapor pressure strategy is not set.
+- `ValueError` - If the specified name is not found in the mixture.
 
 #### Signature
 
 ```python
 def get_saturation_ratio(
-    self, temperature: Union[float, NDArray[np.float64]]
-) -> Union[float, NDArray[np.float64]]: ...
+    self, temperature: Union[float, NDArray[np.float_]]
+) -> Union[float, NDArray[np.float_]]: ...
 ```

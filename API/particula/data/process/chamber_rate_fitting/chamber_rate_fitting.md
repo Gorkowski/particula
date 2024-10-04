@@ -220,7 +220,6 @@ def optimize_and_calculate_rates_looped(
 #### See also
 
 - [ChamberParameters](#chamberparameters)
-- [Stream](../stream.md#stream)
 
 
 

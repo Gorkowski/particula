@@ -1,6 +1,6 @@
 # Diffusion Coefficient
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Diffusion Coefficient
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Diffusion Coefficient
 
 > Auto-generated documentation for [particula.next.particles.properties.diffusion_coefficient](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusion_coefficient.py) module.
 

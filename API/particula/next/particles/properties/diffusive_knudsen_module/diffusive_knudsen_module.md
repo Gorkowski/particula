@@ -1,6 +1,6 @@
 # Diffusive Knudsen Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Diffusive Knudsen Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Diffusive Knudsen Module
 
 > Auto-generated documentation for [particula.next.particles.properties.diffusive_knudsen_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/diffusive_knudsen_module.py) module.
 

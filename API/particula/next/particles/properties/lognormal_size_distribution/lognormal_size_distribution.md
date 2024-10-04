@@ -1,6 +1,6 @@
 # Lognormal Size Distribution
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Lognormal Size Distribution
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Lognormal Size Distribution
 
 > Auto-generated documentation for [particula.next.particles.properties.lognormal_size_distribution](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/lognormal_size_distribution.py) module.
 

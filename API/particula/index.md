@@ -16,7 +16,6 @@
 - [Activity](activity/index.md)
 - [Constants](./constants.md)
 - [Data](data/index.md)
-- [Dynamics](./dynamics.md)
 - [Environment](./environment.md)
 - [Equilibria](equilibria/index.md)
 - [Lagrangian](lagrangian/index.md)

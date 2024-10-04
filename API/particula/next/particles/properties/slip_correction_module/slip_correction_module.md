@@ -1,6 +1,6 @@
 # Slip Correction Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Slip Correction Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Slip Correction Module
 
 > Auto-generated documentation for [particula.next.particles.properties.slip_correction_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/slip_correction_module.py) module.
 
@@ -23,7 +23,7 @@ non-continuum effects on small particles.
 
 Reference:
 ----------
-- Dimensionless quantity accounting for non-continuum effects
+Dimensionless quantity accounting for non-continuum effects
 on small particles. It is a deviation from Stokes' Law.
 Stokes assumes a no-slip condition that is not correct at
 high Knudsen numbers. The slip correction factor is used to

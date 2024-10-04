@@ -14,7 +14,6 @@ generic pint function to convert units
 
 old     [str | u.Quantity]
 new     [str | u.Quantity]
-value   (float) [optional]
 
 #### Returns
 
@@ -29,18 +28,14 @@ multiplier     (float)
 #### Signature
 
 ```python
-def convert_units(
-    old: Union[str, u.Quantity],
-    new: Union[str, u.Quantity],
-    value: Optional[float] = None,
-) -> float: ...
+def convert_units(old: Union[str, u.Quantity], new: Union[str, u.Quantity]) -> float: ...
 ```
 
 
 
 ## in_acceleration
 
-[Show source in input_handling.py:128](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L128)
+[Show source in input_handling.py:121](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L121)
 
 #### Signature
 
@@ -52,7 +47,7 @@ def in_acceleration(acc): ...
 
 ## in_area
 
-[Show source in input_handling.py:133](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L133)
+[Show source in input_handling.py:126](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L126)
 
 #### Signature
 
@@ -64,7 +59,7 @@ def in_area(area): ...
 
 ## in_concentration
 
-[Show source in input_handling.py:135](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L135)
+[Show source in input_handling.py:128](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L128)
 
 #### Signature
 
@@ -76,7 +71,7 @@ def in_concentration(conc): ...
 
 ## in_density
 
-[Show source in input_handling.py:130](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L130)
+[Show source in input_handling.py:123](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L123)
 
 #### Signature
 
@@ -88,7 +83,7 @@ def in_density(density): ...
 
 ## in_gas_constant
 
-[Show source in input_handling.py:134](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L134)
+[Show source in input_handling.py:127](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L127)
 
 #### Signature
 
@@ -129,7 +124,7 @@ def in_handling(value, units: u.Quantity): ...
 
 ## in_latent_heat
 
-[Show source in input_handling.py:137](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L137)
+[Show source in input_handling.py:130](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L130)
 
 #### Signature
 
@@ -141,7 +136,7 @@ def in_latent_heat(latheat): ...
 
 ## in_length
 
-[Show source in input_handling.py:132](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L132)
+[Show source in input_handling.py:125](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L125)
 
 #### Signature
 
@@ -153,7 +148,7 @@ def in_length(length): ...
 
 ## in_mass
 
-[Show source in input_handling.py:124](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L124)
+[Show source in input_handling.py:117](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L117)
 
 #### Signature
 
@@ -165,7 +160,7 @@ def in_mass(mass): ...
 
 ## in_molecular_weight
 
-[Show source in input_handling.py:129](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L129)
+[Show source in input_handling.py:122](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L122)
 
 #### Signature
 
@@ -177,7 +172,7 @@ def in_molecular_weight(molw): ...
 
 ## in_pressure
 
-[Show source in input_handling.py:123](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L123)
+[Show source in input_handling.py:116](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L116)
 
 #### Signature
 
@@ -217,7 +212,7 @@ def in_radius(radius): ...
 
 ## in_scalar
 
-[Show source in input_handling.py:131](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L131)
+[Show source in input_handling.py:124](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L124)
 
 #### Signature
 
@@ -229,7 +224,7 @@ def in_scalar(scalar): ...
 
 ## in_surface_tension
 
-[Show source in input_handling.py:136](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L136)
+[Show source in input_handling.py:129](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L129)
 
 #### Signature
 
@@ -241,7 +236,7 @@ def in_surface_tension(surften): ...
 
 ## in_temperature
 
-[Show source in input_handling.py:121](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L121)
+[Show source in input_handling.py:114](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L114)
 
 #### Signature
 
@@ -253,7 +248,7 @@ def in_temperature(temp): ...
 
 ## in_time
 
-[Show source in input_handling.py:126](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L126)
+[Show source in input_handling.py:119](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L119)
 
 #### Signature
 
@@ -265,7 +260,7 @@ def in_time(time): ...
 
 ## in_velocity
 
-[Show source in input_handling.py:127](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L127)
+[Show source in input_handling.py:120](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L120)
 
 #### Signature
 
@@ -277,7 +272,7 @@ def in_velocity(vel): ...
 
 ## in_viscosity
 
-[Show source in input_handling.py:122](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L122)
+[Show source in input_handling.py:115](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L115)
 
 #### Signature
 
@@ -289,7 +284,7 @@ def in_viscosity(vis): ...
 
 ## in_volume
 
-[Show source in input_handling.py:125](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L125)
+[Show source in input_handling.py:118](https://github.com/Gorkowski/particula/blob/main/particula/util/input_handling.py#L118)
 
 #### Signature
 

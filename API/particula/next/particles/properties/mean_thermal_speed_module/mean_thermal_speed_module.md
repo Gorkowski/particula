@@ -1,6 +1,6 @@
 # Mean Thermal Speed Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Mean Thermal Speed Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Mean Thermal Speed Module
 
 > Auto-generated documentation for [particula.next.particles.properties.mean_thermal_speed_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/mean_thermal_speed_module.py) module.
 

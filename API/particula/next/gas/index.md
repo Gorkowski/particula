@@ -6,7 +6,6 @@
 
 ## Modules
 
-- [Atmosphere](./atmosphere.md)
 - [Atmosphere Builders](./atmosphere_builders.md)
 - [Properties](properties/index.md)
 - [Species](./species.md)

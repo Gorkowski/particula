@@ -58,10 +58,6 @@ def get_1d_stream(
 ) -> Stream: ...
 ```
 
-#### See also
-
-- [Stream](./stream.md#stream)
-
 
 
 ## get_2d_stream
@@ -92,10 +88,6 @@ def get_2d_stream(
     stream: Optional[Stream] = None,
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](./stream.md#stream)
 
 
 
@@ -189,10 +181,6 @@ def load_files_interface(
     sub_sample: Optional[int] = None,
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](./stream.md#stream)
 
 
 

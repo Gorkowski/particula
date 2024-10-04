@@ -51,11 +51,6 @@ def average_std(
 ) -> StreamAveraged: ...
 ```
 
-#### See also
-
-- [StreamAveraged](./stream.md#streamaveraged)
-- [Stream](./stream.md#stream)
-
 
 
 ## drop_masked
@@ -81,10 +76,6 @@ object
 ```python
 def drop_masked(stream: Stream, mask: ignore) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](./stream.md#stream)
 
 
 
@@ -146,10 +137,6 @@ def filtering(
 ) -> Stream: ...
 ```
 
-#### See also
-
-- [Stream](./stream.md#stream)
-
 
 
 ## remove_time_window
@@ -181,10 +168,6 @@ def remove_time_window(
     epoch_end: Optional[Union[float, int]] = None,
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](./stream.md#stream)
 
 
 
@@ -218,10 +201,6 @@ def select_time_window(
 ) -> Stream: ...
 ```
 
-#### See also
-
-- [Stream](./stream.md#stream)
-
 
 
 ## time_derivative_of_stream
@@ -252,7 +231,3 @@ def time_derivative_of_stream(
     stream: Stream, liner_slope_window_size: int = 12
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](./stream.md#stream)

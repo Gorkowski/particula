@@ -1,6 +1,6 @@
 # Knudsen Number Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Knudsen Number Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Knudsen Number Module
 
 > Auto-generated documentation for [particula.next.particles.properties.knudsen_number_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/knudsen_number_module.py) module.
 

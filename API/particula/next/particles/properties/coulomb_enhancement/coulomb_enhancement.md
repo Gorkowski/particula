@@ -1,6 +1,6 @@
 # Coulomb Enhancement
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Coulomb Enhancement
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Coulomb Enhancement
 
 > Auto-generated documentation for [particula.next.particles.properties.coulomb_enhancement](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/coulomb_enhancement.py) module.
 

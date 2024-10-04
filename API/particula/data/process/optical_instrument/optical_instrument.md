@@ -132,10 +132,6 @@ def albedo_from_ext_scat(
 ) -> Stream: ...
 ```
 
-#### See also
-
-- [Stream](../stream.md#stream)
-
 
 
 ## caps_processing
@@ -167,10 +163,6 @@ def caps_processing(
     keywords: dict[str, Union[str, float, int, bool]],
 ): ...
 ```
-
-#### See also
-
-- [Stream](../stream.md#stream)
 
 
 
@@ -208,7 +200,3 @@ def enhancement_ratio(
     stream: Stream, numerator_key: str, denominator_key: str, new_key: str
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](../stream.md#stream)

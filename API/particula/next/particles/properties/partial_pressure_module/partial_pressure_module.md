@@ -1,6 +1,6 @@
 # Partial Pressure Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Partial Pressure Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Partial Pressure Module
 
 > Auto-generated documentation for [particula.next.particles.properties.partial_pressure_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/partial_pressure_module.py) module.
 

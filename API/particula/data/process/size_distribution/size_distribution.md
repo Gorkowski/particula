@@ -146,10 +146,6 @@ def merge_size_distribution(
 ) -> object: ...
 ```
 
-#### See also
-
-- [Stream](../stream.md#stream)
-
 
 
 ## resample_distribution
@@ -184,10 +180,6 @@ def resample_distribution(
 ) -> Stream: ...
 ```
 
-#### See also
-
-- [Stream](../stream.md#stream)
-
 
 
 ## sizer_mean_properties
@@ -221,7 +213,3 @@ def sizer_mean_properties(
     diameter_units: str = "nm",
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](../stream.md#stream)

@@ -6,7 +6,7 @@
 
 ## AntoineBuilder
 
-[Show source in vapor_pressure_builders.py:17](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L17)
+[Show source in vapor_pressure_builders.py:16](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L16)
 
 Builder class for AntoineVaporPressureStrategy. It allows setting the
 coefficients 'a', 'b', and 'c' separately and then building the strategy
@@ -29,17 +29,13 @@ object.
 #### Signature
 
 ```python
-class AntoineBuilder(BuilderABC):
+class AntoineBuilder:
     def __init__(self): ...
 ```
 
-#### See also
-
-- [BuilderABC](../abc_builder.md#builderabc)
-
 ### AntoineBuilder().build
 
-[Show source in vapor_pressure_builders.py:70](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L70)
+[Show source in vapor_pressure_builders.py:86](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L86)
 
 Build the AntoineVaporPressureStrategy object with the set
 coefficients.
@@ -52,7 +48,7 @@ def build(self): ...
 
 ### AntoineBuilder().set_a
 
-[Show source in vapor_pressure_builders.py:44](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L44)
+[Show source in vapor_pressure_builders.py:40](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L40)
 
 Set the coefficient 'a' of the Antoine equation.
 
@@ -64,7 +60,7 @@ def set_a(self, a: float, a_units: Optional[str] = None): ...
 
 ### AntoineBuilder().set_b
 
-[Show source in vapor_pressure_builders.py:54](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L54)
+[Show source in vapor_pressure_builders.py:50](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L50)
 
 Set the coefficient 'b' of the Antoine equation.
 
@@ -76,7 +72,7 @@ def set_b(self, b: float, b_units: str = "K"): ...
 
 ### AntoineBuilder().set_c
 
-[Show source in vapor_pressure_builders.py:62](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L62)
+[Show source in vapor_pressure_builders.py:58](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L58)
 
 Set the coefficient 'c' of the Antoine equation.
 
@@ -86,11 +82,23 @@ Set the coefficient 'c' of the Antoine equation.
 def set_c(self, c: float, c_units: str = "K"): ...
 ```
 
+### AntoineBuilder().set_parameters
+
+[Show source in vapor_pressure_builders.py:66](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L66)
+
+Set coefficients from a dictionary including optional units.
+
+#### Signature
+
+```python
+def set_parameters(self, parameters: ignore): ...
+```
+
 
 
 ## ClausiusClapeyronBuilder
 
-[Show source in vapor_pressure_builders.py:78](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L78)
+[Show source in vapor_pressure_builders.py:96](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L96)
 
 Builder class for ClausiusClapeyronStrategy. This class facilitates
 setting the latent heat of vaporization, initial temperature, and initial
@@ -117,17 +125,13 @@ pressure with unit handling and then builds the strategy object.
 #### Signature
 
 ```python
-class ClausiusClapeyronBuilder(BuilderABC):
+class ClausiusClapeyronBuilder:
     def __init__(self): ...
 ```
 
-#### See also
-
-- [BuilderABC](../abc_builder.md#builderabc)
-
 ### ClausiusClapeyronBuilder().build
 
-[Show source in vapor_pressure_builders.py:149](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L149)
+[Show source in vapor_pressure_builders.py:184](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L184)
 
 Build and return a ClausiusClapeyronStrategy object with the set
 parameters.
@@ -140,7 +144,7 @@ def build(self): ...
 
 ### ClausiusClapeyronBuilder().set_latent_heat
 
-[Show source in vapor_pressure_builders.py:111](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L111)
+[Show source in vapor_pressure_builders.py:124](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L124)
 
 Set the latent heat of vaporization: Default units J/kg.
 
@@ -150,9 +154,21 @@ Set the latent heat of vaporization: Default units J/kg.
 def set_latent_heat(self, latent_heat: float, latent_heat_units: str = "J/kg"): ...
 ```
 
+### ClausiusClapeyronBuilder().set_parameters
+
+[Show source in vapor_pressure_builders.py:162](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L162)
+
+Set parameters from a dictionary including optional units.
+
+#### Signature
+
+```python
+def set_parameters(self, parameters: ignore): ...
+```
+
 ### ClausiusClapeyronBuilder().set_pressure_initial
 
-[Show source in vapor_pressure_builders.py:136](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L136)
+[Show source in vapor_pressure_builders.py:149](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L149)
 
 Set the initial pressure. Default units: Pa.
 
@@ -166,7 +182,7 @@ def set_pressure_initial(
 
 ### ClausiusClapeyronBuilder().set_temperature_initial
 
-[Show source in vapor_pressure_builders.py:123](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L123)
+[Show source in vapor_pressure_builders.py:136](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L136)
 
 Set the initial temperature. Default units: K.
 
@@ -182,7 +198,7 @@ def set_temperature_initial(
 
 ## ConstantBuilder
 
-[Show source in vapor_pressure_builders.py:160](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L160)
+[Show source in vapor_pressure_builders.py:204](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L204)
 
 Builder class for ConstantVaporPressureStrategy. This class facilitates
 setting the constant vapor pressure and then building the strategy object.
@@ -203,17 +219,13 @@ pressure.
 #### Signature
 
 ```python
-class ConstantBuilder(BuilderABC):
+class ConstantBuilder:
     def __init__(self): ...
 ```
 
-#### See also
-
-- [BuilderABC](../abc_builder.md#builderabc)
-
 ### ConstantBuilder().build
 
-[Show source in vapor_pressure_builders.py:194](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L194)
+[Show source in vapor_pressure_builders.py:255](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L255)
 
 Build and return a ConstantVaporPressureStrategy object with the set
 parameters.
@@ -224,9 +236,21 @@ parameters.
 def build(self): ...
 ```
 
+### ConstantBuilder().set_parameters
+
+[Show source in vapor_pressure_builders.py:236](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L236)
+
+Set parameters from a dictionary including optional units.
+
+#### Signature
+
+```python
+def set_parameters(self, parameters: ignore): ...
+```
+
 ### ConstantBuilder().set_vapor_pressure
 
-[Show source in vapor_pressure_builders.py:182](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L182)
+[Show source in vapor_pressure_builders.py:224](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L224)
 
 Set the constant vapor pressure.
 
@@ -242,7 +266,7 @@ def set_vapor_pressure(
 
 ## WaterBuckBuilder
 
-[Show source in vapor_pressure_builders.py:201](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L201)
+[Show source in vapor_pressure_builders.py:263](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L263)
 
 Builder class for WaterBuckStrategy. This class facilitates
 the building of the WaterBuckStrategy object. Which as of now has no
@@ -257,17 +281,12 @@ ice only calculations. We keep the builder for consistency.
 #### Signature
 
 ```python
-class WaterBuckBuilder(BuilderABC):
-    def __init__(self): ...
+class WaterBuckBuilder: ...
 ```
-
-#### See also
-
-- [BuilderABC](../abc_builder.md#builderabc)
 
 ### WaterBuckBuilder().build
 
-[Show source in vapor_pressure_builders.py:215](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L215)
+[Show source in vapor_pressure_builders.py:273](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/vapor_pressure_builders.py#L273)
 
 Build and return a WaterBuckStrategy object.
 

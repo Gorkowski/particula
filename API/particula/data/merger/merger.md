@@ -112,7 +112,3 @@ def stream_add_data(
     header_new: Optional[list] = None,
 ) -> Stream: ...
 ```
-
-#### See also
-
-- [Stream](./stream.md#stream)

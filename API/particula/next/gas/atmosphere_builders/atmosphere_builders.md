@@ -90,7 +90,3 @@ specified.
 ```python
 def build(self) -> Atmosphere: ...
 ```
-
-#### See also
-
-- [Atmosphere](./atmosphere.md#atmosphere)

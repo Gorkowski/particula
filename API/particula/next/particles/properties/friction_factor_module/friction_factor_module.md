@@ -1,6 +1,6 @@
 # Friction Factor Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Friction Factor Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Friction Factor Module
 
 > Auto-generated documentation for [particula.next.particles.properties.friction_factor_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/friction_factor_module.py) module.
 

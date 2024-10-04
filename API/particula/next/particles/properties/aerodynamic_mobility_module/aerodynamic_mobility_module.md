@@ -1,6 +1,6 @@
 # Aerodynamic Mobility Module
 
-[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Properties](./index.md#properties) / Aerodynamic Mobility Module
+[Particula Index](../../../../README.md#particula-index) / [Particula](../../../index.md#particula) / [Next](../../index.md#next) / [Particles](../index.md#particles) / [Particles](../index.md#particles) / Aerodynamic Mobility Module
 
 > Auto-generated documentation for [particula.next.particles.properties.aerodynamic_mobility_module](https://github.com/Gorkowski/particula/blob/main/particula/next/particles/properties/aerodynamic_mobility_module.py) module.
 
