@@ -62,7 +62,7 @@ class GasSpecies:
 
 ### GasSpecies().__len__
 
-[Show source in species.py:69](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L69)
+[Show source in species.py:70](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L70)
 
 Return the number of gas species.
 
@@ -74,7 +74,7 @@ def __len__(self): ...
 
 ### GasSpecies().__str__
 
-[Show source in species.py:65](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L65)
+[Show source in species.py:66](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L66)
 
 Return a string representation of the GasSpecies object.
 
@@ -86,7 +86,7 @@ def __str__(self): ...
 
 ### GasSpecies().add_concentration
 
-[Show source in species.py:269](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L269)
+[Show source in species.py:272](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L272)
 
 Add concentration to the gas species.
 
@@ -103,14 +103,14 @@ def add_concentration(self, added_concentration: Union[float, NDArray[np.float64
 
 ### GasSpecies().get_concentration
 
-[Show source in species.py:100](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L100)
+[Show source in species.py:101](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L101)
 
 Get the concentration of the gas species in the mixture, in kg/m^3.
 
 #### Returns
 
-- concentration (float or NDArray[np.float64]): The concentration of the
-    gas species in the mixture.
+- concentration (float or NDArray[np.float64]): The concentration of
+    the gas species in the mixture.
 
 #### Signature
 
@@ -120,7 +120,7 @@ def get_concentration(self) -> Union[float, NDArray[np.float64]]: ...
 
 ### GasSpecies().get_condensable
 
-[Show source in species.py:92](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L92)
+[Show source in species.py:93](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L93)
 
 Check if the gas species is condensable or not.
 
@@ -137,7 +137,7 @@ def get_condensable(self) -> Union[bool, NDArray[np.bool_]]: ...
 
 ### GasSpecies().get_molar_mass
 
-[Show source in species.py:84](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L84)
+[Show source in species.py:85](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L85)
 
 Get the molar mass of the gas species in kg/mol.
 
@@ -154,7 +154,7 @@ def get_molar_mass(self) -> Union[float, NDArray[np.float64]]: ...
 
 ### GasSpecies().get_name
 
-[Show source in species.py:77](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L77)
+[Show source in species.py:78](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L78)
 
 Get the name of the gas species.
 
@@ -170,7 +170,7 @@ def get_name(self) -> Union[str, NDArray[np.str_]]: ...
 
 ### GasSpecies().get_partial_pressure
 
-[Show source in species.py:144](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L144)
+[Show source in species.py:146](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L146)
 
 Calculate the partial pressure of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
@@ -201,7 +201,7 @@ def get_partial_pressure(
 
 ### GasSpecies().get_pure_vapor_pressure
 
-[Show source in species.py:108](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L108)
+[Show source in species.py:110](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L110)
 
 Calculate the pure vapor pressure of the gas species at a given
 temperature in Kelvin.
@@ -233,7 +233,7 @@ def get_pure_vapor_pressure(
 
 ### GasSpecies().get_saturation_concentration
 
-[Show source in species.py:230](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L230)
+[Show source in species.py:232](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L232)
 
 Calculate the saturation concentration of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if
@@ -264,7 +264,7 @@ def get_saturation_concentration(
 
 ### GasSpecies().get_saturation_ratio
 
-[Show source in species.py:187](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L187)
+[Show source in species.py:189](https://github.com/Gorkowski/particula/blob/main/particula/next/gas/species.py#L189)
 
 Calculate the saturation ratio of the gas based on the vapor
 pressure strategy. This method accounts for multiple strategies if

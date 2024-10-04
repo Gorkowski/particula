@@ -8,7 +8,7 @@
 
 [Show source in merger.py:15](https://github.com/Gorkowski/particula/blob/main/particula/data/merger.py#L15)
 
-"
+ "
 Merge or adds processed data together. Accounts for data shape
 miss matches and duplicate timestamps. If the data is a different shape
 than
@@ -56,7 +56,7 @@ def combine_data(
 
 ## stream_add_data
 
-[Show source in merger.py:100](https://github.com/Gorkowski/particula/blob/main/particula/data/merger.py#L100)
+[Show source in merger.py:99](https://github.com/Gorkowski/particula/blob/main/particula/data/merger.py#L99)
 
 Adds a new data stream and corresponding time stream to the
 existing data.

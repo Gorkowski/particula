@@ -6,7 +6,7 @@
 
 ## bin_particles
 
-[Show source in super_droplet_method.py:451](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L451)
+[Show source in super_droplet_method.py:449](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L449)
 
 Bin particles by size and return the number of particles in each bin.
 
@@ -75,7 +75,7 @@ def bin_to_particle_indices(
 
 ## calculate_concentration_in_bins
 
-[Show source in super_droplet_method.py:494](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L494)
+[Show source in super_droplet_method.py:492](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L492)
 
 Calculate the concentration of particles in each bin.
 
@@ -148,7 +148,7 @@ def coagulation_events(
 
 ## event_pairs
 
-[Show source in super_droplet_method.py:106](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L106)
+[Show source in super_droplet_method.py:102](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L102)
 
 Calculate the number of particle pairs based on kernel value.
 
@@ -218,7 +218,7 @@ def filter_valid_indices(
 
 ## get_bin_pairs
 
-[Show source in super_droplet_method.py:478](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L478)
+[Show source in super_droplet_method.py:476](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L476)
 
 Pre-compute the unique bin pairs for vectorized operations.
 
@@ -240,7 +240,7 @@ def get_bin_pairs(bin_indices: NDArray[np.int64]) -> list[Tuple[int, int]]: ...
 
 ## random_choice_indices
 
-[Show source in super_droplet_method.py:171](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L171)
+[Show source in super_droplet_method.py:165](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L165)
 
 Filter valid indices and select random indices for coagulation events.
 
@@ -298,7 +298,7 @@ def random_choice_indices(
 
 ## sample_events
 
-[Show source in super_droplet_method.py:139](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L139)
+[Show source in super_droplet_method.py:133](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L133)
 
 Sample the number of coagulation events from a Poisson distribution.
 
@@ -331,7 +331,7 @@ def sample_events(
 
 ## select_random_indices
 
-[Show source in super_droplet_method.py:234](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L234)
+[Show source in super_droplet_method.py:228](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L228)
 
 Select random indices for particles involved in coagulation events.
 
@@ -403,7 +403,7 @@ def sort_particles(
 
 ## super_droplet_coagulation_step
 
-[Show source in super_droplet_method.py:522](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L522)
+[Show source in super_droplet_method.py:520](https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/coagulation/super_droplet_method.py#L520)
 
 Perform a single step of the Super Droplet coagulation process.
 

@@ -119,7 +119,7 @@ def convert_aerodynamic_to_physical_radius(
 
 ## convert_physical_to_aerodynamic_radius
 
-[Show source in aerodynamic_convert.py:198](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L198)
+[Show source in aerodynamic_convert.py:197](https://github.com/Gorkowski/particula/blob/main/particula/data/process/aerodynamic_convert.py#L197)
 
 Convert physical radius to aerodynamic radius for a particle or an array
 of particles.

@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.35">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.8c3ca2c6.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
@@ -10237,7 +10237,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationadd_concentration">ParticleRepresentation().add_concentration<a class="headerlink" href="#particlerepresentationadd_concentration" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L313">Show source in representation.py:313</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L309">Show source in representation.py:309</a></p>
 <p>Adds concentration to the particle distribution.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
@@ -10252,7 +10252,7 @@ allows for flexibility in representing particles.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationadd_mass">ParticleRepresentation().add_mass<a class="headerlink" href="#particlerepresentationadd_mass" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L298">Show source in representation.py:298</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L294">Show source in representation.py:294</a></p>
 <p>Adds mass to the particle distribution, and updates parameters.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -10263,7 +10263,7 @@ allows for flexibility in representing particles.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">add_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">added_mass</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationcollide_pairs">ParticleRepresentation().collide_pairs<a class="headerlink" href="#particlerepresentationcollide_pairs" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L338">Show source in representation.py:338</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L334">Show source in representation.py:334</a></p>
 <p>Collide pairs of indices, used for ParticleResolved Strategies.</p>
 <h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -10379,7 +10379,7 @@ account the distribution and concentration.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_mass_concentration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clone</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="particlerepresentationget_radius">ParticleRepresentation().get_radius<a class="headerlink" href="#particlerepresentationget_radius" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L284">Show source in representation.py:284</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/particles/representation.py#L280">Show source in representation.py:280</a></p>
 <p>Returns the radius of the particles as calculated by the strategy.</p>
 <h4 id="arguments_10">Arguments<a class="headerlink" href="#arguments_10" title="Permanent link">&para;</a></h4>
 <ul>
@@ -10541,7 +10541,7 @@ Kelvin effect.</p>
     <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.525ec568.min.js"></script>
       
         <script src="../../../../../javascripts/mathjax.js"></script>
       

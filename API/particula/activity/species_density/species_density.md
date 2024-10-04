@@ -6,7 +6,7 @@
 
 ## organic_array
 
-[Show source in species_density.py:85](https://github.com/Gorkowski/particula/blob/main/particula/activity/species_density.py#L85)
+[Show source in species_density.py:93](https://github.com/Gorkowski/particula/blob/main/particula/activity/species_density.py#L93)
 
 Get densities for an array.
 

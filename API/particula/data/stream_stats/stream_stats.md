@@ -90,7 +90,7 @@ def drop_masked(stream: Stream, mask: ignore) -> Stream: ...
 
 ## filtering
 
-[Show source in stream_stats.py:106](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L106)
+[Show source in stream_stats.py:104](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L104)
 
 Filters the data of the given 'stream' object based on the specified
 bounds or specific value. The filtered data can be either dropped or
@@ -154,7 +154,7 @@ def filtering(
 
 ## remove_time_window
 
-[Show source in stream_stats.py:179](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L179)
+[Show source in stream_stats.py:177](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L177)
 
 Remove a time window from a stream object.
 
@@ -190,7 +190,7 @@ def remove_time_window(
 
 ## select_time_window
 
-[Show source in stream_stats.py:214](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L214)
+[Show source in stream_stats.py:212](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L212)
 
 Keep only a specified time window in a stream object and remove all other
 data.
@@ -226,7 +226,7 @@ def select_time_window(
 
 ## time_derivative_of_stream
 
-[Show source in stream_stats.py:253](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L253)
+[Show source in stream_stats.py:251](https://github.com/Gorkowski/particula/blob/main/particula/data/stream_stats.py#L251)
 
 Calculate the rate of change of the concentration PMF over time and
 return a new stream.

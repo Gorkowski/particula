@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.35">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.8c3ca2c6.min.css">
       
         
         <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.06af60db.min.css">
@@ -9439,7 +9439,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py">particula.next.dynamics.condensation.condensation_strategies</a> module.</p>
 </blockquote>
 <h2 id="condensationisothermal">CondensationIsothermal<a class="headerlink" href="#condensationisothermal" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L287">Show source in condensation_strategies.py:287</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L288">Show source in condensation_strategies.py:288</a></p>
 <p>Condensation strategy for isothermal conditions.</p>
 <p>Condensation strategy for isothermal conditions, where the temperature
 remains constant. This class implements the mass transfer rate calculation
@@ -9460,7 +9460,7 @@ of vaporization effect is considered.</p>
 <li><a href="#condensationstrategy">CondensationStrategy</a></li>
 </ul>
 <h3 id="condensationisothermalmass_transfer_rate">CondensationIsothermal().mass_transfer_rate<a class="headerlink" href="#condensationisothermalmass_transfer_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L310">Show source in condensation_strategies.py:310</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L311">Show source in condensation_strategies.py:311</a></p>
 <h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">mass_transfer_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -9477,7 +9477,7 @@ of vaporization effect is considered.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="condensationisothermalrate">CondensationIsothermal().rate<a class="headerlink" href="#condensationisothermalrate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L364">Show source in condensation_strategies.py:364</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L363">Show source in condensation_strategies.py:363</a></p>
 <h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -9493,7 +9493,7 @@ of vaporization effect is considered.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="condensationisothermalstep">CondensationIsothermal().step<a class="headerlink" href="#condensationisothermalstep" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L393">Show source in condensation_strategies.py:393</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L392">Show source in condensation_strategies.py:392</a></p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
@@ -9511,10 +9511,10 @@ of vaporization effect is considered.</p>
 </ul>
 <h2 id="condensationstrategy">CondensationStrategy<a class="headerlink" href="#condensationstrategy" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L60">Show source in condensation_strategies.py:60</a></p>
-<p>Condensation strategy abstract class.</p>
-<p>Abstract class for mass transfer strategies, for condensation or
-evaporation of particles. This class should be subclassed to implement
-specific mass transfer strategies.</p>
+<p>Abstract base class for condensation strategies.</p>
+<p>This class defines the interface for various condensation models
+used in atmospheric physics. Subclasses should implement specific
+condensation algorithms based on different physical models and equations.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>molar_mass</code> - The molar mass of the species [kg/mol]. If a single value
@@ -9537,7 +9537,7 @@ specific mass transfer strategies.</p>
     <span class="p">):</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="condensationstrategyfirst_order_mass_transport">CondensationStrategy().first_order_mass_transport<a class="headerlink" href="#condensationstrategyfirst_order_mass_transport" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L156">Show source in condensation_strategies.py:156</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L157">Show source in condensation_strategies.py:157</a></p>
 <p>First-order mass transport coefficient per particle.</p>
 <p>Calculate the first-order mass transport coefficient, K, for a given
 particle based on the diffusion coefficient, radius, and vapor
@@ -9568,7 +9568,7 @@ provided, it will be calculated based on the temperature</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="condensationstrategyknudsen_number">CondensationStrategy().knudsen_number<a class="headerlink" href="#condensationstrategyknudsen_number" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L121">Show source in condensation_strategies.py:121</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L122">Show source in condensation_strategies.py:122</a></p>
 <p>The Knudsen number for a particle.</p>
 <p>Calculate the Knudsen number based on the mean free path of the gas
 molecules and the radius of the particle.</p>
@@ -9595,7 +9595,7 @@ molecules and the radius of the particle.</p>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="condensationstrategymass_transfer_rate">CondensationStrategy().mass_transfer_rate<a class="headerlink" href="#condensationstrategymass_transfer_rate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L199">Show source in condensation_strategies.py:199</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L200">Show source in condensation_strategies.py:200</a></p>
 <p>Mass transfer rate for a particle.</p>
 <p>Calculate the mass transfer rate based on the difference in partial
 pressure and the first-order mass transport coefficient.</p>
@@ -9629,7 +9629,7 @@ pressure and the first-order mass transport coefficient.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="condensationstrategymean_free_path">CondensationStrategy().mean_free_path<a class="headerlink" href="#condensationstrategymean_free_path" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L90">Show source in condensation_strategies.py:90</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L91">Show source in condensation_strategies.py:91</a></p>
 <p>Calculate the mean free path of the gas molecules based on the
 temperature, pressure, and dynamic viscosity of the gas.</p>
 <h4 id="arguments_4">Arguments<a class="headerlink" href="#arguments_4" title="Permanent link">&para;</a></h4>
@@ -9653,7 +9653,7 @@ provided, it will be calculated based on the temperature</li>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
 <h3 id="condensationstrategyrate">CondensationStrategy().rate<a class="headerlink" href="#condensationstrategyrate" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L228">Show source in condensation_strategies.py:228</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L229">Show source in condensation_strategies.py:229</a></p>
 <p>Calculate the rate of mass condensation for each particle due to
 each condensable gas species.</p>
 <p>The rate of condensation is determined based on the mass transfer rate,
@@ -9689,7 +9689,7 @@ condensation rate for each particle or bin.</p>
 <li><a href="../../../particles/representation/#particlerepresentation">ParticleRepresentation</a></li>
 </ul>
 <h3 id="condensationstrategystep">CondensationStrategy().step<a class="headerlink" href="#condensationstrategystep" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L260">Show source in condensation_strategies.py:260</a></p>
+<p><a href="https://github.com/Gorkowski/particula/blob/main/particula/next/dynamics/condensation/condensation_strategies.py#L261">Show source in condensation_strategies.py:261</a></p>
 <p>Execute the condensation process for a given time step.</p>
 <h4 id="arguments_6">Arguments<a class="headerlink" href="#arguments_6" title="Permanent link">&para;</a></h4>
 <ul>
@@ -9785,7 +9785,7 @@ condensation rate for each particle or bin.</p>
     <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../../../../../assets/javascripts/bundle.525ec568.min.js"></script>
       
         <script src="../../../../../../javascripts/mathjax.js"></script>
       

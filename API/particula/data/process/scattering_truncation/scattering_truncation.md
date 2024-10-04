@@ -6,7 +6,7 @@
 
 ## correction_for_distribution
 
-[Show source in scattering_truncation.py:234](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L234)
+[Show source in scattering_truncation.py:245](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L245)
 
 Correction for a size distribution of particles.
 
@@ -55,7 +55,7 @@ def correction_for_distribution(
 
 ## correction_for_humidified
 
-[Show source in scattering_truncation.py:302](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L302)
+[Show source in scattering_truncation.py:313](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L313)
 
 Truncation Correction for humidified aerosol measurements.
 
@@ -111,7 +111,7 @@ def correction_for_humidified(
 
 ## correction_for_humidified_looped
 
-[Show source in scattering_truncation.py:381](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L381)
+[Show source in scattering_truncation.py:387](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L387)
 
 Looped correction for humidified aerosol measurements.
 
@@ -174,7 +174,7 @@ def correction_for_humidified_looped(
 
 ## get_truncated_scattering
 
-[Show source in scattering_truncation.py:16](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L16)
+[Show source in scattering_truncation.py:17](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L17)
 
 Extracts the truncated scattering intensity and corresponding angles based
 on the given truncation angles.
@@ -206,7 +206,7 @@ def get_truncated_scattering(
 
 ## trunc_mono
 
-[Show source in scattering_truncation.py:46](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L46)
+[Show source in scattering_truncation.py:47](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L47)
 
 Truncation correction for monodisperse aerosol particle.
 
@@ -262,7 +262,7 @@ def trunc_mono(
 
 ## truncation_for_diameters
 
-[Show source in scattering_truncation.py:182](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L182)
+[Show source in scattering_truncation.py:191](https://github.com/Gorkowski/particula/blob/main/particula/data/process/scattering_truncation.py#L191)
 
 Truncation correction for an array of particle diameters.
 

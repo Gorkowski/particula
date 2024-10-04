@@ -6,7 +6,7 @@
 
 ## lf2013_coag_full
 
-[Show source in src_lf2013_coagulation.py:13](https://github.com/Gorkowski/particula/blob/main/particula/util/lf2013_coagulation/src_lf2013_coagulation.py#L13)
+[Show source in src_lf2013_coagulation.py:14](https://github.com/Gorkowski/particula/blob/main/particula/util/lf2013_coagulation/src_lf2013_coagulation.py#L14)
 
 calculate ion--particle coagulation according to lf2013
 
