@@ -32,7 +32,11 @@ $$
 
 There are two options for calculating the radial relative velocity:
 
-Option 1 (no gravity):
+### $\langle |w_r| \rangle$ Dodin 2002:
+
+Using the spherical formulation, Dodin and Elperin (2002), decomposed the relative velocity into turbulent and gravity-induced components and assumed that the turbulent component is normally distributed.
+
+Dodin Z and Elperin T 2002 Phys. Fluids 14 2921–24
 
 $$
 \langle |w_r| \rangle = \sqrt{\frac{2}{\pi}} \sigma f(b)
@@ -40,10 +44,17 @@ $$
 
 where:
 
-- $f(b) = \frac{1}{2}\sqrt{\pi}\left(b + \frac{0.5}{b}\right)\text{erf}(b) + \frac{1}{2}\exp(-b^2)$
-- $b = \frac{g|\tau_{p1} - \tau_{p2}|}{\sqrt{2} \sigma}$
+$$
+f(b) = \frac{1}{2}\sqrt{\pi}\left(b + \frac{0.5}{b}\right)\text{erf}(b) + \frac{1}{2}\exp(-b^2)
+$$
 
-Option 2 (with gravity): 
+$$
+b = \frac{g|\tau_{p1} - \tau_{p2}|}{\sqrt{2} \sigma}
+$$
+
+### $\langle |w_r| \rangle$ Ayala 2008:
+
+Here both particle inertia and gravitational effects are accounted for in the relative velocity calculation. Derived by Ayala et al. (2008) based on DNS results.
 
 $$
 \langle |w_r| \rangle = \sqrt{\frac{2}{\pi}} \left(\sigma^2 + \pi/8 (\tau_{p1} + \tau_{p2})^2 |g|^2\right)^{1/2}
