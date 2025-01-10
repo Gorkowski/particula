@@ -20,36 +20,52 @@ This implementation is based on the parameterized equations described in the doc
    - Reynolds number, $R_\lambda$
 3. Gravitational acceleration, $g$
 
-### **Step 2: Derived Parameters**
+### **Derived Parameters**
+
 Using the input values, compute the following:
-- Tau Kolmogorov timescale:
-   $$
-   \tau_k = \left(\frac{\nu}{\varepsilon}\right)^{1/2}
-   $$
-- Kolmogorov length scale: 
-   $$
-   \eta = \left(\frac{\nu^3}{\varepsilon}\right)^{1/4}
-   $$
-- Kolmogorov velocity scale:
-   $$
-   v_k = (\nu \varepsilon)^{1/4}
-   $$
-- Particle response time:
-   $$
-   \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
-   $$
-    where $f(Re_p)$ is a function of the particle Reynolds number $Re_p$:
-    $$
-    f(Re_p) = 1 + 0.15 Re_p^{0.687}
-    $$
-- Terminal velocity:
-   $$
-   v_p = \tau_p g
-   $$
-- Stokes number:
-   $$
-   St = \frac{\tau_p}{\tau_k}
-   $$
+
+#### Tau Kolmogorov timescale
+
+$$
+\tau_k = \left(\frac{\nu}{\varepsilon}\right)^{1/2}
+$$
+
+#### Kolmogorov length scale
+
+$$
+\eta = \left(\frac{\nu^3}{\varepsilon}\right)^{1/4}
+$$
+
+#### Kolmogorov velocity scale
+
+$$
+v_k = (\nu \varepsilon)^{1/4}
+$$
+
+#### Particle response time
+
+$$
+\tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
+$$
+
+where $f(Re_p)$ is a function of the particle Reynolds number $Re_p$:
+
+$$
+f(Re_p) = 1 + 0.15 Re_p^{0.687}
+$$
+
+#### Terminal velocity
+
+$$
+v_p = \tau_p g
+$$
+
+#### Stokes number
+
+$$
+    St = \frac{\tau_p}{\tau_k}
+$$
+
 
 ### **Step 3: Radial Relative Velocity ($\langle |w_r| \rangle$)**
 Use:
