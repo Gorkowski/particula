@@ -6,17 +6,18 @@ Ayala, O., Rosa, B., Wang, L. P., & Grabowski, W. W. (2008). Effects of turbulen
 
 Ayala, O., Rosa, B., & Wang, L. P. (2008). Effects of turbulence on the geometric collision rate of sedimenting droplets. Part 2. Theory and parameterization. New Journal of Physics, 10. https://doi.org/10.1088/1367-2630/10/7/075016
 
-## Kernel Description
+## $\Gamma_{12}$: Kernel Description
 
 In the parameterization below, the input parameters are:
-- The radii $a_1 and a_2$ of the droplets
-- The water density $\rho_w$;
+
+- The radii $a_1$ and $a_2$ of the droplets
+- The water density $\rho_w$
 - Turbulent air flow requires:
   - The density $\rho$
   - The viscosity $\nu$
   - The turbulence dissipation rate $\varepsilon$
-  - The Taylor-microscale Reynolds number $R_\lambda$, 
--The gravitational acceleration $|g|$
+  - The Taylor-microscale Reynolds number $R_\lambda$,
+- The gravitational acceleration $|g|$
 
 The output is the collision kernel $\Gamma_{12}$
 
@@ -287,7 +288,7 @@ $$
 \lambda = u' \left(\frac{15 \nu^2}{\epsilon}\right)^{1/2}
 $$
 
-#### $\tau_p$: Droplet Inertia Time
+### $\tau_p$: Droplet Inertia Time
 
 Adjusts droplet inertia:
 $$
