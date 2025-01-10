@@ -20,15 +20,15 @@ This implementation is based on the parameterized equations described in the doc
     - [**2. Turbulent Flow Properties**](#2-turbulent-flow-properties)
       - [$g$: Gravitational Acceleration](#g-gravitational-acceleration)
     - [Derived Parameters](#derived-parameters)
-      - [#\\tau\_k$: Kolmogorov Time\*\*](#tau_k-kolmogorov-time)
+      - [$\\tau\_k$: Kolmogorov Time](#tau_k-kolmogorov-time)
       - [$\\eta$: Kolmogorov Length Scale](#eta-kolmogorov-length-scale)
       - [$v\_k$: Kolmogorov Velocity Scale](#v_k-kolmogorov-velocity-scale)
-      - [$u'$: Fluid RMS Fluctuation Velocity\*\*](#u-fluid-rms-fluctuation-velocity)
-      - [**(T\_L): Lagrangian Integral Scale**](#t_l-lagrangian-integral-scale)
-      - [**(L\_e): Eulerian Integral Scale**](#l_e-eulerian-integral-scale)
-      - [**(a\_o): Coefficient**](#a_o-coefficient)
-      - [**(\\tau\_T): Lagrangian Taylor Microscale Time**](#tau_t-lagrangian-taylor-microscale-time)
-      - [**(\\lambda): Taylor Microscale**](#lambda-taylor-microscale)
+      - [$u'$: Fluid RMS Fluctuation Velocity](#u-fluid-rms-fluctuation-velocity)
+      - [$T\_L$: Lagrangian Integral Scale\*\*](#t_l-lagrangian-integral-scale)
+      - [$L\_e$: Eulerian Integral Scale](#l_e-eulerian-integral-scale)
+      - [$a\_o$: Coefficient](#a_o-coefficient)
+      - [$\\tau\_T$: Lagrangian Taylor Microscale Time](#tau_t-lagrangian-taylor-microscale-time)
+      - [$\\lambda$: Taylor Microscale](#lambda-taylor-microscale)
       - [**Droplet Inertial Response Time**](#droplet-inertial-response-time)
       - [**Particle Terminal Velocity**](#particle-terminal-velocity)
       - [**Particle Reynolds Number**](#particle-reynolds-number)
@@ -94,7 +94,7 @@ The acceleration due to gravity, approximately 9.81 \, $\text{m/s}^2$ on Earth's
 
 ### Derived Parameters
 
-#### #\tau_k$: Kolmogorov Time**
+#### $\tau_k$: Kolmogorov Time
 
 The smallest timescale in turbulence where viscous forces dominate:
 $$
@@ -114,42 +114,42 @@ $$
 v_k = (\nu \varepsilon)^{1/4}
 $$
 
-#### $u'$: Fluid RMS Fluctuation Velocity**
+#### $u'$: Fluid RMS Fluctuation Velocity
 
 Quantifies turbulence intensity:
 $$
 u' = \frac{R_\lambda^{1/2} v_k}{15^{1/4}} 
 $$
 
-#### **\(T_L\): Lagrangian Integral Scale**
+#### $T_L$: Lagrangian Integral Scale**
 
 Describes large-scale turbulence:
 $$
 T_L = \frac{u'^2}{\epsilon}
 $$
 
-#### **\(L_e\): Eulerian Integral Scale**
+#### $L_e$: Eulerian Integral Scale
 
 Length scale for large eddies:
 $$
 L_e = 0.5 \frac{u'^3}{\epsilon}
 $$
 
-#### **\(a_o\): Coefficient**
+#### $a_o$: Coefficient
 
 A Reynolds-dependent parameter:
 $$
 a_o = \frac{11+7 R_\lambda}{205 + R_\lambda}
 $$
 
-#### **\(\tau_T\): Lagrangian Taylor Microscale Time**
+#### $\tau_T$: Lagrangian Taylor Microscale Time
 
 Time correlation decay for turbulent trajectories:
 $$
 \tau_T = \tau_k \left(\frac{2 R_\lambda}{15^{1/2} a_o}\right)^{1/2}
 $$
 
-#### **\(\lambda\): Taylor Microscale**
+#### $\lambda$: Taylor Microscale
 
 Length scale linked to fluid flow:
 $$
