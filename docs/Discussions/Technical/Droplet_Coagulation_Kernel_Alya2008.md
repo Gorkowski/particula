@@ -67,8 +67,8 @@ $$
 Cross terms is defined as:
 
 $$
-\left\langle v'^{(1)} v'^{(2)} \right\rangle = \frac{u'^2 f_2(R)}{\tau_{p1} \tau_{p2}}
-\left[b_1 d_1 \Phi(c_1, e_1) - b_1 d_2 \Phi(c_1, e_2) - b_2 d_1 \Phi(c_2, e_1) + b_2 d_2 \Phi(c_2, e_2)\right].
+\left\langle v'^{(1)} v'^{(2)} \right\rangle = \frac{u'^2 f_2(R)}{\tau_{p1} \tau_{p2}}\\
+\times \left[b_1 d_1 \Phi(c_1, e_1) - b_1 d_2 \Phi(c_1, e_2) - b_2 d_1 \Phi(c_2, e_1) + b_2 d_2 \Phi(c_2, e_2)\right].
 $$
 
 ### $f_2(R)$ Longitudinal velocity correlation
@@ -78,8 +78,8 @@ This is the longitudinal two-point velocity correlation function, which is a fun
 $$
 f_2(R) = \frac{1}{2(1 - 2\beta^2)^{1/2}} 
 \Bigg\{
-\left(1 + \sqrt{1 - 2\beta^2}\right) 
-\times \exp\left[-\frac{2R}{(1 + \sqrt{1 - 2\beta^2})L_e}\right] \quad - \left(1 - \sqrt{1 - 2\beta^2}\right) 
+\left(1 + \sqrt{1 - 2\beta^2}\right) \\
+\times \exp\left[-\frac{2R}{(1 + \sqrt{1 - 2\beta^2})L_e}\right] \quad - \left(1 - \sqrt{1 - 2\beta^2}\right) \\
 \times \exp\left[-\frac{2R}{(1 - \sqrt{1 - 2\beta^2})L_e}\right]
 \Bigg\}
 $$
@@ -128,7 +128,7 @@ $$
 \beta = \frac{\sqrt{2} \lambda}{L_e}
 $$
 
-#### $\Phi(\alpha, \phi)$
+#### $\Phi(\alpha, \phi)$: Definitions
 
 For the case when taking $v_{p1}>v_{p2}$.
 
@@ -153,7 +153,7 @@ $$
 \quad \times \frac{1}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)}
 $$
 
-#### $\Psi(\alpha, \phi)$
+#### $\Psi(\alpha, \phi)$: Definitions
 
 For the case when taking for the k-th droplet:
 
