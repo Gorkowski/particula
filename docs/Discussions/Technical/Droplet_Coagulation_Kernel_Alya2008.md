@@ -1,6 +1,6 @@
 # Cloud Droplet Coagulation Kernel 
 
-Here, we discuss the implementation of the geometric collision kernel for cloud droplets as described in Part II by Ayala et al. (2008). Part II provides a detailed explanation of the theory and parameterization of the collision kernel for cloud droplets in turbulent flows. The implementation involves calculating the geometric collision rate of sedimenting droplets based on the turbulent flow properties and droplet characteristics.
+Here, we discuss the implementation of the geometric collision kernel for cloud droplets as described in Part II by Ayala et al. (2008). Part I provides a detailed explanation of the direct numerical simulations. Where as Part II is the parameterization of the collision kernel for cloud droplets in turbulent flows. The implementation involves calculating the geometric collision rate of sedimenting droplets based on the turbulent flow properties and droplet characteristics.
 
 Ayala, O., Rosa, B., Wang, L. P., & Grabowski, W. W. (2008). Effects of turbulence on the geometric collision rate of sedimenting droplets. Part 1. Results from direct numerical simulation. New Journal of Physics, 10. https://doi.org/10.1088/1367-2630/10/7/075015
 
@@ -24,7 +24,7 @@ This implementation is based on the parameterized equations described in the doc
       - [$\\eta$: Kolmogorov Length Scale](#eta-kolmogorov-length-scale)
       - [$v\_k$: Kolmogorov Velocity Scale](#v_k-kolmogorov-velocity-scale)
       - [$u'$: Fluid RMS Fluctuation Velocity](#u-fluid-rms-fluctuation-velocity)
-      - [$T\_L$: Lagrangian Integral Scale\*\*](#t_l-lagrangian-integral-scale)
+      - [$T\_L$: Lagrangian Integral Scale](#t_l-lagrangian-integral-scale)
       - [$L\_e$: Eulerian Integral Scale](#l_e-eulerian-integral-scale)
       - [$a\_o$: Coefficient](#a_o-coefficient)
       - [$\\tau\_T$: Lagrangian Taylor Microscale Time](#tau_t-lagrangian-taylor-microscale-time)
@@ -121,7 +121,7 @@ $$
 u' = \frac{R_\lambda^{1/2} v_k}{15^{1/4}} 
 $$
 
-#### $T_L$: Lagrangian Integral Scale**
+#### $T_L$: Lagrangian Integral Scale
 
 Describes large-scale turbulence:
 $$
