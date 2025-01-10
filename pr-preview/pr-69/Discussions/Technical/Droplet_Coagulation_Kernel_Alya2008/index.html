@@ -3665,9 +3665,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#kernel-description" class="md-nav__link">
+  <a href="#gamma_12-kernel-description" class="md-nav__link">
     <span class="md-ellipsis">
-      Kernel Description
+      \(\Gamma_{12}\): Kernel Description
     </span>
   </a>
   
@@ -3870,8 +3870,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="\(\lambda\): Taylor Microscale">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#tau_p-droplet-inertia-time" class="md-nav__link">
@@ -3879,11 +3878,6 @@
       \(\tau_p\): Droplet Inertia Time
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -6009,9 +6003,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#kernel-description" class="md-nav__link">
+  <a href="#gamma_12-kernel-description" class="md-nav__link">
     <span class="md-ellipsis">
-      Kernel Description
+      \(\Gamma_{12}\): Kernel Description
     </span>
   </a>
   
@@ -6214,8 +6208,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="\(\lambda\): Taylor Microscale">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#tau_p-droplet-inertia-time" class="md-nav__link">
@@ -6223,11 +6216,6 @@
       \(\tau_p\): Droplet Inertia Time
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -6327,16 +6315,18 @@
 <p>Here, we discuss the implementation of the geometric collision kernel for cloud droplets as described in Part II by Ayala et al. (2008). Part I provides a detailed explanation of the direct numerical simulations. Where as Part II is the parameterization of the collision kernel for cloud droplets in turbulent flows. The implementation involves calculating the geometric collision rate of sedimenting droplets based on the turbulent flow properties and droplet characteristics.</p>
 <p>Ayala, O., Rosa, B., Wang, L. P., &amp; Grabowski, W. W. (2008). Effects of turbulence on the geometric collision rate of sedimenting droplets. Part 1. Results from direct numerical simulation. New Journal of Physics, 10. https://doi.org/10.1088/1367-2630/10/7/075015</p>
 <p>Ayala, O., Rosa, B., &amp; Wang, L. P. (2008). Effects of turbulence on the geometric collision rate of sedimenting droplets. Part 2. Theory and parameterization. New Journal of Physics, 10. https://doi.org/10.1088/1367-2630/10/7/075016</p>
-<h2 id="kernel-description">Kernel Description<a class="headerlink" href="#kernel-description" title="Permanent link">&para;</a></h2>
-<p>In the parameterization below, the input parameters are:
-- The radii <span class="arithmatex">\(a_1 and a_2\)</span> of the droplets
-- The water density <span class="arithmatex">\(\rho_w\)</span>;
-- Turbulent air flow requires:
-  - The density <span class="arithmatex">\(\rho\)</span>
-  - The viscosity <span class="arithmatex">\(\nu\)</span>
-  - The turbulence dissipation rate <span class="arithmatex">\(\varepsilon\)</span>
-  - The Taylor-microscale Reynolds number <span class="arithmatex">\(R_\lambda\)</span>, 
--The gravitational acceleration <span class="arithmatex">\(|g|\)</span></p>
+<h2 id="gamma_12-kernel-description"><span class="arithmatex">\(\Gamma_{12}\)</span>: Kernel Description<a class="headerlink" href="#gamma_12-kernel-description" title="Permanent link">&para;</a></h2>
+<p>In the parameterization below, the input parameters are:</p>
+<ul>
+<li>The radii <span class="arithmatex">\(a_1\)</span> and <span class="arithmatex">\(a_2\)</span> of the droplets</li>
+<li>The water density <span class="arithmatex">\(\rho_w\)</span></li>
+<li>Turbulent air flow requires:</li>
+<li>The density <span class="arithmatex">\(\rho\)</span></li>
+<li>The viscosity <span class="arithmatex">\(\nu\)</span></li>
+<li>The turbulence dissipation rate <span class="arithmatex">\(\varepsilon\)</span></li>
+<li>The Taylor-microscale Reynolds number <span class="arithmatex">\(R_\lambda\)</span>,</li>
+<li>The gravitational acceleration <span class="arithmatex">\(|g|\)</span></li>
+</ul>
 <p>The output is the collision kernel <span class="arithmatex">\(\Gamma_{12}\)</span></p>
 <p>This is valid under the conditions when <span class="arithmatex">\(a_k &lt;&lt; \eta\)</span>, <span class="arithmatex">\(\rho_w &gt;&gt; \rho\)</span>, and <span class="arithmatex">\(Sv &gt; 1\)</span> , the
 geometric collision kernel can be calculated as follows:</p>
@@ -6525,7 +6515,7 @@ $$</p>
 $$
 \lambda = u' \left(\frac{15 \nu<sup 1_2="1/2">2}{\epsilon}\right)</sup>
 $$</p>
-<h4 id="tau_p-droplet-inertia-time"><span class="arithmatex">\(\tau_p\)</span>: Droplet Inertia Time<a class="headerlink" href="#tau_p-droplet-inertia-time" title="Permanent link">&para;</a></h4>
+<h3 id="tau_p-droplet-inertia-time"><span class="arithmatex">\(\tau_p\)</span>: Droplet Inertia Time<a class="headerlink" href="#tau_p-droplet-inertia-time" title="Permanent link">&para;</a></h3>
 <p>Adjusts droplet inertia:
 $$
 \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
