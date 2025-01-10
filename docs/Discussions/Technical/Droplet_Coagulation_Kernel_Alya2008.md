@@ -16,7 +16,7 @@ In the parameterization below, the input parameters are:
     - The density $\rho$
     - The viscosity $\nu$
     - The turbulence dissipation rate $\varepsilon$
-    - The Taylor-microscale Reynolds number $R_\lambda$,
+    - The Taylor-microscale Reynolds number $R_\lambda$
 - The gravitational acceleration $|g|$
 
 The output is the collision kernel $\Gamma_{12}$
@@ -193,7 +193,7 @@ $$ St = max(St_1, St_2) $$
 Since the fitting for $y(St)$ was done for a limited range of St in DNS,
 it should be set to zero for large $St$ when the function $y(St)$ becomes negative.
 
-##### $r_c$P: Expression
+##### $r_c$: Expression
 
 $$
 \left(\frac{r_c}{\eta}\right)^2 = |St_2 - St_1| F(a_o, R_\lambda)
