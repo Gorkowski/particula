@@ -3751,16 +3751,16 @@
           <li class="md-nav__item">
   <a href="#c_1-calculation" class="md-nav__link">
     <span class="md-ellipsis">
-      \(C_1\) Calculation
+      \(C_1\): Calculation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#r_c-expression" class="md-nav__link">
+  <a href="#r_cp-expression" class="md-nav__link">
     <span class="md-ellipsis">
-      \(r_c\) Expression
+      \(r_c\)P: Expression
     </span>
   </a>
   
@@ -6089,16 +6089,16 @@
           <li class="md-nav__item">
   <a href="#c_1-calculation" class="md-nav__link">
     <span class="md-ellipsis">
-      \(C_1\) Calculation
+      \(C_1\): Calculation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#r_c-expression" class="md-nav__link">
+  <a href="#r_cp-expression" class="md-nav__link">
     <span class="md-ellipsis">
-      \(r_c\) Expression
+      \(r_c\)P: Expression
     </span>
   </a>
   
@@ -6407,26 +6407,26 @@ z = \frac{\tau_T}{L_e}
 \]</div>
 <h4 id="phialpha-phi"><span class="arithmatex">\(\Phi(\alpha, \phi)\)</span><a class="headerlink" href="#phialpha-phi" title="Permanent link">&para;</a></h4>
 <p>For the case when taking <span class="arithmatex">\(v_{p1}&gt;v_{p2}\)</span>.</p>
-<p>$$
-\Phi(\alpha, \phi) = 
-\Bigg{
+<div class="arithmatex">\[
+\Phi(\alpha, \phi) =
+\Bigg\{
 \frac{1}{\left(v_{p2}/\phi - (1/\tau_{p2}) - (1/\alpha)\right)} 
-- \frac{1}{\left(v_{p1}/\phi + (1/\tau_{p1}) + (1/\alpha)\right)} \Bigg} \</p>
-<p>\quad \times \frac{v_{p1} - v_{p2}}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)^2} 
-+ \Bigg{
-\frac{4}{\left(v_{p2}/\phi\right)^2 - \left((1/\tau_{p2}) + (1/\alpha)\right)^2} \</p>
-<p>\quad -
+- \frac{1}{\left(v_{p1}/\phi + (1/\tau_{p1}) + (1/\alpha)\right)} \Bigg\} \\
+\quad \times \frac{v_{p1} - v_{p2}}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)^2} 
++ \Bigg\{
+\frac{4}{\left(v_{p2}/\phi\right)^2 - \left((1/\tau_{p2}) + (1/\alpha)\right)^2} \\
+\quad -
 \frac{1}{\left(v_{p2}/\phi + (1/\tau_{p2}) + (1/\alpha)\right)^2} 
-- \frac{1}{\left(v_{p2}/\phi - (1/\tau_{p2}) - (1/\alpha)\right)^2} \Bigg} \</p>
-<p>\quad \times \frac{v_{p2}}{2\phi \left((1/\tau_{p1}) - (1/\alpha) + ((1/\tau_{p2}) + (1/\alpha))(v_{p1}/v_{p2})\right)} \</p>
-<p>\quad + \Bigg{
+- \frac{1}{\left(v_{p2}/\phi - (1/\tau_{p2}) - (1/\alpha)\right)^2} \Bigg\} \\
+\quad \times \frac{v_{p2}}{2\phi \left((1/\tau_{p1}) - (1/\alpha) + ((1/\tau_{p2}) + (1/\alpha))(v_{p1}/v_{p2})\right)} \\
+\quad + \Bigg\{
 \frac{2\phi}{\left((v_{p1}/\phi) + (1/\tau_{p1}) + (1/\alpha)\right)} 
-- \frac{2\phi}{\left((v_{p2}/\phi) - (1/\tau_{p2}) - (1/\alpha)\right)} \</p>
-<p>\quad -
+- \frac{2\phi}{\left((v_{p2}/\phi) - (1/\tau_{p2}) - (1/\alpha)\right)} \\
+\quad -
 \frac{v_{p1}}{\left((v_{p1}/\phi) + (1/\tau_{p1}) + (1/\alpha)\right)^2} 
-+ \frac{v_{p2}}{\left((v_{p2}/\phi) - (1/\tau_{p2}) - (1/\alpha)\right)^2} \Bigg} \</p>
-<p>\quad \times \frac{1}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)}
-$$</p>
++ \frac{v_{p2}}{\left((v_{p2}/\phi) - (1/\tau_{p2}) - (1/\alpha)\right)^2} \Bigg\} \\
+\quad \times \frac{1}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)}
+\]</div>
 <h4 id="psialpha-phi"><span class="arithmatex">\(\Psi(\alpha, \phi)\)</span><a class="headerlink" href="#psialpha-phi" title="Permanent link">&para;</a></h4>
 <p>For the case when taking for the k-th droplet:</p>
 <div class="arithmatex">\[
@@ -6439,7 +6439,7 @@ $$</p>
 g_{12} = \left(\frac{\eta^2 + r_c^2}{R^2 + r_c^2}\right)^{C_1/2}
 \]</div>
 <p>Where <span class="arithmatex">\(C_1\)</span> and <span class="arithmatex">\(r_c\)</span> are derived based on droplet and turbulence properties.</p>
-<h5 id="c_1-calculation"><span class="arithmatex">\(C_1\)</span> Calculation<a class="headerlink" href="#c_1-calculation" title="Permanent link">&para;</a></h5>
+<h5 id="c_1-calculation"><span class="arithmatex">\(C_1\)</span>: Calculation<a class="headerlink" href="#c_1-calculation" title="Permanent link">&para;</a></h5>
 <div class="arithmatex">\[
 C_1 = \frac{y(St)}{\left(|\mathbf{g}| / (v_k / \tau_k)\right)^{f_3(R_\lambda)}}
 \]</div>
@@ -6453,7 +6453,7 @@ f_3(R_\lambda) = 0.1886 \exp\left(\frac{20.306}{R_\lambda}\right)
 <div class="arithmatex">\[ St = max(St_1, St_2) \]</div>
 <p>Since the fitting for <span class="arithmatex">\(y(St)\)</span> was done for a limited range of St in DNS,
 it should be set to zero for large <span class="arithmatex">\(St\)</span> when the function <span class="arithmatex">\(y(St)\)</span> becomes negative.</p>
-<h5 id="r_c-expression"><span class="arithmatex">\(r_c\)</span> Expression<a class="headerlink" href="#r_c-expression" title="Permanent link">&para;</a></h5>
+<h5 id="r_cp-expression"><span class="arithmatex">\(r_c\)</span>P: Expression<a class="headerlink" href="#r_cp-expression" title="Permanent link">&para;</a></h5>
 <div class="arithmatex">\[
 \left(\frac{r_c}{\eta}\right)^2 = |St_2 - St_1| F(a_o, R_\lambda)
 \]</div>
@@ -6471,77 +6471,77 @@ F(a_{Og}, R_\lambda) = 20.115 \left(\frac{a_{og}}{R_\lambda}\right)^{1/2}
 <hr />
 <h2 id="derived-parameters">Derived Parameters<a class="headerlink" href="#derived-parameters" title="Permanent link">&para;</a></h2>
 <h3 id="tau_k-kolmogorov-time"><span class="arithmatex">\(\tau_k\)</span>: Kolmogorov Time<a class="headerlink" href="#tau_k-kolmogorov-time" title="Permanent link">&para;</a></h3>
-<p>The smallest timescale in turbulence where viscous forces dominate:
-$$
-\tau_k = \left(\frac{\nu}{\varepsilon}\right)^{&frac12;}
-$$</p>
+<p>The smallest timescale in turbulence where viscous forces dominate:</p>
+<div class="arithmatex">\[
+\tau_k = \left(\frac{\nu}{\varepsilon}\right)^{1/2}
+\]</div>
 <h3 id="eta-kolmogorov-length-scale"><span class="arithmatex">\(\eta\)</span>: Kolmogorov Length Scale<a class="headerlink" href="#eta-kolmogorov-length-scale" title="Permanent link">&para;</a></h3>
-<p>The smallest scale in turbulence:
-$$
-\eta = \left(\frac{\nu<sup 1_4="1/4">3}{\varepsilon}\right)</sup>
-$$</p>
+<p>The smallest scale in turbulence:</p>
+<div class="arithmatex">\[
+\eta = \left(\frac{\nu^3}{\varepsilon}\right)^{1/4}
+\]</div>
 <h3 id="v_k-kolmogorov-velocity-scale"><span class="arithmatex">\(v_k\)</span>: Kolmogorov Velocity Scale<a class="headerlink" href="#v_k-kolmogorov-velocity-scale" title="Permanent link">&para;</a></h3>
-<p>A velocity scale related to the smallest turbulent eddies:
-$$
-v_k = (\nu \varepsilon)^{&frac14;}
-$$</p>
+<p>A velocity scale related to the smallest turbulent eddies:</p>
+<div class="arithmatex">\[
+v_k = (\nu \varepsilon)^{1/4}
+\]</div>
 <h3 id="u-fluid-rms-fluctuation-velocity"><span class="arithmatex">\(u'\)</span>: Fluid RMS Fluctuation Velocity<a class="headerlink" href="#u-fluid-rms-fluctuation-velocity" title="Permanent link">&para;</a></h3>
-<p>Quantifies turbulence intensity:
-$$
-u' = \frac{R_\lambda^{&frac12;} v_k}{15^{&frac14;}} 
-$$</p>
+<p>Quantifies turbulence intensity:</p>
+<div class="arithmatex">\[
+u' = \frac{R_\lambda^{1/2} v_k}{15^{1/4}} 
+\]</div>
 <h3 id="t_l-lagrangian-integral-scale"><span class="arithmatex">\(T_L\)</span>: Lagrangian Integral Scale<a class="headerlink" href="#t_l-lagrangian-integral-scale" title="Permanent link">&para;</a></h3>
-<p>Describes large-scale turbulence:
-$$
+<p>Describes large-scale turbulence:</p>
+<div class="arithmatex">\[
 T_L = \frac{u'^2}{\epsilon}
-$$</p>
+\]</div>
 <h3 id="l_e-eulerian-integral-scale"><span class="arithmatex">\(L_e\)</span>: Eulerian Integral Scale<a class="headerlink" href="#l_e-eulerian-integral-scale" title="Permanent link">&para;</a></h3>
-<p>Length scale for large eddies:
-$$
+<p>Length scale for large eddies:</p>
+<div class="arithmatex">\[
 L_e = 0.5 \frac{u'^3}{\epsilon}
-$$</p>
+\]</div>
 <h3 id="a_o-coefficient"><span class="arithmatex">\(a_o\)</span>: Coefficient<a class="headerlink" href="#a_o-coefficient" title="Permanent link">&para;</a></h3>
-<p>A Reynolds-dependent parameter:
-$$
+<p>A Reynolds-dependent parameter:</p>
+<div class="arithmatex">\[
 a_o = \frac{11+7 R_\lambda}{205 + R_\lambda}
-$$</p>
+\]</div>
 <h3 id="tau_t-lagrangian-taylor-microscale-time"><span class="arithmatex">\(\tau_T\)</span>: Lagrangian Taylor Microscale Time<a class="headerlink" href="#tau_t-lagrangian-taylor-microscale-time" title="Permanent link">&para;</a></h3>
-<p>Time correlation decay for turbulent trajectories:
-$$
-\tau_T = \tau_k \left(\frac{2 R_\lambda}{15^{&frac12;} a_o}\right)^{&frac12;}
-$$</p>
+<p>Time correlation decay for turbulent trajectories:</p>
+<div class="arithmatex">\[
+\tau_T = \tau_k \left(\frac{2 R_\lambda}{15^{1/2} a_o}\right)^{1/2}
+\]</div>
 <h3 id="lambda-taylor-microscale"><span class="arithmatex">\(\lambda\)</span>: Taylor Microscale<a class="headerlink" href="#lambda-taylor-microscale" title="Permanent link">&para;</a></h3>
-<p>Length scale linked to fluid flow:
-$$
-\lambda = u' \left(\frac{15 \nu<sup 1_2="1/2">2}{\epsilon}\right)</sup>
-$$</p>
+<p>Length scale linked to fluid flow:</p>
+<div class="arithmatex">\[
+\lambda = u' \left(\frac{15 \nu^2}{\epsilon}\right)^{1/2}
+\]</div>
 <h3 id="tau_p-droplet-inertia-time"><span class="arithmatex">\(\tau_p\)</span>: Droplet Inertia Time<a class="headerlink" href="#tau_p-droplet-inertia-time" title="Permanent link">&para;</a></h3>
-<p>Adjusts droplet inertia:
-$$
+<p>Adjusts droplet inertia:</p>
+<div class="arithmatex">\[
 \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
-$$
-with:
-$$
+\]</div>
+<p>with:</p>
+<div class="arithmatex">\[
 f(Re_p) = 1 + 0.15 Re_p^{0.687}
-$$</p>
+\]</div>
 <h3 id="v_p-droplet-settling-velocity"><span class="arithmatex">\(v_p\)</span>: Droplet Settling Velocity<a class="headerlink" href="#v_p-droplet-settling-velocity" title="Permanent link">&para;</a></h3>
-<p>The settling velocity under gravity:
-$$
+<p>The settling velocity under gravity:</p>
+<div class="arithmatex">\[
 v_p = \tau_p |g|
-$$</p>
+\]</div>
 <h3 id="re_p-particle-reynolds-number"><span class="arithmatex">\(Re_p\)</span>: Particle Reynolds Number<a class="headerlink" href="#re_p-particle-reynolds-number" title="Permanent link">&para;</a></h3>
-<p>Characterizes droplet flow:
-$$
+<p>Characterizes droplet flow:</p>
+<div class="arithmatex">\[
 Re_p = \frac{2 a v_p}{\nu}
-$$</p>
+\]</div>
 <h3 id="st-stokes-number"><span class="arithmatex">\(St\)</span>: Stokes Number<a class="headerlink" href="#st-stokes-number" title="Permanent link">&para;</a></h3>
-<p>Non-dimensional inertia parameter:
-$$
+<p>Non-dimensional inertia parameter:</p>
+<div class="arithmatex">\[
 St = \frac{\tau_p}{\tau_k}
-$$</p>
+\]</div>
+<hr />
 <h2 id="variable-descriptions">Variable Descriptions<a class="headerlink" href="#variable-descriptions" title="Permanent link">&para;</a></h2>
 <p>Here are the variables, their definitions.</p>
-<hr />
 <h3 id="droplet-particle-properties">Droplet (Particle) Properties<a class="headerlink" href="#droplet-particle-properties" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -6572,7 +6572,6 @@ $$</p>
 <p><span class="arithmatex">\(g_{12}\)</span>: Radial distribution function (RDF). A measure of how particle pairs are spatially distributed due to turbulence and gravity.</p>
 </li>
 </ul>
-<hr />
 <h3 id="turbulent-flow-properties">Turbulent Flow Properties<a class="headerlink" href="#turbulent-flow-properties" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -6604,7 +6603,7 @@ $$</p>
 </li>
 </ul>
 <h3 id="g-gravitational-acceleration"><span class="arithmatex">\(g\)</span>: Gravitational Acceleration<a class="headerlink" href="#g-gravitational-acceleration" title="Permanent link">&para;</a></h3>
-<p>The acceleration due to gravity, approximately 9.81 \, <span class="arithmatex">\(\text{m/s}^2\)</span> on Earth's surface. This force drives droplet sedimentation in turbulent air.</p>
+<p>The acceleration due to gravity, approximately 9.81 <span class="arithmatex">\(\text{m/s}^2\)</span> on Earth's surface. This force drives droplet sedimentation in turbulent air.</p>
 
 
 
