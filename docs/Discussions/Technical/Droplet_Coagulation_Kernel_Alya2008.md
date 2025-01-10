@@ -6,9 +6,7 @@ Ayala, O., Rosa, B., Wang, L. P., & Grabowski, W. W. (2008). Effects of turbulen
 
 Ayala, O., Rosa, B., & Wang, L. P. (2008). Effects of turbulence on the geometric collision rate of sedimenting droplets. Part 2. Theory and parameterization. New Journal of Physics, 10. https://doi.org/10.1088/1367-2630/10/7/075016
 
-## Kernel
-
-The derived geometric collision kernel implementation provides a detailed approach to calculating the collision rate of cloud droplets in turbulent flows. By considering droplet properties, turbulent flow characteristics, and the radial distribution function, this implementation offers a comprehensive method for understanding cloud droplet coagulation in complex environmental conditions.
+## Kernel Description
 
 In the parameterization below, the input parameters are:
 - The radii $a_1 and a_2$ of the droplets
