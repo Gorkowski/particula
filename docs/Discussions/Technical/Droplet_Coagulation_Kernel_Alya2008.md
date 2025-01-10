@@ -212,7 +212,7 @@ a_{Og} = a_o + \frac{\pi}{8} \left(\frac{|\mathbf{g}|}{v_k / \tau_k}\right)^2
 $$
 
 $$
-F(a_{Og}, R_\lambda) = 20.115 \left(\frac{a_{og}}{R_\lambda}\right)^{1/2}
+F(a_{Og}, R_\lambda) = 20.115 \left(\frac{a_{Og}}{R_\lambda}\right)^{1/2}
 $$
 
 ---
