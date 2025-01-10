@@ -22,15 +22,19 @@ This implementation is based on the parameterized equations described in the doc
 
 ### **Step 2: Derived Parameters**
 Using the input values, compute the following:
-1. Kolmogorov length scale: 
+- Tau Kolmogorov timescale:
+   $$
+   \tau_k = \left(\frac{\nu}{\varepsilon}\right)^{1/2}
+   $$
+- Kolmogorov length scale: 
    $$
    \eta = \left(\frac{\nu^3}{\varepsilon}\right)^{1/4}
    $$
-2. Kolmogorov velocity scale:
+- Kolmogorov velocity scale:
    $$
    v_k = (\nu \varepsilon)^{1/4}
    $$
-3. Particle response time:
+- Particle response time:
    $$
    \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
    $$
@@ -38,11 +42,11 @@ Using the input values, compute the following:
     $$
     f(Re_p) = 1 + 0.15 Re_p^{0.687}
     $$
-4. Terminal velocity:
+- Terminal velocity:
    $$
    v_p = \tau_p g
    $$
-5. Stokes number:
+- Stokes number:
    $$
    St = \frac{\tau_p}{\tau_k}
    $$
