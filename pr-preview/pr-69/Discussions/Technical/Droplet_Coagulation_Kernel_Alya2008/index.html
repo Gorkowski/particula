@@ -3684,11 +3684,71 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-derived-parameters" class="md-nav__link">
+  <a href="#derived-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2: Derived Parameters
+      Derived Parameters
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Derived Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tau-kolmogorov-timescale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tau Kolmogorov timescale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolmogorov-length-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kolmogorov length scale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolmogorov-velocity-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kolmogorov velocity scale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#particle-response-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Particle response time
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminal-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terminal velocity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stokes-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stokes number
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -5791,11 +5851,71 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-derived-parameters" class="md-nav__link">
+  <a href="#derived-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Step 2: Derived Parameters
+      Derived Parameters
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Derived Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tau-kolmogorov-timescale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tau Kolmogorov timescale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolmogorov-length-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kolmogorov length scale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolmogorov-velocity-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kolmogorov velocity scale
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#particle-response-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Particle response time
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminal-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Terminal velocity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stokes-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stokes number
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -5866,36 +5986,36 @@
 <li>Reynolds number, <span class="arithmatex">\(R_\lambda\)</span></li>
 <li>Gravitational acceleration, <span class="arithmatex">\(g\)</span></li>
 </ol>
-<h3 id="step-2-derived-parameters"><strong>Step 2: Derived Parameters</strong><a class="headerlink" href="#step-2-derived-parameters" title="Permanent link">&para;</a></h3>
-<p>Using the input values, compute the following:
-- Tau Kolmogorov timescale:
-   $$
-   \tau_k = \left(\frac{\nu}{\varepsilon}\right)^{&frac12;}
-   $$
-- Kolmogorov length scale: 
-   $$
-   \eta = \left(\frac{\nu<sup 1_4="1/4">3}{\varepsilon}\right)</sup>
-   $$
-- Kolmogorov velocity scale:
-   $$
-   v_k = (\nu \varepsilon)^{&frac14;}
-   $$
-- Particle response time:
-   $$
-   \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
-   $$
-    where <span class="arithmatex">\(f(Re_p)\)</span> is a function of the particle Reynolds number <span class="arithmatex">\(Re_p\)</span>:
-    $$
-    f(Re_p) = 1 + 0.15 Re_p^{0.687}
-    $$
-- Terminal velocity:
-   $$
-   v_p = \tau_p g
-   $$
-- Stokes number:
-   $$
-   St = \frac{\tau_p}{\tau_k}
-   $$</p>
+<h3 id="derived-parameters"><strong>Derived Parameters</strong><a class="headerlink" href="#derived-parameters" title="Permanent link">&para;</a></h3>
+<p>Using the input values, compute the following:</p>
+<h4 id="tau-kolmogorov-timescale">Tau Kolmogorov timescale<a class="headerlink" href="#tau-kolmogorov-timescale" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\tau_k = \left(\frac{\nu}{\varepsilon}\right)^{1/2}
+\]</div>
+<h4 id="kolmogorov-length-scale">Kolmogorov length scale<a class="headerlink" href="#kolmogorov-length-scale" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\eta = \left(\frac{\nu^3}{\varepsilon}\right)^{1/4}
+\]</div>
+<h4 id="kolmogorov-velocity-scale">Kolmogorov velocity scale<a class="headerlink" href="#kolmogorov-velocity-scale" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+v_k = (\nu \varepsilon)^{1/4}
+\]</div>
+<h4 id="particle-response-time">Particle response time<a class="headerlink" href="#particle-response-time" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
+\]</div>
+<p>where <span class="arithmatex">\(f(Re_p)\)</span> is a function of the particle Reynolds number <span class="arithmatex">\(Re_p\)</span>:</p>
+<div class="arithmatex">\[
+f(Re_p) = 1 + 0.15 Re_p^{0.687}
+\]</div>
+<h4 id="terminal-velocity">Terminal velocity<a class="headerlink" href="#terminal-velocity" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+v_p = \tau_p g
+\]</div>
+<h4 id="stokes-number">Stokes number<a class="headerlink" href="#stokes-number" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+    St = \frac{\tau_p}{\tau_k}
+\]</div>
 <h3 id="step-3-radial-relative-velocity-langle-w_r-rangle"><strong>Step 3: Radial Relative Velocity (<span class="arithmatex">\(\langle |w_r| \rangle\)</span>)</strong><a class="headerlink" href="#step-3-radial-relative-velocity-langle-w_r-rangle" title="Permanent link">&para;</a></h3>
 <p>Use:
 $$
