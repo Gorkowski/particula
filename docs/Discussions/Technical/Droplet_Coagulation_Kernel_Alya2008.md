@@ -133,29 +133,23 @@ $$
 For the case when taking $v_{p1}>v_{p2}$.
 
 $$
-\Phi(\alpha, \phi) = 
+\Phi(\alpha, \phi) =
 \Bigg\{
 \frac{1}{\left(v_{p2}/\phi - (1/\tau_{p2}) - (1/\alpha)\right)} 
 - \frac{1}{\left(v_{p1}/\phi + (1/\tau_{p1}) + (1/\alpha)\right)} \Bigg\} \\
-
 \quad \times \frac{v_{p1} - v_{p2}}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)^2} 
 + \Bigg\{
 \frac{4}{\left(v_{p2}/\phi\right)^2 - \left((1/\tau_{p2}) + (1/\alpha)\right)^2} \\
-
 \quad -
 \frac{1}{\left(v_{p2}/\phi + (1/\tau_{p2}) + (1/\alpha)\right)^2} 
 - \frac{1}{\left(v_{p2}/\phi - (1/\tau_{p2}) - (1/\alpha)\right)^2} \Bigg\} \\
-
 \quad \times \frac{v_{p2}}{2\phi \left((1/\tau_{p1}) - (1/\alpha) + ((1/\tau_{p2}) + (1/\alpha))(v_{p1}/v_{p2})\right)} \\
-
 \quad + \Bigg\{
 \frac{2\phi}{\left((v_{p1}/\phi) + (1/\tau_{p1}) + (1/\alpha)\right)} 
 - \frac{2\phi}{\left((v_{p2}/\phi) - (1/\tau_{p2}) - (1/\alpha)\right)} \\
-
 \quad -
 \frac{v_{p1}}{\left((v_{p1}/\phi) + (1/\tau_{p1}) + (1/\alpha)\right)^2} 
 + \frac{v_{p2}}{\left((v_{p2}/\phi) - (1/\tau_{p2}) - (1/\alpha)\right)^2} \Bigg\} \\
-
 \quad \times \frac{1}{2\phi \left((v_{p1} - v_{p2}/\phi) + (1/\tau_{p1}) + (1/\tau_{p2})\right)}
 $$
 
@@ -178,7 +172,7 @@ $$
 
 Where $C_1$ and $r_c$ are derived based on droplet and turbulence properties.
 
-##### $C_1$ Calculation
+##### $C_1$: Calculation
 
 $$
 C_1 = \frac{y(St)}{\left(|\mathbf{g}| / (v_k / \tau_k)\right)^{f_3(R_\lambda)}}
@@ -199,7 +193,7 @@ $$ St = max(St_1, St_2) $$
 Since the fitting for $y(St)$ was done for a limited range of St in DNS,
 it should be set to zero for large $St$ when the function $y(St)$ becomes negative.
 
-##### $r_c$ Expression
+##### $r_c$P: Expression
 
 $$
 \left(\frac{r_c}{\eta}\right)^2 = |St_2 - St_1| F(a_o, R_\lambda)
@@ -228,6 +222,7 @@ $$
 ### $\tau_k$: Kolmogorov Time
 
 The smallest timescale in turbulence where viscous forces dominate:
+
 $$
 \tau_k = \left(\frac{\nu}{\varepsilon}\right)^{1/2}
 $$
@@ -235,6 +230,7 @@ $$
 ### $\eta$: Kolmogorov Length Scale
 
 The smallest scale in turbulence:
+
 $$
 \eta = \left(\frac{\nu^3}{\varepsilon}\right)^{1/4}
 $$
@@ -242,6 +238,7 @@ $$
 ### $v_k$: Kolmogorov Velocity Scale
 
 A velocity scale related to the smallest turbulent eddies:
+
 $$
 v_k = (\nu \varepsilon)^{1/4}
 $$
@@ -249,6 +246,7 @@ $$
 ### $u'$: Fluid RMS Fluctuation Velocity
 
 Quantifies turbulence intensity:
+
 $$
 u' = \frac{R_\lambda^{1/2} v_k}{15^{1/4}} 
 $$
@@ -256,6 +254,7 @@ $$
 ### $T_L$: Lagrangian Integral Scale
 
 Describes large-scale turbulence:
+
 $$
 T_L = \frac{u'^2}{\epsilon}
 $$
@@ -263,6 +262,7 @@ $$
 ### $L_e$: Eulerian Integral Scale
 
 Length scale for large eddies:
+
 $$
 L_e = 0.5 \frac{u'^3}{\epsilon}
 $$
@@ -270,6 +270,7 @@ $$
 ### $a_o$: Coefficient
 
 A Reynolds-dependent parameter:
+
 $$
 a_o = \frac{11+7 R_\lambda}{205 + R_\lambda}
 $$
@@ -277,6 +278,7 @@ $$
 ### $\tau_T$: Lagrangian Taylor Microscale Time
 
 Time correlation decay for turbulent trajectories:
+
 $$
 \tau_T = \tau_k \left(\frac{2 R_\lambda}{15^{1/2} a_o}\right)^{1/2}
 $$
@@ -284,6 +286,7 @@ $$
 ### $\lambda$: Taylor Microscale
 
 Length scale linked to fluid flow:
+
 $$
 \lambda = u' \left(\frac{15 \nu^2}{\epsilon}\right)^{1/2}
 $$
@@ -291,10 +294,13 @@ $$
 ### $\tau_p$: Droplet Inertia Time
 
 Adjusts droplet inertia:
+
 $$
 \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
 $$
+
 with:
+
 $$
 f(Re_p) = 1 + 0.15 Re_p^{0.687}
 $$
@@ -302,6 +308,7 @@ $$
 ### $v_p$: Droplet Settling Velocity
 
 The settling velocity under gravity:
+
 $$
 v_p = \tau_p |g|
 $$
@@ -309,6 +316,7 @@ $$
 ### $Re_p$: Particle Reynolds Number
 
 Characterizes droplet flow:
+
 $$
 Re_p = \frac{2 a v_p}{\nu}
 $$
@@ -316,15 +324,16 @@ $$
 ### $St$: Stokes Number
 
 Non-dimensional inertia parameter:
+
 $$
 St = \frac{\tau_p}{\tau_k}
 $$
 
+---
+
 ## Variable Descriptions
 
 Here are the variables, their definitions.
-
----
 
 ### Droplet (Particle) Properties
 
@@ -345,8 +354,6 @@ Here are the variables, their definitions.
 - $f(R)$: Spatial correlation coefficient. Describes the correlation of fluid velocities at two points separated by a distance $R$, influencing droplet interactions.
 
 - $g_{12}$: Radial distribution function (RDF). A measure of how particle pairs are spatially distributed due to turbulence and gravity.
-
----
 
 ### Turbulent Flow Properties
 
@@ -370,6 +377,6 @@ Here are the variables, their definitions.
 
 ### $g$: Gravitational Acceleration
 
-The acceleration due to gravity, approximately 9.81 \, $\text{m/s}^2$ on Earth's surface. This force drives droplet sedimentation in turbulent air.
+The acceleration due to gravity, approximately 9.81 $\text{m/s}^2$ on Earth's surface. This force drives droplet sedimentation in turbulent air.
 
 
