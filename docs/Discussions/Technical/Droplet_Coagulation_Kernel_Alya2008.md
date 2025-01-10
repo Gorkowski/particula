@@ -13,10 +13,10 @@ In the parameterization below, the input parameters are:
 - The radii $a_1$ and $a_2$ of the droplets
 - The water density $\rho_w$
 - Turbulent air flow requires:
-  - The density $\rho$
-  - The viscosity $\nu$
-  - The turbulence dissipation rate $\varepsilon$
-  - The Taylor-microscale Reynolds number $R_\lambda$,
+    - The density $\rho$
+    - The viscosity $\nu$
+    - The turbulence dissipation rate $\varepsilon$
+    - The Taylor-microscale Reynolds number $R_\lambda$,
 - The gravitational acceleration $|g|$
 
 The output is the collision kernel $\Gamma_{12}$
@@ -49,7 +49,7 @@ $$
 \langle |w_r| \rangle = \sqrt{\frac{2}{\pi}} \left(\sigma^2 + \pi/8 (\tau_{p1} + \tau_{p2})^2 |g|^2\right)^{1/2}
 $$
 
-### $sigma^2$ Direct Numerical Simulation Fit
+### $\sigma^2$ Direct Numerical Simulation Fit
 
 $$
 \sigma^2 = \langle (v'^{(2)})^2 \rangle + \langle (v'^{(1)})^2 \rangle - 2 \langle v'^{(1)} v'^{(2)} \rangle
