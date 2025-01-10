@@ -3708,8 +3708,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 4: Radial Distribution Function (\(g_{12}\))">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#step-5-collision-kernel" class="md-nav__link">
@@ -3717,11 +3716,6 @@
       Step 5: Collision Kernel
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -5821,8 +5815,7 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 4: Radial Distribution Function (\(g_{12}\))">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#step-5-collision-kernel" class="md-nav__link">
@@ -5830,11 +5823,6 @@
       Step 5: Collision Kernel
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -5881,45 +5869,49 @@
 <h3 id="step-2-derived-parameters"><strong>Step 2: Derived Parameters</strong><a class="headerlink" href="#step-2-derived-parameters" title="Permanent link">&para;</a></h3>
 <p>Using the input values, compute the following:
 1. Kolmogorov length scale: 
-   [
+   $$
    \eta = \left(\frac{\nu<sup 1_4="1/4">3}{\varepsilon}\right)</sup>
-   ]
+   $$
 2. Kolmogorov velocity scale:
-   [
+   $$
    v_k = (\nu \varepsilon)^{&frac14;}
-   ]
+   $$
 3. Particle response time:
-   [
-   \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu}
-   ]
+   $$
+   \tau_p = \frac{2}{9} \frac{\rho_w}{\rho} \frac{a^2}{\nu f(Re_p)}
+   $$
+    where <span class="arithmatex">\(f(Re_p)\)</span> is a function of the particle Reynolds number <span class="arithmatex">\(Re_p\)</span>:
+    $$
+    f(Re_p) = 1 + 0.15 Re_p^{0.687}
+    $$
 4. Terminal velocity:
-   [
+   $$
    v_p = \tau_p g
-   ]
+   $$
 5. Stokes number:
-   [
+   $$
    St = \frac{\tau_p}{\tau_k}
-   ]</p>
+   $$</p>
 <h3 id="step-3-radial-relative-velocity-langle-w_r-rangle"><strong>Step 3: Radial Relative Velocity (<span class="arithmatex">\(\langle |w_r| \rangle\)</span>)</strong><a class="headerlink" href="#step-3-radial-relative-velocity-langle-w_r-rangle" title="Permanent link">&para;</a></h3>
 <p>Use:
-[
+$$
 \langle |w_r| \rangle = \sqrt{\frac{2}{\pi}} \sigma f(b)
-]
+$$
 where:
 - <span class="arithmatex">\(f(b) = \frac{1}{2}\sqrt{\pi}\left(b + \frac{0.5}{b}\right)\text{erf}(b) + \frac{1}{2}\exp(-b^2)\)</span>
 - <span class="arithmatex">\(b = \frac{g|\tau_{p1} - \tau_{p2}|}{\sqrt{2} \sigma}\)</span>
 - <span class="arithmatex">\(\sigma\)</span>: variance of relative velocity (derived via equations for turbulent velocity components).</p>
 <h3 id="step-4-radial-distribution-function-g_12"><strong>Step 4: Radial Distribution Function (<span class="arithmatex">\(g_{12}\)</span>)</strong><a class="headerlink" href="#step-4-radial-distribution-function-g_12" title="Permanent link">&para;</a></h3>
 <p>Use an empirical formula for the RDF:
-[
+$$
 g_{12}(R) = \left(\frac{\eta^2 + r_c<sup>2}{R</sup>2 + r_c<sup C_1_2="C_1/2">2}\right)</sup>
-]
+$$
 where <span class="arithmatex">\(C_1\)</span> and <span class="arithmatex">\(r_c\)</span> are derived based on droplet and turbulence properties.</p>
-<h4 id="step-5-collision-kernel"><strong>Step 5: Collision Kernel</strong><a class="headerlink" href="#step-5-collision-kernel" title="Permanent link">&para;</a></h4>
+<h3 id="step-5-collision-kernel"><strong>Step 5: Collision Kernel</strong><a class="headerlink" href="#step-5-collision-kernel" title="Permanent link">&para;</a></h3>
 <p>Combine <span class="arithmatex">\(\langle |w_r| \rangle\)</span> and <span class="arithmatex">\(g_{12}\)</span> into:
-[
+$$
 \beta_{12} = 2\pi R^2 \langle |w_r| \rangle g_{12}
-]
+$$
 where <span class="arithmatex">\(R = a_1 + a_2\)</span> is the sum of droplet radii.</p>
 
 
