@@ -6,48 +6,6 @@ Ayala, O., Rosa, B., Wang, L. P., & Grabowski, W. W. (2008). Effects of turbulen
 
 Ayala, O., Rosa, B., & Wang, L. P. (2008). Effects of turbulence on the geometric collision rate of sedimenting droplets. Part 2. Theory and parameterization. New Journal of Physics, 10. https://doi.org/10.1088/1367-2630/10/7/075016
 
-## **Derived Geometric Collision Kernel Implementation**
-
-This implementation is based on the parameterized equations described in the document and focuses on calculating the geometric collision kernel $\beta_{12}$ for cloud droplets.
-
-## Outline
-
-- [Cloud Droplet Coagulation Kernel](#cloud-droplet-coagulation-kernel)
-  - [**Derived Geometric Collision Kernel Implementation**](#derived-geometric-collision-kernel-implementation)
-  - [Outline](#outline)
-  - [Kernel](#kernel)
-  - [$\\langle |w\_r| \\rangle$: Radial Relative Velocity](#langle-w_r-rangle-radial-relative-velocity)
-    - [$sigma^2$ Direct Numerical Simulation Fit](#sigma2-direct-numerical-simulation-fit)
-    - [$f\_2(R)$ Longitudinal velocity correlation](#f_2r-longitudinal-velocity-correlation)
-      - [$b\_1, b\_2, c\_1, c\_2, d\_1, d\_2, e\_1, e\_2$: Definitions](#b_1-b_2-c_1-c_2-d_1-d_2-e_1-e_2-definitions)
-      - [$z$ and $\\beta$: Definitions](#z-and-beta-definitions)
-      - [$\\Phi(\\alpha, \\phi)$](#phialpha-phi)
-      - [$\\Psi(\\alpha, \\phi)$](#psialpha-phi)
-      - [$g\_{12}$: Radial Distribution Function](#g_12-radial-distribution-function)
-        - [$C\_1$ Calculation](#c_1-calculation)
-        - [$r\_c$ Expression](#r_c-expression)
-  - [Derived Parameters](#derived-parameters)
-    - [$\\tau\_k$: Kolmogorov Time](#tau_k-kolmogorov-time)
-    - [$\\eta$: Kolmogorov Length Scale](#eta-kolmogorov-length-scale)
-    - [$v\_k$: Kolmogorov Velocity Scale](#v_k-kolmogorov-velocity-scale)
-    - [$u'$: Fluid RMS Fluctuation Velocity](#u-fluid-rms-fluctuation-velocity)
-    - [$T\_L$: Lagrangian Integral Scale](#t_l-lagrangian-integral-scale)
-    - [$L\_e$: Eulerian Integral Scale](#l_e-eulerian-integral-scale)
-    - [$a\_o$: Coefficient](#a_o-coefficient)
-    - [$\\tau\_T$: Lagrangian Taylor Microscale Time](#tau_t-lagrangian-taylor-microscale-time)
-    - [$\\lambda$: Taylor Microscale](#lambda-taylor-microscale)
-      - [$\\tau\_p$: Droplet Inertia Time](#tau_p-droplet-inertia-time)
-    - [$v\_p$: Droplet Settling Velocity](#v_p-droplet-settling-velocity)
-    - [$Re\_p$: Particle Reynolds Number](#re_p-particle-reynolds-number)
-    - [$St$: Stokes Number](#st-stokes-number)
-  - [Variable Descriptions](#variable-descriptions)
-    - [Droplet (Particle) Properties](#droplet-particle-properties)
-    - [Turbulent Flow Properties](#turbulent-flow-properties)
-    - [$g$: Gravitational Acceleration](#g-gravitational-acceleration)
-
-
-
-
 ## Kernel
 
 The derived geometric collision kernel implementation provides a detailed approach to calculating the collision rate of cloud droplets in turbulent flows. By considering droplet properties, turbulent flow characteristics, and the radial distribution function, this implementation offers a comprehensive method for understanding cloud droplet coagulation in complex environmental conditions.
