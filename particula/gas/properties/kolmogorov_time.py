@@ -12,10 +12,15 @@ from typing import Union
 from numpy.typing import NDArray
 import numpy as np
 
+from particula.util.validate_inputs import validate_inputs
 
+
+@validate_inputs(
+    {"kinematic_viscosity": "positive", "turbulent_dissipation": "positive"}
+)
 def kolmogorov_time(
-        kinematic_viscosity: Union[float, NDArray[np.float64]],
-        turbulent_dissipation: Union[float, NDArray[np.float64]],
+    kinematic_viscosity: Union[float, NDArray[np.float64]],
+    turbulent_dissipation: Union[float, NDArray[np.float64]],
 ) -> Union[float, NDArray[np.float64]]:
     """
     Calculate the Kolmogorov time of a fluid.
