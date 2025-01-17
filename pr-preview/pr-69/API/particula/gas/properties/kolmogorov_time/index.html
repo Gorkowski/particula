@@ -5884,7 +5884,7 @@
 <p>Auto-generated documentation for <a href="https://github.com/uncscode/particula/blob/main/particula/gas/properties/kolmogorov_time.py">particula.gas.properties.kolmogorov_time</a> module.</p>
 </blockquote>
 <h2 id="kolmogorov_time">kolmogorov_time<a class="headerlink" href="#kolmogorov_time" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/uncscode/particula/blob/main/particula/gas/properties/kolmogorov_time.py#L16">Show source in kolmogorov_time.py:16</a></p>
+<p><a href="https://github.com/uncscode/particula/blob/main/particula/gas/properties/kolmogorov_time.py#L18">Show source in kolmogorov_time.py:18</a></p>
 <p>Calculate the Kolmogorov time of a fluid.</p>
 <p>The Kolmogorov time is the smallest timescale in turbulence where viscous
 forces dominate. It is calculated as the square root of kinematic
@@ -5908,7 +5908,10 @@ and parameterization. New Journal of Physics, 10.
 https://doi.org/10.1088/1367-2630/10/7/075016
 </code></pre></div>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">kolmogorov_time</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;kinematic_viscosity&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">,</span> <span class="s2">&quot;turbulent_dissipation&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">kolmogorov_time</span><span class="p">(</span>
     <span class="n">kinematic_viscosity</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">turbulent_dissipation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
