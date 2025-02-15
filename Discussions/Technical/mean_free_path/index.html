@@ -12,11 +12,11 @@
         <link rel="prev" href="../ionparticle_coagulation/">
       
       
-        <link rel="next" href="../../../How-To-Guides/">
+        <link rel="next" href="../Cloud_Droplet_Coagulation/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
@@ -4159,6 +4159,8 @@
       
         
       
+        
+      
     
     
       
@@ -4310,6 +4312,215 @@
   
 
       </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../Cloud_Droplet_Coagulation/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Cloud Droplet Coagulation
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3_6" id="__nav_3_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Cloud Droplet Coagulation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud_Droplet_Coagulation/DNS_Fluid_and_Particle_Properties_Comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fluid and Particle Properties for Cloud Droplet Coagulation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud_Droplet_Coagulation/DNS_Horizontal_Velocity_Comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Horizontal Velocity Comparison
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud_Droplet_Coagulation/DNS_Kernel_Comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNS Kernel Comparison
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud_Droplet_Coagulation/DNS_Radial_Distribution_Comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Radial Distribution Function Comparison
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud_Droplet_Coagulation/DNS_Radial_Relative_Velocity_Comparison/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Radial Relative Velocity Comparison
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud_Droplet_Coagulation/Droplet_Coagulation_Kernel_Ayala2008/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Droplet Coagulation Kernel Ayala 2008
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -6922,7 +7133,10 @@ $$</p>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">particula.gas.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">molecule_mean_free_path</span><span class="p">,</span> <span class="n">get_dynamic_viscosity</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">particula.gas.properties</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">molecule_mean_free_path</span><span class="p">,</span>
+    <span class="n">get_dynamic_viscosity</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">air_dynamic_viscosity</span> <span class="o">=</span> <span class="n">get_dynamic_viscosity</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">298.15</span><span class="p">)</span>
 
@@ -6933,9 +7147,12 @@ $$</p>
     <span class="n">dynamic_viscosity</span><span class="o">=</span><span class="n">air_dynamic_viscosity</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mean free path is </span><span class="si">{</span><span class="n">mean_free_path</span><span class="si">}</span><span class="s2"> m"</span><span class="p">)</span> <span class="c1"># will produce approx 66.5 nm</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"mean free path is </span><span class="si">{</span><span class="n">mean_free_path</span><span class="si">}</span><span class="s2"> m"</span><span class="p">)</span>  <span class="c1"># will produce approx 66.5 nm</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">from particula.gas.properties import molecule_mean_free_path, get_dynamic_viscosity
+<div class="clipboard-copy-txt" id="cell-1">from particula.gas.properties import (
+    molecule_mean_free_path,
+    get_dynamic_viscosity,
+)
 
 air_dynamic_viscosity = get_dynamic_viscosity(temperature=298.15)
 
@@ -6946,7 +7163,7 @@ mean_free_path = molecule_mean_free_path(
     dynamic_viscosity=air_dynamic_viscosity,
 )
 
-print(f"mean free path is {mean_free_path} m") # will produce approx 66.5 nm</div>
+print(f"mean free path is {mean_free_path} m")  # will produce approx 66.5 nm</div>
 </div>
 </div>
 </div>
