@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../particle_resolved_method/">
+        <link rel="prev" href="../coagulation_factories/">
       
       
         <link rel="next" href="../sedimentation_kernel/">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Rate - Particula</title>
+        <title>Coagulation Rate - Particula</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rate" class="md-skip">
+        <a href="#coagulation-rate" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Rate
+              Coagulation Rate
             
           </span>
         </div>
@@ -1188,6 +1188,8 @@
       
         
       
+        
+      
     
     
       
@@ -1261,11 +1263,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../kernel/" class="md-nav__link">
+      <a href="../charged_dimensionless_kernel/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Kernel
+    Charged Dimensionless Kernel
     
   </span>
   
@@ -1283,11 +1285,33 @@
   
   
     <li class="md-nav__item">
-      <a href="../particle_resolved_method/" class="md-nav__link">
+      <a href="../charged_kernel_strategy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Particle Resolved Method
+    Charged Kernel Strategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_factories/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coagulation Factories
     
   </span>
   
@@ -1318,7 +1342,7 @@
           
   
   <span class="md-ellipsis">
-    Rate
+    Coagulation Rate
     
   </span>
   
@@ -1330,7 +1354,7 @@
         
   
   <span class="md-ellipsis">
-    Rate
+    Coagulation Rate
     
   </span>
   
@@ -1353,13 +1377,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#continuous_gain" class="md-nav__link">
+  <a href="#get_coagulation_gain_rate_continuous" class="md-nav__link">
     <span class="md-ellipsis">
-      continuous_gain
+      get_coagulation_gain_rate_continuous
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="continuous_gain">
+    <nav class="md-nav" aria-label="get_coagulation_gain_rate_continuous">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1404,13 +1428,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#continuous_loss" class="md-nav__link">
+  <a href="#get_coagulation_gain_rate_discrete" class="md-nav__link">
     <span class="md-ellipsis">
-      continuous_loss
+      get_coagulation_gain_rate_discrete
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="continuous_loss">
+    <nav class="md-nav" aria-label="get_coagulation_gain_rate_discrete">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1455,13 +1479,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#discrete_gain" class="md-nav__link">
+  <a href="#get_coagulation_loss_rate_continuous" class="md-nav__link">
     <span class="md-ellipsis">
-      discrete_gain
+      get_coagulation_loss_rate_continuous
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="discrete_gain">
+    <nav class="md-nav" aria-label="get_coagulation_loss_rate_continuous">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1506,13 +1530,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#discrete_loss" class="md-nav__link">
+  <a href="#get_coagulation_loss_rate_discrete" class="md-nav__link">
     <span class="md-ellipsis">
-      discrete_loss
+      get_coagulation_loss_rate_discrete
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="discrete_loss">
+    <nav class="md-nav" aria-label="get_coagulation_loss_rate_discrete">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1594,11 +1618,102 @@
   
   
     <li class="md-nav__item">
-      <a href="../strategy/" class="md-nav__link">
+      <a href="../turbulent_shear_kernel/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Strategy
+    Turbulent Shear Kernel
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_9_5_9" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../coagulation_builder/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Coagulation builder
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2_9_5_9" id="__nav_2_2_9_5_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_9_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_9_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            Coagulation builder
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_builder/brownian_coagulation_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BrownianCoagulationBuilder
     
   </span>
   
@@ -1616,7 +1731,441 @@
   
   
     <li class="md-nav__item">
-      <a href="../super_droplet_method/" class="md-nav__link">
+      <a href="../coagulation_builder/charged_coagulation_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ChargedCoagulationBuilder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_builder/coagulation_builder_mixin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coagulation Builder Mixin
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_builder/combine_coagulation_strategy_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CombineCoagulationStrategyBuilder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_builder/turbulent_dns_coagulation_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TurbulentDNSCoagulationBuilder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_builder/turbulent_shear_coagulation_builder/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TurbulentShearCoagulationBuilder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_9_5_10" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../coagulation_strategy/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Coagulation strategy
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2_9_5_10" id="__nav_2_2_9_5_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_9_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_9_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            Coagulation strategy
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/brownian_coagulation_strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BrownianCoagulationStrategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/charged_coagulation_strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ChargedCoagulationStrategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/coagulation_strategy_abc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CoagulationStrategyABC
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/combine_coagulation_strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CombineCoagulationStrategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/sedimentation_coagulation_strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SedimentationCoagulationStrategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/trubulent_dns_coagulation_strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Trubulent Dns Coagulation Strategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coagulation_strategy/turbulent_shear_coagulation_strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TurbulentShearCoagulationStrategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_9_5_11" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../particle_resolved_step/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Particle resolved step
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2_9_5_11" id="__nav_2_2_9_5_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_9_5_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_9_5_11">
+            <span class="md-nav__icon md-icon"></span>
+            Particle resolved step
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../particle_resolved_step/particle_resolved_method/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Particle Resolved Method
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../particle_resolved_step/super_droplet_method/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1631,45 +2180,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../transition_regime/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Transition Regime
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../turbulent_shear_kernel/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Turbulent Shear Kernel
-    
-  </span>
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1716,7 +2229,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_9_5_11" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_9_5_12" >
         
           
           
@@ -1733,14 +2246,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2_9_5_11" id="__nav_2_2_9_5_11_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2_9_5_12" id="__nav_2_2_9_5_12_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_9_5_11_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2_9_5_11">
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_2_9_5_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_9_5_12">
             <span class="md-nav__icon md-icon"></span>
             Turbulent dns kernel
           </label>
@@ -1760,28 +2273,6 @@
   
   <span class="md-ellipsis">
     G12 Radial Distribution Ao2008
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../turbulent_dns_kernel/kernel_ao2008/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Kernel Ao2008
     
   </span>
   
@@ -1870,6 +2361,28 @@
   
   <span class="md-ellipsis">
     Sigma Relative Velocity Ao2008
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../turbulent_dns_kernel/turbulent_dns_kernel_ao2008/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Turbulent Dns Kernel Ao2008
     
   </span>
   
@@ -2890,6 +3403,8 @@
       
         
       
+        
+      
     
     
       
@@ -2990,6 +3505,28 @@
   
   <span class="md-ellipsis">
     Activity Strategies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../particles/change_particle_representation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Change Particle Representation
     
   </span>
   
@@ -3263,7 +3800,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_12_14" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_12_15" >
         
           
           
@@ -3280,14 +3817,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2_12_14" id="__nav_2_2_12_14_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2_12_15" id="__nav_2_2_12_15_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_12_14_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2_12_14">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_2_12_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_12_15">
             <span class="md-nav__icon md-icon"></span>
             Properties
           </label>
@@ -6890,13 +7427,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#continuous_gain" class="md-nav__link">
+  <a href="#get_coagulation_gain_rate_continuous" class="md-nav__link">
     <span class="md-ellipsis">
-      continuous_gain
+      get_coagulation_gain_rate_continuous
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="continuous_gain">
+    <nav class="md-nav" aria-label="get_coagulation_gain_rate_continuous">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6941,13 +7478,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#continuous_loss" class="md-nav__link">
+  <a href="#get_coagulation_gain_rate_discrete" class="md-nav__link">
     <span class="md-ellipsis">
-      continuous_loss
+      get_coagulation_gain_rate_discrete
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="continuous_loss">
+    <nav class="md-nav" aria-label="get_coagulation_gain_rate_discrete">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -6992,13 +7529,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#discrete_gain" class="md-nav__link">
+  <a href="#get_coagulation_loss_rate_continuous" class="md-nav__link">
     <span class="md-ellipsis">
-      discrete_gain
+      get_coagulation_loss_rate_continuous
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="discrete_gain">
+    <nav class="md-nav" aria-label="get_coagulation_loss_rate_continuous">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -7043,13 +7580,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#discrete_loss" class="md-nav__link">
+  <a href="#get_coagulation_loss_rate_discrete" class="md-nav__link">
     <span class="md-ellipsis">
-      discrete_loss
+      get_coagulation_loss_rate_discrete
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="discrete_loss">
+    <nav class="md-nav" aria-label="get_coagulation_loss_rate_discrete">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -7112,13 +7649,13 @@
   
 
 
-<h1 id="rate">Rate<a class="headerlink" href="#rate" title="Permanent link">&para;</a></h1>
-<p><a href="../../../../#particula-index">Particula Index</a> / <a href="../../../#particula">Particula</a> / <a href="../../#dynamics">Dynamics</a> / <a href="../#coagulation">Coagulation</a> / Rate</p>
+<h1 id="coagulation-rate">Coagulation Rate<a class="headerlink" href="#coagulation-rate" title="Permanent link">&para;</a></h1>
+<p><a href="../../../../#particula-index">Particula Index</a> / <a href="../../../#particula">Particula</a> / <a href="../../#dynamics">Dynamics</a> / <a href="../#coagulation">Coagulation</a> / Coagulation Rate</p>
 <blockquote>
-<p>Auto-generated documentation for <a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/rate.py">particula.dynamics.coagulation.rate</a> module.</p>
+<p>Auto-generated documentation for <a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/coagulation_rate.py">particula.dynamics.coagulation.coagulation_rate</a> module.</p>
 </blockquote>
-<h2 id="continuous_gain">continuous_gain<a class="headerlink" href="#continuous_gain" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/rate.py#L120">Show source in rate.py:120</a></p>
+<h2 id="get_coagulation_gain_rate_continuous">get_coagulation_gain_rate_continuous<a class="headerlink" href="#get_coagulation_gain_rate_continuous" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/coagulation_rate.py#L120">Show source in coagulation_rate.py:120</a></p>
 <p>Calculate the coagulation gain rate, via the integration method.</p>
 <h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h4>
 <p>radius : The radius of the particles.
@@ -7140,44 +7677,23 @@ we use interporlation techniques.</li>
 physics, Chapter 13 Equations 13.61</li>
 </ul>
 <h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">continuous_gain</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coagulation_gain_rate_continuous</span><span class="p">(</span>
     <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
-<h2 id="continuous_loss">continuous_loss<a class="headerlink" href="#continuous_loss" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/rate.py#L96">Show source in rate.py:96</a></p>
-<p>Calculate the coagulation loss rate, via the integration method.</p>
+<h2 id="get_coagulation_gain_rate_discrete">get_coagulation_gain_rate_discrete<a class="headerlink" href="#get_coagulation_gain_rate_discrete" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/coagulation_rate.py#L40">Show source in coagulation_rate.py:40</a></p>
+<p>Calculate the coagulation gain rate, via the integration method, by
+converting to a continuous distribution.</p>
 <h4 id="arguments_1">Arguments<a class="headerlink" href="#arguments_1" title="Permanent link">&para;</a></h4>
 <p>radius : The radius of the particles.
 concentration : The distribution of particles.
 kernel : The coagulation kernel.</p>
 <h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h4>
-<p>The coagulation loss rate.</p>
-<h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Seinfeld, J. H., &amp; Pandis, S. N. (2016). Atmospheric chemistry and
-    physics, Chapter 13 Equations 13.61</li>
-</ul>
-<h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">continuous_loss</span><span class="p">(</span>
-    <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
-    <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
-    <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
-</code></pre></div>
-<h2 id="discrete_gain">discrete_gain<a class="headerlink" href="#discrete_gain" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/rate.py#L40">Show source in rate.py:40</a></p>
-<p>Calculate the coagulation gain rate, via the integration method, by
-converting to a continuous distribution.</p>
-<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
-<p>radius : The radius of the particles.
-concentration : The distribution of particles.
-kernel : The coagulation kernel.</p>
-<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
 <p>The coagulation gain rate.</p>
-<h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
+<h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
 <hr />
 <ul>
 <li>This equation necessitates the use of a for-loop due to the
@@ -7189,15 +7705,36 @@ most expensive step of all coagulation calculations. Using
 <li>Seinfeld, J. H., &amp; Pandis, S. (2016). Atmospheric chemistry and
 physics, Chapter 13 Equations 13.61</li>
 </ul>
-<h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">discrete_gain</span><span class="p">(</span>
+<h4 id="signature_1">Signature<a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coagulation_gain_rate_discrete</span><span class="p">(</span>
     <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
-<h2 id="discrete_loss">discrete_loss<a class="headerlink" href="#discrete_loss" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/rate.py#L19">Show source in rate.py:19</a></p>
+<h2 id="get_coagulation_loss_rate_continuous">get_coagulation_loss_rate_continuous<a class="headerlink" href="#get_coagulation_loss_rate_continuous" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/coagulation_rate.py#L96">Show source in coagulation_rate.py:96</a></p>
+<p>Calculate the coagulation loss rate, via the integration method.</p>
+<h4 id="arguments_2">Arguments<a class="headerlink" href="#arguments_2" title="Permanent link">&para;</a></h4>
+<p>radius : The radius of the particles.
+concentration : The distribution of particles.
+kernel : The coagulation kernel.</p>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">&para;</a></h4>
+<p>The coagulation loss rate.</p>
+<h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Seinfeld, J. H., &amp; Pandis, S. N. (2016). Atmospheric chemistry and
+    physics, Chapter 13 Equations 13.61</li>
+</ul>
+<h4 id="signature_2">Signature<a class="headerlink" href="#signature_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coagulation_loss_rate_continuous</span><span class="p">(</span>
+    <span class="n">radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
+    <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
+</code></pre></div>
+<h2 id="get_coagulation_loss_rate_discrete">get_coagulation_loss_rate_discrete<a class="headerlink" href="#get_coagulation_loss_rate_discrete" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/uncscode/particula/blob/main/particula/dynamics/coagulation/coagulation_rate.py#L19">Show source in coagulation_rate.py:19</a></p>
 <p>Calculate the coagulation loss rate, via the summation method.</p>
 <h4 id="arguments_3">Arguments<a class="headerlink" href="#arguments_3" title="Permanent link">&para;</a></h4>
 <p>concentraiton : The distribution of particles.
@@ -7208,7 +7745,7 @@ kernel : The coagulation kernel.</p>
 <p>Seinfeld, J. H., &amp; Pandis, S. N. (2016). Atmospheric chemistry and
 physics, Chapter 13 Equations 13.61</p>
 <h4 id="signature_3">Signature<a class="headerlink" href="#signature_3" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">discrete_loss</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_coagulation_loss_rate_discrete</span><span class="p">(</span>
     <span class="n">concentration</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span> <span class="n">kernel</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]:</span> <span class="o">...</span>
 </code></pre></div>
