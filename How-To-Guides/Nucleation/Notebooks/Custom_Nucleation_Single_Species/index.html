@@ -12,7 +12,7 @@
         <link rel="prev" href="../../">
       
       
-        <link rel="next" href="../../../Setup_Particula/">
+        <link rel="next" href="../debug_script/">
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
@@ -5565,6 +5565,8 @@
       
         
       
+        
+      
     
     
       
@@ -5702,6 +5704,28 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug_script/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom Nucleation: Single Species
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -7840,7 +7864,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
@@ -7856,34 +7880,15 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="c1"># particula imports</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">particula</span><span class="w"> </span><span class="kn">import</span> <span class="n">particles</span><span class="p">,</span> <span class="n">dynamics</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">particula.aerosol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Aerosol</span>
-
-<span class="c1"># Gas phase species and atmosphere builders</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">particula.gas.species_builders</span><span class="w"> </span><span class="kn">import</span> <span class="n">GasSpeciesBuilder</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">particula.gas.atmosphere_builders</span><span class="w"> </span><span class="kn">import</span> <span class="n">AtmosphereBuilder</span>
-
-<span class="c1"># Vapor pressure factory for calculating vapor pressures</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">particula.gas.vapor_pressure_factories</span><span class="w"> </span><span class="kn">import</span> <span class="n">VaporPressureFactory</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">particula.util.input_handling</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_units</span>
+<span class="c1"># particula</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">particula</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">par</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-1">import numpy as np
 import matplotlib.pyplot as plt
 
-# particula imports
-from particula import particles, dynamics
-from particula.aerosol import Aerosol
-
-# Gas phase species and atmosphere builders
-from particula.gas.species_builders import GasSpeciesBuilder
-from particula.gas.atmosphere_builders import AtmosphereBuilder
-
-# Vapor pressure factory for calculating vapor pressures
-from particula.gas.vapor_pressure_factories import VaporPressureFactory
-
-from particula.util.input_handling import convert_units</div>
+# particula
+import particula as par
+</div>
 </div>
 </div>
 </div>
@@ -7907,7 +7912,7 @@ from particula.util.input_handling import convert_units</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
@@ -7933,7 +7938,7 @@ from particula.util.input_handling import convert_units</div>
 <span class="p">}</span>
 
 <span class="c1"># Create a constant vapor pressure strategy using the VaporPressureFactory</span>
-<span class="n">vapor_pressure_sulfate</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+<span class="n">vapor_pressure_sulfate</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
     <span class="s2">"constant"</span><span class="p">,</span> <span class="n">parameters_vapor</span>
 <span class="p">)</span>
 
@@ -7948,7 +7953,7 @@ from particula.util.input_handling import convert_units</div>
 
 <span class="c1"># Build the sulfate gas species using the GasSpeciesBuilder</span>
 <span class="n">gas_sulfate</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">GasSpeciesBuilder</span><span class="p">()</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">GasSpeciesBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s2">"sulfate"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_molar_mass</span><span class="p">(</span><span class="n">molar_mass_ammonium_sulfate</span><span class="p">,</span> <span class="s2">"kg/mol"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_condensable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -7959,7 +7964,7 @@ from particula.util.input_handling import convert_units</div>
 
 <span class="c1"># Build the atmosphere with the sulfate species and environmental conditions</span>
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">AtmosphereBuilder</span><span class="p">()</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">AtmosphereBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">gas_sulfate</span><span class="p">)</span>  <span class="c1"># Add sulfate to the atmosphere</span>
     <span class="o">.</span><span class="n">set_temperature</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">temperature_units</span><span class="o">=</span><span class="s2">"degC"</span><span class="p">)</span>  <span class="c1"># Set temperature to 25°C</span>
     <span class="o">.</span><span class="n">set_pressure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pressure_units</span><span class="o">=</span><span class="s2">"atm"</span><span class="p">)</span>  <span class="c1"># Set pressure to 1 atm</span>
@@ -7967,7 +7972,7 @@ from particula.util.input_handling import convert_units</div>
 <span class="p">)</span>
 
 <span class="c1"># Generate a lognormal particle size distribution</span>
-<span class="n">particle_sample</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">lognormal_sample_distribution</span><span class="p">(</span>
+<span class="n">particle_sample</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">get_lognormal_sample_distribution</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">400e-9</span><span class="p">]),</span>  <span class="c1"># Mean particle diameter of 400 nm</span>
     <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.4</span><span class="p">]),</span>  <span class="c1"># GSD of 1.4</span>
     <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -7981,13 +7986,13 @@ from particula.util.input_handling import convert_units</div>
     <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">particle_sample</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="n">density_ammonium_sulfate</span>  <span class="c1"># kg</span>
 <span class="p">)</span>
 
-<span class="n">volume_sim</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">convert_units</span><span class="p">(</span><span class="s2">"cm^3"</span><span class="p">,</span> <span class="s2">"m^3"</span><span class="p">)</span>  <span class="c1"># m^3</span>
+<span class="n">volume_sim</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">par</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_unit_conversion</span><span class="p">(</span><span class="s2">"cm^3"</span><span class="p">,</span> <span class="s2">"m^3"</span><span class="p">)</span>  <span class="c1"># m^3</span>
 <span class="c1"># Build the resolved particle mass representation for the aerosol particles</span>
 <span class="n">resolved_masses</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">particles</span><span class="o">.</span><span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ParticleResolvedSpeciatedMass</span><span class="p">())</span>
-    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
-    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyVolume</span><span class="p">())</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ParticleResolvedSpeciatedMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyVolume</span><span class="p">())</span>
     <span class="o">.</span><span class="n">set_mass</span><span class="p">(</span><span class="n">particle_mass_sample</span><span class="p">,</span> <span class="s2">"kg"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="n">density_ammonium_sulfate</span><span class="p">,</span> <span class="s2">"kg/m^3"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_charge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -7996,7 +8001,7 @@ from particula.util.input_handling import convert_units</div>
 <span class="p">)</span>
 
 <span class="c1"># Create the aerosol object with the atmosphere and particles</span>
-<span class="n">aerosol</span> <span class="o">=</span> <span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">resolved_masses</span><span class="p">)</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">resolved_masses</span><span class="p">)</span>
 
 <span class="c1"># Print the properties of the created aerosol system</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">aerosol</span><span class="p">)</span>
@@ -8014,7 +8019,7 @@ parameters_vapor = {
 }
 
 # Create a constant vapor pressure strategy using the VaporPressureFactory
-vapor_pressure_sulfate = VaporPressureFactory().get_strategy(
+vapor_pressure_sulfate = par.gas.VaporPressureFactory().get_strategy(
     "constant", parameters_vapor
 )
 
@@ -8029,7 +8034,7 @@ initial_sulfate_concentration = 0.5 * sulfate_saturation  # kg/m^3
 
 # Build the sulfate gas species using the GasSpeciesBuilder
 gas_sulfate = (
-    GasSpeciesBuilder()
+    par.gas.GasSpeciesBuilder()
     .set_name("sulfate")
     .set_molar_mass(molar_mass_ammonium_sulfate, "kg/mol")
     .set_condensable(True)
@@ -8040,7 +8045,7 @@ gas_sulfate = (
 
 # Build the atmosphere with the sulfate species and environmental conditions
 atmosphere = (
-    AtmosphereBuilder()
+    par.gas.AtmosphereBuilder()
     .add_species(gas_sulfate)  # Add sulfate to the atmosphere
     .set_temperature(25, temperature_units="degC")  # Set temperature to 25°C
     .set_pressure(1, pressure_units="atm")  # Set pressure to 1 atm
@@ -8048,7 +8053,7 @@ atmosphere = (
 )
 
 # Generate a lognormal particle size distribution
-particle_sample = particles.properties.lognormal_sample_distribution(
+particle_sample = par.particles.get_lognormal_sample_distribution(
     mode=np.array([400e-9]),  # Mean particle diameter of 400 nm
     geometric_standard_deviation=np.array([1.4]),  # GSD of 1.4
     number_of_particles=np.array(
@@ -8062,13 +8067,13 @@ particle_mass_sample = (
     4 / 3 * np.pi * particle_sample**3 * density_ammonium_sulfate  # kg
 )
 
-volume_sim = 0.1 * convert_units("cm^3", "m^3")  # m^3
+volume_sim = 0.1 * par.util.get_unit_conversion("cm^3", "m^3")  # m^3
 # Build the resolved particle mass representation for the aerosol particles
 resolved_masses = (
-    particles.ResolvedParticleMassRepresentationBuilder()
-    .set_distribution_strategy(particles.ParticleResolvedSpeciatedMass())
-    .set_activity_strategy(particles.ActivityIdealMass())
-    .set_surface_strategy(particles.SurfaceStrategyVolume())
+    par.particles.ResolvedParticleMassRepresentationBuilder()
+    .set_distribution_strategy(par.particles.ParticleResolvedSpeciatedMass())
+    .set_activity_strategy(par.particles.ActivityIdealMass())
+    .set_surface_strategy(par.particles.SurfaceStrategyVolume())
     .set_mass(particle_mass_sample, "kg")
     .set_density(density_ammonium_sulfate, "kg/m^3")
     .set_charge(0)
@@ -8077,7 +8082,7 @@ resolved_masses = (
 )
 
 # Create the aerosol object with the atmosphere and particles
-aerosol = Aerosol(atmosphere=atmosphere, particles=resolved_masses)
+aerosol = par.Aerosol(atmosphere=atmosphere, particles=resolved_masses)
 
 # Print the properties of the created aerosol system
 print(aerosol)</div>
@@ -8092,12 +8097,12 @@ print(aerosol)</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Gas mixture at 298.15 K and 101325.0 Pa consisting of ['sulfate']
+<pre>Gas mixture at 6828.749999999999 K and 101325.0 Pa consisting of ['sulfate']
 [0]: Particle Representation:
 	Strategy: ParticleResolvedSpeciatedMass
 	Activity: ActivityIdealMass
 	Surface: SurfaceStrategyVolume
-	Mass Concentration: 8.737e-07 [kg/m^3]
+	Mass Concentration: 7.201e-07 [kg/m^3]
 	Number Concentration: 1.000e+09 [#/m^3]
 </pre>
 </div>
@@ -8111,7 +8116,7 @@ print(aerosol)</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
@@ -8133,7 +8138,7 @@ print(aerosol)</div>
     <span class="s2">"vapor_pressure"</span><span class="p">:</span> <span class="mf">4e-12</span><span class="p">,</span>  <span class="c1"># pascal</span>
     <span class="s2">"vapor_pressure_units"</span><span class="p">:</span> <span class="s2">"atm"</span><span class="p">,</span>
 <span class="p">}</span>
-<span class="n">vapor_pressure_sulfate</span> <span class="o">=</span> <span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
+<span class="n">vapor_pressure_sulfate</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">VaporPressureFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
     <span class="s2">"constant"</span><span class="p">,</span> <span class="n">parameters_vapor</span>
 <span class="p">)</span>
 
@@ -8148,7 +8153,7 @@ print(aerosol)</div>
 
 <span class="c1"># Create the gas species</span>
 <span class="n">gas_sulfate</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">GasSpeciesBuilder</span><span class="p">()</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">GasSpeciesBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s2">"sulfate"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_molar_mass</span><span class="p">(</span><span class="n">molar_mass_ammonium_sulfate</span><span class="p">,</span> <span class="s2">"kg/mol"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_condensable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -8159,7 +8164,7 @@ print(aerosol)</div>
 
 <span class="c1"># AtmosphereBuilder constructs the atmosphere with predefined species</span>
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">AtmosphereBuilder</span><span class="p">()</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">AtmosphereBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">gas_sulfate</span><span class="p">)</span>  <span class="c1"># Add the sulfate gas species to the atmosphere</span>
     <span class="o">.</span><span class="n">set_temperature</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">temperature_units</span><span class="o">=</span><span class="s2">"degC"</span><span class="p">)</span>  <span class="c1"># Set temperature to 25°C</span>
     <span class="o">.</span><span class="n">set_pressure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pressure_units</span><span class="o">=</span><span class="s2">"atm"</span><span class="p">)</span>  <span class="c1"># Set pressure to 1 atmosphere</span>
@@ -8168,7 +8173,7 @@ print(aerosol)</div>
 
 <span class="c1"># Generate a particle distribution using a lognormal sample distribution</span>
 <span class="c1"># This distribution has a mean particle diameter (mode) and geometric standard deviation (GSD)</span>
-<span class="n">particle_sample</span> <span class="o">=</span> <span class="n">particles</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">lognormal_sample_distribution</span><span class="p">(</span>
+<span class="n">particle_sample</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">get_lognormal_sample_distribution</span><span class="p">(</span>
     <span class="n">mode</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">400e-9</span><span class="p">]),</span>  <span class="c1"># Mean particle diameter of 100 nm</span>
     <span class="n">geometric_standard_deviation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.4</span><span class="p">]),</span>  <span class="c1"># GSD of 1.3</span>
     <span class="n">number_of_particles</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e4</span><span class="p">]),</span>  <span class="c1"># Total number of particles</span>
@@ -8185,10 +8190,10 @@ print(aerosol)</div>
 <span class="c1"># Build a resolved mass representation for each particle</span>
 <span class="c1"># This defines how particle mass, activity, and surface are represented</span>
 <span class="n">resolved_masses</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">particles</span><span class="o">.</span><span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ParticleResolvedSpeciatedMass</span><span class="p">())</span>
-    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
-    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyVolume</span><span class="p">())</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ParticleResolvedSpeciatedMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyVolume</span><span class="p">())</span>
     <span class="o">.</span><span class="n">set_mass</span><span class="p">(</span><span class="n">particle_mass_sample</span><span class="p">,</span> <span class="s2">"kg"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="n">density_ammonium_sulfate</span><span class="p">,</span> <span class="s2">"kg/m^3"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_charge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -8197,7 +8202,7 @@ print(aerosol)</div>
 <span class="p">)</span>
 
 <span class="c1"># # Create an aerosol object with the defined atmosphere and resolved particles</span>
-<span class="n">aerosol</span> <span class="o">=</span> <span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">resolved_masses</span><span class="p">)</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">resolved_masses</span><span class="p">)</span>
 
 
 <span class="c1"># Print the properties of the atmosphere</span>
@@ -8212,7 +8217,7 @@ parameters_vapor = {
     "vapor_pressure": 4e-12,  # pascal
     "vapor_pressure_units": "atm",
 }
-vapor_pressure_sulfate = VaporPressureFactory().get_strategy(
+vapor_pressure_sulfate = par.gas.VaporPressureFactory().get_strategy(
     "constant", parameters_vapor
 )
 
@@ -8227,7 +8232,7 @@ initial_sulfate_concentration = 0.5 * sulfate_saturation
 
 # Create the gas species
 gas_sulfate = (
-    GasSpeciesBuilder()
+    par.gas.GasSpeciesBuilder()
     .set_name("sulfate")
     .set_molar_mass(molar_mass_ammonium_sulfate, "kg/mol")
     .set_condensable(True)
@@ -8238,7 +8243,7 @@ gas_sulfate = (
 
 # AtmosphereBuilder constructs the atmosphere with predefined species
 atmosphere = (
-    AtmosphereBuilder()
+    par.gas.AtmosphereBuilder()
     .add_species(gas_sulfate)  # Add the sulfate gas species to the atmosphere
     .set_temperature(25, temperature_units="degC")  # Set temperature to 25°C
     .set_pressure(1, pressure_units="atm")  # Set pressure to 1 atmosphere
@@ -8247,7 +8252,7 @@ atmosphere = (
 
 # Generate a particle distribution using a lognormal sample distribution
 # This distribution has a mean particle diameter (mode) and geometric standard deviation (GSD)
-particle_sample = particles.properties.lognormal_sample_distribution(
+particle_sample = par.particles.get_lognormal_sample_distribution(
     mode=np.array([400e-9]),  # Mean particle diameter of 100 nm
     geometric_standard_deviation=np.array([1.4]),  # GSD of 1.3
     number_of_particles=np.array([1e4]),  # Total number of particles
@@ -8264,10 +8269,10 @@ particle_mass_sample = (
 # Build a resolved mass representation for each particle
 # This defines how particle mass, activity, and surface are represented
 resolved_masses = (
-    particles.ResolvedParticleMassRepresentationBuilder()
-    .set_distribution_strategy(particles.ParticleResolvedSpeciatedMass())
-    .set_activity_strategy(particles.ActivityIdealMass())
-    .set_surface_strategy(particles.SurfaceStrategyVolume())
+    par.particles.ResolvedParticleMassRepresentationBuilder()
+    .set_distribution_strategy(par.particles.ParticleResolvedSpeciatedMass())
+    .set_activity_strategy(par.particles.ActivityIdealMass())
+    .set_surface_strategy(par.particles.SurfaceStrategyVolume())
     .set_mass(particle_mass_sample, "kg")
     .set_density(density_ammonium_sulfate, "kg/m^3")
     .set_charge(0)
@@ -8276,7 +8281,7 @@ resolved_masses = (
 )
 
 # # Create an aerosol object with the defined atmosphere and resolved particles
-aerosol = Aerosol(atmosphere=atmosphere, particles=resolved_masses)
+aerosol = par.Aerosol(atmosphere=atmosphere, particles=resolved_masses)
 
 
 # Print the properties of the atmosphere
@@ -8292,12 +8297,12 @@ print(aerosol)</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Gas mixture at 298.15 K and 101325.0 Pa consisting of ['sulfate']
+<pre>Gas mixture at 6828.749999999999 K and 101325.0 Pa consisting of ['sulfate']
 [0]: Particle Representation:
 	Strategy: ParticleResolvedSpeciatedMass
 	Activity: ActivityIdealMass
 	Surface: SurfaceStrategyVolume
-	Mass Concentration: 6.688e-07 [kg/m^3]
+	Mass Concentration: 8.108e-07 [kg/m^3]
 	Number Concentration: 1.000e+09 [#/m^3]
 </pre>
 </div>
@@ -8333,7 +8338,7 @@ print(aerosol)</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
@@ -8347,33 +8352,43 @@ print(aerosol)</div>
 </clipboard-copy>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># setup dynamics for condensation</span>
-<span class="n">condensation_method</span> <span class="o">=</span> <span class="n">dynamics</span><span class="o">.</span><span class="n">condensation</span><span class="o">.</span><span class="n">CondensationIsothermal</span><span class="p">(</span>
+<span class="n">condensation_method</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">CondensationIsothermal</span><span class="p">(</span>
     <span class="n">molar_mass</span><span class="o">=</span><span class="n">molar_mass_ammonium_sulfate</span><span class="p">,</span>
     <span class="n">accommodation_coefficient</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">diffusion_coefficient</span><span class="o">=</span><span class="mf">2e-5</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">condensation_runnable</span> <span class="o">=</span> <span class="n">dynamics</span><span class="o">.</span><span class="n">MassCondensation</span><span class="p">(</span>
+<span class="n">condensation_runnable</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">MassCondensation</span><span class="p">(</span>
     <span class="n">condensation_strategy</span><span class="o">=</span><span class="n">condensation_method</span>
 <span class="p">)</span>
 <span class="c1"># setup dynamics for coagulation</span>
-<span class="n">coagulation_runnable</span> <span class="o">=</span> <span class="n">dynamics</span><span class="o">.</span><span class="n">Coagulation</span><span class="p">(</span>
-    <span class="n">coagulation_strategy</span><span class="o">=</span><span class="n">dynamics</span><span class="o">.</span><span class="n">coagulation</span><span class="o">.</span><span class="n">ParticleResolved</span><span class="p">()</span>
+<span class="n">coagulation_strategy</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">BrownianCoagulationBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_distribution_type</span><span class="p">(</span><span class="s2">"particle_resolved"</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">coagulation_runnable</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">Coagulation</span><span class="p">(</span>
+    <span class="n">coagulation_strategy</span><span class="o">=</span><span class="n">coagulation_strategy</span>
 <span class="p">)</span>
 
 <span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-4"># setup dynamics for condensation
-condensation_method = dynamics.condensation.CondensationIsothermal(
+condensation_method = par.dynamics.CondensationIsothermal(
     molar_mass=molar_mass_ammonium_sulfate,
     accommodation_coefficient=1,
     diffusion_coefficient=2e-5,
 )
-condensation_runnable = dynamics.MassCondensation(
+condensation_runnable = par.dynamics.MassCondensation(
     condensation_strategy=condensation_method
 )
 # setup dynamics for coagulation
-coagulation_runnable = dynamics.Coagulation(
-    coagulation_strategy=dynamics.coagulation.ParticleResolved()
+coagulation_strategy = (
+    par.dynamics.BrownianCoagulationBuilder()
+    .set_distribution_type("particle_resolved")
+    .build()
+)
+coagulation_runnable = par.dynamics.Coagulation(
+    coagulation_strategy=coagulation_strategy
 )
 
 step_count = 0</div>
@@ -8399,7 +8414,7 @@ step_count = 0</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
@@ -8673,7 +8688,7 @@ Number of new particles nucleated: 0.0
 Number of new resolved particles to be created: 0
 Total particle concentration before dynamics [#/m^3]: 999999999.9999999
 Total particle concentration after dynamics [#/m^3]: 999999999.9999999
-Total particle mass after dynamics [kg/m^3]: 6.688268754297869e-07
+Total particle mass after dynamics [kg/m^3]: 8.108392451912408e-07
 Total resolved particles in simulation: 100.0
 </pre>
 </div>
@@ -8699,7 +8714,7 @@ Total resolved particles in simulation: 100.0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
@@ -8714,7 +8729,7 @@ Total resolved particles in simulation: 100.0
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Build the sulfate gas species using the GasSpeciesBuilder</span>
 <span class="n">gas_sulfate</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">GasSpeciesBuilder</span><span class="p">()</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">GasSpeciesBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s2">"sulfate"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_molar_mass</span><span class="p">(</span><span class="n">molar_mass_ammonium_sulfate</span><span class="p">,</span> <span class="s2">"kg/mol"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_condensable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -8725,7 +8740,7 @@ Total resolved particles in simulation: 100.0
 
 <span class="c1"># AtmosphereBuilder constructs the atmosphere with predefined species</span>
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">AtmosphereBuilder</span><span class="p">()</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">AtmosphereBuilder</span><span class="p">()</span>
     <span class="o">.</span><span class="n">add_species</span><span class="p">(</span><span class="n">gas_sulfate</span><span class="p">)</span>  <span class="c1"># Add the sulfate gas species to the atmosphere</span>
     <span class="o">.</span><span class="n">set_temperature</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="n">temperature_units</span><span class="o">=</span><span class="s2">"degC"</span><span class="p">)</span>  <span class="c1"># Set temperature to 25°C</span>
     <span class="o">.</span><span class="n">set_pressure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pressure_units</span><span class="o">=</span><span class="s2">"atm"</span><span class="p">)</span>  <span class="c1"># Set pressure to 1 atmosphere</span>
@@ -8733,10 +8748,10 @@ Total resolved particles in simulation: 100.0
 <span class="p">)</span>
 <span class="c1"># Build the resolved particle mass representation for the aerosol particles</span>
 <span class="n">resolved_masses</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">particles</span><span class="o">.</span><span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ParticleResolvedSpeciatedMass</span><span class="p">())</span>
-    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
-    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyVolume</span><span class="p">())</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ResolvedParticleMassRepresentationBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_distribution_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ParticleResolvedSpeciatedMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_activity_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">ActivityIdealMass</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">set_surface_strategy</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">SurfaceStrategyVolume</span><span class="p">())</span>
     <span class="o">.</span><span class="n">set_mass</span><span class="p">(</span><span class="n">particle_mass_sample</span><span class="p">,</span> <span class="s2">"kg"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_density</span><span class="p">(</span><span class="n">density_ammonium_sulfate</span><span class="p">,</span> <span class="s2">"kg/m^3"</span><span class="p">)</span>
     <span class="o">.</span><span class="n">set_charge</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -8745,7 +8760,7 @@ Total resolved particles in simulation: 100.0
 <span class="p">)</span>
 
 <span class="c1"># Create the aerosol object with the atmosphere and particles</span>
-<span class="n">aerosol</span> <span class="o">=</span> <span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">resolved_masses</span><span class="p">)</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">resolved_masses</span><span class="p">)</span>
 
 <span class="c1"># Print the properties of the created aerosol system</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">aerosol</span><span class="p">)</span>
@@ -8770,7 +8785,7 @@ Total resolved particles in simulation: 100.0
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-6"># Build the sulfate gas species using the GasSpeciesBuilder
 gas_sulfate = (
-    GasSpeciesBuilder()
+    par.gas.GasSpeciesBuilder()
     .set_name("sulfate")
     .set_molar_mass(molar_mass_ammonium_sulfate, "kg/mol")
     .set_condensable(True)
@@ -8781,7 +8796,7 @@ gas_sulfate = (
 
 # AtmosphereBuilder constructs the atmosphere with predefined species
 atmosphere = (
-    AtmosphereBuilder()
+    par.gas.AtmosphereBuilder()
     .add_species(gas_sulfate)  # Add the sulfate gas species to the atmosphere
     .set_temperature(25, temperature_units="degC")  # Set temperature to 25°C
     .set_pressure(1, pressure_units="atm")  # Set pressure to 1 atmosphere
@@ -8789,10 +8804,10 @@ atmosphere = (
 )
 # Build the resolved particle mass representation for the aerosol particles
 resolved_masses = (
-    particles.ResolvedParticleMassRepresentationBuilder()
-    .set_distribution_strategy(particles.ParticleResolvedSpeciatedMass())
-    .set_activity_strategy(particles.ActivityIdealMass())
-    .set_surface_strategy(particles.SurfaceStrategyVolume())
+    par.particles.ResolvedParticleMassRepresentationBuilder()
+    .set_distribution_strategy(par.particles.ParticleResolvedSpeciatedMass())
+    .set_activity_strategy(par.particles.ActivityIdealMass())
+    .set_surface_strategy(par.particles.SurfaceStrategyVolume())
     .set_mass(particle_mass_sample, "kg")
     .set_density(density_ammonium_sulfate, "kg/m^3")
     .set_charge(0)
@@ -8801,7 +8816,7 @@ resolved_masses = (
 )
 
 # Create the aerosol object with the atmosphere and particles
-aerosol = Aerosol(atmosphere=atmosphere, particles=resolved_masses)
+aerosol = par.Aerosol(atmosphere=atmosphere, particles=resolved_masses)
 
 # Print the properties of the created aerosol system
 print(aerosol)
@@ -8834,12 +8849,12 @@ print(f"Total iterations to do: {len(time)*sub_steps}")</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Gas mixture at 298.15 K and 101325.0 Pa consisting of ['sulfate']
+<pre>Gas mixture at 6828.749999999999 K and 101325.0 Pa consisting of ['sulfate']
 [0]: Particle Representation:
 	Strategy: ParticleResolvedSpeciatedMass
 	Activity: ActivityIdealMass
 	Surface: SurfaceStrategyVolume
-	Mass Concentration: 6.688e-07 [kg/m^3]
+	Mass Concentration: 8.108e-07 [kg/m^3]
 	Number Concentration: 1.000e+09 [#/m^3]
 Total iterations to do: 400
 </pre>
@@ -8854,7 +8869,7 @@ Total iterations to do: 400
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
@@ -8942,7 +8957,7 @@ Total iterations to do: 400
 
         <span class="c1"># 7. Perform the condensation step</span>
         <span class="n">condensation_runnable</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">,</span> <span class="n">sub_steps</span><span class="p">)</span>
-
+        <span class="nb">print</span><span class="p">(</span><span class="n">aerosol</span><span class="p">)</span>
         <span class="c1"># 8. Perform the coagulation step</span>
         <span class="n">coagulation_runnable</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="p">,</span> <span class="n">sub_steps</span><span class="p">)</span>
 
@@ -8956,7 +8971,7 @@ Total iterations to do: 400
         <span class="mi">0</span>
     <span class="p">]</span><span class="o">.</span><span class="n">get_saturation_ratio</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mf">298.15</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># Retrieve and print the total number of resolved particles simulated</span>
         <span class="n">total_resolved_particles_in_simulation</span> <span class="o">=</span> <span class="n">aerosol</span><span class="o">.</span><span class="n">particles</span><span class="p">[</span>
             <span class="mi">0</span>
@@ -9043,7 +9058,7 @@ for i, t in enumerate(time):
 
         # 7. Perform the condensation step
         condensation_runnable.execute(aerosol, time_step, sub_steps)
-
+        print(aerosol)
         # 8. Perform the coagulation step
         coagulation_runnable.execute(aerosol, time_step, sub_steps)
 
@@ -9057,7 +9072,7 @@ for i, t in enumerate(time):
         0
     ].get_saturation_ratio(temperature=298.15)
 
-    if i % 20 == 0:
+    if i % 1 == 0:
         # Retrieve and print the total number of resolved particles simulated
         total_resolved_particles_in_simulation = aerosol.particles[
             0
@@ -9080,22 +9095,67 @@ number_distribution_binned = number_distribution_binned / volume_sim</div>
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Index 0: Total resolved particles in simulation: 100.0
+Gas mixture at 6828.749999999999 K and 101325.0 Pa consisting of ['sulfate']
+[0]: Particle Representation:
+	Strategy: ParticleResolvedSpeciatedMass
+	Activity: ActivityIdealMass
+	Surface: SurfaceStrategyVolume
+	Mass Concentration: 7.635e-07 [kg/m^3]
+	Number Concentration: 1.000e+09 [#/m^3]
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Index 20: Total resolved particles in simulation: 360698.0
-Index 40: Total resolved particles in simulation: 381036.0
-Index 60: Total resolved particles in simulation: 355792.0
-Index 80: Total resolved particles in simulation: 331894.0
-Index 100: Total resolved particles in simulation: 310821.0
-Index 120: Total resolved particles in simulation: 292075.0
-Index 140: Total resolved particles in simulation: 275280.0
-Index 160: Total resolved particles in simulation: 260109.0
-Index 180: Total resolved particles in simulation: 246462.0
-</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>                            Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[14], line 78</span>
+<span class="ansi-green-fg">     76</span>     <span style="color: rgb(0,135,0)">print</span>(aerosol)
+<span class="ansi-green-fg">     77</span>     <span style="color: rgb(95,135,135)"># 8. Perform the coagulation step</span>
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 78</span>     <span class="ansi-yellow-bg">coagulation_runnable</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">execute</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">aerosol</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">time_step</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">sub_steps</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">     80</span> total_mass_resolved[i] <span style="color: rgb(98,98,98)">=</span> aerosol<span style="color: rgb(98,98,98)">.</span>particles[<span style="color: rgb(98,98,98)">0</span>]<span style="color: rgb(98,98,98)">.</span>get_mass_concentration()
+<span class="ansi-green-fg">     81</span> number_distribution <span style="color: rgb(98,98,98)">=</span> aerosol<span style="color: rgb(98,98,98)">.</span>particles[<span style="color: rgb(98,98,98)">0</span>]<span style="color: rgb(98,98,98)">.</span>get_radius(clone<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>)
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\dynamics\particle_process.py:123</span>, in <span class="ansi-cyan-fg">Coagulation.execute</span><span class="ansi-blue-intense-fg ansi-bold">(self, aerosol, time_step, sub_steps)</span>
+<span class="ansi-green-fg">    120</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> particle <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> aerosol<span style="color: rgb(98,98,98)">.</span>iterate_particle():
+<span class="ansi-green-fg">    121</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> _ <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">range</span>(sub_steps):
+<span class="ansi-green-fg">    122</span>         <span style="color: rgb(95,135,135)"># Calculate the coagulation step for the particle</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 123</span>         particle <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">coagulation_strategy</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">step</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">    124</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">particle</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">particle</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    125</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">temperature</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">aerosol</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">atmosphere</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">temperature</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    126</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">pressure</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">aerosol</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">atmosphere</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">total_pressure</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    127</span> <span class="ansi-yellow-bg">            </span><span class="ansi-yellow-bg">time_step</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">time_step</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">/</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">sub_steps</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    128</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">    129</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> aerosol
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\dynamics\coagulation\coagulation_strategy\coagulation_strategy_abc.py:250</span>, in <span class="ansi-cyan-fg">CoagulationStrategyABC.step</span><span class="ansi-blue-intense-fg ansi-bold">(self, particle, temperature, pressure, time_step)</span>
+<span class="ansi-green-fg">    246</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> particle
+<span class="ansi-green-fg">    248</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>distribution_type <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">"</span><span style="color: rgb(175,0,0)">particle_resolved</span><span style="color: rgb(175,0,0)">"</span>:
+<span class="ansi-green-fg">    249</span>     <span style="color: rgb(95,135,135)"># get the kernel radius</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 250</span>     kernel_radius <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">get_particle_resolved_binned_radius</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg">    251</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">particle</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">particle</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    252</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">bin_radius</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">particle_resolved_radius</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    253</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">total_bins</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">particle_resolved_bins_number</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    254</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">bins_per_radius_decade</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">particle_resolved_bins_per_decade</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-fg">    255</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">    256</span>     <span style="color: rgb(95,135,135)"># convert particle representation to calculate kernel</span>
+<span class="ansi-green-fg">    257</span>     kernel_particle <span style="color: rgb(98,98,98)">=</span> (
+<span class="ansi-green-fg">    258</span>         get_speciated_mass_representation_from_particle_resolved(
+<span class="ansi-green-fg">    259</span>             particle<span style="color: rgb(98,98,98)">=</span>particle,
+<span class="ansi-green-fg">    260</span>             bin_radius<span style="color: rgb(98,98,98)">=</span>kernel_radius,
+<span class="ansi-green-fg">    261</span>         )
+<span class="ansi-green-fg">    262</span>     )
+
+File <span class="ansi-green-intense-fg ansi-bold">C:\GitHub\particula\particula\particles\change_particle_representation.py:45</span>, in <span class="ansi-cyan-fg">get_particle_resolved_binned_radius</span><span class="ansi-blue-intense-fg ansi-bold">(particle, bin_radius, total_bins, bins_per_radius_decade)</span>
+<span class="ansi-green-fg">     43</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> bin_radius
+<span class="ansi-green-fg">     44</span> <span style="color: rgb(95,135,135)"># else find the non-zero min and max radii, the log space them</span>
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 45</span> particle_radius <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">particle</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">get_radius</span>()
+<span class="ansi-green-fg">     46</span> min_radius <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>min(particle_radius[particle_radius <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">0</span>])
+<span class="ansi-green-fg">     47</span> max_radius <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>max(particle_radius[particle_radius <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">0</span>])
+
+<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>: 'NoneType' object has no attribute 'get_radius'</pre>
 </div>
 </div>
 </div>
@@ -9118,7 +9178,7 @@ Index 180: Total resolved particles in simulation: 246462.0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
@@ -9221,7 +9281,7 @@ plt.show()</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
