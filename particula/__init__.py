@@ -36,3 +36,7 @@ __version__ = "0.2.4"
 logger = setup()
 # log the version of particula upon loading
 logger.info("particula version %s loaded.", __version__)
+
+
+# Numba JIT compilation
+NUMBA_JIT_ENABLED = False  # Off by default
