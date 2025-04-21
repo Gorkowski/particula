@@ -4,6 +4,7 @@ This module provides a decorator to optionally JIT-compile
 functions using Numba.
 """
 import functools
+import os, sys
 try:
     import numba
 
@@ -11,8 +12,6 @@ try:
 except ImportError:
     # If Numba is not installed, set to False by default
     HAVE_NUMBA = False
-
-from particula.__init__ import NUMBA_JIT_ENABLED
 
 
 def numba_jit_wrapper(func):
@@ -31,7 +30,7 @@ def numba_jit_wrapper(func):
     # based on the flag
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        if HAVE_NUMBA and NUMBA_JIT_ENABLED and compiled_func is not None:
+        if HAVE_NUMBA and _jit_enabled() and compiled_func is not None:
             # Call the Numba-compiled version
             return compiled_func(*args, **kwargs)
         # Fallback to pure Python execution
