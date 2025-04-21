@@ -35,3 +35,6 @@ from particula.util.convert_units import (
 from particula.util.colors import (
     TAILWIND,
 )
+from particula.util.numba_jit import (
+    numba_jit_wrapper,
+)

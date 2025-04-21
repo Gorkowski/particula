@@ -1,7 +1,5 @@
 """a simple, fast, and powerful particle simulator.
 
-NUMBA_JIT_ENABLED = False  # Off by default
-
 particula is a simple, fast, and powerful particle simulator,
 or at least two of the three, we hope. It is a simple particle
 system that is designed to be easy to use and easy to extend.
@@ -38,7 +36,3 @@ __version__ = "0.2.4"
 logger = setup()
 # log the version of particula upon loading
 logger.info("particula version %s loaded.", __version__)
-
-
-# Numba JIT compilation
-# NUMBA_JIT_ENABLED = False  # Off by default

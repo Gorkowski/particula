@@ -38,7 +38,6 @@ from particula.util.numba_jit import numba_jit_wrapper
         "particle_radius": "nonnegative",
     }
 )
-@numba_jit_wrapper
 def get_first_order_mass_transport_k(
     particle_radius: Union[float, NDArray[np.float64]],
     vapor_transition: Union[float, NDArray[np.float64]],
@@ -110,7 +109,6 @@ def get_first_order_mass_transport_k(
         "molar_mass": "positive",
     }
 )
-@numba_jit_wrapper
 def get_mass_transfer_rate(
     pressure_delta: Union[float, NDArray[np.float64]],
     first_order_mass_transport: Union[float, NDArray[np.float64]],
@@ -185,7 +183,6 @@ def get_mass_transfer_rate(
         "density": "positive",
     }
 )
-@numba_jit_wrapper
 def get_radius_transfer_rate(
     mass_rate: Union[float, NDArray[np.float64]],
     particle_radius: Union[float, NDArray[np.float64]],
@@ -246,7 +243,6 @@ def get_radius_transfer_rate(
         "particle_concentration": "nonnegative",
     }
 )
-@numba_jit_wrapper
 def get_mass_transfer(
     mass_rate: NDArray[np.float64],
     time_step: float,
@@ -324,7 +320,6 @@ def get_mass_transfer(
         "particle_concentration": "nonnegative",
     }
 )
-@numba_jit_wrapper
 def get_mass_transfer_of_single_species(
     mass_rate: NDArray[np.float64],
     time_step: float,
@@ -400,7 +395,6 @@ def get_mass_transfer_of_single_species(
         "particle_concentration": "nonnegative",
     }
 )
-@numba_jit_wrapper
 def get_mass_transfer_of_multiple_species(
     mass_rate: NDArray[np.float64],
     time_step: float,

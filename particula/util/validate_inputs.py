@@ -18,8 +18,10 @@ import inspect
 from functools import wraps
 
 import numpy as np
+from particula.util.numba_jit import numba_jit_wrapper
 
 
+@numba_jit_wrapper
 def validate_positive(value, name):
     """
     Validate that a numeric array or scalar is strictly positive.
@@ -31,10 +33,12 @@ def validate_positive(value, name):
     Raises:
         - ValueError : If any element is <= 0.
     """
-    if np.any(value <= 0):
+    if value.size and np.max(value) <= 0:
+        #np.any(value <= 0):
         raise ValueError(f"Argument '{name}' must be positive.")
 
 
+@numba_jit_wrapper
 def validate_negative(value, name):
     """
     Validate that a numeric array or scalar is strictly negative.
@@ -46,10 +50,12 @@ def validate_negative(value, name):
     Raises:
         - ValueError : If any element is >= 0.
     """
-    if np.any(value >= 0):
+    if value.size and np.min(value) >= 0:
+        # np.any(value >= 0):
         raise ValueError(f"Argument '{name}' must be negative.")
 
 
+@numba_jit_wrapper
 def validate_nonpositive(value, name):
     """
     Validate that a numeric array or scalar is nonpositive (<= 0).
@@ -61,10 +67,12 @@ def validate_nonpositive(value, name):
     Raises:
         - ValueError : If any element is > 0.
     """
-    if np.any(value > 0):
+    if value.size and np.max(value) > 0:
+        #np.any(value > 0):
         raise ValueError(f"Argument '{name}' must be nonpositive.")
 
 
+@numba_jit_wrapper
 def validate_nonnegative(value, name):
     """
     Validate that a numeric array or scalar is nonnegative (>= 0).
@@ -76,10 +84,12 @@ def validate_nonnegative(value, name):
     Raises:
         - ValueError : If any element is < 0.
     """
-    if np.any(value < 0):
+    if value.size and np.min(value) < 0:
+        #np.any(value < 0):
         raise ValueError(f"Argument '{name}' must be nonnegative.")
 
 
+@numba_jit_wrapper
 def validate_nonzero(value, name):
     """
     Validate that a numeric array or scalar is nonzero.
@@ -91,10 +101,11 @@ def validate_nonzero(value, name):
     Raises:
         - ValueError : If any element is 0.
     """
-    if np.any(value == 0):
+    if value.size and np.min(value) == 0:  # np.any(value == 0):
         raise ValueError(f"Argument '{name}' must be nonzero.")
 
 
+@numba_jit_wrapper
 def validate_finite(value, name):
     """
     Validate that a numeric array or scalar has no infinities or NaNs.
@@ -106,8 +117,17 @@ def validate_finite(value, name):
     Raises:
         - ValueError : If any element is inf or NaN.
     """
-    if not np.all(np.isfinite(value)):
-        raise ValueError(f"Argument '{name}' must be finite (no inf or NaN).")
+    for v in np.asarray(value).ravel():
+        if not np.isfinite(v):
+            raise ValueError(f"Argument '{name}' must be finite (no inf or NaN).")
+    # is_finite = np.isfinite(value)
+    # if value.size and np.min(is_finite) == 0:
+    # arr = np.asarray(value)
+
+    # # 0‑D scalars give size == 1, empty arrays give size == 0
+    # if arr.size and np.min(np.isfinite(arr)) == 0:
+    #     #not np.all(np.isfinite(value)):
+    #     raise ValueError(f"Argument '{name}' must be finite (no inf or NaN).")
 
 
 def validate_inputs(dict_args):
