@@ -13,6 +13,21 @@ except ImportError:
     # If Numba is not installed, set to False by default
     HAVE_NUMBA = False
 
+def _jit_enabled() -> bool:
+    """
+    Decide at *run time* whether JIT is enabled, avoiding
+    an import of `particula` during module initialisation.
+    Priority:
+    1. Environment variable  PARTICULA_NUMBA_JIT (=1/true/yes to enable)
+    2. Attribute `NUMBA_JIT_ENABLED` on an already‑loaded `particula`
+    3. Default False
+    """
+    env_flag = os.getenv("PARTICULA_NUMBA_JIT")
+    if env_flag is not None:
+        return env_flag.lower() in ("1", "true", "yes")
+    pkg = sys.modules.get("particula")
+    return getattr(pkg, "NUMBA_JIT_ENABLED", False) if pkg else False
+
 
 def numba_jit_wrapper(func):
     """Decorator to optionally JIT-compile the function `func`."""
