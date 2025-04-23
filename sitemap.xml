@@ -713,7 +713,7 @@
          <lastmod>2025-04-23</lastmod>
     </url>
     <url>
-         <loc>https://uncscode.github.io/particula/Examples/Setup_Particula/Details/Contributor_Workflow/</loc>
+         <loc>https://uncscode.github.io/particula/Examples/Setup_Particula/Details/Contributor_Setup/</loc>
          <lastmod>2025-04-23</lastmod>
     </url>
     <url>
@@ -834,6 +834,22 @@
     </url>
     <url>
          <loc>https://uncscode.github.io/particula/contribute/CONTRIBUTING/</loc>
+         <lastmod>2025-04-23</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/contribute/Code_Specifications/</loc>
+         <lastmod>2025-04-23</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/contribute/Code_Specifications/Details/Class_docstring_format/</loc>
+         <lastmod>2025-04-23</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/contribute/Code_Specifications/Details/Function_docstring_format/</loc>
+         <lastmod>2025-04-23</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/contribute/Code_Specifications/Details/Linear_Git_Repository/</loc>
          <lastmod>2025-04-23</lastmod>
     </url>
     <url>
