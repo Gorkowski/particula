@@ -1,3 +1,9 @@
+"""
+Backend dispatching and registration.
+This module provides a mechanism for dispatching function calls to
+accelerated implementations based on the currently-selected backend.
+"""
+
 from __future__ import annotations
 
 import functools
@@ -8,12 +14,16 @@ from typing import Callable, Dict
 # ----------------------------------------------------------------------
 # _GLOBAL STATE
 # ----------------------------------------------------------------------
-_backend: str = "python"                       # active backend
-_registry: Dict[str, Dict[str, Callable]] = defaultdict(dict)  # name → {backend: impl}
+_backend: str = "python"  # active backend
+_registry: Dict[str, Dict[str, Callable]] = defaultdict(
+    dict
+)  # name → {backend: impl}
 
 # ----------------------------------------------------------------------
 # PUBLIC HELPERS
 # ----------------------------------------------------------------------
+
+
 def use_backend(name: str = "python") -> None:
     """
     Set the active backend.  Pass ``"python"`` (or leave empty) to disable
@@ -21,6 +31,7 @@ def use_backend(name: str = "python") -> None:
     """
     global _backend
     _backend = (name or "python").lower()
+
 
 def get_backend() -> str:
     """Return the currently-selected backend name."""
@@ -43,6 +54,7 @@ def backend(name: str):
     finally:
         use_backend(prev)
 
+
 # ----------------------------------------------------------------------
 # DECORATORS
 # ----------------------------------------------------------------------
@@ -56,7 +68,7 @@ def dispatchable(func: Callable) -> Callable:
     ``"python"``.
     """
     func_name = func.__name__
-    _registry.setdefault(func_name, {})["python"] = func   # default path
+    _registry.setdefault(func_name, {})["python"] = func  # default path
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
