@@ -100,13 +100,3 @@ def register(func_name: str, *, backend: str) -> Callable:
     return decorator
 
 
-# ----------------------------------------------------------------------
-# WHAT WE EXPORT
-# ----------------------------------------------------------------------
-__all__ = [
-    "use_backend",
-    "get_backend",
-    "backend",
-    "dispatchable",
-    "register",
-]
