@@ -42,7 +42,7 @@ def kget_knudsen_number(
     mean_free_path: ti.types.ndarray(dtype=ti.f64, ndim=1),
     particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
-) -> None:
+):
     """
     Vectorised Taichi kernel computing the Knudsen number.
 
@@ -88,18 +88,8 @@ def get_knudsen_number_taichi(mean_free_path, particle_radius):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
     # --- convert to 1-D numpy arrays -----------------------------------
-    mfp_np = np.atleast_1d(mean_free_path).astype(np.float64, copy=False)
-    pr_np = np.atleast_1d(particle_radius).astype(np.float64, copy=False)
-
-    # manual broadcasting (match reference behaviour)
-    if mfp_np.size == 1 and pr_np.size > 1:
-        mfp_np = np.full_like(pr_np, mfp_np.item())
-    elif pr_np.size == 1 and mfp_np.size > 1:
-        pr_np = np.full_like(mfp_np, pr_np.item())
-    elif mfp_np.size != pr_np.size:
-        raise ValueError(
-            "Input arrays must have the same length or one of them may be length-1."
-        )
+    mfp_np = np.atleast_1d(mean_free_path)
+    pr_np = np.atleast_1d(particle_radius)
 
     n = mfp_np.size
     # --- allocate Taichi ndarrays --------------------------------------
