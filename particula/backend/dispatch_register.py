@@ -98,5 +98,3 @@ def register(func_name: str, *, backend: str) -> Callable:
         return accel_func
 
     return decorator
-
-
