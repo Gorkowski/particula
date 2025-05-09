@@ -43,36 +43,44 @@ def knudsen_number(mean_free_path, particle_radius):
 # ---------- kernel (handles ndarrays) ----------
 @ti.kernel
 def kget_knudsen_number(
-    mean_free_path: ti.types.ndarray(),  # 1‑D float64
-    particle_radius: ti.types.ndarray(),  # 1‑D float64
-    result: ti.types.ndarray(),  # 1‑D float64 (pre‑allocated)
+    mean_free_path: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ) -> None:
-    n = mean_free_path.shape[0]  # number of elements
+    n = mean_free_path.shape[0]
     for i in range(n):
         result[i] = knudsen_number(mean_free_path[i], particle_radius[i])
 
 
-# --------------------------------------------------------------------- #
-# Python wrapper registered for the “taichi” backend                    #
-# --------------------------------------------------------------------- #
-# @register("get_knudsen_number", backend="taichi")
-# def get_knudsen_number_taichi(
-#     mean_free_path,
-#     particle_radius,
-# ):
-#     """
-#     Taichi version of ``get_knudsen_number``.
-#     Handles scalars as well as 1-D numpy arrays (vectorised).  Broadcasting
-#     rules follow the reference implementation: either the two arrays must
-#     be the same length, or one of them may be length-1 (scalar broadcast).
-#     """
-#     # ---- Normalise to 1-D numpy arrays ---------------------------------
-#     mean_free_path = np.atleast_1d(mean_free_path)
-#     particle_radius = np.atleast_1d(particle_radius)
-#     result = np.zeros_like(mean_free_path)
+@register("get_knudsen_number", backend="taichi")
+def get_knudsen_number_taichi(mean_free_path, particle_radius):
+    """
+    Vectorised Taichi implementation matching the reference semantics.
+    Accepts scalars or 1-D numpy arrays and broadcasts either argument
+    when it has length 1.
+    """
+    # normalise to 1-D float64 numpy arrays
+    mfp_np = np.atleast_1d(mean_free_path).astype(np.float64, copy=False)
+    pr_np = np.atleast_1d(particle_radius).astype(np.float64, copy=False)
 
-#     kget_knudsen_number(
-#         mean_free_path, particle_radius, result
-#     )
+    # manual broadcasting rules
+    if mfp_np.size == 1 and pr_np.size > 1:
+        mfp_np = np.full_like(pr_np, mfp_np.item())
+    elif pr_np.size == 1 and mfp_np.size > 1:
+        pr_np = np.full_like(mfp_np, pr_np.item())
+    elif mfp_np.size != pr_np.size:
+        raise ValueError(
+            "Input arrays must have the same length or one of them may be length-1."
+        )
 
-#     return result
+    n = mfp_np.size
+    mfp_nd = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_nd = ti.ndarray(dtype=ti.f64, shape=n)
+    res_nd = ti.ndarray(dtype=ti.f64, shape=n)
+
+    mfp_nd.from_numpy(mfp_np)
+    pr_nd.from_numpy(pr_np)
+
+    kget_knudsen_number(mfp_nd, pr_nd, res_nd)
+
+    return res_nd.to_numpy()
