@@ -14,35 +14,26 @@ import taichi as ti
 import numpy as np
 
 
-# ---------------------------------------------------------------------
-# 1. Device function ─ operates on **scalars only**
-# ---------------------------------------------------------------------
-
-ti.init(arch=ti.cpu, default_fp=ti.f64)  # sets scalar precision
-
-
+# --------------------------------------------------------------------- #
+#  Device function (scalar)                                             #
+# --------------------------------------------------------------------- #
 @ti.func
-def fget_knudsen_number(
-    mean_free_path,
-    particle_radius,
-    result,
-):
-    """Loop inside the Taichi *function*."""
-    n = mean_free_path.shape[0]
-    for i in range(n):  # device‑side loop
-        result[i] = mean_free_path[i] / particle_radius[i]
-    return result
+def _knudsen_element(lambda_mfp: ti.f64, r: ti.f64) -> ti.f64:
+    """Return Kn = λ / r for one scalar pair."""
+    return lambda_mfp / r
 
 
+# --------------------------------------------------------------------- #
+#  Kernel that works on 1-D arrays                                      #
+# --------------------------------------------------------------------- #
 @ti.kernel
 def kget_knudsen_number(
-    mean_free_path: ti.types.ndarray(),
-    particle_radius: ti.types.ndarray(),
-    result: ti.types.ndarray(),
-):
-    # The kernel just delegates all work to the function.
-    fget_knudsen_number(mean_free_path, particle_radius, result)
-    return result
+    mean_free_path: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+) -> None:
+    for i in range(result.shape[0]):
+        result[i] = _knudsen_element(mean_free_path[i], particle_radius[i])
 
 
 # # ---------- device function (scalar inputs, no annotations) ----------
@@ -65,16 +56,34 @@ def kget_knudsen_number(
 
 
 def get_knudsen_number_taichi(mean_free_path, particle_radius):
-    """
-    Vectorised Taichi implementation matching the reference semantics.
-    Accepts scalars or 1-D numpy arrays and broadcasts either argument
-    when it has length 1.
-    """
-    # normalise to 1-D float64 numpy arrays
-    mfp_np = np.atleast_1d(mean_free_path)
-    pr_np = np.atleast_1d(particle_radius)
-    res_np = np.zeros_like(mfp_np)
+    # --- convert to 1-D numpy arrays -----------------------------------
+    mfp_np = np.atleast_1d(mean_free_path).astype(np.float64, copy=False)
+    pr_np = np.atleast_1d(particle_radius).astype(np.float64, copy=False)
 
-    res_np = kget_knudsen_number(mfp_np, pr_np, res_np)
+    # manual broadcasting rules matching reference implementation
+    if mfp_np.size == 1 and pr_np.size > 1:
+        mfp_np = np.full_like(pr_np, mfp_np.item())
+    elif pr_np.size == 1 and mfp_np.size > 1:
+        pr_np = np.full_like(mfp_np, pr_np.item())
+    elif mfp_np.size != pr_np.size:
+        raise ValueError(
+            "Input arrays must have the same length or one of them may be length-1."
+        )
 
-    return res_np
+    n = mfp_np.size
+    # --- allocate Taichi ndarrays --------------------------------------
+    mfp_nd = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_nd  = ti.ndarray(dtype=ti.f64, shape=n)
+    res_nd = ti.ndarray(dtype=ti.f64, shape=n)
+
+    mfp_nd.from_numpy(mfp_np)
+    pr_nd.from_numpy(pr_np)
+
+    # --- launch kernel -------------------------------------------------
+    kget_knudsen_number(mfp_nd, pr_nd, res_nd)
+
+    result_np = res_nd.to_numpy()
+    # return scalar if both inputs were scalar
+    if np.isscalar(mean_free_path) and np.isscalar(particle_radius):
+        return float(result_np[0])
+    return result_np
