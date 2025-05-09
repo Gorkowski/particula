@@ -1,6 +1,7 @@
 # required imports
 import taichi as ti
 import numpy as np
+from numbers import Number          # new
 from particula.backend import register
 
 # ─── 3. element-wise Taichi function ────────────────────────────────────────
@@ -23,24 +24,36 @@ def kget_vapor_transition_correction(
 # ─── 5. public wrapper (backend registration) ───────────────────────────────
 @register("get_vapor_transition_correction", backend="taichi")
 def get_vapor_transition_correction_taichi(knudsen_number, mass_accommodation):
-    # 5 a – type guard
-    if not (
-        isinstance(knudsen_number, np.ndarray)
-        and isinstance(mass_accommodation, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+    """
+    Taichi backend for get_vapor_transition_correction.
 
-    # 5 b – ensure 1-D NumPy arrays
-    kn, alpha = np.atleast_1d(knudsen_number), np.atleast_1d(mass_accommodation)
-    n = kn.size
+    Accepts scalar or array-like inputs, broadcasts them to the same
+    shape, calls the Taichi kernel and returns a NumPy array with the
+    broadcast shape (or a scalar if both inputs were scalars).
+    """
+    # 5 a – coerce to NumPy arrays (scalars become 0-d arrays)
+    kn_np = np.asarray(knudsen_number, dtype=np.float64) \
+        if not isinstance(knudsen_number, Number) \
+        else np.array(knudsen_number, dtype=np.float64)
+    alpha_np = np.asarray(mass_accommodation, dtype=np.float64) \
+        if not isinstance(mass_accommodation, Number) \
+        else np.array(mass_accommodation, dtype=np.float64)
+
+    # 5 b – broadcast to a common shape and flatten
+    kn_b, alpha_b = np.broadcast_arrays(kn_np, alpha_np)
+    flat_kn, flat_alpha = kn_b.ravel(), alpha_b.ravel()
+    n = flat_kn.size
 
     # 5 c – allocate Taichi buffers
-    kn_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    al_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    kn_ti.from_numpy(kn)
-    al_ti.from_numpy(alpha)
+    kn_ti    = ti.ndarray(dtype=ti.f64, shape=n)
+    alpha_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti   = ti.ndarray(dtype=ti.f64, shape=n)
+    kn_ti.from_numpy(flat_kn)
+    alpha_ti.from_numpy(flat_alpha)
 
-    # 5 d – launch kernel
-    kget_vapor_transition_correction(kn_ti, al_ti, res_ti)
-    return res_ti.to_numpy()
+    # 5 d – launch the kernel
+    kget_vapor_transition_correction(kn_ti, alpha_ti, res_ti)
+
+    # 5 e – reshape back and restore scalar return if needed
+    result = res_ti.to_numpy().reshape(kn_b.shape)
+    return result.item() if result.size == 1 else result
