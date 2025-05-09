@@ -7,7 +7,7 @@ import time
 import statistics
 import gc
 from typing import Callable, Optional, Any, Dict
-import json
+import csv
 import platform
 
 import numpy as np
@@ -71,7 +71,7 @@ def get_system_info():
 def get_function_benchmark(
     func: Callable[[], Any],
     ops_per_call: float,
-    max_run_time_s: float = 2.0,
+    max_run_time_s: float = 1.0,
     min_iterations: int = 5,
     repeats: Optional[int] = None,
 ) -> dict[str, Any]:
@@ -226,3 +226,17 @@ def get_function_benchmark(
         "array_stats": array_stats,
         "array_headers": array_headers,
     }
+
+
+def save_combined_csv(csv_path: str, header: list[str], *result_matrices):
+    """
+    Write one or more 2-D `result_matrices` into a single CSV file.
+
+    Each matrix is an iterable of rows; every row length must match
+    `header`.  Matrices are concatenated in the order provided.
+    """
+    rows = [row for matrix in result_matrices for row in matrix]
+    with open(csv_path, "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(header)
+        writer.writerows(rows)

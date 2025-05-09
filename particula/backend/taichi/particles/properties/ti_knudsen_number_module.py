@@ -63,5 +63,5 @@ def get_knudsen_number_taichi(mean_free_path, particle_radius):
     particle_radius_ti.from_numpy(particle_radius_np)
 
     # launch kernel
-    kget_knudsen_number(mean_free_path_np, particle_radius_np, result_ti)
+    kget_knudsen_number(mean_free_path_ti, particle_radius_ti, result_ti)
     return result_ti.to_numpy()

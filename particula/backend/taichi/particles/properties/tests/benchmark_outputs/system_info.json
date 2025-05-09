@@ -1,0 +1,29 @@
+{
+  "physical_cores": 4,
+  "total_cores": 8,
+  "max_frequency_mhz": 2995.0,
+  "min_frequency_mhz": 0.0,
+  "current_frequency_mhz": 2995.0,
+  "cpu_usage_per_core_%": [
+    41.5,
+    40.6,
+    30.8,
+    23.1,
+    51.5,
+    30.8,
+    45.3,
+    38.5
+  ],
+  "total_cpu_usage_%": 51.5,
+  "system": "Windows",
+  "release": "11",
+  "version": "10.0.26100",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+  "python_version": "3.12.8",
+  "python_build": [
+    "main",
+    "Jan 14 2025 22:49:36"
+  ],
+  "python_compiler": "MSC v.1942 64 bit (AMD64)"
+}
