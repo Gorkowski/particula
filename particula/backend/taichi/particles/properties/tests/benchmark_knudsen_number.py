@@ -39,8 +39,8 @@ def _save_combined_csv(csv_path: str, header: list[str], *result_matrices):
         writer.writerows(rows)
 
 
-def _run_benchmarks() -> list[tuple[int, float, float]]:
-    """Return list of (n, mean_time_py, mean_time_ti)."""
+def _run_benchmarks() -> list[list[float]]:
+    """Return list of rows: [n, *python_stats..., *taichi_stats...]."""
     rng = np.random.default_rng(seed=42)
     lengths = np.logspace(2, 6, 10, dtype=int)
     rows: list = []
@@ -56,7 +56,8 @@ def _run_benchmarks() -> list[tuple[int, float, float]]:
         stats_py = get_function_benchmark(py_call, ops_per_call=len(mfp))
         stats_ti = get_function_benchmark(ti_call, ops_per_call=len(mfp))
 
-        rows.append((n, stats_py["array_stats"], stats_ti["array_stats"]))
+        row = [n, *stats_py["array_stats"], *stats_ti["array_stats"]]
+        rows.append(row)
     python_header = ["python_" + k for k in stats_py["array_headers"]]
     taichi_header = ["taichi_" + k for k in stats_ti["array_headers"]]
     header = ["array_length"] + python_header + taichi_header
