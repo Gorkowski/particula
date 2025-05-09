@@ -5,6 +5,8 @@ Taichi-accelerated implementation of ``get_knudsen_number``.
 import taichi as ti
 import numpy as np
 
+from particula.backend import register
+
 
 @ti.func
 def fget_knudsen_number(
@@ -32,9 +34,10 @@ def kget_knudsen_number(
         result[i] = fget_knudsen_number(mean_free_path[i], particle_radius[i])
 
 
+@register("get_knudsen_number", backend="taichi")
 def get_knudsen_number_taichi(mean_free_path, particle_radius):
     """
-    Taichi-accelerated version of ``get_knudsen_number``.
+    Taichi-accelerated version of ``par.particles.get_knudsen_number``.
 
     Notes
     -----
