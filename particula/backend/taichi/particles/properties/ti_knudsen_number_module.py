@@ -19,23 +19,23 @@ import numpy as np
 
 
 @ti.func
-def _knudsen_element(lambda_mfp: ti.f64, r: ti.f64) -> ti.f64:
+def _knudsen_element(mean_free_path: ti.f64, particle_radius: ti.f64) -> ti.f64:
     """
     Element-wise Knudsen number.
 
     Parameters
     ----------
-    lambda_mfp : ti.f64
+    mean_free_path : ti.f64
         Mean free path of the gas molecules (m).
-    r : ti.f64
+    particle_radius : ti.f64
         Particle radius (m).
 
     Returns
     -------
     ti.f64
-        Knudsen number (dimensionless), computed as λ / r.
+        Knudsen number (dimensionless), computed as mean_free_path / particle_radius.
     """
-    return lambda_mfp / r
+    return mean_free_path / particle_radius
 
 @ti.kernel
 def kget_knudsen_number(
@@ -59,7 +59,7 @@ def kget_knudsen_number(
         Output buffer that will receive the Knudsen numbers.
     """
     for i in range(result.shape[0]):
-        result[i] = _knudsen_element(mean_free_path[i], particle_radius[i])
+        result[i] = _knudsen_element(mean_free_path[i], particle_radius[i])    # arguments unchanged; signature changed
 
 
 def get_knudsen_number_taichi(mean_free_path, particle_radius):
@@ -88,21 +88,21 @@ def get_knudsen_number_taichi(mean_free_path, particle_radius):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
     # --- convert to 1-D numpy arrays -----------------------------------
-    mfp_np = np.atleast_1d(mean_free_path)
-    pr_np = np.atleast_1d(particle_radius)
+    mean_free_path_np = np.atleast_1d(mean_free_path)
+    particle_radius_np = np.atleast_1d(particle_radius)
 
-    n = mfp_np.size
+    n = mean_free_path_np.size
     # --- allocate Taichi ndarrays --------------------------------------
-    mfp_nd = ti.ndarray(dtype=ti.f64, shape=n)
-    pr_nd  = ti.ndarray(dtype=ti.f64, shape=n)
-    res_nd = ti.ndarray(dtype=ti.f64, shape=n)
+    mean_free_path_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    particle_radius_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
 
-    mfp_nd.from_numpy(mfp_np)
-    pr_nd.from_numpy(pr_np)
+    mean_free_path_ti.from_numpy(mean_free_path_np)
+    particle_radius_ti.from_numpy(particle_radius_np)
 
     # --- launch kernel -------------------------------------------------
-    kget_knudsen_number(mfp_nd, pr_nd, res_nd)
+    kget_knudsen_number(mean_free_path_ti, particle_radius_ti, result_ti)
 
-    result_np = res_nd.to_numpy()
+    result_np = result_ti.to_numpy()
 
     return result_np
