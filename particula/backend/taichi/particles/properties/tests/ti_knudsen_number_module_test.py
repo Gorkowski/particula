@@ -41,15 +41,6 @@ def _assert_close(result, expected):
 # --------------------------------------------------------------------- #
 # Tests                                                                 #
 # --------------------------------------------------------------------- #
-def test_get_knudsen_number_taichi_scalar():
-    """Scalar inputs should match the reference calculation."""
-    mfp = 6.5e-8
-    pr = 1.0e-7
-
-    expected = get_knudsen_number_python(mfp, pr)  # float
-    result = get_knudsen_number_taichi(mfp, pr)    # 1-element ndarray
-
-    _assert_close(result, expected)
 
 
 def test_get_knudsen_number_taichi_array():

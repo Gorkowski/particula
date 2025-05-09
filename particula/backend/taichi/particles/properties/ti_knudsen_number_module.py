@@ -68,16 +68,15 @@ def get_knudsen_number_taichi(mean_free_path, particle_radius):
 
     Parameters
     ----------
-    mean_free_path : float | np.ndarray
+    mean_free_path : np.ndarray
         Mean free path(s) in metres.
-    particle_radius : float | np.ndarray
+    particle_radius : np.ndarray
         Particle radius/radii in metres.
 
     Returns
     -------
-    float | np.ndarray
-        Knudsen number(s).  A scalar is returned if both inputs were
-        scalar; otherwise a NumPy array is returned.
+    np.ndarray
+        Knudsen number(s) as a NumPy array.
 
     Notes
     -----
@@ -85,6 +84,9 @@ def get_knudsen_number_taichi(mean_free_path, particle_radius):
     Taichi NDArray buffers, launches :pyfunc:`kget_knudsen_number`,
     and converts the result back to NumPy for the caller.
     """
+    if not (isinstance(mean_free_path, np.ndarray) and isinstance(particle_radius, np.ndarray)):
+        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+
     # --- convert to 1-D numpy arrays -----------------------------------
     mfp_np = np.atleast_1d(mean_free_path).astype(np.float64, copy=False)
     pr_np = np.atleast_1d(particle_radius).astype(np.float64, copy=False)
@@ -113,7 +115,4 @@ def get_knudsen_number_taichi(mean_free_path, particle_radius):
 
     result_np = res_nd.to_numpy()
 
-    # return scalar if both inputs were scalar
-    if np.isscalar(mean_free_path) and np.isscalar(particle_radius):
-        return float(result_np[0])
     return result_np
