@@ -63,20 +63,57 @@ def kget_knudsen_number(
 
 
 def get_knudsen_number_taichi(mean_free_path, particle_radius):
+    """
+    Taichi-accelerated version of ``get_knudsen_number``.
+
+    Parameters
+    ----------
+    mean_free_path : float | np.ndarray
+        Mean free path(s) in metres.
+    particle_radius : float | np.ndarray
+        Particle radius/radii in metres.
+
+    Returns
+    -------
+    float | np.ndarray
+        Knudsen number(s).  A scalar is returned if both inputs were
+        scalar; otherwise a NumPy array is returned.
+
+    Notes
+    -----
+    The function normalises the inputs to 1-D NumPy arrays, allocates
+    Taichi NDArray buffers, launches :pyfunc:`kget_knudsen_number`,
+    and converts the result back to NumPy for the caller.
+    """
     # --- convert to 1-D numpy arrays -----------------------------------
-    mfp_np = np.atleast_1d(mean_free_path)
-    pr_np = np.atleast_1d(particle_radius)
+    mfp_np = np.atleast_1d(mean_free_path).astype(np.float64, copy=False)
+    pr_np = np.atleast_1d(particle_radius).astype(np.float64, copy=False)
+
+    # manual broadcasting (match reference behaviour)
+    if mfp_np.size == 1 and pr_np.size > 1:
+        mfp_np = np.full_like(pr_np, mfp_np.item())
+    elif pr_np.size == 1 and mfp_np.size > 1:
+        pr_np = np.full_like(mfp_np, pr_np.item())
+    elif mfp_np.size != pr_np.size:
+        raise ValueError(
+            "Input arrays must have the same length or one of them may be length-1."
+        )
 
     n = mfp_np.size
     # --- allocate Taichi ndarrays --------------------------------------
     mfp_nd = ti.ndarray(dtype=ti.f64, shape=n)
-    pr_nd = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_nd  = ti.ndarray(dtype=ti.f64, shape=n)
     res_nd = ti.ndarray(dtype=ti.f64, shape=n)
 
     mfp_nd.from_numpy(mfp_np)
     pr_nd.from_numpy(pr_np)
 
     # --- launch kernel -------------------------------------------------
-    kget_knudsen_number(mfp_np, pr_np, res_nd)
+    kget_knudsen_number(mfp_nd, pr_nd, res_nd)
 
-    return res_nd.to_numpy()
+    result_np = res_nd.to_numpy()
+
+    # return scalar if both inputs were scalar
+    if np.isscalar(mean_free_path) and np.isscalar(particle_radius):
+        return float(result_np[0])
+    return result_np
