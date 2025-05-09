@@ -4,10 +4,11 @@ They verify numerical consistency with the reference NumPy implementation
 and exercise both the Python wrapper and the Taichi kernel.
 """
 
-from __future__ import annotations
-
 import numpy as np
 import pytest
+import taichi as ti
+
+ti.init(arch=ti.cpu)  # Initialize Taichi with CPU backend
 
 # --------------------------------------------------------------------- #
 # Skip the whole module if Taichi is not available                      #
@@ -48,7 +49,7 @@ def test_get_knudsen_number_taichi_scalar():
     expected = get_knudsen_number_python(mfp, pr)  # float
     result = get_knudsen_number_taichi(mfp, pr)    # 1-element ndarray
 
-    _assert_close(result[0], expected)
+    _assert_close(result, expected)
 
 
 def test_get_knudsen_number_taichi_array():
