@@ -31,7 +31,8 @@ def kget_mass_fractions_2d(                       # 2-D wrapper kernel (row-wise
     mw: ti.types.ndarray(dtype=ti.f64, ndim=1),       # Mⱼ
     out: ti.types.ndarray(dtype=ti.f64, ndim=2),      # wᵢⱼ
 ):
-    rows, cols = out.shape
+    rows = out.shape[0]
+    cols = out.shape[1]
     for r in range(rows):
         tot = ti.f64(0.0)
         for c in range(cols):
@@ -57,7 +58,9 @@ def ti_get_mass_fractions_from_moles(mole_fractions, molecular_weights):
     # 1-D case
     if x.ndim == 1:
         n = x.size
-        x_ti, mw_ti, out_ti = [ti.ndarray(ti.f64, shape=n) for _ in range(3)]
+        x_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+        mw_ti = ti.ndarray(dtype=ti.f64, shape=n)
+        out_ti = ti.ndarray(dtype=ti.f64, shape=n)
         x_ti.from_numpy(x)
         mw_ti.from_numpy(mw)
         kget_mass_fractions_1d(x_ti, mw_ti, out_ti)
@@ -66,9 +69,9 @@ def ti_get_mass_fractions_from_moles(mole_fractions, molecular_weights):
     # 2-D case
     if x.ndim == 2:
         rows, cols = x.shape
-        x_ti = ti.ndarray(ti.f64, shape=(rows, cols))
-        mw_ti = ti.ndarray(ti.f64, shape=cols)
-        out_ti = ti.ndarray(ti.f64, shape=(rows, cols))
+        x_ti  = ti.ndarray(dtype=ti.f64, shape=(rows, cols))
+        mw_ti = ti.ndarray(dtype=ti.f64, shape=cols)
+        out_ti = ti.ndarray(dtype=ti.f64, shape=(rows, cols))
         x_ti.from_numpy(x)
         mw_ti.from_numpy(mw)
         kget_mass_fractions_2d(x_ti, mw_ti, out_ti)
