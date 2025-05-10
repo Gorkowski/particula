@@ -50,7 +50,7 @@ def kget_kolmogorov_velocity(
         result[i] = fget_kolmogorov_velocity(kinematic_viscosity[i], turbulent_dissipation[i])
 
 @register("get_kolmogorov_time", backend="taichi")
-def ti_get_kolmogorov_time(kinematic_viscosity, turbulent_dissipation):
+def get_kolmogorov_time_taichi(kinematic_viscosity, turbulent_dissipation):
     """Taichi wrapper for Kolmogorov time."""
     if not (isinstance(kinematic_viscosity, np.ndarray) and isinstance(turbulent_dissipation, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
@@ -66,7 +66,7 @@ def ti_get_kolmogorov_time(kinematic_viscosity, turbulent_dissipation):
     return result_np.item() if result_np.size == 1 else result_np
 
 @register("get_kolmogorov_length", backend="taichi")
-def ti_get_kolmogorov_length(kinematic_viscosity, turbulent_dissipation):
+def get_kolmogorov_length_taichi(kinematic_viscosity, turbulent_dissipation):
     """Taichi wrapper for Kolmogorov length."""
     if not (isinstance(kinematic_viscosity, np.ndarray) and isinstance(turbulent_dissipation, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
@@ -82,7 +82,7 @@ def ti_get_kolmogorov_length(kinematic_viscosity, turbulent_dissipation):
     return result_np.item() if result_np.size == 1 else result_np
 
 @register("get_kolmogorov_velocity", backend="taichi")
-def ti_get_kolmogorov_velocity(kinematic_viscosity, turbulent_dissipation):
+def get_kolmogorov_velocity_taichi(kinematic_viscosity, turbulent_dissipation):
     """Taichi wrapper for Kolmogorov velocity."""
     if not (isinstance(kinematic_viscosity, np.ndarray) and isinstance(turbulent_dissipation, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
