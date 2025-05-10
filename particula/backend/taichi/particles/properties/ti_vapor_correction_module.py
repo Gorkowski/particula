@@ -2,7 +2,7 @@
 import taichi as ti
 import numpy as np
 from numbers import Number  # new
-from particula.backend import register
+from particula.backend.dispatch_register import register
 
 
 # ─── 3. element-wise Taichi function ────────────────────────────────────────

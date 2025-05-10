@@ -1,6 +1,6 @@
 import taichi as ti
 import numpy as np
-from particula.backend import register
+from particula.backend.dispatch_register import register
 
 @ti.func
 def fget_particle_reynolds_number(          # scalar version
@@ -50,4 +50,5 @@ def ti_get_particle_reynolds_number(
     kv_ti.from_numpy(kv)
 
     kget_particle_reynolds_number(pr_ti, pv_ti, kv_ti, res_ti)
-    return res_ti.to_numpy().reshape(pr.shape)
+    result_np = res_ti.to_numpy().reshape(pr.shape)
+    return result_np.item() if result_np.size == 1 else result_np

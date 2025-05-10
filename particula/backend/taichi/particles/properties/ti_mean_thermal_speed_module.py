@@ -2,7 +2,7 @@
 
 import taichi as ti
 import numpy as np
-from particula.backend import register
+from particula.backend.dispatch_register import register
 from particula.util.constants import BOLTZMANN_CONSTANT
 
 @ti.func
@@ -46,4 +46,5 @@ def ti_get_mean_thermal_speed(particle_mass, temperature):
     temp_ti.from_numpy(temp_flat)
 
     kget_mean_thermal_speed(pm_ti, temp_ti, result_ti)
-    return result_ti.to_numpy().reshape(pm.shape)
+    result_np = result_ti.to_numpy().reshape(pm.shape)
+    return result_np.item() if result_np.size == 1 else result_np
