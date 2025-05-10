@@ -13,8 +13,8 @@ def fget_friction_factor(
 @ti.kernel
 def kget_friction_factor(
     particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    slip_correction: ti.types.ndarray(dtype=ti.f64, ndim=1),
     dynamic_viscosity: ti.f64,
+    slip_correction: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(result.shape[0]):
@@ -57,7 +57,7 @@ def ti_get_friction_factor(particle_radius, dynamic_viscosity, slip_correction):
     r_ti.from_numpy(r_np)
     c_ti.from_numpy(c_np)
 
-    kget_friction_factor(r_ti, c_ti, float(dynamic_viscosity), out_ti)
+    kget_friction_factor(r_ti, float(dynamic_viscosity), c_ti, out_ti)
 
     res = out_ti.to_numpy()
     return res.item() if res.size == 1 else res
