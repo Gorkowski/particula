@@ -33,3 +33,8 @@ from .ti_reynolds_number_module import (           # NEW – keep style parity
     kget_particle_reynolds_number,
     fget_particle_reynolds_number,
 )
+from .ti_partial_pressure_module import (
+    ti_get_partial_pressure_delta,
+    kget_partial_pressure_delta,
+    fget_partial_pressure_delta,
+)
