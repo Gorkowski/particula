@@ -10,10 +10,7 @@ from particula.backend import register
 @ti.func
 def fget_debye_function(variable: ti.f64, exponent: ti.f64) -> ti.f64:
     """Generalised Debye function, trapezoid rule with 1000 points."""
-    n_points = 1000
-    if variable <= 0.0:  # avoid 0/0 when variable == 0
-        return 0.0
-
+    n_points = 10_000
     dt = variable / (n_points - 1)
     integral = 0.0
     for j in range(1, n_points):                # t = 0 gives 0 → skip
@@ -37,7 +34,10 @@ def kget_debye_function(                               # noqa: N802
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(result.shape[0]):
-        result[i] = fget_debye_function(variable[i], exponent)
+        if variable[i] <= 0.0:  # avoid 0/0 when variable == 0
+            result[i] = 0.0
+        else:
+            result[i] = fget_debye_function(variable[i], exponent)
 
 
 # --------------------------------------------------------------------------- #
@@ -46,14 +46,14 @@ def kget_debye_function(                               # noqa: N802
 @register("get_debye_function", backend="taichi")       # noqa: D401
 def ti_get_debye_function(                              # noqa: N802
     variable,
-    integration_points: int = 1000,
+    integration_points: int = 10_000,
     n: int = 1,
 ):
     """Taichi wrapper replicating particles.properties.special_functions."""
     # only the default grid supported for now
-    if integration_points != 1000:
+    if integration_points != 10_000:
         raise NotImplementedError(
-            "Taichi backend currently supports integration_points = 1000 only."
+            "Taichi backend currently supports integration_points = 10_000 only."
         )
 
     single_value = np.isscalar(variable)
