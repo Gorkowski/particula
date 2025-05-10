@@ -37,13 +37,15 @@ def ti_get_partial_pressure_delta(
     kelvin_term
 ):
     """Taichi-accelerated wrapper for partial pressure delta."""
-    # Type guard
-    if not (
-        isinstance(partial_pressure_gas, np.ndarray)
-        and isinstance(partial_pressure_particle, np.ndarray)
-        and isinstance(kelvin_term, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for all inputs.")
+    # accept scalars or arrays – convert scalars to 0-D arrays
+    partial_pressure_gas  = np.asarray(partial_pressure_gas,  dtype=np.float64)
+    partial_pressure_particle = np.asarray(partial_pressure_particle, dtype=np.float64)
+    kelvin_term = np.asarray(kelvin_term, dtype=np.float64)
+
+    # Ensure all three inputs have the same size
+    if not (partial_pressure_gas.size == partial_pressure_particle.size ==
+            kelvin_term.size):
+        raise ValueError("All inputs must have the same length.")
 
     # Ensure 1-D NumPy arrays
     ppg = np.atleast_1d(partial_pressure_gas)
