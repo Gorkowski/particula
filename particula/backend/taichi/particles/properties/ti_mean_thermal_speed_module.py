@@ -3,9 +3,7 @@
 import taichi as ti
 import numpy as np
 from particula.backend import register
-
-# Boltzmann constant in J/K, must match the value used in the NumPy version
-BOLTZMANN_CONSTANT = 1.380649e-23
+from particula.util.constants import BOLTZMANN_CONSTANT
 
 @ti.func
 def fget_mean_thermal_speed(
@@ -34,13 +32,18 @@ def ti_get_mean_thermal_speed(particle_mass, temperature):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
     pm, temp = np.atleast_1d(particle_mass), np.atleast_1d(temperature)
-    n = pm.size
+    if pm.shape != temp.shape:
+        raise ValueError("particle_mass and temperature must share the same shape.")
 
-    pm_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    # flatten to 1-D for Taichi
+    pm_flat, temp_flat = pm.ravel(), temp.ravel()
+    n = pm_flat.size
+
+    pm_ti   = ti.ndarray(dtype=ti.f64, shape=n)
     temp_ti = ti.ndarray(dtype=ti.f64, shape=n)
     result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pm_ti.from_numpy(pm)
-    temp_ti.from_numpy(temp)
+    pm_ti.from_numpy(pm_flat)
+    temp_ti.from_numpy(temp_flat)
 
     kget_mean_thermal_speed(pm_ti, temp_ti, result_ti)
-    return result_ti.to_numpy()
+    return result_ti.to_numpy().reshape(pm.shape)
