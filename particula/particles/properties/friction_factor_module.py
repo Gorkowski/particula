@@ -14,6 +14,27 @@ import numpy as np
 
 from particula.util.validate_inputs import validate_inputs
 
+# Example usage of dispatchable (for documentation/testing purposes)
+try:
+    from particula.backend.dispatch_register import dispatchable
+except ImportError:
+    dispatchable = None
+
+if dispatchable is not None:
+    # This is an example of how to use dispatchable to call the correct backend.
+    # The order of preference is determined by the registration order and backend availability.
+    # For example, to call the friction factor function with dispatch:
+    #
+    # result = dispatchable("get_friction_factor")(
+    #     particle_radius=1e-7,
+    #     dynamic_viscosity=1.8e-5,
+    #     slip_correction=1.1,
+    #     backend="taichi"  # or "numpy", etc.
+    # )
+    #
+    # If backend is not specified, the default or highest-priority backend is used.
+    pass
+
 
 @validate_inputs(
     {
