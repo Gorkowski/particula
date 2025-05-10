@@ -17,3 +17,7 @@ from .ti_mean_free_path_module import get_molecule_mean_free_path_taichi  # noqa
 from .ti_normalize_accel_variance_module import (      # NEW, keep noqa
     get_normalized_accel_variance_ao2008_taichi,
 )  # noqa: F401
+from .ti_pressure_function_module import (      # NEW
+    ti_get_partial_pressure,
+    ti_get_saturation_ratio,
+)  # noqa: F401
