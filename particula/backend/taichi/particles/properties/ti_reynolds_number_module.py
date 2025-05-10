@@ -1,3 +1,4 @@
+"""Taichi-accelerated implementation of get_particle_reynolds_number."""
 import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
@@ -8,6 +9,7 @@ def fget_particle_reynolds_number(          # scalar version
     particle_velocity: ti.f64,
     kinematic_viscosity: ti.f64,
 ) -> ti.f64:
+    """Element-wise Reₚ = 2 a vₚ / ν (all ti.f64)."""
     return (2.0 * particle_radius * particle_velocity) / kinematic_viscosity
 
 @ti.kernel
@@ -17,6 +19,7 @@ def kget_particle_reynolds_number(          # vectorised kernel
     kinematic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
+    """Vectorised kernel calling fget_particle_reynolds_number over 1-D arrays."""
     for i in range(result.shape[0]):
         result[i] = fget_particle_reynolds_number(
             particle_radius[i], particle_velocity[i], kinematic_viscosity[i]
