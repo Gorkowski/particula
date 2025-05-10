@@ -4,6 +4,8 @@ import numpy as np
 from particula.backend.dispatch_register import register
 
 
+PI = 3.141592653589793
+
 @ti.func
 def fget_friction_factor(
     particle_radius: ti.f64,
