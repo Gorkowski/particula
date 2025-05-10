@@ -1,6 +1,7 @@
 """Taichi implementation of aerodynamic mobility of a particle in a fluid."""
 import taichi as ti
 import numpy as np
+from numbers import Number
 from particula.backend.dispatch_register import register
 
 @ti.func
@@ -33,28 +34,39 @@ def ti_get_aerodynamic_mobility(
     slip_correction_factor,
     dynamic_viscosity,
 ):
-    """Taichi wrapper for aerodynamic mobility."""
+    # --- type guard ---------------------------------------------------------
     if not (
-        isinstance(particle_radius, np.ndarray)
-        and isinstance(slip_correction_factor, np.ndarray)
-        and isinstance(dynamic_viscosity, np.ndarray)
+        isinstance(particle_radius, (np.ndarray, Number))
+        and isinstance(slip_correction_factor, (np.ndarray, Number))
+        and isinstance(dynamic_viscosity, (np.ndarray, Number))
     ):
-        raise TypeError("Taichi backend expects NumPy arrays for all inputs.")
+        raise TypeError(
+            "Taichi backend expects NumPy arrays or scalars for all inputs."
+        )
 
-    a1 = np.atleast_1d(particle_radius)
-    a2 = np.atleast_1d(slip_correction_factor)
-    a3 = np.atleast_1d(dynamic_viscosity)
-    n = a1.size
+    # --- broadcast ----------------------------------------------------------
+    pr_np  = np.asarray(particle_radius, dtype=np.float64)
+    scf_np = np.asarray(slip_correction_factor, dtype=np.float64)
+    dv_np  = np.asarray(dynamic_viscosity, dtype=np.float64)
+    pr_b, scf_b, dv_b = np.broadcast_arrays(pr_np, scf_np, dv_np)
 
-    a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a3_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a1_ti.from_numpy(a1)
-    a2_ti.from_numpy(a2)
-    a3_ti.from_numpy(a3)
+    flat_pr  = pr_b.ravel()
+    flat_scf = scf_b.ravel()
+    flat_dv  = dv_b.ravel()
+    n = flat_pr.size
 
-    kget_aerodynamic_mobility(a1_ti, a2_ti, a3_ti, result_ti)
+    # --- Taichi buffers -----------------------------------------------------
+    pr_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    scf_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    dv_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_ti.from_numpy(flat_pr)
+    scf_ti.from_numpy(flat_scf)
+    dv_ti.from_numpy(flat_dv)
 
-    result_np = result_ti.to_numpy()
+    # --- kernel -------------------------------------------------------------
+    kget_aerodynamic_mobility(pr_ti, scf_ti, dv_ti, res_ti)
+
+    # --- reshape / unwrap ---------------------------------------------------
+    result_np = res_ti.to_numpy().reshape(pr_b.shape)
     return result_np.item() if result_np.size == 1 else result_np

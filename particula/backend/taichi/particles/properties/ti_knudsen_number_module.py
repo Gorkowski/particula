@@ -4,6 +4,7 @@ Taichi-accelerated implementation of ``get_knudsen_number``.
 
 import taichi as ti
 import numpy as np
+from numbers import Number
 
 from particula.backend.dispatch_register import register
 
@@ -36,33 +37,34 @@ def kget_knudsen_number(
 
 @register("get_knudsen_number", backend="taichi")
 def ti_get_knudsen_number(mean_free_path, particle_radius):
-    """
-    Taichi-accelerated version of ``par.particles.get_knudsen_number``.
-
-    Notes
-    -----
-    The function normalises the inputs to 1-D NumPy arrays, allocates
-    Taichi NDArray buffers, launches :pyfunc:`kget_knudsen_number`,
-    and converts the result back to NumPy for the caller.
-    """
+    # --- type guard ---------------------------------------------------------
     if not (
-        isinstance(mean_free_path, np.ndarray)
-        and isinstance(particle_radius, np.ndarray)
+        isinstance(mean_free_path, (np.ndarray, Number))
+        and isinstance(particle_radius, (np.ndarray, Number))
     ):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+        raise TypeError(
+            "Taichi backend expects NumPy arrays or scalars for both inputs."
+        )
 
-    # convert to 1-D numpy arrays if not done
-    mean_free_path_np = np.atleast_1d(mean_free_path)
-    particle_radius_np = np.atleast_1d(particle_radius)
-    # allocate Taichi ndarrays
-    n = mean_free_path_np.size
-    mean_free_path_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    particle_radius_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    mean_free_path_ti.from_numpy(mean_free_path_np)
-    particle_radius_ti.from_numpy(particle_radius_np)
+    # --- broadcast ----------------------------------------------------------
+    mfp_np = np.asarray(mean_free_path, dtype=np.float64)
+    pr_np  = np.asarray(particle_radius, dtype=np.float64)
+    mfp_b, pr_b = np.broadcast_arrays(mfp_np, pr_np)
 
-    # launch kernel
-    kget_knudsen_number(mean_free_path_ti, particle_radius_ti, result_ti)
-    result_np = result_ti.to_numpy().reshape(mean_free_path_np.shape)
+    flat_mfp = mfp_b.ravel()
+    flat_pr  = pr_b.ravel()
+    n = flat_mfp.size
+
+    # --- Taichi buffers -----------------------------------------------------
+    mfp_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    mfp_ti.from_numpy(flat_mfp)
+    pr_ti.from_numpy(flat_pr)
+
+    # --- kernel -------------------------------------------------------------
+    kget_knudsen_number(mfp_ti, pr_ti, res_ti)
+
+    # --- reshape / unwrap ---------------------------------------------------
+    result_np = res_ti.to_numpy().reshape(mfp_b.shape)
     return result_np.item() if result_np.size == 1 else result_np
