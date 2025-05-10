@@ -16,6 +16,12 @@ from .ti_convert_mass_concentration_module import (   # NEW
     kget_volume_fraction_from_mass,                    # NEW
     fget_volume_single,                                # NEW
 )
+from .ti_convert_mole_fraction_module import (        # NEW
+    ti_get_mass_fractions_from_moles,                 # NEW
+    kget_mass_fractions_1d,                           # NEW
+    kget_mass_fractions_2d,                           # NEW
+    fget_mass_fraction,                               # NEW
+)
 from .ti_convert_kappa_volumes import (
     ti_get_solute_volume_from_kappa,
     kget_solute_volume_from_kappa,
