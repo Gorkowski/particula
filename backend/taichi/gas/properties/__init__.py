@@ -4,3 +4,7 @@ from .ti_integral_scale_module import (           # NEW
     get_lagrangian_integral_time_taichi,
     get_eulerian_integral_length_taichi,
 )  # noqa: F401
+from .ti_kinematic_viscosity_module import (          # NEW
+    ti_get_kinematic_viscosity,
+    ti_get_kinematic_viscosity_via_system_state,
+)  # noqa: F401
