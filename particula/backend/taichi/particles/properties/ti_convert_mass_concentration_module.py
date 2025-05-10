@@ -78,3 +78,29 @@ def ti_get_volume_fraction_from_mass(mass_concentrations, densities):
     kget_volume_fraction_from_mass(m_ti, rho_ti, out_ti)
     out_np = out_ti.to_numpy()
     return out_np.item() if out_np.size == 1 else out_np
+
+# ───── mass-fraction ─────────────────────────────────────────────
+@ti.kernel
+def kget_mass_fraction_from_mass(
+    m: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    out: ti.types.ndarray(dtype=ti.f64, ndim=1),
+):
+    total = 0.0
+    for i in range(m.shape[0]):
+        total += m[i]
+    inv_tot = 1.0 / total if total != 0.0 else 0.0
+    for i in range(out.shape[0]):
+        out[i] = m[i] * inv_tot
+
+@register("get_mass_fraction_from_mass", backend="taichi")
+def ti_get_mass_fraction_from_mass(mass_concentrations):
+    if not isinstance(mass_concentrations, np.ndarray):
+        raise TypeError("Taichi backend expects a NumPy array for input.")
+    m = np.atleast_1d(mass_concentrations)
+    m_ti, out_ti = (
+        ti.ndarray(dtype=ti.f64, shape=m.size) for _ in range(2)
+    )
+    m_ti.from_numpy(m)
+    kget_mass_fraction_from_mass(m_ti, out_ti)
+    out_np = out_ti.to_numpy()
+    return out_np.item() if out_np.size == 1 else out_np
