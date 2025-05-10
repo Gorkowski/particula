@@ -38,3 +38,8 @@ from .ti_partial_pressure_module import (
     kget_partial_pressure_delta,
     fget_partial_pressure_delta,
 )
+from .ti_mixing_state_index_module import (
+    ti_get_mixing_state_index,
+    kget_mixing_state_index,
+    fget_mixing_state_index,
+)
