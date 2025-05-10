@@ -74,7 +74,10 @@ def ti_get_<name>(arg1, arg2):
 
     # 5 d – launch the kernel
     kget_<name>(variable_a1_ti, variable_a2_ti, result_ti)
-    return result_ti.to_numpy()
+
+    # 5 e – convert result back to NumPy and unwrap if it is a single value
+    result_np = result_ti.to_numpy()
+    return result_np.item() if result_np.size == 1 else result_np
 ```
 
 ## 6.  Expose the function
