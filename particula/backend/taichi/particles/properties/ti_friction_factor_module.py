@@ -36,14 +36,20 @@ def ti_get_friction_factor(particle_radius, dynamic_viscosity, slip_correction):
             "`particle_radius` and `slip_correction`."
         )
 
-    # 5 b – ensure 1-D NumPy arrays
-    r_np = np.atleast_1d(np.asarray(particle_radius, dtype=np.float64))
-    c_np = np.atleast_1d(np.asarray(slip_correction, dtype=np.float64))
-    if r_np.size != c_np.size:
-        raise ValueError(
-            "particle_radius and slip_correction must have the same length."
-        )
+    # 5 b – convert to 1-D NumPy arrays and broadcast shapes
+    r_np = np.asarray(particle_radius, dtype=np.float64).ravel()
+    c_np = np.asarray(slip_correction, dtype=np.float64).ravel()
 
+    try:
+        r_np, c_np = np.broadcast_arrays(r_np, c_np)
+    except ValueError as exc:
+        raise ValueError(
+            "`particle_radius` and `slip_correction` could not be "
+            "broadcast to a common shape."
+        ) from exc
+
+    r_np = r_np.ravel()
+    c_np = c_np.ravel()
     n = r_np.size
     r_ti = ti.ndarray(dtype=ti.f64, shape=n)
     c_ti = ti.ndarray(dtype=ti.f64, shape=n)
