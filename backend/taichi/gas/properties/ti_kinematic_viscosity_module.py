@@ -4,7 +4,7 @@ import numpy as np
 
 from particula.backend.dispatch_register import register
 from particula.backend.taichi.gas.properties.ti_dynamic_viscosity_module import (
-    ti_get_dynamic_viscosity,
+    get_dynamic_viscosity_taichi,
 )
 
 # ── 3. element-wise func
@@ -52,7 +52,7 @@ def ti_get_kinematic_viscosity_via_system_state(
     reference_temperature,            # K
 ):
     # obtain μ(T) from Taichi implementation
-    mu = ti_get_dynamic_viscosity(
+    mu = get_dynamic_viscosity_taichi(
         temperature, reference_viscosity, reference_temperature
     )
     # divide by ρ (NumPy broadcast works)
