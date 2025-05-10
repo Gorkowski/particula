@@ -94,10 +94,10 @@ import taichi as ti
 ti.init(arch=ti.cpu)
 ```
 
-## 9.  Data types
+## 8.  Data types
 Use `float64` (`ti.f64`) consistently for numerical parity with NumPy.
 
-## 10.  Coding style
+## 9.  Coding style
 Keep the API identical to the original NumPy function.  
 Suffix the public Taichi wrapper with `_taichi`, and prefix new files with
 `ti_`.
