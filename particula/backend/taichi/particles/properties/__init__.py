@@ -1,2 +1,1 @@
-
-from .ti_vapor_correction_module import get_vapor_transition_correction_taichi
+from .ti_vapor_correction_module import ti_get_vapor_transition_correction
