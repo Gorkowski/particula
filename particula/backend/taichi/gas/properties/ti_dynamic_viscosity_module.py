@@ -1,4 +1,4 @@
-from taichi import f64, func, kernel, ndarray, types
+"""Taichi implementation of Sutherland’s dynamic-viscosity formula."""
 import taichi as ti
 import numpy as np
 
@@ -12,10 +12,10 @@ from particula.util.constants import (
 # ── 3. element-wise function ──────────────────────────────────────────
 @ti.func
 def fget_dynamic_viscosity(
-    temperature: f64,
-    reference_viscosity: f64,
-    reference_temperature: f64,
-) -> f64:
+    temperature: ti.f64,
+    reference_viscosity: ti.f64,
+    reference_temperature: ti.f64,
+) -> ti.f64:
     return (
         reference_viscosity
         * (temperature / reference_temperature) ** 1.5
@@ -26,10 +26,10 @@ def fget_dynamic_viscosity(
 # ── 4. vectorised kernel ──────────────────────────────────────────────
 @ti.kernel
 def kget_dynamic_viscosity(                    # 1-D only
-    temperature: ti.types.ndarray(dtype=f64, ndim=1),
-    reference_viscosity: ti.types.ndarray(dtype=f64, ndim=1),
-    reference_temperature: ti.types.ndarray(dtype=f64, ndim=1),
-    result: ti.types.ndarray(dtype=f64, ndim=1),
+    temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    reference_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    reference_temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(result.shape[0]):
         result[i] = fget_dynamic_viscosity(
@@ -62,10 +62,10 @@ def ti_get_dynamic_viscosity(
     n = t_np.size
 
     # 5 c – allocate Taichi NDArrays
-    t_ti = ti.ndarray(dtype=f64, shape=n)
-    rv_ti = ti.ndarray(dtype=f64, shape=n)
-    rt_ti = ti.ndarray(dtype=f64, shape=n)
-    res_ti = ti.ndarray(dtype=f64, shape=n)
+    t_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    rv_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    rt_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
 
     t_ti.from_numpy(t_np)
     rv_ti.from_numpy(rv_np)
