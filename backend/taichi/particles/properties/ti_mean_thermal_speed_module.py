@@ -3,15 +3,13 @@
 import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
-
-# Boltzmann constant in J/K (should match particula.util.constants.BOLTZMANN_CONSTANT)
-BOLTZMANN_CONSTANT = 1.380649e-23
+from particula.util.constants import BOLTZMANN_CONSTANT
 
 @ti.func
 def fget_mean_thermal_speed(particle_mass: ti.f64, temperature: ti.f64) -> ti.f64:
     """Elementwise mean thermal speed calculation."""
     return ti.sqrt(
-        (8.0 * BOLTZMANN_CONSTANT * temperature) / (ti.math.pi * particle_mass)
+        (8.0 * BOLTZMANN_CONSTANT * temperature) / (ti.math.pi64 * particle_mass)
     )
 
 @ti.kernel
