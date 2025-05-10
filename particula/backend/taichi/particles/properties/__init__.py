@@ -66,3 +66,16 @@ from .ti_diffusive_knudsen_module import (      # NEW
     kget_diffusive_knudsen_number,              # NEW
     fget_diffusive_knudsen_number,              # NEW
 )
+from .ti_activity_module import (
+    ti_get_ideal_activity_molar,
+    kget_ideal_activity_molar,
+    ti_get_ideal_activity_volume,
+    kget_ideal_activity_volume,
+    ti_get_ideal_activity_mass,
+    kget_ideal_activity_mass,
+    ti_get_kappa_activity,
+    kget_kappa_activity,
+    ti_get_surface_partial_pressure,
+    kget_surface_partial_pressure,
+    fget_surface_partial_pressure,
+)
