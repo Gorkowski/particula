@@ -11,6 +11,11 @@ from .ti_vapor_correction_module import (
     kget_vapor_transition_correction,
     fget_vapor_transition_correction,
 )
+from .ti_inertia_time_module import (                 # NEW – keep style parity
+    ti_get_particle_inertia_time,
+    kget_particle_inertia_time,
+    fget_particle_inertia_time,
+)
 from .ti_stokes_number_module import (
     ti_get_stokes_number,
     kget_stokes_number,
