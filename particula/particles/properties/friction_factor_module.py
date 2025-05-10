@@ -1,91 +1,60 @@
-"""
-Module for friction factor of a particle in a fluid.
-
-Zhang, C., Thajudeen, T., Larriba, C., Schwartzentruber, T. E., &
-Hogan, C. J. (2012). Determination of the Scalar Friction Factor for
-Nonspherical Particles and Aggregates Across the Entire Knudsen Number Range
-by Direct Simulation Monte Carlo (DSMC). Aerosol Science and Technology,
-46(10), 1065-1078. https://doi.org/10.1080/02786826.2012.690543
-"""
-
-from typing import Union
-from numpy.typing import NDArray
+"""Taichi-accelerated friction-factor implementation."""
+import taichi as ti
 import numpy as np
-
-from particula.util.validate_inputs import validate_inputs
-
-# Example usage of dispatchable (for documentation/testing purposes)
-try:
-    from particula.backend.dispatch_register import dispatchable
-except ImportError:
-    dispatchable = None
-
-if dispatchable is not None:
-    # This is an example of how to use dispatchable to call the correct backend.
-    # The order of preference is determined by the registration order and backend availability.
-    # For example, to call the friction factor function with dispatch:
-    #
-    # result = dispatchable("get_friction_factor")(
-    #     particle_radius=1e-7,
-    #     dynamic_viscosity=1.8e-5,
-    #     slip_correction=1.1,
-    #     backend="taichi"  # or "numpy", etc.
-    # )
-    #
-    # If backend is not specified, the default or highest-priority backend is used.
-    pass
+from particula.backend.dispatch_register import register
 
 
-@validate_inputs(
-    {
-        "particle_radius": "nonnegative",
-        "dynamic_viscosity": "positive",
-        "slip_correction": "positive",
-    }
-)
-def get_friction_factor(
-    particle_radius: Union[float, NDArray[np.float64]],
-    dynamic_viscosity: float,
-    slip_correction: Union[float, NDArray[np.float64]],
+@ti.func
+def fget_friction_factor(
+    particle_radius: ti.f64,
+    dynamic_viscosity: ti.f64,
+    slip_correction: ti.f64,
+) -> ti.f64:
+    """Scalar friction factor f = 6πμr / C."""
+    return 6.0 * PI * dynamic_viscosity * particle_radius / slip_correction
+@ti.kernel
+def kget_friction_factor(
+    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    dynamic_viscosity: ti.f64,
+    slip_correction: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    """
-    Calculate the friction factor for a particle in a fluid.
-
-    This friction factor (f) is the proportionality constant between
-    the fluid velocity and the resulting drag force on the particle.
-    The formula used is:
-
-    - f = (6πμ r) / C
-        - f is the friction factor (N·s/m),
-        - μ is the dynamic viscosity of the fluid (Pa·s),
-        - r is the radius of the particle (m),
-        - C is the slip correction factor (dimensionless).
-
-    Arguments:
-        - particle_radius : Radius of the particle in meters (m).
-        - dynamic_viscosity : Dynamic viscosity of the fluid in Pa·s.
-        - slip_correction : Slip correction factor (dimensionless).
-
-    Returns:
-        - The friction factor of the particle in N·s/m.
-
-    Examples:
-        ``` py title="Example"
-        import particula as par
-        par.particles.get_friction_factor(
-            particle_radius=1e-7,
-            dynamic_viscosity=1.8e-5,
-            slip_correction=1.1
+    """Vectorised friction factor."""
+    for i in range(result.shape[0]):
+        result[i] = fget_friction_factor(
+            particle_radius[i], dynamic_viscosity, slip_correction[i]
         )
-        # Output: ...
-        ```
 
-    References:
-        - Zhang, C., Thajudeen, T., Larriba, C., Schwartzentruber, T. E.,
-          & Hogan, C. J. (2012). "Determination of the Scalar Friction Factor
-          for Nonspherical Particles and Aggregates Across the Entire Knudsen
-          Number Range by Direct Simulation Monte Carlo (DSMC)."
-          Aerosol Science and Technology, 46(10), 1065-1078.
-          https://doi.org/10.1080/02786826.2012.690543
-    """
-    return 6 * np.pi * dynamic_viscosity * particle_radius / slip_correction
+@register("get_friction_factor", backend="taichi")
+def ti_get_friction_factor(
+    particle_radius,
+    dynamic_viscosity,
+    slip_correction,
+):
+    """Taichi wrapper for get_friction_factor."""
+    # 5 a – type guard
+    if not (
+        isinstance(particle_radius, np.ndarray)
+        and isinstance(slip_correction, np.ndarray)
+    ):
+        raise TypeError("Taichi backend expects NumPy arrays for radii & slip.")
+    if not np.isscalar(dynamic_viscosity):
+        raise TypeError("dynamic_viscosity must be a Python / NumPy scalar.")
+
+    # 5 b – ensure 1-D
+    pr, sc = np.atleast_1d(particle_radius), np.atleast_1d(slip_correction)
+    n = pr.size
+
+    # 5 c – allocate buffers
+    pr_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    sc_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_ti.from_numpy(pr)
+    sc_ti.from_numpy(sc)
+
+    # 5 d – launch
+    kget_friction_factor(pr_ti, float(dynamic_viscosity), sc_ti, res_ti)
+
+    # 5 e – back to NumPy
+    res_np = res_ti.to_numpy()
+    return res_np.item() if res_np.size == 1 else res_np
