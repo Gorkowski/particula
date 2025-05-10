@@ -89,3 +89,13 @@ from .ti_activity_module import (
     kget_surface_partial_pressure,
     fget_surface_partial_pressure,
 )
+from .ti_collision_radius_module import (             # NEW
+    ti_get_collision_radius_mg1988,
+    ti_get_collision_radius_sr1992,
+    ti_get_collision_radius_mzg2002,
+    ti_get_collision_radius_tt2012,
+    ti_get_collision_radius_wq2022_rg,
+    ti_get_collision_radius_wq2022_rg_df,
+    ti_get_collision_radius_wq2022_rg_df_k0,
+    ti_get_collision_radius_wq2022_rg_df_k0_a13,
+)
