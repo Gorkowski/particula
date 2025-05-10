@@ -1,3 +1,8 @@
+from .ti_aerodynamic_mobility_module import (
+    ti_get_aerodynamic_mobility,
+    kget_aerodynamic_mobility,
+    fget_aerodynamic_mobility,
+)
 from .ti_convert_mass_concentration_module import (   # NEW
     ti_get_mole_fraction_from_mass,                    # NEW
     kget_mole_fraction_from_mass,                      # NEW
