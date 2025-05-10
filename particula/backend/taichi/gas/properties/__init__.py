@@ -11,3 +11,8 @@ from .ti_pressure_function_module import (          # noqa: F401
     ti_get_partial_pressure,
     ti_get_saturation_ratio_from_pressure,
 )
+from .ti_taylor_microscale_module import (
+    ti_get_lagrangian_taylor_microscale_time,
+    ti_get_taylor_microscale,
+    ti_get_taylor_microscale_reynolds_number,
+)
