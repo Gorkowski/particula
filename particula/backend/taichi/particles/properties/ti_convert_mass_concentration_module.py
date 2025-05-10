@@ -63,7 +63,8 @@ def ti_get_mole_fraction_from_mass(mass_concentrations, molar_masses):
     m_ti.from_numpy(m)
     mm_ti.from_numpy(mm)
     kget_mole_fraction_from_mass(m_ti, mm_ti, out_ti)
-    return out_ti.to_numpy()
+    out_np = out_ti.to_numpy()
+    return out_np.item() if out_np.size == 1 else out_np
 
 
 @register("get_volume_fraction_from_mass", backend="taichi")
@@ -75,4 +76,5 @@ def ti_get_volume_fraction_from_mass(mass_concentrations, densities):
     m_ti.from_numpy(m)
     rho_ti.from_numpy(rho)
     kget_volume_fraction_from_mass(m_ti, rho_ti, out_ti)
-    return out_ti.to_numpy()
+    out_np = out_ti.to_numpy()
+    return out_np.item() if out_np.size == 1 else out_np
