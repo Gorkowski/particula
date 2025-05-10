@@ -4,7 +4,7 @@ import numpy as np
 from numpy.testing import assert_allclose
 
 from particula.backend.taichi.gas.properties.ti_fluid_rms_velocity_module import (
-    ti_get_fluid_rms_velocity, kget_fluid_rms_velocity
+    get_fluid_rms_velocity_taichi, kget_fluid_rms_velocity
 )
 from particula.gas.properties.fluid_rms_velocity import get_fluid_rms_velocity
 
@@ -13,7 +13,7 @@ def test_ti_get_fluid_rms_velocity_wrapper_agreement():
     kv = np.array([1.5e-5, 1.7e-5])
     td = np.array([0.1, 0.12])
     expected = get_fluid_rms_velocity(rl, kv, td)
-    actual = ti_get_fluid_rms_velocity(rl, kv, td)
+    actual = get_fluid_rms_velocity_taichi(rl, kv, td)
     assert_allclose(actual, expected, rtol=1e-12, atol=0)
 
 def test_kget_fluid_rms_velocity_kernel_direct():

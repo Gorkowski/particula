@@ -27,10 +27,10 @@ def kget_fluid_rms_velocity(
         )
 
 @register("get_fluid_rms_velocity", backend="taichi")
-def ti_get_fluid_rms_velocity(
+def get_fluid_rms_velocity_taichi(
     re_lambda, kinematic_viscosity, turbulent_dissipation
 ):
-    """Public Taichi wrapper for fluid RMS fluctuation velocity."""
+    """Taichi backend wrapper for fluid RMS fluctuation velocity."""
     if not (
         isinstance(re_lambda, np.ndarray)
         and isinstance(kinematic_viscosity, np.ndarray)
