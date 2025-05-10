@@ -3,7 +3,7 @@
 import taichi as ti
 import numpy as np
 from numbers import Number
-from particula.backend import register
+from particula.backend.dispatch_register import register
 
 
 @ti.func
