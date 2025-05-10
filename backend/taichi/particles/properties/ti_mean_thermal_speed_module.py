@@ -23,19 +23,23 @@ def kget_mean_thermal_speed(
         result[i] = fget_mean_thermal_speed(particle_mass[i], temperature[i])
 
 @register("get_mean_thermal_speed", backend="taichi")
-def ti_get_mean_thermal_speed(particle_mass, temperature):
+def get_mean_thermal_speed_taichi(particle_mass, temperature):
     """Taichi-accelerated mean thermal speed calculation."""
-    if not (isinstance(particle_mass, np.ndarray) and isinstance(temperature, np.ndarray)):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+    if not isinstance(particle_mass, np.ndarray):
+        particle_mass = np.asarray(particle_mass, dtype=np.float64)
+    if not isinstance(temperature, np.ndarray):
+        temperature = np.asarray(temperature, dtype=np.float64)
 
-    pm, temp = np.atleast_1d(particle_mass), np.atleast_1d(temperature)
-    n = pm.size
+    pm_arr, t_arr = np.broadcast_arrays(
+        np.atleast_1d(particle_mass), np.atleast_1d(temperature)
+    )
+    n = pm_arr.size
 
     pm_ti = ti.ndarray(dtype=ti.f64, shape=n)
     temp_ti = ti.ndarray(dtype=ti.f64, shape=n)
     result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pm_ti.from_numpy(pm)
-    temp_ti.from_numpy(temp)
+    pm_ti.from_numpy(pm_arr)
+    temp_ti.from_numpy(t_arr)
 
     kget_mean_thermal_speed(pm_ti, temp_ti, result_ti)
 

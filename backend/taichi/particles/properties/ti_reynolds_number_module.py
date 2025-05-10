@@ -28,31 +28,30 @@ def kget_particle_reynolds_number(
         )
 
 @register("get_particle_reynolds_number", backend="taichi")
-def ti_get_particle_reynolds_number(
+def get_particle_reynolds_number_taichi(
     particle_radius,
     particle_velocity,
     kinematic_viscosity
 ):
     """Taichi-accelerated wrapper for particle Reynolds number."""
-    if not (
-        isinstance(particle_radius, np.ndarray)
-        and isinstance(particle_velocity, np.ndarray)
-        and isinstance(kinematic_viscosity, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for all inputs.")
+    for var_name, var in dict(r=particle_radius, v=particle_velocity, nu=kinematic_viscosity).items():
+        if not isinstance(var, np.ndarray):
+            locals()[var_name] = np.asarray(var, dtype=np.float64)
 
-    a1 = np.atleast_1d(particle_radius)
-    a2 = np.atleast_1d(particle_velocity)
-    a3 = np.atleast_1d(kinematic_viscosity)
-    n = a1.size
+    r_arr, v_arr, nu_arr = np.broadcast_arrays(
+        np.atleast_1d(particle_radius),
+        np.atleast_1d(particle_velocity),
+        np.atleast_1d(kinematic_viscosity),
+    )
+    n = r_arr.size
 
     a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
     a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
     a3_ti = ti.ndarray(dtype=ti.f64, shape=n)
     result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a1_ti.from_numpy(a1)
-    a2_ti.from_numpy(a2)
-    a3_ti.from_numpy(a3)
+    a1_ti.from_numpy(r_arr)
+    a2_ti.from_numpy(v_arr)
+    a3_ti.from_numpy(nu_arr)
 
     kget_particle_reynolds_number(a1_ti, a2_ti, a3_ti, result_ti)
 

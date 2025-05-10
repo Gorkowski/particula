@@ -27,7 +27,7 @@ def kget_mixing_state_index(
             total_mass += mp
 
     if total_mass <= 0.0:          # no mass → NaN
-        out[0] = ti.nan
+        out[0] = ti.math.nan64
         return
 
     # 2) mass-weighted mean diversity  D̄α
@@ -63,10 +63,10 @@ def kget_mixing_state_index(
     out[0] = (mw_div - 1.0) / (D_bulk - 1.0)
 
 @register("get_mixing_state_index", backend="taichi")
-def ti_get_mixing_state_index(species_masses):
+def get_mixing_state_index_taichi(species_masses):
     """Taichi-accelerated mixing state index calculation."""
     if not isinstance(species_masses, np.ndarray):
-        raise TypeError("Taichi backend expects a NumPy array for species_masses.")
+        species_masses = np.asarray(species_masses, dtype=np.float64)
 
     a = np.atleast_2d(species_masses)
     n_particles, n_species = a.shape

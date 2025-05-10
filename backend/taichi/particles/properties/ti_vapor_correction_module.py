@@ -30,22 +30,23 @@ def kget_vapor_transition_correction(
 
 # 5 – public wrapper + backend registration
 @register("get_vapor_transition_correction", backend="taichi")
-def ti_get_vapor_transition_correction(knudsen_number, mass_accommodation):
+def get_vapor_transition_correction_taichi(knudsen_number, mass_accommodation):
     """Wrapper identical to NumPy API but executed with Taichi."""
-    if not (
-        isinstance(knudsen_number, np.ndarray)
-        and isinstance(mass_accommodation, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+    if not isinstance(knudsen_number, np.ndarray):
+        knudsen_number = np.asarray(knudsen_number, dtype=np.float64)
+    if not isinstance(mass_accommodation, np.ndarray):
+        mass_accommodation = np.asarray(mass_accommodation, dtype=np.float64)
 
-    kn, ma = np.atleast_1d(knudsen_number), np.atleast_1d(mass_accommodation)
-    n = kn.size
+    kn_arr, ma_arr = np.broadcast_arrays(
+        np.atleast_1d(knudsen_number), np.atleast_1d(mass_accommodation)
+    )
+    n = kn_arr.size
 
     kn_ti = ti.ndarray(dtype=ti.f64, shape=n)
     ma_ti = ti.ndarray(dtype=ti.f64, shape=n)
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    kn_ti.from_numpy(kn)
-    ma_ti.from_numpy(ma)
+    kn_ti.from_numpy(kn_arr)
+    ma_ti.from_numpy(ma_arr)
 
     kget_vapor_transition_correction(kn_ti, ma_ti, res_ti)
 

@@ -26,3 +26,5 @@ from .ti_taylor_microscale_module import (                 # noqa: F401
     get_taylor_microscale_taichi,
     get_taylor_microscale_reynolds_number_taichi,
 )  # noqa: F401
+
+from .ti_dynamic_viscosity_module import get_dynamic_viscosity_taichi  # noqa: F401
