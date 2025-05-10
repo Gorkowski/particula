@@ -28,3 +28,8 @@ from .ti_settling_velocity import (
     kget_particle_settling_velocity,
     fget_particle_settling_velocity,
 )
+from .ti_reynolds_number_module import (           # NEW – keep style parity
+    ti_get_particle_reynolds_number,
+    kget_particle_reynolds_number,
+    fget_particle_reynolds_number,
+)
