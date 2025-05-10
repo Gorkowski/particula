@@ -59,6 +59,14 @@ from .ti_knudsen_number_module import (
     kget_knudsen_number,
     fget_knudsen_number,
 )
+from .ti_kelvin_effect_module import (             # NEW
+    ti_get_kelvin_radius,                          # NEW
+    kget_kelvin_radius,                            # NEW
+    fget_kelvin_radius,                            # NEW
+    ti_get_kelvin_term,                            # NEW
+    kget_kelvin_term,                              # NEW
+    fget_kelvin_term,                              # NEW
+)
 from .ti_special_functions import (
     ti_get_debye_function,
     kget_debye_function,
