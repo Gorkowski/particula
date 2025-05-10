@@ -3,6 +3,9 @@ import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
 
+MAX_SPECIES = 64                              # upper limit supported
+ts = ti.field(dtype=ti.f64, shape=MAX_SPECIES) # per-species scratch space
+
 @ti.func
 def f_shannon_entropy(frac: ti.f64) -> ti.f64:
     return frac * ti.log(frac) if frac > 0.0 else 0.0
@@ -29,8 +32,7 @@ def kget_mixing_state_index(
 
     # 2) mass-weighted mean diversity  D̄α
     mw_div = 0.0
-    # Step (a) initialise a per-species accumulator
-    ts = ti.field(dtype=ti.f64, shape=64)                  # ← keeps ≤64 spec.
+    # Step (a) reset per-species accumulator
     for s in range(n_species):
         ts[s] = 0.0
 
@@ -68,8 +70,8 @@ def ti_get_mixing_state_index(species_masses):
 
     a = np.atleast_2d(species_masses)
     n_particles, n_species = a.shape
-    if a.shape[1] > 64:
-        raise ValueError("Taichi backend supports up to 64 species.")
+    if a.shape[1] > MAX_SPECIES:
+        raise ValueError(f"Taichi backend supports up to {MAX_SPECIES} species.")
     # Allocate Taichi NDArray buffers
     species_masses_ti = ti.ndarray(dtype=ti.f64, shape=(n_particles, n_species))
     result_ti = ti.ndarray(dtype=ti.f64, shape=(1,))
