@@ -24,20 +24,25 @@ def kget_friction_factor(
 
 @register("get_friction_factor", backend="taichi")
 def ti_get_friction_factor(particle_radius, dynamic_viscosity, slip_correction):
-    if not isinstance(dynamic_viscosity, (int, float, np.floating)):
-        raise TypeError("dynamic_viscosity must be a scalar float.")
-    if not (
-        isinstance(particle_radius, np.ndarray)
-        and isinstance(slip_correction, np.ndarray)
+    # 5 a – type guard
+    if not np.isscalar(dynamic_viscosity):
+        raise TypeError("dynamic_viscosity must be a scalar (float).")
+    if not all(
+        np.isscalar(arg) or isinstance(arg, np.ndarray)
+        for arg in (particle_radius, slip_correction)
     ):
         raise TypeError(
-            "Taichi backend expects NumPy arrays for particle_radius and slip_correction."
+            "Taichi backend expects scalar(s) or NumPy array(s) for "
+            "`particle_radius` and `slip_correction`."
         )
 
-    r_np = np.atleast_1d(particle_radius).astype(np.float64)
-    c_np = np.atleast_1d(slip_correction).astype(np.float64)
+    # 5 b – ensure 1-D NumPy arrays
+    r_np = np.atleast_1d(np.asarray(particle_radius, dtype=np.float64))
+    c_np = np.atleast_1d(np.asarray(slip_correction, dtype=np.float64))
     if r_np.size != c_np.size:
-        raise ValueError("particle_radius and slip_correction must have the same length.")
+        raise ValueError(
+            "particle_radius and slip_correction must have the same length."
+        )
 
     n = r_np.size
     r_ti = ti.ndarray(dtype=ti.f64, shape=n)
