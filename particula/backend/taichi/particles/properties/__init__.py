@@ -13,3 +13,8 @@ from .ti_knudsen_number_module import (
     kget_knudsen_number,
     fget_knudsen_number,
 )
+from .ti_special_functions import (
+    ti_get_debye_function,
+    kget_debye_function,
+    fget_debye_function,
+)
