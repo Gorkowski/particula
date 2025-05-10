@@ -7,8 +7,9 @@ import argparse
 import subprocess
 from pathlib import Path
 
-GUIDE_PATH = (Path(__file__).resolve().parent
-              / "taichi_conversion_guide.md")    # <-- hard path to the guide
+GUIDE_PATH = Path(
+    r"C:\GitHub\particula\particula\backend\taichi_function_development_guide.md"
+)
 
 
 def _call_aider(extra_args: list[str]) -> None:
@@ -37,7 +38,7 @@ def convert(file_path: Path, prompt: str | None = None) -> None:
         prompt = (
             f"Take the following python file {file_path.name} "
             "and convert it to a taichi version following the "
-            "taichi_conversion_guide.md."
+            "taichi_function_development_guide.md."
         )
     file_str = str(file_path.resolve())
 
