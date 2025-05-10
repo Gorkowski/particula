@@ -7,6 +7,10 @@ import argparse
 import subprocess
 from pathlib import Path
 
+GUIDE_PATH = (Path(__file__).resolve().parent.parent
+              / "docs"
+              / "taichi_conversion_guide.md")    # <-- hard path to the guide
+
 
 def _call_aider(extra_args: list[str]) -> None:
     """Run aider with the provided extra CLI flags."""
@@ -18,7 +22,7 @@ def _call_aider(extra_args: list[str]) -> None:
         "--editor-model", "gpt-4.1",
         "--no-detect-urls",
         "--yes-always",
-        "--read",
+        # "--read",                # DELETE this line
     ] + extra_args
     subprocess.run(base_cmd, check=True)
 
@@ -34,16 +38,18 @@ def convert(file_path: Path, prompt: str) -> None:
 
     # first pass
     _call_aider([
+        "--read", str(GUIDE_PATH),          # add the guide as read-only
         file_str,
         "--message",
-        f"CREATE a taichi version of the python file provided follow the guide in {prompt}",
+        f"CREATE a taichi version of the python file provided, following the guide.",
     ])
 
     # reflection / verification pass
     _call_aider([
+        "--read", str(GUIDE_PATH),          # add the guide again for the reflection pass
         file_str,
         "--message",
-        f"Double check the taichi conversion of the python file has been corretly implemented, following the guide: {prompt}",
+        "Double-check that the Taichi conversion has been correctly implemented.",
     ])
 
 
