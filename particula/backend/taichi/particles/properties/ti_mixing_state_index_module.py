@@ -42,19 +42,23 @@ def fget_mixing_state_index(
             mw_div_sum += m_p * D_n
             tot_mass += m_p
 
-    if tot_mass == 0.0:        # aerosol has no mass
-        return float("nan")
+    # ------------------------------------------------------------------
+    # build the result without an early-return (Taichi limitation)
+    # ------------------------------------------------------------------
+    chi = float("nan")                      # default when tot_mass == 0
+    if tot_mass > 0.0:
+        D_bar = mw_div_sum / tot_mass
 
-    D_bar = mw_div_sum / tot_mass
+        bulk_ent = 0.0
+        for s in range(n_species):
+            if bulk_mass[s] > 0.0:
+                F_s = bulk_mass[s] / tot_mass
+                bulk_ent += -F_s * _safe_log10(F_s)
+        D_gamma = _safe_exp(bulk_ent)
 
-    bulk_ent = 0.0
-    for s in range(n_species):
-        if bulk_mass[s] > 0.0:
-            F_s = bulk_mass[s] / tot_mass
-            bulk_ent += -F_s * _safe_log10(F_s)
-    D_gamma = _safe_exp(bulk_ent)
+        chi = (D_bar - 1.0) / (D_gamma - 1.0)
 
-    return (D_bar - 1.0) / (D_gamma - 1.0)
+    return chi
 
 # ---------- kernel ----------------------------------------------------
 @ti.kernel
