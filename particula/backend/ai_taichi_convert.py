@@ -27,21 +27,26 @@ def _call_aider(extra_args: list[str]) -> None:
     subprocess.run(base_cmd, check=True)
 
 
-def convert(file_path: Path, prompt: str) -> None:
+def convert(file_path: Path, prompt: str | None = None) -> None:
     """
-    Run the two-step aider conversion on *file_path* using *prompt*.
+    Run the two-step aider conversion on *file_path*.
 
-    The first run is done with --no-auto-commit; the second (reflection)
-    run commits automatically.
+    If *prompt* is None, a default prompt is generated that asks aider to
+    convert the given Python file to a Taichi version following the guide.
     """
+    if prompt is None:
+        prompt = (
+            f"Take the following python file {file_path.name} "
+            "and convert it to a taichi version following the "
+            "taichi_conversion_guide.md."
+        )
     file_str = str(file_path.resolve())
 
     # first pass
     _call_aider([
         "--read", str(GUIDE_PATH),          # add the guide as read-only
         file_str,
-        "--message",
-        f"CREATE a taichi version of the python file provided, following the guide.",
+        "--message", prompt,          # <- use generated or user-supplied prompt
     ])
 
     # reflection / verification pass
@@ -64,8 +69,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-p", "--prompt",
-        required=True,
-        help="Prompt describing the desired conversion.",
+        default=None,                # <- no longer required
+        help="Custom prompt for the conversion; if omitted, a default prompt is used.",
     )
     args = parser.parse_args()
 
