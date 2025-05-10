@@ -26,7 +26,7 @@ Use full names for variables in functions, and avoid abbreviations.
 """Short description of the module version."""
 import taichi as ti
 import numpy as np
-from particula.backend import register
+from particula.backend.dispatch_register import register
 ```
 
 ## 3.  Element-wise Taichi function
