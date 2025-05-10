@@ -1,6 +1,7 @@
+"""Taichi-accelerated implementation of get_partial_pressure_delta."""
 import taichi as ti
 import numpy as np
-from particula.backend import register
+from particula.backend.dispatch_register import register
 
 @ti.func
 def fget_partial_pressure_delta(
@@ -50,5 +51,9 @@ def ti_get_partial_pressure_delta(
     pp_ti.from_numpy(pp)
     kt_ti.from_numpy(kt)
 
+    # launch the kernel
     kget_partial_pressure_delta(pg_ti, pp_ti, kt_ti, res_ti)
-    return res_ti.to_numpy().reshape(pg.shape)
+
+    # convert back to NumPy and unwrap scalar
+    result_np = res_ti.to_numpy()
+    return result_np.item() if result_np.size == 1 else result_np
