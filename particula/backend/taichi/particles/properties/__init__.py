@@ -59,6 +59,10 @@ from .ti_knudsen_number_module import (
     kget_knudsen_number,
     fget_knudsen_number,
 )
+from .ti_lognormal_size_distribution_module import (
+    ti_get_lognormal_pdf_distribution,
+    ti_get_lognormal_pmf_distribution,
+)
 from .ti_kelvin_effect_module import (             # NEW
     ti_get_kelvin_radius,                          # NEW
     kget_kelvin_radius,                            # NEW
