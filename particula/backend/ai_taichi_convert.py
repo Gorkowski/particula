@@ -64,9 +64,13 @@ if __name__ == "__main__":
         description="Convert a Python file to Taichi using aider."
     )
     parser.add_argument(
-        "file",
+        "path",
         type=Path,
-        help="Path to the Python file that should be converted.",
+        help=(
+            "Path to a Python file OR to a directory that contains Python files. "
+            "If a directory is supplied, every *.py file in that directory "
+            "(non-recursive) is converted one-by-one."
+        ),
     )
     parser.add_argument(
         "-p", "--prompt",
@@ -75,4 +79,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    convert(args.file, args.prompt)
+    target = args.path.resolve()
+    if target.is_dir():
+        for py_file in target.glob("*.py"):        # non-recursive
+            convert(py_file, args.prompt)
+    else:
+        convert(target, args.prompt)
