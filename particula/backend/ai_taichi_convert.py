@@ -38,7 +38,8 @@ def convert(file_path: Path, prompt: str | None = None) -> None:
         prompt = (
             f"Take the following python file {file_path.name} "
             "and convert it to a taichi version following the "
-            "taichi_function_development_guide.md."
+            "taichi_function_development_guide.md. DO NOT modify"
+            f" the original file {file_path.name} or the guide."
         )
     file_str = str(file_path.resolve())
 
