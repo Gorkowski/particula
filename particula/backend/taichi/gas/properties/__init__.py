@@ -16,3 +16,4 @@ from .ti_taylor_microscale_module import (
     ti_get_taylor_microscale,
     ti_get_taylor_microscale_reynolds_number,
 )
+from .ti_thermal_conductivity_module import ti_get_thermal_conductivity  # noqa: F401
