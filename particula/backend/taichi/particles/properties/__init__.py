@@ -22,6 +22,14 @@ from .ti_convert_mole_fraction_module import (        # NEW
     kget_mass_fractions_2d,                           # NEW
     fget_mass_fraction,                               # NEW
 )
+from .ti_convert_size_distribution_module import (
+    ti_get_distribution_in_dn,
+    kget_distribution_in_dn,
+    fget_distribution_in_dn,
+    ti_get_pdf_distribution_in_pmf,
+    kget_pdf_distribution_in_pmf,
+    fget_pdf_distribution_in_pmf,
+)
 from .ti_convert_kappa_volumes import (
     ti_get_solute_volume_from_kappa,
     kget_solute_volume_from_kappa,
