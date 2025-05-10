@@ -18,3 +18,8 @@ from .ti_special_functions import (
     kget_debye_function,
     fget_debye_function,
 )
+from .ti_slip_correction_module import (
+    ti_get_cunningham_slip_correction,
+    kget_cunningham_slip_correction,
+    fget_cunningham_slip_correction,
+)
