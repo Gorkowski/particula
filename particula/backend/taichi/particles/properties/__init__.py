@@ -1,3 +1,11 @@
+from .ti_convert_mass_concentration_module import (   # NEW
+    ti_get_mole_fraction_from_mass,                    # NEW
+    kget_mole_fraction_from_mass,                      # NEW
+    fget_mole_single,                                  # NEW
+    ti_get_volume_fraction_from_mass,                  # NEW
+    kget_volume_fraction_from_mass,                    # NEW
+    fget_volume_single,                                # NEW
+)
 from .ti_vapor_correction_module import (
     ti_get_vapor_transition_correction,
     kget_vapor_transition_correction,
