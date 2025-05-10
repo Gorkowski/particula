@@ -23,3 +23,8 @@ from .ti_slip_correction_module import (
     kget_cunningham_slip_correction,
     fget_cunningham_slip_correction,
 )
+from .ti_settling_velocity import (
+    ti_get_particle_settling_velocity,
+    kget_particle_settling_velocity,
+    fget_particle_settling_velocity,
+)
