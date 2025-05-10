@@ -11,8 +11,8 @@ prepend the filename with `ti_`.
 
 Example  
 ```
-particula/particles/properties/knudsen_number_module.py
-→ particula/backend/taichi/particles/properties/ti_knudsen_number_module.py
+particula/particles/properties/<name>.py
+→ particula/backend/taichi/particles/properties/ti_<name>.py
 ```
 
 ### Name convention
