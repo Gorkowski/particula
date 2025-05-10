@@ -4,7 +4,7 @@ Taichi-accelerated implementation of ``get_particle_inertia_time``.
 import taichi as ti
 import numpy as np
 
-from particula.backend import register
+from particula.backend.dispatch_register import register
 
 
 @ti.func
@@ -72,4 +72,5 @@ def ti_get_particle_inertia_time(
     kv_ti.from_numpy(kv)
 
     kget_particle_inertia_time(pr_ti, pd_ti, fd_ti, kv_ti, res_ti)
-    return res_ti.to_numpy()
+    result_np = res_ti.to_numpy()
+    return result_np.item() if result_np.size == 1 else result_np
