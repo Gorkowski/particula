@@ -40,15 +40,26 @@ def ti_get_knudsen_number(mean_free_path, particle_radius):
     Taichi-accelerated wrapper for Knudsen number calculation.
     """
     # 5 a – type guard
-    if not (isinstance(mean_free_path, np.ndarray) and isinstance(particle_radius, np.ndarray)):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+    if not isinstance(mean_free_path, (int, float, np.ndarray)) \
+       or not isinstance(particle_radius, (int, float, np.ndarray)):
+        raise TypeError(
+            "Taichi backend expects scalar (int/float) or NumPy array inputs.")
 
-    # 5 b – ensure 1-D NumPy arrays
-    mfp_np = np.atleast_1d(mean_free_path).astype(np.float64)
-    pr_np  = np.atleast_1d(particle_radius).astype(np.float64)
-    if mfp_np.size != pr_np.size:
-        raise ValueError("Input arrays must have identical length.")
-    n = mfp_np.size
+    # 5 b – convert to 1-D NumPy arrays and broadcast if a scalar/size-1 vector is given
+    mfp_np = np.atleast_1d(np.asarray(mean_free_path,  dtype=np.float64)).ravel()
+    pr_np  = np.atleast_1d(np.asarray(particle_radius, dtype=np.float64)).ravel()
+
+    if mfp_np.size == pr_np.size:               # same length -> OK
+        n = mfp_np.size
+    elif mfp_np.size == 1:                      # scalar mean-free-path
+        mfp_np = np.full(pr_np.size, mfp_np.item(), dtype=np.float64)
+        n = pr_np.size
+    elif pr_np.size == 1:                       # scalar radius
+        pr_np = np.full(mfp_np.size, pr_np.item(), dtype=np.float64)
+        n = mfp_np.size
+    else:
+        raise ValueError(
+            "Inputs must have identical size or one of them must be scalar.")
 
     # 5 c – allocate Taichi NDArray buffers
     mfp_ti = ti.ndarray(dtype=ti.f64, shape=n)
