@@ -35,7 +35,7 @@ def kget_knudsen_number(
 
 
 @register("get_knudsen_number", backend="taichi")
-def get_knudsen_number_taichi(mean_free_path, particle_radius):
+def ti_get_knudsen_number(mean_free_path, particle_radius):
     """
     Taichi-accelerated version of ``par.particles.get_knudsen_number``.
 

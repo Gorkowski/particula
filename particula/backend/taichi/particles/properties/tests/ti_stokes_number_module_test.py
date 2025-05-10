@@ -3,19 +3,21 @@ import numpy as np
 import pytest
 
 from particula.backend.taichi.particles.properties.ti_stokes_number_module import (
-    get_stokes_number_taichi,
+    ti_get_stokes_number,
     kget_stokes_number,
 )
 from particula.particles.properties.stokes_number import get_stokes_number
 
 ti.init(arch=ti.cpu)
 
+
 def test_get_stokes_number_taichi_matches_numpy():
     pit = np.array([1e-3, 2e-3, 3e-3])
     kt = np.array([2e-3, 2e-3, 1e-3])
     expected = get_stokes_number(pit, kt)
-    result = get_stokes_number_taichi(pit, kt)
+    result = ti_get_stokes_number(pit, kt)
     np.testing.assert_allclose(result, expected)
+
 
 def test_kget_stokes_number_kernel_direct():
     pit = np.array([1e-3, 2e-3, 3e-3], dtype=np.float64)

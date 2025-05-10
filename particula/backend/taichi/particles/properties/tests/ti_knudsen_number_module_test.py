@@ -14,7 +14,7 @@ ti.init(arch=ti.cpu)  # Initialize Taichi with CPU backend
 
 # Taichi implementation under test
 from particula.backend.taichi.particles.properties.ti_knudsen_number_module import (
-    get_knudsen_number_taichi,
+    ti_get_knudsen_number,
     kget_knudsen_number,
 )
 
@@ -25,7 +25,7 @@ def test_get_knudsen_number_taichi_array():
     pr = np.array([1.0e-7, 2.0e-7], dtype=np.float64)
 
     expected = par.particles.get_knudsen_number(mfp, pr)
-    result = get_knudsen_number_taichi(mfp, pr)
+    result = ti_get_knudsen_number(mfp, pr)
 
     np.testing.assert_allclose(result, expected, rtol=1e-12, atol=0.0)
 
@@ -46,4 +46,6 @@ def test_kget_knudsen_number_kernel_direct_call():
 
     kget_knudsen_number(mfp_nd, pr_nd, res_nd)
 
-    np.testing.assert_allclose(res_nd.to_numpy(), expected, rtol=1e-12, atol=0.0)
+    np.testing.assert_allclose(
+        res_nd.to_numpy(), expected, rtol=1e-12, atol=0.0
+    )
