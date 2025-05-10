@@ -7,8 +7,7 @@ import argparse
 import subprocess
 from pathlib import Path
 
-GUIDE_PATH = (Path(__file__).resolve().parent.parent
-              / "docs"
+GUIDE_PATH = (Path(__file__).resolve().parent
               / "taichi_conversion_guide.md")    # <-- hard path to the guide
 
 
