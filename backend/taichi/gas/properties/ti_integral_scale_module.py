@@ -33,7 +33,7 @@ def kget_eulerian_integral_length(                                           # n
 
 # ── 5. public wrappers with backend registration ────────────────────────────
 @register("get_lagrangian_integral_time", backend="taichi")
-def ti_get_lagrangian_integral_time(fluid_rms_velocity, turbulent_dissipation):  # noqa: D401, N802
+def get_lagrangian_integral_time_taichi(fluid_rms_velocity, turbulent_dissipation):  # noqa: D401
     if not (isinstance(fluid_rms_velocity, np.ndarray) and isinstance(turbulent_dissipation, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
@@ -51,7 +51,7 @@ def ti_get_lagrangian_integral_time(fluid_rms_velocity, turbulent_dissipation): 
     return out.item() if out.size == 1 else out
 
 @register("get_eulerian_integral_length", backend="taichi")
-def ti_get_eulerian_integral_length(fluid_rms_velocity, turbulent_dissipation):  # noqa: D401, N802
+def get_eulerian_integral_length_taichi(fluid_rms_velocity, turbulent_dissipation):  # noqa: D401
     if not (isinstance(fluid_rms_velocity, np.ndarray) and isinstance(turbulent_dissipation, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
