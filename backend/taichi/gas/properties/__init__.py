@@ -13,3 +13,4 @@ from .ti_kolmogorov_module import (      # NEW
     get_kolmogorov_length_taichi,
     get_kolmogorov_velocity_taichi,
 )  # noqa: F401
+from .ti_mean_free_path_module import get_molecule_mean_free_path_taichi  # noqa: F401
