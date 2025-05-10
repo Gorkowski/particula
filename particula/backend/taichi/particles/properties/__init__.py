@@ -31,6 +31,11 @@ from .ti_slip_correction_module import (
     kget_cunningham_slip_correction,
     fget_cunningham_slip_correction,
 )
+from .ti_friction_factor_module import (   # NEW
+    ti_get_friction_factor,                # NEW
+    kget_friction_factor,                  # NEW
+    fget_friction_factor,                  # NEW
+)
 from .ti_settling_velocity import (
     ti_get_particle_settling_velocity,
     kget_particle_settling_velocity,
