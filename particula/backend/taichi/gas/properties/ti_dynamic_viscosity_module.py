@@ -59,6 +59,8 @@ def ti_get_dynamic_viscosity(
         else np.asarray(reference_temperature, dtype=np.float64)
     )
 
+    # make sure all inputs share the same shape
+    t_np, rv_np, rt_np = np.broadcast_arrays(t_np, rv_np, rt_np)
     n = t_np.size
 
     # 5 c – allocate Taichi NDArrays

@@ -1,7 +1,7 @@
 """Taichi version of get_mixing_state_index."""
 import taichi as ti
 import numpy as np
-from particula.backend import register
+from particula.backend.dispatch_register import register
 
 # ---------- helpers ---------------------------------------------------
 @ti.func

@@ -17,3 +17,9 @@ from .ti_taylor_microscale_module import (
     ti_get_taylor_microscale_reynolds_number,
 )
 from .ti_thermal_conductivity_module import ti_get_thermal_conductivity  # noqa: F401
+
+from .ti_vapor_pressure_module import (
+    ti_get_antoine_vapor_pressure,
+    ti_get_clausius_clapeyron_vapor_pressure,
+    ti_get_buck_vapor_pressure,
+)
