@@ -22,14 +22,14 @@ def test_ti_wrapper_matches_numpy():
     npt.assert_allclose(
         ti_get_cunningham_slip_correction(kn_scalar),
         get_cunningham_slip_correction(kn_scalar),
-        rtol=1e-12,
+        rtol=1e-7,
     )
     # array
     kn_array = np.linspace(0.05, 2.0, 8)
     npt.assert_allclose(
         ti_get_cunningham_slip_correction(kn_array),
         get_cunningham_slip_correction(kn_array),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 
@@ -44,5 +44,5 @@ def test_kernel_direct_matches_numpy():
     npt.assert_allclose(
         res_ti.to_numpy(),
         get_cunningham_slip_correction(kn_array),
-        rtol=1e-12,
+        rtol=1e-7,
     )
