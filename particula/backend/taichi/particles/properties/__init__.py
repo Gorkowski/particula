@@ -16,6 +16,20 @@ from .ti_convert_mass_concentration_module import (   # NEW
     kget_volume_fraction_from_mass,                    # NEW
     fget_volume_single,                                # NEW
 )
+from .ti_convert_kappa_volumes import (
+    ti_get_solute_volume_from_kappa,
+    kget_solute_volume_from_kappa,
+    fget_solute_volume_from_kappa,
+    ti_get_water_volume_from_kappa,
+    kget_water_volume_from_kappa,
+    fget_water_volume_from_kappa,
+    ti_get_kappa_from_volumes,
+    kget_kappa_from_volumes,
+    fget_kappa_from_volumes,
+    ti_get_water_volume_in_mixture,
+    kget_water_volume_in_mixture,
+    fget_water_volume_in_mixture,
+)
 from .ti_vapor_correction_module import (
     ti_get_vapor_transition_correction,
     kget_vapor_transition_correction,
