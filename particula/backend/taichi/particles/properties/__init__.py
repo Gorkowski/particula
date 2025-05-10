@@ -61,3 +61,8 @@ from .ti_mixing_state_index_module import (
     kget_mixing_state_index,
     fget_mixing_state_index,
 )
+from .ti_diffusive_knudsen_module import (      # NEW
+    ti_get_diffusive_knudsen_number,            # NEW
+    kget_diffusive_knudsen_number,              # NEW
+    fget_diffusive_knudsen_number,              # NEW
+)
