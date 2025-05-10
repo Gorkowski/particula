@@ -64,7 +64,8 @@ def ti_get_mass_fractions_from_moles(mole_fractions, molecular_weights):
         x_ti.from_numpy(x)
         mw_ti.from_numpy(mw)
         kget_mass_fractions_1d(x_ti, mw_ti, out_ti)
-        return out_ti.to_numpy()
+        result_np = out_ti.to_numpy()
+        return result_np.item() if result_np.size == 1 else result_np
 
     # 2-D case
     if x.ndim == 2:
@@ -75,6 +76,7 @@ def ti_get_mass_fractions_from_moles(mole_fractions, molecular_weights):
         x_ti.from_numpy(x)
         mw_ti.from_numpy(mw)
         kget_mass_fractions_2d(x_ti, mw_ti, out_ti)
-        return out_ti.to_numpy()
+        result_np = out_ti.to_numpy()
+        return result_np.item() if result_np.size == 1 else result_np
 
     raise ValueError("mole_fractions must be 1-D or 2-D.")

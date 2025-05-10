@@ -1,3 +1,4 @@
+"""Taichi-accelerated implementation of get_friction_factor."""
 import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
@@ -8,7 +9,7 @@ def fget_friction_factor(
     dynamic_viscosity: ti.f64,
     slip_correction: ti.f64,
 ) -> ti.f64:
-    return 6.0 * 3.141592653589793 * dynamic_viscosity * particle_radius / slip_correction
+    return 6.0 * ti.math.pi * dynamic_viscosity * particle_radius / slip_correction
 
 @ti.kernel
 def kget_friction_factor(
