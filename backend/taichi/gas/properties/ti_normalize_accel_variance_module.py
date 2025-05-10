@@ -27,6 +27,9 @@ def get_normalized_accel_variance_ao2008_taichi(
     re_lambda,
     numerical_stability_epsilon: float = 1e-14,
 ):
+    # 5 a – type guard (keep behaviour identical to sibling modules)
+    if not isinstance(re_lambda, np.ndarray):
+        raise TypeError("Taichi backend expects NumPy arrays for the input.")
     if not isinstance(numerical_stability_epsilon, (float, int)):
         raise TypeError("ε must be a float or int.")
     rl_np = np.atleast_1d(re_lambda).astype(np.float64)
