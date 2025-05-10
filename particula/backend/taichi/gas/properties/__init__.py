@@ -7,3 +7,7 @@ from .ti_kolmogorov_module import (
     ti_get_kolmogorov_length,
     ti_get_kolmogorov_velocity,
 )
+from .ti_pressure_function_module import (          # noqa: F401
+    ti_get_partial_pressure,
+    ti_get_saturation_ratio_from_pressure,
+)
