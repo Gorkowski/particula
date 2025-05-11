@@ -32,6 +32,7 @@ def test_kernel_direct():
     radius_ti.from_numpy(radius)
     corr_ti.from_numpy(corr)
 
-    kget_friction_factor(radius_ti, corr_ti, mu_ti, res_ti)
+    # kernel expects (radius, dynamic_viscosity, slip_correction, result)
+    kget_friction_factor(radius_ti, mu_ti, corr_ti, res_ti)
     npt.assert_allclose(res_ti.to_numpy(), get_friction_factor(radius, mu, corr),
                         rtol=1e-8, atol=0.0)
