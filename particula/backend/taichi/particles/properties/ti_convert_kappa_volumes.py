@@ -16,6 +16,7 @@ def fget_solute_volume_from_kappa(v_tot: ti.f64, kappa: ti.f64, aw: ti.f64) -> t
 @ti.func
 def fget_water_volume_from_kappa(v_sol: ti.f64, kappa: ti.f64, aw: ti.f64) -> ti.f64:
     aw = ti.min(aw, 1.0 - 1e-16)
+
     if aw <= 1e-16:
         return 0.0
     return v_sol * kappa / (1.0 / aw - 1.0)
