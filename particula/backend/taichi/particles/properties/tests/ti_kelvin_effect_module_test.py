@@ -28,10 +28,19 @@ def test_kernel_kelvin_term():
     kr = np.array([2e-7, 1e-7, 5e-8], dtype=np.float64)
     expected = np_get_kelvin_term(pr, kr)
 
-    n = pr.size
-    pr_ti = ti.ndarray(dtype=ti.f64, shape=n); pr_ti.from_numpy(pr)
-    kr_ti = ti.ndarray(dtype=ti.f64, shape=n); kr_ti.from_numpy(kr)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    pr_mat = np.broadcast_to(pr[:, None], (pr.size, kr.size))
+    kr_mat = np.broadcast_to(kr[None, :], (pr.size, kr.size))
+
+    pr_ti = ti.ndarray(dtype=ti.f64, shape=pr_mat.shape); pr_ti.from_numpy(pr_mat)
+    kr_ti = ti.ndarray(dtype=ti.f64, shape=kr_mat.shape); kr_ti.from_numpy(kr_mat)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=pr_mat.shape)
+
     kget_kelvin_term(pr_ti, kr_ti, res_ti)
     got = res_ti.to_numpy()
+    assert_allclose(got, expected, rtol=1e-8, atol=0)
+def test_wrapper_kelvin_term_scalar_kr():
+    pr = np.array([1e-7, 5e-8, 1e-7], dtype=np.float64)
+    kr = np.array([2e-7], dtype=np.float64)
+    expected = np_get_kelvin_term(pr, kr)
+    got = ti_get_kelvin_term(pr, kr)
     assert_allclose(got, expected, rtol=1e-8, atol=0)

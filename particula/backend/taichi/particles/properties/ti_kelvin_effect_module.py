@@ -37,12 +37,12 @@ def kget_kelvin_radius(
 
 @ti.kernel
 def kget_kelvin_term(
-    r_p: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    r_k: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    r_p: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    r_k: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    res: ti.types.ndarray(dtype=ti.f64, ndim=2),
 ):
-    for i in range(res.shape[0]):
-        res[i] = fget_kelvin_term(r_p[i], r_k[i])
+    for I in ti.grouped(res):
+        res[I] = fget_kelvin_term(r_p[I], r_k[I])
 
 # 5 – public wrappers with backend registration
 @register("get_kelvin_radius", backend="taichi")
@@ -67,24 +67,31 @@ def ti_get_kelvin_radius(surface_tension, density, molar_mass, temperature):
 
 @register("get_kelvin_term", backend="taichi")
 def ti_get_kelvin_term(particle_radius, kelvin_radius_value):
-    if not (isinstance(particle_radius, np.ndarray) and isinstance(kelvin_radius_value, np.ndarray)):
+    if not (isinstance(particle_radius, np.ndarray)
+            and isinstance(kelvin_radius_value, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
-    # broadcast → 1-D
-    # pr, kr = np.broadcast_arrays(particle_radius, kelvin_radius_value)
-    if isinstance(kelvin_radius_value, np.ndarray) and (
-        kelvin_radius_value.size > 1
-    ):
-        kelvin_radius_value = np.broadcast_to(kelvin_radius_value, particle_radius.shape)
-    pr = particle_radius.ravel()
-    kr = kelvin_radius_value.ravel()
-    n = pr.size
+    pr = particle_radius.astype(np.float64).ravel()
+    kr = kelvin_radius_value.astype(np.float64).ravel()
 
-    pr_ti, kr_ti = (ti.ndarray(dtype=ti.f64, shape=n) for _ in range(2))
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pr_ti.from_numpy(pr)
-    kr_ti.from_numpy(kr)
+    # replicate NumPy implementation: outer product only if both arrays > 1
+    expand = (kr.size > 1) and (pr.size > 1)
+
+    if expand:                                        # outer-product case
+        pr_mat = np.broadcast_to(pr[:, None], (pr.size, kr.size))
+        kr_mat = np.broadcast_to(kr[None, :], (pr.size, kr.size))
+    else:                                             # no expansion
+        pr_mat = pr[:, None]                          # (n, 1)
+        kr_mat = np.broadcast_to(kr, pr_mat.shape)    # (n, 1)
+
+    shape_2d = pr_mat.shape                           # (rows, cols)
+    pr_ti = ti.ndarray(ti.f64, shape_2d);  pr_ti.from_numpy(pr_mat)
+    kr_ti = ti.ndarray(ti.f64, shape_2d);  kr_ti.from_numpy(kr_mat)
+    res_ti = ti.ndarray(ti.f64, shape_2d)
 
     kget_kelvin_term(pr_ti, kr_ti, res_ti)
-    out = res_ti.to_numpy().reshape(pr.shape)
+    out = res_ti.to_numpy()
+
+    if not expand:                                    # restore 1-D result
+        out = out[:, 0]
     return out.item() if out.size == 1 else out
