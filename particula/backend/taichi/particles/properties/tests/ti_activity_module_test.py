@@ -9,8 +9,14 @@ from particula.particles.properties.activity_module import (
     get_kappa_activity,
     get_surface_partial_pressure,
 )
-from particula.backend.dispatch_register import use_backend
-use_backend("taichi")
+from particula.backend.taichi.particles.properties.ti_activity_module import (
+    ti_get_ideal_activity_molar,
+    ti_get_ideal_activity_volume,
+    ti_get_ideal_activity_mass,
+    ti_get_kappa_activity,
+    ti_get_surface_partial_pressure,
+    kget_ideal_activity_mass,
+)
 ti.init(arch=ti.cpu)
 
 # sample data -------------------------------------------------------
@@ -25,31 +31,31 @@ act  = np.array([0.95, 0.85], dtype=np.float64)
 def test_wrapper_molar():
     assert_allclose(
         get_ideal_activity_molar(mc, mm),
-        use_backend.get_ideal_activity_molar(mc, mm)  # dispatch
+        ti_get_ideal_activity_molar(mc, mm)
     )
 
 def test_wrapper_volume():
     assert_allclose(
         get_ideal_activity_volume(mc, dens),
-        use_backend.get_ideal_activity_volume(mc, dens)
+        ti_get_ideal_activity_volume(mc, dens)
     )
 
 def test_wrapper_mass():
     assert_allclose(
         get_ideal_activity_mass(mc),
-        use_backend.get_ideal_activity_mass(mc)
+        ti_get_ideal_activity_mass(mc)
     )
 
 def test_wrapper_kappa():
     assert_allclose(
         get_kappa_activity(mc, kap, dens, mm, 0),
-        use_backend.get_kappa_activity(mc, kap, dens, mm, 0)
+        ti_get_kappa_activity(mc, kap, dens, mm, 0)
     )
 
 def test_wrapper_surf_p():
     assert_allclose(
         get_surface_partial_pressure(pvp, act),
-        use_backend.get_surface_partial_pressure(pvp, act)
+        ti_get_surface_partial_pressure(pvp, act)
     )
 
 # one direct-kernel test (example) ----------------------------------
