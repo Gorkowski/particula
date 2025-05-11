@@ -39,33 +39,33 @@ def fget_water_volume_in_mixture(v_sol_dry: ti.f64, phi_w: ti.f64) -> ti.f64:
 def kget_solute_volume_from_kappa(
     vt: ti.types.ndarray(dtype=ti.f64, ndim=1),
     kp: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    aw: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    aw: ti.f64,
     res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
-        res[i] = fget_solute_volume_from_kappa(vt[i], kp[i], aw[i])
+        res[i] = fget_solute_volume_from_kappa(vt[i], kp[i], aw)
 
 
 @ti.kernel
 def kget_water_volume_from_kappa(
     vs: ti.types.ndarray(dtype=ti.f64, ndim=1),
     kp: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    aw: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    aw: ti.f64,
     res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
-        res[i] = fget_water_volume_from_kappa(vs[i], kp[i], aw[i])
+        res[i] = fget_water_volume_from_kappa(vs[i], kp[i], aw)
 
 
 @ti.kernel
 def kget_kappa_from_volumes(
     vs: ti.types.ndarray(dtype=ti.f64, ndim=1),
     vw: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    aw: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    aw: ti.f64,
     res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
-        res[i] = fget_kappa_from_volumes(vs[i], vw[i], aw[i])
+        res[i] = fget_kappa_from_volumes(vs[i], vw[i], aw)
 
 
 @ti.kernel
@@ -79,48 +79,66 @@ def kget_water_volume_in_mixture(
 
 
 # ── 5 ▸ public wrappers with backend registration ──────────────
-def _wrap(kernel, *arrays):
+def _wrap(kernel, *arrays, scalar_args=()):
     """Broadcast inputs, launch kernel, reshape result."""
-    # 5 a – convert to float64 nd-arrays and broadcast to common shape
     b_arrays = np.broadcast_arrays(
         *[np.asarray(a, dtype=np.float64) for a in arrays]
     )
-    flat = [a.ravel() for a in b_arrays]          # 1-D buffers for Taichi
+    flat = [a.ravel() for a in b_arrays]
     n = flat[0].size
 
-    # 5 b – allocate Taichi NDArrays
     ti_in = [ti.ndarray(dtype=ti.f64, shape=n) for _ in flat]
     result_ti = ti.ndarray(dtype=ti.f64, shape=n)
     for buf, arr in zip(ti_in, flat):
         buf.from_numpy(arr)
 
-    # 5 c – launch the kernel
-    kernel(*ti_in, result_ti)
+    scalars = [np.float64(s) for s in scalar_args]  # ensure f64 scalars
+    kernel(*ti_in, *scalars, result_ti)
 
-    # 5 d – reshape back to broadcasted shape and unwrap scalar
     result_np = result_ti.to_numpy().reshape(b_arrays[0].shape)
     return result_np.item() if result_np.size == 1 else result_np
 
 
 @register("get_solute_volume_from_kappa", backend="taichi")
 def ti_get_solute_volume_from_kappa(volume_total, kappa, water_activity):
-    if not all(isinstance(x, (np.ndarray, float, int)) for x in (volume_total, kappa, water_activity)):
-        raise TypeError("Taichi backend expects NumPy arrays or scalars.")
-    return _wrap(kget_solute_volume_from_kappa, volume_total, kappa, water_activity)
+    if isinstance(water_activity, np.ndarray) and water_activity.size != 1:
+        raise TypeError("water_activity must be a scalar for Taichi backend.")
+    if not all(isinstance(x, (np.ndarray, float, int)) for x in (volume_total, kappa)):
+        raise TypeError("volume_total and kappa must be scalars or NumPy arrays.")
+    return _wrap(
+        kget_solute_volume_from_kappa,
+        volume_total,
+        kappa,
+        scalar_args=(water_activity,),
+    )
 
 
 @register("get_water_volume_from_kappa", backend="taichi")
 def ti_get_water_volume_from_kappa(volume_solute, kappa, water_activity):
-    if not all(isinstance(x, (np.ndarray, float, int)) for x in (volume_solute, kappa, water_activity)):
-        raise TypeError("Taichi backend expects NumPy arrays or scalars.")
-    return _wrap(kget_water_volume_from_kappa, volume_solute, kappa, water_activity)
+    if isinstance(water_activity, np.ndarray) and water_activity.size != 1:
+        raise TypeError("water_activity must be a scalar for Taichi backend.")
+    if not all(isinstance(x, (np.ndarray, float, int)) for x in (volume_solute, kappa)):
+        raise TypeError("volume_solute and kappa must be scalars or NumPy arrays.")
+    return _wrap(
+        kget_water_volume_from_kappa,
+        volume_solute,
+        kappa,
+        scalar_args=(water_activity,),
+    )
 
 
 @register("get_kappa_from_volumes", backend="taichi")
 def ti_get_kappa_from_volumes(volume_solute, volume_water, water_activity):
-    if not all(isinstance(x, (np.ndarray, float, int)) for x in (volume_solute, volume_water, water_activity)):
-        raise TypeError("Taichi backend expects NumPy arrays or scalars.")
-    return _wrap(kget_kappa_from_volumes, volume_solute, volume_water, water_activity)
+    if isinstance(water_activity, np.ndarray) and water_activity.size != 1:
+        raise TypeError("water_activity must be a scalar for Taichi backend.")
+    if not all(isinstance(x, (np.ndarray, float, int)) for x in (volume_solute, volume_water)):
+        raise TypeError("volume_solute and volume_water must be scalars or NumPy arrays.")
+    return _wrap(
+        kget_kappa_from_volumes,
+        volume_solute,
+        volume_water,
+        scalar_args=(water_activity,),
+    )
 
 
 @register("get_water_volume_in_mixture", backend="taichi")
