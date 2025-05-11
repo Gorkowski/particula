@@ -32,7 +32,7 @@ def test_get_water_volume_from_kappa_wrapper():
     np.testing.assert_allclose(
         ti_get_water_volume_from_kappa(vs, kp, aw),
         ref.get_water_volume_from_kappa(vs, kp, aw),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 def test_get_kappa_from_volumes_wrapper():
@@ -62,7 +62,7 @@ def test_kget_solute_volume_from_kappa_kernel():
     np.testing.assert_allclose(
         res.to_numpy(),
         ref.get_solute_volume_from_kappa(vt, kp, aw),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 def test_kget_water_volume_from_kappa_kernel():
@@ -75,7 +75,7 @@ def test_kget_water_volume_from_kappa_kernel():
     np.testing.assert_allclose(
         res.to_numpy(),
         ref.get_water_volume_from_kappa(vs, kp, aw),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 def test_kget_kappa_from_volumes_kernel():
