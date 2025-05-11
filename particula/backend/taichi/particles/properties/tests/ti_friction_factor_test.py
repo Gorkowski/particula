@@ -28,7 +28,7 @@ def test_kernel_direct():
     radius_ti = ti.ndarray(dtype=ti.f64, shape=n)
     corr_ti = ti.ndarray(dtype=ti.f64, shape=n)
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    mu_ti = ti.cast(mu, dtype=ti.f64)
+    mu_ti = np.float64(mu)        # scalar float64, not a Taichi Expr
     radius_ti.from_numpy(radius)
     corr_ti.from_numpy(corr)
 
