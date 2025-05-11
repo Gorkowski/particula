@@ -7,19 +7,20 @@ from particula.backend.dispatch_register import register
 @ti.func
 def fget_solute_volume_from_kappa(v_tot: ti.f64, kappa: ti.f64, aw: ti.f64) -> ti.f64:
     kappa = ti.max(kappa, 1e-16)
-    if aw <= 1e-16:
-        return v_tot
-    vol_factor = (aw - 1.0) / (aw * (1.0 - kappa - 1.0 / aw))
+    # default: aw very small ⇒ whole volume is solute
+    vol_factor = 1.0
+    if aw > 1e-16:
+        vol_factor = (aw - 1.0) / (aw * (1.0 - kappa - 1.0 / aw))
     return v_tot * vol_factor
 
 
 @ti.func
 def fget_water_volume_from_kappa(v_sol: ti.f64, kappa: ti.f64, aw: ti.f64) -> ti.f64:
     aw = ti.min(aw, 1.0 - 1e-16)
-
-    if aw <= 1e-16:
-        return 0.0
-    return v_sol * kappa / (1.0 / aw - 1.0)
+    res = 0.0
+    if aw > 1e-16:
+        res = v_sol * kappa / (1.0 / aw - 1.0)
+    return res
 
 
 @ti.func
