@@ -18,12 +18,21 @@ from particula.backend.taichi.particles.properties.ti_convert_kappa_volumes impo
 def _rand(n=5):
     return np.random.random(n) + 1e-3
 
+def _ref_vec_get_solute_volume_from_kappa(vt, kp, aw):
+    """Reference wrapper that loops because ref code needs scalar kappa."""
+    vt_arr, kp_arr = np.asarray(vt), np.asarray(kp)
+    flat = [
+        ref.get_solute_volume_from_kappa(v, k, aw)
+        for v, k in zip(vt_arr.ravel(), kp_arr.ravel())
+    ]
+    return np.reshape(np.array(flat), vt_arr.shape)
+
 
 def test_get_solute_volume_from_kappa_wrapper():
     vt, kp, aw = _rand(), _rand(), 0.8
     np.testing.assert_allclose(
         ti_get_solute_volume_from_kappa(vt, kp, aw),
-        ref.get_solute_volume_from_kappa(vt, kp, aw),
+        _ref_vec_get_solute_volume_from_kappa(vt, kp, aw),
         rtol=1e-12,
     )
 
@@ -61,7 +70,7 @@ def test_kget_solute_volume_from_kappa_kernel():
     kget_solute_volume_from_kappa(vt_t, kp_t, np.float64(aw), res)
     np.testing.assert_allclose(
         res.to_numpy(),
-        ref.get_solute_volume_from_kappa(vt, kp, aw),
+        _ref_vec_get_solute_volume_from_kappa(vt, kp, aw),
         rtol=1e-7,
     )
 
