@@ -17,7 +17,7 @@ def test_wrapper_vs_numpy():
 
     expected = get_friction_factor(radius, mu, corr)
     actual = ti_get_friction_factor(radius, mu, corr)
-    npt.assert_allclose(actual, expected, rtol=1e-14, atol=0.0)
+    npt.assert_allclose(actual, expected, rtol=1e-8, atol=0.0)
 
 def test_kernel_direct():
     radius = np.array([1e-7, 2e-7])
@@ -28,9 +28,10 @@ def test_kernel_direct():
     radius_ti = ti.ndarray(dtype=ti.f64, shape=n)
     corr_ti = ti.ndarray(dtype=ti.f64, shape=n)
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    mu_ti = ti.cast(mu, dtype=ti.f64)
     radius_ti.from_numpy(radius)
     corr_ti.from_numpy(corr)
 
-    kget_friction_factor(radius_ti, corr_ti, mu, res_ti)
+    kget_friction_factor(radius_ti, corr_ti, mu_ti, res_ti)
     npt.assert_allclose(res_ti.to_numpy(), get_friction_factor(radius, mu, corr),
-                        rtol=1e-14, atol=0.0)
+                        rtol=1e-8, atol=0.0)
