@@ -16,6 +16,10 @@ from particula.backend.taichi.particles.properties.ti_activity_module import (
     ti_get_kappa_activity,
     ti_get_surface_partial_pressure,
     kget_ideal_activity_mass,
+    kget_surface_partial_pressure,
+    kget_ideal_activity_volume,
+    kget_ideal_activity_molar,
+    kget_kappa_activity,
 )
 ti.init(arch=ti.cpu)
 
@@ -68,3 +72,40 @@ def test_kernel_mass_direct():
     mc_ti.from_numpy(mc)
     kget_ideal_activity_mass(mc_ti, res_ti)
     assert_allclose(res_ti.to_numpy(), get_ideal_activity_mass(mc))
+
+def _to_ti(arr):          # small helper for brevity
+    nd = ti.ndarray(dtype=ti.f64, shape=arr.shape)
+    nd.from_numpy(arr)
+    return nd
+
+# ------------------------------------------------------------------
+def test_kernel_surface_partial_pressure_direct():
+    res_ti = ti.ndarray(dtype=ti.f64, shape=pvp.shape)
+    kget_surface_partial_pressure(
+        _to_ti(pvp), _to_ti(act), res_ti
+    )
+    assert_allclose(res_ti.to_numpy(), get_surface_partial_pressure(pvp, act))
+
+def test_kernel_volume_direct():
+    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
+    kget_ideal_activity_volume(
+        _to_ti(mc), _to_ti(dens), res_ti
+    )
+    assert_allclose(res_ti.to_numpy(), get_ideal_activity_volume(mc, dens))
+
+def test_kernel_molar_direct():
+    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
+    kget_ideal_activity_molar(
+        _to_ti(mc), _to_ti(mm), res_ti
+    )
+    assert_allclose(res_ti.to_numpy(), get_ideal_activity_molar(mc, mm))
+
+def test_kernel_kappa_direct():
+    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
+    kget_kappa_activity(
+        _to_ti(mc), _to_ti(kap), _to_ti(dens), _to_ti(mm), 0, res_ti
+    )
+    assert_allclose(
+        res_ti.to_numpy(),
+        get_kappa_activity(mc, kap, dens, mm, 0)
+    )
