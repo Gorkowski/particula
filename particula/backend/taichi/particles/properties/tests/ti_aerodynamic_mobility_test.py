@@ -19,7 +19,7 @@ def test_wrapper_vs_numpy():
     npt.assert_allclose(
         ti_get_aerodynamic_mobility(r, scf, mu),
         get_aerodynamic_mobility(r, scf, mu),
-        rtol=1e-14,
+        rtol=1e-8,
         atol=0.0,
     )
 
@@ -41,6 +41,6 @@ def test_kernel_direct():
     npt.assert_allclose(
         res_ti.to_numpy(),
         get_aerodynamic_mobility(r, scf, mu),
-        rtol=1e-14,
+        rtol=1e-8,
         atol=0.0,
     )

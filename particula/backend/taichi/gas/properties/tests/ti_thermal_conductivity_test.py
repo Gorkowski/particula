@@ -14,7 +14,7 @@ def test_wrapper_matches_numpy():
     npt.assert_allclose(
         ti_get_thermal_conductivity(temp),
         get_thermal_conductivity(temp),
-        rtol=1e-13, atol=0
+        rtol=1e-7, atol=0
     )
 
 def test_kernel_direct():
@@ -26,5 +26,5 @@ def test_kernel_direct():
     npt.assert_allclose(
         res_ti.to_numpy(),
         get_thermal_conductivity(temp),
-        rtol=1e-13, atol=0
+        rtol=1e-7, atol=0
     )

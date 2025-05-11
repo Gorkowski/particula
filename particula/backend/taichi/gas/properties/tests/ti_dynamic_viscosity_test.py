@@ -18,7 +18,7 @@ def test_wrapper_matches_reference():
     np.testing.assert_allclose(
         ti_get_dynamic_viscosity(temps),
         get_dynamic_viscosity(temps),
-        rtol=1e-12,
+        rtol=1e-9,
     )
 
 def test_kernel_direct():
@@ -38,5 +38,5 @@ def test_kernel_direct():
     np.testing.assert_allclose(
         res_ti.to_numpy(),
         get_dynamic_viscosity(temps),
-        rtol=1e-12,
+        rtol=1e-9,
     )

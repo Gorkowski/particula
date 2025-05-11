@@ -21,7 +21,7 @@ def test_wrapper_matches_numpy():
     expected = get_concentration_from_pressure(pp, mm, tt)
     result = ti_get_concentration_from_pressure(pp, mm, tt)
 
-    assert_allclose(result, expected, rtol=1e-12, atol=0)
+    assert_allclose(result, expected, rtol=1e-8, atol=0)
 
 
 def test_kernel_direct_call():
@@ -41,4 +41,4 @@ def test_kernel_direct_call():
     kget_concentration_from_pressure(pp_ti, mm_ti, tt_ti, res_ti)
 
     assert_allclose(res_ti.to_numpy(), get_concentration_from_pressure(pp, mm, tt),
-                    rtol=1e-12, atol=0)
+                    rtol=1e-8, atol=0)

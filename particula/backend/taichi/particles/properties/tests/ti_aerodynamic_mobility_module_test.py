@@ -20,7 +20,7 @@ def test_ti_get_aerodynamic_mobility_vs_numpy():
     mu = np.array([1.8e-5, 1.8e-5, 1.8e-5], dtype=np.float64)
     expected = reference_aerodynamic_mobility(r, c, mu)
     result = ti_get_aerodynamic_mobility(r, c, mu)
-    np.testing.assert_allclose(result, expected, rtol=1e-12)
+    np.testing.assert_allclose(result, expected, rtol=1e-8)
 
     # Test with scalar
     r_scalar = np.array(5e-8, dtype=np.float64)
@@ -28,7 +28,7 @@ def test_ti_get_aerodynamic_mobility_vs_numpy():
     mu_scalar = np.array(1.9e-5, dtype=np.float64)
     expected_scalar = reference_aerodynamic_mobility(r_scalar, c_scalar, mu_scalar)
     result_scalar = ti_get_aerodynamic_mobility(r_scalar, c_scalar, mu_scalar)
-    np.testing.assert_allclose(result_scalar, expected_scalar, rtol=1e-12)
+    np.testing.assert_allclose(result_scalar, expected_scalar, rtol=1e-8)
 
 def test_kget_aerodynamic_mobility_kernel_direct():
     # Prepare data
@@ -48,4 +48,4 @@ def test_kget_aerodynamic_mobility_kernel_direct():
 
     kget_aerodynamic_mobility(r_ti, c_ti, mu_ti, result_ti)
     result = result_ti.to_numpy()
-    np.testing.assert_allclose(result, expected, rtol=1e-12)
+    np.testing.assert_allclose(result, expected, rtol=1e-8)

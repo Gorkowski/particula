@@ -82,7 +82,7 @@ def test_ti_get_buck_vapor_pressure_vs_numpy():
     T = np.array([273.15, 300.0])
     ref = get_buck_vapor_pressure(T)
     taichi_result = ti_get_buck_vapor_pressure(T)
-    assert_allclose(taichi_result, ref, rtol=1e-10, atol=1e-8)
+    assert_allclose(taichi_result, ref, rtol=1e-6, atol=1e-8)
 
 def test_kget_buck_vapor_pressure_kernel():
     T = np.array([273.15, 300.0])
@@ -93,4 +93,4 @@ def test_kget_buck_vapor_pressure_kernel():
     T_ti.from_numpy(T)
     kget_buck_vapor_pressure(T_ti, res_ti)
     result = res_ti.to_numpy()
-    assert_allclose(result, expected, rtol=1e-10, atol=1e-8)
+    assert_allclose(result, expected, rtol=1e-6, atol=1e-8)

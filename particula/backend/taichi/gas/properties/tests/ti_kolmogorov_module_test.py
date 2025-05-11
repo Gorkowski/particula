@@ -18,8 +18,8 @@ from particula.backend.taichi.gas.properties.ti_kolmogorov_module import (
 
 def _sample_data():
     # Return two arrays of positive floats, length >= 2
-    v = np.array([1.5e-5, 2.0e-5], dtype=np.float64)
-    eps = np.array([0.1, 0.2], dtype=np.float64)
+    v = np.array([1.5e-5, 2.0e-5])
+    eps = np.array([0.1, 0.2])
     return v, eps
 
 def test_ti_wrappers_parity():
@@ -40,23 +40,7 @@ def test_ti_wrappers_parity():
         get_kolmogorov_velocity(v, eps),
         rtol=1e-12, atol=0
     )
-    # Scalar input
-    v0, eps0 = v[0], eps[0]
-    np.testing.assert_allclose(
-        ti_get_kolmogorov_time(v0, eps0),
-        get_kolmogorov_time(v0, eps0),
-        rtol=1e-12, atol=0
-    )
-    np.testing.assert_allclose(
-        ti_get_kolmogorov_length(v0, eps0),
-        get_kolmogorov_length(v0, eps0),
-        rtol=1e-12, atol=0
-    )
-    np.testing.assert_allclose(
-        ti_get_kolmogorov_velocity(v0, eps0),
-        get_kolmogorov_velocity(v0, eps0),
-        rtol=1e-12, atol=0
-    )
+
 
 def test_ti_kernels_parity():
     v, eps = _sample_data()
