@@ -105,7 +105,6 @@ def get_kolmogorov_length(
     return np.sqrt(np.sqrt(kinematic_viscosity**3 / turbulent_dissipation))
 
 
-@dispatchable
 @validate_inputs(
     {"kinematic_viscosity": "positive", "turbulent_dissipation": "positive"}
 )

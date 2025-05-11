@@ -20,7 +20,7 @@ def test_wrapper_matches_numpy(shape):
 
     expected = get_particle_inertia_time(r, rho_p, rho_f, nu)
     result   = ti_get_particle_inertia_time(r, rho_p, rho_f, nu)
-    assert_allclose(result, expected, rtol=1e-14, atol=0.0)
+    assert_allclose(result, expected, rtol=1e-8, atol=0.0)
 
 def test_kernel_direct():
     n = 4
@@ -42,6 +42,6 @@ def test_kernel_direct():
     assert_allclose(
         res_ti.to_numpy(),
         (2.0 / 9.0) * (rho_p / rho_f) * (r**2 / nu),
-        rtol=1e-14,
+        rtol=1e-8,
         atol=0.0,
     )

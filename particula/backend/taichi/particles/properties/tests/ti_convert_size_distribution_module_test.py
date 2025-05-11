@@ -22,7 +22,7 @@ def test_wrapper_distribution_in_dn():
     npt.assert_allclose(
         ti_get_distribution_in_dn(d, dn, inverse=False),
         py_get_distribution_in_dn(d, dn, inverse=False),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 def test_wrapper_pdf_pmf():

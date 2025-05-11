@@ -19,5 +19,5 @@ def test_package_import_and_wrapper_execution():
     result = kn_func(np.array([1.0]), np.array([0.1]))
 
     # basic sanity check – result shape and finite value(s)
-    assert result.size == 1
+    assert np.array(result).size == 1
     npt.assert_allclose(np.isfinite(result), True)

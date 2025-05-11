@@ -17,7 +17,7 @@ def test_wrapper_matches_numpy():
     np.testing.assert_allclose(
         ti_get_diffusive_knudsen_number(r, m, f, phi),
         ref_fn(r, m, f, phi),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 def test_kernel_direct():

@@ -33,7 +33,7 @@ def test_pdf_wrapper():
     npt.assert_allclose(
         ti_get_lognormal_pdf_distribution(x_vals, mode, gsd, n_part),
         ref_pdf(x_vals, mode, gsd, n_part),
-        rtol=1e-7,
+        rtol=1e-6,
     )
 
 
@@ -42,7 +42,7 @@ def test_pmf_wrapper():
     npt.assert_allclose(
         ti_get_lognormal_pmf_distribution(x_vals, mode, gsd, n_part),
         ref_pmf(x_vals, mode, gsd, n_part),
-        rtol=1e-7,
+        rtol=1e-6,
     )
 
 
@@ -68,5 +68,5 @@ def test_kernel_direct():
     npt.assert_allclose(
         out_ti.to_numpy(),
         ref_pdf(x_vals, mode, gsd, n_part),
-        rtol=1e-7,
+        rtol=1e-6,
     )

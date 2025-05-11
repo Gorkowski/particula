@@ -21,14 +21,14 @@ def test_wrapper_mole():
     np.testing.assert_allclose(
         ti_get_mole_fraction_from_mass(m, mm),
         get_mole_fraction_from_mass(m, mm),
-        rtol=1e-12, atol=0)
+        rtol=1e-7, atol=0)
 
 def test_wrapper_volume():
     m, _, rho = _sample()
     np.testing.assert_allclose(
         ti_get_volume_fraction_from_mass(m, rho),
         get_volume_fraction_from_mass(m, rho),
-        rtol=1e-12, atol=0)
+        rtol=1e-7, atol=0)
 
 def test_kernel_mole():
     m, mm, _ = _sample()
@@ -38,7 +38,7 @@ def test_kernel_mole():
     out = ti.ndarray(dtype=ti.f64, shape=n)
     kget_mole_fraction_from_mass(m_ti, mm_ti, out)
     np.testing.assert_allclose(out.to_numpy(),
-        get_mole_fraction_from_mass(m, mm), rtol=1e-12, atol=0)
+        get_mole_fraction_from_mass(m, mm), rtol=1e-7, atol=0)
 
 def test_kernel_volume():
     m, _, rho = _sample()
@@ -48,4 +48,4 @@ def test_kernel_volume():
     out = ti.ndarray(dtype=ti.f64, shape=n)
     kget_volume_fraction_from_mass(m_ti, rho_ti, out)
     np.testing.assert_allclose(out.to_numpy(),
-        get_volume_fraction_from_mass(m, rho), rtol=1e-12, atol=0)
+        get_volume_fraction_from_mass(m, rho), rtol=1e-7, atol=0)

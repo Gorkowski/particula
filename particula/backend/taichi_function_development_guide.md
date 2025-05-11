@@ -84,7 +84,7 @@ def ti_get_<name>(arg1, arg2):
 If the corresponding `__init__.py` under `backend/taichi/...` does not yet
 import your new function, add it there.
 
-## 7.  Unit tests
+## 7.  ADD Unit tests
 Create `ti_<name>_test.py` inside the same sub-package as the new taichi module `backend/taichi/.../.../tests`. Include at least two tests:
 
 1. Compare the Taichi wrapper with the reference NumPy implementation using  

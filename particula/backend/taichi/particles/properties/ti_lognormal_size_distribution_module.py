@@ -13,10 +13,10 @@ from particula.particles.properties.convert_size_distribution import (
 @ti.func
 def fget_lognormal_pdf(x: ti.f64, mode: ti.f64, gsd: ti.f64) -> ti.f64:
     """Log-normal PDF for one x and one mode (all float64)."""
-    if x <= 0.0:
-        return 0.0
     sigma = ti.log(gsd)
-    coeff = 1.0 / (x * sigma * ti.sqrt(2.0 * ti.pi))
+    coeff = 0.0
+    if x > 0.0:
+        coeff = 1.0 / (x * sigma * ti.sqrt(2.0 * ti.math.pi))
     exponent = -((ti.log(x) - ti.log(mode)) ** 2) / (2.0 * sigma * sigma)
     return coeff * ti.exp(exponent)
 
@@ -54,7 +54,7 @@ def _compute_mode_weights(
     dist = np.exp(
         -((np.log(x_vals[:, None]) - np.log(mode)) ** 2) / (2.0 * sigma**2)
     ) / (x_vals[:, None] * sigma * np.sqrt(2.0 * np.pi))
-    area = np.trapz(dist, x=x_vals[:, None], axis=0)
+    area = np.trapezoid(dist, x=x_vals[:, None], axis=0)
     area[area == 0] = np.nan
     return n_part / area
 

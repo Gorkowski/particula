@@ -10,7 +10,6 @@ from particula.backend.dispatch_register import dispatchable
 from particula.util.validate_inputs import validate_inputs
 
 
-@dispatchable
 @validate_inputs(
     {
         "particle_inertia_time": "positive",

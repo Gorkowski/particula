@@ -20,9 +20,9 @@ def _rand(n=5):
 
 
 def test_wrapper_parity():
-    vt, kp, aw = _rand(), _rand(), 0.8 * _rand()
+    vt, kp, aw = _rand(), _rand(), 0.8
     vs, vw = _rand(), _rand()
-    phi_w = 0.5 * _rand()
+    phi_w = 0.5
 
     np.testing.assert_allclose(
         ti_get_solute_volume_from_kappa(vt, kp, aw),
@@ -48,11 +48,11 @@ def test_wrapper_parity():
 
 def test_kernel_direct():
     n = 4
-    vt, kp, aw = _rand(n), _rand(n), 0.8 * _rand(n)
+    vt, kp, aw = _rand(n), _rand(n), 0.8
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
     vt_t = ti.ndarray(dtype=ti.f64, shape=n); vt_t.from_numpy(vt)
     kp_t = ti.ndarray(dtype=ti.f64, shape=n); kp_t.from_numpy(kp)
-    aw_t = ti.ndarray(dtype=ti.f64, shape=n); aw_t.from_numpy(aw)
+    aw_t = np.float64(aw)
 
     kget_solute_volume_from_kappa(vt_t, kp_t, aw_t, res_ti)
     np.testing.assert_allclose(

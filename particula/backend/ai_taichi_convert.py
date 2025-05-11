@@ -40,6 +40,8 @@ def convert(file_path: Path, prompt: str | None = None) -> None:
             "and convert it to a taichi version following the "
             "taichi_function_development_guide.md. DO NOT modify"
             f" the original file {file_path.name} or the guide."
+            " If the file is already in taichi, review it and "
+            "make sure it follows the guide and has tests."
         )
     file_str = str(file_path.resolve())
 
