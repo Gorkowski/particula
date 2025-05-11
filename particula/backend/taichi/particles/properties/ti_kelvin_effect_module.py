@@ -71,9 +71,13 @@ def ti_get_kelvin_term(particle_radius, kelvin_radius_value):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
     # broadcast → 1-D
-    pr, kr = np.broadcast_arrays(particle_radius, kelvin_radius_value)
-    pr = pr.ravel()
-    kr = kr.ravel()
+    # pr, kr = np.broadcast_arrays(particle_radius, kelvin_radius_value)
+    if isinstance(kelvin_radius_value, np.ndarray) and (
+        kelvin_radius_value.size > 1
+    ):
+        kelvin_radius_value = np.broadcast_to(kelvin_radius_value, particle_radius.shape)
+    pr = particle_radius.ravel()
+    kr = kelvin_radius_value.ravel()
     n = pr.size
 
     pr_ti, kr_ti = (ti.ndarray(dtype=ti.f64, shape=n) for _ in range(2))
