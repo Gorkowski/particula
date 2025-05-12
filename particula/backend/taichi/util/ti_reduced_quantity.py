@@ -34,8 +34,9 @@ def kget_reduced_self_broadcast(               # ndim = 2
 def ti_get_reduced_value(alpha, beta):
     if not (isinstance(alpha, np.ndarray) and isinstance(beta, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
-    a1, a2 = np.atleast_1d(alpha), np.atleast_1d(beta)
-    if a1.shape != a2.shape:
+    a1 = np.asarray(alpha, dtype=np.float64).ravel()
+    a2 = np.asarray(beta,  dtype=np.float64).ravel()
+    if a1.size != a2.size:
         raise ValueError("Alpha and beta must have identical shapes.")
     n = a1.size
     alpha_ti = ti.ndarray(dtype=ti.f64, shape=n)
@@ -44,7 +45,7 @@ def ti_get_reduced_value(alpha, beta):
     alpha_ti.from_numpy(a1)
     beta_ti.from_numpy(a2)
     kget_reduced_value(alpha_ti, beta_ti, out_ti)
-    res = out_ti.to_numpy()
+    res = out_ti.to_numpy().reshape(np.asarray(alpha).shape)
     return res.item() if res.size == 1 else res
 
 # ───────── 5 b – wrapper for self-broadcast version ─────────
@@ -52,7 +53,7 @@ def ti_get_reduced_value(alpha, beta):
 def ti_get_reduced_self_broadcast(alpha):
     if not isinstance(alpha, np.ndarray):
         raise TypeError("Taichi backend expects a NumPy array.")
-    a = np.atleast_1d(alpha)
+    a = np.asarray(alpha, dtype=np.float64).ravel()
     n = a.size
     alpha_ti = ti.ndarray(dtype=ti.f64, shape=n)
     res_ti   = ti.ndarray(dtype=ti.f64, shape=(n, n))
