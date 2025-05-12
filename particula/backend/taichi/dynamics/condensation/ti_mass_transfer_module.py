@@ -22,31 +22,31 @@ def fget_radius_transfer_rate(dm: ti.f64, r: ti.f64, rho: ti.f64) -> ti.f64:
 
 @ti.kernel
 def kget_first_order_mass_transport_k(
-    r: ti.types.ndarray(ti.f64, 1),
-    vt: ti.types.ndarray(ti.f64, 1),
-    d: ti.types.ndarray(ti.f64, 1),
-    res: ti.types.ndarray(ti.f64, 1),
+    r: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    vt: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    d: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
         res[i] = fget_first_order_mass_transport_k(r[i], vt[i], d[i])
 
 @ti.kernel
 def kget_mass_transfer_rate(
-    dp: ti.types.ndarray(ti.f64, 1),
-    k: ti.types.ndarray(ti.f64, 1),
-    t: ti.types.ndarray(ti.f64, 1),
-    m: ti.types.ndarray(ti.f64, 1),
-    res: ti.types.ndarray(ti.f64, 1),
+    dp: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    k: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    t: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    m: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
         res[i] = fget_mass_transfer_rate(dp[i], k[i], t[i], m[i])
 
 @ti.kernel
 def kget_radius_transfer_rate(
-    dm: ti.types.ndarray(ti.f64, 1),
-    r: ti.types.ndarray(ti.f64, 1),
-    rho: ti.types.ndarray(ti.f64, 1),
-    res: ti.types.ndarray(ti.f64, 1),
+    dm: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    r: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    rho: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
         res[i] = fget_radius_transfer_rate(dm[i], r[i], rho[i])
