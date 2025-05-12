@@ -8,12 +8,10 @@ import logging
 from typing import Union
 from numpy.typing import NDArray
 import numpy as np
-from particula.backend.dispatch_register import dispatchable
 
 logger = logging.getLogger("particula")  # get instance of logger
 
 
-@dispatchable
 def get_reduced_value(
     alpha: Union[float, NDArray[np.float64]],
     beta: Union[float, NDArray[np.float64]],
@@ -70,7 +68,6 @@ def get_reduced_value(
     return result
 
 
-@dispatchable
 def get_reduced_self_broadcast(
     alpha_array: NDArray[np.float64],
 ) -> NDArray[np.float64]:

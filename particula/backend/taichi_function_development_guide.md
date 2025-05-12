@@ -6,7 +6,7 @@ a Taichi-accelerated implementation.
 ---
 
 ## 1.  File location
-Duplicate the original module’s relative path under the `backend/taichi` tree and
+Duplicate the original module’s relative path under the `particula/backend/taichi` tree and
 prepend the filename with `ti_`.
 
 Example  
