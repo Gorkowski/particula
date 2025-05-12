@@ -7,6 +7,7 @@ from numpy.typing import NDArray
 import numpy as np
 
 from particula.util.validate_inputs import validate_inputs
+from particula.backend.dispatch_register import dispatchable   # NEW
 
 
 @validate_inputs(
@@ -16,6 +17,7 @@ from particula.util.validate_inputs import validate_inputs
         "kinematic_viscosity": "positive",
     }
 )
+@dispatchable                               # NEW
 def get_particle_reynolds_number(
     particle_radius: Union[float, NDArray[np.float64]],
     particle_velocity: Union[float, NDArray[np.float64]],

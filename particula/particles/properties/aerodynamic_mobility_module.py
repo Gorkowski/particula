@@ -6,6 +6,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from particula.util.validate_inputs import validate_inputs
+from particula.backend.dispatch_register import dispatchable   # NEW
 
 logger = logging.getLogger("particula")
 
@@ -17,6 +18,7 @@ logger = logging.getLogger("particula")
         "dynamic_viscosity": "positive",
     }
 )
+@dispatchable                               # NEW
 def get_aerodynamic_mobility(
     particle_radius: Union[float, NDArray[np.float64]],
     slip_correction_factor: Union[float, NDArray[np.float64]],
