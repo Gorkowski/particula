@@ -4,6 +4,7 @@ import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
+from numpy import broadcast_arrays, broadcast_to
 
 PI = np.pi
 GAS_R = float(GAS_CONSTANT)
@@ -57,28 +58,38 @@ def ti_get_first_order_mass_transport_k(
 ):
     """Taichi version of get_first_order_mass_transport_k."""
     import numpy as np
-    if not (isinstance(particle_radius, np.ndarray) and isinstance(vapor_transition, np.ndarray)):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
-    a1 = np.atleast_1d(particle_radius).astype(np.float64)
-    a2 = np.atleast_1d(vapor_transition).astype(np.float64)
-    n = a1.size
-    # Broadcast diffusion_coefficient to match input size
+    # ── convert to np.ndarray ────────────────────────────────────────────────
+    r  = np.asarray(particle_radius,   dtype=np.float64)
+    vt = np.asarray(vapor_transition,  dtype=np.float64)
+
+    # expand radius to 2-D if vapor_transition is 2-D (python version does)
+    if vt.ndim == 2 and r.ndim == 1:
+        r = r[:, np.newaxis]
+
+    # broadcast radius and vapor-transition to common shape
+    r, vt = broadcast_arrays(r, vt)
+
+    # handle diffusion coefficient (scalar, 1-D or 2-D)
     if np.isscalar(diffusion_coefficient):
-        d = np.full(n, diffusion_coefficient, dtype=np.float64)
+        d = np.full_like(r, diffusion_coefficient, dtype=np.float64)
     else:
-        d = np.atleast_1d(diffusion_coefficient).astype(np.float64)
-        if d.size != n:
-            d = np.broadcast_to(d, (n,))
-    r_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    vt_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    d_ti = ti.ndarray(dtype=ti.f64, shape=n)
+        d = np.asarray(diffusion_coefficient, dtype=np.float64)
+        d  = broadcast_to(d, r.shape)
+
+    # flatten for Taichi kernel
+    r_flat  = r.ravel()
+    vt_flat = vt.ravel()
+    d_flat  = d.ravel()
+    n = r_flat.size
+
+    r_ti  = ti.ndarray(dtype=ti.f64, shape=n);   r_ti.from_numpy(r_flat)
+    vt_ti = ti.ndarray(dtype=ti.f64, shape=n);  vt_ti.from_numpy(vt_flat)
+    d_ti  = ti.ndarray(dtype=ti.f64, shape=n);   d_ti.from_numpy(d_flat)
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    r_ti.from_numpy(a1)
-    vt_ti.from_numpy(a2)
-    d_ti.from_numpy(d)
     kget_first_order_mass_transport_k(r_ti, vt_ti, d_ti, res_ti)
-    result_np = res_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+
+    return res_ti.to_numpy().reshape(r.shape).item() \
+           if r.size == 1 else res_ti.to_numpy().reshape(r.shape)
 
 @register("get_mass_transfer_rate", backend="taichi")
 def ti_get_mass_transfer_rate(
@@ -86,45 +97,71 @@ def ti_get_mass_transfer_rate(
 ):
     """Taichi version of get_mass_transfer_rate."""
     import numpy as np
-    if not (isinstance(pressure_delta, np.ndarray) and isinstance(first_order_mass_transport, np.ndarray)):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
-    dp = np.atleast_1d(pressure_delta).astype(np.float64)
-    k = np.atleast_1d(first_order_mass_transport).astype(np.float64)
-    t = np.atleast_1d(temperature).astype(np.float64)
-    m = np.atleast_1d(molar_mass).astype(np.float64)
-    n = dp.size
-    dp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    k_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    t_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    m_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    dp = np.asarray(pressure_delta,           dtype=np.float64)
+    k  = np.asarray(first_order_mass_transport, dtype=np.float64)
+
+    # broadcast primary operands
+    dp, k = broadcast_arrays(dp, k)
+
+    t = np.asarray(temperature, dtype=np.float64)
+    m = np.asarray(molar_mass, dtype=np.float64)
+
+    # broadcast scalars / vectors to dp,k shape
+    if t.size == 1:
+        t = np.full(dp.shape, t.item(), dtype=np.float64)
+    else:
+        t = broadcast_to(t, dp.shape)
+
+    if m.size == 1:
+        m = np.full(dp.shape, m.item(), dtype=np.float64)
+    else:
+        m = broadcast_to(m, dp.shape)
+
+    # flatten
+    dp_f, k_f, t_f, m_f = [arr.ravel() for arr in (dp, k, t, m)]
+    n = dp_f.size
+
+    dp_ti = ti.ndarray(dtype=ti.f64, shape=n); dp_ti.from_numpy(dp_f)
+    k_ti  = ti.ndarray(dtype=ti.f64, shape=n);  k_ti.from_numpy(k_f)
+    t_ti  = ti.ndarray(dtype=ti.f64, shape=n);  t_ti.from_numpy(t_f)
+    m_ti  = ti.ndarray(dtype=ti.f64, shape=n);  m_ti.from_numpy(m_f)
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    dp_ti.from_numpy(dp)
-    k_ti.from_numpy(k)
-    t_ti.from_numpy(t if t.size == n else np.full(n, t[0], dtype=np.float64))
-    m_ti.from_numpy(m if m.size == n else np.full(n, m[0], dtype=np.float64))
     kget_mass_transfer_rate(dp_ti, k_ti, t_ti, m_ti, res_ti)
-    result_np = res_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+
+    return res_ti.to_numpy().reshape(dp.shape).item() \
+           if dp.size == 1 else res_ti.to_numpy().reshape(dp.shape)
 
 @register("get_radius_transfer_rate", backend="taichi")
-def ti_get_radius_transfer_rate(
-    mass_rate, particle_radius, density
-):
+def ti_get_radius_transfer_rate(mass_rate, particle_radius, density):
     """Taichi version of get_radius_transfer_rate."""
     import numpy as np
-    if not (isinstance(mass_rate, np.ndarray) and isinstance(particle_radius, np.ndarray)):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
-    dm = np.atleast_1d(mass_rate).astype(np.float64)
-    r = np.atleast_1d(particle_radius).astype(np.float64)
-    rho = np.atleast_1d(density).astype(np.float64)
-    n = dm.size
-    dm_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    r_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    rho_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    dm  = np.asarray(mass_rate,        dtype=np.float64)
+    r   = np.asarray(particle_radius,  dtype=np.float64)
+    rho = np.asarray(density,          dtype=np.float64)
+
+    # if mass_rate is 2-D make radius 2-D in the first axis
+    if dm.ndim == 2 and r.ndim == 1:
+        r = r[:, np.newaxis]
+
+    dm, r = broadcast_arrays(dm, r)
+
+    # density broadcast
+    if rho.size == 1:
+        rho = np.full(dm.shape, rho.item(), dtype=np.float64)
+    else:
+        if rho.ndim == 1 and dm.ndim == 2:
+            rho = rho[:, np.newaxis]
+        rho = broadcast_to(rho, dm.shape)
+
+    # flatten
+    dm_f, r_f, rho_f = [arr.ravel() for arr in (dm, r, rho)]
+    n = dm_f.size
+
+    dm_ti  = ti.ndarray(dtype=ti.f64, shape=n);  dm_ti.from_numpy(dm_f)
+    r_ti   = ti.ndarray(dtype=ti.f64, shape=n);   r_ti.from_numpy(r_f)
+    rho_ti = ti.ndarray(dtype=ti.f64, shape=n); rho_ti.from_numpy(rho_f)
     res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    dm_ti.from_numpy(dm)
-    r_ti.from_numpy(r)
-    rho_ti.from_numpy(rho if rho.size == n else np.full(n, rho[0], dtype=np.float64))
     kget_radius_transfer_rate(dm_ti, r_ti, rho_ti, res_ti)
-    result_np = res_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+
+    return res_ti.to_numpy().reshape(dm.shape).item() \
+           if dm.size == 1 else res_ti.to_numpy().reshape(dm.shape)
