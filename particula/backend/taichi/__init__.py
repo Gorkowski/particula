@@ -4,9 +4,14 @@ taichi backend for Particula
 import/initalize taichi
 """
 
-import .dynamics
-import .particles
-import .particles.properties
-import .gas
-import .gas.properties
-import .util
+import taichi as ti
+ti.init(arch=ti.cpu)        # safe default; let users override elsewhere
+
+from . import dynamics       # noqa: F401
+from . import particles      # noqa: F401
+from .particles import properties as _particle_properties   # noqa: F401
+from . import gas            # noqa: F401
+from .gas import properties as _gas_properties              # noqa: F401
+from . import util           # noqa: F401
+
+__all__ = ["dynamics", "particles", "gas", "util"]
