@@ -8,10 +8,10 @@ from numpy.typing import NDArray
 
 from particula.util.constants import GAS_CONSTANT
 from particula.util.validate_inputs import validate_inputs
-from particula.backend.dispatch_register import dispatchable
+from particula.backend.dispatch_register import backend_dispatch
 
 
-@dispatchable
+@backend_dispatch
 @validate_inputs(
     {
         "a": "finite",
@@ -65,7 +65,7 @@ def get_antoine_vapor_pressure(
     return vapor_pressure * 133.32238741499998  # Convert mmHg to Pa
 
 
-@dispatchable
+@backend_dispatch
 @validate_inputs(
     {
         "latent_heat": "positive",
@@ -124,7 +124,7 @@ def get_clausius_clapeyron_vapor_pressure(
     )
 
 
-@dispatchable
+@backend_dispatch
 @validate_inputs(
     {
         "temperature": "positive",

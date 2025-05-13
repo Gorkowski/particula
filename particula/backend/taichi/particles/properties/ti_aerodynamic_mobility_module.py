@@ -43,11 +43,12 @@ def ti_get_aerodynamic_mobility(
         raise TypeError(
             "Taichi backend expects NumPy arrays or scalars for all inputs."
         )
-
     # --- broadcast ----------------------------------------------------------
     pr_np  = np.asarray(particle_radius, dtype=np.float64)
     scf_np = np.asarray(slip_correction_factor, dtype=np.float64)
     dv_np  = np.asarray(dynamic_viscosity, dtype=np.float64)
+    # if not (dv_np.shape == pr_np.shape):
+    #     dv_np = np.ones_like(pr_np) * dv_np
     pr_b, scf_b, dv_b = np.broadcast_arrays(pr_np, scf_np, dv_np)
 
     flat_pr  = pr_b.ravel()

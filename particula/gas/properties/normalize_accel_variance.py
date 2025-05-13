@@ -7,10 +7,10 @@ from numpy.typing import NDArray
 import numpy as np
 
 from particula.util.validate_inputs import validate_inputs
-from particula.backend.dispatch_register import dispatchable
+from particula.backend.dispatch_register import backend_dispatch
 
 
-@dispatchable
+@backend_dispatch
 @validate_inputs({"re_lambda": "positive"})
 def get_normalized_accel_variance_ao2008(
     re_lambda: Union[float, NDArray[np.float64]],

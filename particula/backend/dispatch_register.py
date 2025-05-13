@@ -4,8 +4,6 @@ This module provides a mechanism for dispatching function calls to
 accelerated implementations based on the currently-selected backend.
 """
 
-from __future__ import annotations
-
 import functools
 from collections import defaultdict
 from contextlib import contextmanager
@@ -24,13 +22,23 @@ _registry: Dict[str, Dict[str, Callable]] = defaultdict(
 # ----------------------------------------------------------------------
 
 
-def use_backend(name: str = "python") -> None:
+def use_backend(name: str = "python", architecture: str = 'cpu' ) -> None:
     """
     Set the active backend.  Pass ``"python"`` (or leave empty) to disable
     acceleration globally.
     """
     global _backend
     _backend = (name or "python").lower()
+    if _backend == "taichi":
+        import taichi as ti
+        import particula.backend.taichi as backend_taichi
+        # Set the Taichi backend to the specified architecture
+        if architecture == 'cpu':
+            ti.init(arch=ti.cpu)
+        elif architecture == 'gpu':
+            ti.init(arch=ti.gpu)
+        else:
+            raise ValueError(f"Unsupported architecture: {architecture}")
 
 
 def get_backend() -> str:
@@ -58,7 +66,7 @@ def backend(name: str):
 # ----------------------------------------------------------------------
 # DECORATORS
 # ----------------------------------------------------------------------
-def dispatchable(func: Callable) -> Callable:
+def backend_dispatch(func: Callable) -> Callable:
     """
     Decorator for the *reference* Python implementation.
 

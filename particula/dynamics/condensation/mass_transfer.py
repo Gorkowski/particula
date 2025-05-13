@@ -30,7 +30,7 @@ import numpy as np
 # particula imports
 from particula.util.constants import GAS_CONSTANT  # type: ignore
 from particula.util.validate_inputs import validate_inputs
-from particula.backend.dispatch_register import dispatchable
+from particula.backend.dispatch_register import backend_dispatch
 
 
 @validate_inputs(
@@ -38,7 +38,7 @@ from particula.backend.dispatch_register import dispatchable
         "particle_radius": "nonnegative",
     }
 )
-@dispatchable
+@backend_dispatch
 def get_first_order_mass_transport_k(
     particle_radius: Union[float, NDArray[np.float64]],
     vapor_transition: Union[float, NDArray[np.float64]],
@@ -110,7 +110,7 @@ def get_first_order_mass_transport_k(
         "molar_mass": "positive",
     }
 )
-@dispatchable
+@backend_dispatch
 def get_mass_transfer_rate(
     pressure_delta: Union[float, NDArray[np.float64]],
     first_order_mass_transport: Union[float, NDArray[np.float64]],
@@ -185,7 +185,7 @@ def get_mass_transfer_rate(
         "density": "positive",
     }
 )
-@dispatchable
+@backend_dispatch
 def get_radius_transfer_rate(
     mass_rate: Union[float, NDArray[np.float64]],
     particle_radius: Union[float, NDArray[np.float64]],

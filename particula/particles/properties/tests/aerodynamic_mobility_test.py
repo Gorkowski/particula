@@ -2,10 +2,13 @@
 
 from contextlib import nullcontext
 import numpy as np
+import numpy.testing as npt
 import pytest
 from particula.particles.properties.aerodynamic_mobility_module import (
     get_aerodynamic_mobility,
 )
+from particula.backend.dispatch_register import use_backend
+
 
 
 def test_particle_aerodynamic_mobility_single_value():
@@ -81,3 +84,22 @@ def test_particle_aerodynamic_mobility_extreme_values(radius: float) -> None:
             assert np.isclose(
                 actual_mobility, expected_mobility
             ), f"The value does not match for radius {radius}."
+
+
+def test_dispatch_ti_aerodynamic_mobility():
+    """
+    Test that the dispatch function for the Taichi backend works correctly.
+    """
+    radius = np.array([0.00005, 0.00007])  # Array of radii
+    slip_correction_factor = np.array([1.1, 1.2])
+    dynamic_viscosity = 0.0000181
+    python_mobility = get_aerodynamic_mobility(
+        radius, slip_correction_factor, dynamic_viscosity
+    )
+    use_backend("taichi")
+    actual_mobility = get_aerodynamic_mobility(
+        radius, slip_correction_factor, dynamic_viscosity
+    )
+    npt.assert_allclose(
+        actual_mobility, python_mobility
+    )
