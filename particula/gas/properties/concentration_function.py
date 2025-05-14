@@ -5,6 +5,7 @@ from numpy.typing import NDArray
 import numpy as np
 
 from particula.util.constants import GAS_CONSTANT  # pyright: ignore
+from particula.backend.dispatch_register import backend_dispatch
 
 
 def get_concentration_from_pressure(

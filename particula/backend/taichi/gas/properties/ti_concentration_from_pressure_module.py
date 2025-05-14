@@ -30,12 +30,9 @@ def kget_concentration_from_pressure(
 @register("get_concentration_from_pressure", backend="taichi")
 def ti_get_concentration_from_pressure(partial_pressure, molar_mass, temperature):
     # 5 a – type guard
-    if not (
-        isinstance(partial_pressure, np.ndarray)
-        and isinstance(molar_mass, np.ndarray)
-        and isinstance(temperature, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for all inputs.")
+    partial_pressure = np.asarray(partial_pressure)
+    molar_mass = np.asarray(molar_mass)
+    temperature = np.asarray(temperature)
 
     # 5 b – ensure 1-D
     pp, mm, tt = map(np.atleast_1d, (partial_pressure, molar_mass, temperature))

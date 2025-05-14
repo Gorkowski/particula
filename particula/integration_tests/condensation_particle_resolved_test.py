@@ -5,12 +5,14 @@ Integration test for isothermal condensation on particle-resolved aerosol.
 import unittest
 import numpy as np
 import particula as par
+from particula.backend.dispatch_register import use_backend
 
 
 class TestCondensationParticleResolved(unittest.TestCase):
     """Verify that mass is transferred from gas to particles."""
 
     def setUp(self):
+        use_backend("taichi")
         # ---------- vapor-pressure strategies ----------
         self.vp_water = par.gas.VaporPressureFactory().get_strategy(
             "water_buck"

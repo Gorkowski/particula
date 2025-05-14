@@ -246,6 +246,7 @@ def get_radius_transfer_rate(
         "particle_concentration": "nonnegative",
     }
 )
+@backend_dispatch
 def get_mass_transfer(
     mass_rate: NDArray[np.float64],
     time_step: float,
