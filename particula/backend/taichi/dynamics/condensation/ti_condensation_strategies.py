@@ -10,10 +10,6 @@ from particula.backend.taichi.particles.properties.ti_knudsen_number_module impo
 from particula.backend.taichi.dynamics.mass_transfer.ti_vapor import (
     fget_vapor_transition_correction,
 )
-from particula.backend.taichi.dynamics.mass_transfer.ti_mass_transfer import (
-    kget_first_order_mass_transport_k,
-    kget_mass_transfer_rate,
-)
 
 # Python-side objects that stay in NumPy land
 from particula.particles.representation import ParticleRepresentation
@@ -116,13 +112,16 @@ class TiCondensationIsothermal(CondensationStrategy):
         dP_t  = ti.ndarray(ti.f64, radius.shape)
         dm_t  = ti.ndarray(ti.f64, radius.shape)
         r_t.from_numpy(radius)
-        # mean free path is computed in Python, as in the original
-        mean_free_path = self.mean_free_path(
+        # mean-free-path (scalar) → broadcasted Taichi array
+        mean_free_path_scalar = self.mean_free_path(
             temperature=temperature,
             pressure=pressure,
             dynamic_viscosity=dynamic_viscosity,
         )
-        kget_knudsen_number(mean_free_path, r_t, kn_t)
+        mfp_np = np.full_like(radius, mean_free_path_scalar, dtype=np.float64)
+        mfp_t  = ti.ndarray(dtype=ti.f64, shape=radius.shape)
+        mfp_t.from_numpy(mfp_np)
+        kget_knudsen_number(mfp_t, r_t, kn_t)
         self._first_order_k(r_t, kn_t, K_t)
         dP_t.from_numpy(self.calculate_pressure_delta(
             particle, gas_species, temperature, radius
