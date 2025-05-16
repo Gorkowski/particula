@@ -18,6 +18,7 @@ from particula.particles.properties.knudsen_number_module import (
 )
 from particula.backend.taichi.particles.properties.ti_knudsen_number_module import (
     ti_get_knudsen_number,
+    kget_knudsen_number,
 )
 
 ti.init(arch=ti.cpu)
