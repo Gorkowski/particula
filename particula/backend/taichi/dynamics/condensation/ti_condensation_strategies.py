@@ -6,12 +6,10 @@ from particula.backend.dispatch_register import register
 # ── Taichi helpers already available ─────────────────────────────────────
 from particula.backend.taichi.particles.properties import (
     kget_knudsen_number,
-    fget_cunningham_slip_correction,
     fget_vapor_transition_correction,
 )
 from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
     fget_first_order_mass_transport_k,
-    fget_mass_transfer_rate
 )
 from particula.dynamics.condensation.mass_transfer import get_mass_transfer
 
@@ -58,7 +56,11 @@ class TiCondensationIsothermal(CondensationStrategy):
         """Vectorised K = 4π r D f(Kn, α)."""
         D = ti.static(self.diffusion_coefficient)
         for i in range(r.shape[0]):
-            result[i] = 4.0 * ti.math.pi * r[i] * D * self._transition(kn[i])
+            result[i] = fget_first_order_mass_transport_k(
+                particle_radius=r[i],
+                vapor_transition=self._transition(kn[i]),
+                diffusion_coefficient=D,
+            )
 
     @ti.kernel
     def _mass_rate_k(
@@ -74,32 +76,6 @@ class TiCondensationIsothermal(CondensationStrategy):
         for i in range(pressure_delta.shape[0]):
             out_[i] = K[i] * M * pressure_delta[i] / (R * T)
 
-    def _fill_zero_radius(
-        self, radius: np.ndarray
-    ) -> np.ndarray:
-        """Fill zero radius values with the maximum radius. The concentration
-        value of zero will ensure that the rate of condensation is zero. The
-        fill is necessary to avoid division by zero in the array operations.
-
-        Arguments:
-            - radius : The radius of the particles.
-
-        Returns:
-            - radius : The radius of the particles with zero values filled.
-
-        Raises:
-            - Warning : If all radius values are zero.
-        """
-        if np.max(radius) == 0:
-            import logging
-            message = (
-                "All radius values are zero, radius set to 1 m for "
-                "condensation calculations. This should be ignored as the "
-                "particle concentration would also be zero."
-            )
-            logging.warning(message)
-            radius = np.where(radius == 0, 1, radius)
-        return np.where(radius == 0, np.max(radius), radius)
 
     def mass_transfer_rate(
         self,
@@ -110,11 +86,11 @@ class TiCondensationIsothermal(CondensationStrategy):
         dynamic_viscosity=None,
     ):
         radius = self._fill_zero_radius(particle.get_radius())
-        r_t   = ti.ndarray(ti.f64, radius.shape)
-        kn_t  = ti.ndarray(ti.f64, radius.shape)
-        K_t   = ti.ndarray(ti.f64, radius.shape)
-        dP_t  = ti.ndarray(ti.f64, radius.shape)
-        dm_t  = ti.ndarray(ti.f64, radius.shape)
+        r_t   = ti.ndarray(dtype=ti.f64, shape=radius.shape)
+        kn_t  = ti.ndarray(dtype=ti.f64, shape=radius.shape)
+        K_t   = ti.ndarray(dtype=ti.f64, shape=radius.shape)
+        dP_t  = ti.ndarray(dtype=ti.f64, shape=radius.shape)
+        dm_t  = ti.ndarray(dtype=ti.f64, shape=radius.shape)
         r_t.from_numpy(radius)
         # mean-free-path (scalar) → broadcasted Taichi array
         mean_free_path_scalar = self.mean_free_path(
@@ -140,6 +116,7 @@ class TiCondensationIsothermal(CondensationStrategy):
         temperature: float,
         pressure: float,
     ):
+        """Return condensation rate per particle/bin using Taichi kernels."""
         mass_rate = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
@@ -161,6 +138,7 @@ class TiCondensationIsothermal(CondensationStrategy):
         pressure: float,
         time_step: float,
     ):
+        """Advance the system by one time step using Taichi kernels."""
         mass_rate = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
