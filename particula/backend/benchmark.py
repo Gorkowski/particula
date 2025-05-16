@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import particula as par
 
+
 def plot_throughput_vs_array_length(
     header: list[str],
     rows: list[list],

@@ -17,8 +17,8 @@ Create the script in the `../benchmark/` folder, next to the module <name> you a
 Example
 
 ```
-particula/backend_/particles/properties/test/ti_knudsen_number_test.py
-→ particula/backend/taichi/particles/properties/benchmark/ti_knudsen_number_benchmark.py
+particula/backend/taichi/particles/properties/test/<name>_test.py
+→ particula/backend/taichi/particles/properties/benchmark/<name>_benchmark.py
 ```
 
 ---
