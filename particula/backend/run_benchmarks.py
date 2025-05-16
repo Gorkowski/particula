@@ -14,7 +14,7 @@ import inspect
 from types import ModuleType
 
 # package to scan -----------------------------------------------------------
-PKG_PATH = "particula.backend.taichi.particles.properties.benchmark"
+PKG_PATH = "particula.backend.taichi"
 FUNC_SUFFIXES = ("_benchmark_csv", "run_benchmark")  # callable filters
 
 
