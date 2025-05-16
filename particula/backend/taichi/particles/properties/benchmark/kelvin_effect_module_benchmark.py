@@ -15,7 +15,7 @@ from particula.backend.taichi.particles.properties.ti_kelvin_effect_module impor
 )
 
 RNG_SEED      = 42
-ARRAY_LENGTHS = np.logspace(2, 8, 10, dtype=int)      # 1-D
+ARRAY_LENGTHS = np.logspace(2, 6, 10, dtype=int)      # 1-D
 ARRAY_LENGTHS_2D = np.logspace(2, 4, 4, dtype=int)    # 2-D
 ti.init(arch=ti.cpu)
 

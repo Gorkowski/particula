@@ -18,7 +18,7 @@ from particula.backend.taichi.particles.properties.ti_convert_mole_fraction_modu
 )
 
 RNG_SEED = 42
-ARRAY_LENGTHS = np.logspace(2, 8, 10, dtype=int)   # 10² … 10⁸
+ARRAY_LENGTHS = np.logspace(2, 7, 10, dtype=int)   # 10² … 10⁸
 ti.init(arch=ti.cpu)
 
 def benchmark_mass_fractions_from_moles_1d_csv():
