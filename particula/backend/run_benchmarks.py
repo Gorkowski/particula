@@ -1,8 +1,8 @@
 """
 Utility that discovers every *benchmark_* module inside
 `particula.backend.taichi.particles.properties.benchmark`
-and executes any public function whose name ends with
-`_benchmark_csv` or equals `run_benchmark`.
+and executes any public function whose name follows
+`benchmark_*_csv` or equals `run_benchmark`.
 
 Run it with:
     python run_benchmarks.py
@@ -15,15 +15,18 @@ from types import ModuleType
 
 # package to scan -----------------------------------------------------------
 PKG_PATH = "particula.backend.taichi"
-FUNC_SUFFIXES = ("_benchmark_csv", "run_benchmark")  # callable filters
+FUNC_SUFFIX = "_csv"          # each benchmark function must end with this
 
 
 def _run_functions_in_module(mod: ModuleType) -> None:
     """Invoke every selected benchmark function inside *mod*."""
     for name, obj in inspect.getmembers(mod, inspect.isfunction):
         if name.startswith("_"):
-            continue                       # skip private helpers
-        if any(name.endswith(suf) for suf in FUNC_SUFFIXES):
+            continue
+        if (
+            name == "run_benchmark"
+            or (name.startswith("benchmark_") and name.endswith(FUNC_SUFFIX))
+        ):
             print(f"[benchmark] {mod.__name__}.{name}()")
             obj()
 
