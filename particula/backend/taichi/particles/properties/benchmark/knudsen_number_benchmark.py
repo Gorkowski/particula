@@ -1,7 +1,5 @@
 """
-Benchmarks the reference Python, the Taichi wrapper, and the raw Taichi kernel implementations of
-`get_knudsen_number` for 10 array lengths between 10 and 10 000 elements
-and stores the timing results in a CSV file inside the test folder.
+Benchmarks the reference Python, the Taichi wrapper, and the raw Taichi kernel.
 """
 
 import os

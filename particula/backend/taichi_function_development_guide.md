@@ -104,4 +104,3 @@ Use `float64` (`ti.f64`) consistently for numerical parity with NumPy.
 Keep the API identical to the original NumPy function.  
 Suffix the public Taichi wrapper with `_taichi`, and prefix new files with
 `ti_`.
-
