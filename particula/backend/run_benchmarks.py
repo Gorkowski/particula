@@ -1,6 +1,6 @@
 """
-Utility that discovers every *benchmark_* module inside
-`particula.backend.taichi.particles.properties.benchmark`
+Utility that discovers every *\*_benchmark.py* module inside
+`particula.backend.taichi`
 and executes any public function whose name follows
 `benchmark_*_csv` or equals `run_benchmark`.
 
@@ -15,7 +15,8 @@ from types import ModuleType
 
 # package to scan -----------------------------------------------------------
 PKG_PATH = "particula.backend.taichi"
-FUNC_SUFFIX = "_csv"          # each benchmark function must end with this
+MODULE_SUFFIX = "_benchmark"   # benchmark modules must end with this
+FUNC_SUFFIX = "_csv"           # each benchmark function must end with this
 
 
 def _run_functions_in_module(mod: ModuleType) -> None:
@@ -34,10 +35,13 @@ def _run_functions_in_module(mod: ModuleType) -> None:
 def run_all_benchmarks() -> None:
     """Import each benchmark_* module and execute its benchmark functions."""
     package = importlib.import_module(PKG_PATH)
-    for mod_info in pkgutil.iter_modules(package.__path__, package.__name__ + "."):
-        if mod_info.ispkg:
-            continue                       # ignore sub-packages
-        if mod_info.name.split(".")[-1].startswith("benchmark_"):
+    for mod_info in pkgutil.iter_modules(
+        package.__path__, package.__name__ + "."
+    ):
+        if mod_info.ispkg:          # ignore sub-packages
+            continue
+        module_basename = mod_info.name.rsplit(".", 1)[-1]
+        if module_basename.endswith(MODULE_SUFFIX):
             module = importlib.import_module(mod_info.name)
             _run_functions_in_module(module)
 
