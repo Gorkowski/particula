@@ -14,7 +14,8 @@ from particula.backend.benchmark import (
     plot_throughput_vs_array_length,
 )
 
-from particula.particles import (          # pure-Python
+# functions to benchmark --------------------------------------------------
+from particula.particles.properties.aerodynamic_mobility import (
     get_aerodynamic_mobility as py_func,
 )
 from particula.backend.taichi.particles.properties.ti_aerodynamic_mobility_module import (
