@@ -49,10 +49,23 @@ def benchmark_dynamic_viscosity_csv():
         rt_ti.from_numpy(rt)
 
         # ----- timing ----------------------------------------------------
-        stats_py     = get_function_benchmark(
-            lambda: py_func(temps), ops_per_call=n)
-        stats_ti     = get_function_benchmark(
-            lambda: ti_func(temps), ops_per_call=n)
+        stats_py = get_function_benchmark(
+            lambda: py_func(
+                temps,
+                reference_viscosity=rv,
+                reference_temperature=rt,
+            ),
+            ops_per_call=n,
+        )
+
+        stats_ti = get_function_benchmark(
+            lambda: ti_func(
+                temps,
+                rv,
+                rt,
+            ),
+            ops_per_call=n,
+        )
         stats_kernel = get_function_benchmark(
             lambda: ti_kernel(temps_ti, rv_ti, rt_ti, res_ti),
             ops_per_call=n)
