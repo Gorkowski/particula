@@ -34,6 +34,7 @@ def ti_get_aerodynamic_mobility(
     slip_correction_factor,
     dynamic_viscosity,
 ):
+    """Taichi backend wrapper for get_aerodynamic_mobility (broadcasts & dispatches)."""
     # --- type guard ---------------------------------------------------------
     if not (
         isinstance(particle_radius, (np.ndarray, Number))
@@ -47,8 +48,6 @@ def ti_get_aerodynamic_mobility(
     pr_np  = np.asarray(particle_radius, dtype=np.float64)
     scf_np = np.asarray(slip_correction_factor, dtype=np.float64)
     dv_np  = np.asarray(dynamic_viscosity, dtype=np.float64)
-    # if not (dv_np.shape == pr_np.shape):
-    #     dv_np = np.ones_like(pr_np) * dv_np
     pr_b, scf_b, dv_b = np.broadcast_arrays(pr_np, scf_np, dv_np)
 
     flat_pr  = pr_b.ravel()
