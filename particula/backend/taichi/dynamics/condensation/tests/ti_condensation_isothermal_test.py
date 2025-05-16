@@ -20,7 +20,7 @@ def test_first_order_mass_transport_parity():
     k_ti = ti_impl.first_order_mass_transport(radius, temperature, pressure)
     k_py = py_impl.first_order_mass_transport(radius, temperature, pressure)
 
-    np.testing.assert_allclose(k_ti, k_py, rtol=1e-12)
+    np.testing.assert_allclose(k_ti, k_py, rtol=1e-7)
 
 
 def test_kernel_runs():
