@@ -4,8 +4,8 @@ import numpy as np
 from particula.backend.dispatch_register import register
 
 # ── Taichi helpers already available ─────────────────────────────────────
+from particula.backend.taichi.particles.properties.ti_knudsen_number_module import kget_knudsen_number
 from particula.backend.taichi.particles.properties import (
-    kget_knudsen_number,
     fget_vapor_transition_correction,
 )
 from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
@@ -40,6 +40,8 @@ class TiCondensationIsothermal(CondensationStrategy):
             accommodation_coefficient=accommodation_coefficient,
             update_gases=update_gases,
         )
+        self.molar_mass = float(np.asarray(self.molar_mass))
+        self.diffusion_coefficient = float(np.asarray(self.diffusion_coefficient))
 
     @ti.func
     def _transition(self, kn: ti.f64) -> ti.f64:
