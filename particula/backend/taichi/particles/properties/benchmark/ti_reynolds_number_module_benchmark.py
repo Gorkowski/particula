@@ -14,7 +14,7 @@ from particula.backend.benchmark import (
 )
 
 # functions to benchmark
-from particula.particles.properties.reynolds_number_module import (
+from particula.particles.properties.reynolds_number import (
     get_particle_reynolds_number as py_func,
 )
 from particula.backend.taichi.particles.properties.ti_reynolds_number_module import (
@@ -79,7 +79,7 @@ def benchmark_particle_reynolds_number_csv() -> None:
     out_dir = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
     os.makedirs(out_dir, exist_ok=True)
 
-    csv_path = os.path.join(out_dir, "particle_reynolds_number_benchmark.csv")
+    csv_path = os.path.join(out_dir, "ti_reynolds_number_module_benchmark.csv")
     save_combined_csv(csv_path, header, rows)
 
     with open(os.path.join(out_dir, "system_info.json"), "w", encoding="utf-8") as fh:
@@ -89,7 +89,7 @@ def benchmark_particle_reynolds_number_csv() -> None:
         header,
         rows,
         "Particle Reynolds-number throughput benchmark",
-        os.path.join(out_dir, "particle_reynolds_number_benchmark.png"),
+        os.path.join(out_dir, "ti_reynolds_number_module_benchmark.png"),
     )
 
 # ---------- entry-point -----------------------------------------------------
