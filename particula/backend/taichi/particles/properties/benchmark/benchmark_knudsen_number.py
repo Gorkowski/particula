@@ -21,6 +21,8 @@ from particula.backend.taichi.particles.properties.ti_knudsen_number_module impo
     kget_knudsen_number,
 )
 
+import matplotlib.pyplot as plt           # NEW
+
 ti.init(arch=ti.cpu)
 
 
@@ -84,6 +86,32 @@ def knudsen_benchmark_csv():
     sysinfo_path = os.path.join(out_dir, "system_info.json")
     with open(sysinfo_path, "w", encoding="utf-8") as fh:
         json.dump(get_system_info(), fh, indent=2)
+
+    # ---------- plot throughput vs array_length -----------------------------
+    # column indices for the three throughput fields
+    idx_py      = header.index("python_throughput_calls_per_s")
+    idx_ti      = header.index("taichi_throughput_calls_per_s")
+    idx_kernel  = header.index("taichi_kernel_throughput_calls_per_s")
+
+    array_lengths   = [row[0]           for row in rows]
+    throughput_py   = [row[idx_py]      for row in rows]
+    throughput_ti   = [row[idx_ti]      for row in rows]
+    throughput_kern = [row[idx_kernel]  for row in rows]
+
+    plt.figure()
+    plt.loglog(array_lengths, throughput_py,   "o-", label="Python")
+    plt.loglog(array_lengths, throughput_ti,   "s-", label="Taichi wrapper")
+    plt.loglog(array_lengths, throughput_kern, "^-", label="Taichi kernel")
+    plt.xlabel("Array length")
+    plt.ylabel("Throughput (calls/s)")
+    plt.title("Knudsen-number throughput benchmark")
+    plt.legend()
+    plt.grid(True, which="both", ls="--", alpha=0.5)
+
+    png_path = os.path.join(out_dir, "knudsen_benchmark_throughput.png")
+    plt.tight_layout()
+    plt.savefig(png_path, dpi=300)
+    plt.close()
 
 
 if __name__ == "__main__":
