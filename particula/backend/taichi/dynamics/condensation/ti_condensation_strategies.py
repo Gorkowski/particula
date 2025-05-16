@@ -1,18 +1,11 @@
 """Taichi implementation of condensation strategies (isothermal)."""
 import taichi as ti
 import numpy as np
-from math import pi
 from particula.backend.dispatch_register import register
 
 # ---- Taichi helpers already in repo -----------------------------------
 from particula.backend.taichi.particles.properties.ti_vapor_correction_module import (
     fget_vapor_transition_correction,
-)
-from particula.backend.taichi.particles.properties.ti_knudsen_number_module import (
-    kget_knudsen_number,
-)
-from particula.backend.taichi.particles.properties.ti_partial_pressure_module import (
-    kget_partial_pressure_delta,
 )
 
 # ---- Python-side utilities (unchanged, lightweight) --------------------
@@ -25,7 +18,6 @@ import logging
 logger = logging.getLogger("particula")
 R_GAS = 8.314462618
 
-ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 @ti.data_oriented
 class CondensationIsothermal:
@@ -76,7 +68,7 @@ class CondensationIsothermal:
             rad = ti.max(r[i], 1e-20)
             kn  = mean_free_path / rad
             fkn = fget_vapor_transition_correction(kn, alpha)
-            result[i] = 4.0 * pi * rad * D * fkn
+            result[i] = 4.0 * ti.math.pi * rad * D * fkn
 
     @ti.kernel
     def _kget_mass_transfer_rate(                          # ← dm/dt  1-D
@@ -88,8 +80,9 @@ class CondensationIsothermal:
     ):
         """dm/dt per particle (isothermal)."""
         M = self.molar_mass[None]
+        R = ti.static(R_GAS)
         for i in range(delta_p.shape[0]):
-            result[i] = K[i] * M * delta_p[i] / (R_GAS * temperature)
+            result[i] = K[i] * M * delta_p[i] / (R * temperature)
 
     # ─────────────────────── public helpers ────────────────────────────────
     def first_order_mass_transport(
