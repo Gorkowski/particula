@@ -15,7 +15,7 @@ from particula.backend.benchmark import (
 )
 
 # functions to benchmark --------------------------------------------------
-from particula.particles.properties.aerodynamic_mobility import (
+from particula.particles.properties.aerodynamic_mobility_module import (
     get_aerodynamic_mobility as py_func,
 )
 from particula.backend.taichi.particles.properties.ti_aerodynamic_mobility_module import (
