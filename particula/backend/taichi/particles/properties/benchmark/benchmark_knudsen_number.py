@@ -24,10 +24,10 @@ from particula.backend.taichi.particles.properties.ti_knudsen_number_module impo
 ti.init(arch=ti.cpu)
 
 
-def _run_benchmarks() -> list[list[float]]:
+def _run_benchmarks() -> tuple[list, list]:
     """Return list of rows: [n, *python_stats..., *taichi_stats...]."""
     rng = np.random.default_rng(seed=42)
-    lengths = np.logspace(2, 6, 10, dtype=int)
+    lengths = np.logspace(2, 8, 10, dtype=int)
     rows: list = []
 
     for n in lengths:
@@ -36,7 +36,7 @@ def _run_benchmarks() -> list[list[float]]:
 
         # Build Taichi NDArrays once per array length
         mfp_ti = ti.ndarray(dtype=ti.f64, shape=mfp.shape)
-        pr_ti  = ti.ndarray(dtype=ti.f64, shape=pr.shape)
+        pr_ti = ti.ndarray(dtype=ti.f64, shape=pr.shape)
         res_ti = ti.ndarray(dtype=ti.f64, shape=mfp.shape)
         mfp_ti.from_numpy(mfp)
         pr_ti.from_numpy(pr)
@@ -61,8 +61,12 @@ def _run_benchmarks() -> list[list[float]]:
         rows.append(row)
     python_header = ["python_" + k for k in stats_py["array_headers"]]
     taichi_header = ["taichi_" + k for k in stats_ti["array_headers"]]
-    taichi_kernel_header = ["taichi_kernel_" + k for k in stats_kernel["array_headers"]]
-    header = ["array_length"] + python_header + taichi_header + taichi_kernel_header
+    taichi_kernel_header = [
+        "taichi_kernel_" + k for k in stats_kernel["array_headers"]
+    ]
+    header = (
+        ["array_length"] + python_header + taichi_header + taichi_kernel_header
+    )
     return rows, header
 
 
