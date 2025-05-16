@@ -40,7 +40,7 @@ from particula.backend.benchmark import (
 
 # functions to benchmark
 from particula.particles.properties.<name> import get_<name> as py_func
-from particula.backend.taichi.particles.properties.ti_<name> import (
+from particula.backend.taichi.particles.properties.<name> import (
     ti_get_<name> as ti_func,
     kget_<name>   as ti_kernel,
 )
