@@ -53,7 +53,7 @@ def benchmark_aerodynamic_length_csv():
             lambda: ti_func(pl, psc, asc, rho), ops_per_call=n
         )
         stats_kernel = get_function_benchmark(
-            lambda: kget_aerodynamic_length(
+            lambda: ti_kernel(
                 pl_ti, psc_ti, asc_ti, rho_ti, ref_rho, chi, res_ti
             ),
             ops_per_call=n,
