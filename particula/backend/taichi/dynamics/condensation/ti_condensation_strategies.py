@@ -13,6 +13,7 @@ from particula.dynamics.condensation.mass_transfer import get_mass_transfer
 from particula.gas import get_molecule_mean_free_path
 from particula.particles.representation import ParticleRepresentation
 from particula.gas.species import GasSpecies
+from particula.particles import get_partial_pressure_delta
 import logging
 
 logger = logging.getLogger("particula")
@@ -52,6 +53,34 @@ class CondensationIsothermal:
             )
             radius = np.where(radius == 0.0, 1.0, radius)
         return np.where(radius == 0.0, np.max(radius), radius)
+
+    # ────────────────── Δp helper (pure-python, no Taichi) ──────────────────
+    def calculate_pressure_delta(
+        self,
+        particle: ParticleRepresentation,
+        gas_species: GasSpecies,
+        temperature: float,
+        radius: np.ndarray,
+    ) -> np.ndarray:
+        """Return Δp = p_gas – p_particle ·exp(Kelvin)."""
+        mass_conc = particle.get_species_mass()
+        pure_vp   = gas_species.get_pure_vapor_pressure(temperature=temperature)
+        p_part    = particle.activity.partial_pressure(
+                        pure_vapor_pressure=pure_vp,
+                        mass_concentration=mass_conc,
+                    )
+        p_gas     = gas_species.get_partial_pressure(temperature)
+        kelvin    = particle.surface.kelvin_term(
+                        radius=radius,
+                        molar_mass=self.molar_mass[None],
+                        mass_concentration=mass_conc,
+                        temperature=temperature,
+                    )
+        return get_partial_pressure_delta(
+            partial_pressure_gas=p_gas,
+            partial_pressure_particle=p_part,
+            kelvin_term=kelvin,
+        )
 
     # ──────────────────────── Taichi kernels ───────────────────────────────
     @ti.kernel
@@ -120,8 +149,9 @@ class CondensationIsothermal:
                     pressure=pressure,
                     dynamic_viscosity=dynamic_viscosity,
                  )
-        delta_p = particle.calculate_pressure_delta(      # we can re-use
-            gas_species=gas_species,                      # the python logic
+        delta_p = self.calculate_pressure_delta(
+            particle=particle,
+            gas_species=gas_species,
             temperature=temperature,
             radius=radius,
         )
