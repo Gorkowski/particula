@@ -47,8 +47,7 @@ def kget_volume_fraction_from_mass(
 
 # ───── public wrappers + backend registration ──────────────
 def _prepare_1d(a, b, name_a, name_b):
-    if not (isinstance(a, np.ndarray) and isinstance(b, np.ndarray)):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+    a, b = np.asarray(a, dtype=np.float64), np.asarray(b, dtype=np.float64)
     if a.shape != b.shape:
         raise ValueError(f"{name_a} and {name_b} must have identical shape.")
     return np.atleast_1d(a), np.atleast_1d(b)
@@ -94,12 +93,9 @@ def kget_mass_fraction_from_mass(
 
 @register("get_mass_fraction_from_mass", backend="taichi")
 def ti_get_mass_fraction_from_mass(mass_concentrations):
-    if not isinstance(mass_concentrations, np.ndarray):
-        raise TypeError("Taichi backend expects a NumPy array for input.")
-    m = np.atleast_1d(mass_concentrations)
-    m_ti, out_ti = (
-        ti.ndarray(dtype=ti.f64, shape=m.size) for _ in range(2)
-    )
+    m = np.atleast_1d(np.asarray(mass_concentrations, dtype=np.float64))
+    n = m.size
+    m_ti, out_ti = (ti.ndarray(dtype=ti.f64, shape=n) for _ in range(2))
     m_ti.from_numpy(m)
     kget_mass_fraction_from_mass(m_ti, out_ti)
     out_np = out_ti.to_numpy()
