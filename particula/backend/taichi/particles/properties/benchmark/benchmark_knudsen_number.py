@@ -1,5 +1,5 @@
 """
-Benchmarks the reference Python and Taichi implementations of
+Benchmarks the reference Python, the Taichi wrapper, and the raw Taichi kernel implementations of
 `get_knudsen_number` for 10 array lengths between 10 and 10 000 elements
 and stores the timing results in a CSV file inside the test folder.
 """
@@ -34,18 +34,35 @@ def _run_benchmarks() -> list[list[float]]:
         mfp = rng.random(n, dtype=np.float64) + 1e-9
         pr = rng.random(n, dtype=np.float64) + 1e-9
 
+        # Build Taichi NDArrays once per array length
+        mfp_ti = ti.ndarray(dtype=ti.f64, shape=mfp.shape)
+        pr_ti  = ti.ndarray(dtype=ti.f64, shape=pr.shape)
+        res_ti = ti.ndarray(dtype=ti.f64, shape=mfp.shape)
+        mfp_ti.from_numpy(mfp)
+        pr_ti.from_numpy(pr)
+
         # zero-arg lambdas for the benchmark helper
         py_call = lambda: get_knudsen_number_python(mfp, pr)
         ti_call = lambda: ti_get_knudsen_number(mfp, pr)
+        ti_kernel_call = lambda: kget_knudsen_number(mfp_ti, pr_ti, res_ti)
 
         stats_py = get_function_benchmark(py_call, ops_per_call=len(mfp))
         stats_ti = get_function_benchmark(ti_call, ops_per_call=len(mfp))
+        stats_kernel = get_function_benchmark(
+            ti_kernel_call, ops_per_call=len(mfp)
+        )
 
-        row = [n, *stats_py["array_stats"], *stats_ti["array_stats"]]
+        row = [
+            n,
+            *stats_py["array_stats"],
+            *stats_ti["array_stats"],
+            *stats_kernel["array_stats"],
+        ]
         rows.append(row)
     python_header = ["python_" + k for k in stats_py["array_headers"]]
     taichi_header = ["taichi_" + k for k in stats_ti["array_headers"]]
-    header = ["array_length"] + python_header + taichi_header
+    taichi_kernel_header = ["taichi_kernel_" + k for k in stats_kernel["array_headers"]]
+    header = ["array_length"] + python_header + taichi_header + taichi_kernel_header
     return rows, header
 
 
