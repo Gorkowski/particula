@@ -1,5 +1,5 @@
 r"""
-Utility that discovers every *_benchmark.py* module inside
+Utility that recursively discovers every *_benchmark.py* module inside
 `particula.backend.taichi`
 and executes any public function whose name follows
 `benchmark_*_csv` or equals `run_benchmark`.
@@ -35,7 +35,7 @@ def _run_functions_in_module(mod: ModuleType) -> None:
 def run_all_benchmarks() -> None:
     """Import each benchmark_* module and execute its benchmark functions."""
     package = importlib.import_module(PKG_PATH)
-    for mod_info in pkgutil.iter_modules(
+    for mod_info in pkgutil.walk_packages(
         package.__path__, package.__name__ + "."
     ):
         if mod_info.ispkg:          # ignore sub-packages
