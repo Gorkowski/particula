@@ -85,6 +85,7 @@ class TiCondensationIsothermal(CondensationStrategy):
         pressure: float,
         dynamic_viscosity=None,
     ):
+        """Return dm/dt per particle using Taichi kernels."""
         radius = self._fill_zero_radius(particle.get_radius())
         r_t   = ti.ndarray(dtype=ti.f64, shape=radius.shape)
         kn_t  = ti.ndarray(dtype=ti.f64, shape=radius.shape)
