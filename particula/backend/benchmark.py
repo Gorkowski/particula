@@ -15,6 +15,50 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import particula as par
 
+def plot_throughput_vs_array_length(
+    header: list[str],
+    rows: list[list],
+    title: str,
+    output_path: str,
+    array_length_key: str = "array_length",
+) -> None:
+    """
+    Plot array-length vs *_throughput_calls_per_s for every column that
+    matches the suffix and save the figure as *output_path* (PNG).
+    """
+    # indices ---------------------------------------------------------------
+    try:
+        idx_len = header.index(array_length_key)
+    except ValueError as exc:
+        raise ValueError(f"'{array_length_key}' not found in header") from exc
+
+    thrpt_indices = [
+        i for i, h in enumerate(header)
+        if h.endswith("throughput_calls_per_s") and i != idx_len
+    ]
+    if not thrpt_indices:
+        raise ValueError("No throughput columns found in header")
+
+    # data ------------------------------------------------------------------
+    array_lengths = [row[idx_len] for row in rows]
+
+    plt.figure()
+    markers = "os^v><dph"  # cycle through a few markers
+    for k, idx in enumerate(thrpt_indices):
+        values = [row[idx] for row in rows]
+        label = header[idx].removesuffix("_throughput_calls_per_s")
+        plt.loglog(array_lengths, values, markers[k % len(markers)] + "-", label=label)
+
+    # cosmetics -------------------------------------------------------------
+    plt.xlabel("Array length")
+    plt.ylabel("Throughput (calls/s)")
+    plt.title(title)
+    plt.legend()
+    plt.grid(True, which="both", ls="--", alpha=0.5)
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=300)
+    plt.close()
+
 # non-standard libraries for this script
 import psutil
 
