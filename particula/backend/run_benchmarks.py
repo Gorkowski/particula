@@ -1,5 +1,5 @@
-"""
-Utility that discovers every *\*_benchmark.py* module inside
+r"""
+Utility that discovers every *_benchmark.py* module inside
 `particula.backend.taichi`
 and executes any public function whose name follows
 `benchmark_*_csv` or equals `run_benchmark`.
