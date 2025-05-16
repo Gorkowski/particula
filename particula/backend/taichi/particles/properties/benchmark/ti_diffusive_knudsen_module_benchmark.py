@@ -9,6 +9,8 @@ from particula.backend.benchmark import (
     save_combined_csv,
     plot_throughput_vs_array_length,
 )
+from particula.util.reduced_quantity import get_reduced_self_broadcast
+from particula.particles.properties import coulomb_enhancement as ce
 
 from particula.particles.properties.diffusive_knudsen_module import (
     get_diffusive_knudsen_number as py_func,
@@ -19,18 +21,18 @@ from particula.backend.taichi.particles.properties.ti_diffusive_knudsen_module i
 )
 
 RNG_SEED = 42
-MATRIX_SIZES = np.logspace(1, 4, 8, dtype=int)   # 10 … 10 000 (square matrices)
+ARRAY_LENGTHS = np.logspace(1, 4, 8, dtype=int)      # 10 … 10 000
 ti.init(arch=ti.cpu)
 
 def benchmark_diffusive_knudsen_number_csv():
     """
-    Time pure-Python, Taichi wrapper, and raw kernel over MATRIX_SIZES,
+    Time pure-Python, Taichi wrapper, and raw kernel over ARRAY_LENGTHS,
     then save CSV, JSON, and PNG into ./benchmark_outputs/.
     """
     rows: list[list[float]] = []
     rng  = np.random.default_rng(seed=RNG_SEED)
 
-    for n in MATRIX_SIZES:
+    for n in ARRAY_LENGTHS:
         # ---------------- random input data --------------------------
         r_arr      = rng.random(n, dtype=np.float64) * 3e-7 + 1e-8      # particle radius  (m)
         m_arr      = rng.random(n, dtype=np.float64) * 4e-17 + 1e-18    # particle mass    (kg)
@@ -41,10 +43,13 @@ def benchmark_diffusive_knudsen_number_csv():
         # ‑ broadcast 1-D inputs into (n,n) reduced-pair matrices exactly
         #   as done inside the Taichi wrapper.
         sum_r_mat   = r_arr[:, None] + r_arr[None, :]          # rᵢ+rⱼ
-        red_mass    = m_arr[:, None] + m_arr[None, :]
-        red_fric    = f_arr[:, None] * f_arr[None, :]
-        cont_enh    = phi_arr[:, None] + phi_arr[None, :]
-        kin_enh     = cont_enh                                        # symmetric placeholder
+        red_mass    = get_reduced_self_broadcast(m_arr)        # (n, n)
+        red_fric    = get_reduced_self_broadcast(f_arr)        # (n, n)
+
+        kin_1d  = ce.get_coulomb_kinetic_limit   (phi_arr)     # (n,)
+        cont_1d = ce.get_coulomb_continuum_limit (phi_arr)     # (n,)
+        kin_enh  = np.broadcast_to(np.atleast_2d(kin_1d ), (n, n)).astype(np.float64)
+        cont_enh = np.broadcast_to(np.atleast_2d(cont_1d), (n, n)).astype(np.float64)
         temp_scalar = 298.15
 
         # ---- Taichi device buffers (re-create per size) -------------
@@ -53,12 +58,12 @@ def benchmark_diffusive_knudsen_number_csv():
             buf.from_numpy(arr)
             return buf
 
-        sum_r_ti   = make_buf(sum_r_mat)
-        red_mass_ti= make_buf(red_mass)
-        red_fric_ti= make_buf(red_fric)
-        cont_enh_ti= make_buf(cont_enh)
-        kin_enh_ti = make_buf(kin_enh)
-        res_ti     = ti.ndarray(dtype=ti.f64, shape=sum_r_mat.shape)
+        sum_r_ti    = make_buf(sum_r_mat)
+        red_mass_ti = make_buf(red_mass)
+        red_fric_ti = make_buf(red_fric)
+        cont_enh_ti = make_buf(cont_enh)
+        kin_enh_ti  = make_buf(kin_enh)
+        res_ti      = ti.ndarray(dtype=ti.f64, shape=sum_r_mat.shape)
 
         # ---------------- timing -------------------------------------
         ops = n * n     # one value per matrix element
@@ -88,7 +93,7 @@ def benchmark_diffusive_knudsen_number_csv():
     python_hdr  = ["python_"        + h for h in stats_py["array_headers"]]
     taichi_hdr  = ["taichi_"        + h for h in stats_ti["array_headers"]]
     kernel_hdr  = ["taichi_kernel_" + h for h in stats_kernel["array_headers"]]
-    header = ["matrix_size", *python_hdr, *taichi_hdr, *kernel_hdr]
+    header = ["array_length", *python_hdr, *taichi_hdr, *kernel_hdr]
 
     # --------------- output directory --------------------------------
     out_dir = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
@@ -108,7 +113,6 @@ def benchmark_diffusive_knudsen_number_csv():
         rows,
         "Diffusive Knudsen-number throughput benchmark",
         os.path.join(out_dir, "diffusive_knudsen_number_benchmark.png"),
-        array_length_key="matrix_size",
     )
 
 if __name__ == "__main__":
