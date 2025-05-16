@@ -4,12 +4,16 @@ import numpy as np
 from particula.backend.dispatch_register import register
 
 # ── Taichi helpers already available ─────────────────────────────────────
-from particula.backend.taichi.particles.properties.ti_knudsen_number_module import (
+from particula.backend.taichi.particles.properties import (
     kget_knudsen_number,
-)
-from particula.backend.taichi.dynamics.mass_transfer.ti_vapor import (
+    fget_cunningham_slip_correction,
     fget_vapor_transition_correction,
 )
+from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
+    fget_first_order_mass_transport_k,
+    fget_mass_transfer_rate
+)
+from particula.dynamics.condensation.mass_transfer import get_mass_transfer
 
 # Python-side objects that stay in NumPy land
 from particula.particles.representation import ParticleRepresentation
@@ -59,7 +63,7 @@ class TiCondensationIsothermal(CondensationStrategy):
     @ti.kernel
     def _mass_rate_k(
         self,
-        Δp:   ti.types.ndarray(dtype=ti.f64, ndim=1),   # pressure delta
+        pressure_delta:   ti.types.ndarray(dtype=ti.f64, ndim=1),   # pressure delta
         K:    ti.types.ndarray(dtype=ti.f64, ndim=1),   # first-order coef
         T:    ti.f64,
         out_: ti.types.ndarray(dtype=ti.f64, ndim=1),   # dm/dt
@@ -67,8 +71,8 @@ class TiCondensationIsothermal(CondensationStrategy):
         """dm/dt =  K · M · Δp /(R·T)."""
         M  = ti.static(self.molar_mass)
         R  = 8.314462618
-        for i in range(Δp.shape[0]):
-            out_[i] = K[i] * M * Δp[i] / (R * T)
+        for i in range(pressure_delta.shape[0]):
+            out_[i] = K[i] * M * pressure_delta[i] / (R * T)
 
     def _fill_zero_radius(
         self, radius: np.ndarray
@@ -163,7 +167,6 @@ class TiCondensationIsothermal(CondensationStrategy):
             temperature=temperature,
             pressure=pressure,
         )
-        from particula.dynamics.condensation.mass_transfer import get_mass_transfer
         mass_transfer = get_mass_transfer(
             mass_rate=mass_rate,  # type: ignore
             time_step=time_step,
