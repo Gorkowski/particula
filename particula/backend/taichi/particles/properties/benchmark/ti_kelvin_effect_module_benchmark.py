@@ -29,7 +29,7 @@ from particula.backend.taichi.particles.properties.ti_kelvin_effect_module impor
 # -- benchmark configuration ----------------------------------------------
 RNG_SEED          = 42
 ARRAY_LENGTHS_1D  = np.logspace(2, 7, 6, dtype=int)   # 10² … 10⁷   (1-D)
-ARRAY_LENGTHS_2D  = np.logspace(2, 5, 4, dtype=int)   # 10² … 10⁵   (2-D)
+ARRAY_LENGTHS_2D  = np.logspace(1, 2, 4, dtype=int)   # 10² … 10⁵   (2-D)
 ti.init(arch=ti.cpu)                                  # CPU backend
 
 # ------------------------------------------------------------------------- #
