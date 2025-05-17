@@ -23,12 +23,11 @@ def _check(strategy_py, strategy_ti, conc, p0):
     )
 
 
-def test_scalar_and_vector_consistency():
-    conc_s  = 1.23
-    conc_v  = np.array([0.5, 1.0, 2.0])
-    p0_s, p0_v = 950.0, np.array([500.0, 800.0, 1000.0])
+# ───────────────────────── strategy-specific tests ──────────────────────────
+def test_activity_ideal_molar():
+    conc_s, conc_v = 1.23, np.array([0.5, 1.0, 2.0])
+    p0_s,  p0_v    = 950.0, np.array([500.0, 800.0, 1000.0])
 
-    # Ideal-molar
     _check(
         par.particles.ActivityIdealMolar(molar_mass=0.018),
         TiMolar(molar_mass=0.018),
@@ -40,11 +39,33 @@ def test_scalar_and_vector_consistency():
         conc_v, p0_v,
     )
 
-    # Ideal-mass
+
+def test_activity_ideal_mass():
+    conc_s, conc_v = 1.23, np.array([0.5, 1.0, 2.0])
+    p0_s,  p0_v    = 950.0, np.array([500.0, 800.0, 1000.0])
+
     _check(par.particles.ActivityIdealMass(), TiMass(), conc_s, p0_s)
     _check(par.particles.ActivityIdealMass(), TiMass(), conc_v, p0_v)
 
-    # Kappa (two-species example)
+
+def test_activity_ideal_volume():
+    conc_s, conc_v = 1.23, np.array([0.5, 1.0, 2.0])
+    p0_s,  p0_v    = 950.0, np.array([500.0, 800.0, 1000.0])
+
+    density = 1000.0
+    _check(
+        par.particles.ActivityIdealVolume(density=density),
+        TiVol(density=density),
+        conc_s, p0_s,
+    )
+    _check(
+        par.particles.ActivityIdealVolume(density=density),
+        TiVol(density=density),
+        conc_v, p0_v,
+    )
+
+
+def test_activity_kappa_parameter():
     kappa      = np.array([0.1, 0.0])
     density    = np.array([1000.0, 1200.0])
     molar_mass = np.array([0.018, 0.058])
