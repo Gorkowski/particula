@@ -37,7 +37,7 @@ class GasSpecies:
 class Particle:
     def __init__(self, masses_np):
         n = masses_np.size
-        self.mass = ti.ndarray(dtype=ti.f64, shape=n)
+        self.mass = ti.field(dtype=ti.f64, shape=(n,))
         self.mass.from_numpy(masses_np)
 
     @ti.func
@@ -65,8 +65,8 @@ class PressureDeltaCalc:
         self.p = particle  # injected dependency
         self.g = gas  # injected dependency
         self.n = radii_np.size
-        self.r = ti.ndarray(dtype=ti.f64, shape=self.n)
-        self.delta = ti.ndarray(dtype=ti.f64, shape=self.n)
+        self.r = ti.field(dtype=ti.f64, shape=(self.n,))
+        self.delta = ti.field(dtype=ti.f64, shape=(self.n,))
         self.r.from_numpy(radii_np)
 
     @ti.kernel
