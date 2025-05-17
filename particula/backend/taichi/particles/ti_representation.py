@@ -7,10 +7,10 @@ from particula.backend.dispatch_register import register
 
 @ti.data_oriented
 class _FieldIO:                                            # ← tiny helper‐mixin
-    @staticmethod @ti.kernel
+    @ti.kernel
     def _assign_1d(f: ti.template(), a: ti.types.ndarray(dtype=ti.f64, ndim=1)):
         for i in f: f[i] = a[i]
-    @staticmethod @ti.kernel
+    @ti.kernel
     def _assign_2d(f: ti.template(), a: ti.types.ndarray(dtype=ti.f64, ndim=2)):
         for i, j in f: f[i, j] = a[i, j]
     @classmethod
@@ -19,7 +19,6 @@ class _FieldIO:                                            # ← tiny helper‐m
         elif arr.ndim == 2: cls._assign_2d(fld, arr)
         else: raise ValueError("Only 1-D/2-D supported")
 
-@register("ParticleRepresentation", backend="taichi")      # backend factory-hook
 @ti.data_oriented
 class TiParticleRepresentation:                            # public Taichi class
     def __init__(self, strategy, activity, surface,
