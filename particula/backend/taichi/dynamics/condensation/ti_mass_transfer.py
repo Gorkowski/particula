@@ -5,6 +5,16 @@ import numpy as np
 from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
 
+from particula.backend.taichi.gas.properties.ti_mean_free_path_module import (
+    fget_molecule_mean_free_path,
+)
+from particula.backend.taichi.particles.properties.ti_knudsen_number_module import (
+    fget_knudsen_number,
+)
+from particula.backend.taichi.particles.properties.ti_vapor_correction_module import (
+    fget_vapor_transition_correction,
+)
+
 PI = np.pi
 GAS_R = float(GAS_CONSTANT)
 
@@ -19,6 +29,23 @@ def fget_mass_transfer_rate(dp: ti.f64, k: ti.f64, t: ti.f64, m: ti.f64) -> ti.f
 @ti.func
 def fget_radius_transfer_rate(dm: ti.f64, r: ti.f64, rho: ti.f64) -> ti.f64:
     return dm / (rho * 4.0 * PI * r * r)
+
+@ti.func
+def fget_first_order_mass_transport_via_system_state(   # r × species → k_ij
+    r: ti.f64,
+    molar_mass: ti.f64,
+    accommodation: ti.f64,
+    temperature: ti.f64,
+    pressure: ti.f64,
+    dynamic_viscosity: ti.f64,
+    diffusion_coefficient: ti.f64,
+) -> ti.f64:
+    mean_free_path = fget_molecule_mean_free_path(
+        molar_mass, temperature, pressure, dynamic_viscosity
+    )
+    kn = fget_knudsen_number(mean_free_path, r)
+    vt = fget_vapor_transition_correction(kn, accommodation)
+    return fget_first_order_mass_transport_k(r, vt, diffusion_coefficient)
 
 @ti.kernel
 def kget_first_order_mass_transport_k(
@@ -50,6 +77,29 @@ def kget_radius_transfer_rate(
 ):
     for i in range(res.shape[0]):
         res[i] = fget_radius_transfer_rate(dm[i], r[i], rho[i])
+
+@ti.kernel
+def kget_first_order_mass_transport_via_system_state(
+    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    molar_mass: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    accommodation: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    temperature: ti.f64,
+    pressure: ti.f64,
+    dynamic_viscosity: ti.f64,
+    diffusion_coefficient: ti.f64,
+    result: ti.types.ndarray(dtype=ti.f64, ndim=2),
+):
+    for i in range(particle_radius.shape[0]):            # particles
+        for j in range(molar_mass.shape[0]):             # species
+            result[i, j] = fget_first_order_mass_transport_via_system_state(
+                particle_radius[i],
+                molar_mass[j],
+                accommodation[i],
+                temperature,
+                pressure,
+                dynamic_viscosity,
+                diffusion_coefficient,
+            )
 
 @register("get_first_order_mass_transport_k", backend="taichi")
 def ti_get_first_order_mass_transport_k(
@@ -128,3 +178,43 @@ def ti_get_radius_transfer_rate(
     kget_radius_transfer_rate(dm_ti, r_ti, rho_ti, res_ti)
     result_np = res_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
+
+@register("get_first_order_mass_transport_via_system_state", backend="taichi")
+def ti_get_first_order_mass_transport_via_system_state(
+    particle_radius,
+    molar_mass,
+    accommodation_coefficient,
+    temperature,
+    pressure,
+    dynamic_viscosity,
+    diffusion_coefficient,
+):
+    import numpy as np
+
+    r = np.atleast_1d(particle_radius).astype(np.float64)
+    mm = np.atleast_1d(molar_mass).astype(np.float64)
+    ac = np.atleast_1d(accommodation_coefficient).astype(np.float64)
+    if ac.size != r.size:
+        raise ValueError("accommodation_coefficient must match particle_radius length")
+
+    np_particles, np_species = r.size, mm.size
+    r_ti   = ti.ndarray(dtype=ti.f64, shape=np_particles)
+    mm_ti  = ti.ndarray(dtype=ti.f64, shape=np_species)
+    ac_ti  = ti.ndarray(dtype=ti.f64, shape=np_particles)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=(np_particles, np_species))
+
+    r_ti.from_numpy(r)
+    mm_ti.from_numpy(mm)
+    ac_ti.from_numpy(ac)
+
+    kget_first_order_mass_transport_via_system_state(
+        r_ti,
+        mm_ti,
+        ac_ti,
+        float(temperature),
+        float(pressure),
+        float(dynamic_viscosity),
+        float(diffusion_coefficient),
+        res_ti,
+    )
+    return res_ti.to_numpy()
