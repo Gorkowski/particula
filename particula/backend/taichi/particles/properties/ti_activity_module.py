@@ -6,6 +6,22 @@ from particula.backend.dispatch_register import register
 def fget_surface_partial_pressure(pvp: ti.f64, act: ti.f64) -> ti.f64:
     return pvp * act
 
+@ti.func
+def fget_ideal_activity_mass(mass_single: ti.f64, total_mass: ti.f64) -> ti.f64:
+    return 0.0 if total_mass == 0.0 else mass_single / total_mass
+
+@ti.func
+def fget_ideal_activity_volume(mass_single: ti.f64,
+                               dens_single: ti.f64,
+                               total_volume: ti.f64) -> ti.f64:
+    return 0.0 if total_volume == 0.0 else (mass_single / dens_single) / total_volume
+
+@ti.func
+def fget_ideal_activity_molar(mass_single: ti.f64,
+                              mm_single:   ti.f64,
+                              total_moles: ti.f64) -> ti.f64:
+    return 0.0 if total_moles == 0.0 else (mass_single / mm_single) / total_moles
+
 # 1-D ---------------------------------------------------------------
 @ti.kernel
 def kget_surface_partial_pressure(
@@ -27,7 +43,7 @@ def kget_ideal_activity_mass(
         for s in range(mc.shape[1]):
             row_sum += mc[i, s]
         for s in range(mc.shape[1]):
-            res[i, s] = 0.0 if row_sum == 0.0 else mc[i, s] / row_sum
+            res[i, s] = fget_ideal_activity_mass(mc[i, s], row_sum)
 
 @ti.kernel
 def kget_ideal_activity_volume(
@@ -41,8 +57,7 @@ def kget_ideal_activity_volume(
         for s in range(ns):
             vol_sum += mc[i, s] / dens[s]
         for s in range(ns):
-            num = mc[i, s] / dens[s]
-            res[i, s] = 0.0 if vol_sum == 0.0 else num / vol_sum
+            res[i, s] = fget_ideal_activity_volume(mc[i, s], dens[s], vol_sum)
 
 @ti.kernel
 def kget_ideal_activity_molar(
@@ -56,8 +71,7 @@ def kget_ideal_activity_molar(
         for s in range(ns):
             mol_sum += mc[i, s] / mm[s]
         for s in range(ns):
-            mol = mc[i, s] / mm[s]
-            res[i, s] = 0.0 if mol_sum == 0.0 else mol / mol_sum
+            res[i, s] = fget_ideal_activity_molar(mc[i, s], mm[s], mol_sum)
 
 @ti.kernel
 def kget_kappa_activity(
