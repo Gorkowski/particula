@@ -6,6 +6,20 @@ It uses the Aider model to generate the code and then reflects on the changes ma
 import argparse
 import subprocess
 from pathlib import Path
+from typing import List
+
+
+def _get_taichi_init_files() -> List[str]:
+    """
+    Return a list with the absolute paths of every ``__init__.py`` located
+    anywhere under particula/backend/taichi/.  These files are supplied to
+    aider in *read-only* mode so the model has full package context while
+    being prevented from editing them.
+    """
+    taichi_root = (Path(__file__).parent / "taichi").resolve()
+    if not taichi_root.exists():
+        return []
+    return [str(p.resolve()) for p in taichi_root.rglob("__init__.py")]
 
 GUIDE_PATH = Path(
     r"C:\GitHub\particula\particula\backend\taichi_dataclass_development_guide.md"
@@ -48,22 +62,25 @@ def convert(file_path: Path, prompt: str | None = None) -> None:
         )
     file_str = str(file_path.resolve())
 
+    # gather all read-only files the model needs
+    readonly_args = ["--read", str(GUIDE_PATH)]
+    for init_path in _get_taichi_init_files():
+        readonly_args.extend(["--read", init_path])
+
     # first pass
     _call_aider(
-        [
-            "--read",
-            str(GUIDE_PATH),  # add the guide as read-only
-            file_str,
+        readonly_args
+        + [
+            file_str,            # editable target file
             "--message",
-            prompt,  # <- use generated or user-supplied prompt
+            prompt,
         ]
     )
 
     # reflection / verification pass
     _call_aider(
-        [
-            "--read",
-            str(GUIDE_PATH),  # add the guide again for the reflection pass
+        readonly_args
+        + [
             file_str,
             "--message",
             "Double-check that the Taichi conversion has been correctly implemented.",
