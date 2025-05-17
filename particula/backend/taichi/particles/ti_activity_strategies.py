@@ -33,7 +33,10 @@ class _ActivityMixin:
         result:             ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """Vectorised Raoult/Margules: p = a · p⁰ (element-wise)."""
-        kget_surface_partial_pressure(pure_vapor_pressure, activity, result)
+        for i in ti.ndrange(result.shape[0]):
+            result[i] = fget_surface_partial_pressure(
+                pure_vapor_pressure[i], activity[i]
+            )
 
     # public wrapper identical to NumPy API --------------------------------------
     def partial_pressure(
