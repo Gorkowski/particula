@@ -22,6 +22,50 @@ def fget_ideal_activity_molar(mass_single: ti.f64,
                               total_moles: ti.f64) -> ti.f64:
     return 0.0 if total_moles == 0.0 else (mass_single / mm_single) / total_moles
 
+@ti.func
+def fget_water_activity_from_kappa_row(
+    mc: ti.template(),         # 2-D mass-concentration field
+    kap: ti.template(),        # 1-D κ array
+    dens: ti.template(),       # 1-D density array
+    mm: ti.template(),         # 1-D molar-mass array
+    water_idx: ti.i32,         # column that corresponds to water
+    row_idx: ti.i32,           # current particle / mixture index
+    ns: ti.i32,                # number of species  (= mc.shape[1])
+) -> ti.f64:
+    """
+    Return the water activity (a_w) for one mixture row, using the
+    κ–Köhler mixing rule implemented in kget_kappa_activity.
+    """
+    # ---- volume fractions ----------------------------------------
+    vol_sum = 0.0
+    for s in range(ns):
+        vol_sum += mc[row_idx, s] / dens[s]
+
+    water_vf = 0.0
+    if vol_sum > 0.0:
+        water_vf = (mc[row_idx, water_idx] / dens[water_idx]) / vol_sum
+
+    sol_vol_sum = 1.0 - water_vf
+
+    # ---- bulk κ of the (non-water) solute phase ------------------
+    kappa_w = 0.0
+    if sol_vol_sum > 0.0:
+        if ns == 2:                               # single-solute shortcut
+            sid = 1 if water_idx == 0 else 0
+            kappa_w = kap[sid]
+        else:
+            for s in range(ns):
+                if s != water_idx:
+                    vf_s = (mc[row_idx, s] / dens[s]) / vol_sum
+                    kappa_w += (vf_s / sol_vol_sum) * kap[s]
+
+    # ---- convert κ + φ_w to activity -----------------------------
+    vol_term = 0.0
+    if water_vf > 0.0:
+        vol_term = kappa_w * sol_vol_sum / water_vf
+
+    return 0.0 if water_vf == 0.0 else 1.0 / (1.0 + vol_term)
+
 # 1-D ---------------------------------------------------------------
 @ti.kernel
 def kget_surface_partial_pressure(
@@ -93,33 +137,10 @@ def kget_kappa_activity(
             mol = mc[i, s] / mm[s]
             res[i, s] = 0.0 if mol_sum == 0.0 else mol / mol_sum
 
-        # volume fractions ------------------------------------------
-        vol_sum = 0.0
-        for s in range(ns):
-            vol_sum += mc[i, s] / dens[s]
-
-        water_vf = 0.0
-        if vol_sum > 0.0:
-            water_vf = (mc[i, water_idx] / dens[water_idx]) / vol_sum
-
-        sol_vol_sum = 1.0 - water_vf
-        kappa_w = 0.0
-        if sol_vol_sum > 0.0:
-            # single-solute shortcut
-            if ns == 2:
-                sid = 1 if water_idx == 0 else 0
-                kappa_w = kap[sid]
-            else:
-                for s in range(ns):
-                    if s != water_idx:
-                        vf_s = (mc[i, s] / dens[s]) / vol_sum
-                        kappa_w += (vf_s / sol_vol_sum) * kap[s]
-
-        vol_term = 0.0
-        if water_vf > 0.0:
-            vol_term = kappa_w * sol_vol_sum / water_vf
-        water_activity = 0.0 if water_vf == 0.0 else 1.0 / (1.0 + vol_term)
-
+        # water activity via κ–Köhler mix
+        water_activity = fget_water_activity_from_kappa_row(
+            mc, kap, dens, mm, water_idx, i, ns
+        )
         res[i, water_idx] = water_activity
 
 @register("get_surface_partial_pressure", backend="taichi")
