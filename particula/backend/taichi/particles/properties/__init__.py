@@ -161,10 +161,3 @@ from .ti_collision_radius_module import (
     ti_get_collision_radius_wq2022_rg_df_k0_a13,
 )
 
-# ---------------------------------------------------------------------- #
-#  Public export list – all symbols starting with ti_/kget_/fget_        #
-# ---------------------------------------------------------------------- #
-__all__: list[str] = [
-    name for name in globals()
-    if name.startswith(("ti_get_", "kget_", "fget_"))
-]

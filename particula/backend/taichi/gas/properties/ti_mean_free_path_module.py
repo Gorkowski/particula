@@ -3,8 +3,6 @@ import numpy as np
 
 from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
-from particula.gas.properties.mean_free_path import get_molecule_mean_free_path  # NumPy reference
-from particula.gas.properties.dynamic_viscosity import get_dynamic_viscosity     # fallback for μ
 
 _R = float(GAS_CONSTANT)  # J mol⁻¹ K⁻¹
 

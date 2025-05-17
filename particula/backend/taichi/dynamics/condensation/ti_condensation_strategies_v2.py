@@ -1,4 +1,5 @@
 """Taichi implementation of condensation strategies (isothermal)."""
+
 import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
@@ -6,8 +7,15 @@ from particula.backend.dispatch_register import register
 # ---- Taichi helpers already in repo -----------------------------------
 from particula.backend.taichi.particles.properties import (
     fget_vapor_transition_correction,
+    fget_friction_factor,
     fget_knudsen_number,
-    
+)
+from particula.backend.taichi.gas.properties import (
+    fget_molecule_mean_free_path,
+)
+from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
+    fget_mass_transfer_rate,
+    fget_first_order_mass_transport_k,
 )
 
 # ---- Python-side utilities (unchanged, lightweight) --------------------
@@ -25,26 +33,26 @@ R_GAS = 8.314462618
 @ti.data_oriented
 class CondensationIsothermal:
     """
-    Taichi drop-in replacement for particula.dynamics.condensation.CondensationIsothermal.
+    Taichi version for CondensationIsothermal.
     """
 
     # ─────────────────────────── constructor ───────────────────────────────
     def __init__(
         self,
-        molar_mass: float,
-        diffusion_coefficient: float = 2e-5,
-        accommodation_coefficient: float = 1.0,
-        update_gases: bool = True,
+        molar_mass: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        diffusion_coefficient: ti.field(ti.f64, shape=()),
+        accommodation_coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        update_gases: ti.types.ndarray(dtype=ti.int16, ndim=1),
     ):
         # persistent scalar fields
-        self.molar_mass              = ti.field(ti.f64, shape=())
-        self.diffusion_coefficient   = ti.field(ti.f64, shape=())
-        self.accommodation_coefficient = ti.field(ti.f64, shape=())
+        molar_mass = ti.types.ndarray(dtype=ti.f64, ndim=1)
+        diffusion_coefficient = ti.field(ti.f64, shape=())
+        accommodation_coefficient = ti.types.ndarray(dtype=ti.f64, ndim=1)
+        update_gases = ti.types.ndarray(dtype=ti.int16, ndim=1)
 
-        self.molar_mass[None]            = molar_mass
-        self.diffusion_coefficient[None] = diffusion_coefficient
-        self.accommodation_coefficient[None] = accommodation_coefficient
-
+        self.molar_mass = molar_mass
+        self.diffusion_coefficient = diffusion_coefficient
+        self.accommodation_coefficient = accommodation_coefficient
         self.update_gases = update_gases
 
     # ───────────────────── helper: zero-radius guard ───────────────────────
@@ -58,34 +66,64 @@ class CondensationIsothermal:
 
     # ──────────────────────── Taichi kernels ───────────────────────────────
     @ti.kernel
-    def _kget_first_order_mass_transport(                 # ← K(r)   1-D
+    def _kget_first_order_mass_transport(
         self,
-        r: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        mean_free_path: ti.f64,
-        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        temperature: ti.f64,
+        pressure: ti.f64,
+        dynamic_viscosity: ti.f64,
+        result: ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
-        """Compute first-order mass-transport coefficient per particle."""
-        D      = self.diffusion_coefficient[None]
-        alpha  = self.accommodation_coefficient[None]
-        for i in range(r.shape[0]):
-            rad = ti.max(r[i], 1e-20)
-            kn  = mean_free_path / rad
-            fkn = fget_vapor_transition_correction(kn, alpha)
-            result[i] = 4.0 * ti.math.pi * rad * D * fkn
+        """Compute first-order mass-transport coefficient per particle
+        per species.
+        """
+        particle_i = ti.int16(0)
+        molar_mass_i = ti.int16(1)
+        for particle_i in range(particle_radius.shape[0]):
+            for molar_mass_i in range(self.molar_mass.shape[0]):
+
+                mean_free_path = fget_molecule_mean_free_path(
+                    molar_mass=self.molar_mass[molar_mass_i],
+                    temperature=temperature,
+                    pressure=pressure,
+                    dynamic_viscosity=dynamic_viscosity,
+                )
+                knudsen_number = fget_knudsen_number(
+                    mean_free_path=mean_free_path,
+                    particle_radius=particle_radius[particle_i],
+                )
+                vapor_transition = fget_vapor_transition_correction(
+                    knudsen_number=knudsen_number,
+                    mass_accommodation=self.accommodation_coefficient[
+                        particle_i
+                    ],
+                )
+                result[particle_i, molar_mass_i] = (
+                    fget_first_order_mass_transport_k(
+                        r=particle_radius[particle_i],
+                        vt=vapor_transition,
+                        d=self.diffusion_coefficient[None],
+                    )
+                )
 
     @ti.kernel
-    def _kget_mass_transfer_rate(                          # ← dm/dt  1-D
+    def _kget_mass_transfer_rate(  # ← dm/dt  1-D
         self,
-        delta_p: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        K:       ti.types.ndarray(dtype=ti.f64, ndim=1),
+        delta_p: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        first_order_mass_transport: ti.types.ndarray(dtype=ti.f64, ndim=2),
         temperature: ti.f64,
-        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        result: ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         """dm/dt per particle (isothermal)."""
-        M = self.molar_mass[None]
-        R = ti.static(R_GAS)
-        for i in range(delta_p.shape[0]):
-            result[i] = K[i] * M * delta_p[i] / (R * temperature)
+        for particle_i in range(delta_p.shape[0]):
+            for molar_mass_i in range(delta_p.shape[1]):
+                result[particle_i, molar_mass_i] = fget_mass_transfer_rate(
+                    dp=delta_p[particle_i, molar_mass_i],
+                    k=first_order_mass_transport[particle_i, molar_mass_i],
+                    t=temperature,
+                    m=self.molar_mass[molar_mass_i],
+                )
+
 
     # ─────────────────────── public helpers ────────────────────────────────
     def first_order_mass_transport(
@@ -117,12 +155,12 @@ class CondensationIsothermal:
         dynamic_viscosity: float | None = None,
     ) -> np.ndarray:
         radius = self._fill_zero_radius(particle.get_radius())
-        K      = self.first_order_mass_transport(
-                    particle_radius=radius,
-                    temperature=temperature,
-                    pressure=pressure,
-                    dynamic_viscosity=dynamic_viscosity,
-                 )
+        K = self.first_order_mass_transport(
+            particle_radius=radius,
+            temperature=temperature,
+            pressure=pressure,
+            dynamic_viscosity=dynamic_viscosity,
+        )
         delta_p = self.calculate_pressure_delta(
             particle=particle,
             gas_species=gas_species,
@@ -131,7 +169,7 @@ class CondensationIsothermal:
         )
 
         delta_p_np = np.ascontiguousarray(delta_p, dtype=np.float64)
-        dm_dt      = np.empty_like(delta_p_np)
+        dm_dt = np.empty_like(delta_p_np)
         self._kget_mass_transfer_rate(delta_p_np, K, temperature, dm_dt)
         return dm_dt
 
@@ -181,8 +219,9 @@ class CondensationIsothermal:
             gas_species.add_concentration(-mass_change.sum(axis=0))
         return particle, gas_species
 
+
 # ─────────────────── backend factory registration ───────────────────────────
-@register("condensation_isothermal", backend="taichi")     # factory key
+@register("condensation_isothermal", backend="taichi")  # factory key
 def TiCondensationIsothermal(**kwargs):
     """Factory wrapper used by dispatch_register."""
     return CondensationIsothermal(**kwargs)
