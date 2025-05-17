@@ -17,23 +17,20 @@ def test_scalar_species_partial_pressure():
         rtol=1e-12,
     )
 
-# ‑-- append below the current test_scalar_species_partial_pressure() -----------
-import numpy as np
-
 def test_vector_species_partial_pressure():
-    """Ensure PySpecies and TiSpecies give identical results for N>1 species."""
-    # two arbitrary species
+    """Shared-strategy case: same constant vapor-pressure for all species."""
     names          = np.array(["H2O", "CO2"])
     molar_masses   = np.array([0.018, 0.044])
     concentrations = np.array([1e-3, 2e-3])
-    vapor_pressure = ConstantVaporPressureStrategy(
-        np.array([2_330.0, 101_325.0])
-    )
 
-    py_species  = PySpecies(names, molar_masses, vapor_pressure,
-                            True, concentrations)
-    ti_species  = TiSpecies(names, molar_masses, vapor_pressure,
-                            True, concentrations)
+    shared_strategy = ConstantVaporPressureStrategy(2_330.0)  # one instance
+
+    py_species = PySpecies(
+        names, molar_masses, shared_strategy, True, concentrations
+    )
+    ti_species = TiSpecies(
+        names, molar_masses, shared_strategy, True, concentrations
+    )
 
     T = 298.15  # K
     np.testing.assert_allclose(
@@ -42,7 +39,7 @@ def test_vector_species_partial_pressure():
         rtol=1e-12,
     )
 
-    # shapes must match the number of species
+    # shapes must still match the number of species
     assert py_species.get_partial_pressure(T).shape == (2,)
     assert ti_species.get_partial_pressure(T).shape == (2,)
 
