@@ -73,20 +73,18 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for i in ti.static(range(self.n_species)):
-            strategy = ti.static(self.strategies[i])
-            result[i] = strategy._pure_vp_func(temperature)
+        for idx, strategy in ti.static(enumerate(self.strategies)):
+            result[idx] = strategy._pure_vp_func(temperature)
 
     @ti.kernel
     def _partial_pressure_kernel(                  # vectorised
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for i in ti.static(range(self.n_species)):
-            strategy = ti.static(self.strategies[i])
-            result[i] = strategy._partial_pressure_func(
-                self.concentration[i],
-                self.molar_mass[i],
+        for idx, strategy in ti.static(enumerate(self.strategies)):
+            result[idx] = strategy._partial_pressure_func(
+                self.concentration[idx],
+                self.molar_mass[idx],
                 temperature,
             )
 
@@ -95,27 +93,25 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for i in ti.static(range(self.n_species)):
-            strategy = ti.static(self.strategies[i])
+        for idx, strategy in ti.static(enumerate(self.strategies)):
             vp = strategy._pure_vp_func(temperature)
             pp = strategy._partial_pressure_func(
-                self.concentration[i],
-                self.molar_mass[i],
+                self.concentration[idx],
+                self.molar_mass[idx],
                 temperature,
             )
-            result[i] = pp / vp
+            result[idx] = pp / vp
 
     @ti.kernel
     def _saturation_concentration_kernel(          # vectorised
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for i in ti.static(range(self.n_species)):
-            strategy = ti.static(self.strategies[i])
+        for idx, strategy in ti.static(enumerate(self.strategies)):
             vp = strategy._pure_vp_func(temperature)
-            result[i] = strategy._concentration_func(
+            result[idx] = strategy._concentration_func(
                 vp,
-                self.molar_mass[i],
+                self.molar_mass[idx],
                 temperature,
             )
 
