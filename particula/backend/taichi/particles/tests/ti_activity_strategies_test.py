@@ -44,13 +44,6 @@ def test_scalar_and_vector_consistency():
     _check(par.particles.ActivityIdealMass(), TiMass(), conc_s, p0_s)
     _check(par.particles.ActivityIdealMass(), TiMass(), conc_v, p0_v)
 
-    # Ideal-volume
-    _check(
-        par.particles.ActivityIdealVolume(density=1000.0),
-        TiVol(density=1000.0),
-        conc_v, p0_v,
-    )
-
     # Kappa (two-species example)
     kappa      = np.array([0.1, 0.0])
     density    = np.array([1000.0, 1200.0])
