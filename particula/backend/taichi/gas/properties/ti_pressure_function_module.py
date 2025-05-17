@@ -4,14 +4,16 @@ import numpy as np
 from particula.util.constants import GAS_CONSTANT
 from particula.backend.dispatch_register import register
 
+_GAS_CONSTANT = float(GAS_CONSTANT)    # avoid python → kernel capture
+
 @ti.func
 def fget_partial_pressure(
     concentration: ti.f64,
     molar_mass: ti.f64,
     temperature: ti.f64,
 ) -> ti.f64:
-    """Elementwise partial pressure calculation (Taichi)."""
-    return (concentration * ti.cast(GAS_CONSTANT, ti.f64) * temperature) / molar_mass
+    """Element-wise partial pressure (Pa)."""
+    return (concentration * _GAS_CONSTANT * temperature) / molar_mass
 
 @ti.func
 def fget_saturation_ratio_from_pressure(
@@ -48,47 +50,48 @@ def kget_saturation_ratio_from_pressure(
 
 @register("get_partial_pressure", backend="taichi")
 def ti_get_partial_pressure(concentration, molar_mass, temperature):
-    """Taichi wrapper for partial pressure calculation."""
-    if not (
-        isinstance(concentration, np.ndarray)
-        and isinstance(molar_mass, np.ndarray)
-        and isinstance(temperature, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for all inputs.")
+    """Vectorised Taichi wrapper for gas.properties.get_partial_pressure."""
+    # 1 · normalise & broadcast
+    conc_np = np.asarray(concentration, dtype=np.float64)
+    mm_np   = np.asarray(molar_mass,    dtype=np.float64)
+    tt_np   = np.asarray(temperature,   dtype=np.float64)
+    conc_b, mm_b, tt_b = np.broadcast_arrays(conc_np, mm_np, tt_np)
 
-    a1, a2, a3 = (
-        np.atleast_1d(concentration),
-        np.atleast_1d(molar_mass),
-        np.atleast_1d(temperature),
-    )
-    n = a1.size
-    arr1 = ti.ndarray(dtype=ti.f64, shape=n)
-    arr2 = ti.ndarray(dtype=ti.f64, shape=n)
-    arr3 = ti.ndarray(dtype=ti.f64, shape=n)
-    result = ti.ndarray(dtype=ti.f64, shape=n)
-    arr1.from_numpy(a1)
-    arr2.from_numpy(a2)
-    arr3.from_numpy(a3)
-    kget_partial_pressure(arr1, arr2, arr3, result)
-    result_np = result.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    # 2 · flatten → Taichi ndarrays
+    flat_c, flat_m, flat_t = map(np.ravel, (conc_b, mm_b, tt_b))
+    n = flat_c.size
+    c_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    m_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    t_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    c_ti.from_numpy(flat_c)
+    m_ti.from_numpy(flat_m)
+    t_ti.from_numpy(flat_t)
+
+    # 3 · kernel launch
+    kget_partial_pressure(c_ti, m_ti, t_ti, res_ti)
+
+    # 4 · reshape back & return scalar or array
+    res_np = res_ti.to_numpy().reshape(conc_b.shape)
+    return res_np.item() if res_np.size == 1 else res_np
+
 
 @register("get_saturation_ratio_from_pressure", backend="taichi")
 def ti_get_saturation_ratio_from_pressure(partial_pressure, pure_vapor_pressure):
-    """Taichi wrapper for saturation ratio calculation."""
-    if not (
-        isinstance(partial_pressure, np.ndarray)
-        and isinstance(pure_vapor_pressure, np.ndarray)
-    ):
-        raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
+    """Vectorised Taichi wrapper for saturation-ratio calculation."""
+    pp_np  = np.asarray(partial_pressure,    dtype=np.float64)
+    pvp_np = np.asarray(pure_vapor_pressure, dtype=np.float64)
+    pp_b, pvp_b = np.broadcast_arrays(pp_np, pvp_np)
 
-    a1, a2 = np.atleast_1d(partial_pressure), np.atleast_1d(pure_vapor_pressure)
-    n = a1.size
-    arr1 = ti.ndarray(dtype=ti.f64, shape=n)
-    arr2 = ti.ndarray(dtype=ti.f64, shape=n)
-    result = ti.ndarray(dtype=ti.f64, shape=n)
-    arr1.from_numpy(a1)
-    arr2.from_numpy(a2)
-    kget_saturation_ratio_from_pressure(arr1, arr2, result)
-    result_np = result.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    flat_pp, flat_pvp = map(np.ravel, (pp_b, pvp_b))
+    n = flat_pp.size
+    pp_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+    pvp_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    pp_ti.from_numpy(flat_pp)
+    pvp_ti.from_numpy(flat_pvp)
+
+    kget_saturation_ratio_from_pressure(pp_ti, pvp_ti, res_ti)
+
+    res_np = res_ti.to_numpy().reshape(pp_b.shape)
+    return res_np.item() if res_np.size == 1 else res_np
