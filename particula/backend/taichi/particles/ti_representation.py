@@ -6,18 +6,28 @@ from typing import Optional
 from particula.backend.dispatch_register import register
 
 @ti.data_oriented
-class _FieldIO:                                            # ← tiny helper‐mixin
+class _FieldIO:
     @ti.kernel
-    def _assign_1d(f: ti.template(), a: ti.types.ndarray(dtype=ti.f64, ndim=1)):
-        for i in f: f[i] = a[i]
+    def _assign_1d(self, f: ti.template(),
+                   a: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+        for i in f:
+            f[i] = a[i]
+
     @ti.kernel
-    def _assign_2d(f: ti.template(), a: ti.types.ndarray(dtype=ti.f64, ndim=2)):
-        for i, j in f: f[i, j] = a[i, j]
-    @classmethod
-    def from_numpy(cls, fld, arr):
-        if arr.ndim == 1: cls._assign_1d(fld, arr)
-        elif arr.ndim == 2: cls._assign_2d(fld, arr)
-        else: raise ValueError("Only 1-D/2-D supported")
+    def _assign_2d(self, f: ti.template(),
+                   a: ti.types.ndarray(dtype=ti.f64, ndim=2)):
+        for i, j in f:
+            f[i, j] = a[i, j]
+
+    def from_numpy(self, fld, arr):
+        if arr.ndim == 1:
+            self._assign_1d(fld, arr)
+        elif arr.ndim == 2:
+            self._assign_2d(fld, arr)
+        else:
+            raise ValueError("Only 1-D/2-D supported")
+
+_field_io = _FieldIO()
 
 @ti.data_oriented
 class TiParticleRepresentation:                            # public Taichi class
@@ -35,10 +45,10 @@ class TiParticleRepresentation:                            # public Taichi class
         self.charge        = ti.field(ti.f64, shape=charge.shape)
         self.volume        = ti.field(ti.f64, shape=())
         # copy initial values
-        _FieldIO.from_numpy(self.distribution,  distribution)
-        _FieldIO.from_numpy(self.density,       density)
-        _FieldIO.from_numpy(self.concentration, concentration)
-        _FieldIO.from_numpy(self.charge,        charge)
+        _field_io.from_numpy(self.distribution,  distribution)
+        _field_io.from_numpy(self.density,       density)
+        _field_io.from_numpy(self.concentration, concentration)
+        _field_io.from_numpy(self.charge,        charge)
         self.volume[None] = float(volume)
 
     # ───── getters identical to NumPy class (return NumPy views/copies) ─────
@@ -130,7 +140,7 @@ class TiParticleRepresentation:                            # public Taichi class
                                          self.get_concentration(),
                                          self.get_density(),
                                          added_mass)
-        _FieldIO.from_numpy(self.distribution, dist)
+        _field_io.from_numpy(self.distribution, dist)
 
     def add_concentration(self, added_conc: NDArray[np.float64],
                           added_dist: Optional[NDArray[np.float64]] = None) -> None:
@@ -139,8 +149,8 @@ class TiParticleRepresentation:                            # public Taichi class
                                                      self.get_concentration(),
                                                      added_distribution=added_dist,
                                                      added_concentration=added_conc)
-        _FieldIO.from_numpy(self.distribution,  dist)
-        _FieldIO.from_numpy(self.concentration, conc * self.volume[None])
+        _field_io.from_numpy(self.distribution,  dist)
+        _field_io.from_numpy(self.concentration, conc * self.volume[None])
 
     def collide_pairs(self, indices: NDArray[np.int64]) -> None:
         dist, conc = self.strategy.collide_pairs(
@@ -149,5 +159,5 @@ class TiParticleRepresentation:                            # public Taichi class
             self.get_density(),
             indices,
         )
-        _FieldIO.from_numpy(self.distribution,  dist)
-        _FieldIO.from_numpy(self.concentration, conc * self.volume[None])
+        _field_io.from_numpy(self.distribution,  dist)
+        _field_io.from_numpy(self.concentration, conc * self.volume[None])
