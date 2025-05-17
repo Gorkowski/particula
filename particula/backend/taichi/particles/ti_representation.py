@@ -53,6 +53,50 @@ class TiParticleRepresentation:                            # public Taichi class
         arr = self.distribution.to_numpy();  return arr.copy() if clone else arr
     def get_density(self, clone=False):
         arr = self.density.to_numpy();       return arr.copy() if clone else arr
+
+    # ───── density utilities ────────────────────────────────────────────
+    def get_effective_density(self, clone: bool = False):
+        """
+        Return particle-wise effective density (mass-weighted species density).
+        Mirrors particula.particles.representation.ParticleRepresentation.
+        """
+        densities = self.get_density()
+        # single–species shortcut
+        if isinstance(densities, float) or np.size(densities) == 1:
+            eff = np.ones_like(self.get_species_mass()) * densities
+        else:
+            mass_total = self.get_mass()
+            weighted_mass = np.sum(self.get_species_mass() * densities, axis=1)
+            eff = np.divide(
+                weighted_mass,
+                mass_total,
+                where=mass_total != 0,
+                out=np.zeros_like(weighted_mass),
+            )
+        return eff.copy() if clone else eff
+
+    def get_mean_effective_density(self) -> float:
+        """
+        Mean of the non-zero effective densities (0.0 if all zero).
+        """
+        effective = self.get_effective_density()
+        effective = effective[effective != 0]
+        if effective.size == 0:
+            return 0.0
+        return float(np.mean(effective))
+
+    def __str__(self) -> str:
+        return (
+            f"Particle Representation:\n"
+            f"\tStrategy: {self.get_strategy_name()}\n"
+            f"\tActivity: {self.get_activity_name()}\n"
+            f"\tSurface: {self.get_surface_name()}\n"
+            f"\tMass Concentration: "
+            f"{self.get_mass_concentration():.3e} [kg/m^3]\n"
+            f"\tNumber Concentration: "
+            f"{self.get_total_concentration():.3e} [#/m^3]"
+        )
+
     def get_concentration(self, clone=False):
         vol = self.volume[None]
         arr = self.concentration.to_numpy() / vol
@@ -73,11 +117,13 @@ class TiParticleRepresentation:                            # public Taichi class
     def get_radius(self, clone=False):
         res = self.strategy.get_radius(self.get_distribution(), self.get_density())
         return res.copy() if clone else res
-    def get_mass_concentration(self, clone=False):
-        m_c = self.strategy.get_total_mass(self.get_distribution(),
-                                           self.get_concentration(),
-                                           self.get_density())
-        return float(m_c)
+    def get_mass_concentration(self, clone: bool = False):
+        m_c = self.strategy.get_total_mass(
+            self.get_distribution(),
+            self.get_concentration(),
+            self.get_density(),
+        )
+        return float(m_c)  # scalar, copy not needed but flag accepted
 
     # ───── mutators (update Ti fields in-place) ─────
     def add_mass(self, added_mass: NDArray[np.float64]) -> None:
@@ -98,8 +144,11 @@ class TiParticleRepresentation:                            # public Taichi class
         _FieldIO.from_numpy(self.concentration, conc * self.volume[None])
 
     def collide_pairs(self, indices: NDArray[np.int64]) -> None:
-        dist, conc = self.strategy.collide_pairs(self.get_distribution(),
-                                                 self.get_concentration(),
-                                                 self.get_density(), indices)
+        dist, conc = self.strategy.collide_pairs(
+            self.get_distribution(),
+            self.get_concentration(),      # per m³ passed to strategy
+            self.get_density(),
+            indices,
+        )
         _FieldIO.from_numpy(self.distribution,  dist)
-        _FieldIO.from_numpy(self.concentration, conc)
+        _FieldIO.from_numpy(self.concentration, conc * self.volume[None])
