@@ -9,13 +9,13 @@ from particula.backend.taichi.gas.properties import (
     fget_buck_vapor_pressure,
     fget_clausius_clapeyron_vapor_pressure,
 )
-from particula.backend.registry import register
+from particula.backend.dispatch_register import register
 
 ti.init(default_fp=ti.f64)
 
 GAS_CONSTANT = 8.31446261815324  # J/(mol·K)
 
-# NEW ────────────────────────────────────────────────────────────────────────
+
 class _VaporPressureMixin:          # NO @ti.data_oriented here
     """Shared Taichi helpers for vapor-pressure strategies."""
 

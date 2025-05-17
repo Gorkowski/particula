@@ -30,7 +30,7 @@ _REL_TOL = 1e-9
 _ABS_TOL = 1e-12
 _T      = 300.0         # K
 _M      = 0.018         # kg / mol   (arbitrary)
-_CONC   = 1.0           # mol / m3   (arbitrary)
+_CONC   = 4.0           # mol / m3   (arbitrary)
 
 
 def _close(a, b):
@@ -69,7 +69,7 @@ def test_constant_strategy():
 
 
 def test_antoine_strategy():
-    a, b, c = 1.0, 1.0, 1.0     # arbitrary coefficients
+    a, b, c = 1.0, 2.0, 9.0     # arbitrary coefficients
     ti_s = TiAntoine(a, b, c)
     py_s = PyAntoine(a, b, c)
     _check_kernels_vs_wrappers(ti_s)

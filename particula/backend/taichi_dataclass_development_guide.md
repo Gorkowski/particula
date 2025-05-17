@@ -12,6 +12,7 @@
 | **`fget_*` helper**      | A small `@ti.func` that performs element-wise math.                                                                                                  | You can call it anywhere inside another `@ti.func` or a `@ti.kernel`.                                             |
 | **`kget_*` helper**      | A vectorised `@ti.kernel` that operates on whole fields/ndarrays.                                                                                    | You can call it from Python *or* from another kernel.                                                             |
 | **`snake_case` names**   | Variable or attribute names use plain English words with underscores.                                                                                | No abbreviations (`radius`, **not** `r`; `knudsen_number`, **not** `Kn`).                                         |
+| **Mixins replace ABCs** | Taichi classes are not allowed to inherit from other classes.                                                                                       | Use mixins to share ti.func and ti.kernel code between classes.                                                                          |
 
 ---
 
@@ -172,6 +173,8 @@ class TiCondensation:
 | Heavy vector physics already written in `kget_*` | Call it from your kernel via a thin wrapper                                        | Use full parameter names in wrapper arguments.              |
 | Manipulates temporary arrays                     | Pre-allocate scratch `ti.field`s in `__init__` or a helper like `allocate_buffers` | Scratch names: `mass_rate_buffer`, `temperature_grid`, etc. |
 | Needs new constant each call                     | Pass it as an argument to the kernel or store in a 0-D field                       | Never rely on Python-side globals inside kernels.           |
+| ABCs to mixins                                     | Taichi classes cannot inherit from other classes                                   | Use mixins to share code between classes.                   |
+
 
 ---
 
