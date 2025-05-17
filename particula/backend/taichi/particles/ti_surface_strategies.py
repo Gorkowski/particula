@@ -6,8 +6,13 @@ from typing import Union
 from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
-ti.init(default_fp=ti.f64)
-R_GAS = 8.31446261815324  # ideal-gas constant [J mol⁻¹ K⁻¹]
+if not ti.core.is_initialized():
+    ti.init(arch=ti.cpu, default_fp=ti.f64)      # initialise once, float-64 everywhere
+
+from particula.backend.taichi.particles.properties.ti_kelvin_effect_module import (
+    fget_kelvin_radius,
+    fget_kelvin_term,
+)
 
 
 def _store(value):
@@ -34,11 +39,12 @@ class _SurfaceMixin:
     def _kelvin_radius_elem(
         self, sigma: ti.f64, rho: ti.f64, M: ti.f64, T: ti.f64
     ) -> ti.f64:
-        return 2.0 * sigma * M / (R_GAS * T * rho)
+        # Delegates to the validated helper – keeps one single source of truth
+        return fget_kelvin_radius(sigma, rho, M, T)
 
     @ti.func
     def _kelvin_term_elem(self, r_p: ti.f64, r_k: ti.f64) -> ti.f64:
-        return ti.exp(r_k / r_p)
+        return fget_kelvin_term(r_p, r_k)
 
     def get_name(self) -> str:
         return self.__class__.__name__
@@ -86,7 +92,9 @@ class SurfaceStrategyMolar(_SurfaceMixin):
     ) -> Union[float, NDArray[np.float64]]:
         sigma = self.effective_surface_tension(mass_concentration)
         rho = self.effective_density(mass_concentration)
-        return 2.0 * molar_mass * sigma / (R_GAS * temperature * rho)
+        return fget_kelvin_radius(
+            sigma, rho, molar_mass, temperature
+        )
 
     def kelvin_term(
         self,
@@ -96,7 +104,9 @@ class SurfaceStrategyMolar(_SurfaceMixin):
         temperature: float,
     ) -> Union[float, NDArray[np.float64]]:
         r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        return np.exp(r_k / radius)
+        return np.exp(
+            fget_kelvin_term(radius, r_k)          # preserves NumPy broadcasting
+        )
 
 
 @register("SurfaceStrategyMass", backend="taichi")
@@ -135,7 +145,9 @@ class SurfaceStrategyMass(_SurfaceMixin):
     ) -> Union[float, NDArray[np.float64]]:
         sigma = self.effective_surface_tension(mass_concentration)
         rho = self.effective_density(mass_concentration)
-        return 2.0 * molar_mass * sigma / (R_GAS * temperature * rho)
+        return fget_kelvin_radius(
+            sigma, rho, molar_mass, temperature
+        )
 
     def kelvin_term(
         self,
@@ -145,7 +157,9 @@ class SurfaceStrategyMass(_SurfaceMixin):
         temperature: float,
     ) -> Union[float, NDArray[np.float64]]:
         r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        return np.exp(r_k / radius)
+        return np.exp(
+            fget_kelvin_term(radius, r_k)          # preserves NumPy broadcasting
+        )
 
 
 @register("SurfaceStrategyVolume", backend="taichi")
@@ -188,7 +202,9 @@ class SurfaceStrategyVolume(_SurfaceMixin):
     ) -> Union[float, NDArray[np.float64]]:
         sigma = self.effective_surface_tension(mass_concentration)
         rho = self.effective_density(mass_concentration)
-        return 2.0 * molar_mass * sigma / (R_GAS * temperature * rho)
+        return fget_kelvin_radius(
+            sigma, rho, molar_mass, temperature
+        )
 
     def kelvin_term(
         self,
@@ -198,4 +214,6 @@ class SurfaceStrategyVolume(_SurfaceMixin):
         temperature: float,
     ) -> Union[float, NDArray[np.float64]]:
         r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        return np.exp(r_k / radius)
+        return np.exp(
+            fget_kelvin_term(radius, r_k)          # preserves NumPy broadcasting
+        )
