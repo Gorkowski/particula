@@ -1,6 +1,7 @@
 """Taichi implementation of particula.gas.vapor_pressure_strategies."""
 import taichi as ti
 
+# Add missing import for register
 from particula.backend.taichi.gas.properties import (
     fget_partial_pressure,
     fget_concentration_from_pressure,
@@ -8,6 +9,8 @@ from particula.backend.taichi.gas.properties import (
     fget_buck_vapor_pressure,
     fget_clausius_clapeyron_vapor_pressure,
 )
+from particula.backend.registry import register
+
 ti.init(default_fp=ti.f64)
 
 GAS_CONSTANT = 8.31446261815324  # J/(mol·K)
