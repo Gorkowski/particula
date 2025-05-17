@@ -41,7 +41,7 @@ def _build_ti_impl(
 # ─── Tests ─────────────────────────────────────────────────────────────────
 def test_first_order_mass_transport_kernel_parity():
     """Kernel result must match the reference NumPy implementation."""
-    radius = np.array([1e-7, 2e-7, 5e-8], dtype=np.float64)
+    radius = np.array([1e-7, 2e-7, 5e-6, 3e-5], dtype=np.float64)
     temperature, pressure = 298.15, 101_325.0
     dynamic_viscosity = 1.85e-5
 

@@ -2,8 +2,8 @@
 
 *Turn any NumPy-based “model” class into a high-performance, data-oriented Taichi class while re-using the `fget_…` / `kget_…` helpers you have already written.*
 
-The high-level goal is to convert a numpy-class completely to a Taichi class, keep the similar methods and signatures, and use the same math helpers you have already written.
-This will be a breaking change and will not be interoperable with the NumPy version. To keep the code more performant, we will use the Taichi data-oriented programming paradigm, and use taichi fields to store the data.
+The high-level goal is to convert a numpy-class completely to a Taichi class, keep the same method names and signatures, and use the taichi data-oriented programming paradigm. This will allow us to keep the code clean and easy to read, while also making it more performant.
+This will be a breaking change and will not be interoperable with the NumPy version.
 
 ---
 
@@ -110,7 +110,7 @@ class Ti<name>:
             dm = K * self.Mi[s] * delta_p / (R * T) * dt
             self.mass[p, s] += dm
 
-    # public API identical to NumPy class
+    # public API
     def step(self, dt: float, *, T=298.15, P=101325.0, λ=66e-9):
         """Advance the system by *dt* seconds."""
         self._advance(T, P, dt, λ)

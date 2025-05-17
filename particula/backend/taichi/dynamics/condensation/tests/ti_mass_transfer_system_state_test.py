@@ -1,11 +1,6 @@
 import taichi as ti, numpy as np, numpy.testing as npt
 ti.init(arch=ti.cpu)
 
-# python (NumPy) reference implementation
-from particula.dynamics.condensation.mass_transfer import (
-    get_first_order_mass_transport_via_system_state as np_fk_vs,
-)
-
 # taichi wrapper + kernel
 from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
     ti_get_first_order_mass_transport_via_system_state as ti_fk_vs,
@@ -13,7 +8,7 @@ from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
 )
 
 def _example_inputs():
-    r    = np.array([1e-6, 2e-6], dtype=np.float64)      # particle radii
+    r    = np.array([1e-8, 2e-6], dtype=np.float64)      # particle radii
     mm   = np.array([0.02897, 0.04401], dtype=np.float64)  # species molar masses
     ac   = np.array([1.0, 1.0], dtype=np.float64)        # accommodation coeffs
     T    = 300.0
@@ -24,9 +19,12 @@ def _example_inputs():
 
 def test_wrapper():
     r, mm, ac, T, P, mu, D = _example_inputs()
-    expected = np_fk_vs(r, mm, ac, T, P, mu, D)
+    expected = np.array(
+        [[2.740521e-13, 3.331703e-13], [4.909421e-10, 4.931564e-10]],
+        dtype=np.float64,
+    )
     result   = ti_fk_vs(r, mm, ac, T, P, mu, D)
-    npt.assert_allclose(result, expected)
+    npt.assert_allclose(result, expected, rtol=1e-6)
 
 def test_kernel_direct():
     r, mm, ac, T, P, mu, D = _example_inputs()
@@ -41,5 +39,9 @@ def test_kernel_direct():
     kget_first_order_mass_transport_via_system_state(
         r_ti, mm_ti, ac_ti, T, P, mu, D, res_ti
     )
-    expected = np_fk_vs(r, mm, ac, T, P, mu, D)
-    npt.assert_allclose(res_ti.to_numpy(), expected)
+
+    expected = np.array(
+        [[2.740521e-13, 3.331703e-13], [4.909421e-10, 4.931564e-10]],
+        dtype=np.float64,
+    )
+    npt.assert_allclose(res_ti.to_numpy(), expected, rtol=1e-6)

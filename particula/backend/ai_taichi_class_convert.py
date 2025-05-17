@@ -8,7 +8,7 @@ import subprocess
 from pathlib import Path
 
 GUIDE_PATH = Path(
-    r"C:\GitHub\particula\particula\backend\taichi_class_development_guide.md"
+    r"C:\GitHub\particula\particula\backend\taichi_dataclass_development_guide.md"
 )
 
 

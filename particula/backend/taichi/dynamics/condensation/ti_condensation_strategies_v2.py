@@ -2,6 +2,7 @@
 
 import taichi as ti
 import numpy as np
+from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
 # ---- Taichi helpers already in repo -----------------------------------
@@ -20,6 +21,13 @@ from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
 )
 
 # ---- Python-side utilities (unchanged, lightweight) --------------------
+from particula.particles.representation import ParticleRepresentation
+from particula.gas.species import GasSpecies
+from particula.particles import (
+    get_knudsen_number,
+    get_vapor_transition_correction,
+    get_partial_pressure_delta,
+)
 from particula.dynamics.condensation.mass_transfer import get_mass_transfer
 from particula.gas import get_molecule_mean_free_path
 from particula.particles.representation import ParticleRepresentation
@@ -98,22 +106,82 @@ class CondensationIsothermal:
     @ti.kernel
     def _kget_mass_transfer_rate(  # ← dm/dt  1-D
         self,
-        delta_p: ti.types.ndarray(dtype=ti.f64, ndim=2),
-        first_order_mass_transport: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
         temperature: ti.f64,
+        pressure: ti.f64,
+        dynamic_viscosity: ti.f64,
+        pressure_delta: ti.types.ndarray(dtype=ti.f64, ndim=2),
         result: ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         """dm/dt per particle (isothermal)."""
-        for particle_i in range(delta_p.shape[0]):
-            for molar_mass_i in range(delta_p.shape[1]):
+        for particle_i in range(pressure_delta.shape[0]):
+            for molar_mass_i in range(pressure_delta.shape[1]):
+                first_order_mass_transport_k = (
+                    fget_first_order_mass_transport_via_system_state(
+                        particle_radius[particle_i],
+                        self.molar_mass[molar_mass_i],
+                        self.accommodation_coefficient[molar_mass_i],
+                        temperature,
+                        pressure,
+                        dynamic_viscosity,
+                        self.diffusion_coefficient[None],
+                    )
+                )
+
                 result[particle_i, molar_mass_i] = fget_mass_transfer_rate(
-                    dp=delta_p[particle_i, molar_mass_i],
-                    k=first_order_mass_transport[particle_i, molar_mass_i],
+                    dp=pressure_delta[particle_i, molar_mass_i],
+                    k=first_order_mass_transport_k,
                     t=temperature,
                     m=self.molar_mass[molar_mass_i],
                 )
 
     # ─────────────────────── public helpers ────────────────────────────────
+    def calculate_pressure_delta(
+        self,
+        particle: ParticleRepresentation,
+        gas_species: GasSpecies,
+        temperature: float,
+        radius: NDArray[np.float64],
+    ) -> NDArray[np.float64]:
+        """Calculate the difference in partial pressure between the gas and
+        particle phases.
+
+        Arguments:
+            - particle : The particle for which the partial pressure difference
+                is to be calculated.
+            - gas_species : The gas species with which the particle is in
+                contact.
+            - temperature : The temperature at which the partial pressure
+                difference is to be calculated.
+            - radius : The radius of the particles.
+
+        Returns:
+            - partial_pressure_delta : The difference in partial pressure
+                between the gas and particle phases.
+        """
+        mass_concentration_in_particle = particle.get_species_mass()
+        pure_vapor_pressure = gas_species.get_pure_vapor_pressure(
+            temperature=temperature
+        )
+        partial_pressure_particle = particle.activity.partial_pressure(
+            pure_vapor_pressure=pure_vapor_pressure,
+            mass_concentration=mass_concentration_in_particle,
+        )
+
+        partial_pressure_gas = gas_species.get_partial_pressure(temperature)
+        kelvin_term = particle.surface.kelvin_term(
+            radius=radius,
+            molar_mass=self.molar_mass,
+            mass_concentration=mass_concentration_in_particle,
+            temperature=temperature,
+        )
+
+        return get_partial_pressure_delta(
+            partial_pressure_gas=partial_pressure_gas,
+            partial_pressure_particle=partial_pressure_particle,
+            kelvin_term=kelvin_term,
+        )
+
     def first_order_mass_transport(
         self,
         particle_radius: np.ndarray,
@@ -154,12 +222,6 @@ class CondensationIsothermal:
             temperature=temperature,
             pressure=pressure,
             dynamic_viscosity=dynamic_viscosity,
-        )
-        delta_p = self.calculate_pressure_delta(
-            particle=particle,
-            gas_species=gas_species,
-            temperature=temperature,
-            radius=radius,
         )
 
         delta_p_np = np.ascontiguousarray(delta_p, dtype=np.float64)

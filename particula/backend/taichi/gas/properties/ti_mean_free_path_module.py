@@ -3,8 +3,10 @@ import numpy as np
 
 from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
+from particula.gas import get_dynamic_viscosity
 
 _R = float(GAS_CONSTANT)  # J mol⁻¹ K⁻¹
+
 
 @ti.func
 def fget_molecule_mean_free_path(
@@ -14,7 +16,7 @@ def fget_molecule_mean_free_path(
     dynamic_viscosity: ti.f64,
 ) -> ti.f64:
     return (2.0 * dynamic_viscosity / pressure) / ti.sqrt(
-        8.0 * molar_mass / (ti.pi64 * _R * temperature)
+        8.0 * molar_mass / (ti.math.pi * _R * temperature)
     )
 
 @ti.kernel
