@@ -97,7 +97,7 @@ def main():
     calc = PressureDeltaCalc(particle, gas, radii)
 
     calc.compute(T)
-    print("ΔP (gas – particle·Kelvin) [Pa]:")
+    print("Delta P (gas - particle * Kelvin) [Pa]:")
     print(calc.delta.to_numpy())
 
 
