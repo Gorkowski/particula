@@ -15,9 +15,9 @@ from .ti_activity_strategies import (          # noqa: F401
     ActivityKappaParameter as TiActivityKappaParameter,
 )
 
-__all__.extend([
+__all__ = [
     "TiActivityIdealMolar",
     "TiActivityIdealMass",
     "TiActivityIdealVolume",
     "TiActivityKappaParameter",
-])
+]
