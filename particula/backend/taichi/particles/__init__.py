@@ -30,6 +30,7 @@ from .ti_surface_strategies import (
     SurfaceStrategyVolume  as TiSurfaceStrategyVolume,
 )
 
+from .ti_representation import TiParticleRepresentation          # NEW
 __all__ = [
     "TiActivityIdealMolar",
     "TiActivityIdealMass",
@@ -45,3 +46,4 @@ __all__.extend([
     "TiSurfaceStrategyMass",
     "TiSurfaceStrategyVolume",
 ])
+__all__.append("TiParticleRepresentation")                       # NEW
