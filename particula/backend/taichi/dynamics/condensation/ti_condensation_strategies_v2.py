@@ -45,17 +45,11 @@ class CondensationIsothermal:
         accommodation_coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
         update_gases: ti.types.ndarray(dtype=ti.int16, ndim=1),
     ):
-        # persistent scalar fields
-        molar_mass = ti.types.ndarray(dtype=ti.f64, ndim=1)
-        diffusion_coefficient = ti.field(ti.f64, shape=())
-        accommodation_coefficient = ti.types.ndarray(dtype=ti.f64, ndim=1)
-        update_gases = ti.types.ndarray(dtype=ti.int16, ndim=1)
-
         self.molar_mass = molar_mass
         self.diffusion_coefficient = diffusion_coefficient
         if accommodation_coefficient.shape[0] != molar_mass.shape[0]:
             # distribute accommodation coefficient to all species
-            accommodation_coefficient_new = ti.types.ndarray(
+            accommodation_coefficient_new = ti.ndarray(
                 dtype=ti.f64, shape=(molar_mass.shape[0],)
             )
             for i in range(molar_mass.shape[0]):
@@ -128,15 +122,21 @@ class CondensationIsothermal:
         dynamic_viscosity: float | None = None,
     ) -> np.ndarray:
         """Vectorised K(r) using Taichi kernel."""
-        mfp = get_molecule_mean_free_path(
-            molar_mass=self.molar_mass[None],
-            temperature=temperature,
-            pressure=pressure,
-            dynamic_viscosity=dynamic_viscosity,
-        )
         r_np = np.ascontiguousarray(particle_radius, dtype=np.float64)
         K_np = np.empty_like(r_np)
-        self._kget_first_order_mass_transport(r_np, mfp, K_np)
+        if dynamic_viscosity is None:
+            from particula.gas.properties.dynamic_viscosity import (
+                get_dynamic_viscosity,
+            )
+            dynamic_viscosity = get_dynamic_viscosity(temperature)
+
+        self._kget_first_order_mass_transport(
+            r_np,
+            float(temperature),
+            float(pressure),
+            float(dynamic_viscosity),
+            K_np,
+        )
         return K_np
 
     # ───────────────────────── API: dm/dt ───────────────────────────────────
