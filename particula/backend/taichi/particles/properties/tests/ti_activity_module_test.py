@@ -15,6 +15,10 @@ from particula.backend.taichi.particles.properties.ti_activity_module import (
     ti_get_ideal_activity_mass,
     ti_get_kappa_activity,
     ti_get_surface_partial_pressure,
+    fget_surface_partial_pressure,
+    fget_ideal_activity_mass,
+    fget_ideal_activity_volume,
+    fget_ideal_activity_molar,
     kget_ideal_activity_mass,
     kget_surface_partial_pressure,
     kget_ideal_activity_volume,
@@ -30,6 +34,26 @@ mm   = np.array([18.0, 58.44, 100.0], dtype=np.float64)
 kap  = np.array([0.5, 0.1, 0.0], dtype=np.float64)
 pvp  = np.array([1000.0, 2000.0], dtype=np.float64)
 act  = np.array([0.95, 0.85], dtype=np.float64)
+
+@ti.kernel
+def _call_fget_surf(pvp_val: ti.f64, act_val: ti.f64) -> ti.f64:
+    return fget_surface_partial_pressure(pvp_val, act_val)
+
+@ti.kernel
+def _call_fget_mass(mass_single: ti.f64, total_mass: ti.f64) -> ti.f64:
+    return fget_ideal_activity_mass(mass_single, total_mass)
+
+@ti.kernel
+def _call_fget_vol(mass_single: ti.f64,
+                   dens_single: ti.f64,
+                   total_vol: ti.f64) -> ti.f64:
+    return fget_ideal_activity_volume(mass_single, dens_single, total_vol)
+
+@ti.kernel
+def _call_fget_mol(mass_single: ti.f64,
+                   mm_single: ti.f64,
+                   total_mol: ti.f64) -> ti.f64:
+    return fget_ideal_activity_molar(mass_single, mm_single, total_mol)
 
 # wrapper parity ----------------------------------------------------
 def test_wrapper_molar():
@@ -109,3 +133,11 @@ def test_kernel_kappa_direct():
         res_ti.to_numpy(),
         get_kappa_activity(mc, kap, dens, mm, 0)
     )
+
+# ------------------------------------------------------------------
+# direct tests for the newly-exposed ti.func helpers
+def test_core_funcs_direct():
+    assert_allclose(_call_fget_surf(1000.0, 0.25), 250.0)
+    assert_allclose(_call_fget_mass(2.0, 8.0), 0.25)
+    assert_allclose(_call_fget_vol(2.0, 1000.0, 8.0 / 1000.0), 0.25)
+    assert_allclose(_call_fget_mol(2.0, 18.0, 8.0 / 18.0), 0.25)
