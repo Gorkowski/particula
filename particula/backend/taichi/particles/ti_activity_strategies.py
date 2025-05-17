@@ -7,15 +7,15 @@ from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
 # ─── element-wise & vector helpers already coded in ti_activity_module ──────
-from particula.backend.taichi.particles.properties.ti_activity_module import (
-    fget_ideal_activity_molar,
+from particula.backend.taichi.particles.properties import (
     kget_ideal_activity_molar,
+    fget_ideal_activity_molar,
     fget_ideal_activity_mass,
     kget_ideal_activity_mass,
     fget_ideal_activity_volume,
     kget_ideal_activity_volume,
-    fget_kappa_activity,
     kget_kappa_activity,
+    fget_water_activity_from_kappa_row,
     fget_surface_partial_pressure,
     kget_surface_partial_pressure,
 )
