@@ -6,9 +6,6 @@ from typing import Union
 from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
-if not ti.core.is_initialized():
-    ti.init(arch=ti.cpu, default_fp=ti.f64)      # initialise once, float-64 everywhere
-
 from particula.backend.taichi.particles.properties.ti_kelvin_effect_module import (
     fget_kelvin_radius,
     fget_kelvin_term,
