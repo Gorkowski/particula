@@ -68,16 +68,49 @@ class GasSpecies:
                                  "must equal #species")
             self.strategies = vapor_pressure_strategy
 
-    # element-wise helper already exists → wrap in kernel
     @ti.kernel
-    def _partial_pressure_kernel(
+    def _pure_vapor_pressure_kernel(               # vectorised
         self, temperature: ti.f64,
-        result: ti.types.ndarray(dtype=ti.f64, ndim=1)
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        """Vectorised partial pressure for every species."""
-        for i in self.concentration:
-            result[i] = fget_partial_pressure(
+        for i in ti.static(range(self.n_species)):
+            result[i] = self.strategies[i]._pure_vp_func(temperature)
+
+    @ti.kernel
+    def _partial_pressure_kernel(                  # vectorised
+        self, temperature: ti.f64,
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    ):
+        for i in ti.static(range(self.n_species)):
+            result[i] = self.strategies[i]._partial_pressure_func(
                 self.concentration[i],
+                self.molar_mass[i],
+                temperature,
+            )
+
+    @ti.kernel
+    def _saturation_ratio_kernel(                  # vectorised
+        self, temperature: ti.f64,
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    ):
+        for i in ti.static(range(self.n_species)):
+            vp = self.strategies[i]._pure_vp_func(temperature)
+            pp = self.strategies[i]._partial_pressure_func(
+                self.concentration[i],
+                self.molar_mass[i],
+                temperature,
+            )
+            result[i] = pp / vp
+
+    @ti.kernel
+    def _saturation_concentration_kernel(          # vectorised
+        self, temperature: ti.f64,
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    ):
+        for i in ti.static(range(self.n_species)):
+            vp = self.strategies[i]._pure_vp_func(temperature)
+            result[i] = self.strategies[i]._concentration_func(
+                vp,
                 self.molar_mass[i],
                 temperature,
             )
@@ -91,13 +124,9 @@ class GasSpecies:
                 else self.concentration.to_numpy())
 
     def get_pure_vapor_pressure(self, temperature):
-        # delegate to stored strategy objects (scalar python loop)
-        if self.n_species == 1:
-            return self.strategies[0].pure_vapor_pressure(temperature)
-        return np.array(
-            [s.pure_vapor_pressure(temperature) for s in self.strategies],
-            dtype=np.float64,
-        )
+        buffer = np.empty(self.n_species, dtype=np.float64)
+        self._pure_vapor_pressure_kernel(float(temperature), buffer)
+        return buffer[0] if self.n_species == 1 else buffer
 
     def get_partial_pressure(self, temperature):
         buffer = np.empty(self.n_species, dtype=np.float64)
@@ -105,23 +134,14 @@ class GasSpecies:
         return buffer[0] if self.n_species == 1 else buffer
 
     def get_saturation_ratio(self, temperature):
-        pp   = self.get_partial_pressure(temperature)
-        p_vp = self.get_pure_vapor_pressure(temperature)
-        return pp / p_vp
+        buffer = np.empty(self.n_species, dtype=np.float64)
+        self._saturation_ratio_kernel(float(temperature), buffer)
+        return buffer[0] if self.n_species == 1 else buffer
 
     def get_saturation_concentration(self, temperature):
-        return np.array([
-            s.saturation_concentration(
-                molar_mass=self.molar_mass[i],
-                temperature=temperature,
-            )
-            for i, s in enumerate(self.strategies)
-        ], dtype=np.float64)[0] if self.n_species == 1 else np.array([
-            s.saturation_concentration(
-                molar_mass=self.molar_mass[i],
-                temperature=temperature,
-            ) for i, s in enumerate(self.strategies)
-        ], dtype=np.float64)
+        buffer = np.empty(self.n_species, dtype=np.float64)
+        self._saturation_concentration_kernel(float(temperature), buffer)
+        return buffer[0] if self.n_species == 1 else buffer
 
     # same signature as NumPy class
     def add_concentration(self, delta):
