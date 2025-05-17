@@ -16,6 +16,7 @@ from particula.backend.taichi.gas.properties import (
 from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
     fget_mass_transfer_rate,
     fget_first_order_mass_transport_k,
+    fget_first_order_mass_transport_via_system_state,
 )
 
 # ---- Python-side utilities (unchanged, lightweight) --------------------
@@ -52,7 +53,16 @@ class CondensationIsothermal:
 
         self.molar_mass = molar_mass
         self.diffusion_coefficient = diffusion_coefficient
-        self.accommodation_coefficient = accommodation_coefficient
+        if accommodation_coefficient.shape[0] != molar_mass.shape[0]:
+            # distribute accommodation coefficient to all species
+            accommodation_coefficient_new = ti.types.ndarray(
+                dtype=ti.f64, shape=(molar_mass.shape[0],)
+            )
+            for i in range(molar_mass.shape[0]):
+                accommodation_coefficient_new[i] = accommodation_coefficient[0]
+            self.accommodation_coefficient = accommodation_coefficient_new
+        else:
+            self.accommodation_coefficient = accommodation_coefficient
         self.update_gases = update_gases
 
     # ───────────────────── helper: zero-radius guard ───────────────────────
@@ -77,32 +87,17 @@ class CondensationIsothermal:
         """Compute first-order mass-transport coefficient per particle
         per species.
         """
-        particle_i = ti.int16(0)
-        molar_mass_i = ti.int16(1)
-        for particle_i in range(particle_radius.shape[0]):
-            for molar_mass_i in range(self.molar_mass.shape[0]):
-
-                mean_free_path = fget_molecule_mean_free_path(
-                    molar_mass=self.molar_mass[molar_mass_i],
-                    temperature=temperature,
-                    pressure=pressure,
-                    dynamic_viscosity=dynamic_viscosity,
-                )
-                knudsen_number = fget_knudsen_number(
-                    mean_free_path=mean_free_path,
-                    particle_radius=particle_radius[particle_i],
-                )
-                vapor_transition = fget_vapor_transition_correction(
-                    knudsen_number=knudsen_number,
-                    mass_accommodation=self.accommodation_coefficient[
-                        particle_i
-                    ],
-                )
-                result[particle_i, molar_mass_i] = (
-                    fget_first_order_mass_transport_k(
-                        r=particle_radius[particle_i],
-                        vt=vapor_transition,
-                        d=self.diffusion_coefficient[None],
+        for i in range(particle_radius.shape[0]):  # particles
+            for j in range(self.molar_mass.shape[0]):  # species
+                result[i, j] = (
+                    fget_first_order_mass_transport_via_system_state(
+                        particle_radius[i],
+                        self.molar_mass[j],
+                        self.accommodation_coefficient[j],
+                        temperature,
+                        pressure,
+                        dynamic_viscosity,
+                        self.diffusion_coefficient[None],
                     )
                 )
 
@@ -123,7 +118,6 @@ class CondensationIsothermal:
                     t=temperature,
                     m=self.molar_mass[molar_mass_i],
                 )
-
 
     # ─────────────────────── public helpers ────────────────────────────────
     def first_order_mass_transport(
