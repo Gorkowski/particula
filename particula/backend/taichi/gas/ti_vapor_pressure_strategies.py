@@ -1,59 +1,16 @@
 """Taichi implementation of particula.gas.vapor_pressure_strategies."""
 import taichi as ti
-from particula.backend.dispatch_register import register
+
+from particula.backend.taichi.gas.properties import (
+    fget_partial_pressure,
+    fget_concentration_from_pressure,
+    fget_antoine_vapor_pressure,
+    fget_buck_vapor_pressure,
+    fget_clausius_clapeyron_vapor_pressure,
+)
 ti.init(default_fp=ti.f64)
 
-# --- thermodynamic helpers --------------------------------------------------
-@ti.func
-def fget_partial_pressure(
-    concentration: ti.f64,
-    molar_mass: ti.f64,
-    temperature: ti.f64,
-) -> ti.f64:
-    """Element-wise ideal-gas partial pressure."""
-    gas_constant = 8.314462618
-    return concentration * gas_constant * temperature / molar_mass  # ideal-gas p = ρRT/M
-
-@ti.func
-def fget_concentration_from_pressure(
-    partial_pressure: ti.f64,
-    molar_mass: ti.f64,
-    temperature: ti.f64,
-) -> ti.f64:
-    """Element-wise concentration from pressure."""
-    gas_constant = 8.314462618
-    return partial_pressure * molar_mass / (gas_constant * temperature)  # ρ = pM / RT
-
-# --- pure-vapor-pressure formulas -------------------------------------------
-@ti.func
-def fget_antoine_vp(
-    coefficient_a: ti.f64,
-    coefficient_b: ti.f64,
-    coefficient_c: ti.f64,
-    temperature: ti.f64,
-) -> ti.f64:
-    """Element-wise Antoine vapor pressure."""
-    log10_pressure = coefficient_a - coefficient_b / (temperature - coefficient_c)
-    return ti.pow(10.0, log10_pressure) * 133.32238741499998   # mmHg → Pa
-
-@ti.func
-def fget_clausius_clapeyron_vp(
-    latent_heat: ti.f64,
-    temperature_initial: ti.f64,
-    pressure_initial: ti.f64,
-    temperature: ti.f64,
-) -> ti.f64:
-    """Element-wise Clausius-Clapeyron vapor pressure."""
-    gas_constant = 8.314462618
-    return pressure_initial * ti.exp((latent_heat / gas_constant) * (1.0 / temperature_initial - 1.0 / temperature))
-
-@ti.func
-def fget_buck_vp(temperature: ti.f64) -> ti.f64:
-    """Element-wise Buck vapor pressure for water."""
-    temperature_celsius = temperature - 273.15
-    below = 6.1115 * ti.exp((23.036 - temperature_celsius / 333.7) * temperature_celsius / (279.82 + temperature_celsius)) * 100.0
-    above = 6.1121 * ti.exp((18.678 - temperature_celsius / 234.5) * temperature_celsius / (257.14 + temperature_celsius)) * 100.0
-    return ti.select(temperature_celsius < 0.0, below, above)
+GAS_CONSTANT = 8.31446261815324  # J/(mol·K)
 
 # ─────────────────────────────────────────────────────────────────────────────
 @ti.data_oriented
@@ -124,7 +81,7 @@ class AntoineVaporPressureStrategy:
     @ti.func
     def _pure_vp_func(self, temperature: ti.f64) -> ti.f64:
         """Element-wise Antoine pure vapor pressure."""
-        return fget_antoine_vp(self.coefficient_a[None], self.coefficient_b[None], self.coefficient_c[None], temperature)
+        return fget_antoine_vapor_pressure(self.coefficient_a[None], self.coefficient_b[None], self.coefficient_c[None], temperature)
 
     @ti.kernel
     def _pure_vp_kernel(self, temperature: ti.f64) -> ti.f64:
@@ -182,11 +139,12 @@ class ClausiusClapeyronStrategy:
     @ti.func
     def _pure_vp_func(self, temperature: ti.f64) -> ti.f64:
         """Element-wise Clausius-Clapeyron pure vapor pressure."""
-        return fget_clausius_clapeyron_vp(
+        return fget_clausius_clapeyron_vapor_pressure(
             self.latent_heat[None],
             self.temperature_initial[None],
             self.pressure_initial[None],
-            temperature
+            temperature,
+            gas_constant=GAS_CONSTANT,
         )
 
     @ti.kernel
@@ -240,7 +198,7 @@ class WaterBuckStrategy:
     @ti.func
     def _pure_vp_func(self, temperature: ti.f64) -> ti.f64:
         """Element-wise Buck pure vapor pressure for water."""
-        return fget_buck_vp(temperature)
+        return fget_buck_vapor_pressure(temperature)
 
     @ti.kernel
     def _pure_vp_kernel(self, temperature: ti.f64) -> ti.f64:
