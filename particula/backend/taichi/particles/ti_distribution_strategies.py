@@ -33,6 +33,64 @@ class MassBasedMovingBin(_DistributionMixin):
     def __init__(self):
         pass
 
+    # ───────────────────── ti.func helper layer ──────────────────────
+    # These tiny per-element helpers expose the class’ core maths so
+    # that *other* kernels may `import` the class and re-use them via
+    # dependency-injection without having to call the numpy wrappers.
+
+    @ti.func
+    def ti_species_mass(
+        self, distribution_mass: ti.f64, density: ti.f64
+    ) -> ti.f64:
+        """Species-level mass – identity for this strategy."""
+        return distribution_mass
+
+    @ti.func
+    def ti_particle_mass(self, species_masses: ti.template()) -> ti.f64:
+        """Sum of the species masses of one particle/bin."""
+        total = 0.0
+        for k in ti.static(range(species_masses.n)):
+            total += species_masses[k]
+        return total
+
+    @ti.func
+    def ti_particle_radius(
+        self, particle_mass: ti.f64, particle_density: ti.f64
+    ) -> ti.f64:
+        """Radius from total mass & density."""
+        volume = particle_mass / particle_density
+        return self._volume_to_radius(volume)
+
+    @ti.func
+    def ti_updated_mass(
+        self,
+        current_mass: ti.f64,
+        concentration: ti.f64,
+        added_mass: ti.f64,
+    ) -> ti.f64:
+        """Updated mass after adding `added_mass` to the particle."""
+        if concentration != 0.0:
+            new_mass = (current_mass * concentration + added_mass) / concentration
+            return ti.max(new_mass, 0.0)
+        else:
+            return 0.0
+
+    @ti.func
+    def ti_total_mass(
+        self, particle_mass: ti.f64, concentration: ti.f64
+    ) -> ti.f64:
+        """Contribution of a single particle/bin to the total mass."""
+        return particle_mass * concentration
+
+    @ti.func
+    def ti_merge_concentration(
+        self,
+        concentration_old: ti.f64,
+        concentration_added: ti.f64,
+    ) -> ti.f64:
+        """Simple concentration merge helper."""
+        return concentration_old + concentration_added
+
     def get_name(self) -> str:      # parity with python back-end
         return self.__class__.__name__
 
