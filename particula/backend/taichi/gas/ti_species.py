@@ -7,12 +7,12 @@ from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     ConstantVaporPressureStrategy,
-    VaporPressureStrategy,          # re-exported by the Taichi file
+    AntoineVaporPressureStrategy,
+    WaterBuckStrategy,
+    ClausiusClapeyronStrategy,
 )
-from particula.backend.taichi.gas.properties.ti_pressure_function_module import (
+from particula.backend.taichi.gas.properties import (
     fget_partial_pressure,          # element-wise helper
-    fget_saturation_ratio_from_pressure,
-    fget_concentration_from_pressure,
 )
 ti.init(default_fp=ti.f64)          # safe default
 
@@ -29,9 +29,12 @@ class GasSpecies:
         self,
         name: Union[str, NDArray[np.str_]],
         molar_mass: Union[float, NDArray[np.float64]],
-        vapor_pressure_strategy: Union[VaporPressureStrategy,
-                                       list[VaporPressureStrategy]]
-            = ConstantVaporPressureStrategy(0.0),
+        vapor_pressure_strategy: Union[
+            AntoineVaporPressureStrategy,
+            WaterBuckStrategy,
+            ClausiusClapeyronStrategy,
+            ConstantVaporPressureStrategy,
+        ] = ConstantVaporPressureStrategy(0.0),
         partitioning: bool = True,
         concentration: Union[float, NDArray[np.float64]] = 0.0,
     ):
