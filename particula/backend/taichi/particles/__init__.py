@@ -15,9 +15,21 @@ from .ti_activity_strategies import (          # noqa: F401
     ActivityKappaParameter as TiActivityKappaParameter,
 )
 
+# ─── Distribution strategies ───────────────────────────────────────────
+from .ti_distribution_strategies import (
+    MassBasedMovingBin            as TiMassBasedMovingBin,
+    RadiiBasedMovingBin           as TiRadiiBasedMovingBin,
+    SpeciatedMassMovingBin        as TiSpeciatedMassMovingBin,
+    ParticleResolvedSpeciatedMass as TiParticleResolvedSpeciatedMass,
+)
+
 __all__ = [
     "TiActivityIdealMolar",
     "TiActivityIdealMass",
     "TiActivityIdealVolume",
     "TiActivityKappaParameter",
+    "TiMassBasedMovingBin",
+    "TiRadiiBasedMovingBin",
+    "TiSpeciatedMassMovingBin",
+    "TiParticleResolvedSpeciatedMass",
 ]
