@@ -165,9 +165,6 @@ class MassBasedMovingBin(_DistributionMixin):
                 f"{distribution.shape} and the added distribution shape is "
                 f"{added_distribution.shape}."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
         if concentration.shape != added_concentration.shape:
             message = (
@@ -177,9 +174,6 @@ class MassBasedMovingBin(_DistributionMixin):
                 f"{concentration.shape} and the added concentration shape is "
                 f"{added_concentration.shape}."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
         concentration += added_concentration
         return (distribution, concentration)
@@ -189,9 +183,6 @@ class MassBasedMovingBin(_DistributionMixin):
             "Colliding pairs in MassBasedMovingBin is not physically"
             + "meaningful, change dyanmic or particle strategy."
         )
-        import logging
-        logger = logging.getLogger("particula")
-        logger.warning(message)
         raise NotImplementedError(message)
 
 # ──────────────────────────────────────────────────────────────────────
@@ -281,9 +272,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
                 f"{distribution.shape} and the added distribution shape is "
                 f"{added_distribution.shape}."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
         if concentration.shape != added_concentration.shape:
             message = (
@@ -293,9 +281,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
                 f"{concentration.shape} and the added concentration shape is "
                 f"{added_concentration.shape}."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
         concentration += added_concentration
         return (distribution, concentration)
@@ -305,9 +290,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
             "Colliding pairs in RadiiBasedMovingBin is not physically"
             + "meaningful, change dyanmic or particle strategy."
         )
-        import logging
-        logger = logging.getLogger("particula")
-        logger.warning(message)
         raise NotImplementedError(message)
 
 # ──────────────────────────────────────────────────────────────────────
@@ -400,9 +382,6 @@ class SpeciatedMassMovingBin(_DistributionMixin):
                 f"{distribution.shape} and the added distribution shape is "
                 f"{added_distribution.shape}."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
         if concentration.shape != added_concentration.shape:
             message = (
@@ -412,9 +391,6 @@ class SpeciatedMassMovingBin(_DistributionMixin):
                 f"{concentration.shape} and the added concentration shape is "
                 f"{added_concentration.shape}."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
         concentration += added_concentration
         return (distribution, concentration)
@@ -534,9 +510,6 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
                 + " the added concentration should be all ones or all the same"
                 + " value of 1/volume."
             )
-            import logging
-            logger = logging.getLogger("particula")
-            logger.error(message)
             raise ValueError(message)
 
         concentration = np.divide(
