@@ -43,9 +43,9 @@ class _ActivityMixin:
     ) -> Union[float, NDArray[np.float64]]:
         """Return surface vapour pressure given p⁰ and concentration."""
         if np.ndim(pure_vapor_pressure) == 0:                 # scalar case
-            return self._p_surface_func(
-                float(pure_vapor_pressure),
-                self._activity_func(float(mass_concentration)),
+            # do the computation directly in Python to stay outside Taichi
+            return float(pure_vapor_pressure) * float(
+                self._activity_func(float(mass_concentration))
             )
 
         # vector case – reuse activity kernel then bulk multiply
@@ -64,8 +64,7 @@ class ActivityIdealMolar(_ActivityMixin):
         self.molar_mass = ti.field(ti.f64, shape=())
         self.molar_mass[None] = float(np.asarray(molar_mass))
 
-    @ti.func
-    def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
+    def _activity_func(self, mass_conc: float) -> float:
         return 1.0
 
     @ti.kernel
@@ -94,8 +93,7 @@ class ActivityIdealMolar(_ActivityMixin):
 class ActivityIdealMass(_ActivityMixin):
     """Taichi drop-in for ActivityIdealMass (parameter-free)."""
 
-    @ti.func
-    def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
+    def _activity_func(self, mass_conc: float) -> float:
         return 1.0
 
     @ti.kernel
@@ -126,8 +124,7 @@ class ActivityIdealVolume(_ActivityMixin):
         self.density = ti.field(ti.f64, shape=())
         self.density[None] = float(np.asarray(density))
 
-    @ti.func
-    def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
+    def _activity_func(self, mass_conc: float) -> float:
         return 1.0
 
     @ti.kernel
@@ -178,8 +175,7 @@ class ActivityKappaParameter(_ActivityMixin):
         self.water_index = ti.field(dtype=ti.i32, shape=())
         self.water_index[None] = int(water_index)
 
-    @ti.func
-    def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
+    def _activity_func(self, mass_conc: float) -> float:
         return 1.0
 
     @ti.kernel
