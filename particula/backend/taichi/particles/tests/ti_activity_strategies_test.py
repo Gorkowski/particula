@@ -1,4 +1,4 @@
-import taichi as ti, numpy as np, particula as par
+import numpy as np, particula as par
 from particula.backend.taichi.particles.ti_activity_strategies import (
     ActivityIdealMolar as TiMolar,
     ActivityIdealMass  as TiMass,
@@ -6,6 +6,7 @@ from particula.backend.taichi.particles.ti_activity_strategies import (
     ActivityKappaParameter as TiKap,
 )
 
+import taichi as ti
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 

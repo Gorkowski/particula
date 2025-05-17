@@ -6,16 +6,7 @@ from typing import Union
 from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
-# ─── element-wise & vector helpers already coded in ti_activity_module ──────
-from particula.backend.taichi.particles.properties import (
-    kget_ideal_activity_molar,
-    fget_ideal_activity_molar,
-    fget_ideal_activity_mass,
-    kget_ideal_activity_mass,
-    fget_ideal_activity_volume,
-    kget_ideal_activity_volume,
-    kget_kappa_activity,
-    fget_water_activity_from_kappa_row,
+from particula.backend.taichi.particles.properties.ti_activity_module import (
     fget_surface_partial_pressure,
     kget_surface_partial_pressure,
 )
@@ -73,22 +64,23 @@ class ActivityIdealMolar(_ActivityMixin):
         self.molar_mass = ti.field(ti.f64, shape=())
         self.molar_mass[None] = float(np.asarray(molar_mass))
 
-    # element-wise
     @ti.func
     def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
-        return fget_ideal_activity_molar(mass_conc, self.molar_mass[None])
+        return 1.0
 
-    # vectorised
     @ti.kernel
     def _activity_kernel(
         self,
-        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        result:             ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        mol = self.molar_mass[None]
-        kget_ideal_activity_molar(mass_concentration, ti.static(mol), result)
+        mm = self.molar_mass[None]
+        tot = ti.f64(0.0)
+        for i in range(mc.shape[0]):
+            tot += mc[i] / mm
+        for i in range(mc.shape[0]):
+            out[i] = 0.0 if tot == 0.0 else (mc[i] / mm) / tot
 
-    # public
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
             return self._activity_func(float(mass_concentration))
@@ -104,15 +96,19 @@ class ActivityIdealMass(_ActivityMixin):
 
     @ti.func
     def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
-        return fget_ideal_activity_mass(mass_conc)
+        return 1.0
 
     @ti.kernel
     def _activity_kernel(
         self,
-        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        result:             ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        kget_ideal_activity_mass(mass_concentration, result)
+        tot = ti.f64(0.0)
+        for i in range(mc.shape[0]):
+            tot += mc[i]
+        for i in range(mc.shape[0]):
+            out[i] = 0.0 if tot == 0.0 else mc[i] / tot
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
@@ -132,16 +128,20 @@ class ActivityIdealVolume(_ActivityMixin):
 
     @ti.func
     def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
-        return fget_ideal_activity_volume(mass_conc, self.density[None])
+        return 1.0
 
     @ti.kernel
     def _activity_kernel(
         self,
-        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        result:             ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         rho = self.density[None]
-        kget_ideal_activity_volume(mass_concentration, ti.static(rho), result)
+        tot = ti.f64(0.0)
+        for i in range(mc.shape[0]):
+            tot += mc[i] / rho
+        for i in range(mc.shape[0]):
+            out[i] = 0.0 if tot == 0.0 else (mc[i] / rho) / tot
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
@@ -178,28 +178,52 @@ class ActivityKappaParameter(_ActivityMixin):
         self.water_index = ti.field(dtype=ti.i32, shape=())
         self.water_index[None] = int(water_index)
 
-    # element-wise (rarely used – kept for completeness)
     @ti.func
-    def _activity_func(self, mass_conc: ti.f64) -> ti.f64:      # scalar fall-back
-        return fget_kappa_activity(
-            mass_conc,
-            self.kappa, self.density, self.molar_mass,
-            self.water_index[None],
-        )
+    def _activity_func(self, mass_conc: ti.f64) -> ti.f64:
+        return 1.0
 
-    # vectorised
     @ti.kernel
     def _activity_kernel(
         self,
-        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        result:             ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        kget_kappa_activity(
-            mass_concentration,
-            self.kappa, self.density, self.molar_mass,
-            self.water_index[None],
-            result,
-        )
+        ns = mc.shape[0]
+        wi = self.water_index[None]
+
+        # mole fractions -------------------------------------------------
+        mol_sum = ti.f64(0.0)
+        for s in range(ns):
+            mol_sum += mc[s] / self.molar_mass[s]
+        for s in range(ns):
+            mol = mc[s] / self.molar_mass[s]
+            out[s] = 0.0 if mol_sum == 0.0 else mol / mol_sum
+
+        # κ-Köhler water activity ---------------------------------------
+        vol_sum = ti.f64(0.0)
+        for s in range(ns):
+            vol_sum += mc[s] / self.density[s]
+
+        water_vf = ti.f64(0.0)
+        if vol_sum > 0.0:
+            water_vf = (mc[wi] / self.density[wi]) / vol_sum
+        sol_vf = 1.0 - water_vf
+
+        kappa_mix = ti.f64(0.0)
+        if sol_vf > 0.0:
+            if ns == 2:
+                kappa_mix = self.kappa[1 - wi]
+            else:
+                for s in range(ns):
+                    if s != wi:
+                        vf_s = (mc[s] / self.density[s]) / vol_sum
+                        kappa_mix += (vf_s / sol_vf) * self.kappa[s]
+
+        vol_term = 0.0
+        if water_vf > 0.0:
+            vol_term = kappa_mix * sol_vf / water_vf
+
+        out[wi] = 0.0 if water_vf == 0.0 else 1.0 / (1.0 + vol_term)
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
