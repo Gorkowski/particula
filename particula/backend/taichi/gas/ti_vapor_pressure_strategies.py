@@ -16,7 +16,8 @@ ti.init(default_fp=ti.f64)
 GAS_CONSTANT = 8.31446261815324  # J/(mol·K)
 
 
-class _VaporPressureMixin:          # NO @ti.data_oriented here
+@ti.data_oriented
+class _VaporPressureMixin:
     """Shared Taichi helpers for vapor-pressure strategies."""
 
     # ── pure-vapor-pressure ────────────────────────────────────────────────

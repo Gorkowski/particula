@@ -5,7 +5,7 @@ import/initalize taichi
 """
 
 import taichi as ti
-ti.init(arch=ti.cpu)        # safe default; let users override elsewhere
+ti.init(arch=ti.cpu, default_fp=ti.f64)        # safe default; float64 everywhere
 
 from . import dynamics       # noqa: F401
 from . import particles      # noqa: F401
