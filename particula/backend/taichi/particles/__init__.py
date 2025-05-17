@@ -23,6 +23,13 @@ from .ti_distribution_strategies import (
     ParticleResolvedSpeciatedMass as TiParticleResolvedSpeciatedMass,
 )
 
+# ─── Surface strategies ───────────────────────────────────────────
+from .ti_surface_strategies import (
+    SurfaceStrategyMolar   as TiSurfaceStrategyMolar,
+    SurfaceStrategyMass    as TiSurfaceStrategyMass,
+    SurfaceStrategyVolume  as TiSurfaceStrategyVolume,
+)
+
 __all__ = [
     "TiActivityIdealMolar",
     "TiActivityIdealMass",
@@ -33,3 +40,8 @@ __all__ = [
     "TiSpeciatedMassMovingBin",
     "TiParticleResolvedSpeciatedMass",
 ]
+__all__.extend([
+    "TiSurfaceStrategyMolar",
+    "TiSurfaceStrategyMass",
+    "TiSurfaceStrategyVolume",
+])
