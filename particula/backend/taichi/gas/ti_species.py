@@ -74,7 +74,8 @@ class GasSpecies:
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in ti.static(range(self.n_species)):
-            result[i] = self.strategies[i]._pure_vp_func(temperature)
+            strategy = ti.static(self.strategies[i])
+            result[i] = strategy._pure_vp_func(temperature)
 
     @ti.kernel
     def _partial_pressure_kernel(                  # vectorised
@@ -82,7 +83,8 @@ class GasSpecies:
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in ti.static(range(self.n_species)):
-            result[i] = self.strategies[i]._partial_pressure_func(
+            strategy = ti.static(self.strategies[i])
+            result[i] = strategy._partial_pressure_func(
                 self.concentration[i],
                 self.molar_mass[i],
                 temperature,
@@ -94,8 +96,9 @@ class GasSpecies:
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in ti.static(range(self.n_species)):
-            vp = self.strategies[i]._pure_vp_func(temperature)
-            pp = self.strategies[i]._partial_pressure_func(
+            strategy = ti.static(self.strategies[i])
+            vp = strategy._pure_vp_func(temperature)
+            pp = strategy._partial_pressure_func(
                 self.concentration[i],
                 self.molar_mass[i],
                 temperature,
@@ -108,8 +111,9 @@ class GasSpecies:
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in ti.static(range(self.n_species)):
-            vp = self.strategies[i]._pure_vp_func(temperature)
-            result[i] = self.strategies[i]._concentration_func(
+            strategy = ti.static(self.strategies[i])
+            vp = strategy._pure_vp_func(temperature)
+            result[i] = strategy._concentration_func(
                 vp,
                 self.molar_mass[i],
                 temperature,

@@ -3,12 +3,18 @@ ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 from particula.gas.species import GasSpecies as PySpecies
 from particula.backend.taichi.gas.ti_species import GasSpecies as TiSpecies
-from particula.gas.vapor_pressure_strategies import ConstantVaporPressureStrategy
+from particula.gas.vapor_pressure_strategies import (
+    ConstantVaporPressureStrategy as PyVP,
+)
+from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
+    ConstantVaporPressureStrategy as TiVP,
+)
 
 def test_scalar_species_partial_pressure():
-    vp = ConstantVaporPressureStrategy(2330.0)
-    py = PySpecies("H2O", 0.018, vp, True, 1e-3)
-    ti_species = TiSpecies("H2O", 0.018, vp, True, 1e-3)
+    vp_py  = PyVP(2330.0)
+    vp_ti  = TiVP(2330.0)
+    py         = PySpecies("H2O", 0.018, vp_py, True, 1e-3)
+    ti_species = TiSpecies("H2O", 0.018, vp_ti, True, 1e-3)
 
     T = 298.15
     np.testing.assert_allclose(
@@ -23,13 +29,14 @@ def test_vector_species_partial_pressure():
     molar_masses   = np.array([0.018, 0.044])
     concentrations = np.array([1e-3, 2e-3])
 
-    shared_strategy = ConstantVaporPressureStrategy(2_330.0)  # one instance
+    shared_strategy_py = PyVP(2_330.0)
+    shared_strategy_ti = TiVP(2_330.0)
 
     py_species = PySpecies(
-        names, molar_masses, shared_strategy, True, concentrations
+        names, molar_masses, shared_strategy_py, True, concentrations
     )
     ti_species = TiSpecies(
-        names, molar_masses, shared_strategy, True, concentrations
+        names, molar_masses, shared_strategy_ti, True, concentrations
     )
 
     T = 298.15  # K
@@ -50,16 +57,14 @@ def test_vector_species_list_strategy():
     molar_masses   = np.array([0.018, 0.044])
     concentrations = np.array([1e-3, 2e-3])
 
-    strategies = [
-        ConstantVaporPressureStrategy(2_330.0),     # for H2O
-        ConstantVaporPressureStrategy(101_325.0),   # for CO2
-    ]
+    strategies_py = [PyVP(2_330.0), PyVP(101_325.0)]
+    strategies_ti = [TiVP(2_330.0), TiVP(101_325.0)]
 
     py_species = PySpecies(
-        names, molar_masses, strategies, True, concentrations
+        names, molar_masses, strategies_py, True, concentrations
     )
     ti_species = TiSpecies(
-        names, molar_masses, strategies, True, concentrations
+        names, molar_masses, strategies_ti, True, concentrations
     )
 
     T = 298.15  # K
