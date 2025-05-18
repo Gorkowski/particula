@@ -69,13 +69,13 @@ def _check_kernels_vs_wrappers(strategy) -> None:
         strategy.pure_vapor_pressure(_TEMPERATURE),
     )
     _assert_close(  # partial pressure
-        strategy.partial_pressure(
+        strategy.kget_partial_pressure(
             _CONCENTRATION, _MOLAR_MASS, _TEMPERATURE
         ),
         strategy.partial_pressure(_CONCENTRATION, _MOLAR_MASS, _TEMPERATURE),
     )
     _assert_close(  # concentration
-        strategy.concentration(
+        strategy.kget_concentration_from_pressure(
             strategy.pure_vapor_pressure(_TEMPERATURE),
             _MOLAR_MASS,
             _TEMPERATURE,
