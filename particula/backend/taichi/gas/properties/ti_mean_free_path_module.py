@@ -1,5 +1,6 @@
 import taichi as ti
 import numpy as np
+from typing import Optional, Union
 
 from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
@@ -51,7 +52,7 @@ def fget_molecule_mean_free_path(
     )
 
 @ti.kernel
-def kget_molecule_mean_free_path(          # noqa: N802
+def kget_molecule_mean_free_path(
     molar_mass: ti.types.ndarray(dtype=ti.f64, ndim=1),
     temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
     pressure: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -80,11 +81,11 @@ def kget_molecule_mean_free_path(          # noqa: N802
 
 @register("get_molecule_mean_free_path", backend="taichi")
 def get_molecule_mean_free_path_taichi(
-    molar_mass,
-    temperature,
-    pressure,
-    dynamic_viscosity=None,
-):
+    molar_mass: Union[float, np.ndarray],
+    temperature: Union[float, np.ndarray],
+    pressure: Union[float, np.ndarray],
+    dynamic_viscosity: Optional[Union[float, np.ndarray]] = None,
+) -> Union[float, np.ndarray]:
     """
     Vectorised Taichi implementation of the molecular mean free path.
 
@@ -100,11 +101,14 @@ def get_molecule_mean_free_path_taichi(
         - float | ndarray : λ [m].
 
     Examples:
-        ```py
+        ```py title="Taichi mean free path"
         from particula.backend.dispatch_register import use_backend
+        from particula.backend.taichi.gas.properties.ti_mean_free_path_module \
+            import get_molecule_mean_free_path_taichi
+
         use_backend("taichi")
 
-        λ = get_molecule_mean_free_path(
+        λ = get_molecule_mean_free_path_taichi(
             molar_mass=0.02897,
             temperature=298.15,
             pressure=101_325.0,
@@ -163,3 +167,9 @@ def get_molecule_mean_free_path_taichi(
         if mean_free_path_array.size == 1
         else mean_free_path_array
     )
+
+__all__ = [
+    "fget_molecule_mean_free_path",
+    "kget_molecule_mean_free_path",
+    "get_molecule_mean_free_path_taichi",
+]
