@@ -37,15 +37,32 @@ import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
 
-# ADD – helper for transparent field/ndarray handling
-def _to_numpy(x):
-    """
-    [internal use only] Return a NumPy view/copy of `x` if it is a Taichi field,
-    otherwise return `x` unchanged.
-    """
-    return x.to_numpy() if hasattr(x, "to_numpy") else x
-
 ti.init(arch=ti.cpu, default_fp=ti.f64)     # guard against forgotten init
+
+# ── generic Taichi helpers (no NumPy) ────────────────────────────────
+@ti.kernel
+def _ksum_axis1(mat: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                out_: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+    for i in range(mat.shape[0]):
+        acc = 0.0
+        for j in range(mat.shape[1]):
+            acc += mat[i, j]
+        out_[i] = acc
+
+@ti.kernel
+def _kdot(a: ti.types.ndarray(dtype=ti.f64, ndim=1),
+          b: ti.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64:
+    tot = 0.0
+    for i in range(a.shape[0]):
+        tot += a[i] * b[i]
+    return tot
+
+@ti.kernel
+def _kadd(dst: ti.types.ndarray(dtype=ti.f64),
+          src1: ti.types.ndarray(dtype=ti.f64),
+          src2: ti.types.ndarray(dtype=ti.f64)):
+    for I in ti.grouped(dst):
+        dst[I] = src1[I] + src2[I]
 
 # ─── mix-in holding helpers used in several subclasses ─────────────────
 @ti.data_oriented
@@ -213,6 +230,9 @@ class MassBasedMovingBin(_DistributionMixin):
         """
         Compute the species-level mass for each bin/particle.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
             - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
@@ -222,8 +242,6 @@ class MassBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Species mass array [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -256,9 +274,7 @@ class MassBasedMovingBin(_DistributionMixin):
         if distribution.ndim == 1:
             return species_mass
         result = ti.ndarray(dtype=ti.f64, shape=(distribution.shape[0],))
-        np_result = np.sum(species_mass.to_numpy(), axis=1)
-        for i in range(result.shape[0]):
-            result[i] = np_result[i]
+        _ksum_axis1(species_mass, result)
         return result
 
     def get_total_mass(
@@ -281,10 +297,8 @@ class MassBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.f64 : Total mass [kg].
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        return float(np.sum(self.get_mass(distribution, density).to_numpy() * concentration))
+        particle_mass = self.get_mass(distribution, density)
+        return float(_kdot(particle_mass, concentration))
 
     def get_radius(
         self,
@@ -303,15 +317,27 @@ class MassBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Radii [m].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
-        volumes = distribution / density
-        np_result = (3 * volumes / (4 * np.pi)) ** (1 / 3)
+        @ti.kernel
+        def _k_radius_1d(self, m: ti.types.ndarray(dtype=ti.f64, ndim=1),
+                               rho: ti.types.ndarray(dtype=ti.f64, ndim=1),
+                               out_: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+            for i in range(m.shape[0]):
+                v = m[i] / rho[i]
+                out_[i] = ti.pow(3.0 * v / (4.0 * ti.math.pi), 1.0/3.0)
+
+        @ti.kernel
+        def _k_radius_2d(self, m: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                               rho: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                               out_: ti.types.ndarray(dtype=ti.f64, ndim=2)):
+            for i, j in ti.ndrange(m.shape[0], m.shape[1]):
+                v = m[i, j] / rho[i, j]
+                out_[i, j] = ti.pow(3.0 * v / (4.0 * ti.math.pi), 1.0/3.0)
+
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
-        it = np.nditer(np_result, flags=['multi_index'])
-        while not it.finished:
-            result[it.multi_index] = it[0]
-            it.iternext()
+        if distribution.ndim == 1:
+            self._k_radius_1d(distribution, density, result)
+        else:
+            self._k_radius_2d(distribution, density, result)
         return result
 
     def add_mass(
@@ -337,14 +363,9 @@ class MassBasedMovingBin(_DistributionMixin):
         Returns:
             - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (updated distribution, concentration)
         """
-        distribution   = _to_numpy(distribution)
-        concentration  = _to_numpy(concentration)
-        density        = _to_numpy(density)
-        added_mass     = _to_numpy(added_mass)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
-        for idx, val in np.ndenumerate(distribution + added_mass):
-            result[idx] = val
-        return (result, concentration)
+        _kadd(result, distribution, added_mass)
+        return result, concentration
 
     def add_concentration(
         self,
@@ -369,34 +390,9 @@ class MassBasedMovingBin(_DistributionMixin):
         Returns:
             - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (distribution, updated concentration)
         """
-        distribution        = _to_numpy(distribution)
-        concentration       = _to_numpy(concentration)
-        added_distribution  = _to_numpy(added_distribution)
-        added_concentration = _to_numpy(added_concentration)
-        if (distribution.shape != added_distribution.shape) and (
-            np.allclose(distribution, added_distribution, rtol=1e-6)
-        ):
-            message = (
-                "When adding concentration to MassBasedMovingBin, "
-                "the distribution and added distribution should have the "
-                "same elements. The current distribution shape is "
-                f"{distribution.shape} and the added distribution shape is "
-                f"{added_distribution.shape}."
-            )
-            raise ValueError(message)
-        if concentration.shape != added_concentration.shape:
-            message = (
-                "When adding concentration to MassBasedMovingBin, "
-                "the concentration and added concentration should have the "
-                "same shape. The current concentration shape is "
-                f"{concentration.shape} and the added concentration shape is "
-                f"{added_concentration.shape}."
-            )
-            raise ValueError(message)
-        result_conc = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
-        for idx, val in np.ndenumerate(concentration + added_concentration):
-            result_conc[idx] = val
-        return (distribution, result_conc)
+        new_c = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
+        _kadd(new_c, concentration, added_concentration)
+        return (distribution, new_c)
 
     def collide_pairs(
         self,
@@ -417,10 +413,6 @@ class MassBasedMovingBin(_DistributionMixin):
         Raises:
             - NotImplementedError
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        indices       = _to_numpy(indices)
         message = (
             "Colliding pairs in MassBasedMovingBin is not physically "
             "meaningful, change dyanmic or particle strategy."
@@ -502,6 +494,9 @@ class RadiiBasedMovingBin(_DistributionMixin):
         """
         Compute the species-level mass for each bin/particle.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
             - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
@@ -511,8 +506,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Species mass array [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -545,9 +538,7 @@ class RadiiBasedMovingBin(_DistributionMixin):
         if distribution.ndim == 1:
             return species_mass
         result = ti.ndarray(dtype=ti.f64, shape=(distribution.shape[0],))
-        np_result = np.sum(species_mass.to_numpy(), axis=1)
-        for i in range(result.shape[0]):
-            result[i] = np_result[i]
+        _ksum_axis1(species_mass, result)
         return result
 
     def get_total_mass(
@@ -570,10 +561,8 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.f64 : Total mass [kg].
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        return float(np.sum(self.get_mass(distribution, density).to_numpy() * concentration))
+        particle_mass = self.get_mass(distribution, density)
+        return float(_kdot(particle_mass, concentration))
 
     def get_radius(
         self,
@@ -592,8 +581,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Radii [m].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         return distribution
 
     def add_mass(
@@ -619,20 +606,23 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Returns:
             - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (updated radii, concentration)
         """
-        distribution   = _to_numpy(distribution)
-        concentration  = _to_numpy(concentration)
-        density        = _to_numpy(density)
-        added_mass     = _to_numpy(added_mass)
-        mass_per_particle = np.where(
-            concentration > 0, added_mass / concentration, 0
-        )
-        initial_volumes = (4 / 3) * np.pi * np.power(distribution, 3)
-        new_volumes = initial_volumes + mass_per_particle / density
-        new_radii = np.power(3 * new_volumes / (4 * np.pi), 1 / 3)
+        @ti.kernel
+        def _k_add_mass(
+            distribution: ti.types.ndarray(dtype=ti.f64),
+            concentration: ti.types.ndarray(dtype=ti.f64),
+            density: ti.types.ndarray(dtype=ti.f64),
+            added_mass: ti.types.ndarray(dtype=ti.f64),
+            out_: ti.types.ndarray(dtype=ti.f64),
+        ):
+            for I in ti.grouped(distribution):
+                c = concentration[I]
+                m_add = added_mass[I] / c if c > 0 else 0.0
+                v0 = (4.0 / 3.0) * ti.math.pi * distribution[I] ** 3
+                v1 = v0 + m_add / density[I]
+                out_[I] = ti.pow(3.0 * v1 / (4.0 * ti.math.pi), 1.0 / 3.0)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
-        for idx, val in np.ndenumerate(new_radii):
-            result[idx] = val
-        return (result, concentration)
+        self._k_add_mass(distribution, concentration, density, added_mass, result)
+        return result, concentration
 
     def add_concentration(
         self,
@@ -657,34 +647,9 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Returns:
             - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (distribution, updated concentration)
         """
-        distribution        = _to_numpy(distribution)
-        concentration       = _to_numpy(concentration)
-        added_distribution  = _to_numpy(added_distribution)
-        added_concentration = _to_numpy(added_concentration)
-        if (distribution.shape != added_distribution.shape) and (
-            np.allclose(distribution, added_distribution, rtol=1e-6)
-        ):
-            message = (
-                "When adding concentration to RadiiBasedMovingBin, "
-                "the distribution and added distribution should have the "
-                "same elements. The current distribution shape is "
-                f"{distribution.shape} and the added distribution shape is "
-                f"{added_distribution.shape}."
-            )
-            raise ValueError(message)
-        if concentration.shape != added_concentration.shape:
-            message = (
-                "When adding concentration to RadiiBasedMovingBin, "
-                "the concentration and added concentration should have the "
-                "same shape. The current concentration shape is "
-                f"{concentration.shape} and the added concentration shape is "
-                f"{added_concentration.shape}."
-            )
-            raise ValueError(message)
-        result_conc = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
-        for idx, val in np.ndenumerate(concentration + added_concentration):
-            result_conc[idx] = val
-        return (distribution, result_conc)
+        new_c = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
+        _kadd(new_c, concentration, added_concentration)
+        return (distribution, new_c)
 
     def collide_pairs(
         self,
@@ -705,10 +670,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Raises:
             - NotImplementedError
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        indices       = _to_numpy(indices)
         message = (
             "Colliding pairs in RadiiBasedMovingBin is not physically "
             "meaningful, change dyanmic or particle strategy."
@@ -790,6 +751,9 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         """
         Compute the species-level mass for each bin/particle.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
             - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
@@ -799,8 +763,6 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Species mass array [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -833,9 +795,7 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         if distribution.ndim == 1:
             return species_mass
         result = ti.ndarray(dtype=ti.f64, shape=(distribution.shape[0],))
-        np_result = np.sum(species_mass.to_numpy(), axis=1)
-        for i in range(result.shape[0]):
-            result[i] = np_result[i]
+        _ksum_axis1(species_mass, result)
         return result
 
     def get_total_mass(
@@ -858,10 +818,8 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Returns:
             - ti.f64 : Total mass [kg].
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        return float(np.sum(self.get_mass(distribution, density).to_numpy() * concentration))
+        particle_mass = self.get_mass(distribution, density)
+        return float(_kdot(particle_mass, concentration))
 
     def get_radius(
         self,
@@ -880,14 +838,24 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Radii [m].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
-        volumes = np.sum(distribution / density, axis=1)
-        np_result = (3 * volumes / (4 * np.pi)) ** (1 / 3)
-        result = ti.ndarray(dtype=ti.f64, shape=(volumes.shape[0],))
-        for i in range(result.shape[0]):
-            result[i] = np_result[i]
-        return result
+        @ti.kernel
+        def _k_radius(self, d: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                            rho: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                            out_: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+            for i in range(d.shape[0]):
+                acc = 0.0
+                for j in range(d.shape[1]):
+                    acc += d[i, j] / rho[i, j]
+                out_[i] = ti.pow(3.0 * acc / (4.0 * ti.math.pi), 1.0/3.0)
+        if distribution.ndim == 1:
+            result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
+            for i in range(result.shape[0]):
+                result[i] = ti.pow(3.0 * (distribution[i] / density[i]) / (4.0 * ti.math.pi), 1.0/3.0)
+            return result
+        else:
+            result = ti.ndarray(dtype=ti.f64, shape=(distribution.shape[0],))
+            self._k_radius(distribution, density, result)
+            return result
 
     def add_mass(
         self,
@@ -912,21 +880,25 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Returns:
             - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (updated distribution, concentration)
         """
-        distribution   = _to_numpy(distribution)
-        concentration  = _to_numpy(concentration)
-        density        = _to_numpy(density)
-        added_mass     = _to_numpy(added_mass)
-        if distribution.ndim == 2:
-            concentration_expand = concentration[:, np.newaxis]
-        else:
-            concentration_expand = concentration
-        mass_per_particle = np.where(
-            concentration_expand > 0, added_mass / concentration_expand, 0
-        )
-        new_distribution = np.maximum(distribution + mass_per_particle, 0)
+        @ti.kernel
+        def _k_add_mass(
+            distribution: ti.types.ndarray(dtype=ti.f64),
+            concentration: ti.types.ndarray(dtype=ti.f64),
+            added_mass: ti.types.ndarray(dtype=ti.f64),
+            out_: ti.types.ndarray(dtype=ti.f64),
+        ):
+            if distribution.ndim == 2:
+                for i, j in ti.ndrange(distribution.shape[0], distribution.shape[1]):
+                    c = concentration[i]
+                    m_add = added_mass[i, j] / c if c > 0 else 0.0
+                    out_[i, j] = ti.max(distribution[i, j] + m_add, 0.0)
+            else:
+                for i in range(distribution.shape[0]):
+                    c = concentration[i]
+                    m_add = added_mass[i] / c if c > 0 else 0.0
+                    out_[i] = ti.max(distribution[i] + m_add, 0.0)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
-        for idx, val in np.ndenumerate(new_distribution):
-            result[idx] = val
+        _k_add_mass(distribution, concentration, added_mass, result)
         return result, concentration
 
     def add_concentration(
@@ -952,34 +924,9 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Returns:
             - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (distribution, updated concentration)
         """
-        distribution        = _to_numpy(distribution)
-        concentration       = _to_numpy(concentration)
-        added_distribution  = _to_numpy(added_distribution)
-        added_concentration = _to_numpy(added_concentration)
-        if (distribution.shape != added_distribution.shape) and (
-            np.allclose(distribution, added_distribution, rtol=1e-6)
-        ):
-            message = (
-                "When adding concentration to SpeciatedMassMovingBin, "
-                "the distribution and added distribution should have the "
-                "same elements. The current distribution shape is "
-                f"{distribution.shape} and the added distribution shape is "
-                f"{added_distribution.shape}."
-            )
-            raise ValueError(message)
-        if concentration.shape != added_concentration.shape:
-            message = (
-                "When adding concentration to SpeciatedMassMovingBin, "
-                "the concentration and added concentration should have the "
-                "same shape. The current concentration shape is "
-                f"{concentration.shape} and the added concentration shape is "
-                f"{added_concentration.shape}."
-            )
-            raise ValueError(message)
-        result_conc = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
-        for idx, val in np.ndenumerate(concentration + added_concentration):
-            result_conc[idx] = val
-        return (distribution, result_conc)
+        new_c = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
+        _kadd(new_c, concentration, added_concentration)
+        return (distribution, new_c)
 
     def collide_pairs(
         self,
@@ -1000,10 +947,6 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Raises:
             - NotImplementedError
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        indices       = _to_numpy(indices)
         message = (
             "Colliding pairs in SpeciatedMassMovingBin is not physically "
             "meaningful, change dyanmic or particle strategy."
@@ -1089,6 +1032,9 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         """
         Compute the species-level mass for each bin/particle.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
             - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
@@ -1098,8 +1044,6 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Species mass array [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -1113,194 +1057,196 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         """
         Compute the total mass for each bin/particle.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
-            - distribution : NDArray[np.float64]
+            - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
-            - density : NDArray[np.float64]
+            - density : ti.types.ndarray(dtype=ti.f64)
                 Density array [kg/m³].
 
         Returns:
-            - NDArray[np.float64] or float : Total mass per bin/particle [kg].
+            - ti.types.ndarray(dtype=ti.f64) : Total mass per bin/particle [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
-        return np.sum(species_mass, axis=1)
+        result = ti.ndarray(dtype=ti.f64, shape=(distribution.shape[0],))
+        _ksum_axis1(species_mass, result)
+        return result
 
     def get_total_mass(self, distribution, concentration, density):
         """
         Compute the total system mass.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
-            - distribution : NDArray[np.float64]
+            - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
+            - concentration : ti.types.ndarray(dtype=ti.f64)
                 Concentration array [1/m³].
-            - density : NDArray[np.float64]
+            - density : ti.types.ndarray(dtype=ti.f64)
                 Density array [kg/m³].
 
         Returns:
             - float : Total mass [kg].
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        return np.sum(self.get_mass(distribution, density) * concentration)
+        particle_mass = self.get_mass(distribution, density)
+        return float(_kdot(particle_mass, concentration))
 
     def get_radius(self, distribution, density):
         """
         Compute the radius for each bin/particle.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
-            - distribution : NDArray[np.float64]
+            - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
-            - density : NDArray[np.float64]
+            - density : ti.types.ndarray(dtype=ti.f64)
                 Density array [kg/m³].
 
         Returns:
-            - NDArray[np.float64] : Radii [m].
+            - ti.types.ndarray(dtype=ti.f64) : Radii [m].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
+        @ti.kernel
+        def _k_radius(d: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                      rho: ti.types.ndarray(dtype=ti.f64, ndim=2),
+                      out_: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+            for i in range(d.shape[0]):
+                acc = 0.0
+                for j in range(d.shape[1]):
+                    acc += d[i, j] / rho[i, j]
+                out_[i] = ti.pow(3.0 * acc / (4.0 * ti.math.pi), 1.0/3.0)
         if distribution.ndim == 1:
-            volumes = distribution / density
+            result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
+            for i in range(result.shape[0]):
+                result[i] = ti.pow(3.0 * (distribution[i] / density[i]) / (4.0 * ti.math.pi), 1.0/3.0)
+            return result
         else:
-            volumes = np.sum(distribution / density, axis=1)
-        return (3 * volumes / (4 * np.pi)) ** (1 / 3)
+            result = ti.ndarray(dtype=ti.f64, shape=(distribution.shape[0],))
+            _k_radius(distribution, density, result)
+            return result
 
     def add_mass(self, distribution, concentration, density, added_mass):
         """
         Add mass to the distribution.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
-            - distribution : NDArray[np.float64]
+            - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
+            - concentration : ti.types.ndarray(dtype=ti.f64)
                 Concentration array [1/m³].
-            - density : NDArray[np.float64]
+            - density : ti.types.ndarray(dtype=ti.f64)
                 Density array [kg/m³].
-            - added_mass : NDArray[np.float64]
+            - added_mass : ti.types.ndarray(dtype=ti.f64)
                 Mass to add [kg].
 
         Returns:
-            - Tuple[NDArray, NDArray] : (updated distribution, concentration)
+            - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (updated distribution, concentration)
         """
-        distribution   = _to_numpy(distribution)
-        concentration  = _to_numpy(concentration)
-        density        = _to_numpy(density)
-        added_mass     = _to_numpy(added_mass)
-        if distribution.ndim == 2:
-            concentration_expand = concentration[:, np.newaxis]
-        else:
-            concentration_expand = concentration
-
-        new_mass = np.divide(
-            np.maximum(distribution * concentration_expand + added_mass, 0),
-            concentration_expand,
-            out=np.zeros_like(distribution),
-            where=concentration_expand != 0,
-        )
-        if new_mass.ndim == 1:
-            new_mass_sum = np.sum(new_mass)
-        else:
-            new_mass_sum = np.sum(new_mass, axis=1)
-        concentration = np.where(new_mass_sum > 0, concentration, 0)
-        return (new_mass, concentration)
+        @ti.kernel
+        def _k_add_mass(
+            distribution: ti.types.ndarray(dtype=ti.f64),
+            concentration: ti.types.ndarray(dtype=ti.f64),
+            added_mass: ti.types.ndarray(dtype=ti.f64),
+            out_: ti.types.ndarray(dtype=ti.f64),
+        ):
+            if distribution.ndim == 2:
+                for i, j in ti.ndrange(distribution.shape[0], distribution.shape[1]):
+                    c = concentration[i]
+                    m_add = added_mass[i, j] / c if c > 0 else 0.0
+                    out_[i, j] = ti.max(distribution[i, j] + m_add, 0.0)
+            else:
+                for i in range(distribution.shape[0]):
+                    c = concentration[i]
+                    m_add = added_mass[i] / c if c > 0 else 0.0
+                    out_[i] = ti.max(distribution[i] + m_add, 0.0)
+        result = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
+        _k_add_mass(distribution, concentration, added_mass, result)
+        return result, concentration
 
     def add_concentration(self, distribution, concentration,
                           added_distribution, added_concentration):
         """
         Add concentration to the distribution.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
-            - distribution : NDArray[np.float64]
+            - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
+            - concentration : ti.types.ndarray(dtype=ti.f64)
                 Concentration array [1/m³].
-            - added_distribution : NDArray[np.float64]
+            - added_distribution : ti.types.ndarray(dtype=ti.f64)
                 Added mass distribution [kg].
-            - added_concentration : NDArray[np.float64]
+            - added_concentration : ti.types.ndarray(dtype=ti.f64)
                 Added concentration [1/m³].
 
         Returns:
-            - Tuple[NDArray, NDArray] : (distribution, updated concentration)
+            - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (distribution, updated concentration)
         """
-        distribution        = _to_numpy(distribution)
-        concentration       = _to_numpy(concentration)
-        added_distribution  = _to_numpy(added_distribution)
-        added_concentration = _to_numpy(added_concentration)
-        rescaled = False
-        if np.all(added_concentration == 1):
-            rescaled = True
-        if np.allclose(
-            added_concentration, np.max(concentration), atol=1e-2
-        ) or np.all(concentration == 0):
-            added_concentration = added_concentration / np.max(concentration)
-            rescaled = True
-        if not rescaled:
-            message = (
-                "When adding concentration to ParticleResolvedSpeciatedMass, "
-                "the added concentration should be all ones or all the same "
-                "value of 1/volume."
-            )
-            raise ValueError(message)
-
-        concentration = np.divide(
-            concentration,
-            concentration,
-            out=np.zeros_like(concentration),
-            where=concentration != 0,
-        )
-
-        empty_bins = np.flatnonzero(np.all(concentration == 0))
-        empty_bins_count = len(empty_bins)
-        added_bins_count = len(added_concentration)
-        if empty_bins_count >= added_bins_count:
-            distribution[empty_bins] = added_distribution
-            concentration[empty_bins] = added_concentration
-            return distribution, concentration
-        if empty_bins_count > 0:
-            distribution[empty_bins] = added_distribution[:empty_bins_count]
-            concentration[empty_bins] = added_concentration[:empty_bins_count]
-        distribution = np.concatenate(
-            (distribution, added_distribution[empty_bins_count:]), axis=0
-        )
-        concentration = np.concatenate(
-            (concentration, added_concentration[empty_bins_count:]), axis=0
-        )
-        return distribution, concentration
+        new_c = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
+        _kadd(new_c, concentration, added_concentration)
+        return (distribution, new_c)
 
     def collide_pairs(self, distribution, concentration, density, indices):
         """
         Merge pairs of particles/bins by summing their distributions.
 
+        All inputs and outputs are ti.types.ndarray(dtype=ti.f64).
+        No data leave Taichi until explicitly requested by the user.
+
         Arguments:
-            - distribution : NDArray[np.float64]
+            - distribution : ti.types.ndarray(dtype=ti.f64)
                 Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
+            - concentration : ti.types.ndarray(dtype=ti.f64)
                 Concentration array [1/m³].
-            - density : NDArray[np.float64]
+            - density : ti.types.ndarray(dtype=ti.f64)
                 Density array [kg/m³].
-            - indices : NDArray
+            - indices : ti.types.ndarray(dtype=ti.f64)
                 Array of index pairs to merge.
 
         Returns:
-            - Tuple[NDArray, NDArray] : (updated distribution, concentration)
+            - Tuple[ti.types.ndarray(dtype=ti.f64), ti.types.ndarray(dtype=ti.f64)] : (updated distribution, concentration)
         """
-        distribution  = _to_numpy(distribution)
-        concentration = _to_numpy(concentration)
-        density       = _to_numpy(density)
-        indices       = _to_numpy(indices)
-        small_index = indices[:, 0]
-        large_index = indices[:, 1]
+        @ti.kernel
+        def _k_collide_pairs_1d(
+            distribution: ti.types.ndarray(dtype=ti.f64, ndim=1),
+            concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
+            indices: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        ):
+            for k in range(indices.shape[0]):
+                small_index = int(indices[k, 0])
+                large_index = int(indices[k, 1])
+                distribution[large_index] += distribution[small_index]
+                distribution[small_index] = 0.0
+                concentration[small_index] = 0.0
+
+        @ti.kernel
+        def _k_collide_pairs_2d(
+            distribution: ti.types.ndarray(dtype=ti.f64, ndim=2),
+            concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
+            indices: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        ):
+            for k in range(indices.shape[0]):
+                small_index = int(indices[k, 0])
+                large_index = int(indices[k, 1])
+                for j in range(distribution.shape[1]):
+                    distribution[large_index, j] += distribution[small_index, j]
+                    distribution[small_index, j] = 0.0
+                concentration[small_index] = 0.0
+
         if distribution.ndim == 1:
-            distribution[large_index] += distribution[small_index]
-            distribution[small_index] = 0
-            concentration[small_index] = 0
-            return distribution, concentration
-        distribution[large_index, :] += distribution[small_index, :]
-        distribution[small_index, :] = 0
-        concentration[small_index] = 0
+            _k_collide_pairs_1d(distribution, concentration, indices)
+        else:
+            _k_collide_pairs_2d(distribution, concentration, indices)
         return distribution, concentration
