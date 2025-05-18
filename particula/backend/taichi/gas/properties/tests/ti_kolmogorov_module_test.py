@@ -2,6 +2,7 @@ import taichi as ti
 ti.init(arch=ti.cpu)
 
 import numpy as np
+import pytest
 from particula.gas.properties.kolmogorov_module import (
     get_kolmogorov_time,
     get_kolmogorov_length,
@@ -22,81 +23,46 @@ def _sample_data():
     turbulent_dissipation_array = np.array([0.1, 0.2])
     return kinematic_viscosity_array, turbulent_dissipation_array
 
-def test_ti_wrappers_parity():
-    kinematic_viscosity_array, turbulent_dissipation_array = _sample_data()
-    # Vector input
+@pytest.mark.parametrize(
+    ("ti_func", "py_func"),
+    [
+        (ti_get_kolmogorov_time,     get_kolmogorov_time),
+        (ti_get_kolmogorov_length,   get_kolmogorov_length),
+        (ti_get_kolmogorov_velocity, get_kolmogorov_velocity),
+    ],
+)
+def test_ti_wrappers_parity(ti_func, py_func):
+    kin_visc, turb_diss = _sample_data()
     np.testing.assert_allclose(
-        ti_get_kolmogorov_time(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        get_kolmogorov_time(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        rtol=1e-12, atol=0
-    )
-    np.testing.assert_allclose(
-        ti_get_kolmogorov_length(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        get_kolmogorov_length(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        rtol=1e-12, atol=0
-    )
-    np.testing.assert_allclose(
-        ti_get_kolmogorov_velocity(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        get_kolmogorov_velocity(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        rtol=1e-12, atol=0
+        ti_func(kin_visc, turb_diss),
+        py_func(kin_visc, turb_diss),
+        rtol=1e-12,
+        atol=0,
     )
 
 
-def test_ti_kernels_parity():
-    kinematic_viscosity_array, turbulent_dissipation_array = _sample_data()
-    n_values = kinematic_viscosity_array.size
-    kinematic_viscosity_field = ti.ndarray(dtype=ti.f64, shape=n_values)
-    turbulent_dissipation_field = ti.ndarray(dtype=ti.f64, shape=n_values)
-    kolmogorov_time_field = ti.ndarray(dtype=ti.f64, shape=n_values)
-    kolmogorov_length_field = ti.ndarray(dtype=ti.f64, shape=n_values)
-    kolmogorov_velocity_field = ti.ndarray(dtype=ti.f64, shape=n_values)
-    kinematic_viscosity_field.from_numpy(kinematic_viscosity_array)
-    turbulent_dissipation_field.from_numpy(turbulent_dissipation_array)
-    kget_kolmogorov_time(
-        kinematic_viscosity_field,
-        turbulent_dissipation_field,
-        kolmogorov_time_field
-    )
-    kget_kolmogorov_length(
-        kinematic_viscosity_field,
-        turbulent_dissipation_field,
-        kolmogorov_length_field
-    )
-    kget_kolmogorov_velocity(
-        kinematic_viscosity_field,
-        turbulent_dissipation_field,
-        kolmogorov_velocity_field
-    )
+@pytest.mark.parametrize(
+    ("kernel_func", "py_func"),
+    [
+        (kget_kolmogorov_time,     get_kolmogorov_time),
+        (kget_kolmogorov_length,   get_kolmogorov_length),
+        (kget_kolmogorov_velocity, get_kolmogorov_velocity),
+    ],
+)
+def test_ti_kernels_parity(kernel_func, py_func):
+    kin_visc_arr, turb_diss_arr = _sample_data()
+    n = kin_visc_arr.size
+    kin_field   = ti.ndarray(dtype=ti.f64, shape=n)
+    diss_field  = ti.ndarray(dtype=ti.f64, shape=n)
+    result_field = ti.ndarray(dtype=ti.f64, shape=n)
+    kin_field.from_numpy(kin_visc_arr)
+    diss_field.from_numpy(turb_diss_arr)
+
+    kernel_func(kin_field, diss_field, result_field)
+
     np.testing.assert_allclose(
-        kolmogorov_time_field.to_numpy(),
-        get_kolmogorov_time(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        rtol=1e-12, atol=0
-    )
-    np.testing.assert_allclose(
-        kolmogorov_length_field.to_numpy(),
-        get_kolmogorov_length(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        rtol=1e-12, atol=0
-    )
-    np.testing.assert_allclose(
-        kolmogorov_velocity_field.to_numpy(),
-        get_kolmogorov_velocity(
-            kinematic_viscosity_array, turbulent_dissipation_array
-        ),
-        rtol=1e-12, atol=0
+        result_field.to_numpy(),
+        py_func(kin_visc_arr, turb_diss_arr),
+        rtol=1e-12,
+        atol=0,
     )
