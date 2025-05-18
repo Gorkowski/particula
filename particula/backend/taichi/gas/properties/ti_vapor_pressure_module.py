@@ -8,47 +8,56 @@ _MMHG_TO_PA = 133.32238741499998
 # ── Antoine equation ──────────────────────────────────────────────
 @ti.func
 def fget_antoine_vapor_pressure(
-    a: ti.f64, b: ti.f64, c: ti.f64, temperature: ti.f64
+    constant_a: ti.f64,
+    constant_b: ti.f64,
+    constant_c: ti.f64,
+    temperature: ti.f64,
 ) -> ti.f64:
     """Element-wise Antoine vapor pressure (all ti.f64)."""
-    vapor_pressure_log = a - (b / (temperature - c))
+    vapor_pressure_log = constant_a - (constant_b / (temperature - constant_c))
     vapor_pressure = ti.pow(10.0, vapor_pressure_log)
     return vapor_pressure * _MMHG_TO_PA
 
 @ti.kernel
 def kget_antoine_vapor_pressure(
-    a: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    b: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    c: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    constant_a: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    constant_b: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    constant_c: ti.types.ndarray(dtype=ti.f64, ndim=1),
     temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(result.shape[0]):
         result[i] = fget_antoine_vapor_pressure(
-            a[i], b[i], c[i], temperature[i]
+            constant_a[i], constant_b[i], constant_c[i], temperature[i]
         )
 
 @register("get_antoine_vapor_pressure", backend="taichi")
-def ti_get_antoine_vapor_pressure(a, b, c, temperature):
+def ti_get_antoine_vapor_pressure(constant_a, constant_b, constant_c, temperature):
     """Taichi backend wrapper for Antoine vapor pressure."""
-    a_np, b_np, c_np, t_np = np.broadcast_arrays(
-        np.atleast_1d(a).astype(np.float64),
-        np.atleast_1d(b).astype(np.float64),
-        np.atleast_1d(c).astype(np.float64),
+    constant_a_np, constant_b_np, constant_c_np, temperature_np = np.broadcast_arrays(
+        np.atleast_1d(constant_a).astype(np.float64),
+        np.atleast_1d(constant_b).astype(np.float64),
+        np.atleast_1d(constant_c).astype(np.float64),
         np.atleast_1d(temperature).astype(np.float64),
     )
-    n = a_np.size
-    a_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    b_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    c_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    t_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a_ti.from_numpy(a_np.ravel())
-    b_ti.from_numpy(b_np.ravel())
-    c_ti.from_numpy(c_np.ravel())
-    t_ti.from_numpy(t_np.ravel())
-    kget_antoine_vapor_pressure(a_ti, b_ti, c_ti, t_ti, res_ti)
-    result_np = res_ti.to_numpy().reshape(a_np.shape)
+    n_elements = constant_a_np.size
+    constant_a_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    constant_b_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    constant_c_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    constant_a_ti.from_numpy(constant_a_np.ravel())
+    constant_b_ti.from_numpy(constant_b_np.ravel())
+    constant_c_ti.from_numpy(constant_c_np.ravel())
+    temperature_ti.from_numpy(temperature_np.ravel())
+    kget_antoine_vapor_pressure(
+        constant_a_ti,
+        constant_b_ti,
+        constant_c_ti,
+        temperature_ti,
+        result_ti,
+    )
+    result_np = result_ti.to_numpy().reshape(constant_a_np.shape)
     return result_np.item() if result_np.size == 1 else result_np
 
 # ── Clausius-Clapeyron equation ────────────────────────────────────
@@ -93,26 +102,26 @@ def ti_get_clausius_clapeyron_vapor_pressure(
     gas_constant=8.31446261815324,
 ):
     """Taichi backend wrapper for Clausius-Clapeyron vapor pressure."""
-    lh_np, ti_np, pi_np, t_np = np.broadcast_arrays(
+    latent_heat_np, temperature_initial_np, pressure_initial_np, temperature_np = np.broadcast_arrays(
         np.atleast_1d(latent_heat).astype(np.float64),
         np.atleast_1d(temperature_initial).astype(np.float64),
         np.atleast_1d(pressure_initial).astype(np.float64),
         np.atleast_1d(temperature).astype(np.float64),
     )
-    n = lh_np.size
-    lh_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    ti_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pi_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    t_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    lh_ti.from_numpy(lh_np.ravel())
-    ti_ti.from_numpy(ti_np.ravel())
-    pi_ti.from_numpy(pi_np.ravel())
-    t_ti.from_numpy(t_np.ravel())
+    n_elements = latent_heat_np.size
+    latent_heat_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_initial_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    pressure_initial_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    latent_heat_ti.from_numpy(latent_heat_np.ravel())
+    temperature_initial_ti.from_numpy(temperature_initial_np.ravel())
+    pressure_initial_ti.from_numpy(pressure_initial_np.ravel())
+    temperature_ti.from_numpy(temperature_np.ravel())
     kget_clausius_clapeyron_vapor_pressure(
-        lh_ti, ti_ti, pi_ti, t_ti, float(gas_constant), res_ti
+        latent_heat_ti, temperature_initial_ti, pressure_initial_ti, temperature_ti, float(gas_constant), result_ti
     )
-    result_np = res_ti.to_numpy().reshape(lh_np.shape)
+    result_np = result_ti.to_numpy().reshape(latent_heat_np.shape)
     return result_np.item() if result_np.size == 1 else result_np
 
 # ── Buck equation ────────────────────────────────────────────────────
@@ -121,15 +130,15 @@ def fget_buck_vapor_pressure(
     temperature: ti.f64,
 ) -> ti.f64:
     """Element-wise Buck vapor pressure (all ti.f64)."""
-    temp_c = temperature - 273.15
+    temperature_celsius = temperature - 273.15
     vapor_pressure = 0.0
-    if temp_c < 0.0:
+    if temperature_celsius < 0.0:
         vapor_pressure = (
-            6.1115 * ti.exp((23.036 - temp_c / 333.7) * temp_c / (279.82 + temp_c)) * 100.0
+            6.1115 * ti.exp((23.036 - temperature_celsius / 333.7) * temperature_celsius / (279.82 + temperature_celsius)) * 100.0
         )
     else:
         vapor_pressure = (
-            6.1121 * ti.exp((18.678 - temp_c / 234.5) * temp_c / (257.14 + temp_c)) * 100.0
+            6.1121 * ti.exp((18.678 - temperature_celsius / 234.5) * temperature_celsius / (257.14 + temperature_celsius)) * 100.0
         )
     return vapor_pressure
 
@@ -144,11 +153,11 @@ def kget_buck_vapor_pressure(
 @register("get_buck_vapor_pressure", backend="taichi")
 def ti_get_buck_vapor_pressure(temperature):
     """Taichi backend wrapper for Buck vapor pressure."""
-    t_np = np.atleast_1d(temperature).astype(np.float64)
-    n = t_np.size
-    t_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    t_ti.from_numpy(t_np.ravel())
-    kget_buck_vapor_pressure(t_ti, res_ti)
-    result_np = res_ti.to_numpy().reshape(t_np.shape)
+    temperature_np = np.atleast_1d(temperature).astype(np.float64)
+    n_elements = temperature_np.size
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_ti.from_numpy(temperature_np.ravel())
+    kget_buck_vapor_pressure(temperature_ti, result_ti)
+    result_np = result_ti.to_numpy().reshape(temperature_np.shape)
     return result_np.item() if result_np.size == 1 else result_np
