@@ -54,6 +54,35 @@ class CondensationIsothermal:
             radius = np.where(radius == 0.0, 1.0, radius)
         return np.where(radius == 0.0, np.max(radius), radius)
 
+    # ───────────────── pressure–delta calculation (ΔP) ───────────────────
+    def calculate_pressure_delta(
+        self,
+        particle: ParticleRepresentation,
+        gas_species: GasSpecies,
+        temperature: float,
+        radius: np.ndarray,
+    ) -> np.ndarray:
+        """
+        Calculate the partial-pressure difference driving condensation.
+
+        ΔP = P_v − P_eq
+
+        Arguments:
+            - particle : Particle representation instance.
+            - gas_species : Gas-phase species instance.
+            - temperature : Temperature in kelvin.
+            - radius : Particle-radius array in metres.
+
+        Returns:
+            - pressure_delta : ΔP array [Pa] for each particle.
+        """
+        return get_partial_pressure_delta(
+            particle=particle,
+            gas_species=gas_species,
+            temperature=temperature,
+            radius=radius,
+        )
+
     # ──────────────────────── Taichi kernels ───────────────────────────────
     @ti.kernel
     def _kget_first_order_mass_transport(
@@ -167,7 +196,7 @@ class CondensationIsothermal:
             temperature=temperature,
             pressure=pressure,
         )
-        concentration = particle.concentration
+        concentration = particle.get_concentration()
         if mass_rate.ndim == 2:
             concentration = concentration[:, np.newaxis]
         return mass_rate * concentration
@@ -201,6 +230,6 @@ class CondensationIsothermal:
 
 # ─────────────────── backend factory registration ───────────────────────────
 @register("condensation_isothermal", backend="taichi")     # factory key
-def TiCondensationIsothermal(**kwargs):
+def ti_condensation_isothermal(**kwargs):
     """Factory wrapper used by dispatch_register."""
     return CondensationIsothermal(**kwargs)
