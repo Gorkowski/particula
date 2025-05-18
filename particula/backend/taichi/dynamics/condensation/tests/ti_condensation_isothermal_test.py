@@ -13,7 +13,7 @@ from particula.backend.taichi.particles.ti_activity_strategies import (
     ActivityKappaParameter,
 )
 from particula.backend.taichi.particles.ti_surface_strategies import (
-    SurfaceStrategyMolar,
+    TiSurfaceStrategyMolar,
 )
 from particula.backend.taichi.particles.ti_representation import (
     TiParticleRepresentation,
@@ -71,7 +71,7 @@ class TiCondensationIsothermalTest(unittest.TestCase):
             molar_mass=np.array([0.018, 0.050, 0.040]),
             water_index=0,
         )
-        surface = SurfaceStrategyMolar(
+        surface = TiSurfaceStrategyMolar(
             surface_tension=np.full(self.n_species, 0.072),
             density=self.densities,
             molar_mass=np.array([0.018, 0.050, 0.040]),

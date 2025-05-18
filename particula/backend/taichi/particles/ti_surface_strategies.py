@@ -27,6 +27,8 @@ import numpy as np
 from particula.backend.taichi.particles.properties.ti_kelvin_effect_module import (
     kget_kelvin_radius,
     kget_kelvin_term,
+    fget_kelvin_term,
+    fget_kelvin_radius,
 )
 
 from particula.backend.taichi.util.ti_field_helper import FieldIO

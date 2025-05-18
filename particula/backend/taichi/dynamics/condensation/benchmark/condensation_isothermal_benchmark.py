@@ -195,7 +195,7 @@ def make_python_step_callable(particle, gas, cond):
 
 if __name__ == "__main__":
     N_SPECIES = 10
-    PARTICLE_COUNTS = [10, 100, 1_000, 10_000, 50_000, 100_000]  # adjust/extend as desired
+    PARTICLE_COUNTS = np.logspace(1, 6, num=10, dtype=np.int64)  # 10^1 to 10^5 particles
 
     # build a single condensation object (species count is fixed)
     molar_mass_vec = np.linspace(0.018, 0.018 + 0.002 * (N_SPECIES - 1), N_SPECIES)
@@ -203,7 +203,7 @@ if __name__ == "__main__":
 
     # build a single Python-side CondensationIsothermal object
     condensation_py = PyCondensationIsothermal(
-        molar_mass=0.018,              # water
+        molar_mass=molar_mass_vec,
         diffusion_coefficient=2.0e-5,
         accommodation_coefficient=1.0,
     )
@@ -217,6 +217,7 @@ if __name__ == "__main__":
         stats_ti = get_function_benchmark(
             make_step_callable(particle, gas, condensation_ti),
             ops_per_call=1,
+            max_run_time_s=3.0,
         )
 
         # ----- Python objects & stats ---------------------------------------

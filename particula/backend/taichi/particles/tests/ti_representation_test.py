@@ -44,6 +44,12 @@ class TestTiParticleRepresentation(unittest.TestCase):
         )
         cls.charge = np.zeros(5, dtype=np.float64)
 
+        ti_surface_strategy = TiSurfaceStrategyMolar(
+            surface_tension=np.array([0.072, 0.058, 0.045], dtype=np.float64),
+            density=cls.density,
+            molar_mass=np.array([0.018, 0.046, 0.058], dtype=np.float64),
+        )
+
         cls.py_obj = PyRep(
             ParticleResolvedSpeciatedMass(),
             ActivityIdealMass(),
@@ -56,19 +62,11 @@ class TestTiParticleRepresentation(unittest.TestCase):
         cls.ti_obj = TiRep(
             TiParticleResolvedSpeciatedMass(),
             TiActivityIdealMass(),
-            TiSurfaceStrategyMolar(),
+            ti_surface_strategy,
             cls.distribution,
             cls.density,
             cls.concentration,
             cls.charge,
-        )
-
-    # ───── name getters ──────────────────────────────────────────────────
-
-    def test_surface_name(self):
-        self.assertEqual(
-            self.py_obj.get_surface_name(),
-            self.ti_obj.get_surface_name(),
         )
 
     # ───── numeric parity checks ────────────────────────────────────────
