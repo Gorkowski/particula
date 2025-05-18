@@ -15,26 +15,26 @@ def _dummy_arrays(ndim: int = 1):
     directly to the Taichi distribution-strategy methods.
     """
     if ndim == 1:
-        d = ti.ndarray(dtype=ti.f64, shape=(2,))
-        c = ti.ndarray(dtype=ti.f64, shape=(2,))
+        distribution = ti.ndarray(dtype=ti.f64, shape=(2,))
+        concentration = ti.ndarray(dtype=ti.f64, shape=(2,))
         for i, val in enumerate((1.0, 2.0)):
-            d[i] = val
+            distribution[i] = val
         for i, val in enumerate((10.0, 20.0)):
-            c[i] = val
-        rho = ti.ndarray(dtype=ti.f64, shape=(2,))
+            concentration[i] = val
+        density = ti.ndarray(dtype=ti.f64, shape=(2,))
     else:
-        d = ti.ndarray(dtype=ti.f64, shape=(2, 2))
+        distribution = ti.ndarray(dtype=ti.f64, shape=(2, 2))
         vals = ((1.0, 2.0), (3.0, 4.0))
         for i in range(2):
             for j in range(2):
-                d[i, j] = vals[i][j]
-        c = ti.ndarray(dtype=ti.f64, shape=(2,))
+                distribution[i, j] = vals[i][j]
+        concentration = ti.ndarray(dtype=ti.f64, shape=(2,))
         for i, val in enumerate((10.0, 20.0)):
-            c[i] = val
-        rho = ti.ndarray(dtype=ti.f64, shape=(2, 2))
+            concentration[i] = val
+        density = ti.ndarray(dtype=ti.f64, shape=(2, 2))
 
-    rho.fill(1.0)                # set all‐ones density
-    return d, c, rho
+    density.fill(1.0)                # set all‐ones density
+    return distribution, concentration, density
 
 # convert a Taichi ndarray to NumPy for comparison
 def _np(a):
@@ -42,33 +42,29 @@ def _np(a):
 
 @pytest.mark.parametrize("ndim", [2])
 def test_getters(ndim):
-    d, c, rho = _dummy_arrays(ndim)
+    distribution, concentration, density = _dummy_arrays(ndim)
     strat = TiParticleResolvedSpeciatedMass()
 
     # ─ get_species_mass ─
-    sm = strat.get_species_mass(d, rho)
-    assert sm.shape == d.shape
-    assert np.allclose(_np(sm), _np(d))
+    species_mass = strat.get_species_mass(distribution, density)
+    assert species_mass.shape == distribution.shape
+    assert np.allclose(_np(species_mass), _np(distribution))
 
     # ─ get_mass ─
-    m = strat.get_mass(d, rho)
-    if ndim == 1:
-        assert np.allclose(_np(m), _np(d))
-    else:
-        assert np.allclose(_np(m), _np(d).sum(axis=1))
+    mass = strat.get_mass(distribution, density)
+    assert np.allclose(_np(mass), _np(distribution).sum(axis=1))
 
     # ─ get_total_mass ─
-    tm = strat.get_total_mass(d, c, rho)
-    expected_total = float(np.dot(_np(m), _np(c)))
-    assert np.isclose(tm, expected_total)
+    total_mass = strat.get_total_mass(distribution, concentration, density)
+    expected_total = float(np.dot(_np(mass), _np(concentration)))
+    assert np.isclose(total_mass, expected_total)
 
     # ─ get_radius ─
-    r = strat.get_radius(d, rho)
-    vol = _np(d) / _np(rho)
-    expected_r = (3 * vol / (4 * np.pi)) ** (1 / 3)
-    if ndim == 2:
-        expected_r = expected_r.sum(axis=1) ** (1 / 3)
-    assert np.allclose(_np(r), expected_r)
+    radius = strat.get_radius(distribution, density)
+    volume = _np(distribution) / _np(density)
+    expected_radius = (3 * volume / (4 * np.pi)) ** (1 / 3)
+    expected_radius = expected_radius.sum(axis=1) ** (1 / 3)
+    assert np.allclose(_np(radius), expected_radius)
 
     # ─ get_name ─
     assert strat.get_name() == "TiParticleResolvedSpeciatedMass"
@@ -76,43 +72,46 @@ def test_getters(ndim):
 
 @pytest.mark.parametrize("ndim", [2])
 def test_add_mass(ndim):
-    d, c, rho = _dummy_arrays(ndim)
-    added = ti.ndarray(dtype=ti.f64, shape=d.shape)
-    added.fill(0.1)                         # constant extra mass
+    distribution, concentration, density = _dummy_arrays(ndim)
+    added_mass = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
+    added_mass.fill(0.1)                         # constant extra mass
     strat = TiParticleResolvedSpeciatedMass()
-    new_d, new_c = strat.add_mass(d, c, rho, added)
+    new_distribution, new_concentration = strat.add_mass(
+        distribution, concentration, density, added_mass
+    )
 
-    expected = _np(d) + _np(added) / _np(c)[..., None] if ndim == 2 else \
-               _np(d) + _np(added) / _np(c)
-    assert np.allclose(_np(new_d), expected)
-    assert np.allclose(_np(new_c), _np(c))      # concentration unchanged
+    expected = _np(distribution) + _np(added_mass) / _np(concentration)[..., None]
+    assert np.allclose(_np(new_distribution), expected)
+    assert np.allclose(_np(new_concentration), _np(concentration))      # concentration unchanged
 
 
 def test_add_concentration():
-    d, c, rho = _dummy_arrays(2)
-    add_c = ti.ndarray(dtype=ti.f64, shape=c.shape)
-    add_c.fill(5.0)
+    distribution, concentration, density = _dummy_arrays(2)
+    added_concentration = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
+    added_concentration.fill(5.0)
     strat = TiParticleResolvedSpeciatedMass()
-    new_d, new_c = strat.add_concentration(d, c, d, add_c)
-    assert np.allclose(_np(new_d), _np(d))
-    assert np.allclose(_np(new_c), _np(c) + 5.0)
+    new_distribution, new_concentration = strat.add_concentration(
+        distribution, concentration, distribution, added_concentration
+    )
+    assert np.allclose(_np(new_distribution), _np(distribution))
+    assert np.allclose(_np(new_concentration), _np(concentration) + 5.0)
 
 
 @pytest.mark.parametrize("ndim", [2])
 def test_collide_pairs(ndim):
-    d, c, rho = _dummy_arrays(ndim)
-    idx = ti.ndarray(dtype=ti.f64, shape=(1, 2))
-    idx[0, 0], idx[0, 1] = 0, 1             # merge 0 → 1
+    distribution, concentration, density = _dummy_arrays(ndim)
+    indices = ti.ndarray(dtype=ti.f64, shape=(1, 2))
+    indices[0, 0], indices[0, 1] = 0, 1             # merge 0 → 1
 
     strat = TiParticleResolvedSpeciatedMass()
-    new_d, new_c = strat.collide_pairs(d, c, rho, idx)
+    new_distribution, new_concentration = strat.collide_pairs(
+        distribution, concentration, density, indices
+    )
 
-    np_d, np_c = _np(new_d), _np(new_c)
-    if ndim == 1:
-        assert np_d[0] == 0
-        assert np_d[1] == 3                  # 1+2
-    else:
-        assert np.allclose(np_d[0], 0)
-        assert np.allclose(np_d[1],
-                           np.array([1, 2]) + np.array([3, 4]))
-    assert np_c[0] == 0
+    np_distribution = _np(new_distribution)
+    np_concentration = _np(new_concentration)
+    assert np.allclose(np_distribution[0], 0)
+    assert np.allclose(
+        np_distribution[1], np.array([1, 2]) + np.array([3, 4])
+    )
+    assert np_concentration[0] == 0
