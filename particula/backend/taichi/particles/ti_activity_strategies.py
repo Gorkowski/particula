@@ -24,6 +24,23 @@ class _ActivityMixin:
     ) -> ti.f64:
         return fget_surface_partial_pressure(pure_vapor_pressure, activity)
 
+    # ─────────────────────────── kernel helper (scalar) ────────────────────
+    @ti.func
+    def fget_partial_pressure_internal(          # NEW
+        self,
+        mass_concentration: ti.f64,
+        pure_vapor_pressure: ti.f64,
+    ) -> ti.f64:
+        """
+        Element-wise surface partial pressure used inside Taichi kernels.
+
+        Returns p = a × p⁰.  Here we apply the simplest ideal fallback
+        (activity = 1) so the value reduces to the pure vapor pressure.
+        More sophisticated activity models can override this function in
+        their concrete class if needed.
+        """
+        return pure_vapor_pressure   # ideal behaviour: activity ≡ 1
+
     # vectorised kernel (1-D ndarray in / out) -----------------------------------
     @ti.kernel
     def kget_surface_partial_pressure(
