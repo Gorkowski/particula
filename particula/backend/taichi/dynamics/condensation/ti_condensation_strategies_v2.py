@@ -224,9 +224,25 @@ class CondensationIsothermal:
             dynamic_viscosity=dynamic_viscosity,
         )
 
-        pressure_delta_np = np.ascontiguousarray(delta_p, dtype=np.float64)
+        # delta_p is not defined in this scope; calculate it using the helper
+        pressure_delta_np = np.ascontiguousarray(
+            self.calculate_pressure_delta(
+                particle=particle,
+                gas_species=gas_species,
+                temperature=temperature,
+                radius=radius,
+            ),
+            dtype=np.float64,
+        )
         mass_transfer_rate_array = np.empty_like(pressure_delta_np)
-        self._kget_mass_transfer_rate(pressure_delta_np, mass_transport_coeff_array, temperature, mass_transfer_rate_array)
+        self._kget_mass_transfer_rate(
+            radius,
+            float(temperature),
+            float(pressure),
+            float(dynamic_viscosity) if dynamic_viscosity is not None else 0.0,
+            pressure_delta_np,
+            mass_transfer_rate_array,
+        )
         return mass_transfer_rate_array
 
     # ──────────────────── API: concentration-scaled rate ───────────────────
