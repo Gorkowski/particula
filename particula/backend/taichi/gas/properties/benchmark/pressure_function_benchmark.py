@@ -30,8 +30,20 @@ ti.init(arch=ti.cpu)
 
 def benchmark_partial_pressure_csv():
     """
-    Time pure-Python, Taichi wrapper, and raw kernel for get_partial_pressure
-    over ARRAY_LENGTHS, then save CSV, JSON, and PNG into ./benchmark_outputs/.
+    Benchmark the throughput of get_partial_pressure implementations.
+
+    Times the pure-Python, Taichi wrapper, and raw kernel versions of
+    get_partial_pressure over a range of array lengths. Results are saved
+    as CSV, JSON, and PNG files in the ./benchmark_outputs/ directory.
+
+    Returns:
+        - None : Results are written to disk; nothing is returned.
+
+    Examples:
+        ```py
+        benchmark_partial_pressure_csv()
+        # Output: Files saved in ./benchmark_outputs/
+        ```
     """
     result_rows = []
     random_generator = np.random.default_rng(seed=RNG_SEED)
@@ -70,7 +82,10 @@ def benchmark_partial_pressure_csv():
         )
         kernel_stats = get_function_benchmark(
             lambda: kget_partial_pressure(
-                concentration_field, molar_mass_field, temperature_field, result_field
+                concentration_field,
+                molar_mass_field,
+                temperature_field,
+                result_field,
             ),
             ops_per_call=array_length,
         )
@@ -85,13 +100,15 @@ def benchmark_partial_pressure_csv():
         )
 
     python_header = [
-        "python_" + header_name for header_name in python_stats["array_headers"]
+        f"python_{header_name}"
+        for header_name in python_stats["array_headers"]
     ]
     taichi_header = [
-        "taichi_" + header_name for header_name in taichi_stats["array_headers"]
+        f"taichi_{header_name}"
+        for header_name in taichi_stats["array_headers"]
     ]
     kernel_header = [
-        "taichi_kernel_" + header_name
+        f"taichi_kernel_{header_name}"
         for header_name in kernel_stats["array_headers"]
     ]
     header = ["array_length", *python_header, *taichi_header, *kernel_header]
@@ -100,7 +117,8 @@ def benchmark_partial_pressure_csv():
     os.makedirs(output_directory, exist_ok=True)
 
     csv_file_path = os.path.join(
-        output_directory, "get_partial_pressure_benchmark.csv"
+        output_directory,
+        "get_partial_pressure_benchmark.csv",
     )
     save_combined_csv(csv_file_path, header, result_rows)
 
@@ -113,14 +131,32 @@ def benchmark_partial_pressure_csv():
         header,
         result_rows,
         "get_partial_pressure throughput benchmark",
-        os.path.join(output_directory, "get_partial_pressure_benchmark.png"),
+        os.path.join(
+            output_directory,
+            "get_partial_pressure_benchmark.png",
+        ),
     )
+
+
 
 
 def benchmark_saturation_ratio_csv():
     """
-    Time pure-Python, Taichi wrapper, and raw kernel for get_saturation_ratio_from_pressure
-    over ARRAY_LENGTHS, then save CSV, JSON, and PNG into ./benchmark_outputs/.
+    Benchmark the throughput of get_saturation_ratio_from_pressure.
+
+    Times the pure-Python, Taichi wrapper, and raw kernel versions of
+    get_saturation_ratio_from_pressure over a range of array lengths.
+    Results are saved as CSV, JSON, and PNG files in the
+    ./benchmark_outputs/ directory.
+
+    Returns:
+        - None : Results are written to disk; nothing is returned.
+
+    Examples:
+        ```py
+        benchmark_saturation_ratio_csv()
+        # Output: Files saved in ./benchmark_outputs/
+        ```
     """
     result_rows = []
     random_generator = np.random.default_rng(seed=RNG_SEED)
@@ -156,7 +192,9 @@ def benchmark_saturation_ratio_csv():
         )
         kernel_stats = get_function_benchmark(
             lambda: kget_saturation_ratio_from_pressure(
-                partial_pressure_field, pure_vapor_pressure_field, result_field
+                partial_pressure_field,
+                pure_vapor_pressure_field,
+                result_field,
             ),
             ops_per_call=array_length,
         )
@@ -171,13 +209,15 @@ def benchmark_saturation_ratio_csv():
         )
 
     python_header = [
-        "python_" + header_name for header_name in python_stats["array_headers"]
+        f"python_{header_name}"
+        for header_name in python_stats["array_headers"]
     ]
     taichi_header = [
-        "taichi_" + header_name for header_name in taichi_stats["array_headers"]
+        f"taichi_{header_name}"
+        for header_name in taichi_stats["array_headers"]
     ]
     kernel_header = [
-        "taichi_kernel_" + header_name
+        f"taichi_kernel_{header_name}"
         for header_name in kernel_stats["array_headers"]
     ]
     header = ["array_length", *python_header, *taichi_header, *kernel_header]
@@ -186,7 +226,8 @@ def benchmark_saturation_ratio_csv():
     os.makedirs(output_directory, exist_ok=True)
 
     csv_file_path = os.path.join(
-        output_directory, "get_saturation_ratio_from_pressure_benchmark.csv"
+        output_directory,
+        "get_saturation_ratio_from_pressure_benchmark.csv",
     )
     save_combined_csv(csv_file_path, header, result_rows)
 
@@ -200,10 +241,13 @@ def benchmark_saturation_ratio_csv():
         result_rows,
         "get_saturation_ratio_from_pressure throughput benchmark",
         os.path.join(
-            output_directory, "get_saturation_ratio_from_pressure_benchmark.png"
+            output_directory,
+            "get_saturation_ratio_from_pressure_benchmark.png",
         ),
     )
 
+
+    
 
 if __name__ == "__main__":
     benchmark_partial_pressure_csv()
