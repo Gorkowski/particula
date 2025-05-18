@@ -12,33 +12,33 @@ def fget_mass_fraction(partial_mass: ti.f64, total_mass: ti.f64) -> ti.f64:
 
 @ti.kernel
 def kget_mass_fractions_1d(                       # 1-D wrapper kernel
-    mole: ti.types.ndarray(dtype=ti.f64, ndim=1),     # xᵢ
-    mw: ti.types.ndarray(dtype=ti.f64, ndim=1),       # Mᵢ
-    out: ti.types.ndarray(dtype=ti.f64, ndim=1),      # wᵢ
+    mole_fraction: ti.types.ndarray(dtype=ti.f64, ndim=1),     # xᵢ
+    molecular_weight: ti.types.ndarray(dtype=ti.f64, ndim=1),  # Mᵢ
+    mass_fraction: ti.types.ndarray(dtype=ti.f64, ndim=1),     # wᵢ
 ):
     # first pass – Σ(x·M)
-    tot = ti.f64(0.0)
-    for i in range(out.shape[0]):
-        tot += mole[i] * mw[i]
+    total_weighted_mass = ti.f64(0.0)
+    for i in range(mass_fraction.shape[0]):
+        total_weighted_mass += mole_fraction[i] * molecular_weight[i]
     # second pass – wᵢ
-    for i in range(out.shape[0]):
-        out[i] = fget_mass_fraction(mole[i] * mw[i], tot)
+    for i in range(mass_fraction.shape[0]):
+        mass_fraction[i] = fget_mass_fraction(mole_fraction[i] * molecular_weight[i], total_weighted_mass)
 
 
 @ti.kernel
 def kget_mass_fractions_2d(                       # 2-D wrapper kernel (row-wise)
-    mole: ti.types.ndarray(dtype=ti.f64, ndim=2),     # xᵢⱼ
-    mw: ti.types.ndarray(dtype=ti.f64, ndim=1),       # Mⱼ
-    out: ti.types.ndarray(dtype=ti.f64, ndim=2),      # wᵢⱼ
+    mole_fraction: ti.types.ndarray(dtype=ti.f64, ndim=2),     # xᵢⱼ
+    molecular_weight: ti.types.ndarray(dtype=ti.f64, ndim=1),  # Mⱼ
+    mass_fraction: ti.types.ndarray(dtype=ti.f64, ndim=2),     # wᵢⱼ
 ):
-    rows = out.shape[0]
-    cols = out.shape[1]
+    rows = mass_fraction.shape[0]
+    cols = mass_fraction.shape[1]
     for r in range(rows):
-        tot = ti.f64(0.0)
+        total_weighted_mass = ti.f64(0.0)
         for c in range(cols):
-            tot += mole[r, c] * mw[c]
+            total_weighted_mass += mole_fraction[r, c] * molecular_weight[c]
         for c in range(cols):
-            out[r, c] = fget_mass_fraction(mole[r, c] * mw[c], tot)
+            mass_fraction[r, c] = fget_mass_fraction(mole_fraction[r, c] * molecular_weight[c], total_weighted_mass)
 
 
 @register("get_mass_fractions_from_moles", backend="taichi")
@@ -49,34 +49,34 @@ def ti_get_mass_fractions_from_moles(mole_fractions, molecular_weights):
             and isinstance(molecular_weights, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
-    x = np.asarray(mole_fractions, dtype=np.float64)
-    mw = np.asarray(molecular_weights, dtype=np.float64)
+    mole_fraction_array = np.asarray(mole_fractions, dtype=np.float64)
+    molecular_weight_array = np.asarray(molecular_weights, dtype=np.float64)
 
-    if x.shape[-1] != mw.shape[-1]:
+    if mole_fraction_array.shape[-1] != molecular_weight_array.shape[-1]:
         raise ValueError("Last dimension of inputs must match.")
 
     # 1-D case
-    if x.ndim == 1:
-        n = x.size
-        x_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-        mw_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        out_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        x_ti.from_numpy(x)
-        mw_ti.from_numpy(mw)
-        kget_mass_fractions_1d(x_ti, mw_ti, out_ti)
-        result_np = out_ti.to_numpy()
-        return result_np.item() if result_np.size == 1 else result_np
+    if mole_fraction_array.ndim == 1:
+        n = mole_fraction_array.size
+        mole_fraction_ti  = ti.ndarray(dtype=ti.f64, shape=n)
+        molecular_weight_ti = ti.ndarray(dtype=ti.f64, shape=n)
+        mass_fraction_ti = ti.ndarray(dtype=ti.f64, shape=n)
+        mole_fraction_ti.from_numpy(mole_fraction_array)
+        molecular_weight_ti.from_numpy(molecular_weight_array)
+        kget_mass_fractions_1d(mole_fraction_ti, molecular_weight_ti, mass_fraction_ti)
+        result_array = mass_fraction_ti.to_numpy()
+        return result_array.item() if result_array.size == 1 else result_array
 
     # 2-D case
-    if x.ndim == 2:
-        rows, cols = x.shape
-        x_ti  = ti.ndarray(dtype=ti.f64, shape=(rows, cols))
-        mw_ti = ti.ndarray(dtype=ti.f64, shape=cols)
-        out_ti = ti.ndarray(dtype=ti.f64, shape=(rows, cols))
-        x_ti.from_numpy(x)
-        mw_ti.from_numpy(mw)
-        kget_mass_fractions_2d(x_ti, mw_ti, out_ti)
-        result_np = out_ti.to_numpy()
-        return result_np.item() if result_np.size == 1 else result_np
+    if mole_fraction_array.ndim == 2:
+        rows, cols = mole_fraction_array.shape
+        mole_fraction_ti  = ti.ndarray(dtype=ti.f64, shape=(rows, cols))
+        molecular_weight_ti = ti.ndarray(dtype=ti.f64, shape=cols)
+        mass_fraction_ti = ti.ndarray(dtype=ti.f64, shape=(rows, cols))
+        mole_fraction_ti.from_numpy(mole_fraction_array)
+        molecular_weight_ti.from_numpy(molecular_weight_array)
+        kget_mass_fractions_2d(mole_fraction_ti, molecular_weight_ti, mass_fraction_ti)
+        result_array = mass_fraction_ti.to_numpy()
+        return result_array.item() if result_array.size == 1 else result_array
 
     raise ValueError("mole_fractions must be 1-D or 2-D.")
