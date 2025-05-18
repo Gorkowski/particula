@@ -27,46 +27,51 @@ References:
 
 import taichi as ti
 from taichi.types import ndarray as ti_nd
-import numpy as np
-from typing import Union
-from numpy.typing import NDArray
-
-from particula.backend.taichi.particles.properties import (
-        ti_get_kelvin_radius,  # <- NEW
-        ti_get_kelvin_term,    # <- NEW
-        fget_kelvin_radius,    # still used in in-kernel helpers
-        fget_kelvin_term,
-        kget_kelvin_radius,
-        kget_kelvin_term,
-        fget_ideal_activity_mass,
-        kget_ideal_activity_mass,
-        fget_ideal_activity_molar,
-        kget_ideal_activity_molar,
-        fget_ideal_activity_volume,
-        kget_ideal_activity_volume,
-        fget_water_activity_from_kappa_row,
-        kget_water_volume_in_mixture,
+from particula.backend.taichi.particles.properties.ti_kelvin_effect_module import (
+    kget_kelvin_radius,
+    kget_kelvin_term,
 )
 
-def _store(arr):
-    """Helper to store a scalar or 1D array as a Taichi field and return (field, n)."""
+def store(arr):
+    # returns (scalar/1-D field, length)
     if isinstance(arr, (float, int)):
         f = ti.field(dtype=ti.f64, shape=())
         f[None] = float(arr)
         return f, 1
-    arr = np.asarray(arr, dtype=np.float64)
-    if arr.ndim == 0:
-        f = ti.field(dtype=ti.f64, shape=())
-        f[None] = float(arr)
-        return f, 1
-    f = ti.field(dtype=ti.f64, shape=arr.shape)
-    for i in range(arr.shape[0]):
-        f[i] = arr[i]
-    return f, arr.shape[0]
+    # python list / tuple
+    if not hasattr(arr, "shape"):
+        n = len(arr)
+        f = ti.field(dtype=ti.f64, shape=n)
+        for i in range(n):
+            f[i] = float(arr[i])
+        return f, n
+    # ti.types.ndarray or numpy.ndarray (no NumPy ops used)
+    n = arr.shape[0]
+    f = ti.field(dtype=ti.f64, shape=n)
 
+    @ti.kernel
+    def _copy(src: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+        for i in range(n):
+            f[i] = src[i]
+
+    _copy(arr)
+    return f, n
+
+def ensure_ti_nd(x):
+    if isinstance(x, (float, int)):
+        a = ti_nd(dtype=ti.f64, shape=(1,))
+        a[0] = float(x)
+        return a
+    if not hasattr(x, "shape"):
+        n = len(x)
+        a = ti_nd(dtype=ti.f64, shape=(n,))
+        for i in range(n):
+            a[i] = float(x[i])
+        return a
+    return x   # already ndarray-like
 
 @ti.data_oriented
-class _SurfaceMixin:
+class SurfaceMixin:
     """
     Shared helpers reused by the three pure-surface strategies.
 
@@ -84,24 +89,26 @@ class _SurfaceMixin:
     """
 
     def __init__(self, surface_tension, density):
-        self.surface_tension, self.n_species = _store(surface_tension)
-        self.density, _ = _store(density)
+        self.surface_tension, self.n_species = store(surface_tension)
+        self.density, _ = store(density)
+        # ones array used for “mass” strategy
+        self.ones = ti.field(dtype=ti.f64, shape=self.n_species)
+        for i in range(self.n_species):
+            self.ones[i] = 1.0
 
     @ti.kernel
-    def _weighted_average(
+    def weighted_average(
         self,
         values: ti.template(),
         weights: ti_nd(dtype=ti.f64, ndim=1),
-        normalize_by: ti_nd(dtype=ti.f64, ndim=1) = None
+        normalizer: ti.template(),
     ) -> ti.f64:
         tot = 0.0
         for i in range(self.n_species):
-            w = weights[i] if normalize_by is None else weights[i] / normalize_by[i]
-            tot += w
+            tot += weights[i] / normalizer[i]
         acc = 0.0
         for i in range(self.n_species):
-            w = weights[i] if normalize_by is None else weights[i] / normalize_by[i]
-            acc += values[i] * w / tot
+            acc += values[i] * (weights[i] / normalizer[i]) / tot
         return acc
 
     def get_name(self) -> str:
@@ -120,7 +127,7 @@ class _SurfaceMixin:
 
 
 @ti.data_oriented
-class SurfaceStrategyMolar(_SurfaceMixin):
+class SurfaceStrategyMolar(SurfaceMixin):
     """
     Surface property mixing by mole fraction (molar-based).
 
@@ -154,49 +161,40 @@ class SurfaceStrategyMolar(_SurfaceMixin):
 
     def __init__(
         self,
-        surface_tension: Union[float, NDArray[np.float64]] = 0.072,
-        density: Union[float, NDArray[np.float64]] = 1000,
-        molar_mass: Union[float, NDArray[np.float64]] = 0.01815,
+        surface_tension=0.072,
+        density=1000,
+        molar_mass=0.01815,
     ):
         super().__init__(surface_tension, density)
-        self.molar_mass, _ = _store(molar_mass)
+        self.molar_mass, _ = store(molar_mass)
 
-    def effective_surface_tension(
-        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
-    ) -> float:
-        return float(self._weighted_average(self.surface_tension, mass_concentration, self.molar_mass))
+    def effective_surface_tension(self, mass_concentration):
+        mc = ensure_ti_nd(mass_concentration)
+        return float(self.weighted_average(self.surface_tension, mc, self.molar_mass))
 
-    def effective_density(
-        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
-    ) -> float:
-        return float(self._weighted_average(self.density, mass_concentration, self.molar_mass))
+    def effective_density(self, mass_concentration):
+        mc = ensure_ti_nd(mass_concentration)
+        return float(self.weighted_average(self.density, mc, self.molar_mass))
 
-    def kelvin_radius(
-        self,
-        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
-        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
-        temperature: float,
-    ):
+    def kelvin_radius(self, molar_mass, mass_concentration, temperature):
+        M = ensure_ti_nd(molar_mass)
+        mc = ensure_ti_nd(mass_concentration)
         st = ti_nd(dtype=ti.f64, shape=(1,))
         rho = ti_nd(dtype=ti.f64, shape=(1,))
-        st[0] = self.effective_surface_tension(mass_concentration)
-        rho[0] = self.effective_density(mass_concentration)
-        r_k = kget_kelvin_radius(st, rho, molar_mass, float(temperature))
-        return r_k
+        st[0] = self.effective_surface_tension(mc)
+        rho[0] = self.effective_density(mc)
+        return kget_kelvin_radius(st, rho, M, float(temperature))
 
-    def kelvin_term(
-        self,
-        radius: ti_nd(dtype=ti.f64, ndim=1),
-        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
-        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
-        temperature: float,
-    ):
-        r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        return kget_kelvin_term(radius, r_k)
+    def kelvin_term(self, radius, molar_mass, mass_concentration, temperature):
+        r = ensure_ti_nd(radius)
+        M = ensure_ti_nd(molar_mass)
+        mc = ensure_ti_nd(mass_concentration)
+        r_k = self.kelvin_radius(M, mc, temperature)
+        return kget_kelvin_term(r, r_k)
 
 
 @ti.data_oriented
-class SurfaceStrategyMass(_SurfaceMixin):
+class SurfaceStrategyMass(SurfaceMixin):
     """
     Surface property mixing by mass fraction.
 
@@ -227,47 +225,38 @@ class SurfaceStrategyMass(_SurfaceMixin):
 
     def __init__(
         self,
-        surface_tension: Union[float, NDArray[np.float64]] = 0.072,
-        density: Union[float, NDArray[np.float64]] = 1000,
+        surface_tension=0.072,
+        density=1000,
     ):
         super().__init__(surface_tension, density)
 
-    def effective_surface_tension(
-        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
-    ) -> float:
-        return float(self._weighted_average(self.surface_tension, mass_concentration, None))
+    def effective_surface_tension(self, mass_concentration):
+        mc = ensure_ti_nd(mass_concentration)
+        return float(self.weighted_average(self.surface_tension, mc, self.ones))
 
-    def effective_density(
-        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
-    ) -> float:
-        return float(self._weighted_average(self.density, mass_concentration, None))
+    def effective_density(self, mass_concentration):
+        mc = ensure_ti_nd(mass_concentration)
+        return float(self.weighted_average(self.density, mc, self.ones))
 
-    def kelvin_radius(
-        self,
-        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
-        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
-        temperature: float,
-    ):
+    def kelvin_radius(self, molar_mass, mass_concentration, temperature):
+        M = ensure_ti_nd(molar_mass)
+        mc = ensure_ti_nd(mass_concentration)
         st = ti_nd(dtype=ti.f64, shape=(1,))
         rho = ti_nd(dtype=ti.f64, shape=(1,))
-        st[0] = self.effective_surface_tension(mass_concentration)
-        rho[0] = self.effective_density(mass_concentration)
-        r_k = kget_kelvin_radius(st, rho, molar_mass, float(temperature))
-        return r_k
+        st[0] = self.effective_surface_tension(mc)
+        rho[0] = self.effective_density(mc)
+        return kget_kelvin_radius(st, rho, M, float(temperature))
 
-    def kelvin_term(
-        self,
-        radius: ti_nd(dtype=ti.f64, ndim=1),
-        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
-        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
-        temperature: float,
-    ):
-        r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        return kget_kelvin_term(radius, r_k)
+    def kelvin_term(self, radius, molar_mass, mass_concentration, temperature):
+        r = ensure_ti_nd(radius)
+        M = ensure_ti_nd(molar_mass)
+        mc = ensure_ti_nd(mass_concentration)
+        r_k = self.kelvin_radius(M, mc, temperature)
+        return kget_kelvin_term(r, r_k)
 
 
 @ti.data_oriented
-class SurfaceStrategyVolume(_SurfaceMixin):
+class SurfaceStrategyVolume(SurfaceMixin):
     """
     Surface property mixing by volume fraction.
 
@@ -298,40 +287,31 @@ class SurfaceStrategyVolume(_SurfaceMixin):
 
     def __init__(
         self,
-        surface_tension: Union[float, NDArray[np.float64]] = 0.072,
-        density: Union[float, NDArray[np.float64]] = 1000,
+        surface_tension=0.072,
+        density=1000,
     ):
         super().__init__(surface_tension, density)
 
-    def effective_surface_tension(
-        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
-    ) -> float:
-        return float(self._weighted_average(self.surface_tension, mass_concentration, self.density))
+    def effective_surface_tension(self, mass_concentration):
+        mc = ensure_ti_nd(mass_concentration)
+        return float(self.weighted_average(self.surface_tension, mc, self.density))
 
-    def effective_density(
-        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
-    ) -> float:
-        return float(self._weighted_average(self.density, mass_concentration, self.density))
+    def effective_density(self, mass_concentration):
+        mc = ensure_ti_nd(mass_concentration)
+        return float(self.weighted_average(self.density, mc, self.density))
 
-    def kelvin_radius(
-        self,
-        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
-        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
-        temperature: float,
-    ):
+    def kelvin_radius(self, molar_mass, mass_concentration, temperature):
+        M = ensure_ti_nd(molar_mass)
+        mc = ensure_ti_nd(mass_concentration)
         st = ti_nd(dtype=ti.f64, shape=(1,))
         rho = ti_nd(dtype=ti.f64, shape=(1,))
-        st[0] = self.effective_surface_tension(mass_concentration)
-        rho[0] = self.effective_density(mass_concentration)
-        r_k = kget_kelvin_radius(st, rho, molar_mass, float(temperature))
-        return r_k
+        st[0] = self.effective_surface_tension(mc)
+        rho[0] = self.effective_density(mc)
+        return kget_kelvin_radius(st, rho, M, float(temperature))
 
-    def kelvin_term(
-        self,
-        radius: ti_nd(dtype=ti.f64, ndim=1),
-        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
-        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
-        temperature: float,
-    ):
-        r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        return kget_kelvin_term(radius, r_k)
+    def kelvin_term(self, radius, molar_mass, mass_concentration, temperature):
+        r = ensure_ti_nd(radius)
+        M = ensure_ti_nd(molar_mass)
+        mc = ensure_ti_nd(mass_concentration)
+        r_k = self.kelvin_radius(M, mc, temperature)
+        return kget_kelvin_term(r, r_k)
