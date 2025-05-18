@@ -1,4 +1,16 @@
-"""Benchmarks the reference Python, Taichi wrapper, and raw Taichi kernel."""
+"""
+Benchmark throughput of concentration-from-pressure routines implemented
+in pure-Python and Taichi.
+
+The script measures element-throughput for three variants
+(Python, Taichi wrapper, raw Taichi kernel) across several
+input-array lengths and stores the results as CSV, JSON and PNG
+in ``./benchmark_outputs``.
+
+References:
+    - Y. Hu et al., “Taichi: A Unified, Efficient, and Portable
+      Programming Framework”, ACM TOG 38 (3), 2019.
+"""
 # ── imports ────────────────────────────────────────────────────────────────
 import os
 import json
@@ -15,21 +27,41 @@ from particula.backend.benchmark import (                       # utilities
 from particula.gas.properties.concentration_function import (
     get_concentration_from_pressure as python_get_concentration_from_pressure,
 )
-from particula.backend.taichi.gas.properties.ti_concentration_from_pressure_module import (
-    ti_get_concentration_from_pressure as taichi_get_concentration_from_pressure,
-    kget_concentration_from_pressure as taichi_kernel_get_concentration_from_pressure,
+from particula.backend.taichi.gas.properties.ti_concentration_from_pressure_module import (  # noqa: E501
+    ti_get_concentration_from_pressure
+    as taichi_get_concentration_from_pressure,
+    kget_concentration_from_pressure
+    as taichi_kernel_get_concentration_from_pressure,
 )
 
 # ── benchmark configuration ────────────────────────────────────────────────
 RNG_SEED = 42
-ARRAY_LENGTHS = np.logspace(2, 8, 10, dtype=int)        # 10² … 10⁸
+ARRAY_LENGTHS = np.logspace(2, 8, 10, dtype=int)  # 10² … 10⁸
 ti.init(arch=ti.cpu)
 
 
 def benchmark_concentration_from_pressure_to_csv() -> None:
     """
-    Time pure-Python, Taichi wrapper, and raw kernel over ARRAY_LENGTHS,
-    then save CSV, JSON, and PNG into ./benchmark_outputs/.
+    Execute the benchmark and write artefacts to ``./benchmark_outputs``.
+
+    The routine iterates over ``ARRAY_LENGTHS``, builds random yet
+    physically plausible test vectors, measures throughput for the three
+    back-ends via ``get_function_benchmark``, aggregates the results, and
+    saves them as CSV, JSON, and PNG.
+
+    Arguments:
+        - None
+
+    Returns:
+        - None
+
+    Examples:
+        ```py
+        from particula.backend.taichi.gas.properties.benchmark import (
+            ti_concentration_from_pressure_module_benchmark as bm,
+        )
+        bm.benchmark_concentration_from_pressure_to_csv()
+        ```
     """
     rows: list[list[float]] = []
     random_generator = np.random.default_rng(seed=RNG_SEED)
@@ -37,9 +69,18 @@ def benchmark_concentration_from_pressure_to_csv() -> None:
     # ── loop over array lengths ────────────────────────────────────────────
     for array_length in ARRAY_LENGTHS:
         # random input data (physically sensible ranges)
-        partial_pressure_array = random_generator.random(array_length, dtype=np.float64) * 1.0e5 + 1.0      # Pa
-        molar_mass_array      = random_generator.random(array_length, dtype=np.float64) * 0.04    + 0.002   # kg mol⁻¹
-        temperature_array     = random_generator.random(array_length, dtype=np.float64) * 300.0   + 200.0   # K
+        partial_pressure_array = (
+            random_generator.random(array_length, dtype=np.float64) * 1.0e5
+            + 1.0
+        )  # Pa
+        molar_mass_array = (
+            random_generator.random(array_length, dtype=np.float64) * 0.04
+            + 0.002
+        )  # kg mol⁻¹
+        temperature_array = (
+            random_generator.random(array_length, dtype=np.float64) * 300.0
+            + 200.0
+        )  # K
 
         # Taichi buffers
         partial_pressure_field = ti.ndarray(dtype=ti.f64, shape=array_length)
