@@ -3,8 +3,7 @@ import taichi as ti
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 # ─── Implementations under test ────────────────────────────────────────────
-from particula.backend.taichi.dynamics.condensation.\
-ti_condensation_strategies_v2 import (
+from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies import (
     CondensationIsothermal as TiCondensationIsothermal,
 )
 from particula.dynamics.condensation.condensation_strategies import (

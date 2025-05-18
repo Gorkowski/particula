@@ -305,12 +305,6 @@ def ti_get_first_order_mass_transport_coefficient(
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
-@register("get_first_order_mass_transport_k", backend="taichi")
-def ti_get_first_order_mass_transport_k(*args, **kwargs):
-    """Compatibility wrapper – use *_coefficient version instead."""
-    return ti_get_first_order_mass_transport_coefficient(*args, **kwargs)
-
-
 @register("get_mass_transfer_rate", backend="taichi")
 def ti_get_mass_transfer_rate(
     pressure_delta, first_order_mass_transport, temperature, molar_mass

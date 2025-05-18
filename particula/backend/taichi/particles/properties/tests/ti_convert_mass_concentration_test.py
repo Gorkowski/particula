@@ -6,8 +6,8 @@ from particula.particles.properties.convert_mass_concentration import (
 )
 from particula.backend.taichi.particles.properties.ti_convert_mass_concentration_module import (
     kget_mole_fraction_from_mass, kget_volume_fraction_from_mass,
-    ti_get_mole_fraction_from_mass, ti_get_volume_fraction_from_mass,
-    kget_mass_fraction_from_mass, ti_get_mass_fraction_from_mass
+    taichi_get_mass_fraction_from_mass, taichi_get_mole_fraction_from_mass,
+    kget_mass_fraction_from_mass, taichi_get_volume_fraction_from_mass
 )
 
 ti.init(arch=ti.cpu)
@@ -24,14 +24,14 @@ def _scalar_sample():
 def test_wrapper_mole():
     m, mm, _ = _sample()
     np.testing.assert_allclose(
-        ti_get_mole_fraction_from_mass(m, mm),
+        taichi_get_mole_fraction_from_mass(m, mm),
         get_mole_fraction_from_mass(m, mm),
         rtol=1e-7, atol=0)
 
 def test_wrapper_volume():
     m, _, rho = _sample()
     np.testing.assert_allclose(
-        ti_get_volume_fraction_from_mass(m, rho),
+        taichi_get_volume_fraction_from_mass(m, rho),
         get_volume_fraction_from_mass(m, rho),
         rtol=1e-7, atol=0)
 
@@ -58,14 +58,14 @@ def test_kernel_volume():
 def test_wrapper_mass_array():
     m, _, _ = _sample()
     np.testing.assert_allclose(
-        ti_get_mass_fraction_from_mass(m),
+        taichi_get_mass_fraction_from_mass(m),
         get_mass_fraction_from_mass(m),
         rtol=1e-7, atol=0)
 
 def test_wrapper_mass_scalar():
     m = 4.2
     np.testing.assert_allclose(
-        ti_get_mass_fraction_from_mass(m),
+        taichi_get_mass_fraction_from_mass(m),
         get_mass_fraction_from_mass(m),
         rtol=1e-7, atol=0)
 

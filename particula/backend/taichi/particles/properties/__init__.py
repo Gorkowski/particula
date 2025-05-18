@@ -11,12 +11,14 @@ from .ti_aerodynamic_length_module import (
 )
 
 from .ti_convert_mass_concentration_module import (
-    ti_get_mole_fraction_from_mass,
+    fget_mole_fraction_single,
+    fget_volume_fraction_single,
     kget_mole_fraction_from_mass,
-    fget_mole_single,
-    ti_get_volume_fraction_from_mass,
     kget_volume_fraction_from_mass,
-    fget_volume_single,
+    kget_mass_fraction_from_mass,
+    taichi_get_mass_fraction_from_mass,
+    taichi_get_mole_fraction_from_mass,
+    taichi_get_volume_fraction_from_mass,
 )
 
 from .ti_convert_mole_fraction_module import (
