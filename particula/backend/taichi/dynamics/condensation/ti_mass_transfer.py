@@ -25,6 +25,30 @@ def fget_first_order_mass_transport_k(
     vapor_transition: ti.f64,
     diffusion_coefficient: ti.f64,
 ) -> ti.f64:
+    """
+    Compute first-order mass transport coefficient.
+
+    Arguments:
+        - particle_radius : Particle radius [m].
+        - vapor_transition : Vapor transition correction factor [unitless].
+        - diffusion_coefficient : Diffusion coefficient [m²/s].
+
+    Returns:
+        - First-order mass transport coefficient [kg/s].
+
+    Equation:
+        k = 4 π r D β
+
+    Examples:
+        ```py
+        k = fget_first_order_mass_transport_k(1e-6, 0.9, 2e-5)
+        # Output: 2.261946710584651e-10
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     return 4.0 * PI * particle_radius * diffusion_coefficient * vapor_transition
 
 
@@ -35,6 +59,31 @@ def fget_mass_transfer_rate(
     temperature: ti.f64,
     molar_mass: ti.f64,
 ) -> ti.f64:
+    """
+    Compute mass transfer rate for condensation/evaporation.
+
+    Arguments:
+        - pressure_delta : Vapor pressure difference [Pa].
+        - first_order_mass_transport : First-order mass transport [kg/s].
+        - temperature : Temperature [K].
+        - molar_mass : Molar mass [kg/mol].
+
+    Returns:
+        - Mass transfer rate [kg/s].
+
+    Equation:
+        ṁ = k ΔP M / (R T)
+
+    Examples:
+        ```py
+        m_rate = fget_mass_transfer_rate(10, 1e-10, 300, 0.018)
+        # Output: 7.219827586206897e-14
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     return (
         first_order_mass_transport
         * pressure_delta
@@ -49,11 +98,35 @@ def fget_radius_transfer_rate(
     particle_radius: ti.f64,
     density: ti.f64,
 ) -> ti.f64:
+    """
+    Compute rate of change of particle radius.
+
+    Arguments:
+        - mass_rate : Mass transfer rate [kg/s].
+        - particle_radius : Particle radius [m].
+        - density : Particle density [kg/m³].
+
+    Returns:
+        - Radius transfer rate [m/s].
+
+    Equation:
+        dr/dt = ṁ / (ρ 4 π r²)
+
+    Examples:
+        ```py
+        drdt = fget_radius_transfer_rate(1e-14, 1e-6, 1800)
+        # Output: 4.420970641441225e-04
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     return mass_rate / (density * 4.0 * PI * particle_radius * particle_radius)
 
 
 @ti.func
-def fget_first_order_mass_transport_via_system_state(  # r × species → k_ij
+def fget_first_order_mass_transport_via_system_state(
     particle_radius: ti.f64,
     molar_mass: ti.f64,
     mass_accommodation: ti.f64,
@@ -62,13 +135,44 @@ def fget_first_order_mass_transport_via_system_state(  # r × species → k_ij
     dynamic_viscosity: ti.f64,
     diffusion_coefficient: ti.f64,
 ) -> ti.f64:
+    """
+    Compute first-order mass transport coefficient from system state.
+
+    Arguments:
+        - particle_radius : Particle radius [m].
+        - molar_mass : Molar mass [kg/mol].
+        - mass_accommodation : Mass accommodation coefficient [unitless].
+        - temperature : Temperature [K].
+        - pressure : Pressure [Pa].
+        - dynamic_viscosity : Dynamic viscosity [Pa·s].
+        - diffusion_coefficient : Diffusion coefficient [m²/s].
+
+    Returns:
+        - First-order mass transport coefficient [kg/s].
+
+    Equation:
+        k = 4 π r D β(kn(λ, r, α))
+
+    Examples:
+        ```py
+        k = fget_first_order_mass_transport_via_system_state(
+            1e-6, 0.018, 0.9, 300, 101325, 1.8e-5, 2e-5)
+        # Output: ~2.26e-10
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     mean_free_path = fget_molecule_mean_free_path(
         molar_mass, temperature, pressure, dynamic_viscosity
     )
-    kn = fget_knudsen_number(mean_free_path, particle_radius)
-    vt = fget_vapor_transition_correction(kn, mass_accommodation)
+    knudsen_number = fget_knudsen_number(mean_free_path, particle_radius)
+    vapor_transition = fget_vapor_transition_correction(
+        knudsen_number, mass_accommodation
+    )
     return fget_first_order_mass_transport_k(
-        particle_radius, vt, diffusion_coefficient
+        particle_radius, vapor_transition, diffusion_coefficient
     )
 
 
@@ -140,7 +244,30 @@ def kget_first_order_mass_transport_via_system_state(
 def ti_get_first_order_mass_transport_k(
     particle_radius, vapor_transition, diffusion_coefficient=2e-5
 ):
-    """Taichi version of get_first_order_mass_transport_k."""
+    """
+    Taichi vectorized first-order mass transport coefficient.
+
+    Arguments:
+        - particle_radius : Array of particle radii [m].
+        - vapor_transition : Array of vapor transition corrections.
+        - diffusion_coefficient : Array or scalar diffusion coefficient [m²/s].
+
+    Returns:
+        - Array of first-order mass transport coefficients [kg/s].
+
+    Equation:
+        k = 4 π r D β
+
+    Examples:
+        ```py
+        k = ti_get_first_order_mass_transport_k([1e-6], [0.9], 2e-5)
+        # Output: array([2.26194671e-10])
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     import numpy as np
 
     if not (
@@ -176,7 +303,32 @@ def ti_get_first_order_mass_transport_k(
 def ti_get_mass_transfer_rate(
     pressure_delta, first_order_mass_transport, temperature, molar_mass
 ):
-    """Taichi version of get_mass_transfer_rate."""
+    """
+    Taichi vectorized mass transfer rate for condensation/evaporation.
+
+    Arguments:
+        - pressure_delta : Array of vapor pressure differences [Pa].
+        - first_order_mass_transport : Array of first-order mass transport [kg/s].
+        - temperature : Array or scalar temperature [K].
+        - molar_mass : Array or scalar molar mass [kg/mol].
+
+    Returns:
+        - Array of mass transfer rates [kg/s].
+
+    Equation:
+        ṁ = k ΔP M / (R T)
+
+    Examples:
+        ```py
+        m_rate = ti_get_mass_transfer_rate(
+            [10], [1e-10], 300, 0.018)
+        # Output: array([7.21982759e-14])
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     import numpy as np
 
     if not (
@@ -211,7 +363,31 @@ def ti_get_mass_transfer_rate(
 
 @register("get_radius_transfer_rate", backend="taichi")
 def ti_get_radius_transfer_rate(mass_rate, particle_radius, density):
-    """Taichi version of get_radius_transfer_rate."""
+    """
+    Taichi vectorized rate of change of particle radius.
+
+    Arguments:
+        - mass_rate : Array of mass transfer rates [kg/s].
+        - particle_radius : Array of particle radii [m].
+        - density : Array or scalar particle density [kg/m³].
+
+    Returns:
+        - Array of radius transfer rates [m/s].
+
+    Equation:
+        dr/dt = ṁ / (ρ 4 π r²)
+
+    Examples:
+        ```py
+        drdt = ti_get_radius_transfer_rate(
+            [1e-14], [1e-6], 1800)
+        # Output: array([4.42097064e-04])
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     import numpy as np
 
     if not (
@@ -243,20 +419,49 @@ def ti_get_radius_transfer_rate(mass_rate, particle_radius, density):
 def ti_get_first_order_mass_transport_via_system_state(
     particle_radius,
     molar_mass,
-    accommodation_coefficient,
+    mass_accommodation,
     temperature,
     pressure,
     dynamic_viscosity,
     diffusion_coefficient,
 ):
+    """
+    Taichi vectorized first-order mass transport coefficient from system state.
+
+    Arguments:
+        - particle_radius : Array of particle radii [m].
+        - molar_mass : Array of molar masses [kg/mol].
+        - mass_accommodation : Array of mass accommodation coefficients.
+        - temperature : Temperature [K].
+        - pressure : Pressure [Pa].
+        - dynamic_viscosity : Dynamic viscosity [Pa·s].
+        - diffusion_coefficient : Diffusion coefficient [m²/s].
+
+    Returns:
+        - 2D array of first-order mass transport coefficients [kg/s].
+
+    Equation:
+        k = 4 π r D β(kn(λ, r, α))
+
+    Examples:
+        ```py
+        k = ti_get_first_order_mass_transport_via_system_state(
+            [1e-6, 2e-6], [0.018], [0.9, 0.9], 300, 101325, 1.8e-5, 2e-5)
+        # Output: array([[...], [...]])
+        ```
+
+    References:
+        - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
+          and Physics. Wiley.
+    """
     import numpy as np
 
     particle_radius_array = np.atleast_1d(particle_radius).astype(np.float64)
     molar_mass_array = np.atleast_1d(molar_mass).astype(np.float64)
-    accommodation_coefficient_array = np.atleast_1d(accommodation_coefficient).astype(np.float64)
-    if accommodation_coefficient_array.size != particle_radius_array.size:
+    mass_accommodation_array = np.atleast_1d(mass_accommodation).astype(np.float64)
+    if mass_accommodation_array.size != particle_radius_array.size:
         raise ValueError(
-            "accommodation_coefficient must match particle_radius length"
+            "mass_accommodation must match particle_radius length"
         )
 
     n_particles, n_species = particle_radius_array.size, molar_mass_array.size
@@ -267,7 +472,7 @@ def ti_get_first_order_mass_transport_via_system_state(
 
     particle_radius_ti.from_numpy(particle_radius_array)
     molar_mass_ti.from_numpy(molar_mass_array)
-    mass_accommodation_ti.from_numpy(accommodation_coefficient_array)
+    mass_accommodation_ti.from_numpy(mass_accommodation_array)
 
     kget_first_order_mass_transport_via_system_state(
         particle_radius_ti,
