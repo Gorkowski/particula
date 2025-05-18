@@ -301,29 +301,3 @@ class TiGasSpecies:
         `new_value` must be a 1-D ti.ndarray with shape (n_species,).
         """
         self._set_concentration_kernel(new_value)
-
-    # meta dunders (str / len / + / +=) can remain python-side only
-
-
-@register("GasSpecies", backend="taichi")
-def ti_create_gas_species(*args, **kwargs):  # noqa: D401
-    """
-    Factory helper that instantiates :class:`GasSpecies` through the
-    backend-dispatch mechanism.
-
-    Arguments:
-        - *args, **kwargs : Forwarded verbatim to ``GasSpecies``.
-    Returns:
-        - GasSpecies : A newly constructed Taichi ``GasSpecies`` instance.
-
-    Examples:
-        ```py
-        from particula.backend.dispatch_register import use_backend
-        use_backend(name="taichi")          # ensure Taichi backend
-        gas = ti_create_gas_species("H2O", 0.018, concentration=1.0)
-        ```
-    """
-    return TiGasSpecies(*args, **kwargs)
-
-
-__all__ = ["TiGasSpecies", "ti_create_gas_species"]

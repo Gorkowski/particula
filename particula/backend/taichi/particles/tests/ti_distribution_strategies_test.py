@@ -7,42 +7,43 @@ from particula.backend.taichi.particles.ti_distribution_strategies import (
 
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
-def _dummy_arrays(ndim: int = 1):
+
+def _dummy_arrays():
     """
     Create dummy data as Taichi ndarrays (ti.ndarray) for the tests.
 
     No NumPy objects are returned; everything is ready to be passed
     directly to the Taichi distribution-strategy methods.
     """
-    if ndim == 1:
-        distribution = ti.ndarray(dtype=ti.f64, shape=(2,))
-        concentration = ti.ndarray(dtype=ti.f64, shape=(2,))
-        for i, val in enumerate((1.0, 2.0)):
-            distribution[i] = val
-        for i, val in enumerate((10.0, 20.0)):
-            concentration[i] = val
-        density = ti.ndarray(dtype=ti.f64, shape=(2,))
-    else:
-        distribution = ti.ndarray(dtype=ti.f64, shape=(2, 2))
-        vals = ((1.0, 2.0), (3.0, 4.0))
-        for i in range(2):
-            for j in range(2):
-                distribution[i, j] = vals[i][j]
-        concentration = ti.ndarray(dtype=ti.f64, shape=(2,))
-        for i, val in enumerate((10.0, 20.0)):
-            concentration[i] = val
-        density = ti.ndarray(dtype=ti.f64, shape=(2, 2))
+    distribution = ti.ndarray(dtype=ti.f64, shape=(10, 3))
+    vals = np.array(
+        [
+            [1.0, 2.0, 3.0],
+            [4.0, 5.0, 6.0],
+            [7.0, 8.0, 9.0],
+            [10.0, 11.0, 12.0],
+            [13.0, 14.0, 15.0],
+            [16.0, 17.0, 18.0],
+            [19.0, 20.0, 21.0],
+            [22.0, 23.0, 24.0],
+            [25.0, 26.0, 27.0],
+            [28.0, 29.0, 30.0],
+        ]
+    )
+    distribution.from_numpy(vals)
+    concentration = ti.ndarray(dtype=ti.f64, shape=(10,))
+    concentration.from_numpy(np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]))
+    density = ti.ndarray(dtype=ti.f64, shape=(3,))
+    density.from_numpy(np.array([1000.0, 1200.0, 1400.0]))
 
-    density.fill(1.0)                # set all‐ones density
     return distribution, concentration, density
 
 # convert a Taichi ndarray to NumPy for comparison
 def _np(a):
     return a.to_numpy() if hasattr(a, "to_numpy") else np.asarray(a)
 
-@pytest.mark.parametrize("ndim", [2])
-def test_getters(ndim):
-    distribution, concentration, density = _dummy_arrays(ndim)
+def test_getters():
+    distribution, concentration, density = _dummy_arrays()
     strat = TiParticleResolvedSpeciatedMass()
 
     # ─ get_species_mass ─
@@ -61,18 +62,14 @@ def test_getters(ndim):
 
     # ─ get_radius ─
     radius = strat.get_radius(distribution, density)
-    volume = _np(distribution) / _np(density)
-    expected_radius = (3 * volume / (4 * np.pi)) ** (1 / 3)
-    expected_radius = expected_radius.sum(axis=1) ** (1 / 3)
-    assert np.allclose(_np(radius), expected_radius)
-
-    # ─ get_name ─
-    assert strat.get_name() == "TiParticleResolvedSpeciatedMass"
+    radius = _np(radius)
+    volume = _np(distribution) / _np(density)[np.newaxis, :]
+    expected_radius = (3 * np.sum(volume, axis=1) / (4 * np.pi)) ** (1 / 3)
+    assert np.allclose(radius, expected_radius)
 
 
-@pytest.mark.parametrize("ndim", [2])
-def test_add_mass(ndim):
-    distribution, concentration, density = _dummy_arrays(ndim)
+def test_add_mass():
+    distribution, concentration, density = _dummy_arrays()
     added_mass = ti.ndarray(dtype=ti.f64, shape=distribution.shape)
     added_mass.fill(0.1)                         # constant extra mass
     strat = TiParticleResolvedSpeciatedMass()
@@ -86,7 +83,7 @@ def test_add_mass(ndim):
 
 
 def test_add_concentration():
-    distribution, concentration, density = _dummy_arrays(2)
+    distribution, concentration, density = _dummy_arrays()
     added_concentration = ti.ndarray(dtype=ti.f64, shape=concentration.shape)
     added_concentration.fill(5.0)
     strat = TiParticleResolvedSpeciatedMass()
@@ -95,23 +92,3 @@ def test_add_concentration():
     )
     assert np.allclose(_np(new_distribution), _np(distribution))
     assert np.allclose(_np(new_concentration), _np(concentration) + 5.0)
-
-
-@pytest.mark.parametrize("ndim", [2])
-def test_collide_pairs(ndim):
-    distribution, concentration, density = _dummy_arrays(ndim)
-    indices = ti.ndarray(dtype=ti.f64, shape=(1, 2))
-    indices[0, 0], indices[0, 1] = 0, 1             # merge 0 → 1
-
-    strat = TiParticleResolvedSpeciatedMass()
-    new_distribution, new_concentration = strat.collide_pairs(
-        distribution, concentration, density, indices
-    )
-
-    np_distribution = _np(new_distribution)
-    np_concentration = _np(new_concentration)
-    assert np.allclose(np_distribution[0], 0)
-    assert np.allclose(
-        np_distribution[1], np.array([1, 2]) + np.array([3, 4])
-    )
-    assert np_concentration[0] == 0

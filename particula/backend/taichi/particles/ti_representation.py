@@ -1,8 +1,10 @@
 """Taichi replacement for particula.particles.representation.ParticleRepresentation."""
+
 import taichi as ti
 import numpy as np
 from numpy.typing import NDArray
 from typing import Optional
+
 
 @ti.data_oriented
 class _FieldIO:
@@ -20,8 +22,11 @@ class _FieldIO:
     """
 
     @ti.kernel
-    def _assign_1d(self, field: ti.template(),
-                   array: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+    def _assign_1d(
+        self,
+        field: ti.template(),
+        array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    ):
         """
         Assign a 1D NumPy array to a Taichi field.
 
@@ -36,8 +41,11 @@ class _FieldIO:
             field[i] = array[i]
 
     @ti.kernel
-    def _assign_2d(self, field: ti.template(),
-                   array: ti.types.ndarray(dtype=ti.f64, ndim=2)):
+    def _assign_2d(
+        self,
+        field: ti.template(),
+        array: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    ):
         """
         Assign a 2D NumPy array to a Taichi field.
 
@@ -72,7 +80,9 @@ class _FieldIO:
         else:
             raise ValueError("Only 1-D/2-D supported")
 
+
 _field_io = _FieldIO()
+
 
 @ti.data_oriented
 class TiParticleRepresentation:
@@ -120,21 +130,31 @@ class TiParticleRepresentation:
 
     """
 
-    def __init__(self, strategy, activity, surface,
-                 distribution: NDArray[np.float64],
-                 density: NDArray[np.float64],
-                 concentration: NDArray[np.float64],
-                 charge: NDArray[np.float64], volume: float = 1.0):
-        self.strategy, self.activity, self.surface = strategy, activity, surface
-        self.distribution  = ti.field(ti.f64, shape=distribution.shape)
-        self.density       = ti.field(ti.f64, shape=density.shape)
+    def __init__(
+        self,
+        strategy,
+        activity,
+        surface,
+        distribution: NDArray[np.float64],
+        density: NDArray[np.float64],
+        concentration: NDArray[np.float64],
+        charge: NDArray[np.float64],
+        volume: float = 1.0,
+    ):
+        self.strategy, self.activity, self.surface = (
+            strategy,
+            activity,
+            surface,
+        )
+        self.distribution = ti.field(ti.f64, shape=distribution.shape)
+        self.density = ti.field(ti.f64, shape=density.shape)
         self.concentration = ti.field(ti.f64, shape=concentration.shape)
-        self.charge        = ti.field(ti.f64, shape=charge.shape)
-        self.volume        = ti.field(ti.f64, shape=())
-        _field_io.from_numpy(self.distribution,  distribution)
-        _field_io.from_numpy(self.density,       density)
+        self.charge = ti.field(ti.f64, shape=charge.shape)
+        self.volume = ti.field(ti.f64, shape=())
+        _field_io.from_numpy(self.distribution, distribution)
+        _field_io.from_numpy(self.density, density)
         _field_io.from_numpy(self.concentration, concentration)
-        _field_io.from_numpy(self.charge,        charge)
+        _field_io.from_numpy(self.charge, charge)
         self.volume[None] = float(volume)
 
     # ───── getters identical to NumPy class (return NumPy views/copies) ─────
@@ -161,9 +181,7 @@ class TiParticleRepresentation:
         Returns:
             - str : Name of the strategy.
         """
-        return (
-            self.strategy.get_name()
-        )
+        return self.strategy.get_name()
 
     def get_activity(self, clone: bool = False):
         """
@@ -188,9 +206,7 @@ class TiParticleRepresentation:
         Returns:
             - str : Name of the activity.
         """
-        return (
-            self.activity.get_name()
-        )
+        return self.activity.get_name()
 
     def get_surface(self, clone: bool = False):
         """
@@ -215,9 +231,7 @@ class TiParticleRepresentation:
         Returns:
             - str : Name of the surface.
         """
-        return (
-            self.surface.get_name()
-        )
+        return self.surface.get_name()
 
     def get_distribution(self, clone: bool = False):
         """
@@ -256,17 +270,14 @@ class TiParticleRepresentation:
             - np.ndarray : Effective density array.
         """
         densities = self.get_density()
-        if isinstance(densities, float) or np.size(densities) == 1:
-            eff = np.ones_like(self.get_species_mass()) * densities
-        else:
-            mass_total = self.get_mass()
-            weighted_mass = np.sum(self.get_species_mass() * densities, axis=1)
-            eff = np.divide(
-                weighted_mass,
-                mass_total,
-                where=mass_total != 0,
-                out=np.zeros_like(weighted_mass),
-            )
+        mass_total = self.get_mass().to_numpy()
+        weighted_mass = np.sum(self.get_species_mass() * densities, axis=1)
+        eff = np.divide(
+            weighted_mass,
+            mass_total,
+            where=mass_total != 0,
+            out=np.zeros_like(weighted_mass),
+        )
         return eff.copy() if clone else eff
 
     def get_mean_effective_density(self) -> float:
@@ -330,7 +341,7 @@ class TiParticleRepresentation:
         Returns:
             - np.ndarray : Charge array.
         """
-        charge_array = self.charge.to_numpy()
+        charge_array = self.charge
         return charge_array.copy() if clone else charge_array
 
     def get_volume(self, clone: bool = False):
@@ -359,7 +370,7 @@ class TiParticleRepresentation:
         species_mass = self.strategy.get_species_mass(
             self.get_distribution(), self.get_density()
         )
-        return species_mass.copy() if clone else species_mass
+        return species_mass.copy().to_numpy() if clone else species_mass
 
     def get_mass(self, clone: bool = False):
         """
@@ -423,14 +434,14 @@ class TiParticleRepresentation:
             self.get_distribution(),
             self.get_concentration(),
             self.get_density(),
-            added_mass
+            added_mass,
         )
         _field_io.from_numpy(self.distribution, distribution_array)
 
     def add_concentration(
         self,
         added_concentration: NDArray[np.float64],
-        added_distribution: Optional[NDArray[np.float64]] = None
+        added_distribution: Optional[NDArray[np.float64]] = None,
     ) -> None:
         """
         Add concentration (and optionally distribution) to the system in-place.
@@ -444,30 +455,15 @@ class TiParticleRepresentation:
         """
         if added_distribution is None:
             added_distribution = self.get_distribution()
-        distribution_array, concentration_array = self.strategy.add_concentration(
-            self.get_distribution(),
-            self.get_concentration(),
-            added_distribution=added_distribution,
-            added_concentration=added_concentration
+        distribution_array, concentration_array = (
+            self.strategy.add_concentration(
+                self.get_distribution(),
+                self.get_concentration(),
+                added_distribution=added_distribution,
+                added_concentration=added_concentration,
+            )
         )
         _field_io.from_numpy(self.distribution, distribution_array)
-        _field_io.from_numpy(self.concentration, concentration_array * self.volume[None])
-
-    def collide_pairs(self, indices: NDArray[np.int64]) -> None:
-        """
-        Collide pairs of particles, updating distribution and concentration.
-
-        Args:
-            - indices : Array of particle index pairs to collide.
-
-        Returns:
-            - None
-        """
-        distribution_array, concentration_array = self.strategy.collide_pairs(
-            self.get_distribution(),
-            self.get_concentration(),
-            self.get_density(),
-            indices,
+        _field_io.from_numpy(
+            self.concentration, concentration_array * self.volume[None]
         )
-        _field_io.from_numpy(self.distribution, distribution_array)
-        _field_io.from_numpy(self.concentration, concentration_array * self.volume[None])

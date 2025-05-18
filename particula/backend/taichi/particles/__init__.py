@@ -17,10 +17,7 @@ from .ti_activity_strategies import (          # noqa: F401
 
 # ─── Distribution strategies ───────────────────────────────────────────
 from .ti_distribution_strategies import (
-    MassBasedMovingBin            as TiMassBasedMovingBin,
-    RadiiBasedMovingBin           as TiRadiiBasedMovingBin,
-    SpeciatedMassMovingBin        as TiSpeciatedMassMovingBin,
-    ParticleResolvedSpeciatedMass as TiParticleResolvedSpeciatedMass,
+    TiParticleResolvedSpeciatedMass
 )
 
 # ─── Surface strategies ───────────────────────────────────────────
@@ -30,20 +27,3 @@ from .ti_surface_strategies import (
     SurfaceStrategyVolume  as TiSurfaceStrategyVolume,
 )
 
-from .ti_representation import TiParticleRepresentation          # NEW
-__all__ = [
-    "TiActivityIdealMolar",
-    "TiActivityIdealMass",
-    "TiActivityIdealVolume",
-    "TiActivityKappaParameter",
-    "TiMassBasedMovingBin",
-    "TiRadiiBasedMovingBin",
-    "TiSpeciatedMassMovingBin",
-    "TiParticleResolvedSpeciatedMass",
-]
-__all__.extend([
-    "TiSurfaceStrategyMolar",
-    "TiSurfaceStrategyMass",
-    "TiSurfaceStrategyVolume",
-])
-__all__.append("TiParticleRepresentation")                       # NEW

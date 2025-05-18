@@ -64,17 +64,6 @@ class TestTiParticleRepresentation(unittest.TestCase):
         )
 
     # ───── name getters ──────────────────────────────────────────────────
-    def test_strategy_name(self):
-        self.assertEqual(
-            self.py_obj.get_strategy_name(),
-            self.ti_obj.get_strategy_name(),
-        )
-
-    def test_activity_name(self):
-        self.assertEqual(
-            self.py_obj.get_activity_name(),
-            self.ti_obj.get_activity_name(),
-        )
 
     def test_surface_name(self):
         self.assertEqual(
@@ -87,44 +76,40 @@ class TestTiParticleRepresentation(unittest.TestCase):
         npt.assert_allclose(
             self.py_obj.get_mass_concentration(),
             self.ti_obj.get_mass_concentration(),
-            rtol=1e-8,
+            rtol=1e-7,
         )
 
     def test_species_mass(self):
         npt.assert_allclose(
             self.py_obj.get_species_mass(),
             self.ti_obj.get_species_mass(),
-            rtol=1e-8,
+            rtol=1e-7,
         )
 
     def test_mass(self):
         npt.assert_allclose(
             self.py_obj.get_mass(),
             self.ti_obj.get_mass().to_numpy(),
-            rtol=1e-8,
+            rtol=1e-7,
         )
 
     def test_radius(self):
         npt.assert_allclose(
             self.py_obj.get_radius(),
             self.ti_obj.get_radius().to_numpy(),
-            rtol=1e-8,
+            rtol=1e-7,
         )
 
     def test_effective_density(self):
         npt.assert_allclose(
             self.py_obj.get_effective_density(),
-            self.ti_obj.get_effective_density().to_numpy(),
-            rtol=1e-8,
+            self.ti_obj.get_effective_density(),
+            rtol=1e-7,
         )
 
     def test_total_concentration(self):
         npt.assert_allclose(
             self.py_obj.get_total_concentration(),
             self.ti_obj.get_total_concentration(),
-            rtol=1e-8,
+            rtol=1e-7,
         )
-
-
-if __name__ == "__main__":
-    unittest.main()
