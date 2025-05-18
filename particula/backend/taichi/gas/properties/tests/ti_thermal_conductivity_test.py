@@ -34,3 +34,9 @@ def test_kernel_direct():
         get_thermal_conductivity(temperature_array),
         rtol=1e-7, atol=0
     )
+
+def test_scalar_input():
+    temperature = 300.0
+    result = ti_get_thermal_conductivity(temperature)
+    expected = get_thermal_conductivity(temperature)
+    npt.assert_allclose(result, expected, rtol=1e-7, atol=0)

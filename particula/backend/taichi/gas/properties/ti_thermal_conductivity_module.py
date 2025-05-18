@@ -93,7 +93,7 @@ def ti_get_thermal_conductivity(
     Taichi-accelerated wrapper for air thermal conductivity (NumPy ⇄ Taichi).
 
     Arguments:
-        - temperature : float or NDArray[np.float64], absolute temperature [K].
+        - temperature : float, list-like, or NDArray[np.float64], absolute temperature [K].
 
     Returns:
         - κ : float or NDArray[np.float64], thermal conductivity [W m⁻¹ K⁻¹].
@@ -113,10 +113,8 @@ def ti_get_thermal_conductivity(
         - Bergman, T.L., Lavine, A.S., Incropera, F.P., DeWitt, D.P.,
           "Fundamentals of Heat and Mass Transfer," 8th Edition, Wiley, 2020.
     """
-    if not isinstance(temperature, np.ndarray):
-        raise TypeError("Taichi backend expects NumPy arrays for the input.")
-
-    temperature_array = np.atleast_1d(temperature)
+    # accept float, list-like or NumPy array
+    temperature_array = np.atleast_1d(temperature).astype(np.float64)
     n_values = temperature_array.size
 
     temperature_field = ti.ndarray(dtype=ti.f64, shape=n_values)
