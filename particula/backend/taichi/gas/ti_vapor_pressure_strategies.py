@@ -42,7 +42,6 @@ from particula.backend.taichi.gas.properties import (
 )
 from particula.backend.dispatch_register import register
 
-ti.init(default_fp=ti.f64)
 
 GAS_CONSTANT = 8.31446261815324  # J/(mol·K)
 

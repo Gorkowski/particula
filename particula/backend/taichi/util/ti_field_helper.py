@@ -21,7 +21,7 @@ class FieldIO:
     def _assign_1d(
         self,
         field: ti.template(),
-        array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        array: ti.types.ndarray(ndim=1),
     ):
         """
         Assign a 1D NumPy array to a Taichi field.
@@ -40,7 +40,7 @@ class FieldIO:
     def _assign_2d(
         self,
         field: ti.template(),
-        array: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        array: ti.types.ndarray(ndim=2),
     ):
         """
         Assign a 2D NumPy array to a Taichi field.

@@ -13,18 +13,12 @@ import numpy as np
 from typing import Union
 from numpy.typing import NDArray
 
-from particula.backend.dispatch_register import register
 from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     ConstantVaporPressureStrategy,
     AntoineVaporPressureStrategy,
     WaterBuckStrategy,
     ClausiusClapeyronStrategy,
 )
-
-# from particula.backend.taichi.gas.properties import (
-#     fget_partial_pressure,          # element-wise helper
-# )
-ti.init(default_fp=ti.f64)  # safe default
 
 
 @ti.data_oriented

@@ -1,10 +1,12 @@
 """Benchmark CondensationIsothermal.step for an ever-increasing number of
 particles (10 species fixed)."""
+
 import os
 import json
 import numpy as np
-import particula as par          # << NEW – pure-python helpers
+import particula as par  # << NEW – pure-python helpers
 import taichi as ti
+
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 from particula.backend.benchmark import (
@@ -31,13 +33,15 @@ from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     WaterBuckStrategy,
     ConstantVaporPressureStrategy,
 )
-from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies \
-    import TiCondensationIsothermal
+from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies import (
+    TiCondensationIsothermal,
+)
 
 # python (NumPy-only) condensation
 from particula.dynamics.condensation.condensation_strategies import (
     CondensationIsothermal as PyCondensationIsothermal,
 )
+
 
 def _build_taichi_condensation_isothermal(
     molar_mass: np.ndarray,
@@ -64,10 +68,13 @@ def _build_taichi_condensation_isothermal(
     cond.accommodation_coefficient = alpha_ti
     return cond
 
+
 def _build_particle_and_gas(n_particles: int, n_species: int = 10):
     # --- particle block --------------------------------------------------
     rng = np.random.default_rng(0)
-    distribution = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    distribution = (
+        np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    )
     densities = np.linspace(1_000.0, 1_500.0, n_species)
     concentration = np.ones(n_particles)
     charge = np.zeros(n_particles)
@@ -76,13 +83,17 @@ def _build_particle_and_gas(n_particles: int, n_species: int = 10):
     activity = ActivityKappaParameter(
         kappa=np.zeros(n_species),
         density=densities,
-        molar_mass=np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species),
+        molar_mass=np.linspace(
+            0.018, 0.018 + 0.002 * (n_species - 1), n_species
+        ),
         water_index=0,
     )
     surface = TiSurfaceStrategyMolar(
         surface_tension=np.full(n_species, 0.072),
         density=densities,
-        molar_mass=np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species),
+        molar_mass=np.linspace(
+            0.018, 0.018 + 0.002 * (n_species - 1), n_species
+        ),
     )
     particle = TiParticleRepresentation(
         strategy,
@@ -98,15 +109,22 @@ def _build_particle_and_gas(n_particles: int, n_species: int = 10):
     # --- gas block -------------------------------------------------------
     gas = TiGasSpecies(
         name=np.array([f"X{i}" for i in range(n_species)]),
-        molar_mass=np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species),
+        molar_mass=np.linspace(
+            0.018, 0.018 + 0.002 * (n_species - 1), n_species
+        ),
         vapor_pressure_strategy=[
-            WaterBuckStrategy() if i == 0 else ConstantVaporPressureStrategy(100.0 + i * 50.0)
+            (
+                WaterBuckStrategy()
+                if i == 0
+                else ConstantVaporPressureStrategy(100.0 + i * 50.0)
+            )
             for i in range(n_species)
         ],
         partitioning=True,
         concentration=np.ones(n_species),
     )
     return particle, gas
+
 
 def make_step_callable(particle, gas, cond):
     def _inner():
@@ -117,7 +135,9 @@ def make_step_callable(particle, gas, cond):
             pressure=101_325.0,
             time_step=1.0,
         )
+
     return _inner
+
 
 def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     """
@@ -149,13 +169,15 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     )
     particle = (
         par.particles.ResolvedParticleMassRepresentationBuilder()
-        .set_distribution_strategy(par.particles.ParticleResolvedSpeciatedMass())
+        .set_distribution_strategy(
+            par.particles.ParticleResolvedSpeciatedMass()
+        )
         .set_activity_strategy(activity)
         .set_surface_strategy(surface)
         .set_mass(mass, "kg")
         .set_density(densities, "kg/m^3")
         .set_charge(0)
-        .set_volume(1.0, "m^3")          # arbitrary parcel volume
+        .set_volume(1.0, "m^3")  # arbitrary parcel volume
         .build()
     )
 
@@ -163,9 +185,14 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     vp_strategies = [
         par.gas.VaporPressureFactory().get_strategy(
             "water_buck" if i == 0 else "constant",
-            None
-            if i == 0
-            else {"vapor_pressure": 100.0 + i * 50.0, "vapor_pressure_units": "Pa"},
+            (
+                None
+                if i == 0
+                else {
+                    "vapor_pressure": 100.0 + i * 50.0,
+                    "vapor_pressure_units": "Pa",
+                }
+            ),
         )
         for i in range(n_species)
     ]
@@ -181,8 +208,10 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
 
     return particle, gas_species
 
+
 def make_python_step_callable(particle, gas, cond):
     """Return a callable that executes cond.step once."""
+
     def _inner():
         cond.step(
             particle=particle,
@@ -191,14 +220,20 @@ def make_python_step_callable(particle, gas, cond):
             pressure=101_325.0,
             time_step=1.0,
         )
+
     return _inner
+
 
 if __name__ == "__main__":
     N_SPECIES = 10
-    PARTICLE_COUNTS = np.logspace(1, 6, num=10, dtype=np.int64)  # 10^1 to 10^5 particles
+    PARTICLE_COUNTS = np.logspace(
+        1, 6, num=10, dtype=np.int64
+    )  # 10^1 to 10^5 particles
 
     # build a single condensation object (species count is fixed)
-    molar_mass_vec = np.linspace(0.018, 0.018 + 0.002 * (N_SPECIES - 1), N_SPECIES)
+    molar_mass_vec = np.linspace(
+        0.018, 0.018 + 0.002 * (N_SPECIES - 1), N_SPECIES
+    )
     condensation_ti = _build_taichi_condensation_isothermal(molar_mass_vec)
 
     # build a single Python-side CondensationIsothermal object
@@ -209,7 +244,7 @@ if __name__ == "__main__":
     )
 
     rows = []
-    csv_header = None                           # will be created in first loop
+    csv_header = None  # will be created in first loop
 
     for n_particles in PARTICLE_COUNTS:
         # ----- Taichi objects & stats ---------------------------------------
@@ -233,12 +268,10 @@ if __name__ == "__main__":
         if csv_header is None:
             taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
             python_headers = ["python_" + h for h in stats_py["array_headers"]]
-            csv_header = ["array_length", *taichi_headers, *python_headers]
+            csv_header = ["array_length", *python_headers, *taichi_headers]
 
         # ----- collect row ---------------------------------------------------
-        rows.append(
-            [n_particles, *stats_ti["array_stats"], *stats_py["array_stats"]]
-        )
+        rows.append([n_particles, *stats_py["array_stats"], *stats_ti["array_stats"]])
 
     # ── output directory ───────────────────────────────────────────────────
     output_directory = os.path.join(
@@ -246,16 +279,24 @@ if __name__ == "__main__":
     )
     os.makedirs(output_directory, exist_ok=True)
 
-    csv_file = os.path.join(output_directory, "condensation_isothermal_step_benchmark.csv")
+    csv_file = os.path.join(
+        output_directory, "condensation_isothermal_step_benchmark.csv"
+    )
     save_combined_csv(csv_file, csv_header, rows)
 
     plot_throughput_vs_array_length(
         csv_header,
         rows,
         "TiCondensation.step throughput vs #particles (10 species)",
-        os.path.join(output_directory, "condensation_isothermal_step_benchmark.png"),
+        os.path.join(
+            output_directory, "condensation_isothermal_step_benchmark.png"
+        ),
     )
 
     # also stash the machine / environment info
-    with open(os.path.join(output_directory, "system_info.json"), "w", encoding="utf-8") as fh:
+    with open(
+        os.path.join(output_directory, "system_info.json"),
+        "w",
+        encoding="utf-8",
+    ) as fh:
         json.dump(get_system_info(), fh, indent=2)

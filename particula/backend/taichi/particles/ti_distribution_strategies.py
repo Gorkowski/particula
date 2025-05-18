@@ -32,9 +32,6 @@ References:
 
 import taichi as ti
 import numpy as np
-from particula.backend.dispatch_register import register
-
-ti.init(arch=ti.cpu, default_fp=ti.f64)  # guard against forgotten init
 
 
 # ── generic Taichi helpers (no NumPy) ────────────────────────────────
