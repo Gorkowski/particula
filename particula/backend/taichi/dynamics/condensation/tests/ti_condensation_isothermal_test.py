@@ -17,11 +17,19 @@ def test_first_order_mass_transport_parity():
     ti_condensation_isothermal = TiCondensationIsothermal(molar_mass=molar_mass)
     py_condensation_isothermal = PyCondensationIsothermal(molar_mass=molar_mass)
 
-    mass_transport_coefficient_ti = ti_condensation_isothermal.first_order_mass_transport(
-        particle_radius, temperature, pressure
+    mass_transport_coefficient_ti = (
+        ti_condensation_isothermal.first_order_mass_transport(
+            particle_radius,
+            temperature,
+            pressure,
+        )
     )
-    mass_transport_coefficient_py = py_condensation_isothermal.first_order_mass_transport(
-        particle_radius, temperature, pressure
+    mass_transport_coefficient_py = (
+        py_condensation_isothermal.first_order_mass_transport(
+            particle_radius,
+            temperature,
+            pressure,
+        )
     )
 
     np.testing.assert_allclose(
@@ -33,7 +41,15 @@ def test_kernel_runs():
     """Smoke test: kernels compile & return finite results."""
     particle_radius = np.array([1e-7, 1e-7], dtype=np.float64)
     ti_condensation_isothermal = TiCondensationIsothermal(molar_mass=0.018)
-    mass_transport_coefficient = ti_condensation_isothermal.first_order_mass_transport(
-        particle_radius, 300.0, 101325.0
+    mass_transport_coefficient = (
+        ti_condensation_isothermal.first_order_mass_transport(
+            particle_radius,
+            300.0,
+            101_325.0,
+        )
     )
-    assert np.all(np.isfinite(mass_transport_coefficient)) and mass_transport_coefficient.shape == particle_radius.shape
+
+    assert (
+        np.all(np.isfinite(mass_transport_coefficient))
+        and mass_transport_coefficient.shape == particle_radius.shape
+    )
