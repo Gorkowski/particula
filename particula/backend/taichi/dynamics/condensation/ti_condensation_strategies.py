@@ -257,11 +257,20 @@ class TiCondensationIsothermal:
 
         # --- Kelvin term (computed in Python/NumPy space) ------------------
         kelvin_np = particle.surface.kelvin_term(
-            radius=radius,                          # NumPy array
-            molar_mass=mm_np,                       # use NumPy version
-            mass_concentration=mass_np,             # NumPy (n_part, n_spec)
+            radius=radius,              # NumPy (n_particles,)
+            molar_mass=mm_np,           # NumPy (n_species,)
+            mass_concentration=mass_np, # NumPy (n_particles, n_species)
             temperature=temperature,
         )
+
+        # Ensure Kelvin term has shape (n_particles, n_species)
+        if kelvin_np.ndim == 1:                 # returned per-particle only
+            kelvin_np = np.repeat(
+                kelvin_np[:, None], mm_np.shape[0], axis=1
+            ).astype(np.float64)
+        else:                                   # already 2-D: just cast
+            kelvin_np = kelvin_np.astype(np.float64)
+
         kelvin_ti = ti.ndarray(dtype=ti.f64, shape=kelvin_np.shape)
         kelvin_ti.from_numpy(kelvin_np)
 
