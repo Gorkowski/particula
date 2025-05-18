@@ -332,15 +332,16 @@ class TiCondensationIsothermal:
         pressure_delta = self.calculate_pressure_delta(
             particle, gas_species, temperature, radius_np
         )                                          # Ti array
-        dm_dt = ti.ndarray(dtype=ti.f64, shape=pressure_delta.shape)
+        dm_dt_ti = ti.ndarray(dtype=ti.f64, shape=pressure_delta.shape)
         self._kget_mass_transfer_rate(
             radius_ti, float(temperature), float(pressure),
             float(dynamic_viscosity),
             self.molar_mass,
             self.accommodation_coefficient,
-            pressure_delta, dm_dt
+            pressure_delta, dm_dt_ti
         )
-        return dm_dt
+        dm_dt_np = dm_dt_ti.to_numpy()          # convert for callers / tests
+        return dm_dt_np
 
     # ──────────────────── API: concentration-scaled rate ───────────────────
     def rate(
@@ -350,14 +351,16 @@ class TiCondensationIsothermal:
         temperature: float,
         pressure: float,
     ):
-        dm_dt = self.mass_transfer_rate(
+        dm_dt_np = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
-        scaled = ti.ndarray(dtype=ti.f64, shape=dm_dt.shape)
-        self._kscale_rate(dm_dt, particle.concentration, scaled)
+        dm_dt_ti = ti.ndarray(dtype=ti.f64, shape=dm_dt_np.shape)
+        dm_dt_ti.from_numpy(dm_dt_np)
+        scaled = ti.ndarray(dtype=ti.f64, shape=dm_dt_ti.shape)
+        self._kscale_rate(dm_dt_ti, particle.concentration, scaled)
         return scaled
 
     # ─────────────────────────── API: step ─────────────────────────────────
@@ -369,19 +372,20 @@ class TiCondensationIsothermal:
         pressure: float,
         time_step: float,
     ):
-        dm_dt = self.mass_transfer_rate(
+        dm_dt_np = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
-        mass_change = ti.ndarray(dtype=ti.f64, shape=dm_dt.shape)
-        self._kapply_mass_change(dm_dt, float(time_step), mass_change)
+        dm_dt_ti = ti.ndarray(dtype=ti.f64, shape=dm_dt_np.shape)
+        dm_dt_ti.from_numpy(dm_dt_np)
+        mass_change = ti.ndarray(dtype=ti.f64, shape=dm_dt_ti.shape)
+        self._kapply_mass_change(dm_dt_ti, float(time_step), mass_change)
 
-        particle.add_mass(added_mass=mass_change.to_numpy())   # strategy expects NumPy
+        mass_change_np = np.asarray(mass_change.to_numpy(), dtype=np.float64)
+        particle.add_mass(added_mass=mass_change_np)
 
         if self.update_gases:
-            gas_species.add_concentration(
-                -mass_change.to_numpy().sum(axis=0)
-            )
+            gas_species.add_concentration(-mass_change_np.sum(axis=0))
         return particle, gas_species
