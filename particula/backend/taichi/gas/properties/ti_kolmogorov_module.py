@@ -90,7 +90,7 @@ def kget_kolmogorov_time(
     kinematic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     turbulent_dissipation: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
-) -> None:
+):
     """
     Vectorized Kolmogorov time kernel.
 
@@ -112,7 +112,7 @@ def kget_kolmogorov_length(
     kinematic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     turbulent_dissipation: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
-) -> None:
+):
     """
     Vectorized Kolmogorov length kernel.
 
@@ -134,7 +134,7 @@ def kget_kolmogorov_velocity(
     kinematic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     turbulent_dissipation: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
-) -> None:
+):
     """
     Vectorized Kolmogorov velocity kernel.
 
