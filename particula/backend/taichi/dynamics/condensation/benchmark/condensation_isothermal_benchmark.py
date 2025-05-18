@@ -33,6 +33,11 @@ from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
 from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies \
     import TiCondensationIsothermal
 
+# python (NumPy-only) condensation
+from particula.dynamics.condensation.condensation_strategies import (
+    CondensationIsothermal as PyCondensationIsothermal,
+)
+
 def _build_taichi_condensation_isothermal(
     molar_mass: np.ndarray,
     diffusion_coefficient: float = 2.0e-5,
@@ -113,6 +118,18 @@ def make_step_callable(particle, gas, cond):
         )
     return _inner
 
+def make_python_step_callable(radii: np.ndarray, cond):
+    """Return a callable that loops over radii and calls
+    cond.first_order_mass_transport once per particle."""
+    def _inner():
+        for r in radii:
+            cond.first_order_mass_transport(
+                particle_radius=r,
+                temperature=298.15,
+                pressure=101_325.0,
+            )
+    return _inner
+
 if __name__ == "__main__":
     N_SPECIES = 10
     PARTICLE_COUNTS = [10, 100, 1_000, 10_000, 50_000, 100_000]  # adjust/extend as desired
@@ -121,24 +138,41 @@ if __name__ == "__main__":
     molar_mass_vec = np.linspace(0.018, 0.018 + 0.002 * (N_SPECIES - 1), N_SPECIES)
     condensation_ti = _build_taichi_condensation_isothermal(molar_mass_vec)
 
+    # build a single Python-side CondensationIsothermal object
+    condensation_py = PyCondensationIsothermal(
+        molar_mass=0.018,              # water
+        diffusion_coefficient=2.0e-5,
+        accommodation_coefficient=1.0,
+    )
+
     rows = []
+    csv_header = None                           # will be created in first loop
 
     for n_particles in PARTICLE_COUNTS:
+        # ----- Taichi objects & stats ---------------------------------------
         particle, gas = _build_particle_and_gas(n_particles, N_SPECIES)
         stats_ti = get_function_benchmark(
             make_step_callable(particle, gas, condensation_ti),
             ops_per_call=1,
         )
-        rows.append([
-            n_particles,
-            *stats_ti["array_stats"],
-        ])
 
-    taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
-    csv_header = [
-        "array_length",
-        *taichi_headers,
-    ]
+        # ----- Python objects & stats ---------------------------------------
+        radii = np.full(n_particles, 1.0e-7)    # 100-nm particles
+        stats_py = get_function_benchmark(
+            make_python_step_callable(radii, condensation_py),
+            ops_per_call=1,
+        )
+
+        # ----- build header only once ---------------------------------------
+        if csv_header is None:
+            taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
+            python_headers = ["python_" + h for h in stats_py["array_headers"]]
+            csv_header = ["array_length", *taichi_headers, *python_headers]
+
+        # ----- collect row ---------------------------------------------------
+        rows.append(
+            [n_particles, *stats_ti["array_stats"], *stats_py["array_stats"]]
+        )
 
     # ── output directory ───────────────────────────────────────────────────
     output_directory = os.path.join(
