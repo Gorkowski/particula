@@ -65,5 +65,6 @@ def calculate_radius():
 
 
 if __name__ == "__main__":
-    # run the kernel to calculate the radius
     calculate_radius()
+    for i, r in enumerate(radii.to_numpy()):
+        print(f"Particle {i}: Radius = {r}")
