@@ -4,8 +4,6 @@ import particula as par
 
 from particula.backend.taichi.particles.ti_surface_strategies import (
     TiSurfaceStrategyMolar   as TiMolar,
-    TiSurfaceStrategyMass    as TiMass,
-    TiSurfaceStrategyVolume  as TiVol,
 )
 
 ti.init(arch=ti.cpu, default_fp=ti.f64)      # only needs to be done once
