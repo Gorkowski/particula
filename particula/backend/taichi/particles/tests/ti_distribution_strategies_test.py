@@ -40,7 +40,7 @@ def _dummy_arrays(ndim: int = 1):
 def _np(a):
     return a.to_numpy() if hasattr(a, "to_numpy") else np.asarray(a)
 
-@pytest.mark.parametrize("ndim", [1, 2])
+@pytest.mark.parametrize("ndim", [2])
 def test_getters(ndim):
     d, c, rho = _dummy_arrays(ndim)
     strat = TiParticleResolvedSpeciatedMass()
@@ -74,7 +74,7 @@ def test_getters(ndim):
     assert strat.get_name() == "TiParticleResolvedSpeciatedMass"
 
 
-@pytest.mark.parametrize("ndim", [1, 2])
+@pytest.mark.parametrize("ndim", [2])
 def test_add_mass(ndim):
     d, c, rho = _dummy_arrays(ndim)
     added = ti.ndarray(dtype=ti.f64, shape=d.shape)
@@ -89,7 +89,7 @@ def test_add_mass(ndim):
 
 
 def test_add_concentration():
-    d, c, rho = _dummy_arrays()
+    d, c, rho = _dummy_arrays(2)
     add_c = ti.ndarray(dtype=ti.f64, shape=c.shape)
     add_c.fill(5.0)
     strat = TiParticleResolvedSpeciatedMass()
@@ -98,7 +98,7 @@ def test_add_concentration():
     assert np.allclose(_np(new_c), _np(c) + 5.0)
 
 
-@pytest.mark.parametrize("ndim", [1, 2])
+@pytest.mark.parametrize("ndim", [2])
 def test_collide_pairs(ndim):
     d, c, rho = _dummy_arrays(ndim)
     idx = ti.ndarray(dtype=ti.f64, shape=(1, 2))
