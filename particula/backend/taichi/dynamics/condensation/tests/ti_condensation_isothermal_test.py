@@ -10,22 +10,30 @@ from particula.dynamics.condensation.condensation_strategies \
 
 def test_first_order_mass_transport_parity():
     """Ensure Ti implementation matches NumPy reference."""
-    radius = np.array([1e-7, 2e-7, 5e-8], dtype=np.float64)
+    particle_radius = np.array([1e-7, 2e-7, 5e-8], dtype=np.float64)
     temperature, pressure = 298.15, 101_325.0
     molar_mass = 0.018  # kg mol⁻¹
 
-    ti_impl = TiCondensationIsothermal(molar_mass=molar_mass)
-    py_impl = PyCondensationIsothermal(molar_mass=molar_mass)
+    ti_condensation_isothermal = TiCondensationIsothermal(molar_mass=molar_mass)
+    py_condensation_isothermal = PyCondensationIsothermal(molar_mass=molar_mass)
 
-    k_ti = ti_impl.first_order_mass_transport(radius, temperature, pressure)
-    k_py = py_impl.first_order_mass_transport(radius, temperature, pressure)
+    mass_transport_coefficient_ti = ti_condensation_isothermal.first_order_mass_transport(
+        particle_radius, temperature, pressure
+    )
+    mass_transport_coefficient_py = py_condensation_isothermal.first_order_mass_transport(
+        particle_radius, temperature, pressure
+    )
 
-    np.testing.assert_allclose(k_ti, k_py, rtol=1e-7)
+    np.testing.assert_allclose(
+        mass_transport_coefficient_ti, mass_transport_coefficient_py, rtol=1e-7
+    )
 
 
 def test_kernel_runs():
     """Smoke test: kernels compile & return finite results."""
-    radius = np.array([1e-7, 1e-7], dtype=np.float64)
-    ti_impl = TiCondensationIsothermal(molar_mass=0.018)
-    k = ti_impl.first_order_mass_transport(radius, 300.0, 101325.0)
-    assert np.all(np.isfinite(k)) and k.shape == radius.shape
+    particle_radius = np.array([1e-7, 1e-7], dtype=np.float64)
+    ti_condensation_isothermal = TiCondensationIsothermal(molar_mass=0.018)
+    mass_transport_coefficient = ti_condensation_isothermal.first_order_mass_transport(
+        particle_radius, 300.0, 101325.0
+    )
+    assert np.all(np.isfinite(mass_transport_coefficient)) and mass_transport_coefficient.shape == particle_radius.shape
