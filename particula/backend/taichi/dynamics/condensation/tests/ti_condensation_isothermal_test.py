@@ -132,5 +132,3 @@ class TiCondensationIsothermalTest(unittest.TestCase):
         self.assertEqual(dm_dt.shape, (self.n_particles, self.n_species))
         self.assertTrue(np.all(np.isfinite(dm_dt.to_numpy())))
 
-if __name__ == "__main__":
-    unittest.main()
