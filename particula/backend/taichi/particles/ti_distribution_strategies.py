@@ -713,6 +713,8 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - NDArray[np.float64] : Species mass array [kg].
         """
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -735,6 +737,8 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - NDArray[np.float64] or float : Total mass per bin/particle [kg].
         """
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
@@ -755,6 +759,9 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - float : Total mass [kg].
         """
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
         return np.sum(self.get_mass(distribution, density) * concentration)
 
     def get_radius(self, distribution, density):
@@ -770,6 +777,8 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - NDArray[np.float64] : Radii [m].
         """
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         if distribution.ndim == 1:
             volumes = distribution / density
         else:
@@ -793,6 +802,10 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - Tuple[NDArray, NDArray] : (updated distribution, concentration)
         """
+        distribution   = _to_numpy(distribution)
+        concentration  = _to_numpy(concentration)
+        density        = _to_numpy(density)
+        added_mass     = _to_numpy(added_mass)
         if distribution.ndim == 2:
             concentration_expand = concentration[:, np.newaxis]
         else:
@@ -829,6 +842,10 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - Tuple[NDArray, NDArray] : (distribution, updated concentration)
         """
+        distribution        = _to_numpy(distribution)
+        concentration       = _to_numpy(concentration)
+        added_distribution  = _to_numpy(added_distribution)
+        added_concentration = _to_numpy(added_concentration)
         rescaled = False
         if np.all(added_concentration == 1):
             rescaled = True
@@ -887,6 +904,10 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         Returns:
             - Tuple[NDArray, NDArray] : (updated distribution, concentration)
         """
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
+        indices       = _to_numpy(indices)
         small_index = indices[:, 0]
         large_index = indices[:, 1]
         if distribution.ndim == 1:
