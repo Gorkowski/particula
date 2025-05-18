@@ -25,7 +25,7 @@ def test_scalar_species_partial_pressure():
     temperature_k = 298.15
     np.testing.assert_allclose(
         python_species.get_partial_pressure(temperature_k),
-        taichi_species.get_partial_pressure(temperature_k),
+        taichi_species.get_partial_pressure(temperature_k).to_numpy(),
         rtol=1e-8,
     )
 
@@ -49,7 +49,7 @@ def test_vector_species_partial_pressure():
     temperature_k = 298.15  # K
     np.testing.assert_allclose(
         python_species.get_partial_pressure(temperature_k),
-        taichi_species.get_partial_pressure(temperature_k),
+        taichi_species.get_partial_pressure(temperature_k).to_numpy(),
         rtol=1e-8,
     )
 
@@ -79,17 +79,51 @@ def test_vector_species_list_strategy():
     # pure vapor pressure must agree
     np.testing.assert_allclose(
         python_species.get_pure_vapor_pressure(temperature_k),
-        taichi_species.get_pure_vapor_pressure(temperature_k),
+        taichi_species.get_pure_vapor_pressure(temperature_k).to_numpy(),
         rtol=1e-8,
     )
 
     # partial pressure must also agree
     np.testing.assert_allclose(
         python_species.get_partial_pressure(temperature_k),
-        taichi_species.get_partial_pressure(temperature_k),
+        taichi_species.get_partial_pressure(temperature_k).to_numpy(),
         rtol=1e-8,
     )
 
     # shapes should equal the number of species
     assert python_species.get_pure_vapor_pressure(temperature_k).shape == (2,)
     assert taichi_species.get_pure_vapor_pressure(temperature_k).shape == (2,)
+
+
+def test_concentration_mutators_with_ti_arrays():
+    names           = np.array(["H2O", "CO2"])
+    molar_masses    = np.array([0.018, 0.044])
+    init_conc_np    = np.array([1e-3, 2e-3])
+
+    species = TiSpecies(names, molar_masses, TiVP(2330.0), True, init_conc_np)
+
+    # --- add_concentration ----------------------------------------------
+    delta = ti.ndarray(dtype=ti.f64, shape=(2,))
+    delta[0] = 1e-4
+    delta[1] = -5e-4      # will be clipped to zero for the second entry
+
+    species.add_concentration(delta)
+
+    np.testing.assert_allclose(
+        species.get_concentration().to_numpy(),
+        np.maximum(0.0, init_conc_np + np.array([1e-4, -5e-4])),
+        rtol=1e-12,
+    )
+
+    # --- set_concentration ----------------------------------------------
+    new_vals = ti.ndarray(dtype=ti.f64, shape=(2,))
+    new_vals[0] = 0.0
+    new_vals[1] = 3e-3
+
+    species.set_concentration(new_vals)
+
+    np.testing.assert_allclose(
+        species.get_concentration().to_numpy(),
+        np.array([0.0, 3e-3]),
+        rtol=1e-12,
+    )
