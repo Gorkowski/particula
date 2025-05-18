@@ -57,3 +57,37 @@ def test_particle_resolved_mass_concentration_parity():
         ti_obj.get_mass_concentration(),
         rtol=1e-12,
     )
+
+# ADD BELOW the existing two tests
+def test_representation_method_parity():
+    # single-species moving-bin
+    distribution   = np.array([1e-18, 3e-18])
+    density        = np.array([1000.0])
+    concentration  = np.array([1e6, 2e6])
+    charge         = np.zeros_like(concentration)
+    added_mass     = np.array([1e-19, 2e-19])
+
+    py = PyRep(
+        MassBasedMovingBin(), ActivityIdealMass(), SurfaceStrategyMass(),
+        distribution, density, concentration, charge,
+    )
+    ti = TiRep(
+        TiMassBasedMovingBin(), TiActivityIdealMass(), TiSurfaceStrategyMass(),
+        distribution, density, concentration, charge,
+    )
+
+    # ─── parity of getter methods ────────────────────────────────
+    npt.assert_allclose(py.get_species_mass(),        ti.get_species_mass(),        rtol=1e-12)
+    npt.assert_allclose(py.get_mass(),                ti.get_mass(),                rtol=1e-12)
+    npt.assert_allclose(py.get_radius(),              ti.get_radius(),              rtol=1e-12)
+    npt.assert_allclose(py.get_effective_density(),   ti.get_effective_density(),   rtol=1e-12)
+    assert np.isclose(py.get_mean_effective_density(),
+                      ti.get_mean_effective_density(), rtol=1e-12)
+    npt.assert_allclose(py.get_total_concentration(), ti.get_total_concentration(), rtol=1e-12)
+
+    # ─── mutate both objects identically & re-check ──────────────
+    py.add_mass(added_mass)
+    ti.add_mass(added_mass)
+
+    npt.assert_allclose(py.get_distribution(),        ti.get_distribution(),        rtol=1e-12)
+    npt.assert_allclose(py.get_mass_concentration(),  ti.get_mass_concentration(),  rtol=1e-12)
