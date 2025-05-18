@@ -81,7 +81,7 @@ if __name__ == "__main__":
         help=(
             "Path to a Python file OR to a directory that contains Python files. "
             "If a directory is supplied, every *.py file in that directory "
-            "(non-recursive) is converted one-by-one."
+            "(recursively) is converted one-by-one, skipping any __init__.py files."
         ),
     )
     parser.add_argument(
@@ -94,7 +94,9 @@ if __name__ == "__main__":
 
     target = args.path.resolve()
     if target.is_dir():
-        for py_file in target.glob("*_test.py"):  # non-recursive
+        for py_file in target.rglob("*.py"):      # recursive
+            if py_file.name == "__init__.py":     # skip package initializers
+                continue
             convert(py_file, args.prompt)
     else:
         convert(target, args.prompt)
