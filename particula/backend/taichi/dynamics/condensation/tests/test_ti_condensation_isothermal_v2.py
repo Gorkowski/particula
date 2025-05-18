@@ -3,10 +3,13 @@ import taichi as ti
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 # ─── Implementations under test ────────────────────────────────────────────
-from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies_v2 \
-    import CondensationIsothermal as TiCondensationIsothermal
-from particula.dynamics.condensation.condensation_strategies \
-    import CondensationIsothermal as PyCondensationIsothermal
+from particula.backend.taichi.dynamics.condensation.\
+ti_condensation_strategies_v2 import (
+    CondensationIsothermal as TiCondensationIsothermal,
+)
+from particula.dynamics.condensation.condensation_strategies import (
+    CondensationIsothermal as PyCondensationIsothermal,
+)
 
 
 # ─── Helper to build a *working* v2 object (class ctor is mis-typed) ───────
@@ -15,8 +18,24 @@ def _build_taichi_condensation_isothermal(
     diffusion_coefficient: float = 2.0e-5,
     accommodation_coefficient: float = 1.0,
 ):
-    """Return a TiCondensationIsothermal instance with properly
-    initialised Taichi fields so its kernels can be called directly."""
+    """
+    Construct a Taichi-backed CondensationIsothermal instance.
+
+    The object is returned with all numerical parameters pre-loaded into
+    Taichi fields so that its private kernels can be called directly from
+    the test-suite.
+
+    Args:
+        - molar_mass : Molar mass of the condensing species [kg mol⁻¹].
+        - diffusion_coefficient : Gas-phase diffusion coefficient
+          [m² s⁻¹].
+        - accommodation_coefficient : Mass-accommodation coefficient
+          (dimensionless).
+
+    Returns:
+        - TiCondensationIsothermal : Ready-to-use Taichi condensation
+          object.
+    """
     taichi_condensation = TiCondensationIsothermal(
         molar_mass=np.array([molar_mass], dtype=np.float64),
         diffusion_coefficient=np.array(diffusion_coefficient, dtype=np.float64),
@@ -40,7 +59,12 @@ def _build_taichi_condensation_isothermal(
 
 # ─── Tests ─────────────────────────────────────────────────────────────────
 def test_first_order_mass_transport_kernel_parity():
-    """Kernel result must match the reference NumPy implementation."""
+    """
+    Kernel result must match the NumPy reference.
+
+    Compares Taichi output with the pure-Python implementation to
+    machine precision.
+    """
     particle_radius = np.array([1e-7, 2e-7, 5e-6, 3e-5], dtype=np.float64)
     temperature, pressure = 298.15, 101_325.0
     dynamic_viscosity = 1.85e-5
@@ -60,7 +84,11 @@ def test_first_order_mass_transport_kernel_parity():
 
 
 def test_kernel_runs_v2():
-    """Smoke test: v2 kernel compiles & returns finite outputs."""
+    """
+    Smoke test for the v2 kernel.
+
+    Verifies that compilation succeeds and the result is finite.
+    """
     particle_radius = np.array([1e-7, 1e-7], dtype=np.float64)
     taichi_condensation = _build_taichi_condensation_isothermal()
     dynamic_viscosity = 1.85e-5
