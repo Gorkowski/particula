@@ -11,22 +11,30 @@ def fget_thermal_conductivity(temperature: ti.f64) -> ti.f64:
 @ti.kernel
 def kget_thermal_conductivity(
     temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result:      ti.types.ndarray(dtype=ti.f64, ndim=1),
+    thermal_conductivity: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     """Kernel for vectorized thermal conductivity."""
-    for i in range(result.shape[0]):
-        result[i] = fget_thermal_conductivity(temperature[i])
+    for i in range(thermal_conductivity.shape[0]):
+        thermal_conductivity[i] = fget_thermal_conductivity(temperature[i])
 
 @register("get_thermal_conductivity", backend="taichi")
 def ti_get_thermal_conductivity(temperature):
     """Taichi-accelerated wrapper for thermal conductivity."""
     if not isinstance(temperature, np.ndarray):
         raise TypeError("Taichi backend expects NumPy arrays for the input.")
-    t = np.atleast_1d(temperature)
-    n = t.size
-    t_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    t_ti.from_numpy(t)
-    kget_thermal_conductivity(t_ti, res_ti)
-    out = res_ti.to_numpy()
-    return out.item() if out.size == 1 else out
+
+    temperature_array = np.atleast_1d(temperature)
+    n_values = temperature_array.size
+
+    temperature_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+    thermal_conductivity_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+
+    temperature_field.from_numpy(temperature_array)
+    kget_thermal_conductivity(temperature_field, thermal_conductivity_field)
+
+    thermal_conductivity_array = thermal_conductivity_field.to_numpy()
+    return (
+        thermal_conductivity_array.item()
+        if thermal_conductivity_array.size == 1
+        else thermal_conductivity_array
+    )
