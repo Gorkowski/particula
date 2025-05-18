@@ -14,52 +14,114 @@ ti.init(arch=ti.cpu)
 
 def test_wrappers_vs_numpy():
     # vector inputs
-    kt  = np.array([0.38, 0.40])
-    rl  = np.array([400., 600.])
-    av  = np.array([0.05, 0.06])
-    u   = np.array([0.35, 0.40])
-    nu  = np.array([1.5e-5, 1.8e-5])
-    eps = np.array([0.10, 0.12])
-    lam = par.gas.get_taylor_microscale(u, nu, eps)
+    kolmogorov_time_array = np.array([0.38, 0.40])
+    taylor_microscale_reynolds_number_array = np.array([400., 600.])
+    acceleration_variance_array = np.array([0.05, 0.06])
+    fluid_rms_velocity_array = np.array([0.35, 0.40])
+    kinematic_viscosity_array = np.array([1.5e-5, 1.8e-5])
+    turbulent_dissipation_array = np.array([0.10, 0.12])
+    taylor_microscale_array = par.gas.get_taylor_microscale(
+        fluid_rms_velocity_array, kinematic_viscosity_array, turbulent_dissipation_array
+    )
 
     np.testing.assert_allclose(
-        ti_get_lagrangian_taylor_microscale_time(kt, rl, av),
-        par.gas.get_lagrangian_taylor_microscale_time(kt, rl, av),
+        ti_get_lagrangian_taylor_microscale_time(
+            kolmogorov_time_array,
+            taylor_microscale_reynolds_number_array,
+            acceleration_variance_array,
+        ),
+        par.gas.get_lagrangian_taylor_microscale_time(
+            kolmogorov_time_array,
+            taylor_microscale_reynolds_number_array,
+            acceleration_variance_array,
+        ),
     )
     np.testing.assert_allclose(
-        ti_get_taylor_microscale(u, nu, eps),
-        lam,
+        ti_get_taylor_microscale(
+            fluid_rms_velocity_array,
+            kinematic_viscosity_array,
+            turbulent_dissipation_array,
+        ),
+        taylor_microscale_array,
     )
     np.testing.assert_allclose(
-        ti_get_taylor_microscale_reynolds_number(u, lam, nu),
-        par.gas.get_taylor_microscale_reynolds_number(u, lam, nu),
+        ti_get_taylor_microscale_reynolds_number(
+            fluid_rms_velocity_array,
+            taylor_microscale_array,
+            kinematic_viscosity_array,
+        ),
+        par.gas.get_taylor_microscale_reynolds_number(
+            fluid_rms_velocity_array,
+            taylor_microscale_array,
+            kinematic_viscosity_array,
+        ),
     )
 
 def test_kernels_direct():
-    n = 3
-    kt, rl, av = [np.full(n, v) for v in (0.40, 500., 0.05)]
-    u, nu, eps = [np.full(n, v) for v in (0.35, 1.5e-5, 0.10)]
-    lam = par.gas.get_taylor_microscale(u, nu, eps)
+    n_points = 3
+    kolmogorov_time_array, taylor_microscale_reynolds_number_array, acceleration_variance_array = [
+        np.full(n_points, v) for v in (0.40, 500., 0.05)
+    ]
+    fluid_rms_velocity_array, kinematic_viscosity_array, turbulent_dissipation_array = [
+        np.full(n_points, v) for v in (0.35, 1.5e-5, 0.10)
+    ]
+    taylor_microscale_array = par.gas.get_taylor_microscale(
+        fluid_rms_velocity_array, kinematic_viscosity_array, turbulent_dissipation_array
+    )
 
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
 
     # lagrangian time kernel
-    kt_ti = ti.ndarray(ti.f64, n); rl_ti = ti.ndarray(ti.f64, n); av_ti = ti.ndarray(ti.f64, n)
-    kt_ti.from_numpy(kt); rl_ti.from_numpy(rl); av_ti.from_numpy(av)
-    kget_lagrangian_taylor_microscale_time(kt_ti, rl_ti, av_ti, res_ti)
-    np.testing.assert_allclose(res_ti.to_numpy(),
-        par.gas.get_lagrangian_taylor_microscale_time(kt, rl, av))
+    kolmogorov_time_ti = ti.ndarray(ti.f64, n_points)
+    taylor_microscale_reynolds_number_ti = ti.ndarray(ti.f64, n_points)
+    acceleration_variance_ti = ti.ndarray(ti.f64, n_points)
+    kolmogorov_time_ti.from_numpy(kolmogorov_time_array)
+    taylor_microscale_reynolds_number_ti.from_numpy(taylor_microscale_reynolds_number_array)
+    acceleration_variance_ti.from_numpy(acceleration_variance_array)
+    kget_lagrangian_taylor_microscale_time(
+        kolmogorov_time_ti,
+        taylor_microscale_reynolds_number_ti,
+        acceleration_variance_ti,
+        result_ti,
+    )
+    np.testing.assert_allclose(
+        result_ti.to_numpy(),
+        par.gas.get_lagrangian_taylor_microscale_time(
+            kolmogorov_time_array,
+            taylor_microscale_reynolds_number_array,
+            acceleration_variance_array,
+        ),
+    )
 
     # taylor microscale kernel
-    u_ti = ti.ndarray(ti.f64, n); nu_ti = ti.ndarray(ti.f64, n); eps_ti = ti.ndarray(ti.f64, n)
-    u_ti.from_numpy(u); nu_ti.from_numpy(nu); eps_ti.from_numpy(eps)
-    kget_taylor_microscale(u_ti, nu_ti, eps_ti, res_ti)
-    np.testing.assert_allclose(res_ti.to_numpy(), lam)
+    fluid_rms_velocity_ti = ti.ndarray(ti.f64, n_points)
+    kinematic_viscosity_ti = ti.ndarray(ti.f64, n_points)
+    turbulent_dissipation_ti = ti.ndarray(ti.f64, n_points)
+    fluid_rms_velocity_ti.from_numpy(fluid_rms_velocity_array)
+    kinematic_viscosity_ti.from_numpy(kinematic_viscosity_array)
+    turbulent_dissipation_ti.from_numpy(turbulent_dissipation_array)
+    kget_taylor_microscale(
+        fluid_rms_velocity_ti,
+        kinematic_viscosity_ti,
+        turbulent_dissipation_ti,
+        result_ti,
+    )
+    np.testing.assert_allclose(result_ti.to_numpy(), taylor_microscale_array)
 
     # Reynolds number kernel
-    lam_ti = ti.ndarray(ti.f64, n); lam_ti.from_numpy(lam)
-    kget_taylor_microscale_reynolds_number(u_ti, lam_ti, nu_ti, res_ti)
+    taylor_microscale_ti = ti.ndarray(ti.f64, n_points)
+    taylor_microscale_ti.from_numpy(taylor_microscale_array)
+    kget_taylor_microscale_reynolds_number(
+        fluid_rms_velocity_ti,
+        taylor_microscale_ti,
+        kinematic_viscosity_ti,
+        result_ti,
+    )
     np.testing.assert_allclose(
-        res_ti.to_numpy(),
-        par.gas.get_taylor_microscale_reynolds_number(u, lam, nu),
+        result_ti.to_numpy(),
+        par.gas.get_taylor_microscale_reynolds_number(
+            fluid_rms_velocity_array,
+            taylor_microscale_array,
+            kinematic_viscosity_array,
+        ),
     )
