@@ -25,7 +25,7 @@ import taichi as ti
 import numpy as np
 from particula.backend.dispatch_register import register
 
-_MMHG_TO_PA = 133.32238741499998
+MMHG_TO_PA = 133.32238741499998
 
 # ── Antoine equation ──────────────────────────────────────────────
 @ti.func
@@ -43,7 +43,7 @@ def fget_antoine_vapor_pressure(
 
     Equation:
         log₁₀(P) = A - B / (T - C)
-        P = 10^(A - B / (T - C)) × 133.322 Pa
+        P = 10^(A - B / (T - C)) × MMHG_TO_PA Pa
 
     Arguments:
         - constant_a : Antoine constant A (unitless)
@@ -65,7 +65,7 @@ def fget_antoine_vapor_pressure(
     """
     vapor_pressure_log = constant_a - (constant_b / (temperature - constant_c))
     vapor_pressure = ti.pow(10.0, vapor_pressure_log)
-    return vapor_pressure * _MMHG_TO_PA
+    return vapor_pressure * MMHG_TO_PA
 
 @ti.kernel
 def kget_antoine_vapor_pressure(

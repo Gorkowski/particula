@@ -1,10 +1,11 @@
 """
 Vapor pressure modules for calculating the vapor pressure of a gas.
 """
-
 from typing import Union
 import numpy as np
 from numpy.typing import NDArray
+
+MMHG_TO_PA = 133.32238741499998  # mmHg → Pa conversion factor
 
 from particula.util.constants import GAS_CONSTANT
 from particula.util.validate_inputs import validate_inputs
@@ -14,16 +15,16 @@ from particula.backend.dispatch_register import backend_dispatch
 @backend_dispatch
 @validate_inputs(
     {
-        "a": "finite",
-        "b": "finite",
-        "c": "finite",
+        "constant_a": "finite",
+        "constant_b": "finite",
+        "constant_c": "finite",
         "temperature": "positive",
     }
 )
 def get_antoine_vapor_pressure(
-    a: Union[float, NDArray[np.float64]],
-    b: Union[float, NDArray[np.float64]],
-    c: Union[float, NDArray[np.float64]],
+    constant_a: Union[float, NDArray[np.float64]],
+    constant_b: Union[float, NDArray[np.float64]],
+    constant_c: Union[float, NDArray[np.float64]],
     temperature: Union[float, NDArray[np.float64]],
 ) -> Union[float, NDArray[np.float64]]:
     """
@@ -32,15 +33,15 @@ def get_antoine_vapor_pressure(
     The Antoine equation relates the logarithm of vapor pressure to
     temperature for a pure substance.
 
-    - P = 10^(a - b / (T - c)) × 133.322
+    - P = 10^(constant_a - constant_b / (T - constant_c)) × MMHG_TO_PA
         - P is Vapor pressure [Pa].
-        - a, b, c is Antoine equation parameters (dimensionless).
+        - constant_a, constant_b, constant_c are Antoine equation parameters (dimensionless).
         - T is Temperature [K].
 
     Arguments:
-        - a : Antoine parameter a (dimensionless).
-        - b : Antoine parameter b (dimensionless).
-        - c : Antoine parameter c (dimensionless).
+        - constant_a : Antoine parameter A (dimensionless).
+        - constant_b : Antoine parameter B (dimensionless).
+        - constant_c : Antoine parameter C (dimensionless).
         - temperature : Temperature in Kelvin [K].
 
     Returns:
@@ -60,9 +61,9 @@ def get_antoine_vapor_pressure(
         - Kelvin conversion details:
           https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118135341.app1
     """
-    vapor_pressure_log = a - (b / (temperature - c))
-    vapor_pressure = 10**vapor_pressure_log
-    return vapor_pressure * 133.32238741499998  # Convert mmHg to Pa
+    vapor_pressure_log = constant_a - (constant_b / (temperature - constant_c))
+    vapor_pressure = 10 ** vapor_pressure_log
+    return vapor_pressure * MMHG_TO_PA
 
 
 @backend_dispatch
@@ -139,12 +140,12 @@ def get_buck_vapor_pressure(
     Uses separate empirical formulas below 0 °C and above 0 °C to compute
     water vapor pressure.
 
-    - For T < 0 °C, as
-        p = 6.1115 × exp( (23.036 - T/333.7) × T / (279.82 + T ) ) × 100
-    - For T ≥ 0 °C, as
-        p = 6.1121 × exp( (18.678 - T/234.5) × T / (257.14 + T ) ) × 100
-        - p is Vapor pressure [Pa].
-        - T is Temperature in Celsius [°C] (converted internally from Kelvin).
+    - For temperature_celsius < 0 °C:
+        vapor_pressure = 6.1115 × exp( (23.036 - temperature_celsius/333.7) × temperature_celsius / (279.82 + temperature_celsius) ) × 100
+    - For temperature_celsius ≥ 0 °C:
+        vapor_pressure = 6.1121 × exp( (18.678 - temperature_celsius/234.5) × temperature_celsius / (257.14 + temperature_celsius) ) × 100
+        - vapor_pressure is Vapor pressure [Pa].
+        - temperature_celsius is Temperature in Celsius [°C] (converted internally from Kelvin).
 
     Arguments:
         - temperature : Temperature in Kelvin [K].
@@ -163,18 +164,26 @@ def get_buck_vapor_pressure(
         - Buck, A. L., (1981)
         - https://en.wikipedia.org/wiki/Arden_Buck_equation
     """
-    temp = np.array(temperature) - 273.15  # Convert to Celsius
-    temp_below_freezing = temp < 0.0
-    temp_above_freezing = temp >= 0.0
+    temperature_celsius = np.asarray(temperature) - 273.15
+    mask_below_freezing = temperature_celsius < 0.0
+    mask_above_freezing = ~mask_below_freezing
 
     vapor_pressure_below_freezing = (
-        6.1115 * np.exp((23.036 - temp / 333.7) * temp / (279.82 + temp)) * 100
-    )  # hPa to Pa
+        6.1115 * np.exp(
+            (23.036 - temperature_celsius / 333.7)
+            * temperature_celsius
+            / (279.82 + temperature_celsius)
+        ) * 100
+    )
     vapor_pressure_above_freezing = (
-        6.1121 * np.exp((18.678 - temp / 234.5) * temp / (257.14 + temp)) * 100
-    )  # hPa to Pa
+        6.1121 * np.exp(
+            (18.678 - temperature_celsius / 234.5)
+            * temperature_celsius
+            / (257.14 + temperature_celsius)
+        ) * 100
+    )
 
     return (
-        vapor_pressure_below_freezing * temp_below_freezing
-        + vapor_pressure_above_freezing * temp_above_freezing
+        vapor_pressure_below_freezing * mask_below_freezing
+        + vapor_pressure_above_freezing * mask_above_freezing
     )
