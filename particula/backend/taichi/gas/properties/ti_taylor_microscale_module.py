@@ -1,7 +1,6 @@
 """Taichi-accelerated Taylor microscale helpers."""
 import taichi as ti
 import numpy as np
-from particula.backend.dispatch_register import register
 
 @ti.func
 def fget_lagrangian_taylor_microscale_time(
@@ -229,7 +228,7 @@ def kget_taylor_microscale_reynolds_number(
             kinematic_viscosity[i],
         )
 
-@register("get_lagrangian_taylor_microscale_time", backend="taichi")
+
 def ti_get_lagrangian_taylor_microscale_time(
     kolmogorov_time, taylor_microscale_reynolds_number, acceleration_variance
 ):
@@ -296,7 +295,6 @@ def ti_get_lagrangian_taylor_microscale_time(
     result_np = result_ti_array.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
-@register("get_taylor_microscale", backend="taichi")
 def ti_get_taylor_microscale(
     fluid_rms_velocity, kinematic_viscosity, turbulent_dissipation
 ):
@@ -360,7 +358,6 @@ def ti_get_taylor_microscale(
     result_np = result_ti_array.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
-@register("get_taylor_microscale_reynolds_number", backend="taichi")
 def ti_get_taylor_microscale_reynolds_number(
     fluid_rms_velocity, taylor_microscale, kinematic_viscosity
 ):

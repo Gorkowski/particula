@@ -23,7 +23,6 @@ from particula.util.constants import (
 from particula.gas.properties.dynamic_viscosity import (
     get_dynamic_viscosity,
 )
-from particula.backend.dispatch_register import backend_dispatch
 
 logger = logging.getLogger("particula")  # get instance of logger
 

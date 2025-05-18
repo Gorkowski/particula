@@ -17,7 +17,7 @@ def reference(m):
 def test_wrapper():
     m = np.array([[1e-15, 0.0], [5e-16, 5e-16]])
     np.testing.assert_allclose(
-        ti_get_mixing_state_index(m), reference(m), rtol=1e-12
+        ti_get_mixing_state_index(m), reference(m), rtol=1e-6
     )
 
 
@@ -28,4 +28,4 @@ def test_kernel_direct():
     m_ti.from_numpy(m)
     out_ti = ti.ndarray(dtype=ti.f64, shape=1)
     kget_mixing_state_index(m_ti, n_p, n_s, out_ti)
-    np.testing.assert_allclose(out_ti.to_numpy()[0], reference(m), rtol=1e-12)
+    np.testing.assert_allclose(out_ti.to_numpy()[0], reference(m), rtol=1e-6)

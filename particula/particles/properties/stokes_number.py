@@ -6,7 +6,6 @@ from typing import Union
 from numpy.typing import NDArray
 import numpy as np
 
-from particula.backend.dispatch_register import backend_dispatch
 from particula.util.validate_inputs import validate_inputs
 
 

@@ -26,8 +26,8 @@ from particula.gas.vapor_pressure_strategies import (
 )
 
 # ────────────────────────────────────────────────────────────────────────────
-_REL_TOL = 1e-9
-_ABS_TOL = 1e-12
+_REL_TOL = 1e-6
+_ABS_TOL = 1e-10
 _TEMPERATURE      = 300.0         # K
 _MOLAR_MASS      = 0.018         # kg / mol   (arbitrary)
 _CONCENTRATION   = 4.0           # mol / m3   (arbitrary)

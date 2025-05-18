@@ -9,22 +9,20 @@ MMHG_TO_PA = 133.32238741499998  # mmHg → Pa conversion factor
 
 from particula.util.constants import GAS_CONSTANT
 from particula.util.validate_inputs import validate_inputs
-from particula.backend.dispatch_register import backend_dispatch
 
 
-@backend_dispatch
 @validate_inputs(
     {
-        "constant_a": "finite",
-        "constant_b": "finite",
-        "constant_c": "finite",
+        "a": "finite",
+        "b": "finite",
+        "c": "finite",
         "temperature": "positive",
     }
 )
 def get_antoine_vapor_pressure(
-    constant_a: Union[float, NDArray[np.float64]],
-    constant_b: Union[float, NDArray[np.float64]],
-    constant_c: Union[float, NDArray[np.float64]],
+    a: Union[float, NDArray[np.float64]],
+    b: Union[float, NDArray[np.float64]],
+    c: Union[float, NDArray[np.float64]],
     temperature: Union[float, NDArray[np.float64]],
 ) -> Union[float, NDArray[np.float64]]:
     """
@@ -61,12 +59,11 @@ def get_antoine_vapor_pressure(
         - Kelvin conversion details:
           https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118135341.app1
     """
-    vapor_pressure_log = constant_a - (constant_b / (temperature - constant_c))
+    vapor_pressure_log = a - (b / (temperature - c))
     vapor_pressure = 10 ** vapor_pressure_log
     return vapor_pressure * MMHG_TO_PA
 
 
-@backend_dispatch
 @validate_inputs(
     {
         "latent_heat": "positive",
@@ -125,7 +122,6 @@ def get_clausius_clapeyron_vapor_pressure(
     )
 
 
-@backend_dispatch
 @validate_inputs(
     {
         "temperature": "positive",

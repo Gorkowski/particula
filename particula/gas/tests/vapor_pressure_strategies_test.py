@@ -27,7 +27,8 @@ def test_antoine_vapor_pressure_strategy():
     expected_pressure = (
         10 ** (a - (b / (temperature - c))) * 133.32238741499998
     )
-    assert strategy.pure_vapor_pressure(temperature) == pytest.approx(
+    result = strategy.pure_vapor_pressure(temperature)
+    assert strategy.pure_vapor_pressure(temperature) ==pytest.approx(
         expected_pressure
     )
 

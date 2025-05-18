@@ -20,7 +20,6 @@ from particula.util.constants import (
     SUTHERLAND_CONSTANT,
 )
 from particula.util.validate_inputs import validate_inputs
-from particula.backend.dispatch_register import backend_dispatch
 
 logger = logging.getLogger("particula")  # get instance of logger
 

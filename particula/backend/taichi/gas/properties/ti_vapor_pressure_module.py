@@ -23,7 +23,6 @@ References:
 """
 import taichi as ti
 import numpy as np
-from particula.backend.dispatch_register import register
 
 MMHG_TO_PA = 133.32238741499998
 
@@ -106,7 +105,6 @@ def kget_antoine_vapor_pressure(
             constant_a[i], constant_b[i], constant_c[i], temperature[i]
         )
 
-@register("get_antoine_vapor_pressure", backend="taichi")
 def ti_get_antoine_vapor_pressure(constant_a, constant_b, constant_c, temperature):
     """
     Taichi backend wrapper for Antoine vapor pressure.
@@ -252,7 +250,6 @@ def kget_clausius_clapeyron_vapor_pressure(
             gas_constant,
         )
 
-@register("get_clausius_clapeyron_vapor_pressure", backend="taichi")
 def ti_get_clausius_clapeyron_vapor_pressure(
     latent_heat,
     temperature_initial,
@@ -384,7 +381,6 @@ def kget_buck_vapor_pressure(
     for i in range(result.shape[0]):
         result[i] = fget_buck_vapor_pressure(temperature[i])
 
-@register("get_buck_vapor_pressure", backend="taichi")
 def ti_get_buck_vapor_pressure(temperature):
     """
     Taichi backend wrapper for Buck vapor pressure.

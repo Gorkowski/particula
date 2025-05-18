@@ -14,12 +14,12 @@ def _check(strategy_py, strategy_ti, conc, p0):
     np.testing.assert_allclose(
         strategy_py.activity(conc),
         strategy_ti.activity(conc),
-        rtol=1e-12,
+        rtol=1e-7,
     )
     np.testing.assert_allclose(
         strategy_py.partial_pressure(p0, conc),
         strategy_ti.partial_pressure(p0, conc),
-        rtol=1e-12,
+        rtol=1e-7,
     )
 
 

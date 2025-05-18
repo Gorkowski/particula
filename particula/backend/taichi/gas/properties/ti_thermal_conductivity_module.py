@@ -25,7 +25,6 @@ from typing import Union
 from numpy.typing import NDArray
 import taichi as ti
 import numpy as np
-from particula.backend.dispatch_register import register
 
 @ti.func
 def fget_thermal_conductivity(temperature: ti.f64) -> ti.f64:
@@ -85,7 +84,6 @@ def kget_thermal_conductivity(
     for i in range(thermal_conductivity.shape[0]):
         thermal_conductivity[i] = fget_thermal_conductivity(temperature[i])
 
-@register("get_thermal_conductivity", backend="taichi")
 def ti_get_thermal_conductivity(
     temperature: Union[float, NDArray[np.float64]]
 ) -> Union[float, NDArray[np.float64]]:

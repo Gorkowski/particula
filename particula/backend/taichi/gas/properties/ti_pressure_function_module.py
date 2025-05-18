@@ -56,7 +56,6 @@ References:
 import taichi as ti
 import numpy as np
 from particula.util.constants import GAS_CONSTANT
-from particula.backend.dispatch_register import register
 
 _GAS_CONSTANT = float(GAS_CONSTANT)    # avoid python → kernel capture
 
@@ -185,7 +184,6 @@ def kget_saturation_ratio_from_pressure(
             partial_pressure[i], pure_vapor_pressure[i]
         )
 
-@register("get_partial_pressure", backend="taichi")
 def ti_get_partial_pressure(concentration, molar_mass, temperature):
     """
     Vectorized Taichi wrapper for partial pressure calculation.
@@ -243,7 +241,6 @@ def ti_get_partial_pressure(concentration, molar_mass, temperature):
     return result_np.item() if result_np.size == 1 else result_np
 
 
-@register("get_saturation_ratio_from_pressure", backend="taichi")
 def ti_get_saturation_ratio_from_pressure(partial_pressure, pure_vapor_pressure):
     """
     Vectorized Taichi wrapper for saturation ratio calculation.

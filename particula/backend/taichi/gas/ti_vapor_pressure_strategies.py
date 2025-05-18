@@ -499,19 +499,3 @@ class WaterBuckStrategy(_VaporPressureMixin):
         """
         return fget_buck_vapor_pressure(temperature)
 
-# ─────────────────────────────────────────────────────────────────────────────
-@register("ConstantVaporPressureStrategy", backend="taichi")
-def _build_constant(*args, **kwargs):
-    return ConstantVaporPressureStrategy(*args, **kwargs)
-
-@register("AntoineVaporPressureStrategy", backend="taichi")
-def _build_antoine(*args, **kwargs):
-    return AntoineVaporPressureStrategy(*args, **kwargs)
-
-@register("ClausiusClapeyronStrategy", backend="taichi")
-def _build_clausius_clapeyron(*args, **kwargs):
-    return ClausiusClapeyronStrategy(*args, **kwargs)
-
-@register("WaterBuckStrategy", backend="taichi")
-def _build_buck(*args, **kwargs):
-    return WaterBuckStrategy(*args, **kwargs)

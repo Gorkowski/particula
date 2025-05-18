@@ -30,7 +30,6 @@ References:
 import taichi as ti
 import numpy as np
 
-from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
 
 _GAS_CONSTANT = float(GAS_CONSTANT)
@@ -88,7 +87,6 @@ def kget_concentration_from_pressure(
             partial_pressure[i], molar_mass[i], temperature[i]
         )
 
-@register("get_concentration_from_pressure", backend="taichi")
 def ti_get_concentration_from_pressure(partial_pressure, molar_mass, temperature):
     """
     Taichi wrapper for get_concentration_from_pressure (vectorized).

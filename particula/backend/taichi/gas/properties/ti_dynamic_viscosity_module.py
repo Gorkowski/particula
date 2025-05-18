@@ -21,7 +21,6 @@ References:
 import taichi as ti
 import numpy as np
 
-from particula.backend.dispatch_register import register
 from particula.util.constants import (
     REF_TEMPERATURE_STP,
     REF_VISCOSITY_AIR_STP,
@@ -98,7 +97,6 @@ def kget_dynamic_viscosity(                     # 1-D only
         )
 
 # ── 5. public wrapper, backend registration ───────────────────────────
-@register("get_dynamic_viscosity", backend="taichi")
 def ti_get_dynamic_viscosity(
     temperature,
     reference_viscosity: float = REF_VISCOSITY_AIR_STP,

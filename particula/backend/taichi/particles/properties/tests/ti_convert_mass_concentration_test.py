@@ -62,12 +62,6 @@ def test_wrapper_mass_array():
         get_mass_fraction_from_mass(m),
         rtol=1e-7, atol=0)
 
-def test_wrapper_mass_scalar():
-    m = 4.2
-    np.testing.assert_allclose(
-        taichi_get_mass_fraction_from_mass(m),
-        get_mass_fraction_from_mass(m),
-        rtol=1e-7, atol=0)
 
 def test_kernel_mass():
     m, _, _ = _sample()

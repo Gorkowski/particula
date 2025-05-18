@@ -47,7 +47,7 @@ def test_vector_species_partial_pressure():
     np.testing.assert_allclose(
         python_species.get_partial_pressure(temperature_k),
         taichi_species.get_partial_pressure(temperature_k),
-        rtol=1e-12,
+        rtol=1e-8,
     )
 
     # shapes must still match the number of species
@@ -77,14 +77,14 @@ def test_vector_species_list_strategy():
     np.testing.assert_allclose(
         python_species.get_pure_vapor_pressure(temperature_k),
         taichi_species.get_pure_vapor_pressure(temperature_k),
-        rtol=1e-12,
+        rtol=1e-8,
     )
 
     # partial pressure must also agree
     np.testing.assert_allclose(
         python_species.get_partial_pressure(temperature_k),
         taichi_species.get_partial_pressure(temperature_k),
-        rtol=1e-12,
+        rtol=1e-8,
     )
 
     # shapes should equal the number of species

@@ -13,14 +13,14 @@ from particula.util.validate_inputs import validate_inputs
 @validate_inputs(
     {
         "kolmogorov_time": "positive",
-        "taylor_microscale_reynolds_number": "positive",
-        "acceleration_variance": "positive",
+        "re_lambda": "positive",
+        "accel_variance": "positive",
     }
 )
 def get_lagrangian_taylor_microscale_time(
     kolmogorov_time: Union[float, NDArray[np.float64]],
-    taylor_microscale_reynolds_number: Union[float, NDArray[np.float64]],
-    acceleration_variance: Union[float, NDArray[np.float64]],
+    re_lambda: Union[float, NDArray[np.float64]],
+    accel_variance: Union[float, NDArray[np.float64]],
 ) -> Union[float, NDArray[np.float64]]:
     """
     Calculate the Lagrangian Taylor microscale time.
@@ -32,14 +32,14 @@ def get_lagrangian_taylor_microscale_time(
     - τ_T = τ_k * (2 R_λ / (15^(1/2) a_o))^(1/2)
         - τ_T is Lagrangian Taylor microscale time [s]
         - τ_k (kolmogorov_time) is Kolmogorov time scale [s]
-        - R_λ (taylor_microscale_reynolds_number) is Taylor-microscale Reynolds number [-]
-        - a_o (acceleration_variance) is Normalized acceleration variance in isotropic
+        - R_λ (re_lambda) is Taylor-microscale Reynolds number [-]
+        - a_o (accel_variance) is Normalized acceleration variance in isotropic
             turbulence [-]
 
     Arguments:
         - kolmogorov_time : Kolmogorov time scale [s]
-        - taylor_microscale_reynolds_number : Taylor-microscale Reynolds number [-]
-        - acceleration_variance : Normalized acceleration variance in isotropic
+        - re_lambda : Taylor-microscale Reynolds number [-]
+        - accel_variance : Normalized acceleration variance in isotropic
             turbulence [-]
 
     Examples:
@@ -52,7 +52,7 @@ def get_lagrangian_taylor_microscale_time(
         - Lagrangian Taylor microscale time [s]
     """
     return kolmogorov_time * np.sqrt(
-        (2 * taylor_microscale_reynolds_number) / (15**0.5 * acceleration_variance)
+        (2 * re_lambda) / (15**0.5 * accel_variance)
     )
 
 
