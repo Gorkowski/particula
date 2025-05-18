@@ -2,7 +2,7 @@ import taichi as ti; ti.init(arch=ti.cpu, default_fp=ti.f64)
 import numpy as np, numpy.testing as npt
 
 from particula.particles.distribution_strategies import MassBasedMovingBin
-from particula.backend.taichi.particles.ti_distribution_strategies import TiMassBasedMovingBin
+from particula.backend.taichi.particles import TiMassBasedMovingBin
 from particula.particles.activity_strategies import ActivityIdealMass
 from particula.backend.taichi.particles.ti_activity_strategies import ActivityIdealMass as TiActivityIdealMass
 from particula.particles.surface_strategies import SurfaceStrategyMass
