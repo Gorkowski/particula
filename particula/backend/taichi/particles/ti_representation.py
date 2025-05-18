@@ -8,22 +8,22 @@ from particula.backend.dispatch_register import register
 @ti.data_oriented
 class _FieldIO:
     @ti.kernel
-    def _assign_1d(self, f: ti.template(),
-                   a: ti.types.ndarray(dtype=ti.f64, ndim=1)):
-        for i in f:
-            f[i] = a[i]
+    def _assign_1d(self, field: ti.template(),
+                   array: ti.types.ndarray(dtype=ti.f64, ndim=1)):
+        for i in field:
+            field[i] = array[i]
 
     @ti.kernel
-    def _assign_2d(self, f: ti.template(),
-                   a: ti.types.ndarray(dtype=ti.f64, ndim=2)):
-        for i, j in f:
-            f[i, j] = a[i, j]
+    def _assign_2d(self, field: ti.template(),
+                   array: ti.types.ndarray(dtype=ti.f64, ndim=2)):
+        for i, j in field:
+            field[i, j] = array[i, j]
 
-    def from_numpy(self, fld, arr):
-        if arr.ndim == 1:
-            self._assign_1d(fld, arr)
-        elif arr.ndim == 2:
-            self._assign_2d(fld, arr)
+    def from_numpy(self, field, array):
+        if array.ndim == 1:
+            self._assign_1d(field, array)
+        elif array.ndim == 2:
+            self._assign_2d(field, array)
         else:
             raise ValueError("Only 1-D/2-D supported")
 
@@ -59,9 +59,11 @@ class TiParticleRepresentation:                            # public Taichi class
     def get_surface(self, clone=False):           return self.surface if not clone else self.surface.__copy__()
     def get_surface_name(self) -> str:            return self.surface.get_name()
     def get_distribution(self, clone=False):      # field → numpy
-        arr = self.distribution.to_numpy();  return arr.copy() if clone else arr
+        distribution_array = self.distribution.to_numpy()
+        return distribution_array.copy() if clone else distribution_array
     def get_density(self, clone=False):
-        arr = self.density.to_numpy();       return arr.copy() if clone else arr
+        density_array = self.density.to_numpy()
+        return density_array.copy() if clone else density_array
 
     # ───── density utilities ────────────────────────────────────────────
     def get_effective_density(self, clone: bool = False):
@@ -107,57 +109,72 @@ class TiParticleRepresentation:                            # public Taichi class
         )
 
     def get_concentration(self, clone=False):
-        vol = self.volume[None]
-        arr = self.concentration.to_numpy() / vol
-        return arr.copy() if clone else arr
+        system_volume = self.volume[None]
+        concentration_array = self.concentration.to_numpy() / system_volume
+        return concentration_array.copy() if clone else concentration_array
     def get_total_concentration(self, clone=False):
         return np.sum(self.get_concentration(clone=clone))
     def get_charge(self, clone=False):
-        arr = self.charge.to_numpy();        return arr.copy() if clone else arr
+        charge_array = self.charge.to_numpy()
+        return charge_array.copy() if clone else charge_array
     def get_volume(self, clone=False):       return float(self.volume[None])
 
     # ───── derived quantities (delegate to strategy) ─────
     def get_species_mass(self, clone=False):
-        res = self.strategy.get_species_mass(self.get_distribution(), self.get_density())
-        return res.copy() if clone else res
+        species_mass = self.strategy.get_species_mass(
+            self.get_distribution(), self.get_density()
+        )
+        return species_mass.copy() if clone else species_mass
     def get_mass(self, clone=False):
-        res = self.strategy.get_mass(self.get_distribution(), self.get_density())
-        return res.copy() if clone else res
+        particle_mass = self.strategy.get_mass(
+            self.get_distribution(), self.get_density()
+        )
+        return particle_mass.copy() if clone else particle_mass
     def get_radius(self, clone=False):
-        res = self.strategy.get_radius(self.get_distribution(), self.get_density())
-        return res.copy() if clone else res
+        particle_radius = self.strategy.get_radius(
+            self.get_distribution(), self.get_density()
+        )
+        return particle_radius.copy() if clone else particle_radius
     def get_mass_concentration(self, clone: bool = False):
-        m_c = self.strategy.get_total_mass(
+        mass_concentration = self.strategy.get_total_mass(
             self.get_distribution(),
             self.get_concentration(),
             self.get_density(),
         )
-        return float(m_c)  # scalar, copy not needed but flag accepted
+        return float(mass_concentration)  # scalar, copy not needed but flag accepted
 
     # ───── mutators (update Ti fields in-place) ─────
     def add_mass(self, added_mass: NDArray[np.float64]) -> None:
-        dist, _ = self.strategy.add_mass(self.get_distribution(),
-                                         self.get_concentration(),
-                                         self.get_density(),
-                                         added_mass)
-        _field_io.from_numpy(self.distribution, dist)
+        distribution_array, _ = self.strategy.add_mass(
+            self.get_distribution(),
+            self.get_concentration(),
+            self.get_density(),
+            added_mass
+        )
+        _field_io.from_numpy(self.distribution, distribution_array)
 
-    def add_concentration(self, added_conc: NDArray[np.float64],
-                          added_dist: Optional[NDArray[np.float64]] = None) -> None:
-        if added_dist is None: added_dist = self.get_distribution()
-        dist, conc = self.strategy.add_concentration(self.get_distribution(),
-                                                     self.get_concentration(),
-                                                     added_distribution=added_dist,
-                                                     added_concentration=added_conc)
-        _field_io.from_numpy(self.distribution,  dist)
-        _field_io.from_numpy(self.concentration, conc * self.volume[None])
+    def add_concentration(
+        self,
+        added_concentration: NDArray[np.float64],
+        added_distribution: Optional[NDArray[np.float64]] = None
+    ) -> None:
+        if added_distribution is None:
+            added_distribution = self.get_distribution()
+        distribution_array, concentration_array = self.strategy.add_concentration(
+            self.get_distribution(),
+            self.get_concentration(),
+            added_distribution=added_distribution,
+            added_concentration=added_concentration
+        )
+        _field_io.from_numpy(self.distribution, distribution_array)
+        _field_io.from_numpy(self.concentration, concentration_array * self.volume[None])
 
     def collide_pairs(self, indices: NDArray[np.int64]) -> None:
-        dist, conc = self.strategy.collide_pairs(
+        distribution_array, concentration_array = self.strategy.collide_pairs(
             self.get_distribution(),
             self.get_concentration(),      # per m³ passed to strategy
             self.get_density(),
             indices,
         )
-        _field_io.from_numpy(self.distribution,  dist)
-        _field_io.from_numpy(self.concentration, conc * self.volume[None])
+        _field_io.from_numpy(self.distribution, distribution_array)
+        _field_io.from_numpy(self.concentration, concentration_array * self.volume[None])
