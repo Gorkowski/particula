@@ -241,7 +241,7 @@ def benchmark_lagrangian_taylor_microscale_time_csv():
     rows, stats_python, stats_taichi, stats_kernel = _benchmark_loop(
         generate_input_data,
         python_get_lagrangian_taylor_microscale_time,
-        taichi_get_lagrangian_taylor_microscale_time,
+        ti_get_lagrangian_taylor_microscale_time,
         kget_lagrangian_taylor_microscale_time,
     )
     _save_outputs(
@@ -303,7 +303,7 @@ def benchmark_taylor_microscale_csv():
     rows, stats_python, stats_taichi, stats_kernel = _benchmark_loop(
         generate_input_data,
         python_get_taylor_microscale,
-        taichi_get_taylor_microscale,
+        ti_get_taylor_microscale,
         kget_taylor_microscale,
     )
     _save_outputs(
@@ -365,7 +365,7 @@ def benchmark_taylor_microscale_reynolds_number_csv():
     rows, stats_python, stats_taichi, stats_kernel = _benchmark_loop(
         generate_input_data,
         python_get_taylor_microscale_reynolds_number,
-        taichi_get_taylor_microscale_reynolds_number,
+        ti_get_taylor_microscale_reynolds_number,
         kget_taylor_microscale_reynolds_number,
     )
     _save_outputs(
