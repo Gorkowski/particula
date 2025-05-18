@@ -20,13 +20,13 @@ GAS_R = float(GAS_CONSTANT)
 
 
 @ti.func
-def fget_first_order_mass_transport_k(
+def fget_first_order_mass_transport_coefficient(
     particle_radius: ti.f64,
     vapor_transition: ti.f64,
     diffusion_coefficient: ti.f64,
 ) -> ti.f64:
     """
-    Compute first-order mass transport coefficient.
+    Compute the first-order mass-transport coefficient.
 
     Arguments:
         - particle_radius : Particle radius [m].
@@ -34,14 +34,16 @@ def fget_first_order_mass_transport_k(
         - diffusion_coefficient : Diffusion coefficient [m²/s].
 
     Returns:
-        - First-order mass transport coefficient [kg/s].
+        - First-order mass-transport coefficient [kg/s].
 
     Equation:
-        k = 4 π r D β
+        first-order mass-transport coefficient =
+            4 π r D β
 
     Examples:
         ```py
-        k = fget_first_order_mass_transport_k(1e-6, 0.9, 2e-5)
+        coefficient = fget_first_order_mass_transport_coefficient(
+            1e-6, 0.9, 2e-5)
         # Output: 2.261946710584651e-10
         ```
 
@@ -171,20 +173,20 @@ def fget_first_order_mass_transport_via_system_state(
     vapor_transition = fget_vapor_transition_correction(
         knudsen_number, mass_accommodation
     )
-    return fget_first_order_mass_transport_k(
+    return fget_first_order_mass_transport_coefficient(
         particle_radius, vapor_transition, diffusion_coefficient
     )
 
 
 @ti.kernel
-def kget_first_order_mass_transport_k(
+def kget_first_order_mass_transport_coefficient(
     particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
     vapor_transition: ti.types.ndarray(dtype=ti.f64, ndim=1),
     diffusion_coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(result.shape[0]):
-        result[i] = fget_first_order_mass_transport_k(
+        result[i] = fget_first_order_mass_transport_coefficient(
             particle_radius[i], vapor_transition[i], diffusion_coefficient[i]
         )
 
@@ -240,12 +242,12 @@ def kget_first_order_mass_transport_via_system_state(
             )
 
 
-@register("get_first_order_mass_transport_k", backend="taichi")
-def ti_get_first_order_mass_transport_k(
+@register("get_first_order_mass_transport_coefficient", backend="taichi")
+def ti_get_first_order_mass_transport_coefficient(
     particle_radius, vapor_transition, diffusion_coefficient=2e-5
 ):
     """
-    Taichi vectorized first-order mass transport coefficient.
+    Taichi vectorized first-order mass-transport coefficient.
 
     Arguments:
         - particle_radius : Array of particle radii [m].
@@ -253,14 +255,16 @@ def ti_get_first_order_mass_transport_k(
         - diffusion_coefficient : Array or scalar diffusion coefficient [m²/s].
 
     Returns:
-        - Array of first-order mass transport coefficients [kg/s].
+        - Array of first-order mass-transport coefficients [kg/s].
 
     Equation:
-        k = 4 π r D β
+        first-order mass-transport coefficient =
+            4 π r D β
 
     Examples:
         ```py
-        k = ti_get_first_order_mass_transport_k([1e-6], [0.9], 2e-5)
+        coefficient = ti_get_first_order_mass_transport_coefficient(
+            [1e-6], [0.9], 2e-5)
         # Output: array([2.26194671e-10])
         ```
 
@@ -292,7 +296,7 @@ def ti_get_first_order_mass_transport_k(
     particle_radius_ti.from_numpy(particle_radius_array)
     vapor_transition_ti.from_numpy(vapor_transition_array)
     diffusion_coefficient_ti.from_numpy(diffusion_coefficient_array)
-    kget_first_order_mass_transport_k(
+    kget_first_order_mass_transport_coefficient(
         particle_radius_ti, vapor_transition_ti, diffusion_coefficient_ti, result_ti
     )
     result_np = result_ti.to_numpy()
