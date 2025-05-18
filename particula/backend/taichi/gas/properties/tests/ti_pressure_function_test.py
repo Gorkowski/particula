@@ -1,17 +1,12 @@
 import taichi as ti
 import numpy as np
-import pytest
-from particula.backend.taichi.gas.properties.ti_pressure_function_module import (
-    ti_get_partial_pressure,
-    ti_get_saturation_ratio_from_pressure,
-    kget_partial_pressure,
-    kget_saturation_ratio_from_pressure,
+from particula.backend.taichi.gas.properties import (
+    ti_pressure_function_module as ti_pfm,
 )
 from particula.gas.properties.pressure_function import (
     get_partial_pressure,
     get_saturation_ratio_from_pressure,
 )
-from particula.util.constants import GAS_CONSTANT
 
 ti.init(arch=ti.cpu)
 
@@ -22,7 +17,7 @@ def test_ti_get_partial_pressure_matches_numpy():
     expected_partial_pressure = get_partial_pressure(
         concentration_array, molar_mass_array, temperature_array
     )
-    result_partial_pressure = ti_get_partial_pressure(
+    result_partial_pressure = ti_pfm.ti_get_partial_pressure(
         concentration_array, molar_mass_array, temperature_array
     )
     np.testing.assert_allclose(
@@ -35,7 +30,7 @@ def test_ti_get_saturation_ratio_from_pressure_matches_numpy():
     expected_saturation_ratio = get_saturation_ratio_from_pressure(
         partial_pressure_array, pure_vapor_pressure_array
     )
-    result_saturation_ratio = ti_get_saturation_ratio_from_pressure(
+    result_saturation_ratio = ti_pfm.ti_get_saturation_ratio_from_pressure(
         partial_pressure_array, pure_vapor_pressure_array
     )
     np.testing.assert_allclose(
@@ -56,7 +51,7 @@ def test_kget_partial_pressure_direct_kernel():
     concentration_ti_array.from_numpy(concentration_array)
     molar_mass_ti_array.from_numpy(molar_mass_array)
     temperature_ti_array.from_numpy(temperature_array)
-    kget_partial_pressure(
+    ti_pfm.kget_partial_pressure(
         concentration_ti_array,
         molar_mass_ti_array,
         temperature_ti_array,
@@ -77,7 +72,7 @@ def test_kget_saturation_ratio_from_pressure_direct_kernel():
     result_ti_array = ti.ndarray(dtype=ti.f64, shape=2)
     partial_pressure_ti_array.from_numpy(partial_pressure_array)
     pure_vapor_pressure_ti_array.from_numpy(pure_vapor_pressure_array)
-    kget_saturation_ratio_from_pressure(
+    ti_pfm.kget_saturation_ratio_from_pressure(
         partial_pressure_ti_array,
         pure_vapor_pressure_ti_array,
         result_ti_array,
