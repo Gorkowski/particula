@@ -16,7 +16,9 @@ where:
 
 Examples:
     ```py
-    import particula.backend.taichi.gas.properties.ti_concentration_from_pressure_module as ti_cfp
+    from particula.backend.taichi.gas.properties import (
+        ti_concentration_from_pressure_module as ti_cfp,
+    )
     c = ti_cfp.ti_get_concentration_from_pressure(101325, 0.02897, 300)
     # Output: 1.176... (kg/m³)
     ```
@@ -47,8 +49,8 @@ def fget_concentration_from_pressure(
 
     Arguments:
         - partial_pressure : Partial pressure of the gas [Pa].
-        - molar_mass      : Molar mass of the gas [kg/mol].
-        - temperature     : Temperature [K].
+        - molar_mass : Molar mass of the gas [kg/mol].
+        - temperature : Temperature [K].
 
     Returns:
         - Concentration [kg/m³] as a float.
@@ -74,9 +76,9 @@ def kget_concentration_from_pressure(
 
     Arguments:
         - partial_pressure : 1D ndarray of partial pressures [Pa].
-        - molar_mass      : 1D ndarray of molar masses [kg/mol].
-        - temperature     : 1D ndarray of temperatures [K].
-        - concentration   : 1D output ndarray for concentrations [kg/m³].
+        - molar_mass : 1D ndarray of molar masses [kg/mol].
+        - temperature : 1D ndarray of temperatures [K].
+        - concentration : 1D output ndarray for concentrations [kg/m³].
 
     Returns:
         - None (results written in-place to `concentration` buffer).
@@ -97,8 +99,8 @@ def ti_get_concentration_from_pressure(partial_pressure, molar_mass, temperature
 
     Arguments:
         - partial_pressure : Scalar or array of partial pressures [Pa].
-        - molar_mass      : Scalar or array of molar masses [kg/mol].
-        - temperature     : Scalar or array of temperatures [K].
+        - molar_mass : Scalar or array of molar masses [kg/mol].
+        - temperature : Scalar or array of temperatures [K].
 
     Returns:
         - Concentration(s) [kg/m³] as a NumPy array or scalar.
@@ -122,8 +124,8 @@ def ti_get_concentration_from_pressure(partial_pressure, molar_mass, temperature
     """
     # 5 a – type guard  (explicit float64)
     partial_pressure = np.asarray(partial_pressure, dtype=np.float64)
-    molar_mass       = np.asarray(molar_mass,       dtype=np.float64)
-    temperature      = np.asarray(temperature,      dtype=np.float64)
+    molar_mass = np.asarray(molar_mass, dtype=np.float64)
+    temperature = np.asarray(temperature, dtype=np.float64)
 
     # 5 b – broadcast to common shape, then flatten
     (
@@ -151,9 +153,9 @@ def ti_get_concentration_from_pressure(partial_pressure, molar_mass, temperature
 
     # 5 c – allocate buffers with explicit names
     partial_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    molar_mass_ti       = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    temperature_ti      = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    concentration_ti    = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    concentration_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
     partial_pressure_ti.from_numpy(flat_partial_pressure)
     molar_mass_ti.from_numpy(flat_molar_mass)
     temperature_ti.from_numpy(flat_temperature)
