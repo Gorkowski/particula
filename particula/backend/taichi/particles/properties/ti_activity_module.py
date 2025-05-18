@@ -47,8 +47,28 @@ def fget_water_activity_from_kappa_row(
     n_species: ti.i32,                  # number of species (= mass_concentration.shape[1])
 ) -> ti.f64:
     """
-    Return the water activity (a_w) for one mixture row, using the
-    κ–Köhler mixing rule implemented in kget_kappa_activity.
+    Compute the water activity (a_w) for a single mixture (row) using the
+    κ–Köhler mixing rule.
+
+    Arguments:
+        - mass_concentration : 2-D field of species mass concentrations
+          [kg m⁻³] (rows = mixtures, cols = species).
+        - kappa : 1-D array of κ hygroscopicity coefficients
+          (dimensionless).
+        - density : 1-D array of species densities [kg m⁻³].
+        - molar_mass : 1-D array of species molar masses [kg mol⁻¹].
+        - water_index : Column index that corresponds to water.
+        - row_index : Row being evaluated (mixture index).
+        - n_species : Total number of species
+          (= mass_concentration.shape[1]).
+
+    Returns:
+        - Water activity a_w for the selected row (dimensionless).
+
+    References:
+        - Petters & Kreidenweis, “A single parameter representation of
+          hygroscopic growth and cloud condensation nucleus activity,”
+          Atmos. Chem. Phys., 7 (2007).
     """
     # ---- volume fractions ----------------------------------------
     volume_sum = 0.0
@@ -67,8 +87,8 @@ def fget_water_activity_from_kappa_row(
     bulk_kappa = 0.0
     if solute_volume_fraction > 0.0:
         if n_species == 2:  # single-solute shortcut
-            sid = 1 if water_index == 0 else 0
-            bulk_kappa = kappa[sid]
+            solute_index = 1 if water_index == 0 else 0
+            bulk_kappa = kappa[solute_index]
         else:
             for s in range(n_species):
                 if s != water_index:
@@ -187,6 +207,29 @@ def kget_kappa_activity(
 
 @register("get_surface_partial_pressure", backend="taichi")
 def ti_get_surface_partial_pressure(pure_vapor_pressure, activity):
+    """
+    Vectorised Taichi backend for
+    get_surface_partial_pressure(…).
+
+    Calculates Pₛ = P₀ × a element-wise.
+
+    Arguments:
+        - pure_vapor_pressure : Scalar or array-like of pure vapor
+          pressure [Pa].
+        - activity : Scalar or array-like activity (dimensionless).
+
+    Returns:
+        - Surface partial pressure with the same shape as the inputs
+          [Pa].
+
+    Examples:
+        ```py
+        p_surface = ti_get_surface_partial_pressure(
+            pure_vapor_pressure=[100.0, 200.0],
+            activity=[0.8, 0.6]
+        )
+        ```
+    """
     if isinstance(pure_vapor_pressure, float):
         return pure_vapor_pressure * activity  # scalar shortcut
 
@@ -206,6 +249,26 @@ def ti_get_surface_partial_pressure(pure_vapor_pressure, activity):
 
 @register("get_ideal_activity_mass", backend="taichi")
 def ti_get_ideal_activity_mass(mass_concentration):
+    """
+    Vectorised Taichi backend for get_ideal_activity_mass(…).
+
+    Computes the ideal activity for each species in a mixture based on
+    mass fraction.
+
+    Arguments:
+        - mass_concentration : Scalar, 1-D, or 2-D array of species
+          mass concentrations [kg m⁻³].
+
+    Returns:
+        - Array of ideal activities (dimensionless), same shape as input.
+
+    Examples:
+        ```py
+        a_mass = ti_get_ideal_activity_mass(
+            mass_concentration=[[1.0, 2.0], [3.0, 4.0]]
+        )
+        ```
+    """
     if isinstance(mass_concentration, float):
         return 1.0
     mass_concentration_np = np.atleast_2d(mass_concentration)
@@ -225,6 +288,28 @@ def ti_get_ideal_activity_mass(mass_concentration):
 
 @register("get_ideal_activity_volume", backend="taichi")
 def ti_get_ideal_activity_volume(mass_concentration, density):
+    """
+    Vectorised Taichi backend for get_ideal_activity_volume(…).
+
+    Computes the ideal activity for each species in a mixture based on
+    volume fraction.
+
+    Arguments:
+        - mass_concentration : Scalar, 1-D, or 2-D array of species
+          mass concentrations [kg m⁻³].
+        - density : 1-D array of species densities [kg m⁻³].
+
+    Returns:
+        - Array of ideal activities (dimensionless), same shape as input.
+
+    Examples:
+        ```py
+        a_vol = ti_get_ideal_activity_volume(
+            mass_concentration=[[1.0, 2.0], [3.0, 4.0]],
+            density=[1000.0, 1200.0]
+        )
+        ```
+    """
     if isinstance(mass_concentration, float):
         return 1.0
     mass_concentration_np = np.atleast_2d(mass_concentration)
@@ -249,6 +334,28 @@ def ti_get_ideal_activity_volume(mass_concentration, density):
 
 @register("get_ideal_activity_molar", backend="taichi")
 def ti_get_ideal_activity_molar(mass_concentration, molar_mass):
+    """
+    Vectorised Taichi backend for get_ideal_activity_molar(…).
+
+    Computes the ideal activity for each species in a mixture based on
+    molar fraction.
+
+    Arguments:
+        - mass_concentration : Scalar, 1-D, or 2-D array of species
+          mass concentrations [kg m⁻³].
+        - molar_mass : 1-D array of species molar masses [kg mol⁻¹].
+
+    Returns:
+        - Array of ideal activities (dimensionless), same shape as input.
+
+    Examples:
+        ```py
+        a_mol = ti_get_ideal_activity_molar(
+            mass_concentration=[[1.0, 2.0], [3.0, 4.0]],
+            molar_mass=[0.018, 0.044]
+        )
+        ```
+    """
     if isinstance(mass_concentration, float):
         return 1.0
     mass_concentration_np = np.atleast_2d(mass_concentration)
@@ -275,6 +382,35 @@ def ti_get_ideal_activity_molar(mass_concentration, molar_mass):
 def ti_get_kappa_activity(
     mass_concentration, kappa, density, molar_mass, water_index
 ):
+    """
+    Vectorised Taichi backend for get_kappa_activity(…).
+
+    Computes the kappa-Köhler water activity and mole fractions for
+    each mixture row.
+
+    Arguments:
+        - mass_concentration : Scalar, 1-D, or 2-D array of species
+          mass concentrations [kg m⁻³].
+        - kappa : 1-D array of κ hygroscopicity coefficients
+          (dimensionless).
+        - density : 1-D array of species densities [kg m⁻³].
+        - molar_mass : 1-D array of species molar masses [kg mol⁻¹].
+        - water_index : Index of the water species column.
+
+    Returns:
+        - Array of activities (dimensionless), same shape as input.
+
+    Examples:
+        ```py
+        a_kappa = ti_get_kappa_activity(
+            mass_concentration=[[1.0, 2.0], [3.0, 4.0]],
+            kappa=[0.3, 0.0],
+            density=[1000.0, 1200.0],
+            molar_mass=[0.018, 0.044],
+            water_index=0
+        )
+        ```
+    """
     if isinstance(mass_concentration, float):
         return 1.0
     mass_concentration_np = np.atleast_2d(mass_concentration)
