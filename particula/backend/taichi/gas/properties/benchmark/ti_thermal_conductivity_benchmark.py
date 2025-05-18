@@ -1,4 +1,26 @@
-"""Benchmarks Python vs. Taichi thermal-conductivity implementations."""
+"""
+Benchmark Python and Taichi thermal conductivity implementations.
+
+This module benchmarks the throughput of three implementations of the
+thermal conductivity calculation: a pure-Python function, a Taichi
+vectorized wrapper, and a raw Taichi kernel. For each array length in
+ARRAY_LENGTHS, it generates random temperature arrays (200–400 K),
+times each function, and collects performance statistics. The results
+are saved as a CSV file, system information as JSON, and a throughput
+plot as PNG in the benchmark_outputs directory.
+
+Examples:
+    ```sh
+    python -m particula.backend.taichi.gas.properties.benchmark.ti_thermal_conductivity_benchmark
+    ```
+    This will run the benchmark and write outputs to the appropriate
+    directory.
+
+References:
+    - Yuanming Hu et al., "Taichi: A Language for High-Performance
+      Numerical Computation," ACM Transactions on Graphics (TOG), 2019.
+      [https://taichi.graphics/](https://taichi.graphics/)
+"""
 import os
 import json
 import numpy as np
@@ -26,8 +48,25 @@ ti.init(arch=ti.cpu)
 
 def benchmark_thermal_conductivity_csv() -> None:
     """
-    Time pure-Python, Taichi wrapper, and raw kernel over ARRAY_LENGTHS,
-    then save CSV, JSON, and PNG into ./benchmark_outputs/.
+    Benchmark and save throughput for three thermal conductivity methods.
+
+    For each array length in ARRAY_LENGTHS, this function generates a
+    random temperature array, times the pure-Python, Taichi wrapper,
+    and Taichi kernel implementations, and collects performance
+    statistics. It writes a CSV file with all results, a JSON file
+    with system information, and a PNG plot of throughput versus array
+    length to the benchmark_outputs directory.
+
+    Returns:
+        - None : This function writes files and does not return a value.
+
+    Examples:
+        ```py
+        from particula.backend.taichi.gas.properties.benchmark.ti_thermal_conductivity_benchmark import (
+            benchmark_thermal_conductivity_csv
+        )
+        benchmark_thermal_conductivity_csv()
+        ```
     """
     rows: list[list[float]] = []
     random_generator = np.random.default_rng(seed=RNG_SEED)
