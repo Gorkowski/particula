@@ -10,11 +10,16 @@ are used to compute the Kelvin radius and Kelvin term, which are
 critical for modeling vapor pressure and condensation/evaporation
 in atmospheric aerosols.
 
+All vector inputs and outputs are Taichi ndarrays (taichi.types.ndarray(dtype=ti.f64, ndim=1)).
+All scalar values are ti.f64 (scalar). No NumPy arrays, lists, or Python floats are used
+in the API or returned values.
+
 High-level objectives:
     - Provide fast, vectorized, and Taichi-accelerated computation
       of surface property mixing and Kelvin effect terms.
     - Maintain API compatibility with the Python backend.
-    - Support both scalar and array-valued properties.
+    - All vector quantities are taichi.types.ndarray(dtype=ti.f64, ndim=1).
+    - All scalar quantities are ti.f64.
 
 References:
     - Seinfeld, J. H., & Pandis, S. N. (2016). Atmospheric Chemistry
@@ -33,7 +38,15 @@ from particula.backend.taichi.particles.properties.ti_kelvin_effect_module impor
 )
 
 def store(arr):
-    # returns (scalar/1-D field, length)
+    """
+    Store a scalar or 1-D array as a Taichi field.
+
+    Args:
+        arr : ti.f64 (scalar) or taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+    Returns:
+        (ti.field(ti.f64), int) : The Taichi field and its length.
+    """
     if isinstance(arr, (float, int)):
         f = ti.field(dtype=ti.f64, shape=())
         f[None] = float(arr)
@@ -58,6 +71,15 @@ def store(arr):
     return f, n
 
 def ensure_ti_nd(x):
+    """
+    Ensure input is a Taichi ndarray (taichi.types.ndarray(dtype=ti.f64, ndim=1)).
+
+    Args:
+        x : ti.f64 (scalar) or taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+    Returns:
+        taichi.types.ndarray(dtype=ti.f64, ndim=1)
+    """
     if isinstance(x, (float, int)):
         a = ti_nd(dtype=ti.f64, shape=(1,))
         a[0] = float(x)
@@ -79,9 +101,12 @@ class SurfaceMixin:
     properties, as well as Taichi-accelerated helpers for the Kelvin effect.
 
     Attributes:
-        - surface_tension : Taichi field for surface tension.
-        - density : Taichi field for density.
-        - n_species : Number of species/components.
+        - surface_tension : ti.field(ti.f64)  (scalar or 1-D)
+        - density         : ti.field(ti.f64)
+        - n_species       : int
+
+    All methods receive and return Taichi ndarrays (taichi.types.ndarray(dtype=ti.f64, ndim=1))
+    or ti.f64 (scalar).
 
     Methods:
         - get_name: Returns the class name.
@@ -103,6 +128,17 @@ class SurfaceMixin:
         weights: ti_nd(dtype=ti.f64, ndim=1),
         normalizer: ti.template(),
     ) -> ti.f64:
+        """
+        Compute a weighted average.
+
+        Args:
+            values     : ti.field(ti.f64)
+            weights    : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            normalizer : ti.field(ti.f64)
+
+        Returns:
+            ti.f64
+        """
         tot = 0.0
         for i in range(self.n_species):
             tot += weights[i] / normalizer[i]
@@ -116,12 +152,7 @@ class SurfaceMixin:
         Return the class name.
 
         Returns:
-            - name : Name of the class as a string.
-
-        Examples:
-            >>> strat = SurfaceStrategyMolar()
-            >>> strat.get_name()
-            'SurfaceStrategyMolar'
+            name : str
         """
         return self.__class__.__name__
 
@@ -136,16 +167,21 @@ class SurfaceStrategyMolar(SurfaceMixin):
     Kelvin radius and Kelvin term calculations.
 
     Attributes:
-        - surface_tension : Taichi field for surface tension.
-        - density : Taichi field for density.
-        - molar_mass : Taichi field for molar mass.
-        - n_species : Number of species/components.
+        - surface_tension : ti.field(ti.f64)
+        - density         : ti.field(ti.f64)
+        - molar_mass      : ti.field(ti.f64)
+        - n_species       : int
 
     Methods:
-        - effective_surface_tension: Mole-fraction weighted surface tension.
-        - effective_density: Mole-fraction weighted density.
-        - kelvin_radius: Kelvin radius (rₖ = (2σM)/(ρRT)).
-        - kelvin_term: Kelvin term (exp(rₖ/r)).
+        - effective_surface_tension(mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64
+        - effective_density(mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64
+        - kelvin_radius(molar_mass: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                        mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                        temperature: ti.f64) -> taichi.types.ndarray(dtype=ti.f64, ndim=1)
+        - kelvin_term(radius: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      molar_mass: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      temperature: ti.f64) -> taichi.types.ndarray(dtype=ti.f64, ndim=1)
 
     Examples:
         >>> strat = SurfaceStrategyMolar([0.072, 0.073], [1000, 1200], [0.018, 0.02])
@@ -169,14 +205,43 @@ class SurfaceStrategyMolar(SurfaceMixin):
         self.molar_mass, _ = store(molar_mass)
 
     def effective_surface_tension(self, mass_concentration):
+        """
+        Compute mole-fraction weighted surface tension.
+
+        Args:
+            mass_concentration : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+        Returns:
+            ti.f64 : Effective surface tension.
+        """
         mc = ensure_ti_nd(mass_concentration)
         return float(self.weighted_average(self.surface_tension, mc, self.molar_mass))
 
     def effective_density(self, mass_concentration):
+        """
+        Compute mole-fraction weighted density.
+
+        Args:
+            mass_concentration : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+        Returns:
+            ti.f64 : Effective density.
+        """
         mc = ensure_ti_nd(mass_concentration)
         return float(self.weighted_average(self.density, mc, self.molar_mass))
 
     def kelvin_radius(self, molar_mass, mass_concentration, temperature):
+        """
+        Compute Kelvin radius (rₖ = (2σM)/(ρRT)).
+
+        Args:
+            molar_mass        : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            temperature       : ti.f64
+
+        Returns:
+            taichi.types.ndarray(dtype=ti.f64, ndim=1) : Kelvin radius.
+        """
         M = ensure_ti_nd(molar_mass)
         mc = ensure_ti_nd(mass_concentration)
         st = ti_nd(dtype=ti.f64, shape=(1,))
@@ -186,6 +251,18 @@ class SurfaceStrategyMolar(SurfaceMixin):
         return kget_kelvin_radius(st, rho, M, float(temperature))
 
     def kelvin_term(self, radius, molar_mass, mass_concentration, temperature):
+        """
+        Compute Kelvin term (exp(rₖ/r)).
+
+        Args:
+            radius            : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            molar_mass        : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            temperature       : ti.f64
+
+        Returns:
+            taichi.types.ndarray(dtype=ti.f64, ndim=1) : Kelvin term.
+        """
         r = ensure_ti_nd(radius)
         M = ensure_ti_nd(molar_mass)
         mc = ensure_ti_nd(mass_concentration)
@@ -203,15 +280,20 @@ class SurfaceStrategyMass(SurfaceMixin):
     calculations.
 
     Attributes:
-        - surface_tension : Taichi field for surface tension.
-        - density : Taichi field for density.
-        - n_species : Number of species/components.
+        - surface_tension : ti.field(ti.f64)
+        - density         : ti.field(ti.f64)
+        - n_species       : int
 
     Methods:
-        - effective_surface_tension: Mass-fraction weighted surface tension.
-        - effective_density: Mass-fraction weighted density.
-        - kelvin_radius: Kelvin radius (rₖ = (2σM)/(ρRT)).
-        - kelvin_term: Kelvin term (exp(rₖ/r)).
+        - effective_surface_tension(mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64
+        - effective_density(mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64
+        - kelvin_radius(molar_mass: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                        mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                        temperature: ti.f64) -> taichi.types.ndarray(dtype=ti.f64, ndim=1)
+        - kelvin_term(radius: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      molar_mass: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      temperature: ti.f64) -> taichi.types.ndarray(dtype=ti.f64, ndim=1)
 
     Examples:
         >>> strat = SurfaceStrategyMass([0.072, 0.073], [1000, 1200])
@@ -231,14 +313,43 @@ class SurfaceStrategyMass(SurfaceMixin):
         super().__init__(surface_tension, density)
 
     def effective_surface_tension(self, mass_concentration):
+        """
+        Compute mass-fraction weighted surface tension.
+
+        Args:
+            mass_concentration : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+        Returns:
+            ti.f64 : Effective surface tension.
+        """
         mc = ensure_ti_nd(mass_concentration)
         return float(self.weighted_average(self.surface_tension, mc, self.ones))
 
     def effective_density(self, mass_concentration):
+        """
+        Compute mass-fraction weighted density.
+
+        Args:
+            mass_concentration : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+        Returns:
+            ti.f64 : Effective density.
+        """
         mc = ensure_ti_nd(mass_concentration)
         return float(self.weighted_average(self.density, mc, self.ones))
 
     def kelvin_radius(self, molar_mass, mass_concentration, temperature):
+        """
+        Compute Kelvin radius (rₖ = (2σM)/(ρRT)).
+
+        Args:
+            molar_mass        : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            temperature       : ti.f64
+
+        Returns:
+            taichi.types.ndarray(dtype=ti.f64, ndim=1) : Kelvin radius.
+        """
         M = ensure_ti_nd(molar_mass)
         mc = ensure_ti_nd(mass_concentration)
         st = ti_nd(dtype=ti.f64, shape=(1,))
@@ -248,6 +359,18 @@ class SurfaceStrategyMass(SurfaceMixin):
         return kget_kelvin_radius(st, rho, M, float(temperature))
 
     def kelvin_term(self, radius, molar_mass, mass_concentration, temperature):
+        """
+        Compute Kelvin term (exp(rₖ/r)).
+
+        Args:
+            radius            : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            molar_mass        : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            temperature       : ti.f64
+
+        Returns:
+            taichi.types.ndarray(dtype=ti.f64, ndim=1) : Kelvin term.
+        """
         r = ensure_ti_nd(radius)
         M = ensure_ti_nd(molar_mass)
         mc = ensure_ti_nd(mass_concentration)
@@ -265,15 +388,20 @@ class SurfaceStrategyVolume(SurfaceMixin):
     calculations.
 
     Attributes:
-        - surface_tension : Taichi field for surface tension.
-        - density : Taichi field for density.
-        - n_species : Number of species/components.
+        - surface_tension : ti.field(ti.f64)
+        - density         : ti.field(ti.f64)
+        - n_species       : int
 
     Methods:
-        - effective_surface_tension: Volume-fraction weighted surface tension.
-        - effective_density: Volume-fraction weighted density.
-        - kelvin_radius: Kelvin radius (rₖ = (2σM)/(ρRT)).
-        - kelvin_term: Kelvin term (exp(rₖ/r)).
+        - effective_surface_tension(mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64
+        - effective_density(mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)) -> ti.f64
+        - kelvin_radius(molar_mass: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                        mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                        temperature: ti.f64) -> taichi.types.ndarray(dtype=ti.f64, ndim=1)
+        - kelvin_term(radius: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      molar_mass: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1),
+                      temperature: ti.f64) -> taichi.types.ndarray(dtype=ti.f64, ndim=1)
 
     Examples:
         >>> strat = SurfaceStrategyVolume([0.072, 0.073], [1000, 1200])
@@ -293,14 +421,43 @@ class SurfaceStrategyVolume(SurfaceMixin):
         super().__init__(surface_tension, density)
 
     def effective_surface_tension(self, mass_concentration):
+        """
+        Compute volume-fraction weighted surface tension.
+
+        Args:
+            mass_concentration : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+        Returns:
+            ti.f64 : Effective surface tension.
+        """
         mc = ensure_ti_nd(mass_concentration)
         return float(self.weighted_average(self.surface_tension, mc, self.density))
 
     def effective_density(self, mass_concentration):
+        """
+        Compute volume-fraction weighted density.
+
+        Args:
+            mass_concentration : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+
+        Returns:
+            ti.f64 : Effective density.
+        """
         mc = ensure_ti_nd(mass_concentration)
         return float(self.weighted_average(self.density, mc, self.density))
 
     def kelvin_radius(self, molar_mass, mass_concentration, temperature):
+        """
+        Compute Kelvin radius (rₖ = (2σM)/(ρRT)).
+
+        Args:
+            molar_mass        : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            temperature       : ti.f64
+
+        Returns:
+            taichi.types.ndarray(dtype=ti.f64, ndim=1) : Kelvin radius.
+        """
         M = ensure_ti_nd(molar_mass)
         mc = ensure_ti_nd(mass_concentration)
         st = ti_nd(dtype=ti.f64, shape=(1,))
@@ -310,6 +467,18 @@ class SurfaceStrategyVolume(SurfaceMixin):
         return kget_kelvin_radius(st, rho, M, float(temperature))
 
     def kelvin_term(self, radius, molar_mass, mass_concentration, temperature):
+        """
+        Compute Kelvin term (exp(rₖ/r)).
+
+        Args:
+            radius            : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            molar_mass        : taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            mass_concentration: taichi.types.ndarray(dtype=ti.f64, ndim=1)
+            temperature       : ti.f64
+
+        Returns:
+            taichi.types.ndarray(dtype=ti.f64, ndim=1) : Kelvin term.
+        """
         r = ensure_ti_nd(radius)
         M = ensure_ti_nd(molar_mass)
         mc = ensure_ti_nd(mass_concentration)
