@@ -6,8 +6,6 @@ from particula.backend.dispatch_register import register
 # ---- Taichi helpers already in repo -----------------------------------
 from particula.backend.taichi.particles.properties import (
     fget_vapor_transition_correction,
-    fget_knudsen_number,
-    
 )
 
 # ---- Python-side utilities (unchanged, lightweight) --------------------
@@ -58,34 +56,45 @@ class CondensationIsothermal:
 
     # ──────────────────────── Taichi kernels ───────────────────────────────
     @ti.kernel
-    def _kget_first_order_mass_transport(                 # ← K(r)   1-D
+    def _kget_first_order_mass_transport(
         self,
-        r: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
         mean_free_path: ti.f64,
-        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_transport_coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """Compute first-order mass-transport coefficient per particle."""
-        D      = self.diffusion_coefficient[None]
-        alpha  = self.accommodation_coefficient[None]
-        for i in range(r.shape[0]):
-            rad = ti.max(r[i], 1e-20)
-            kn  = mean_free_path / rad
-            fkn = fget_vapor_transition_correction(kn, alpha)
-            result[i] = 4.0 * ti.math.pi * rad * D * fkn
+        diffusion_coefficient = self.diffusion_coefficient[None]
+        accommodation_coefficient = self.accommodation_coefficient[None]
+        for i in range(particle_radius.shape[0]):
+            radius = ti.max(particle_radius[i], 1e-20)
+            knudsen_number = mean_free_path / radius
+            correction_factor = fget_vapor_transition_correction(
+                knudsen_number,
+                accommodation_coefficient,
+            )
+            mass_transport_coefficient[i] = (
+                4.0 * ti.math.pi * radius
+                * diffusion_coefficient * correction_factor
+            )
 
     @ti.kernel
-    def _kget_mass_transfer_rate(                          # ← dm/dt  1-D
+    def _kget_mass_transfer_rate(
         self,
-        delta_p: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        K:       ti.types.ndarray(dtype=ti.f64, ndim=1),
+        pressure_delta: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_transport_coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
         temperature: ti.f64,
-        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_rate: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """dm/dt per particle (isothermal)."""
-        M = self.molar_mass[None]
-        R = ti.static(R_GAS)
-        for i in range(delta_p.shape[0]):
-            result[i] = K[i] * M * delta_p[i] / (R * temperature)
+        molar_mass = self.molar_mass[None]
+        gas_constant = ti.static(R_GAS)
+        for i in range(pressure_delta.shape[0]):
+            mass_rate[i] = (
+                mass_transport_coefficient[i]
+                * molar_mass
+                * pressure_delta[i]
+                / (gas_constant * temperature)
+            )
 
     # ─────────────────────── public helpers ────────────────────────────────
     def first_order_mass_transport(
@@ -96,16 +105,20 @@ class CondensationIsothermal:
         dynamic_viscosity: float | None = None,
     ) -> np.ndarray:
         """Vectorised K(r) using Taichi kernel."""
-        mfp = get_molecule_mean_free_path(
+        mean_free_path = get_molecule_mean_free_path(
             molar_mass=self.molar_mass[None],
             temperature=temperature,
             pressure=pressure,
             dynamic_viscosity=dynamic_viscosity,
         )
-        r_np = np.ascontiguousarray(particle_radius, dtype=np.float64)
-        K_np = np.empty_like(r_np)
-        self._kget_first_order_mass_transport(r_np, mfp, K_np)
-        return K_np
+        radius_array = np.ascontiguousarray(particle_radius, dtype=np.float64)
+        mass_transport_coefficient_array = np.empty_like(radius_array)
+        self._kget_first_order_mass_transport(
+            radius_array,
+            mean_free_path,
+            mass_transport_coefficient_array,
+        )
+        return mass_transport_coefficient_array
 
     # ───────────────────────── API: dm/dt ───────────────────────────────────
     def mass_transfer_rate(
@@ -116,24 +129,29 @@ class CondensationIsothermal:
         pressure: float,
         dynamic_viscosity: float | None = None,
     ) -> np.ndarray:
-        radius = self._fill_zero_radius(particle.get_radius())
-        K      = self.first_order_mass_transport(
-                    particle_radius=radius,
-                    temperature=temperature,
-                    pressure=pressure,
-                    dynamic_viscosity=dynamic_viscosity,
-                 )
-        delta_p = self.calculate_pressure_delta(
+        particle_radius = self._fill_zero_radius(particle.get_radius())
+        mass_transport_coefficient = self.first_order_mass_transport(
+            particle_radius=particle_radius,
+            temperature=temperature,
+            pressure=pressure,
+            dynamic_viscosity=dynamic_viscosity,
+        )
+        pressure_delta = self.calculate_pressure_delta(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
-            radius=radius,
+            radius=particle_radius,
         )
 
-        delta_p_np = np.ascontiguousarray(delta_p, dtype=np.float64)
-        dm_dt      = np.empty_like(delta_p_np)
-        self._kget_mass_transfer_rate(delta_p_np, K, temperature, dm_dt)
-        return dm_dt
+        pressure_delta_np = np.ascontiguousarray(pressure_delta, dtype=np.float64)
+        mass_rate = np.empty_like(pressure_delta_np)
+        self._kget_mass_transfer_rate(
+            pressure_delta_np,
+            mass_transport_coefficient,
+            temperature,
+            mass_rate,
+        )
+        return mass_rate
 
     # ──────────────────── API: concentration-scaled rate ───────────────────
     def rate(
@@ -143,16 +161,16 @@ class CondensationIsothermal:
         temperature: float,
         pressure: float,
     ) -> np.ndarray:
-        dm_dt = self.mass_transfer_rate(
+        mass_rate = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
         concentration = particle.concentration
-        if dm_dt.ndim == 2:
+        if mass_rate.ndim == 2:
             concentration = concentration[:, np.newaxis]
-        return dm_dt * concentration
+        return mass_rate * concentration
 
     # ─────────────────────────── API: step ─────────────────────────────────
     def step(
@@ -163,14 +181,14 @@ class CondensationIsothermal:
         pressure: float,
         time_step: float,
     ):
-        dm_dt = self.mass_transfer_rate(
+        mass_rate = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
         mass_change = get_mass_transfer(
-            mass_rate=dm_dt,
+            mass_rate=mass_rate,
             time_step=time_step,
             gas_mass=gas_species.get_concentration(),
             particle_mass=particle.get_species_mass(),
