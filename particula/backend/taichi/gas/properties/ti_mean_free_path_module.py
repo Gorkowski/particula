@@ -5,6 +5,19 @@ from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
 from particula.gas.properties.dynamic_viscosity import get_dynamic_viscosity
 
+"""
+Taichi helpers for computing the molecular mean free path (λ).
+
+Implements
+    λ = (2 μ / p) / √(8 M / (π R T))
+
+where μ is the dynamic viscosity, p the pressure, M the molar mass,
+R the universal gas constant, and T the temperature.
+
+All public objects follow the Particula naming guide and include
+detailed docstrings in the required format.
+"""
+
 _GAS_CONSTANT = float(GAS_CONSTANT)  # J mol⁻¹ K⁻¹
 
 
