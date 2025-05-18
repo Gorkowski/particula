@@ -3,6 +3,7 @@ particles (10 species fixed)."""
 import os
 import json
 import numpy as np
+import particula as par          # << NEW – pure-python helpers
 import taichi as ti
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
@@ -118,16 +119,78 @@ def make_step_callable(particle, gas, cond):
         )
     return _inner
 
-def make_python_step_callable(radii: np.ndarray, cond):
-    """Return a callable that loops over radii and calls
-    cond.first_order_mass_transport once per particle."""
+def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
+    """
+    Pure-Python analogue of _build_particle_and_gas for the NumPy backend.
+    Creates particle and gas objects compatible with the python
+    CondensationIsothermal.step signature.
+    """
+    rng = np.random.default_rng(0)
+    # particle mass [kg] per species; positive values only
+    mass = np.abs(rng.standard_normal((n_particles, n_species))) * 1.0e-18
+
+    densities = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+
+    # ---------- particle ----------
+    activity = (
+        par.particles.ActivityKappaParameterBuilder()
+        .set_density(densities, "kg/m^3")
+        .set_kappa(np.zeros(n_species))
+        .set_molar_mass(molar_mass, "kg/mol")
+        .set_water_index(0)
+        .build()
+    )
+    surface = (
+        par.particles.SurfaceStrategyVolumeBuilder()
+        .set_density(densities, "kg/m^3")
+        .set_surface_tension(np.full(n_species, 0.072), "N/m")
+        .build()
+    )
+    particle = (
+        par.particles.ResolvedParticleMassRepresentationBuilder()
+        .set_distribution_strategy(par.particles.ParticleResolvedSpeciatedMass())
+        .set_activity_strategy(activity)
+        .set_surface_strategy(surface)
+        .set_mass(mass, "kg")
+        .set_density(densities, "kg/m^3")
+        .set_charge(0)
+        .set_volume(1.0, "m^3")          # arbitrary parcel volume
+        .build()
+    )
+
+    # ---------- gas ----------
+    vp_strategies = [
+        par.gas.VaporPressureFactory().get_strategy(
+            "water_buck" if i == 0 else "constant",
+            None
+            if i == 0
+            else {"vapor_pressure": 100.0 + i * 50.0, "vapor_pressure_units": "Pa"},
+        )
+        for i in range(n_species)
+    ]
+    gas_species = (
+        par.gas.GasSpeciesBuilder()
+        .set_name([f"X{i}" for i in range(n_species)])
+        .set_molar_mass(molar_mass, "kg/mol")
+        .set_vapor_pressure_strategy(vp_strategies)
+        .set_concentration(np.ones(n_species), "kg/m^3")
+        .set_partitioning(True)
+        .build()
+    )
+
+    return particle, gas_species
+
+def make_python_step_callable(particle, gas, cond):
+    """Return a callable that executes cond.step once."""
     def _inner():
-        for r in radii:
-            cond.first_order_mass_transport(
-                particle_radius=r,
-                temperature=298.15,
-                pressure=101_325.0,
-            )
+        cond.step(
+            particle=particle,
+            gas_species=gas,
+            temperature=298.15,
+            pressure=101_325.0,
+            time_step=1.0,
+        )
     return _inner
 
 if __name__ == "__main__":
@@ -157,9 +220,11 @@ if __name__ == "__main__":
         )
 
         # ----- Python objects & stats ---------------------------------------
-        radii = np.full(n_particles, 1.0e-7)    # 100-nm particles
+        py_particle, py_gas = _build_particle_and_gas_python(
+            n_particles, N_SPECIES
+        )
         stats_py = get_function_benchmark(
-            make_python_step_callable(radii, condensation_py),
+            make_python_step_callable(py_particle, py_gas, condensation_py),
             ops_per_call=1,
         )
 
