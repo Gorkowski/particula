@@ -56,11 +56,12 @@ class SurfaceMixin:
         density: NDArray[np.float64],
     ):
         self.surface_tension = ti.field(ti.f64, shape=surface_tension.shape)
-        self.n_species = ti.field(ti.i32, shape=())
         self.density = ti.field(ti.f64, shape=density.shape)
         _field_io.from_numpy(self.surface_tension, surface_tension)
         _field_io.from_numpy(self.density, density)
-        self.n_species[None] = int(surface_tension.shape[0])
+        # number of chemical species – kept as a Python int so it is
+        # compile-time static for Taichi kernels
+        self.n_species = int(surface_tension.shape[0])
 
     @ti.kernel
     def weighted_average(
@@ -70,10 +71,10 @@ class SurfaceMixin:
         normalizer: ti.template(),
     ) -> ti.f64:
         tot = 0.0
-        for i in range(self.n_species):
+        for i in ti.static(range(self.n_species)):
             tot += weights[i] / normalizer[i]
         acc = 0.0
-        for i in range(self.n_species):
+        for i in ti.static(range(self.n_species)):
             acc += values[i] * (weights[i] / normalizer[i]) / tot
         return acc
 
@@ -128,7 +129,6 @@ class TiSurfaceStrategyMolar(SurfaceMixin):
         super().__init__(surface_tension, density)
         self.molar_mass = ti.field(ti.f64, shape=molar_mass.shape)
         _field_io.from_numpy(self.molar_mass, molar_mass)
-        self.n_species[None] = molar_mass.shape[0]
 
     @ti.kernel
     def k_effective_property(
@@ -139,10 +139,10 @@ class TiSurfaceStrategyMolar(SurfaceMixin):
     ):
         for p in range(mass_conc.shape[0]):                # particle loop
             tot = 0.0
-            for s in range(self.n_species):
+            for s in ti.static(range(self.n_species)):
                 tot += mass_conc[p, s] / self.molar_mass[s]
             acc = 0.0
-            for s in range(self.n_species):
+            for s in ti.static(range(self.n_species)):
                 acc += prop[s] * (mass_conc[p, s] / self.molar_mass[s]) / tot
             res[p] = acc
 
