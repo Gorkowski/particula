@@ -157,7 +157,7 @@ def kget_taylor_microscale(
     fluid_rms_velocity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     kinematic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     turbulent_dissipation: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     """
     Vectorized Taylor microscale (Taichi).
@@ -169,10 +169,10 @@ def kget_taylor_microscale(
         - kinematic_viscosity : 1D array of kinematic viscosities, m²/s.
         - turbulent_dissipation : 1D array of turbulent dissipation rates,
           m²/s³.
-        - result : Output array for Taylor microscales, m.
+        - result_array : Output array for Taylor microscales, m.
 
     Returns:
-        - None (results stored in result)
+        - None (results stored in result_array)
 
     Examples:
         ```py title="Quick example"
@@ -183,8 +183,8 @@ def kget_taylor_microscale(
         - G. I. Taylor, "Statistical theory of turbulence," Proc. Roy. Soc. A,
           151, 421–444, 1935.
     """
-    for i in range(result.shape[0]):
-        result[i] = fget_taylor_microscale(
+    for i in range(result_array.shape[0]):
+        result_array[i] = fget_taylor_microscale(
             fluid_rms_velocity[i],
             kinematic_viscosity[i],
             turbulent_dissipation[i],
@@ -195,7 +195,7 @@ def kget_taylor_microscale_reynolds_number(
     fluid_rms_velocity: ti.types.ndarray(dtype=ti.f64, ndim=1),
     taylor_microscale: ti.types.ndarray(dtype=ti.f64, ndim=1),
     kinematic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     """
     Vectorized Taylor-microscale Reynolds number (Taichi).
@@ -207,11 +207,11 @@ def kget_taylor_microscale_reynolds_number(
         - fluid_rms_velocity : 1D array of RMS fluid velocities, m/s.
         - taylor_microscale : 1D array of Taylor microscales, m.
         - kinematic_viscosity : 1D array of kinematic viscosities, m²/s.
-        - result : Output array for Taylor-microscale Reynolds numbers,
+        - result_array : Output array for Taylor-microscale Reynolds numbers,
           dimensionless.
 
     Returns:
-        - None (results stored in result)
+        - None (results stored in result_array)
 
     Examples:
         ```py title="Quick example"
@@ -222,8 +222,8 @@ def kget_taylor_microscale_reynolds_number(
         - G. I. Taylor, "Statistical theory of turbulence," Proc. Roy. Soc. A,
           151, 421–444, 1935.
     """
-    for i in range(result.shape[0]):
-        result[i] = fget_taylor_microscale_reynolds_number(
+    for i in range(result_array.shape[0]):
+        result_array[i] = fget_taylor_microscale_reynolds_number(
             fluid_rms_velocity[i],
             taylor_microscale[i],
             kinematic_viscosity[i],
