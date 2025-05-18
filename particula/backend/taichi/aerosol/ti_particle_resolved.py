@@ -53,6 +53,28 @@ radii = ti.field(float, shape=(particle_count,), name="radii")
 
 @ti.func
 def get_radius(p_index: int) -> float:
+    """
+    Compute the radius of a single particle.
+
+    Parameters
+    ----------
+    p_index : int
+        Index of the particle whose radius is to be calculated.
+
+    Returns
+    -------
+    float
+        Particle radius (same units as implied by density and mass –
+        typically metres if SI inputs are supplied).
+
+    Notes
+    -----
+    The radius is obtained by first converting each species mass to its
+    partial volume using the species density, summing those volumes, and
+    then inverting the sphere-volume relation:
+
+        r = (3 V / 4π)^(1/3)
+    """
     volume = 0.0
     for j in range(species_count):
         volume += species_masses[p_index, j] / density[j]
@@ -60,6 +82,12 @@ def get_radius(p_index: int) -> float:
 
 @ti.kernel
 def calculate_radius():
+    """
+    Taichi kernel that populates `radii` for every particle.
+
+    Iterates over all particles, calls `get_radius` for each, and stores
+    the resulting radii in the dedicated Taichi field.
+    """
     for i in range(particle_count):
         radii[i] = get_radius(i)
 
