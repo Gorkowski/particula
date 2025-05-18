@@ -106,6 +106,8 @@ class TiCondensationIsothermal:
         temperature: ti.f64,
         pressure: ti.f64,
         dynamic_viscosity: ti.f64,
+        mm: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        alpha: ti.types.ndarray(dtype=ti.f64, ndim=1),
         result: ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         """
@@ -116,18 +118,20 @@ class TiCondensationIsothermal:
             - temperature : Temperature [K]
             - pressure : Pressure [Pa]
             - dynamic_viscosity : Dynamic viscosity [Pa·s]
+            - mm : Molar mass array, shape (n_species,)
+            - alpha : Accommodation coefficient array, shape (n_species,)
             - result : Output array, shape (n_particles, n_species), units [m^3/s]
 
         Returns:
             - None (results written in-place to `result`)
         """
         for particle_i in range(particle_radius.shape[0]):  # particles
-            for species_i in range(self.molar_mass.shape[0]):  # species
+            for species_i in range(mm.shape[0]):  # species
                 result[particle_i, species_i] = (
                     fget_first_order_mass_transport_via_system_state(
                         particle_radius[particle_i],
-                        self.molar_mass[species_i],
-                        self.accommodation_coefficient[species_i],
+                        mm[species_i],
+                        alpha[species_i],
                         temperature,
                         pressure,
                         dynamic_viscosity,
@@ -142,6 +146,8 @@ class TiCondensationIsothermal:
         temperature: ti.f64,
         pressure: ti.f64,
         dynamic_viscosity: ti.f64,
+        mm: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        alpha: ti.types.ndarray(dtype=ti.f64, ndim=1),
         pressure_delta: ti.types.ndarray(dtype=ti.f64, ndim=2),
         result: ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
@@ -153,6 +159,8 @@ class TiCondensationIsothermal:
             - temperature : Temperature [K]
             - pressure : Pressure [Pa]
             - dynamic_viscosity : Dynamic viscosity [Pa·s]
+            - mm : Molar mass array, shape (n_species,)
+            - alpha : Accommodation coefficient array, shape (n_species,)
             - pressure_delta : Partial pressure delta array,
                 shape (n_particles, n_species)
             - result : Output array, shape (n_particles, n_species),
@@ -166,8 +174,8 @@ class TiCondensationIsothermal:
                 first_order_mass_transport_k = (
                     fget_first_order_mass_transport_via_system_state(
                         particle_radius[particle_i],
-                        self.molar_mass[species_i],
-                        self.accommodation_coefficient[species_i],
+                        mm[species_i],
+                        alpha[species_i],
                         temperature,
                         pressure,
                         dynamic_viscosity,
@@ -179,7 +187,7 @@ class TiCondensationIsothermal:
                     pressure_delta=pressure_delta[particle_i, species_i],
                     first_order_mass_transport=first_order_mass_transport_k,
                     temperature=temperature,
-                    molar_mass=self.molar_mass[species_i],
+                    molar_mass=mm[species_i],
                 )
 
     @ti.kernel
@@ -267,7 +275,10 @@ class TiCondensationIsothermal:
         )
         self._kget_first_order_mass_transport(
             r_ti, float(temperature), float(pressure),
-            float(dynamic_viscosity), coeff
+            float(dynamic_viscosity),
+            self.molar_mass,
+            self.accommodation_coefficient,
+            coeff
         )
         return coeff        # hand back Taichi array (convert in caller if desired)
 
@@ -295,7 +306,10 @@ class TiCondensationIsothermal:
         dm_dt = ti.ndarray(dtype=ti.f64, shape=pressure_delta.shape)
         self._kget_mass_transfer_rate(
             radius_ti, float(temperature), float(pressure),
-            float(dynamic_viscosity), pressure_delta, dm_dt
+            float(dynamic_viscosity),
+            self.molar_mass,
+            self.accommodation_coefficient,
+            pressure_delta, dm_dt
         )
         return dm_dt
 

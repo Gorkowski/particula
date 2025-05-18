@@ -72,7 +72,7 @@ class TiCondensationIsothermalTest(unittest.TestCase):
             water_index=0,
         )
         surface = SurfaceStrategyMass(
-            surface_tension=0.072,
+            surface_tension=np.full(self.n_species, 0.072),
             density=self.densities,
         )
 
