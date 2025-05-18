@@ -10,9 +10,6 @@ from particula.backend.taichi.particles.properties.ti_activity_module import (
     fget_surface_partial_pressure,
 )
 
-ti.init(default_fp=ti.f64)          # enforce float64 everywhere
-
-
 # ────────────────────────── shared mixin (no public ctor) ───────────────────
 @ti.data_oriented
 class _ActivityMixin:
