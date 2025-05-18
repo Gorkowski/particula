@@ -204,12 +204,12 @@ def _ensure_all_same_size(*args):
 def ti_get_collision_radius_mg1988(gyration_radius):
     """Taichi wrapper for mg1988."""
     _ensure_all_ndarrays(gyration_radius)
-    a1 = np.atleast_1d(gyration_radius)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    kget_collision_radius_mg1988(variable_a1_ti, result_ti)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    n_elements = gyration_radius_array.size
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    kget_collision_radius_mg1988(gyration_radius_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -217,16 +217,16 @@ def ti_get_collision_radius_mg1988(gyration_radius):
 def ti_get_collision_radius_sr1992(gyration_radius, fractal_dimension):
     """Taichi wrapper for sr1992."""
     _ensure_all_ndarrays(gyration_radius, fractal_dimension)
-    a1 = np.atleast_1d(gyration_radius)
-    a2 = np.atleast_1d(fractal_dimension)
-    _ensure_all_same_size(a1, a2)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    kget_collision_radius_sr1992(variable_a1_ti, variable_a2_ti, result_ti)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    fractal_dimension_array = np.atleast_1d(fractal_dimension)
+    _ensure_all_same_size(gyration_radius_array, fractal_dimension_array)
+    n_elements = gyration_radius_array.size
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_dimension_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    fractal_dimension_ti.from_numpy(fractal_dimension_array)
+    kget_collision_radius_sr1992(gyration_radius_ti, fractal_dimension_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -234,16 +234,16 @@ def ti_get_collision_radius_sr1992(gyration_radius, fractal_dimension):
 def ti_get_collision_radius_mzg2002(gyration_radius, fractal_prefactor):
     """Taichi wrapper for mzg2002."""
     _ensure_all_ndarrays(gyration_radius, fractal_prefactor)
-    a1 = np.atleast_1d(gyration_radius)
-    a2 = np.atleast_1d(fractal_prefactor)
-    _ensure_all_same_size(a1, a2)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    kget_collision_radius_mzg2002(variable_a1_ti, variable_a2_ti, result_ti)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    fractal_prefactor_array = np.atleast_1d(fractal_prefactor)
+    _ensure_all_same_size(gyration_radius_array, fractal_prefactor_array)
+    n_elements = gyration_radius_array.size
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_prefactor_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    fractal_prefactor_ti.from_numpy(fractal_prefactor_array)
+    kget_collision_radius_mzg2002(gyration_radius_ti, fractal_prefactor_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -251,22 +251,22 @@ def ti_get_collision_radius_mzg2002(gyration_radius, fractal_prefactor):
 def ti_get_collision_radius_tt2012(fractal_dimension, number_of_particles, gyration_radius, radius_monomer):
     """Taichi wrapper for tt2012."""
     _ensure_all_ndarrays(fractal_dimension, number_of_particles, gyration_radius, radius_monomer)
-    a1 = np.atleast_1d(fractal_dimension)
-    a2 = np.atleast_1d(number_of_particles)
-    a3 = np.atleast_1d(gyration_radius)
-    a4 = np.atleast_1d(radius_monomer)
-    _ensure_all_same_size(a1, a2, a3, a4)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a3_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a4_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    variable_a3_ti.from_numpy(a3)
-    variable_a4_ti.from_numpy(a4)
-    kget_collision_radius_tt2012(variable_a1_ti, variable_a2_ti, variable_a3_ti, variable_a4_ti, result_ti)
+    fractal_dimension_array = np.atleast_1d(fractal_dimension)
+    number_of_particles_array = np.atleast_1d(number_of_particles)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    radius_monomer_array = np.atleast_1d(radius_monomer)
+    _ensure_all_same_size(fractal_dimension_array, number_of_particles_array, gyration_radius_array, radius_monomer_array)
+    n_elements = fractal_dimension_array.size
+    fractal_dimension_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    number_of_particles_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    radius_monomer_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_dimension_ti.from_numpy(fractal_dimension_array)
+    number_of_particles_ti.from_numpy(number_of_particles_array)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    radius_monomer_ti.from_numpy(radius_monomer_array)
+    kget_collision_radius_tt2012(fractal_dimension_ti, number_of_particles_ti, gyration_radius_ti, radius_monomer_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -274,16 +274,16 @@ def ti_get_collision_radius_tt2012(fractal_dimension, number_of_particles, gyrat
 def ti_get_collision_radius_wq2022_rg(gyration_radius, radius_monomer):
     """Taichi wrapper for wq2022_rg."""
     _ensure_all_ndarrays(gyration_radius, radius_monomer)
-    a1 = np.atleast_1d(gyration_radius)
-    a2 = np.atleast_1d(radius_monomer)
-    _ensure_all_same_size(a1, a2)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    kget_collision_radius_wq2022_rg(variable_a1_ti, variable_a2_ti, result_ti)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    radius_monomer_array = np.atleast_1d(radius_monomer)
+    _ensure_all_same_size(gyration_radius_array, radius_monomer_array)
+    n_elements = gyration_radius_array.size
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    radius_monomer_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    radius_monomer_ti.from_numpy(radius_monomer_array)
+    kget_collision_radius_wq2022_rg(gyration_radius_ti, radius_monomer_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -291,19 +291,19 @@ def ti_get_collision_radius_wq2022_rg(gyration_radius, radius_monomer):
 def ti_get_collision_radius_wq2022_rg_df(fractal_dimension, gyration_radius, radius_monomer):
     """Taichi wrapper for wq2022_rg_df."""
     _ensure_all_ndarrays(fractal_dimension, gyration_radius, radius_monomer)
-    a1 = np.atleast_1d(fractal_dimension)
-    a2 = np.atleast_1d(gyration_radius)
-    a3 = np.atleast_1d(radius_monomer)
-    _ensure_all_same_size(a1, a2, a3)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a3_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    variable_a3_ti.from_numpy(a3)
-    kget_collision_radius_wq2022_rg_df(variable_a1_ti, variable_a2_ti, variable_a3_ti, result_ti)
+    fractal_dimension_array = np.atleast_1d(fractal_dimension)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    radius_monomer_array = np.atleast_1d(radius_monomer)
+    _ensure_all_same_size(fractal_dimension_array, gyration_radius_array, radius_monomer_array)
+    n_elements = fractal_dimension_array.size
+    fractal_dimension_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    radius_monomer_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_dimension_ti.from_numpy(fractal_dimension_array)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    radius_monomer_ti.from_numpy(radius_monomer_array)
+    kget_collision_radius_wq2022_rg_df(fractal_dimension_ti, gyration_radius_ti, radius_monomer_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -311,22 +311,22 @@ def ti_get_collision_radius_wq2022_rg_df(fractal_dimension, gyration_radius, rad
 def ti_get_collision_radius_wq2022_rg_df_k0(fractal_dimension, fractal_prefactor, gyration_radius, radius_monomer):
     """Taichi wrapper for wq2022_rg_df_k0."""
     _ensure_all_ndarrays(fractal_dimension, fractal_prefactor, gyration_radius, radius_monomer)
-    a1 = np.atleast_1d(fractal_dimension)
-    a2 = np.atleast_1d(fractal_prefactor)
-    a3 = np.atleast_1d(gyration_radius)
-    a4 = np.atleast_1d(radius_monomer)
-    _ensure_all_same_size(a1, a2, a3, a4)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a3_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a4_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    variable_a3_ti.from_numpy(a3)
-    variable_a4_ti.from_numpy(a4)
-    kget_collision_radius_wq2022_rg_df_k0(variable_a1_ti, variable_a2_ti, variable_a3_ti, variable_a4_ti, result_ti)
+    fractal_dimension_array = np.atleast_1d(fractal_dimension)
+    fractal_prefactor_array = np.atleast_1d(fractal_prefactor)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    radius_monomer_array = np.atleast_1d(radius_monomer)
+    _ensure_all_same_size(fractal_dimension_array, fractal_prefactor_array, gyration_radius_array, radius_monomer_array)
+    n_elements = fractal_dimension_array.size
+    fractal_dimension_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_prefactor_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    radius_monomer_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_dimension_ti.from_numpy(fractal_dimension_array)
+    fractal_prefactor_ti.from_numpy(fractal_prefactor_array)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    radius_monomer_ti.from_numpy(radius_monomer_array)
+    kget_collision_radius_wq2022_rg_df_k0(fractal_dimension_ti, fractal_prefactor_ti, gyration_radius_ti, radius_monomer_ti, result_ti)
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
 
@@ -334,26 +334,26 @@ def ti_get_collision_radius_wq2022_rg_df_k0(fractal_dimension, fractal_prefactor
 def ti_get_collision_radius_wq2022_rg_df_k0_a13(fractal_dimension, fractal_prefactor, shape_anisotropy, gyration_radius, radius_monomer):
     """Taichi wrapper for wq2022_rg_df_k0_a13."""
     _ensure_all_ndarrays(fractal_dimension, fractal_prefactor, shape_anisotropy, gyration_radius, radius_monomer)
-    a1 = np.atleast_1d(fractal_dimension)
-    a2 = np.atleast_1d(fractal_prefactor)
-    a3 = np.atleast_1d(shape_anisotropy)
-    a4 = np.atleast_1d(gyration_radius)
-    a5 = np.atleast_1d(radius_monomer)
-    _ensure_all_same_size(a1, a2, a3, a4, a5)
-    n = a1.size
-    variable_a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a3_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a4_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a5_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    variable_a1_ti.from_numpy(a1)
-    variable_a2_ti.from_numpy(a2)
-    variable_a3_ti.from_numpy(a3)
-    variable_a4_ti.from_numpy(a4)
-    variable_a5_ti.from_numpy(a5)
+    fractal_dimension_array = np.atleast_1d(fractal_dimension)
+    fractal_prefactor_array = np.atleast_1d(fractal_prefactor)
+    shape_anisotropy_array = np.atleast_1d(shape_anisotropy)
+    gyration_radius_array = np.atleast_1d(gyration_radius)
+    radius_monomer_array = np.atleast_1d(radius_monomer)
+    _ensure_all_same_size(fractal_dimension_array, fractal_prefactor_array, shape_anisotropy_array, gyration_radius_array, radius_monomer_array)
+    n_elements = fractal_dimension_array.size
+    fractal_dimension_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_prefactor_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    shape_anisotropy_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    gyration_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    radius_monomer_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    fractal_dimension_ti.from_numpy(fractal_dimension_array)
+    fractal_prefactor_ti.from_numpy(fractal_prefactor_array)
+    shape_anisotropy_ti.from_numpy(shape_anisotropy_array)
+    gyration_radius_ti.from_numpy(gyration_radius_array)
+    radius_monomer_ti.from_numpy(radius_monomer_array)
     kget_collision_radius_wq2022_rg_df_k0_a13(
-        variable_a1_ti, variable_a2_ti, variable_a3_ti, variable_a4_ti, variable_a5_ti, result_ti
+        fractal_dimension_ti, fractal_prefactor_ti, shape_anisotropy_ti, gyration_radius_ti, radius_monomer_ti, result_ti
     )
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
