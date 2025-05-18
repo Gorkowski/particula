@@ -39,14 +39,14 @@ class MassBasedMovingBin(_DistributionMixin):
     # dependency-injection without having to call the numpy wrappers.
 
     @ti.func
-    def ti_species_mass(
+    def fget_species_mass(
         self, distribution_mass: ti.f64, density: ti.f64
     ) -> ti.f64:
         """Species-level mass – identity for this strategy."""
         return distribution_mass
 
     @ti.func
-    def ti_particle_mass(self, species_masses: ti.template()) -> ti.f64:
+    def fget_particle_mass(self, species_masses: ti.template()) -> ti.f64:
         """Sum of the species masses of one particle/bin."""
         total = 0.0
         for k in ti.static(range(species_masses.n)):
@@ -54,7 +54,7 @@ class MassBasedMovingBin(_DistributionMixin):
         return total
 
     @ti.func
-    def ti_particle_radius(
+    def fget_particle_radius(
         self, particle_mass: ti.f64, particle_density: ti.f64
     ) -> ti.f64:
         """Radius from total mass & density."""
@@ -62,7 +62,7 @@ class MassBasedMovingBin(_DistributionMixin):
         return self._volume_to_radius(volume)
 
     @ti.func
-    def ti_updated_mass(
+    def fget_updated_mass(
         self,
         current_mass: ti.f64,
         concentration: ti.f64,
@@ -76,14 +76,14 @@ class MassBasedMovingBin(_DistributionMixin):
             return 0.0
 
     @ti.func
-    def ti_total_mass(
+    def fget_total_mass(
         self, particle_mass: ti.f64, concentration: ti.f64
     ) -> ti.f64:
         """Contribution of a single particle/bin to the total mass."""
         return particle_mass * concentration
 
     @ti.func
-    def ti_merge_concentration(
+    def fget_merge_concentration(
         self,
         concentration_old: ti.f64,
         concentration_added: ti.f64,
@@ -95,28 +95,28 @@ class MassBasedMovingBin(_DistributionMixin):
         return self.__class__.__name__
 
     @ti.func
-    def _get_species_mass_func(self, distribution, density):
+    def _fget_species_mass(self, distribution, density):
         return distribution
 
     @ti.kernel
-    def _species_mass_1d(
+    def _kget_species_mass_1d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=1),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=1),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in range(distribution.shape[0]):
-            result[i] = self._get_species_mass_func(distribution[i], density[i])
+            result[i] = self._fget_species_mass(distribution[i], density[i])
 
     @ti.kernel
-    def _species_mass_2d(
+    def _kget_species_mass_2d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=2),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=2),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         for i, j in ti.ndrange(distribution.shape[0], distribution.shape[1]):
-            result[i, j] = self._get_species_mass_func(
+            result[i, j] = self._fget_species_mass(
                 distribution[i, j], density[i, j]
             )
 
@@ -127,9 +127,9 @@ class MassBasedMovingBin(_DistributionMixin):
     ) -> NDArray[np.float64]:
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
-            self._species_mass_1d(distribution, density, result)
+            self._kget_species_mass_1d(distribution, density, result)
         elif distribution.ndim == 2:
-            self._species_mass_2d(distribution, density, result)
+            self._kget_species_mass_2d(distribution, density, result)
         else:
             raise ValueError("Only 1-D or 2-D distributions are supported")
         return result
@@ -200,28 +200,28 @@ class RadiiBasedMovingBin(_DistributionMixin):
         return self.__class__.__name__
 
     @ti.func
-    def _get_species_mass_func(self, distribution, density):
+    def _fget_species_mass(self, distribution, density):
         return 4.0 / 3.0 * ti.math.pi * distribution ** 3 * density
 
     @ti.kernel
-    def _species_mass_1d(
+    def _kget_species_mass_1d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=1),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=1),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in range(distribution.shape[0]):
-            result[i] = self._get_species_mass_func(distribution[i], density[i])
+            result[i] = self._fget_species_mass(distribution[i], density[i])
 
     @ti.kernel
-    def _species_mass_2d(
+    def _kget_species_mass_2d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=2),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=2),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         for i, j in ti.ndrange(distribution.shape[0], distribution.shape[1]):
-            result[i, j] = self._get_species_mass_func(
+            result[i, j] = self._fget_species_mass(
                 distribution[i, j], density[i, j]
             )
 
@@ -232,9 +232,9 @@ class RadiiBasedMovingBin(_DistributionMixin):
     ) -> NDArray[np.float64]:
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
-            self._species_mass_1d(distribution, density, result)
+            self._kget_species_mass_1d(distribution, density, result)
         elif distribution.ndim == 2:
-            self._species_mass_2d(distribution, density, result)
+            self._kget_species_mass_2d(distribution, density, result)
         else:
             raise ValueError("Only 1-D or 2-D distributions are supported")
         return result
@@ -307,28 +307,28 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         return self.__class__.__name__
 
     @ti.func
-    def _get_species_mass_func(self, distribution, density):
+    def _fget_species_mass(self, distribution, density):
         return distribution
 
     @ti.kernel
-    def _species_mass_1d(
+    def _kget_species_mass_1d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=1),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=1),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in range(distribution.shape[0]):
-            result[i] = self._get_species_mass_func(distribution[i], density[i])
+            result[i] = self._fget_species_mass(distribution[i], density[i])
 
     @ti.kernel
-    def _species_mass_2d(
+    def _kget_species_mass_2d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=2),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=2),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         for i, j in ti.ndrange(distribution.shape[0], distribution.shape[1]):
-            result[i, j] = self._get_species_mass_func(
+            result[i, j] = self._fget_species_mass(
                 distribution[i, j], density[i, j]
             )
 
@@ -339,9 +339,9 @@ class SpeciatedMassMovingBin(_DistributionMixin):
     ) -> NDArray[np.float64]:
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
-            self._species_mass_1d(distribution, density, result)
+            self._kget_species_mass_1d(distribution, density, result)
         elif distribution.ndim == 2:
-            self._species_mass_2d(distribution, density, result)
+            self._kget_species_mass_2d(distribution, density, result)
         else:
             raise ValueError("Only 1-D or 2-D distributions are supported")
         return result
@@ -420,28 +420,28 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
         return self.__class__.__name__
 
     @ti.func
-    def _get_species_mass_func(self, distribution, density):
+    def _fget_species_mass(self, distribution, density):
         return distribution
 
     @ti.kernel
-    def _species_mass_1d(
+    def _kget_species_mass_1d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=1),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=1),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         for i in range(distribution.shape[0]):
-            result[i] = self._get_species_mass_func(distribution[i], density[i])
+            result[i] = self._fget_species_mass(distribution[i], density[i])
 
     @ti.kernel
-    def _species_mass_2d(
+    def _kget_species_mass_2d(
         self,
         distribution: ti.types.ndarray(dtype=ti.f64, ndim=2),
         density:       ti.types.ndarray(dtype=ti.f64, ndim=2),
         result:        ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
         for i, j in ti.ndrange(distribution.shape[0], distribution.shape[1]):
-            result[i, j] = self._get_species_mass_func(
+            result[i, j] = self._fget_species_mass(
                 distribution[i, j], density[i, j]
             )
 
@@ -452,9 +452,9 @@ class ParticleResolvedSpeciatedMass(_DistributionMixin):
     ) -> NDArray[np.float64]:
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
-            self._species_mass_1d(distribution, density, result)
+            self._kget_species_mass_1d(distribution, density, result)
         elif distribution.ndim == 2:
-            self._species_mass_2d(distribution, density, result)
+            self._kget_species_mass_2d(distribution, density, result)
         else:
             raise ValueError("Only 1-D or 2-D distributions are supported")
         return result
