@@ -151,7 +151,7 @@ class GasSpecies:
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
-            result[species_index] = strategy._pure_vp_func(temperature)
+            result[species_index] = strategy.fget_pure_vapor_pressure(temperature)
 
     @ti.kernel
     def _partial_pressure_kernel(
@@ -172,7 +172,7 @@ class GasSpecies:
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
-            result[species_index] = strategy._partial_pressure_func(
+            result[species_index] = strategy.fget_partial_pressure_internal(
                 self.concentration[species_index],
                 self.molar_mass[species_index],
                 temperature,
@@ -197,8 +197,8 @@ class GasSpecies:
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
-            vapor_pressure = strategy._pure_vp_func(temperature)
-            partial_pressure = strategy._partial_pressure_func(
+            vapor_pressure = strategy.fget_pure_vapor_pressure(temperature)
+            partial_pressure = strategy.fget_partial_pressure_internal(
                 self.concentration[species_index],
                 self.molar_mass[species_index],
                 temperature,
@@ -226,8 +226,8 @@ class GasSpecies:
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
-            vapor_pressure = strategy._pure_vp_func(temperature)
-            result[species_index] = strategy._concentration_func(
+            vapor_pressure = strategy.fget_pure_vapor_pressure(temperature)
+            result[species_index] = strategy.fget_concentration_from_pressure_internal(
                 vapor_pressure,
                 self.molar_mass[species_index],
                 temperature,
