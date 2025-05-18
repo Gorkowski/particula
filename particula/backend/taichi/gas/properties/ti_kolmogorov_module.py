@@ -9,7 +9,33 @@ from particula.backend.dispatch_register import register
 def fget_kolmogorov_time(
     kinematic_viscosity: ti.f64, turbulent_dissipation: ti.f64
 ) -> ti.f64:
-    """Elementwise Kolmogorov time: sqrt(v / eps)"""
+    """
+    Compute the Kolmogorov time scale for turbulence.
+
+    The Kolmogorov time scale τₖ is given by:
+        τₖ = √(ν∕ε)
+    where:
+        - τₖ is the Kolmogorov time scale,
+        - ν is the kinematic viscosity,
+        - ε is the turbulent dissipation rate.
+
+    Arguments:
+        - kinematic_viscosity : Kinematic viscosity (ν) [m²/s].
+        - turbulent_dissipation : Turbulent dissipation rate (ε) [m²/s³].
+
+    Returns:
+        - Kolmogorov time scale τₖ [s].
+
+    Examples:
+        ```py
+        fget_kolmogorov_time(1.5e-5, 1e-3)
+        # Output: 0.12247448713915891
+        ```
+
+    References:
+        - Pope, S. B., "Turbulent Flows," Cambridge University Press, 2000.
+        - "Kolmogorov microscales," [Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov_microscales).
+    """
     return ti.sqrt(kinematic_viscosity / turbulent_dissipation)
 
 
@@ -17,7 +43,33 @@ def fget_kolmogorov_time(
 def fget_kolmogorov_length(
     kinematic_viscosity: ti.f64, turbulent_dissipation: ti.f64
 ) -> ti.f64:
-    """Elementwise Kolmogorov length: sqrt(sqrt(v^3 / eps))"""
+    """
+    Compute the Kolmogorov length scale for turbulence.
+
+    The Kolmogorov length scale η is given by:
+        η = (ν³∕ε)¼
+    where:
+        - η is the Kolmogorov length scale,
+        - ν is the kinematic viscosity,
+        - ε is the turbulent dissipation rate.
+
+    Arguments:
+        - kinematic_viscosity : Kinematic viscosity (ν) [m²/s].
+        - turbulent_dissipation : Turbulent dissipation rate (ε) [m²/s³].
+
+    Returns:
+        - Kolmogorov length scale η [m].
+
+    Examples:
+        ```py
+        fget_kolmogorov_length(1.5e-5, 1e-3)
+        # Output: 0.0606217782649107
+        ```
+
+    References:
+        - Pope, S. B., "Turbulent Flows," Cambridge University Press, 2000.
+        - "Kolmogorov microscales," [Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov_microscales).
+    """
     return ti.sqrt(
         ti.sqrt(
             kinematic_viscosity
@@ -32,7 +84,33 @@ def fget_kolmogorov_length(
 def fget_kolmogorov_velocity(
     kinematic_viscosity: ti.f64, turbulent_dissipation: ti.f64
 ) -> ti.f64:
-    """Elementwise Kolmogorov velocity: sqrt(sqrt(v * eps))"""
+    """
+    Compute the Kolmogorov velocity scale for turbulence.
+
+    The Kolmogorov velocity scale uₖ is given by:
+        uₖ = (ν ε)¼
+    where:
+        - uₖ is the Kolmogorov velocity scale,
+        - ν is the kinematic viscosity,
+        - ε is the turbulent dissipation rate.
+
+    Arguments:
+        - kinematic_viscosity : Kinematic viscosity (ν) [m²/s].
+        - turbulent_dissipation : Turbulent dissipation rate (ε) [m²/s³].
+
+    Returns:
+        - Kolmogorov velocity scale uₖ [m/s].
+
+    Examples:
+        ```py
+        fget_kolmogorov_velocity(1.5e-5, 1e-3)
+        # Output: 0.07745966692414834
+        ```
+
+    References:
+        - Pope, S. B., "Turbulent Flows," Cambridge University Press, 2000.
+        - "Kolmogorov microscales," [Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov_microscales).
+    """
     return ti.sqrt(ti.sqrt(kinematic_viscosity * turbulent_dissipation))
 
 
@@ -108,14 +186,30 @@ def kget_kolmogorov_velocity(
 @register("get_kolmogorov_time", backend="taichi")
 def ti_get_kolmogorov_time(kinematic_viscosity, turbulent_dissipation):
     """
-    Taichi wrapper for Kolmogorov time.
+    Taichi wrapper for Kolmogorov time scale.
+
+    Both input arrays must be NumPy 1-D arrays. Shapes are broadcast internally.
+    If the result has size 1, a scalar is returned.
 
     Arguments:
-        - kinematic_viscosity : NumPy array of kinematic viscosity values.
-        - turbulent_dissipation : NumPy array of turbulent dissipation values.
+        - kinematic_viscosity : NumPy 1-D array of kinematic viscosity values (ν)
+        - turbulent_dissipation : NumPy 1-D array of turbulent dissipation
+          values (ε)
 
     Returns:
-        - Kolmogorov time as a NumPy array or scalar if input is scalar.
+        - Kolmogorov time scale τₖ as a NumPy array, or a scalar if result size
+          is 1.
+
+    Examples:
+        ```py
+        import numpy as np
+        ti_get_kolmogorov_time(np.array([1.5e-5]), np.array([1e-3]))
+        # Output: array([0.12247449])
+        ```
+
+    References:
+        - Pope, S. B., "Turbulent Flows," Cambridge University Press, 2000.
+        - "Kolmogorov microscales," [Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov_microscales).
     """
     if not (
         isinstance(kinematic_viscosity, np.ndarray)
@@ -142,14 +236,30 @@ def ti_get_kolmogorov_time(kinematic_viscosity, turbulent_dissipation):
 @register("get_kolmogorov_length", backend="taichi")
 def ti_get_kolmogorov_length(kinematic_viscosity, turbulent_dissipation):
     """
-    Taichi wrapper for Kolmogorov length.
+    Taichi wrapper for Kolmogorov length scale.
+
+    Both input arrays must be NumPy 1-D arrays. Shapes are broadcast internally.
+    If the result has size 1, a scalar is returned.
 
     Arguments:
-        - kinematic_viscosity : NumPy array of kinematic viscosity values.
-        - turbulent_dissipation : NumPy array of turbulent dissipation values.
+        - kinematic_viscosity : NumPy 1-D array of kinematic viscosity values (ν)
+        - turbulent_dissipation : NumPy 1-D array of turbulent dissipation
+          values (ε)
 
     Returns:
-        - Kolmogorov length as a NumPy array or scalar if input is scalar.
+        - Kolmogorov length scale η as a NumPy array, or a scalar if result size
+          is 1.
+
+    Examples:
+        ```py
+        import numpy as np
+        ti_get_kolmogorov_length(np.array([1.5e-5]), np.array([1e-3]))
+        # Output: array([0.06062178])
+        ```
+
+    References:
+        - Pope, S. B., "Turbulent Flows," Cambridge University Press, 2000.
+        - "Kolmogorov microscales," [Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov_microscales).
     """
     if not (
         isinstance(kinematic_viscosity, np.ndarray)
@@ -176,14 +286,30 @@ def ti_get_kolmogorov_length(kinematic_viscosity, turbulent_dissipation):
 @register("get_kolmogorov_velocity", backend="taichi")
 def ti_get_kolmogorov_velocity(kinematic_viscosity, turbulent_dissipation):
     """
-    Taichi wrapper for Kolmogorov velocity.
+    Taichi wrapper for Kolmogorov velocity scale.
+
+    Both input arrays must be NumPy 1-D arrays. Shapes are broadcast internally.
+    If the result has size 1, a scalar is returned.
 
     Arguments:
-        - kinematic_viscosity : NumPy array of kinematic viscosity values.
-        - turbulent_dissipation : NumPy array of turbulent dissipation values.
+        - kinematic_viscosity : NumPy 1-D array of kinematic viscosity values (ν)
+        - turbulent_dissipation : NumPy 1-D array of turbulent dissipation
+          values (ε)
 
     Returns:
-        - Kolmogorov velocity as a NumPy array or scalar if input is scalar.
+        - Kolmogorov velocity scale uₖ as a NumPy array, or a scalar if result
+          size is 1.
+
+    Examples:
+        ```py
+        import numpy as np
+        ti_get_kolmogorov_velocity(np.array([1.5e-5]), np.array([1e-3]))
+        # Output: array([0.07745967])
+        ```
+
+    References:
+        - Pope, S. B., "Turbulent Flows," Cambridge University Press, 2000.
+        - "Kolmogorov microscales," [Wikipedia](https://en.wikipedia.org/wiki/Kolmogorov_microscales).
     """
     if not (
         isinstance(kinematic_viscosity, np.ndarray)
