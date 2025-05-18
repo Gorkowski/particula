@@ -33,31 +33,96 @@ _MOLAR_MASS      = 0.018         # kg / mol   (arbitrary)
 _CONCENTRATION   = 4.0           # mol / m3   (arbitrary)
 
 
-def _close(a, b):
-    assert math.isclose(a, b, rel_tol=_REL_TOL, abs_tol=_ABS_TOL)
+def _assert_close(
+    actual: float,
+    expected: float,
+    rel_tol: float = _REL_TOL,
+    abs_tol: float = _ABS_TOL,
+) -> None:
+    """
+    Assert two float values are close within the given tolerances.
+
+    Arguments:
+        - actual : Value obtained from computation.
+        - expected : Reference value.
+        - rel_tol : Relative tolerance.
+        - abs_tol : Absolute tolerance.
+
+    Returns:
+        - None
+    """
+    assert math.isclose(actual, expected, rel_tol=rel_tol, abs_tol=abs_tol)
 
 
-def _check_kernels_vs_wrappers(strategy):
-    """Helper: make sure kernels == python wrappers for ONE Taichi strategy."""
-    _close(strategy._pure_vp_kernel(_TEMPERATURE),                            # pure-VP
-           strategy.pure_vapor_pressure(_TEMPERATURE))
-    _close(strategy._partial_pressure_kernel(_CONCENTRATION, _MOLAR_MASS, _TEMPERATURE),        # P-part
-           strategy.partial_pressure(_CONCENTRATION, _MOLAR_MASS, _TEMPERATURE))
-    _close(strategy._concentration_kernel(                          # conc.
-               strategy.pure_vapor_pressure(_TEMPERATURE), _MOLAR_MASS, _TEMPERATURE),
-           strategy.concentration(strategy.pure_vapor_pressure(_TEMPERATURE), _MOLAR_MASS, _TEMPERATURE))
+def _check_kernels_vs_wrappers(strategy) -> None:
+    """
+    Helper: make sure kernels == python wrappers for ONE Taichi strategy.
+
+    Arguments:
+        - strategy : The Taichi vapor pressure strategy instance.
+
+    Returns:
+        - None
+    """
+    _assert_close(  # pure vapor pressure
+        strategy._pure_vp_kernel(_TEMPERATURE),
+        strategy.pure_vapor_pressure(_TEMPERATURE),
+    )
+    _assert_close(  # partial pressure
+        strategy._partial_pressure_kernel(
+            _CONCENTRATION, _MOLAR_MASS, _TEMPERATURE
+        ),
+        strategy.partial_pressure(_CONCENTRATION, _MOLAR_MASS, _TEMPERATURE),
+    )
+    _assert_close(  # concentration
+        strategy._concentration_kernel(
+            strategy.pure_vapor_pressure(_TEMPERATURE),
+            _MOLAR_MASS,
+            _TEMPERATURE,
+        ),
+        strategy.concentration(
+            strategy.pure_vapor_pressure(_TEMPERATURE),
+            _MOLAR_MASS,
+            _TEMPERATURE,
+        ),
+    )
 
 
-def _check_taichi_vs_python(ti_strategy, py_strategy):
-    """Helper: compare numerical results Taichi ↔ python strategy."""
-    _close(ti_strategy.pure_vapor_pressure(_TEMPERATURE),
-           py_strategy.pure_vapor_pressure(_TEMPERATURE))
-    _close(ti_strategy.partial_pressure(_CONCENTRATION, _MOLAR_MASS, _TEMPERATURE),
-           py_strategy.partial_pressure(_CONCENTRATION, _MOLAR_MASS, _TEMPERATURE))
-    _close(ti_strategy.concentration(
-               ti_strategy.pure_vapor_pressure(_TEMPERATURE), _MOLAR_MASS, _TEMPERATURE),
-           py_strategy.concentration(
-               py_strategy.pure_vapor_pressure(_TEMPERATURE), _MOLAR_MASS, _TEMPERATURE))
+def _check_taichi_vs_python(ti_strategy, py_strategy) -> None:
+    """
+    Helper: compare numerical results Taichi ↔ python strategy.
+
+    Arguments:
+        - ti_strategy : The Taichi vapor pressure strategy instance.
+        - py_strategy : The reference Python vapor pressure strategy instance.
+
+    Returns:
+        - None
+    """
+    _assert_close(
+        ti_strategy.pure_vapor_pressure(_TEMPERATURE),
+        py_strategy.pure_vapor_pressure(_TEMPERATURE),
+    )
+    _assert_close(
+        ti_strategy.partial_pressure(
+            _CONCENTRATION, _MOLAR_MASS, _TEMPERATURE
+        ),
+        py_strategy.partial_pressure(
+            _CONCENTRATION, _MOLAR_MASS, _TEMPERATURE
+        ),
+    )
+    _assert_close(
+        ti_strategy.concentration(
+            ti_strategy.pure_vapor_pressure(_TEMPERATURE),
+            _MOLAR_MASS,
+            _TEMPERATURE,
+        ),
+        py_strategy.concentration(
+            py_strategy.pure_vapor_pressure(_TEMPERATURE),
+            _MOLAR_MASS,
+            _TEMPERATURE,
+        ),
+    )
 
 # ── individual strategy tests ──────────────────────────────────────────────
 def test_constant_strategy():
