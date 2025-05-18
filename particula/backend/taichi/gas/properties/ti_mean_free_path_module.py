@@ -5,7 +5,7 @@ from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
 from particula.gas import get_dynamic_viscosity
 
-_R = float(GAS_CONSTANT)  # J mol⁻¹ K⁻¹
+_GAS_CONSTANT = float(GAS_CONSTANT)  # J mol⁻¹ K⁻¹
 
 
 @ti.func
@@ -16,7 +16,7 @@ def fget_molecule_mean_free_path(
     dynamic_viscosity: ti.f64,
 ) -> ti.f64:
     return (2.0 * dynamic_viscosity / pressure) / ti.sqrt(
-        8.0 * molar_mass / (ti.math.pi * _R * temperature)
+        8.0 * molar_mass / (ti.math.pi * _GAS_CONSTANT * temperature)
     )
 
 @ti.kernel
@@ -25,10 +25,10 @@ def kget_molecule_mean_free_path(          # noqa: N802
     temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
     pressure: ti.types.ndarray(dtype=ti.f64, ndim=1),
     dynamic_viscosity: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    mean_free_path: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    for i in range(result.shape[0]):
-        result[i] = fget_molecule_mean_free_path(
+    for i in range(mean_free_path.shape[0]):
+        mean_free_path[i] = fget_molecule_mean_free_path(
             molar_mass[i],
             temperature[i],
             pressure[i],
@@ -52,16 +52,34 @@ def get_molecule_mean_free_path_taichi(
     if dynamic_viscosity is None:
         dynamic_viscosity = get_dynamic_viscosity(temperature)
 
-    mm, T, P, mu = map(np.atleast_1d, (molar_mass, temperature, pressure, dynamic_viscosity))
-    n = mm.size
+    molar_mass_array, temperature_array, pressure_array, dynamic_viscosity_array = map(np.atleast_1d, (molar_mass, temperature, pressure, dynamic_viscosity))
+    n_elements = molar_mass_array.size
 
-    mm_ti  = ti.ndarray(dtype=ti.f64, shape=n);   mm_ti.from_numpy(mm)
-    T_ti   = ti.ndarray(dtype=ti.f64, shape=n);   T_ti.from_numpy(T)
-    P_ti   = ti.ndarray(dtype=ti.f64, shape=n);   P_ti.from_numpy(P)
-    mu_ti  = ti.ndarray(dtype=ti.f64, shape=n);   mu_ti.from_numpy(mu)
-    out_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    molar_mass_ti.from_numpy(molar_mass_array)
 
-    kget_molecule_mean_free_path(mm_ti, T_ti, P_ti, mu_ti, out_ti)
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_ti.from_numpy(temperature_array)
 
-    result_np = out_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    pressure_ti.from_numpy(pressure_array)
+
+    dynamic_viscosity_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    dynamic_viscosity_ti.from_numpy(dynamic_viscosity_array)
+
+    mean_free_path_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+
+    kget_molecule_mean_free_path(
+        molar_mass_ti,
+        temperature_ti,
+        pressure_ti,
+        dynamic_viscosity_ti,
+        mean_free_path_ti,
+    )
+
+    mean_free_path_array = mean_free_path_ti.to_numpy()
+    return (
+        mean_free_path_array.item()
+        if mean_free_path_array.size == 1
+        else mean_free_path_array
+    )
