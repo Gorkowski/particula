@@ -236,24 +236,35 @@ class TiCondensationIsothermal:
         temperature: float,
         radius: NDArray[np.float64],
     ) -> ti.ndarray:
-        # all required fields already live in Taichi
-        mass_in_particle   = particle.get_species_mass()          # (N,P) ti.ndarray
-        pure_vp            = gas_species.get_pure_vapor_pressure(temperature)
-        pp_gas             = gas_species.get_partial_pressure(temperature)
-        kelvin_term        = particle.surface.kelvin_term(
-            radius=radius,
-            molar_mass=self.molar_mass,
-            mass_concentration=mass_in_particle,
+
+        # --- gather particle-level data -----------------------------------
+        mass_ti = particle.get_species_mass()          # ti.ndarray (n_part, n_spec)
+        mass_np = mass_ti.to_numpy()                   # NumPy copy
+        mm_np   = self.molar_mass.to_numpy()           # NumPy (n_spec,)
+
+        # --- gas side ------------------------------------------------------
+        pure_vp = gas_species.get_pure_vapor_pressure(temperature)   # ti.ndarray
+        pp_gas  = gas_species.get_partial_pressure(temperature)      # ti.ndarray
+
+        # --- Kelvin term (computed in Python/NumPy space) ------------------
+        kelvin_np = particle.surface.kelvin_term(
+            radius=radius,                          # NumPy array
+            molar_mass=mm_np,                       # NumPy array
+            mass_concentration=mass_np,             # NumPy array
             temperature=temperature,
         )
-        delta = ti.ndarray(dtype=ti.f64, shape=mass_in_particle.shape)
+        kelvin_ti = ti.ndarray(dtype=ti.f64, shape=kelvin_np.shape)
+        kelvin_ti.from_numpy(kelvin_np)
+
+        # --- allocate output & call kernel ---------------------------------
+        delta = ti.ndarray(dtype=ti.f64, shape=mass_ti.shape)
         self._kget_pressure_delta(
-            mass_in_particle,
+            mass_ti,
             pure_vp,
             pp_gas,
-            kelvin_term,
+            kelvin_ti,
             delta,
-            particle.activity,              # template arg
+            particle.activity,          # template argument
         )
         return delta
 
