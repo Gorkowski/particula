@@ -4,8 +4,6 @@ Integrated Aerosol Dynamics and Particle-Resolved Simulation Representation
 
 import taichi as ti
 import numpy as np
-from particula.backend.taichi.util import FieldIO
-
 import particula.backend.taichi.gas.properties as gas_properties
 import particula.backend.taichi.particles.properties as particle_properties
 
@@ -49,37 +47,21 @@ kappa_value.from_numpy(input_kappa_value)
 surface_tension = ti.field(float, shape=(species_count,), name="surface_tension")
 surface_tension.from_numpy(input_surface_tension)
 
+# create radii field to store computed radii
+radii = ti.field(float, shape=(particle_count,), name="radii")
 
-# write a function to calculate the radius for a single particle
+
 @ti.func
-def get_radius(masses: ti.template(), density: ti.template()):
-    """
-    Calculate the radius of a particle given its mass and density
+def get_radius(p_index: int) -> float:
+    volume = 0.0
+    for j in range(species_count):
+        volume += species_masses[p_index, j] / density[j]
+    return (3.0 * volume / (4.0 * ti.pi)) ** (1.0 / 3.0)
 
-    Arguments:
-        - mass_array: mass of the particle
-        - density: density of the masses
-    """
-    # calculate the volume of the particle
-    volume = ti.cast(0.0, float)
-    for i in range(species_count):
-        volume += masses[i] / density[i]
-    # calculate the radius of the particle
-    radius = (3 * volume / (4 * ti.pi)) ** (1 / 3)
-    return radius
-
-# write a kernel to calculate the radius for all particles
 @ti.kernel
 def calculate_radius():
-    """
-    Calculate the radius of all particles
-    """
     for i in range(particle_count):
-        # get the mass of the particle
-        masses = species_masses[i, :]
-        # calculate the radius of the particle
-        radius = get_radius(masses, density)
-    print(f"Particle {i}: Radius = {radius}")
+        radii[i] = get_radius(i)
 
 
 if __name__ == "__main__":
