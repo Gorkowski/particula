@@ -17,56 +17,86 @@ from particula.backend.taichi.gas.properties.ti_kolmogorov_module import (
 )
 
 def _sample_data():
-    # Return two arrays of positive floats, length >= 2
-    v = np.array([1.5e-5, 2.0e-5])
-    eps = np.array([0.1, 0.2])
-    return v, eps
+    """Return sample kinematic-viscosity and turbulent-dissipation arrays."""
+    kinematic_viscosity_array = np.array([1.5e-5, 2.0e-5])
+    turbulent_dissipation_array = np.array([0.1, 0.2])
+    return kinematic_viscosity_array, turbulent_dissipation_array
 
 def test_ti_wrappers_parity():
-    v, eps = _sample_data()
+    kinematic_viscosity_array, turbulent_dissipation_array = _sample_data()
     # Vector input
     np.testing.assert_allclose(
-        ti_get_kolmogorov_time(v, eps),
-        get_kolmogorov_time(v, eps),
+        ti_get_kolmogorov_time(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
+        get_kolmogorov_time(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
         rtol=1e-12, atol=0
     )
     np.testing.assert_allclose(
-        ti_get_kolmogorov_length(v, eps),
-        get_kolmogorov_length(v, eps),
+        ti_get_kolmogorov_length(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
+        get_kolmogorov_length(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
         rtol=1e-12, atol=0
     )
     np.testing.assert_allclose(
-        ti_get_kolmogorov_velocity(v, eps),
-        get_kolmogorov_velocity(v, eps),
+        ti_get_kolmogorov_velocity(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
+        get_kolmogorov_velocity(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
         rtol=1e-12, atol=0
     )
 
 
 def test_ti_kernels_parity():
-    v, eps = _sample_data()
-    n = v.size
-    v_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    eps_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    out_time = ti.ndarray(dtype=ti.f64, shape=n)
-    out_length = ti.ndarray(dtype=ti.f64, shape=n)
-    out_velocity = ti.ndarray(dtype=ti.f64, shape=n)
-    v_ti.from_numpy(v)
-    eps_ti.from_numpy(eps)
-    kget_kolmogorov_time(v_ti, eps_ti, out_time)
-    kget_kolmogorov_length(v_ti, eps_ti, out_length)
-    kget_kolmogorov_velocity(v_ti, eps_ti, out_velocity)
+    kinematic_viscosity_array, turbulent_dissipation_array = _sample_data()
+    n_values = kinematic_viscosity_array.size
+    kinematic_viscosity_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+    turbulent_dissipation_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+    kolmogorov_time_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+    kolmogorov_length_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+    kolmogorov_velocity_field = ti.ndarray(dtype=ti.f64, shape=n_values)
+    kinematic_viscosity_field.from_numpy(kinematic_viscosity_array)
+    turbulent_dissipation_field.from_numpy(turbulent_dissipation_array)
+    kget_kolmogorov_time(
+        kinematic_viscosity_field,
+        turbulent_dissipation_field,
+        kolmogorov_time_field
+    )
+    kget_kolmogorov_length(
+        kinematic_viscosity_field,
+        turbulent_dissipation_field,
+        kolmogorov_length_field
+    )
+    kget_kolmogorov_velocity(
+        kinematic_viscosity_field,
+        turbulent_dissipation_field,
+        kolmogorov_velocity_field
+    )
     np.testing.assert_allclose(
-        out_time.to_numpy(),
-        get_kolmogorov_time(v, eps),
+        kolmogorov_time_field.to_numpy(),
+        get_kolmogorov_time(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
         rtol=1e-12, atol=0
     )
     np.testing.assert_allclose(
-        out_length.to_numpy(),
-        get_kolmogorov_length(v, eps),
+        kolmogorov_length_field.to_numpy(),
+        get_kolmogorov_length(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
         rtol=1e-12, atol=0
     )
     np.testing.assert_allclose(
-        out_velocity.to_numpy(),
-        get_kolmogorov_velocity(v, eps),
+        kolmogorov_velocity_field.to_numpy(),
+        get_kolmogorov_velocity(
+            kinematic_viscosity_array, turbulent_dissipation_array
+        ),
         rtol=1e-12, atol=0
     )
