@@ -21,8 +21,8 @@ class _ActivityMixin:
 
     # one-off element-wise helpers ------------------------------------------------
     @ti.func
-    def _p_surface_func(self, p_pure: ti.f64, activity: ti.f64) -> ti.f64:
-        return fget_surface_partial_pressure(p_pure, activity)
+    def _get_surface_partial_pressure(self, pure_vapor_pressure: ti.f64, activity: ti.f64) -> ti.f64:
+        return fget_surface_partial_pressure(pure_vapor_pressure, activity)
 
     # vectorised kernel (1-D ndarray in / out) -----------------------------------
     @ti.kernel
@@ -67,21 +67,21 @@ class ActivityIdealMolar(_ActivityMixin):
         self.molar_mass = ti.field(ti.f64, shape=())
         self.molar_mass[None] = float(np.asarray(molar_mass))
 
-    def _activity_func(self, mass_conc: float) -> float:
+    def _activity_func(self, mass_concentration: float) -> float:
         return 1.0
 
     @ti.kernel
     def _activity_kernel(
         self,
-        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        mm = self.molar_mass[None]
-        tot = ti.f64(0.0)
-        for i in range(mc.shape[0]):
-            tot += mc[i] / mm
-        for i in range(mc.shape[0]):
-            out[i] = 0.0 if tot == 0.0 else (mc[i] / mm) / tot
+        molar_mass = self.molar_mass[None]
+        total_moles = ti.f64(0.0)
+        for i in range(mass_concentration.shape[0]):
+            total_moles += mass_concentration[i] / molar_mass
+        for i in range(mass_concentration.shape[0]):
+            result[i] = 0.0 if total_moles == 0.0 else (mass_concentration[i] / molar_mass) / total_moles
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
@@ -96,20 +96,20 @@ class ActivityIdealMolar(_ActivityMixin):
 class ActivityIdealMass(_ActivityMixin):
     """Taichi drop-in for ActivityIdealMass (parameter-free)."""
 
-    def _activity_func(self, mass_conc: float) -> float:
+    def _activity_func(self, mass_concentration: float) -> float:
         return 1.0
 
     @ti.kernel
     def _activity_kernel(
         self,
-        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        tot = ti.f64(0.0)
-        for i in range(mc.shape[0]):
-            tot += mc[i]
-        for i in range(mc.shape[0]):
-            out[i] = 0.0 if tot == 0.0 else mc[i] / tot
+        total_mass = ti.f64(0.0)
+        for i in range(mass_concentration.shape[0]):
+            total_mass += mass_concentration[i]
+        for i in range(mass_concentration.shape[0]):
+            result[i] = 0.0 if total_mass == 0.0 else mass_concentration[i] / total_mass
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
@@ -127,21 +127,21 @@ class ActivityIdealVolume(_ActivityMixin):
         self.density = ti.field(ti.f64, shape=())
         self.density[None] = float(np.asarray(density))
 
-    def _activity_func(self, mass_conc: float) -> float:
+    def _activity_func(self, mass_concentration: float) -> float:
         return 1.0
 
     @ti.kernel
     def _activity_kernel(
         self,
-        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        rho = self.density[None]
-        tot = ti.f64(0.0)
-        for i in range(mc.shape[0]):
-            tot += mc[i] / rho
-        for i in range(mc.shape[0]):
-            out[i] = 0.0 if tot == 0.0 else (mc[i] / rho) / tot
+        density = self.density[None]
+        total_volume = ti.f64(0.0)
+        for i in range(mass_concentration.shape[0]):
+            total_volume += mass_concentration[i] / density
+        for i in range(mass_concentration.shape[0]):
+            result[i] = 0.0 if total_volume == 0.0 else (mass_concentration[i] / density) / total_volume
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
@@ -178,51 +178,51 @@ class ActivityKappaParameter(_ActivityMixin):
         self.water_index = ti.field(dtype=ti.i32, shape=())
         self.water_index[None] = int(water_index)
 
-    def _activity_func(self, mass_conc: float) -> float:
+    def _activity_func(self, mass_concentration: float) -> float:
         return 1.0
 
     @ti.kernel
     def _activity_kernel(
         self,
-        mc: ti.types.ndarray(dtype=ti.f64, ndim=1),
-        out: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
+        result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        ns = mc.shape[0]
-        wi = self.water_index[None]
+        n_species = mass_concentration.shape[0]
+        water_index = self.water_index[None]
 
         # mole fractions -------------------------------------------------
         mol_sum = ti.f64(0.0)
-        for s in range(ns):
-            mol_sum += mc[s] / self.molar_mass[s]
-        for s in range(ns):
-            mol = mc[s] / self.molar_mass[s]
-            out[s] = 0.0 if mol_sum == 0.0 else mol / mol_sum
+        for s in range(n_species):
+            mol_sum += mass_concentration[s] / self.molar_mass[s]
+        for s in range(n_species):
+            mol = mass_concentration[s] / self.molar_mass[s]
+            result[s] = 0.0 if mol_sum == 0.0 else mol / mol_sum
 
         # κ-Köhler water activity ---------------------------------------
-        vol_sum = ti.f64(0.0)
-        for s in range(ns):
-            vol_sum += mc[s] / self.density[s]
+        volume_sum = ti.f64(0.0)
+        for s in range(n_species):
+            volume_sum += mass_concentration[s] / self.density[s]
 
-        water_vf = ti.f64(0.0)
-        if vol_sum > 0.0:
-            water_vf = (mc[wi] / self.density[wi]) / vol_sum
-        sol_vf = 1.0 - water_vf
+        water_volume_fraction = ti.f64(0.0)
+        if volume_sum > 0.0:
+            water_volume_fraction = (mass_concentration[water_index] / self.density[water_index]) / volume_sum
+        solute_volume_fraction = 1.0 - water_volume_fraction
 
-        kappa_mix = ti.f64(0.0)
-        if sol_vf > 0.0:
-            if ns == 2:
-                kappa_mix = self.kappa[1 - wi]
+        kappa_mixed = ti.f64(0.0)
+        if solute_volume_fraction > 0.0:
+            if n_species == 2:
+                kappa_mixed = self.kappa[1 - water_index]
             else:
-                for s in range(ns):
-                    if s != wi:
-                        vf_s = (mc[s] / self.density[s]) / vol_sum
-                        kappa_mix += (vf_s / sol_vf) * self.kappa[s]
+                for s in range(n_species):
+                    if s != water_index:
+                        volume_fraction_species = (mass_concentration[s] / self.density[s]) / volume_sum
+                        kappa_mixed += (volume_fraction_species / solute_volume_fraction) * self.kappa[s]
 
-        vol_term = 0.0
-        if water_vf > 0.0:
-            vol_term = kappa_mix * sol_vf / water_vf
+        volume_term = 0.0
+        if water_volume_fraction > 0.0:
+            volume_term = kappa_mixed * solute_volume_fraction / water_volume_fraction
 
-        out[wi] = 0.0 if water_vf == 0.0 else 1.0 / (1.0 + vol_term)
+        result[water_index] = 0.0 if water_volume_fraction == 0.0 else 1.0 / (1.0 + volume_term)
 
     def activity(self, mass_concentration):
         if np.ndim(mass_concentration) == 0:
@@ -240,7 +240,7 @@ def _make_molar(*a, **k):      return ActivityIdealMolar(*a, **k)
 def _make_mass(*a, **k):       return ActivityIdealMass(*a, **k)
 
 @register("ActivityIdealVolume", backend="taichi")
-def _make_vol(*a, **k):        return ActivityIdealVolume(*a, **k)
+def _make_volume(*a, **k):        return ActivityIdealVolume(*a, **k)
 
 @register("ActivityKappaParameter", backend="taichi")
 def _make_kappa(*a, **k):      return ActivityKappaParameter(*a, **k)
