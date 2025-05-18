@@ -1,63 +1,130 @@
-import taichi as ti; ti.init(arch=ti.cpu, default_fp=ti.f64)
-import numpy as np, numpy.testing as npt
+import unittest
 
-from particula.particles.distribution_strategies import (
-    ParticleResolvedSpeciatedMass,          # NEW
-)
-from particula.backend.taichi.particles import (
-    TiParticleResolvedSpeciatedMass,        # NEW
-)
+import taichi as ti
+ti.init(arch=ti.cpu, default_fp=ti.f64)
+
+import numpy as np
+import numpy.testing as npt
+
+from particula.particles.distribution_strategies import ParticleResolvedSpeciatedMass
+from particula.backend.taichi.particles import TiParticleResolvedSpeciatedMass
 from particula.particles.activity_strategies import ActivityIdealMass
-from particula.backend.taichi.particles.ti_activity_strategies import ActivityIdealMass as TiActivityIdealMass
+from particula.backend.taichi.particles.ti_activity_strategies import (
+    ActivityIdealMass as TiActivityIdealMass,
+)
 from particula.particles.surface_strategies import SurfaceStrategyMass
-from particula.backend.taichi.particles.ti_surface_strategies import SurfaceStrategyMass as TiSurfaceStrategyMass
+from particula.backend.taichi.particles.ti_surface_strategies import (
+    SurfaceStrategyMass as TiSurfaceStrategyMass,
+)
 from particula.particles.representation import ParticleRepresentation as PyRep
-from particula.backend.taichi.particles.ti_representation import TiParticleRepresentation as TiRep
+from particula.backend.taichi.particles.ti_representation import (
+    TiParticleRepresentation as TiRep,
+)
 
 
-def test_particle_resolved_mass_concentration_parity():
-    # two particles, two species each
-    distribution  = np.array([[1e-18, 2e-18],
-                              [2e-18, 3e-18]], dtype=np.float64)
-    density       = np.array([1000.0, 1200.0], dtype=np.float64)
-    concentration = np.array([1e6, 2e6], dtype=np.float64)
-    charge        = np.zeros(2, dtype=np.float64)
+class TestTiParticleRepresentation(unittest.TestCase):
+    """Parity tests for every public getter in ParticleRepresentation."""
 
-    py_obj = PyRep(
-        ParticleResolvedSpeciatedMass(), ActivityIdealMass(), SurfaceStrategyMass(),
-        distribution, density, concentration, charge,
-    )
-    ti_obj = TiRep(
-        TiParticleResolvedSpeciatedMass(), TiActivityIdealMass(), TiSurfaceStrategyMass(),
-        distribution, density, concentration, charge,
-    )
+    @classmethod
+    def setUpClass(cls):
+        # five particles, three species each
+        cls.distribution = np.array(
+            [
+                [1e-18, 2e-18, 3e-18],
+                [2e-18, 3e-18, 4e-18],
+                [3e-18, 4e-18, 5e-18],
+                [4e-18, 5e-18, 6e-18],
+                [5e-18, 6e-18, 7e-18],
+            ],
+            dtype=np.float64,
+        )
+        cls.density = np.array([1.0e3, 1.2e3, 1.5e3], dtype=np.float64)
+        cls.concentration = np.array(
+            [1e6, 2e6, 1.5e6, 1.2e6, 1e6], dtype=np.float64
+        )
+        cls.charge = np.zeros(5, dtype=np.float64)
 
-    npt.assert_allclose(
-        py_obj.get_mass_concentration(),
-        ti_obj.get_mass_concentration(),
-        rtol=1e-8,
-    )
-    # test spcies mass
-    npt.assert_allclose(
-        py_obj.get_species_mass(),
-        ti_obj.get_species_mass(),
-        rtol=1e-8,
-    )
-    # test mass
-    npt.assert_allclose(
-        py_obj.get_mass(),
-        ti_obj.get_mass().to_numpy(),
-        rtol=1e-8,
-    )
-    # test radius
-    npt.assert_allclose(
-        py_obj.get_radius(),
-        ti_obj.get_radius().to_numpy(),
-        rtol=1e-8,
-    )
-    # test effective density
-    npt.assert_allclose(
-        py_obj.get_effective_density(),
-        ti_obj.get_effective_density().to_numpy(),
-        rtol=1e-8,
-    )
+        cls.py_obj = PyRep(
+            ParticleResolvedSpeciatedMass(),
+            ActivityIdealMass(),
+            SurfaceStrategyMass(),
+            cls.distribution,
+            cls.density,
+            cls.concentration,
+            cls.charge,
+        )
+        cls.ti_obj = TiRep(
+            TiParticleResolvedSpeciatedMass(),
+            TiActivityIdealMass(),
+            TiSurfaceStrategyMass(),
+            cls.distribution,
+            cls.density,
+            cls.concentration,
+            cls.charge,
+        )
+
+    # ───── name getters ──────────────────────────────────────────────────
+    def test_strategy_name(self):
+        self.assertEqual(
+            self.py_obj.get_strategy_name(),
+            self.ti_obj.get_strategy_name(),
+        )
+
+    def test_activity_name(self):
+        self.assertEqual(
+            self.py_obj.get_activity_name(),
+            self.ti_obj.get_activity_name(),
+        )
+
+    def test_surface_name(self):
+        self.assertEqual(
+            self.py_obj.get_surface_name(),
+            self.ti_obj.get_surface_name(),
+        )
+
+    # ───── numeric parity checks ────────────────────────────────────────
+    def test_mass_concentration(self):
+        npt.assert_allclose(
+            self.py_obj.get_mass_concentration(),
+            self.ti_obj.get_mass_concentration(),
+            rtol=1e-8,
+        )
+
+    def test_species_mass(self):
+        npt.assert_allclose(
+            self.py_obj.get_species_mass(),
+            self.ti_obj.get_species_mass(),
+            rtol=1e-8,
+        )
+
+    def test_mass(self):
+        npt.assert_allclose(
+            self.py_obj.get_mass(),
+            self.ti_obj.get_mass().to_numpy(),
+            rtol=1e-8,
+        )
+
+    def test_radius(self):
+        npt.assert_allclose(
+            self.py_obj.get_radius(),
+            self.ti_obj.get_radius().to_numpy(),
+            rtol=1e-8,
+        )
+
+    def test_effective_density(self):
+        npt.assert_allclose(
+            self.py_obj.get_effective_density(),
+            self.ti_obj.get_effective_density().to_numpy(),
+            rtol=1e-8,
+        )
+
+    def test_total_concentration(self):
+        npt.assert_allclose(
+            self.py_obj.get_total_concentration(),
+            self.ti_obj.get_total_concentration(),
+            rtol=1e-8,
+        )
+
+
+if __name__ == "__main__":
+    unittest.main()
