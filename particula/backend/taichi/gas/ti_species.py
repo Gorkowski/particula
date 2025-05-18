@@ -137,6 +137,17 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
+        """
+        Compute the pure-component vapor pressure for each species.
+
+        Arguments:
+            - temperature : Temperature in K.
+            - result      : 1-D float64 NumPy array that will be filled
+                            in-place with the vapor-pressure values [Pa].
+
+        Returns:
+            - None (results are written to ``result``).
+        """
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
@@ -147,6 +158,17 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
+        """
+        Compute the partial pressure for each species.
+
+        Arguments:
+            - temperature : Temperature in K.
+            - result      : 1-D float64 NumPy array that will be filled
+                            in-place with the partial-pressure values [Pa].
+
+        Returns:
+            - None (results are written to ``result``).
+        """
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
@@ -161,6 +183,17 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
+        """
+        Compute the saturation ratio for each species.
+
+        Arguments:
+            - temperature : Temperature in K.
+            - result      : 1-D float64 NumPy array that will be filled
+                            in-place with the saturation ratio values.
+
+        Returns:
+            - None (results are written to ``result``).
+        """
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
@@ -179,6 +212,17 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
+        """
+        Compute the saturation concentration for each species.
+
+        Arguments:
+            - temperature : Temperature in K.
+            - result      : 1-D float64 NumPy array that will be filled
+                            in-place with the saturation concentration [kg m⁻³].
+
+        Returns:
+            - None (results are written to ``result``).
+        """
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
@@ -303,7 +347,22 @@ class GasSpecies:
 
 @register("GasSpecies", backend="taichi")
 def ti_create_gas_species(*args, **kwargs):     # noqa: D401
-    """Factory so external code can request GasSpecies via backend."""
+    """
+    Factory helper that instantiates :class:`GasSpecies` through the
+    backend-dispatch mechanism.
+
+    Arguments:
+        - *args, **kwargs : Forwarded verbatim to ``GasSpecies``.
+    Returns:
+        - GasSpecies : A newly constructed Taichi ``GasSpecies`` instance.
+
+    Examples:
+        ```py
+        from particula.backend.dispatch_register import use_backend
+        use_backend(name="taichi")          # ensure Taichi backend
+        gas = ti_create_gas_species("H2O", 0.018, concentration=1.0)
+        ```
+    """
     return GasSpecies(*args, **kwargs)
 
 __all__ = ["GasSpecies", "ti_create_gas_species"]
