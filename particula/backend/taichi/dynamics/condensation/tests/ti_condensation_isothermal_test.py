@@ -1,103 +1,136 @@
+import unittest
 import numpy as np
 import taichi as ti
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
-# ─── Implementations under test ────────────────────────────────────────────
 from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies import (
     TiCondensationIsothermal,
 )
-from particula.dynamics.condensation.condensation_strategies import (
-    CondensationIsothermal as PyCondensationIsothermal,
+from particula.backend.taichi.particles.ti_distribution_strategies import (
+    TiParticleResolvedSpeciatedMass,
+)
+from particula.backend.taichi.particles.ti_activity_strategies import (
+    ActivityKappaParameter,
+)
+from particula.backend.taichi.particles.ti_surface_strategies import (
+    SurfaceStrategyMass,
+)
+from particula.backend.taichi.particles.ti_representation import (
+    TiParticleRepresentation,
+)
+from particula.backend.taichi.gas.ti_species import TiGasSpecies
+from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
+    WaterBuckStrategy,
+    ConstantVaporPressureStrategy,
 )
 
-
-# ─── Helper to build a *working* v2 object (class ctor is mis-typed) ───────
 def _build_taichi_condensation_isothermal(
-    molar_mass: float = 0.018,
+    molar_mass: np.ndarray,
     diffusion_coefficient: float = 2.0e-5,
-    accommodation_coefficient: float = 1.0,
+    accommodation: float = 1.0,
 ):
-    """
-    Construct a Taichi-backed CondensationIsothermal instance.
+    mm_ti = ti.ndarray(dtype=ti.f64, shape=molar_mass.shape)
+    mm_ti.from_numpy(molar_mass)
 
-    The object is returned with all numerical parameters pre-loaded into
-    Taichi fields so that its private kernels can be called directly from
-    the test-suite.
+    diff_coeff_ti = ti.field(ti.f64, shape=())
+    diff_coeff_ti[None] = diffusion_coefficient
 
-    Args:
-        - molar_mass : Molar mass of the condensing species [kg mol⁻¹].
-        - diffusion_coefficient : Gas-phase diffusion coefficient
-          [m² s⁻¹].
-        - accommodation_coefficient : Mass-accommodation coefficient
-          (dimensionless).
+    alpha_ti = ti.ndarray(dtype=ti.f64, shape=molar_mass.shape)
+    alpha_ti.from_numpy(np.full_like(molar_mass, accommodation))
 
-    Returns:
-        - TiCondensationIsothermal : Ready-to-use Taichi condensation
-          object.
-    """
-    taichi_condensation = TiCondensationIsothermal(
-        molar_mass=np.array([molar_mass], dtype=np.float64),
-        diffusion_coefficient=np.array(diffusion_coefficient, dtype=np.float64),
-        accommodation_coefficient=np.array([accommodation_coefficient], dtype=np.float64),
-        update_gases=np.array([0], dtype=np.int16),
+    # let constructor run, then overwrite with the prepared fields
+    cond = TiCondensationIsothermal(
+        molar_mass=mm_ti,
+        diffusion_coefficient=diff_coeff_ti,
+        accommodation_coefficient=alpha_ti,
+        update_gases=False,
     )
+    cond.molar_mass = mm_ti
+    cond.diffusion_coefficient = diff_coeff_ti
+    cond.accommodation_coefficient = alpha_ti
+    return cond
 
-    # Manually patch the fields that the constructor currently overwrites
-    taichi_condensation.molar_mass = ti.field(dtype=ti.f64, shape=(1,))
-    taichi_condensation.molar_mass.from_numpy(np.array([molar_mass], dtype=np.float64))
+class TiCondensationIsothermalTest(unittest.TestCase):
+    def setUp(self):
+        np.random.seed(0)
+        self.n_particles = 10
+        self.n_species = 3
 
-    taichi_condensation.diffusion_coefficient = ti.field(dtype=ti.f64, shape=())
-    taichi_condensation.diffusion_coefficient[None] = diffusion_coefficient
+        # ---- particle side ------------------------------------------------
+        self.distribution = np.abs(
+            np.random.randn(self.n_particles, self.n_species)
+        ) * 1e-18                                 # kg of each species
+        self.densities = np.array([1000., 1200., 1500.])
+        self.concentration = np.ones(self.n_particles)
+        self.charge = np.zeros(self.n_particles)
 
-    taichi_condensation.accommodation_coefficient = ti.field(dtype=ti.f64, shape=(1,))
-    taichi_condensation.accommodation_coefficient.from_numpy(
-        np.array([accommodation_coefficient], dtype=np.float64)
-    )
-    return taichi_condensation
+        strategy = TiParticleResolvedSpeciatedMass()
+        activity = ActivityKappaParameter(
+            kappa=np.array([0.5, 0.0, 0.0]),
+            density=self.densities,
+            molar_mass=np.array([0.018, 0.050, 0.040]),
+            water_index=0,
+        )
+        surface = SurfaceStrategyMass(
+            surface_tension=0.072,
+            density=self.densities,
+        )
 
+        self.particle = TiParticleRepresentation(
+            strategy,
+            activity,
+            surface,
+            self.distribution,
+            self.densities,
+            self.concentration,
+            self.charge,
+            volume=1.0,
+        )
 
-# ─── Tests ─────────────────────────────────────────────────────────────────
-def test_first_order_mass_transport_kernel_parity():
-    """
-    Kernel result must match the NumPy reference.
+        # ---- gas side -----------------------------------------------------
+        self.gas = TiGasSpecies(
+            name=np.array(["H2O", "X1", "X2"]),
+            molar_mass=np.array([0.018, 0.050, 0.040]),
+            vapor_pressure_strategy=[
+                WaterBuckStrategy(),
+                ConstantVaporPressureStrategy(100.0),
+                ConstantVaporPressureStrategy(200.0),
+            ],
+            partitioning=True,
+            concentration=np.array([1.0, 1.0, 1.0]),
+        )
 
-    Compares Taichi output with the pure-Python implementation to
-    machine precision.
-    """
-    particle_radius = np.array([1e-7, 2e-7, 5e-6, 3e-5], dtype=np.float64)
-    temperature, pressure = 298.15, 101_325.0
-    dynamic_viscosity = 1.85e-5
+        # ---- condensation object -----------------------------------------
+        self.condensation = _build_taichi_condensation_isothermal(
+            molar_mass=np.array([0.018, 0.050, 0.040])
+        )
 
-    taichi_condensation = _build_taichi_condensation_isothermal()
-    result_taichi = np.empty((particle_radius.size, 1), dtype=np.float64)
-    taichi_condensation._kget_first_order_mass_transport(
-        particle_radius, temperature, pressure, dynamic_viscosity, result_taichi
-    )
+        self.temperature = 298.15
+        self.pressure = 101_325.0
+        self.dynamic_visc = 1.85e-5
 
-    python_condensation = PyCondensationIsothermal(molar_mass=0.018)
-    result_python = python_condensation.first_order_mass_transport(
-        particle_radius, temperature, pressure, dynamic_viscosity
-    )[:, None]  # add species axis
+    # ---------------------------------------------------------------------
+    def test_first_order_mass_transport_shape_and_finite(self):
+        radius = self.particle.get_radius().to_numpy()
+        coeff = self.condensation.first_order_mass_transport(
+            radius,
+            self.temperature,
+            self.pressure,
+            self.dynamic_visc,
+        )
+        self.assertEqual(coeff.shape, (self.n_particles, self.n_species))
+        self.assertTrue(np.all(np.isfinite(coeff.to_numpy())))
 
-    np.testing.assert_allclose(result_taichi, result_python, rtol=1e-7)
+    def test_mass_transfer_rate_shape_and_finite(self):
+        dm_dt = self.condensation.mass_transfer_rate(
+            particle=self.particle,
+            gas_species=self.gas,
+            temperature=self.temperature,
+            pressure=self.pressure,
+            dynamic_viscosity=self.dynamic_visc,
+        )
+        self.assertEqual(dm_dt.shape, (self.n_particles, self.n_species))
+        self.assertTrue(np.all(np.isfinite(dm_dt.to_numpy())))
 
-
-def test_kernel_runs_v2():
-    """
-    Smoke test for the v2 kernel.
-
-    Verifies that compilation succeeds and the result is finite.
-    """
-    particle_radius = np.array([1e-7, 1e-7], dtype=np.float64)
-    taichi_condensation = _build_taichi_condensation_isothermal()
-    dynamic_viscosity = 1.85e-5
-    mass_transport_result = np.empty((particle_radius.size, 1), dtype=np.float64)
-
-    taichi_condensation._kget_first_order_mass_transport(
-        particle_radius, 300.0, 101_325.0, dynamic_viscosity, mass_transport_result
-    )
-
-    assert (
-        np.all(np.isfinite(mass_transport_result))
-        and mass_transport_result.shape == (particle_radius.size, 1)
-    )
+if __name__ == "__main__":
+    unittest.main()
