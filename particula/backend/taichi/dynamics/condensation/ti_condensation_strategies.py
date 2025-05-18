@@ -21,8 +21,6 @@ import logging
 from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
-logger = logging.getLogger("particula")
-
 from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
     fget_mass_transfer_rate,
     fget_first_order_mass_transport_via_system_state,
@@ -97,9 +95,6 @@ class TiCondensationIsothermal:
     # ───────────────────── helper: zero-radius guard ───────────────────────
     def _fill_zero_radius(self, radius: np.ndarray) -> np.ndarray:
         if np.max(radius) == 0.0:
-            logger.warning(
-                "All radius values are zero, radius set to 1 m for condensation calculations."
-            )
             radius = np.where(radius == 0.0, 1.0, radius)
         return np.where(radius == 0.0, np.max(radius), radius)
 
@@ -294,13 +289,13 @@ class TiCondensationIsothermal:
             from particula.gas.properties.dynamic_viscosity import get_dynamic_viscosity
             dynamic_viscosity = get_dynamic_viscosity(temperature)
 
-        Δp = self.calculate_pressure_delta(
+        pressure_delta = self.calculate_pressure_delta(
             particle, gas_species, temperature, radius_np
         )                                          # Ti array
-        dm_dt = ti.ndarray(dtype=ti.f64, shape=Δp.shape)
+        dm_dt = ti.ndarray(dtype=ti.f64, shape=pressure_delta.shape)
         self._kget_mass_transfer_rate(
             radius_ti, float(temperature), float(pressure),
-            float(dynamic_viscosity), Δp, dm_dt
+            float(dynamic_viscosity), pressure_delta, dm_dt
         )
         return dm_dt
 
