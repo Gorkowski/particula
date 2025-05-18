@@ -26,6 +26,7 @@ References:
 """
 
 import taichi as ti
+from taichi.types import ndarray as ti_nd
 import numpy as np
 from typing import Union
 from numpy.typing import NDArray
@@ -70,26 +71,22 @@ class _SurfaceMixin:
         self.surface_tension, self.n_species = _store(surface_tension)
         self.density, _ = _store(density)
 
-    @ti.func
-    def _kelvin_radius_elem(
+    @ti.kernel
+    def _weighted_average(
         self,
-        surface_tension: ti.f64,
-        density: ti.f64,
-        molar_mass: ti.f64,
-        temperature: ti.f64,
+        values: ti.template(),
+        weights: ti_nd(dtype=ti.f64, ndim=1),
+        normalize_by: ti_nd(dtype=ti.f64, ndim=1) = None
     ) -> ti.f64:
-        # Delegates to the validated helper – keeps one single source of truth
-        return fget_kelvin_radius(
-            surface_tension, density, molar_mass, temperature
-        )
-
-    @ti.func
-    def _kelvin_term_elem(
-        self,
-        particle_radius: ti.f64,
-        kelvin_radius_value: ti.f64,
-    ) -> ti.f64:
-        return fget_kelvin_term(particle_radius, kelvin_radius_value)
+        tot = 0.0
+        for i in range(self.n_species):
+            w = weights[i] if normalize_by is None else weights[i] / normalize_by[i]
+            tot += w
+        acc = 0.0
+        for i in range(self.n_species):
+            w = weights[i] if normalize_by is None else weights[i] / normalize_by[i]
+            acc += values[i] * w / tot
+        return acc
 
     def get_name(self) -> str:
         """
@@ -149,150 +146,37 @@ class SurfaceStrategyMolar(_SurfaceMixin):
         self.molar_mass, _ = _store(molar_mass)
 
     def effective_surface_tension(
-        self, mass_concentration: Union[float, NDArray[np.float64]]
+        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
     ) -> float:
-        """
-        Compute effective surface tension by mole-fraction weighting.
-
-        Arguments:
-            - mass_concentration : Mass concentration(s) of each component.
-
-        Returns:
-            - effective_surface_tension : Weighted surface tension (float).
-
-        Examples:
-            >>> strat = SurfaceStrategyMolar([0.072, 0.073], [1000, 1200], [0.018, 0.02])
-            >>> strat.effective_surface_tension([0.5, 0.5])
-            0.0725
-        """
-        if self.n_species == 1:
-            return self.surface_tension[None]
-        mass_concentration_array = np.asarray(
-            mass_concentration, dtype=np.float64
-        )
-        molar_mass_array = self.molar_mass.to_numpy()
-        mole_fraction = mass_concentration_array / molar_mass_array
-        mole_fraction /= mole_fraction.sum()
-        return (
-            self.surface_tension.to_numpy() * mole_fraction
-        ).sum(dtype=np.float64)
+        return float(self._weighted_average(self.surface_tension, mass_concentration, self.molar_mass))
 
     def effective_density(
-        self, mass_concentration: Union[float, NDArray[np.float64]]
+        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
     ) -> float:
-        """
-        Compute effective density by mole-fraction weighting.
-
-        Arguments:
-            - mass_concentration : Mass concentration(s) of each component.
-
-        Returns:
-            - effective_density : Weighted density (float).
-
-        Examples:
-            >>> strat = SurfaceStrategyMolar([0.072, 0.073], [1000, 1200], [0.018, 0.02])
-            >>> strat.effective_density([0.5, 0.5])
-            1100.0
-        """
-        if self.n_species == 1:
-            return self.density[None]
-        mass_concentration_array = np.asarray(
-            mass_concentration, dtype=np.float64
-        )
-        molar_mass_array = self.molar_mass.to_numpy()
-        mole_fraction = mass_concentration_array / molar_mass_array
-        mole_fraction /= mole_fraction.sum()
-        return (
-            self.density.to_numpy() * mole_fraction
-        ).sum(dtype=np.float64)
+        return float(self._weighted_average(self.density, mass_concentration, self.molar_mass))
 
     def kelvin_radius(
         self,
-        molar_mass: Union[float, NDArray[np.float64]],
-        mass_concentration: Union[float, NDArray[np.float64]],
+        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
+        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
         temperature: float,
-    ) -> Union[float, NDArray[np.float64]]:
-        """
-        Compute the Kelvin radius for the mixture.
-
-        The Kelvin radius is given by:
-            rₖ = (2 σ M) / (ρ R T)
-        where:
-            - σ : Effective surface tension
-            - M : Molar mass
-            - ρ : Effective density
-            - R : Gas constant
-            - T : Temperature
-
-        Arguments:
-            - molar_mass : Molar mass(es) of each component.
-            - mass_concentration : Mass concentration(s) of each component.
-            - temperature : Temperature in K.
-
-        Returns:
-            - kelvin_radius : Kelvin radius (float or ndarray).
-
-        Examples:
-            >>> strat = SurfaceStrategyMolar()
-            >>> strat.kelvin_radius(0.018, 0.5, 298.15)
-            array([...])
-
-        References:
-            - Seinfeld & Pandis (2016), Eq. 8.7.
-        """
-        surface_tension_value = self.effective_surface_tension(mass_concentration)
-        effective_density_value = self.effective_density(mass_concentration)
-        surface_tension_array = np.atleast_1d(
-            surface_tension_value
-        ).astype(np.float64)
-        density_array = np.atleast_1d(
-            effective_density_value
-        ).astype(np.float64)
-        molar_mass_array = np.atleast_1d(
-            molar_mass
-        ).astype(np.float64)
-        return ti_get_kelvin_radius(
-            surface_tension_array, density_array, molar_mass_array, float(temperature)
-        )
+    ):
+        st = ti_nd(dtype=ti.f64, shape=(1,))
+        rho = ti_nd(dtype=ti.f64, shape=(1,))
+        st[0] = self.effective_surface_tension(mass_concentration)
+        rho[0] = self.effective_density(mass_concentration)
+        r_k = kget_kelvin_radius(st, rho, molar_mass, float(temperature))
+        return r_k
 
     def kelvin_term(
         self,
-        radius: Union[float, NDArray[np.float64]],
-        molar_mass: Union[float, NDArray[np.float64]],
-        mass_concentration: Union[float, NDArray[np.float64]],
+        radius: ti_nd(dtype=ti.f64, ndim=1),
+        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
+        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
         temperature: float,
-    ) -> Union[float, NDArray[np.float64]]:
-        """
-        Compute the Kelvin term for the mixture.
-
-        The Kelvin term is given by:
-            exp(rₖ / r)
-        where rₖ is the Kelvin radius and r is the particle radius.
-
-        Arguments:
-            - radius : Particle radius (float or ndarray).
-            - molar_mass : Molar mass(es) of each component.
-            - mass_concentration : Mass concentration(s) of each component.
-            - temperature : Temperature in K.
-
-        Returns:
-            - kelvin_term : Kelvin term (float or ndarray).
-
-        Examples:
-            >>> strat = SurfaceStrategyMolar()
-            >>> strat.kelvin_term(1e-7, 0.018, 0.5, 298.15)
-            array([...])
-        """
-        kelvin_radius_value = self.kelvin_radius(
-            molar_mass, mass_concentration, temperature
-        )
-        particle_radius_array = np.atleast_1d(
-            radius
-        ).astype(np.float64)
-        kelvin_radius_array = np.atleast_1d(
-            kelvin_radius_value
-        ).astype(np.float64)
-        return ti_get_kelvin_term(particle_radius_array, kelvin_radius_array)
+    ):
+        r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
+        return kget_kelvin_term(radius, r_k)
 
 
 @ti.data_oriented
@@ -333,150 +217,37 @@ class SurfaceStrategyMass(_SurfaceMixin):
         super().__init__(surface_tension, density)
 
     def effective_surface_tension(
-        self, mass_concentration: Union[float, NDArray[np.float64]]
+        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
     ) -> float:
-        """
-        Compute effective surface tension by mass-fraction weighting.
-
-        Arguments:
-            - mass_concentration : Mass concentration(s) of each component.
-
-        Returns:
-            - effective_surface_tension : Weighted surface tension (float).
-
-        Examples:
-            >>> strat = SurfaceStrategyMass([0.072, 0.073], [1000, 1200])
-            >>> strat.effective_surface_tension([0.5, 0.5])
-            0.0725
-        """
-        if self.n_species == 1:
-            return self.surface_tension[None]
-        mass_concentration_array = np.asarray(
-            mass_concentration, dtype=np.float64
-        )
-        mass_fraction = (
-            mass_concentration_array / mass_concentration_array.sum()
-        )
-        return (
-            self.surface_tension.to_numpy() * mass_fraction
-        ).sum(dtype=np.float64)
+        return float(self._weighted_average(self.surface_tension, mass_concentration, None))
 
     def effective_density(
-        self, mass_concentration: Union[float, NDArray[np.float64]]
+        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
     ) -> float:
-        """
-        Compute effective density by mass-fraction weighting.
-
-        Arguments:
-            - mass_concentration : Mass concentration(s) of each component.
-
-        Returns:
-            - effective_density : Weighted density (float).
-
-        Examples:
-            >>> strat = SurfaceStrategyMass([0.072, 0.073], [1000, 1200])
-            >>> strat.effective_density([0.5, 0.5])
-            1100.0
-        """
-        if self.n_species == 1:
-            return self.density[None]
-        mass_concentration_array = np.asarray(
-            mass_concentration, dtype=np.float64
-        )
-        mass_fraction = (
-            mass_concentration_array / mass_concentration_array.sum()
-        )
-        return (
-            self.density.to_numpy() * mass_fraction
-        ).sum(dtype=np.float64)
+        return float(self._weighted_average(self.density, mass_concentration, None))
 
     def kelvin_radius(
         self,
-        molar_mass: Union[float, NDArray[np.float64]],
-        mass_concentration: Union[float, NDArray[np.float64]],
+        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
+        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
         temperature: float,
-    ) -> Union[float, NDArray[np.float64]]:
-        """
-        Compute the Kelvin radius for the mixture.
-
-        The Kelvin radius is given by:
-            rₖ = (2 σ M) / (ρ R T)
-        where:
-            - σ : Effective surface tension
-            - M : Molar mass
-            - ρ : Effective density
-            - R : Gas constant
-            - T : Temperature
-
-        Arguments:
-            - molar_mass : Molar mass(es) of each component.
-            - mass_concentration : Mass concentration(s) of each component.
-            - temperature : Temperature in K.
-
-        Returns:
-            - kelvin_radius : Kelvin radius (float or ndarray).
-
-        Examples:
-            >>> strat = SurfaceStrategyMass()
-            >>> strat.kelvin_radius(0.018, 0.5, 298.15)
-            array([...])
-
-        References:
-            - Seinfeld & Pandis (2016), Eq. 8.7.
-        """
-        surface_tension_value = self.effective_surface_tension(mass_concentration)
-        effective_density_value = self.effective_density(mass_concentration)
-        surface_tension_array = np.atleast_1d(
-            surface_tension_value
-        ).astype(np.float64)
-        density_array = np.atleast_1d(
-            effective_density_value
-        ).astype(np.float64)
-        molar_mass_array = np.atleast_1d(
-            molar_mass
-        ).astype(np.float64)
-        return ti_get_kelvin_radius(
-            surface_tension_array, density_array, molar_mass_array, float(temperature)
-        )
+    ):
+        st = ti_nd(dtype=ti.f64, shape=(1,))
+        rho = ti_nd(dtype=ti.f64, shape=(1,))
+        st[0] = self.effective_surface_tension(mass_concentration)
+        rho[0] = self.effective_density(mass_concentration)
+        r_k = kget_kelvin_radius(st, rho, molar_mass, float(temperature))
+        return r_k
 
     def kelvin_term(
         self,
-        radius: Union[float, NDArray[np.float64]],
-        molar_mass: Union[float, NDArray[np.float64]],
-        mass_concentration: Union[float, NDArray[np.float64]],
+        radius: ti_nd(dtype=ti.f64, ndim=1),
+        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
+        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
         temperature: float,
-    ) -> Union[float, NDArray[np.float64]]:
-        """
-        Compute the Kelvin term for the mixture.
-
-        The Kelvin term is given by:
-            exp(rₖ / r)
-        where rₖ is the Kelvin radius and r is the particle radius.
-
-        Arguments:
-            - radius : Particle radius (float or ndarray).
-            - molar_mass : Molar mass(es) of each component.
-            - mass_concentration : Mass concentration(s) of each component.
-            - temperature : Temperature in K.
-
-        Returns:
-            - kelvin_term : Kelvin term (float or ndarray).
-
-        Examples:
-            >>> strat = SurfaceStrategyMass()
-            >>> strat.kelvin_term(1e-7, 0.018, 0.5, 298.15)
-            array([...])
-        """
-        kelvin_radius_value = self.kelvin_radius(
-            molar_mass, mass_concentration, temperature
-        )
-        particle_radius_array = np.atleast_1d(
-            radius
-        ).astype(np.float64)
-        kelvin_radius_array = np.atleast_1d(
-            kelvin_radius_value
-        ).astype(np.float64)
-        return ti_get_kelvin_term(particle_radius_array, kelvin_radius_array)
+    ):
+        r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
+        return kget_kelvin_term(radius, r_k)
 
 
 @ti.data_oriented
@@ -517,147 +288,34 @@ class SurfaceStrategyVolume(_SurfaceMixin):
         super().__init__(surface_tension, density)
 
     def effective_surface_tension(
-        self, mass_concentration: Union[float, NDArray[np.float64]]
+        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
     ) -> float:
-        """
-        Compute effective surface tension by volume-fraction weighting.
-
-        Arguments:
-            - mass_concentration : Mass concentration(s) of each component.
-
-        Returns:
-            - effective_surface_tension : Weighted surface tension (float).
-
-        Examples:
-            >>> strat = SurfaceStrategyVolume([0.072, 0.073], [1000, 1200])
-            >>> strat.effective_surface_tension([0.5, 0.5])
-            0.0725
-        """
-        if self.n_species == 1:
-            return self.surface_tension[None]
-        mass_concentration_array = np.asarray(
-            mass_concentration, dtype=np.float64
-        )
-        density_array = self.density.to_numpy()
-        volume_array = mass_concentration_array / density_array
-        volume_fraction_weight = volume_array / volume_array.sum()
-        return (
-            self.surface_tension.to_numpy() * volume_fraction_weight
-        ).sum(dtype=np.float64)
+        return float(self._weighted_average(self.surface_tension, mass_concentration, self.density))
 
     def effective_density(
-        self, mass_concentration: Union[float, NDArray[np.float64]]
+        self, mass_concentration: ti_nd(dtype=ti.f64, ndim=1)
     ) -> float:
-        """
-        Compute effective density by volume-fraction weighting.
-
-        Arguments:
-            - mass_concentration : Mass concentration(s) of each component.
-
-        Returns:
-            - effective_density : Weighted density (float).
-
-        Examples:
-            >>> strat = SurfaceStrategyVolume([0.072, 0.073], [1000, 1200])
-            >>> strat.effective_density([0.5, 0.5])
-            1100.0
-        """
-        if self.n_species == 1:
-            return self.density[None]
-        mass_concentration_array = np.asarray(
-            mass_concentration, dtype=np.float64
-        )
-        density_array = self.density.to_numpy()
-        volume_array = mass_concentration_array / density_array
-        volume_fraction_weight = volume_array / volume_array.sum()
-        return (
-            self.density.to_numpy() * volume_fraction_weight
-        ).sum(dtype=np.float64)
+        return float(self._weighted_average(self.density, mass_concentration, self.density))
 
     def kelvin_radius(
         self,
-        molar_mass: Union[float, NDArray[np.float64]],
-        mass_concentration: Union[float, NDArray[np.float64]],
+        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
+        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
         temperature: float,
-    ) -> Union[float, NDArray[np.float64]]:
-        """
-        Compute the Kelvin radius for the mixture.
-
-        The Kelvin radius is given by:
-            rₖ = (2 σ M) / (ρ R T)
-        where:
-            - σ : Effective surface tension
-            - M : Molar mass
-            - ρ : Effective density
-            - R : Gas constant
-            - T : Temperature
-
-        Arguments:
-            - molar_mass : Molar mass(es) of each component.
-            - mass_concentration : Mass concentration(s) of each component.
-            - temperature : Temperature in K.
-
-        Returns:
-            - kelvin_radius : Kelvin radius (float or ndarray).
-
-        Examples:
-            >>> strat = SurfaceStrategyVolume()
-            >>> strat.kelvin_radius(0.018, 0.5, 298.15)
-            array([...])
-
-        References:
-            - Seinfeld & Pandis (2016), Eq. 8.7.
-        """
-        surface_tension_value = self.effective_surface_tension(mass_concentration)
-        effective_density_value = self.effective_density(mass_concentration)
-        surface_tension_array = np.atleast_1d(
-            surface_tension_value
-        ).astype(np.float64)
-        density_array = np.atleast_1d(
-            effective_density_value
-        ).astype(np.float64)
-        molar_mass_array = np.atleast_1d(
-            molar_mass
-        ).astype(np.float64)
-        return ti_get_kelvin_radius(
-            surface_tension_array, density_array, molar_mass_array, float(temperature)
-        )
+    ):
+        st = ti_nd(dtype=ti.f64, shape=(1,))
+        rho = ti_nd(dtype=ti.f64, shape=(1,))
+        st[0] = self.effective_surface_tension(mass_concentration)
+        rho[0] = self.effective_density(mass_concentration)
+        r_k = kget_kelvin_radius(st, rho, molar_mass, float(temperature))
+        return r_k
 
     def kelvin_term(
         self,
-        radius: Union[float, NDArray[np.float64]],
-        molar_mass: Union[float, NDArray[np.float64]],
-        mass_concentration: Union[float, NDArray[np.float64]],
+        radius: ti_nd(dtype=ti.f64, ndim=1),
+        molar_mass: ti_nd(dtype=ti.f64, ndim=1),
+        mass_concentration: ti_nd(dtype=ti.f64, ndim=1),
         temperature: float,
-    ) -> Union[float, NDArray[np.float64]]:
-        """
-        Compute the Kelvin term for the mixture.
-
-        The Kelvin term is given by:
-            exp(rₖ / r)
-        where rₖ is the Kelvin radius and r is the particle radius.
-
-        Arguments:
-            - radius : Particle radius (float or ndarray).
-            - molar_mass : Molar mass(es) of each component.
-            - mass_concentration : Mass concentration(s) of each component.
-            - temperature : Temperature in K.
-
-        Returns:
-            - kelvin_term : Kelvin term (float or ndarray).
-
-        Examples:
-            >>> strat = SurfaceStrategyVolume()
-            >>> strat.kelvin_term(1e-7, 0.018, 0.5, 298.15)
-            array([...])
-        """
-        kelvin_radius_value = self.kelvin_radius(
-            molar_mass, mass_concentration, temperature
-        )
-        particle_radius_array = np.atleast_1d(
-            radius
-        ).astype(np.float64)
-        kelvin_radius_array = np.atleast_1d(
-            kelvin_radius_value
-        ).astype(np.float64)
-        return ti_get_kelvin_term(particle_radius_array, kelvin_radius_array)
+    ):
+        r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
+        return kget_kelvin_term(radius, r_k)
