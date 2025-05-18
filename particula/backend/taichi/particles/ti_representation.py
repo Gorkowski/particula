@@ -362,6 +362,12 @@ class TiParticleRepresentation:
             self.get_density(),
             added_mass,
         )
+
+        # strategy may return a Taichi ndarray; convert to plain NumPy
+        if hasattr(distribution_array, "to_numpy"):
+            distribution_array = distribution_array.to_numpy()
+        distribution_array = np.asarray(distribution_array, dtype=np.float64)
+
         _field_io.from_numpy(self.distribution, distribution_array)
 
     def add_concentration(
