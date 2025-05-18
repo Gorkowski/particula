@@ -126,21 +126,44 @@ class TiSurfaceStrategyMolar(SurfaceMixin):
         molar_mass: ti.types.ndarray(dtype=ti.f64),
     ):
         super().__init__(surface_tension, density)
-        self.molar_mass = molar_mass
+        self.molar_mass = ti.field(ti.f64, shape=molar_mass.shape)
+        _field_io.from_numpy(self.molar_mass, molar_mass)
+        self.n_species[None] = molar_mass.shape[0]
+
+    @ti.kernel
+    def k_effective_property(
+        self,
+        prop: ti.template(),                               # surface_tension / density / molar_mass
+        mass_conc: ti.types.ndarray(dtype=ti.f64, ndim=2), # (n_particles, n_species)
+        res: ti.types.ndarray(dtype=ti.f64, ndim=1),       # (n_particles,)
+    ):
+        for p in range(mass_conc.shape[0]):                # particle loop
+            tot = 0.0
+            for s in range(self.n_species):
+                tot += mass_conc[p, s] / self.molar_mass[s]
+            acc = 0.0
+            for s in range(self.n_species):
+                acc += prop[s] * (mass_conc[p, s] / self.molar_mass[s]) / tot
+            res[p] = acc
 
     def effective_surface_tension(
         self, mass_concentration: ti.types.ndarray(dtype=ti.f64)
     ):
-        return self.weighted_average(
-            self.surface_tension, mass_concentration, self.molar_mass
-        )
+        result = np.empty(mass_concentration.shape[0], dtype=np.float64)
+        self.k_effective_property(self.surface_tension, mass_concentration, result)
+        return result
 
     def effective_density(
         self, mass_concentration: ti.types.ndarray(dtype=ti.f64)
     ):
-        return self.weighted_average(
-            self.density, mass_concentration, self.molar_mass
-        )
+        result = np.empty(mass_concentration.shape[0], dtype=np.float64)
+        self.k_effective_property(self.density, mass_concentration, result)
+        return result
+
+    def _effective_molar_mass(self, mass_concentration):
+        result = np.empty(mass_concentration.shape[0], dtype=np.float64)
+        self.k_effective_property(self.molar_mass, mass_concentration, result)
+        return result
 
     def kelvin_radius(
         self,
@@ -148,16 +171,11 @@ class TiSurfaceStrategyMolar(SurfaceMixin):
         mass_concentration: ti.types.ndarray(dtype=ti.f64),
         temperature: float,
     ):
-
-        surface_tension = ti.types.ndarray(dtype=ti.f64)
-        density = ti.types.ndarray(dtype=ti.f64)
-        result = ti.types.ndarray(dtype=ti.f64)
-        surface_tension[0] = self.effective_surface_tension(mass_concentration)
-        density[0] = self.effective_density(mass_concentration)
-
-        kget_kelvin_radius(
-            surface_tension, density, molar_mass, float(temperature), result
-        )
+        eff_sigma  = self.effective_surface_tension(mass_concentration)
+        eff_rho    = self.effective_density(mass_concentration)
+        eff_M      = self._effective_molar_mass(mass_concentration)
+        result     = np.empty(mass_concentration.shape[0], dtype=np.float64)
+        kget_kelvin_radius(eff_sigma, eff_rho, eff_M, float(temperature), result)
         return result
 
     def kelvin_term(
@@ -168,6 +186,8 @@ class TiSurfaceStrategyMolar(SurfaceMixin):
             temperature: float,
         ):
         r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        results = ti.types.ndarray(dtype=ti.f64)
-        kget_kelvin_term(radius, r_k, results)
-        return results
+        n_p = r_k.shape[0]
+        r_array = np.full(n_p, radius, dtype=np.float64) if np.isscalar(radius) else radius
+        result = np.empty(n_p, dtype=np.float64)
+        kget_kelvin_term(r_array, r_k, result)
+        return result
