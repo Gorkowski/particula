@@ -1,20 +1,26 @@
 """Benchmarks get_partial_pressure and get_saturation_ratio_from_pressure."""
-import os, json, numpy as np, taichi as ti
+import os
+import json
+import numpy as np
+import taichi as ti
 from particula.backend.benchmark import (
-    get_function_benchmark, get_system_info,
-    save_combined_csv, plot_throughput_vs_array_length,
+    get_function_benchmark,
+    get_system_info,
+    save_combined_csv,
+    plot_throughput_vs_array_length,
 )
 #  Python reference versions
 from particula.gas.properties.pressure_function import (
-    get_partial_pressure                as py_partial,
-    get_saturation_ratio_from_pressure  as py_sat_ratio,
+    get_partial_pressure as python_get_partial_pressure,
+    get_saturation_ratio_from_pressure
+    as python_get_saturation_ratio_from_pressure,
 )
 #  Taichi wrapper + raw kernel
 from particula.backend.taichi.gas.properties.ti_pressure_function_module import (
-    ti_get_partial_pressure                       as ti_partial,
-    kget_partial_pressure                         as k_partial,
-    ti_get_saturation_ratio_from_pressure         as ti_sat_ratio,
-    kget_saturation_ratio_from_pressure           as k_sat_ratio,
+    ti_get_partial_pressure,
+    kget_partial_pressure,
+    ti_get_saturation_ratio_from_pressure,
+    kget_saturation_ratio_from_pressure,
 )
 
 RNG_SEED = 42
@@ -27,60 +33,87 @@ def benchmark_partial_pressure_csv():
     Time pure-Python, Taichi wrapper, and raw kernel for get_partial_pressure
     over ARRAY_LENGTHS, then save CSV, JSON, and PNG into ./benchmark_outputs/.
     """
-    rows = []
-    rng = np.random.default_rng(seed=RNG_SEED)
+    result_rows = []
+    random_generator = np.random.default_rng(seed=RNG_SEED)
 
-    for n in ARRAY_LENGTHS:
+    for array_length in ARRAY_LENGTHS:
         # Random positive input data
-        concentration = rng.random(n, dtype=np.float64) + 1e-9
-        molar_mass = rng.random(n, dtype=np.float64) + 0.01  # avoid zero
-        temperature = rng.random(n, dtype=np.float64) * 300 + 200  # 200-500K
+        concentration = (
+            random_generator.random(array_length, dtype=np.float64) + 1.0e-9
+        )
+        molar_mass = random_generator.random(array_length, dtype=np.float64) + 0.01
+        temperature = (
+            random_generator.random(array_length, dtype=np.float64) * 300 + 200
+        )
 
         # Taichi buffers
-        conc_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        mm_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        temp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        conc_ti.from_numpy(concentration)
-        mm_ti.from_numpy(molar_mass)
-        temp_ti.from_numpy(temperature)
+        concentration_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        molar_mass_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        temperature_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        result_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        concentration_field.from_numpy(concentration)
+        molar_mass_field.from_numpy(molar_mass)
+        temperature_field.from_numpy(temperature)
 
         # Timing
-        stats_py = get_function_benchmark(
-            lambda: py_partial(concentration, molar_mass, temperature), ops_per_call=n
+        python_stats = get_function_benchmark(
+            lambda: python_get_partial_pressure(
+                concentration, molar_mass, temperature
+            ),
+            ops_per_call=array_length,
         )
-        stats_ti = get_function_benchmark(
-            lambda: ti_partial(concentration, molar_mass, temperature), ops_per_call=n
+        taichi_stats = get_function_benchmark(
+            lambda: ti_get_partial_pressure(
+                concentration, molar_mass, temperature
+            ),
+            ops_per_call=array_length,
         )
-        stats_kernel = get_function_benchmark(
-            lambda: k_partial(conc_ti, mm_ti, temp_ti, res_ti), ops_per_call=n
+        kernel_stats = get_function_benchmark(
+            lambda: kget_partial_pressure(
+                concentration_field, molar_mass_field, temperature_field, result_field
+            ),
+            ops_per_call=array_length,
         )
 
-        rows.append([
-            n,
-            *stats_py["array_stats"],
-            *stats_ti["array_stats"],
-            *stats_kernel["array_stats"],
-        ])
+        result_rows.append(
+            [
+                array_length,
+                *python_stats["array_stats"],
+                *taichi_stats["array_stats"],
+                *kernel_stats["array_stats"],
+            ]
+        )
 
-    python_hdr  = ["python_"        + h for h in stats_py["array_headers"]]
-    taichi_hdr  = ["taichi_"        + h for h in stats_ti["array_headers"]]
-    kernel_hdr  = ["taichi_kernel_" + h for h in stats_kernel["array_headers"]]
-    header = ["array_length", *python_hdr, *taichi_hdr, *kernel_hdr]
+    python_header = [
+        "python_" + header_name for header_name in python_stats["array_headers"]
+    ]
+    taichi_header = [
+        "taichi_" + header_name for header_name in taichi_stats["array_headers"]
+    ]
+    kernel_header = [
+        "taichi_kernel_" + header_name
+        for header_name in kernel_stats["array_headers"]
+    ]
+    header = ["array_length", *python_header, *taichi_header, *kernel_header]
 
-    out_dir = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
-    os.makedirs(out_dir, exist_ok=True)
+    output_directory = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
+    os.makedirs(output_directory, exist_ok=True)
 
-    csv_path = os.path.join(out_dir, "get_partial_pressure_benchmark.csv")
-    save_combined_csv(csv_path, header, rows)
+    csv_file_path = os.path.join(
+        output_directory, "get_partial_pressure_benchmark.csv"
+    )
+    save_combined_csv(csv_file_path, header, result_rows)
 
-    with open(os.path.join(out_dir, "system_info.json"), "w", encoding="utf-8") as fh:
+    with open(
+        os.path.join(output_directory, "system_info.json"), "w", encoding="utf-8"
+    ) as fh:
         json.dump(get_system_info(), fh, indent=2)
 
     plot_throughput_vs_array_length(
-        header, rows,
+        header,
+        result_rows,
         "get_partial_pressure throughput benchmark",
-        os.path.join(out_dir, "get_partial_pressure_benchmark.png"),
+        os.path.join(output_directory, "get_partial_pressure_benchmark.png"),
     )
 
 
@@ -89,57 +122,86 @@ def benchmark_saturation_ratio_csv():
     Time pure-Python, Taichi wrapper, and raw kernel for get_saturation_ratio_from_pressure
     over ARRAY_LENGTHS, then save CSV, JSON, and PNG into ./benchmark_outputs/.
     """
-    rows = []
-    rng = np.random.default_rng(seed=RNG_SEED)
+    result_rows = []
+    random_generator = np.random.default_rng(seed=RNG_SEED)
 
-    for n in ARRAY_LENGTHS:
+    for array_length in ARRAY_LENGTHS:
         # Random positive input data
-        partial_pressure = rng.random(n, dtype=np.float64) * 1000 + 1e-6
-        pure_vapor_pressure = rng.random(n, dtype=np.float64) * 1000 + 1e-6
+        partial_pressure = (
+            random_generator.random(array_length, dtype=np.float64) * 1000 + 1.0e-6
+        )
+        pure_vapor_pressure = (
+            random_generator.random(array_length, dtype=np.float64) * 1000 + 1.0e-6
+        )
 
         # Taichi buffers
-        pp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        pvp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        pp_ti.from_numpy(partial_pressure)
-        pvp_ti.from_numpy(pure_vapor_pressure)
+        partial_pressure_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        pure_vapor_pressure_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        result_field = ti.ndarray(dtype=ti.f64, shape=array_length)
+        partial_pressure_field.from_numpy(partial_pressure)
+        pure_vapor_pressure_field.from_numpy(pure_vapor_pressure)
 
         # Timing
-        stats_py = get_function_benchmark(
-            lambda: py_sat_ratio(partial_pressure, pure_vapor_pressure), ops_per_call=n
+        python_stats = get_function_benchmark(
+            lambda: python_get_saturation_ratio_from_pressure(
+                partial_pressure, pure_vapor_pressure
+            ),
+            ops_per_call=array_length,
         )
-        stats_ti = get_function_benchmark(
-            lambda: ti_sat_ratio(partial_pressure, pure_vapor_pressure), ops_per_call=n
+        taichi_stats = get_function_benchmark(
+            lambda: ti_get_saturation_ratio_from_pressure(
+                partial_pressure, pure_vapor_pressure
+            ),
+            ops_per_call=array_length,
         )
-        stats_kernel = get_function_benchmark(
-            lambda: k_sat_ratio(pp_ti, pvp_ti, res_ti), ops_per_call=n
+        kernel_stats = get_function_benchmark(
+            lambda: kget_saturation_ratio_from_pressure(
+                partial_pressure_field, pure_vapor_pressure_field, result_field
+            ),
+            ops_per_call=array_length,
         )
 
-        rows.append([
-            n,
-            *stats_py["array_stats"],
-            *stats_ti["array_stats"],
-            *stats_kernel["array_stats"],
-        ])
+        result_rows.append(
+            [
+                array_length,
+                *python_stats["array_stats"],
+                *taichi_stats["array_stats"],
+                *kernel_stats["array_stats"],
+            ]
+        )
 
-    python_hdr  = ["python_"        + h for h in stats_py["array_headers"]]
-    taichi_hdr  = ["taichi_"        + h for h in stats_ti["array_headers"]]
-    kernel_hdr  = ["taichi_kernel_" + h for h in stats_kernel["array_headers"]]
-    header = ["array_length", *python_hdr, *taichi_hdr, *kernel_hdr]
+    python_header = [
+        "python_" + header_name for header_name in python_stats["array_headers"]
+    ]
+    taichi_header = [
+        "taichi_" + header_name for header_name in taichi_stats["array_headers"]
+    ]
+    kernel_header = [
+        "taichi_kernel_" + header_name
+        for header_name in kernel_stats["array_headers"]
+    ]
+    header = ["array_length", *python_header, *taichi_header, *kernel_header]
 
-    out_dir = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
-    os.makedirs(out_dir, exist_ok=True)
+    output_directory = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
+    os.makedirs(output_directory, exist_ok=True)
 
-    csv_path = os.path.join(out_dir, "get_saturation_ratio_from_pressure_benchmark.csv")
-    save_combined_csv(csv_path, header, rows)
+    csv_file_path = os.path.join(
+        output_directory, "get_saturation_ratio_from_pressure_benchmark.csv"
+    )
+    save_combined_csv(csv_file_path, header, result_rows)
 
-    with open(os.path.join(out_dir, "system_info.json"), "w", encoding="utf-8") as fh:
+    with open(
+        os.path.join(output_directory, "system_info.json"), "w", encoding="utf-8"
+    ) as fh:
         json.dump(get_system_info(), fh, indent=2)
 
     plot_throughput_vs_array_length(
-        header, rows,
+        header,
+        result_rows,
         "get_saturation_ratio_from_pressure throughput benchmark",
-        os.path.join(out_dir, "get_saturation_ratio_from_pressure_benchmark.png"),
+        os.path.join(
+            output_directory, "get_saturation_ratio_from_pressure_benchmark.png"
+        ),
     )
 
 
