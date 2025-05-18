@@ -268,8 +268,6 @@ class MassBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Total mass per bin/particle [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
@@ -532,8 +530,6 @@ class RadiiBasedMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Total mass per bin/particle [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
@@ -789,8 +785,6 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         Returns:
             - ti.types.ndarray(dtype=ti.f64) : Total mass per bin/particle [kg].
         """
-        distribution = _to_numpy(distribution)
-        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
