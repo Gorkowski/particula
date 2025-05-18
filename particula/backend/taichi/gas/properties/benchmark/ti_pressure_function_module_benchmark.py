@@ -1,5 +1,32 @@
-"""Benchmarks partial-pressure and saturation-ratio routines
-(pure-Python, Taichi wrapper, Taichi kernel)."""
+"""
+Benchmark suite for the partial-pressure and saturation-ratio
+routines implemented in:
+
+    • pure Python,
+    • Taichi-wrapped Python, and
+    • raw Taichi kernels.
+
+The script sweeps input-array lengths from 10² to 10⁸ elements,
+records per-call throughput statistics, and stores
+
+    • a CSV table in *benchmark_outputs/**,
+    • a PNG throughput plot, and
+    • a JSON file with basic system information.
+
+Functions
+---------
+- benchmark_partial_pressure_csv :
+    Benchmark get_partial_pressure implementations.
+- benchmark_saturation_ratio_csv :
+    Benchmark get_saturation_ratio_from_pressure implementations.
+
+Examples
+--------
+```py title="CLI"
+python -m particula.backend.taichi.gas.properties.benchmark.\
+ti_pressure_function_module_benchmark
+```
+"""
 import os
 import json
 import numpy as np
@@ -33,7 +60,31 @@ ti.init(arch=ti.cpu)
 
 # ═══════════════════════════════════════════════════════════════════════════
 def benchmark_partial_pressure_csv() -> None:
-    """Benchmark *get_partial_pressure* variants and save CSV + PNG."""
+    """
+    Benchmark the three get_partial_pressure variants and write results.
+
+    Generates random concentration, molar-mass, and temperature arrays of
+    increasing length, measures the per-call throughput for
+
+        1. pure-Python,
+        2. Taichi-wrapped Python, and
+        3. the raw Taichi kernel,
+
+    then saves a CSV file and a PNG plot under *benchmark_outputs/*.
+
+    Arguments:
+        - None
+
+    Returns:
+        - None
+
+    Examples:
+        ```py
+        from particula.backend.taichi.gas.properties.benchmark \
+import ti_pressure_function_module_benchmark as bm
+        bm.benchmark_partial_pressure_csv()
+        ```
+    """
     rows: list[list[float]] = []
     random_generator = np.random.default_rng(seed=RNG_SEED)
 
@@ -113,7 +164,31 @@ def benchmark_partial_pressure_csv() -> None:
 
 # ═══════════════════════════════════════════════════════════════════════════
 def benchmark_saturation_ratio_csv() -> None:
-    """Benchmark *get_saturation_ratio_from_pressure* variants and save CSV + PNG."""
+    """
+    Benchmark the three get_saturation_ratio_from_pressure variants and write results.
+
+    Generates random partial-pressure and pure-vapor-pressure arrays of
+    increasing length, measures the per-call throughput for
+
+        1. pure-Python,
+        2. Taichi-wrapped Python, and
+        3. the raw Taichi kernel,
+
+    then saves a CSV file and a PNG plot under *benchmark_outputs/*.
+
+    Arguments:
+        - None
+
+    Returns:
+        - None
+
+    Examples:
+        ```py
+        from particula.backend.taichi.gas.properties.benchmark \
+import ti_pressure_function_module_benchmark as bm
+        bm.benchmark_saturation_ratio_csv()
+        ```
+    """
     rows: list[list[float]] = []
     random_generator = np.random.default_rng(seed=RNG_SEED)
 
