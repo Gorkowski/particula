@@ -12,7 +12,7 @@ from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     ClausiusClapeyronStrategy,
 )
 from particula.backend.taichi.gas.properties import (
-    fget_partial_pressure,          # element-wise helper
+    # fget_partial_pressure,          # element-wise helper
 )
 ti.init(default_fp=ti.f64)          # safe default
 
@@ -43,19 +43,30 @@ class GasSpecies:
         self.partitioning  = partitioning
 
         # flatten → ndarray so we know the length
-        mm_np   = np.atleast_1d(np.asarray(molar_mass,   dtype=np.float64))
-        conc_np = np.atleast_1d(np.asarray(concentration, dtype=np.float64))
-        if conc_np.size == 1 and mm_np.size > 1:
-            conc_np = np.full(mm_np.size, conc_np.item(), dtype=np.float64)
+        molar_mass_array = np.atleast_1d(
+            np.asarray(molar_mass, dtype=np.float64)
+        )
+        concentration_array = np.atleast_1d(
+            np.asarray(concentration, dtype=np.float64)
+        )
+        if (concentration_array.size == 1
+                and molar_mass_array.size > 1):
+            concentration_array = np.full(
+                molar_mass_array.size,
+                concentration_array.item(),
+                dtype=np.float64,
+            )
 
-        self.n_species = int(mm_np.size)
+        self.n_species = int(molar_mass_array.size)
 
         # persistent Ti fields
         self.molar_mass   = ti.field(ti.f64, shape=self.n_species)
         self.concentration = ti.field(ti.f64, shape=self.n_species)
-        for i in range(self.n_species):          # one-off copy
-            self.molar_mass[i]    = mm_np[i]
-            self.concentration[i] = max(0.0, conc_np[i])   # no negatives
+        for species_index in range(self.n_species):
+            self.molar_mass[species_index] = molar_mass_array[species_index]
+            self.concentration[species_index] = max(
+                0.0, concentration_array[species_index]
+            )
 
         # make list of strategies the same length as species
         if not isinstance(vapor_pressure_strategy, list):
@@ -73,18 +84,18 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for idx, strategy in ti.static(enumerate(self.strategies)):
-            result[idx] = strategy._pure_vp_func(temperature)
+        for species_index, strategy in ti.static(enumerate(self.strategies)):
+            result[species_index] = strategy._pure_vp_func(temperature)
 
     @ti.kernel
     def _partial_pressure_kernel(                  # vectorised
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for idx, strategy in ti.static(enumerate(self.strategies)):
-            result[idx] = strategy._partial_pressure_func(
-                self.concentration[idx],
-                self.molar_mass[idx],
+        for species_index, strategy in ti.static(enumerate(self.strategies)):
+            result[species_index] = strategy._partial_pressure_func(
+                self.concentration[species_index],
+                self.molar_mass[species_index],
                 temperature,
             )
 
@@ -93,25 +104,27 @@ class GasSpecies:
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for idx, strategy in ti.static(enumerate(self.strategies)):
-            vp = strategy._pure_vp_func(temperature)
-            pp = strategy._partial_pressure_func(
-                self.concentration[idx],
-                self.molar_mass[idx],
+        for species_index, strategy in ti.static(enumerate(self.strategies)):
+            vapor_pressure = strategy._pure_vp_func(temperature)
+            partial_pressure = strategy._partial_pressure_func(
+                self.concentration[species_index],
+                self.molar_mass[species_index],
                 temperature,
             )
-            result[idx] = pp / vp
+            result[species_index] = (
+                partial_pressure / vapor_pressure
+            )
 
     @ti.kernel
     def _saturation_concentration_kernel(          # vectorised
         self, temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
-        for idx, strategy in ti.static(enumerate(self.strategies)):
-            vp = strategy._pure_vp_func(temperature)
-            result[idx] = strategy._concentration_func(
-                vp,
-                self.molar_mass[idx],
+        for species_index, strategy in ti.static(enumerate(self.strategies)):
+            vapor_pressure = strategy._pure_vp_func(temperature)
+            result[species_index] = strategy._concentration_func(
+                vapor_pressure,
+                self.molar_mass[species_index],
                 temperature,
             )
 
@@ -150,9 +163,10 @@ class GasSpecies:
             delta = np.full(self.n_species, delta.item(), dtype=np.float64)
         if delta.size != self.n_species:
             raise ValueError("delta length mismatch")
-        for i in range(self.n_species):
-            self.concentration[i] = max(
-                0.0, self.concentration[i] + delta[i]
+        for species_index in range(self.n_species):
+            self.concentration[species_index] = max(
+                0.0,
+                self.concentration[species_index] + delta[species_index],
             )
 
     def set_concentration(self, new_value):
