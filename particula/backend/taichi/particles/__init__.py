@@ -22,8 +22,5 @@ from .ti_distribution_strategies import (
 
 # ─── Surface strategies ───────────────────────────────────────────
 from .ti_surface_strategies import (
-    SurfaceStrategyMolar   as TiSurfaceStrategyMolar,
-    SurfaceStrategyMass    as TiSurfaceStrategyMass,
-    SurfaceStrategyVolume  as TiSurfaceStrategyVolume,
+    TiSurfaceStrategyMolar,
 )
-

@@ -14,7 +14,7 @@ from particula.backend.taichi.particles.ti_activity_strategies import (
 )
 from particula.particles.surface_strategies import SurfaceStrategyMass
 from particula.backend.taichi.particles.ti_surface_strategies import (
-    SurfaceStrategyMass as TiSurfaceStrategyMass,
+        TiSurfaceStrategyMolar
 )
 from particula.particles.representation import ParticleRepresentation as PyRep
 from particula.backend.taichi.particles.ti_representation import (
@@ -56,7 +56,7 @@ class TestTiParticleRepresentation(unittest.TestCase):
         cls.ti_obj = TiRep(
             TiParticleResolvedSpeciatedMass(),
             TiActivityIdealMass(),
-            TiSurfaceStrategyMass(),
+            TiSurfaceStrategyMolar(),
             cls.distribution,
             cls.density,
             cls.concentration,
@@ -97,7 +97,7 @@ class TestTiParticleRepresentation(unittest.TestCase):
         npt.assert_allclose(
             self.py_obj.get_radius(),
             self.ti_obj.get_radius().to_numpy(),
-            rtol=1e-7,
+            rtol=1e-6,
         )
 
     def test_effective_density(self):

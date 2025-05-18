@@ -239,8 +239,8 @@ class TiCondensationIsothermal:
 
         # --- gather particle-level data -----------------------------------
         mass_ti = particle.get_species_mass()          # ti.ndarray (n_part, n_spec)
-        mass_np = mass_ti.to_numpy()                   # NumPy copy
-        mm_np   = self.molar_mass.to_numpy()           # NumPy (n_spec,)
+        mass_np = mass_ti                   # NumPy copy
+        mm_np   = self.molar_mass           # NumPy (n_spec,)
 
         # --- gas side ------------------------------------------------------
         pure_vp = gas_species.get_pure_vapor_pressure(temperature)   # ti.ndarray

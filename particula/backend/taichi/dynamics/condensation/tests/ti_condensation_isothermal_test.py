@@ -13,7 +13,7 @@ from particula.backend.taichi.particles.ti_activity_strategies import (
     ActivityKappaParameter,
 )
 from particula.backend.taichi.particles.ti_surface_strategies import (
-    SurfaceStrategyMass,
+    SurfaceStrategyMolar,
 )
 from particula.backend.taichi.particles.ti_representation import (
     TiParticleRepresentation,
@@ -71,9 +71,10 @@ class TiCondensationIsothermalTest(unittest.TestCase):
             molar_mass=np.array([0.018, 0.050, 0.040]),
             water_index=0,
         )
-        surface = SurfaceStrategyMass(
+        surface = SurfaceStrategyMolar(
             surface_tension=np.full(self.n_species, 0.072),
             density=self.densities,
+            molar_mass=np.array([0.018, 0.050, 0.040]),
         )
 
         self.particle = TiParticleRepresentation(
@@ -130,7 +131,7 @@ class TiCondensationIsothermalTest(unittest.TestCase):
             dynamic_viscosity=self.dynamic_visc,
         )
         self.assertEqual(dm_dt.shape, (self.n_particles, self.n_species))
-        self.assertTrue(np.all(np.isfinite(dm_dt.to_numpy())))
+        self.assertTrue(np.all(np.isfinite(dm_dt)))
 
     # ---------------------------------------------------------------------
     def test_pressure_delta_shape_and_finite(self):

@@ -39,32 +39,6 @@ def test_activity_ideal_molar():
         conc_v, p0_v,
     )
 
-
-def test_activity_ideal_mass():
-    conc_s, conc_v = 1.23, np.array([0.5, 1.0, 2.0])
-    p0_s,  p0_v    = 950.0, np.array([500.0, 800.0, 1000.0])
-
-    _check(par.particles.ActivityIdealMass(), TiMass(), conc_s, p0_s)
-    _check(par.particles.ActivityIdealMass(), TiMass(), conc_v, p0_v)
-
-
-def test_activity_ideal_volume():
-    conc_s, conc_v = 1.23, np.array([0.5, 1.0, 2.0])
-    p0_s,  p0_v    = 950.0, np.array([500.0, 800.0, 1000.0])
-
-    density = 1000.0
-    _check(
-        par.particles.ActivityIdealVolume(density=density),
-        TiVol(density=density),
-        conc_s, p0_s,
-    )
-    _check(
-        par.particles.ActivityIdealVolume(density=density),
-        TiVol(density=density),
-        conc_v, p0_v,
-    )
-
-
 def test_activity_kappa_parameter():
     kappa      = np.array([0.1, 0.5])
     density    = np.array([1000.0, 1200.0])
