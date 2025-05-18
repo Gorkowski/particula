@@ -115,16 +115,12 @@ def make_step_callable(particle, gas, cond):
 
 if __name__ == "__main__":
     N_SPECIES = 10
-    PARTICLE_COUNTS = [10, 100, 1_000, 10_000, 50_000]  # adjust/extend as desired
+    PARTICLE_COUNTS = [10, 100, 1_000, 10_000, 50_000, 100_000]  # adjust/extend as desired
 
     # build a single condensation object (species count is fixed)
     molar_mass_vec = np.linspace(0.018, 0.018 + 0.002 * (N_SPECIES - 1), N_SPECIES)
     condensation_ti = _build_taichi_condensation_isothermal(molar_mass_vec)
 
-    csv_header = ["array_length",
-                  "ti_step_mean_s", "ti_step_std_s",
-                  "ti_step_throughput_ops", "ti_step_gmean_ops",
-                  "ti_step_gstd_ops"]
     rows = []
 
     for n_particles in PARTICLE_COUNTS:
@@ -138,17 +134,28 @@ if __name__ == "__main__":
             *stats_ti["array_stats"],
         ])
 
-    out_dir = os.path.dirname(__file__)
-    csv_file = os.path.join(out_dir, "condensation_isothermal_step_benchmark.csv")
+    taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
+    csv_header = [
+        "array_length",
+        *taichi_headers,
+    ]
+
+    # ── output directory ───────────────────────────────────────────────────
+    output_directory = os.path.join(
+        os.path.dirname(__file__), "benchmark_outputs"
+    )
+    os.makedirs(output_directory, exist_ok=True)
+
+    csv_file = os.path.join(output_directory, "condensation_isothermal_step_benchmark.csv")
     save_combined_csv(csv_file, csv_header, rows)
 
     plot_throughput_vs_array_length(
         csv_header,
         rows,
         "TiCondensation.step throughput vs #particles (10 species)",
-        os.path.join(out_dir, "condensation_isothermal_step_benchmark.png"),
+        os.path.join(output_directory, "condensation_isothermal_step_benchmark.png"),
     )
 
     # also stash the machine / environment info
-    with open(os.path.join(out_dir, "system_info.json"), "w", encoding="utf-8") as fh:
+    with open(os.path.join(output_directory, "system_info.json"), "w", encoding="utf-8") as fh:
         json.dump(get_system_info(), fh, indent=2)
