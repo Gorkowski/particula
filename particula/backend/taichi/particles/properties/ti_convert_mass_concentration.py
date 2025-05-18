@@ -17,28 +17,31 @@ def kget_mole_fraction_from_mass(
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     """Vectorized Taichi kernel for mole fraction from mass concentration."""
-    n = result.shape[0]
+    n_concentrations = result.shape[0]
     total_moles = 0.0
-    for i in range(n):
+    for i in range(n_concentrations):
         total_moles += mass_concentrations[i] / molar_masses[i]
-    for i in range(n):
-        result[i] = fget_mole_fraction_from_mass(mass_concentrations[i], molar_masses[i], total_moles)
+    for i in range(n_concentrations):
+        result[i] = fget_mole_fraction_from_mass(
+            mass_concentrations[i], molar_masses[i], total_moles
+        )
 
 @register("get_mole_fraction_from_mass", backend="taichi")
 def ti_get_mole_fraction_from_mass(mass_concentrations, molar_masses):
     """Taichi wrapper for mole fraction from mass concentration."""
     if not (isinstance(mass_concentrations, np.ndarray) and isinstance(molar_masses, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
-    a1, a2 = np.atleast_1d(mass_concentrations), np.atleast_1d(molar_masses)
-    n = a1.size
-    a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a1_ti.from_numpy(a1)
-    a2_ti.from_numpy(a2)
-    kget_mole_fraction_from_mass(a1_ti, a2_ti, result_ti)
-    result_np = result_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    mass_concentrations_array = np.atleast_1d(mass_concentrations)
+    molar_masses_array = np.atleast_1d(molar_masses)
+    n_elements = mass_concentrations_array.size
+    mass_concentrations_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    molar_masses_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_fraction_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    mass_concentrations_ti.from_numpy(mass_concentrations_array)
+    molar_masses_ti.from_numpy(molar_masses_array)
+    kget_mole_fraction_from_mass(mass_concentrations_ti, molar_masses_ti, result_fraction_ti)
+    result_fraction_np = result_fraction_ti.to_numpy()
+    return result_fraction_np.item() if result_fraction_np.size == 1 else result_fraction_np
 
 @ti.func
 def fget_volume_fraction_from_mass(mass_concentration: ti.f64, density: ti.f64, total_volume: ti.f64) -> ti.f64:
@@ -54,28 +57,31 @@ def kget_volume_fraction_from_mass(
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     """Vectorized Taichi kernel for volume fraction from mass concentration."""
-    n = result.shape[0]
+    n_concentrations = result.shape[0]
     total_volume = 0.0
-    for i in range(n):
+    for i in range(n_concentrations):
         total_volume += mass_concentrations[i] / densities[i]
-    for i in range(n):
-        result[i] = fget_volume_fraction_from_mass(mass_concentrations[i], densities[i], total_volume)
+    for i in range(n_concentrations):
+        result[i] = fget_volume_fraction_from_mass(
+            mass_concentrations[i], densities[i], total_volume
+        )
 
 @register("get_volume_fraction_from_mass", backend="taichi")
 def ti_get_volume_fraction_from_mass(mass_concentrations, densities):
     """Taichi wrapper for volume fraction from mass concentration."""
     if not (isinstance(mass_concentrations, np.ndarray) and isinstance(densities, np.ndarray)):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
-    a1, a2 = np.atleast_1d(mass_concentrations), np.atleast_1d(densities)
-    n = a1.size
-    a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a2_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a1_ti.from_numpy(a1)
-    a2_ti.from_numpy(a2)
-    kget_volume_fraction_from_mass(a1_ti, a2_ti, result_ti)
-    result_np = result_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    mass_concentrations_array = np.atleast_1d(mass_concentrations)
+    densities_array = np.atleast_1d(densities)
+    n_elements = mass_concentrations_array.size
+    mass_concentrations_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    densities_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_fraction_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    mass_concentrations_ti.from_numpy(mass_concentrations_array)
+    densities_ti.from_numpy(densities_array)
+    kget_volume_fraction_from_mass(mass_concentrations_ti, densities_ti, result_fraction_ti)
+    result_fraction_np = result_fraction_ti.to_numpy()
+    return result_fraction_np.item() if result_fraction_np.size == 1 else result_fraction_np
 
 @ti.func
 def fget_mass_fraction_from_mass(mass_concentration: ti.f64, total_mass: ti.f64) -> ti.f64:
@@ -90,23 +96,25 @@ def kget_mass_fraction_from_mass(
     result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     """Vectorized Taichi kernel for mass fraction from mass concentration."""
-    n = result.shape[0]
+    n_concentrations = result.shape[0]
     total_mass = 0.0
-    for i in range(n):
+    for i in range(n_concentrations):
         total_mass += mass_concentrations[i]
-    for i in range(n):
-        result[i] = fget_mass_fraction_from_mass(mass_concentrations[i], total_mass)
+    for i in range(n_concentrations):
+        result[i] = fget_mass_fraction_from_mass(
+            mass_concentrations[i], total_mass
+        )
 
 @register("get_mass_fraction_from_mass", backend="taichi")
 def ti_get_mass_fraction_from_mass(mass_concentrations):
     """Taichi wrapper for mass fraction from mass concentration."""
     if not isinstance(mass_concentrations, np.ndarray):
         raise TypeError("Taichi backend expects a NumPy array for input.")
-    a1 = np.atleast_1d(mass_concentrations)
-    n = a1.size
-    a1_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a1_ti.from_numpy(a1)
-    kget_mass_fraction_from_mass(a1_ti, result_ti)
-    result_np = result_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    mass_concentrations_array = np.atleast_1d(mass_concentrations)
+    n_elements = mass_concentrations_array.size
+    mass_concentrations_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_fraction_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    mass_concentrations_ti.from_numpy(mass_concentrations_array)
+    kget_mass_fraction_from_mass(mass_concentrations_ti, result_fraction_ti)
+    result_fraction_np = result_fraction_ti.to_numpy()
+    return result_fraction_np.item() if result_fraction_np.size == 1 else result_fraction_np
