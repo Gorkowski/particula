@@ -5,77 +5,99 @@ from particula.backend.dispatch_register import register
 
 # ── 3 ▸ element-wise Taichi functions ──────────────────────────
 @ti.func
-def fget_solute_volume_from_kappa(v_tot: ti.f64, kappa: ti.f64, aw: ti.f64) -> ti.f64:
+def fget_solute_volume_from_kappa(
+    volume_total: ti.f64, kappa: ti.f64, water_activity: ti.f64
+) -> ti.f64:
     kappa = ti.max(kappa, 1e-16)
-    # default: aw very small ⇒ whole volume is solute
+    # default: water_activity very small ⇒ whole volume is solute
     vol_factor = 1.0
-    if aw > 1e-16:
-        vol_factor = (aw - 1.0) / (aw * (1.0 - kappa - 1.0 / aw))
-    return v_tot * vol_factor
+    if water_activity > 1e-16:
+        vol_factor = (water_activity - 1.0) / (
+            water_activity * (1.0 - kappa - 1.0 / water_activity)
+        )
+    return volume_total * vol_factor
 
 
 @ti.func
-def fget_water_volume_from_kappa(v_sol: ti.f64, kappa: ti.f64, aw: ti.f64) -> ti.f64:
-    aw = ti.min(aw, 1.0 - 1e-16)
-    res = 0.0
-    if aw > 1e-16:
-        res = v_sol * kappa / (1.0 / aw - 1.0)
-    return res
+def fget_water_volume_from_kappa(
+    volume_solute: ti.f64, kappa: ti.f64, water_activity: ti.f64
+) -> ti.f64:
+    water_activity = ti.min(water_activity, 1.0 - 1e-16)
+    result = 0.0
+    if water_activity > 1e-16:
+        result = (
+            volume_solute * kappa / (1.0 / water_activity - 1.0)
+        )
+    return result
 
 
 @ti.func
-def fget_kappa_from_volumes(v_sol: ti.f64, v_wat: ti.f64, aw: ti.f64) -> ti.f64:
-    aw = ti.min(aw, 1.0 - 1e-16)
-    return (1.0 / aw - 1.0) * v_wat / v_sol
+def fget_kappa_from_volumes(
+    volume_solute: ti.f64, volume_water: ti.f64, water_activity: ti.f64
+) -> ti.f64:
+    water_activity = ti.min(water_activity, 1.0 - 1e-16)
+    return (1.0 / water_activity - 1.0) * volume_water / volume_solute
 
 
 @ti.func
-def fget_water_volume_in_mixture(v_sol_dry: ti.f64, phi_w: ti.f64) -> ti.f64:
-    return phi_w * v_sol_dry / (1.0 - phi_w)
+def fget_water_volume_in_mixture(
+    volume_solute_dry: ti.f64, volume_fraction_water: ti.f64
+) -> ti.f64:
+    return (
+        volume_fraction_water * volume_solute_dry / (1.0 - volume_fraction_water)
+    )
 
 
 # ── 4 ▸ vectorised kernels ─────────────────────────────────────
 @ti.kernel
 def kget_solute_volume_from_kappa(
-    vt: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    kp: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    aw: ti.f64,
-    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_total: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    kappa: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    water_activity: ti.f64,
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    for i in range(res.shape[0]):
-        res[i] = fget_solute_volume_from_kappa(vt[i], kp[i], aw)
+    for i in range(result.shape[0]):
+        result[i] = fget_solute_volume_from_kappa(
+            volume_total[i], kappa[i], water_activity
+        )
 
 
 @ti.kernel
 def kget_water_volume_from_kappa(
-    vs: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    kp: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    aw: ti.f64,
-    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_solute: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    kappa: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    water_activity: ti.f64,
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    for i in range(res.shape[0]):
-        res[i] = fget_water_volume_from_kappa(vs[i], kp[i], aw)
+    for i in range(result.shape[0]):
+        result[i] = fget_water_volume_from_kappa(
+            volume_solute[i], kappa[i], water_activity
+        )
 
 
 @ti.kernel
 def kget_kappa_from_volumes(
-    vs: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    vw: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    aw: ti.f64,
-    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_solute: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_water: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    water_activity: ti.f64,
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    for i in range(res.shape[0]):
-        res[i] = fget_kappa_from_volumes(vs[i], vw[i], aw)
+    for i in range(result.shape[0]):
+        result[i] = fget_kappa_from_volumes(
+            volume_solute[i], volume_water[i], water_activity
+        )
 
 
 @ti.kernel
 def kget_water_volume_in_mixture(
-    vsd: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    phi: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_solute_dry: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_fraction_water: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    for i in range(res.shape[0]):
-        res[i] = fget_water_volume_in_mixture(vsd[i], phi[i])
+    for i in range(result.shape[0]):
+        result[i] = fget_water_volume_in_mixture(
+            volume_solute_dry[i], volume_fraction_water[i]
+        )
 
 
 # ── 5 ▸ public wrappers with backend registration ──────────────
