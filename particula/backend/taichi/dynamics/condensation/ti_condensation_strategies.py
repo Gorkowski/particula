@@ -237,12 +237,19 @@ class TiCondensationIsothermal:
         radius: NDArray[np.float64],
     ) -> ti.ndarray:
 
-        # --- gather particle-level data -----------------------------------
-        mass_ti = particle.get_species_mass()          # ti.ndarray (n_part, n_spec)
-        mass_np = mass_ti.to_numpy()                   # NumPy (n_part, n_spec)
+        # particle‐level masses (may come back as Taichi or NumPy)
+        mass_arr = particle.get_species_mass()           # np.ndarray OR ti.ndarray
+        if hasattr(mass_arr, "to_numpy"):                # Taichi array
+            mass_np = mass_arr.to_numpy()
+            mass_ti = mass_arr
+        else:                                            # already NumPy
+            mass_np = mass_arr
+            mass_ti = ti.ndarray(dtype=ti.f64, shape=mass_np.shape)
+            mass_ti.from_numpy(mass_np)
 
-        mm_ti = self.molar_mass                         # ti.ndarray (n_spec,)
-        mm_np = mm_ti.to_numpy()                        # NumPy  (n_spec,)
+        # molar-mass field (also allow plain NumPy fallback)
+        mm_field = self.molar_mass
+        mm_np = mm_field.to_numpy() if hasattr(mm_field, "to_numpy") else mm_field
 
         # --- gas side ------------------------------------------------------
         pure_vp = gas_species.get_pure_vapor_pressure(temperature)   # ti.ndarray
@@ -259,7 +266,7 @@ class TiCondensationIsothermal:
         kelvin_ti.from_numpy(kelvin_np)
 
         # --- allocate output & call kernel ---------------------------------
-        delta = ti.ndarray(dtype=ti.f64, shape=mass_ti.shape)
+        delta = ti.ndarray(dtype=ti.f64, shape=mass_np.shape)
         self._kget_pressure_delta(
             mass_ti,
             pure_vp,
