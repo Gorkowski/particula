@@ -11,9 +11,9 @@ from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     WaterBuckStrategy,
     ClausiusClapeyronStrategy,
 )
-from particula.backend.taichi.gas.properties import (
-    # fget_partial_pressure,          # element-wise helper
-)
+# from particula.backend.taichi.gas.properties import (
+#     fget_partial_pressure,          # element-wise helper
+# )
 ti.init(default_fp=ti.f64)          # safe default
 
 @ti.data_oriented
