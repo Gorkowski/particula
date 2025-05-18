@@ -22,7 +22,9 @@ class TestTiSurfaceStrategyMolar(unittest.TestCase):
         self.mass_concentration = np.tile(
             np.array([1.3, 2.6], dtype=np.float64), (self.n_particles, 1)
         )
-        self.radius = 5e-7
+        self.radius = np.random.uniform(
+            1e-9, 1e-6, size=(self.n_particles,)
+        )
         self.temperature = 298.15
 
         self.py_strat = par.particles.SurfaceStrategyMolar(
