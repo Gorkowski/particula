@@ -9,7 +9,6 @@ Examples:
 """
 
 import taichi as ti
-import taichi.math as tim
 import numpy as np
 from typing import Union
 from numpy.typing import NDArray
@@ -30,22 +29,6 @@ ti.init(default_fp=ti.f64)  # safe default
 
 @ti.data_oriented
 class TiGasSpecies:
-
-    @ti.kernel
-    def _copy_field_kernel(self, src: ti.template(), dst: ti.types.ndarray()):
-        for i in src:
-            dst[i] = src[i]
-
-    @ti.kernel
-    def _add_concentration_kernel(self, delta: ti.types.ndarray()):
-        for i in self.concentration:
-            new_val = self.concentration[i] + delta[i]
-            self.concentration[i] = ti.select(new_val < 0.0, 0.0, new_val)
-
-    @ti.kernel
-    def _set_concentration_kernel(self, new_vals: ti.types.ndarray()):
-        for i in self.concentration:
-            self.concentration[i] = ti.select(new_vals[i] < 0.0, 0.0, new_vals[i])
     """
     Taichi-based gas species container for vectorized property evaluation.
 
@@ -80,6 +63,22 @@ class TiGasSpecies:
     References:
         - "Antoine equation", Wikipedia.  (URL)
     """
+
+    @ti.kernel
+    def _copy_field_kernel(self, src: ti.template(), dst: ti.types.ndarray()):
+        for i in src:
+            dst[i] = src[i]
+
+    @ti.kernel
+    def _add_concentration_kernel(self, delta: ti.types.ndarray()):
+        for i in self.concentration:
+            new_val = self.concentration[i] + delta[i]
+            self.concentration[i] = ti.select(new_val < 0.0, 0.0, new_val)
+
+    @ti.kernel
+    def _set_concentration_kernel(self, new_vals: ti.types.ndarray()):
+        for i in self.concentration:
+            self.concentration[i] = ti.select(new_vals[i] < 0.0, 0.0, new_vals[i])
 
     # ─── constructor ──────────────────────────────────────────────
     def __init__(
@@ -288,25 +287,20 @@ class TiGasSpecies:
         self._saturation_concentration_kernel(float(temperature), buf)
         return buf
 
-    def add_concentration(self, delta):
-        arr_np = np.asarray(delta, dtype=np.float64)
-        if arr_np.size == 1:
-            arr_np = np.full(self.n_species, arr_np.item(), dtype=np.float64)
-        if arr_np.size != self.n_species:
-            raise ValueError("delta length mismatch")
-        arr_ti = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
-        arr_ti.from_numpy(arr_np)
-        self._add_concentration_kernel(arr_ti)
+    # ─── public mutators ──────────────────────────────────────────
+    def add_concentration(self, delta: ti.types.ndarray(dtype=ti.f64)):
+        """
+        Increment the concentration field element-wise by `delta`.
+        `delta` must be a 1-D ti.ndarray with shape (n_species,).
+        """
+        self._add_concentration_kernel(delta)
 
-    def set_concentration(self, new_value):
-        arr_np = np.asarray(new_value, dtype=np.float64)
-        if arr_np.size == 1:
-            arr_np = np.full(self.n_species, arr_np.item(), dtype=np.float64)
-        if arr_np.size != self.n_species:
-            raise ValueError("new_value length mismatch")
-        arr_ti = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
-        arr_ti.from_numpy(arr_np)
-        self._set_concentration_kernel(arr_ti)
+    def set_concentration(self, new_value: ti.types.ndarray(dtype=ti.f64)):
+        """
+        Overwrite the concentration field with `new_value`.
+        `new_value` must be a 1-D ti.ndarray with shape (n_species,).
+        """
+        self._set_concentration_kernel(new_value)
 
     # meta dunders (str / len / + / +=) can remain python-side only
 
