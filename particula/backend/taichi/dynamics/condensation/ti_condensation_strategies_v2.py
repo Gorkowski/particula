@@ -113,7 +113,7 @@ class CondensationIsothermal:
         pressure_delta: ti.types.ndarray(dtype=ti.f64, ndim=2),
         result: ti.types.ndarray(dtype=ti.f64, ndim=2),
     ):
-        """dm/dt per particle (isothermal)."""
+        """mass_transfer_rate_array (dm/dt) per particle (isothermal)."""
         for particle_i in range(pressure_delta.shape[0]):
             for molar_mass_i in range(pressure_delta.shape[1]):
                 first_order_mass_transport_k = (
@@ -189,9 +189,9 @@ class CondensationIsothermal:
         pressure: float,
         dynamic_viscosity: float | None = None,
     ) -> np.ndarray:
-        """Vectorised K(r) using Taichi kernel."""
-        r_np = np.ascontiguousarray(particle_radius, dtype=np.float64)
-        K_np = np.empty_like(r_np)
+        """Vectorised mass_transport_coeff_array (K(r)) using Taichi kernel."""
+        particle_radius_np = np.ascontiguousarray(particle_radius, dtype=np.float64)
+        mass_transport_coeff_array = np.empty_like(particle_radius_np)
         if dynamic_viscosity is None:
             from particula.gas.properties.dynamic_viscosity import (
                 get_dynamic_viscosity,
@@ -199,13 +199,13 @@ class CondensationIsothermal:
             dynamic_viscosity = get_dynamic_viscosity(temperature)
 
         self._kget_first_order_mass_transport(
-            r_np,
+            particle_radius_np,
             float(temperature),
             float(pressure),
             float(dynamic_viscosity),
-            K_np,
+            mass_transport_coeff_array,
         )
-        return K_np
+        return mass_transport_coeff_array
 
     # ───────────────────────── API: dm/dt ───────────────────────────────────
     def mass_transfer_rate(
@@ -217,17 +217,17 @@ class CondensationIsothermal:
         dynamic_viscosity: float | None = None,
     ) -> np.ndarray:
         radius = self._fill_zero_radius(particle.get_radius())
-        K = self.first_order_mass_transport(
+        mass_transport_coeff_array = self.first_order_mass_transport(
             particle_radius=radius,
             temperature=temperature,
             pressure=pressure,
             dynamic_viscosity=dynamic_viscosity,
         )
 
-        delta_p_np = np.ascontiguousarray(delta_p, dtype=np.float64)
-        dm_dt = np.empty_like(delta_p_np)
-        self._kget_mass_transfer_rate(delta_p_np, K, temperature, dm_dt)
-        return dm_dt
+        pressure_delta_np = np.ascontiguousarray(delta_p, dtype=np.float64)
+        mass_transfer_rate_array = np.empty_like(pressure_delta_np)
+        self._kget_mass_transfer_rate(pressure_delta_np, mass_transport_coeff_array, temperature, mass_transfer_rate_array)
+        return mass_transfer_rate_array
 
     # ──────────────────── API: concentration-scaled rate ───────────────────
     def rate(
@@ -237,16 +237,16 @@ class CondensationIsothermal:
         temperature: float,
         pressure: float,
     ) -> np.ndarray:
-        dm_dt = self.mass_transfer_rate(
+        mass_transfer_rate_array = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
         concentration = particle.concentration
-        if dm_dt.ndim == 2:
+        if mass_transfer_rate_array.ndim == 2:
             concentration = concentration[:, np.newaxis]
-        return dm_dt * concentration
+        return mass_transfer_rate_array * concentration
 
     # ─────────────────────────── API: step ─────────────────────────────────
     def step(
@@ -257,14 +257,14 @@ class CondensationIsothermal:
         pressure: float,
         time_step: float,
     ):
-        dm_dt = self.mass_transfer_rate(
+        mass_transfer_rate_array = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
         mass_change = get_mass_transfer(
-            mass_rate=dm_dt,
+            mass_rate=mass_transfer_rate_array,
             time_step=time_step,
             gas_mass=gas_species.get_concentration(),
             particle_mass=particle.get_species_mass(),
