@@ -177,7 +177,6 @@ def fget_first_order_mass_transport_via_system_state(
         particle_radius, vapor_transition, diffusion_coefficient
     )
 
-
 @ti.kernel
 def kget_first_order_mass_transport_coefficient(
     particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -189,6 +188,11 @@ def kget_first_order_mass_transport_coefficient(
         result[i] = fget_first_order_mass_transport_coefficient(
             particle_radius[i], vapor_transition[i], diffusion_coefficient[i]
         )
+
+# Kernel-level alias for backward compatibility
+kget_first_order_mass_transport_k = (
+    kget_first_order_mass_transport_coefficient  # noqa: E501
+)
 
 
 @ti.kernel
@@ -240,7 +244,6 @@ def kget_first_order_mass_transport_via_system_state(
                 dynamic_viscosity,
                 diffusion_coefficient,
             )
-
 
 @register("get_first_order_mass_transport_coefficient", backend="taichi")
 def ti_get_first_order_mass_transport_coefficient(
@@ -301,6 +304,11 @@ def ti_get_first_order_mass_transport_coefficient(
     )
     result_np = result_ti.to_numpy()
     return result_np.item() if result_np.size == 1 else result_np
+
+@register("get_first_order_mass_transport_k", backend="taichi")
+def ti_get_first_order_mass_transport_k(*args, **kwargs):
+    """Compatibility wrapper – use *_coefficient version instead."""
+    return ti_get_first_order_mass_transport_coefficient(*args, **kwargs)
 
 
 @register("get_mass_transfer_rate", backend="taichi")

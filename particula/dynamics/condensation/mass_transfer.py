@@ -39,7 +39,7 @@ from particula.backend.dispatch_register import backend_dispatch
     }
 )
 @backend_dispatch
-def get_first_order_mass_transport_k(
+def get_first_order_mass_transport_coefficient(
     particle_radius: Union[float, NDArray[np.float64]],
     vapor_transition: Union[float, NDArray[np.float64]],
     diffusion_coefficient: Union[float, NDArray[np.float64]] = 2e-5,
@@ -47,11 +47,11 @@ def get_first_order_mass_transport_k(
     """
     Calculate the first-order mass transport coefficient per particle.
 
-    This function computes the coefficient K that governs how fast mass is
-    transported to or from a particle in a vapor. The equation is:
+    This function computes the mass-transport coefficient that governs how fast
+    mass is transported to or from a particle in a vapor. The equation is:
 
-    - K = 4π × radius × D × X
-        - K : Mass transport coefficient [m³/s].
+    - mass-transport coefficient = 4π × radius × D × X
+        - mass-transport coefficient : [m³/s].
         - radius : Particle radius [m].
         - D : Diffusion coefficient of the vapor [m²/s].
         - X : Vapor transition correction factor [unitless].
@@ -68,7 +68,7 @@ def get_first_order_mass_transport_k(
     Examples:
         ```py title="Float input"
         import particula as par
-        par.dynamics.get_first_order_mass_transport_k(
+        par.dynamics.get_first_order_mass_transport_coefficient(
             particle_radius=1e-6,
             vapor_transition=0.6,
             diffusion_coefficient=2e-9
@@ -78,7 +78,7 @@ def get_first_order_mass_transport_k(
 
         ```py title="Array input"
         import particula as par
-        par.dynamics.get_first_order_mass_transport_k(
+        par.dynamics.get_first_order_mass_transport_coefficient(
             particle_radius=np.array([1e-6, 2e-6]),
             vapor_transition=np.array([0.6, 0.6]),
             diffusion_coefficient=2e-9
@@ -100,6 +100,11 @@ def get_first_order_mass_transport_k(
     return (
         4 * np.pi * particle_radius * diffusion_coefficient * vapor_transition
     )
+
+# TEMPORARY alias – remove in next major version
+get_first_order_mass_transport_k = (
+    get_first_order_mass_transport_coefficient  # noqa: E501
+)
 
 
 @validate_inputs(
