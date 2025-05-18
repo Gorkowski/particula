@@ -1,7 +1,33 @@
-"""Benchmarks Kolmogorov time/length/velocity (Python vs. Taichi)."""
+"""
+Benchmark Kolmogorov‐scale time, length, and velocity calculations for both
+NumPy and Taichi implementations.
+
+The script creates CSV files and PNG plots that compare the achieved
+throughput (FLOPs s⁻¹) of:
+1. Pure-Python/NumPy vectorised functions.
+2. Taichi python-scope helpers.
+3. Taichi kernels.
+
+Constants
+---------
+RANDOM_SEED : int
+    Seed for the random number generator (reproducibility).
+ARRAY_LENGTHS : np.ndarray[int]
+    Vector of array sizes (10² … 10⁸) used for the benchmarks.
+
+Examples
+--------
+>>> python ti_kolmogorov_module_benchmark.py
+# CSV files and plots are written to  ./benchmark_outputs/
+
+References
+----------
+Pope, S. B., *Turbulent Flows*, Cambridge University Press, 2000.
+"""
 
 # --- std / 3rd-party -------------------------------------------------------
-import os, json
+import os
+import json
 import numpy as np
 import taichi as ti
 from particula.backend.benchmark import (
@@ -29,6 +55,31 @@ ti.init(arch=ti.cpu)                                  # fixed backend
 def _one_benchmark(
     benchmark_name, python_func, taichi_func, taichi_kernel, file_stub
 ):
+    """
+    Run a throughput benchmark for a single Kolmogorov routine.
+
+    Parameters
+    ----------
+    benchmark_name : str
+        Human-readable name used in plot titles.
+    python_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
+        NumPy reference implementation.
+    taichi_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
+        Taichi helper executed in python scope.
+    taichi_kernel : Callable[[ti.ndarray, ti.ndarray, ti.ndarray], None]
+        Taichi kernel writing results into `result_ti`.
+    file_stub : str
+        Core name for output CSV/PNG files.
+
+    Returns
+    -------
+    None
+
+    Notes
+    -----
+    Throughput Φ is calculated as Φ = n_ops / ⟨Δt⟩ where ⟨Δt⟩ is the median
+    execution time across repetitions.
+    """
     rows = []
     random_generator = np.random.default_rng(seed=RANDOM_SEED)
     for array_length in ARRAY_LENGTHS:
@@ -106,7 +157,12 @@ def _one_benchmark(
 #  Three public benchmark entry points                                       #
 # -------------------------------------------------------------------------- #
 def benchmark_kolmogorov_time_csv():
-    """Benchmark Kolmogorov *time*."""
+    """
+    Create CSV and PNG throughput benchmarks for Kolmogorov time.
+
+    Runs `_one_benchmark` with the time routines and writes the results to
+    `benchmark_outputs/kolmogorov_time_benchmark.*`.
+    """
     _one_benchmark(
         "Kolmogorov time",
         get_kolmogorov_time,
@@ -116,7 +172,12 @@ def benchmark_kolmogorov_time_csv():
     )
 
 def benchmark_kolmogorov_length_csv():
-    """Benchmark Kolmogorov *length*."""
+    """
+    Create CSV and PNG throughput benchmarks for Kolmogorov length.
+
+    Runs `_one_benchmark` with the length routines and writes the results to
+    `benchmark_outputs/kolmogorov_length_benchmark.*`.
+    """
     _one_benchmark(
         "Kolmogorov length",
         get_kolmogorov_length,
@@ -126,7 +187,12 @@ def benchmark_kolmogorov_length_csv():
     )
 
 def benchmark_kolmogorov_velocity_csv():
-    """Benchmark Kolmogorov *velocity*."""
+    """
+    Create CSV and PNG throughput benchmarks for Kolmogorov velocity.
+
+    Runs `_one_benchmark` with the velocity routines and writes the results to
+    `benchmark_outputs/kolmogorov_velocity_benchmark.*`.
+    """
     _one_benchmark(
         "Kolmogorov velocity",
         get_kolmogorov_velocity,
