@@ -3,241 +3,307 @@ import numpy as np
 from particula.backend.dispatch_register import register
 
 @ti.func
-def fget_surface_partial_pressure(pvp: ti.f64, act: ti.f64) -> ti.f64:
-    return pvp * act
+def fget_surface_partial_pressure(
+    pure_vapor_pressure: ti.f64, activity: ti.f64
+) -> ti.f64:
+    return pure_vapor_pressure * activity
 
 @ti.func
 def fget_ideal_activity_mass(mass_single: ti.f64, total_mass: ti.f64) -> ti.f64:
     return 0.0 if total_mass == 0.0 else mass_single / total_mass
 
 @ti.func
-def fget_ideal_activity_volume(mass_single: ti.f64,
-                               dens_single: ti.f64,
-                               total_volume: ti.f64) -> ti.f64:
-    return 0.0 if total_volume == 0.0 else (mass_single / dens_single) / total_volume
+def fget_ideal_activity_volume(
+    mass_single: ti.f64,
+    density_single: ti.f64,
+    total_volume: ti.f64
+) -> ti.f64:
+    return (
+        0.0
+        if total_volume == 0.0
+        else (mass_single / density_single) / total_volume
+    )
 
 @ti.func
-def fget_ideal_activity_molar(mass_single: ti.f64,
-                              mm_single:   ti.f64,
-                              total_moles: ti.f64) -> ti.f64:
-    return 0.0 if total_moles == 0.0 else (mass_single / mm_single) / total_moles
+def fget_ideal_activity_molar(
+    mass_single: ti.f64,
+    molar_mass_single: ti.f64,
+    total_moles: ti.f64
+) -> ti.f64:
+    return (
+        0.0
+        if total_moles == 0.0
+        else (mass_single / molar_mass_single) / total_moles
+    )
 
 @ti.func
 def fget_water_activity_from_kappa_row(
-    mc: ti.template(),         # 2-D mass-concentration field
-    kap: ti.template(),        # 1-D κ array
-    dens: ti.template(),       # 1-D density array
-    mm: ti.template(),         # 1-D molar-mass array
-    water_idx: ti.i32,         # column that corresponds to water
-    row_idx: ti.i32,           # current particle / mixture index
-    ns: ti.i32,                # number of species  (= mc.shape[1])
+    mass_concentration: ti.template(),  # 2-D mass-concentration field
+    kappa: ti.template(),               # 1-D κ array
+    density: ti.template(),             # 1-D density array
+    molar_mass: ti.template(),          # 1-D molar-mass array
+    water_index: ti.i32,                # column that corresponds to water
+    row_index: ti.i32,                  # current particle / mixture index
+    n_species: ti.i32,                  # number of species (= mass_concentration.shape[1])
 ) -> ti.f64:
     """
     Return the water activity (a_w) for one mixture row, using the
     κ–Köhler mixing rule implemented in kget_kappa_activity.
     """
     # ---- volume fractions ----------------------------------------
-    vol_sum = 0.0
-    for s in range(ns):
-        vol_sum += mc[row_idx, s] / dens[s]
+    volume_sum = 0.0
+    for s in range(n_species):
+        volume_sum += mass_concentration[row_index, s] / density[s]
 
-    water_vf = 0.0
-    if vol_sum > 0.0:
-        water_vf = (mc[row_idx, water_idx] / dens[water_idx]) / vol_sum
+    water_volume_fraction = 0.0
+    if volume_sum > 0.0:
+        water_volume_fraction = (
+            mass_concentration[row_index, water_index] / density[water_index]
+        ) / volume_sum
 
-    sol_vol_sum = 1.0 - water_vf
+    solute_volume_fraction = 1.0 - water_volume_fraction
 
     # ---- bulk κ of the (non-water) solute phase ------------------
-    kappa_w = 0.0
-    if sol_vol_sum > 0.0:
-        if ns == 2:                               # single-solute shortcut
-            sid = 1 if water_idx == 0 else 0
-            kappa_w = kap[sid]
+    bulk_kappa = 0.0
+    if solute_volume_fraction > 0.0:
+        if n_species == 2:  # single-solute shortcut
+            sid = 1 if water_index == 0 else 0
+            bulk_kappa = kappa[sid]
         else:
-            for s in range(ns):
-                if s != water_idx:
-                    vf_s = (mc[row_idx, s] / dens[s]) / vol_sum
-                    kappa_w += (vf_s / sol_vol_sum) * kap[s]
+            for s in range(n_species):
+                if s != water_index:
+                    volume_fraction_species = (
+                        (mass_concentration[row_index, s] / density[s]) / volume_sum
+                    )
+                    bulk_kappa += (
+                        (volume_fraction_species / solute_volume_fraction) * kappa[s]
+                    )
 
     # ---- convert κ + φ_w to activity -----------------------------
-    vol_term = 0.0
-    if water_vf > 0.0:
-        vol_term = kappa_w * sol_vol_sum / water_vf
+    volume_term = 0.0
+    if water_volume_fraction > 0.0:
+        volume_term = (
+            bulk_kappa * solute_volume_fraction / water_volume_fraction
+        )
 
-    return 0.0 if water_vf == 0.0 else 1.0 / (1.0 + vol_term)
+    return (
+        0.0
+        if water_volume_fraction == 0.0
+        else 1.0 / (1.0 + volume_term)
+    )
 
 # 1-D ---------------------------------------------------------------
 @ti.kernel
 def kget_surface_partial_pressure(
-    pvp: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    act: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    pure_vapor_pressure_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    activity_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    for i in range(res.shape[0]):
-        res[i] = fget_surface_partial_pressure(pvp[i], act[i])
+    for i in range(result_array.shape[0]):
+        result_array[i] = fget_surface_partial_pressure(
+            pure_vapor_pressure_array[i], activity_array[i]
+        )
 
 # 2-D rows = particles / mixtures ; cols = species  -----------------
 @ti.kernel
 def kget_ideal_activity_mass(
-    mc: ti.types.ndarray(dtype=ti.f64, ndim=2),
-    res: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    mass_concentration_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
 ):
-    for i in range(mc.shape[0]):
+    for i in range(mass_concentration_array.shape[0]):
         row_sum = 0.0
-        for s in range(mc.shape[1]):
-            row_sum += mc[i, s]
-        for s in range(mc.shape[1]):
-            res[i, s] = fget_ideal_activity_mass(mc[i, s], row_sum)
+        for s in range(mass_concentration_array.shape[1]):
+            row_sum += mass_concentration_array[i, s]
+        for s in range(mass_concentration_array.shape[1]):
+            result_array[i, s] = fget_ideal_activity_mass(
+                mass_concentration_array[i, s], row_sum
+            )
 
 @ti.kernel
 def kget_ideal_activity_volume(
-    mc: ti.types.ndarray(dtype=ti.f64, ndim=2),
-    dens: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    res: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    mass_concentration_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    density_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
 ):
-    ns = mc.shape[1]
-    for i in range(mc.shape[0]):
-        vol_sum = 0.0
-        for s in range(ns):
-            vol_sum += mc[i, s] / dens[s]
-        for s in range(ns):
-            res[i, s] = fget_ideal_activity_volume(mc[i, s], dens[s], vol_sum)
+    n_species = mass_concentration_array.shape[1]
+    for i in range(mass_concentration_array.shape[0]):
+        volume_sum = 0.0
+        for s in range(n_species):
+            volume_sum += mass_concentration_array[i, s] / density_array[s]
+        for s in range(n_species):
+            result_array[i, s] = fget_ideal_activity_volume(
+                mass_concentration_array[i, s], density_array[s], volume_sum
+            )
 
 @ti.kernel
 def kget_ideal_activity_molar(
-    mc: ti.types.ndarray(dtype=ti.f64, ndim=2),
-    mm: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    res: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    mass_concentration_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    molar_mass_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
 ):
-    ns = mc.shape[1]
-    for i in range(mc.shape[0]):
-        mol_sum = 0.0
-        for s in range(ns):
-            mol_sum += mc[i, s] / mm[s]
-        for s in range(ns):
-            res[i, s] = fget_ideal_activity_molar(mc[i, s], mm[s], mol_sum)
+    n_species = mass_concentration_array.shape[1]
+    for i in range(mass_concentration_array.shape[0]):
+        mole_sum = 0.0
+        for s in range(n_species):
+            mole_sum += mass_concentration_array[i, s] / molar_mass_array[s]
+        for s in range(n_species):
+            result_array[i, s] = fget_ideal_activity_molar(
+                mass_concentration_array[i, s], molar_mass_array[s], mole_sum
+            )
 
 @ti.kernel
 def kget_kappa_activity(
-    mc: ti.types.ndarray(dtype=ti.f64, ndim=2),
-    kap: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    dens: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    mm: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    water_idx: ti.i32,
-    res: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    mass_concentration_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    kappa_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    density_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    molar_mass_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    water_index: ti.i32,
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=2),
 ):
-    ns = mc.shape[1]
-    for i in range(mc.shape[0]):
+    n_species = mass_concentration_array.shape[1]
+    for i in range(mass_concentration_array.shape[0]):
 
         # mole-fraction part (all species first)
-        mol_sum = 0.0
-        for s in range(ns):
-            mol_sum += mc[i, s] / mm[s]
-        for s in range(ns):
-            mol = mc[i, s] / mm[s]
-            res[i, s] = 0.0 if mol_sum == 0.0 else mol / mol_sum
+        mole_sum = 0.0
+        for s in range(n_species):
+            mole_sum += mass_concentration_array[i, s] / molar_mass_array[s]
+        for s in range(n_species):
+            moles_of_species = mass_concentration_array[i, s] / molar_mass_array[s]
+            result_array[i, s] = (
+                0.0 if mole_sum == 0.0 else moles_of_species / mole_sum
+            )
 
         # water activity via κ–Köhler mix
         water_activity = fget_water_activity_from_kappa_row(
-            mc, kap, dens, mm, water_idx, i, ns
+            mass_concentration_array,
+            kappa_array,
+            density_array,
+            molar_mass_array,
+            water_index,
+            i,
+            n_species,
         )
-        res[i, water_idx] = water_activity
+        result_array[i, water_index] = water_activity
 
 @register("get_surface_partial_pressure", backend="taichi")
 def ti_get_surface_partial_pressure(pure_vapor_pressure, activity):
     if isinstance(pure_vapor_pressure, float):
         return pure_vapor_pressure * activity  # scalar shortcut
 
-    pv, act = np.atleast_1d(pure_vapor_pressure), np.atleast_1d(activity)
-    n = pv.size
-    pv_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    act_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pv_ti.from_numpy(pv)
-    act_ti.from_numpy(act)
-    kget_surface_partial_pressure(pv_ti, act_ti, res_ti)
-    out = res_ti.to_numpy()
-    return out.item() if out.size == 1 else out
+    pure_vapor_pressure_np = np.atleast_1d(pure_vapor_pressure)
+    activity_np = np.atleast_1d(activity)
+    n_elements = pure_vapor_pressure_np.size
+    pure_vapor_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    activity_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    pure_vapor_pressure_ti.from_numpy(pure_vapor_pressure_np)
+    activity_ti.from_numpy(activity_np)
+    kget_surface_partial_pressure(
+        pure_vapor_pressure_ti, activity_ti, result_ti
+    )
+    output = result_ti.to_numpy()
+    return output.item() if output.size == 1 else output
 
 @register("get_ideal_activity_mass", backend="taichi")
 def ti_get_ideal_activity_mass(mass_concentration):
     if isinstance(mass_concentration, float):
         return 1.0
-    mc = np.atleast_2d(mass_concentration)
+    mass_concentration_np = np.atleast_2d(mass_concentration)
     single_row = False
     if mass_concentration is not None and np.ndim(mass_concentration) == 1:
         single_row = True
-    mc_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    mc_ti.from_numpy(mc)
-    kget_ideal_activity_mass(mc_ti, res_ti)
-    out = res_ti.to_numpy()
+    mass_concentration_ti = ti.ndarray(
+        dtype=ti.f64, shape=mass_concentration_np.shape
+    )
+    result_ti = ti.ndarray(dtype=ti.f64, shape=mass_concentration_np.shape)
+    mass_concentration_ti.from_numpy(mass_concentration_np)
+    kget_ideal_activity_mass(mass_concentration_ti, result_ti)
+    output = result_ti.to_numpy()
     if single_row:
-        return out[0]
-    return out
+        return output[0]
+    return output
 
 @register("get_ideal_activity_volume", backend="taichi")
 def ti_get_ideal_activity_volume(mass_concentration, density):
     if isinstance(mass_concentration, float):
         return 1.0
-    mc = np.atleast_2d(mass_concentration)
-    dens = np.atleast_1d(density)
+    mass_concentration_np = np.atleast_2d(mass_concentration)
+    density_np = np.atleast_1d(density)
     single_row = False
     if mass_concentration is not None and np.ndim(mass_concentration) == 1:
         single_row = True
-    mc_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    dens_ti = ti.ndarray(dtype=ti.f64, shape=dens.shape)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    mc_ti.from_numpy(mc)
-    dens_ti.from_numpy(dens)
-    kget_ideal_activity_volume(mc_ti, dens_ti, res_ti)
-    out = res_ti.to_numpy()
+    mass_concentration_ti = ti.ndarray(
+        dtype=ti.f64, shape=mass_concentration_np.shape
+    )
+    density_ti = ti.ndarray(dtype=ti.f64, shape=density_np.shape)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=mass_concentration_np.shape)
+    mass_concentration_ti.from_numpy(mass_concentration_np)
+    density_ti.from_numpy(density_np)
+    kget_ideal_activity_volume(
+        mass_concentration_ti, density_ti, result_ti
+    )
+    output = result_ti.to_numpy()
     if single_row:
-        return out[0]
-    return out
+        return output[0]
+    return output
 
 @register("get_ideal_activity_molar", backend="taichi")
 def ti_get_ideal_activity_molar(mass_concentration, molar_mass):
     if isinstance(mass_concentration, float):
         return 1.0
-    mc = np.atleast_2d(mass_concentration)
-    mm = np.atleast_1d(molar_mass)
+    mass_concentration_np = np.atleast_2d(mass_concentration)
+    molar_mass_np = np.atleast_1d(molar_mass)
     single_row = False
     if mass_concentration is not None and np.ndim(mass_concentration) == 1:
         single_row = True
-    mc_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    mm_ti = ti.ndarray(dtype=ti.f64, shape=mm.shape)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    mc_ti.from_numpy(mc)
-    mm_ti.from_numpy(mm)
-    kget_ideal_activity_molar(mc_ti, mm_ti, res_ti)
-    out = res_ti.to_numpy()
+    mass_concentration_ti = ti.ndarray(
+        dtype=ti.f64, shape=mass_concentration_np.shape
+    )
+    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=molar_mass_np.shape)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=mass_concentration_np.shape)
+    mass_concentration_ti.from_numpy(mass_concentration_np)
+    molar_mass_ti.from_numpy(molar_mass_np)
+    kget_ideal_activity_molar(
+        mass_concentration_ti, molar_mass_ti, result_ti
+    )
+    output = result_ti.to_numpy()
     if single_row:
-        return out[0]
-    return out
+        return output[0]
+    return output
 
 @register("get_kappa_activity", backend="taichi")
-def ti_get_kappa_activity(mass_concentration, kappa, density, molar_mass, water_index):
+def ti_get_kappa_activity(
+    mass_concentration, kappa, density, molar_mass, water_index
+):
     if isinstance(mass_concentration, float):
         return 1.0
-    mc = np.atleast_2d(mass_concentration)
-    kap = np.atleast_1d(kappa)
-    dens = np.atleast_1d(density)
-    mm = np.atleast_1d(molar_mass)
+    mass_concentration_np = np.atleast_2d(mass_concentration)
+    kappa_np = np.atleast_1d(kappa)
+    density_np = np.atleast_1d(density)
+    molar_mass_np = np.atleast_1d(molar_mass)
     single_row = False
     if mass_concentration is not None and np.ndim(mass_concentration) == 1:
         single_row = True
-    mc_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    kap_ti = ti.ndarray(dtype=ti.f64, shape=kap.shape)
-    dens_ti = ti.ndarray(dtype=ti.f64, shape=dens.shape)
-    mm_ti = ti.ndarray(dtype=ti.f64, shape=mm.shape)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=mc.shape)
-    mc_ti.from_numpy(mc)
-    kap_ti.from_numpy(kap)
-    dens_ti.from_numpy(dens)
-    mm_ti.from_numpy(mm)
-    kget_kappa_activity(mc_ti, kap_ti, dens_ti, mm_ti, int(water_index), res_ti)
-    out = res_ti.to_numpy()
+    mass_concentration_ti = ti.ndarray(
+        dtype=ti.f64, shape=mass_concentration_np.shape
+    )
+    kappa_ti = ti.ndarray(dtype=ti.f64, shape=kappa_np.shape)
+    density_ti = ti.ndarray(dtype=ti.f64, shape=density_np.shape)
+    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=molar_mass_np.shape)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=mass_concentration_np.shape)
+    mass_concentration_ti.from_numpy(mass_concentration_np)
+    kappa_ti.from_numpy(kappa_np)
+    density_ti.from_numpy(density_np)
+    molar_mass_ti.from_numpy(molar_mass_np)
+    kget_kappa_activity(
+        mass_concentration_ti,
+        kappa_ti,
+        density_ti,
+        molar_mass_ti,
+        int(water_index),
+        result_ti,
+    )
+    output = result_ti.to_numpy()
     if single_row:
-        return out[0]
-    return out
+        return output[0]
+    return output
