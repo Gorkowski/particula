@@ -17,7 +17,7 @@ class _ActivityMixin:
 
     # one-off element-wise helpers ------------------------------------------------
     @ti.func
-    def _get_surface_partial_pressure(
+    def _fget_surface_partial_pressure(
         self,
         pure_vapor_pressure: ti.f64,
         activity: ti.f64,
@@ -26,7 +26,7 @@ class _ActivityMixin:
 
     # vectorised kernel (1-D ndarray in / out) -----------------------------------
     @ti.kernel
-    def _partial_pressure_kernel(
+    def _kget_surface_partial_pressure(
         self,
         pure_vapor_pressure: ti.types.ndarray(dtype=ti.f64, ndim=1),
         activity: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -49,7 +49,7 @@ class _ActivityMixin:
         Examples:
             ```py
             result = np.empty_like(pure_vapor_pressure)
-            self._partial_pressure_kernel(
+            self._kget_surface_partial_pressure(
                 pure_vapor_pressure, activity, result
             )
             # result now contains the partial pressures
@@ -95,7 +95,7 @@ class _ActivityMixin:
         # vector case – reuse activity kernel then bulk multiply
         activity = self.activity(mass_concentration)  # ndarray (same shape)
         result = np.empty_like(pure_vapor_pressure, dtype=np.float64)
-        self._partial_pressure_kernel(pure_vapor_pressure, activity, result)
+        self._kget_surface_partial_pressure(pure_vapor_pressure, activity, result)
         return result
 
 
@@ -143,7 +143,7 @@ class ActivityIdealMolar(_ActivityMixin):
         return 1.0
 
     @ti.kernel
-    def _activity_kernel(
+    def _kget_activity(
         self,
         mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -164,7 +164,7 @@ class ActivityIdealMolar(_ActivityMixin):
         Examples:
             ```py
             result = np.empty_like(mass_concentration)
-            self._activity_kernel(mass_concentration, result)
+            self._kget_activity(mass_concentration, result)
             # result now contains the activities
             ```
         """
@@ -200,7 +200,7 @@ class ActivityIdealMolar(_ActivityMixin):
             return self._activity_func(float(mass_concentration))
 
         result = np.empty_like(mass_concentration, dtype=np.float64)
-        self._activity_kernel(mass_concentration, result)
+        self._kget_activity(mass_concentration, result)
         return result
 
 
@@ -231,7 +231,7 @@ class ActivityIdealMass(_ActivityMixin):
         return 1.0
 
     @ti.kernel
-    def _activity_kernel(
+    def _kget_activity(
         self,
         mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -252,7 +252,7 @@ class ActivityIdealMass(_ActivityMixin):
         Examples:
             ```py
             result = np.empty_like(mass_concentration)
-            self._activity_kernel(mass_concentration, result)
+            self._kget_activity(mass_concentration, result)
             # result now contains the activities
             ```
         """
@@ -286,7 +286,7 @@ class ActivityIdealMass(_ActivityMixin):
         if np.ndim(mass_concentration) == 0:
             return self._activity_func(float(mass_concentration))
         result = np.empty_like(mass_concentration, dtype=np.float64)
-        self._activity_kernel(mass_concentration, result)
+        self._kget_activity(mass_concentration, result)
         return result
 
 
@@ -333,7 +333,7 @@ class ActivityIdealVolume(_ActivityMixin):
         return 1.0
 
     @ti.kernel
-    def _activity_kernel(
+    def _kget_activity(
         self,
         mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -354,7 +354,7 @@ class ActivityIdealVolume(_ActivityMixin):
         Examples:
             ```py
             result = np.empty_like(mass_concentration)
-            self._activity_kernel(mass_concentration, result)
+            self._kget_activity(mass_concentration, result)
             # result now contains the activities
             ```
         """
@@ -389,7 +389,7 @@ class ActivityIdealVolume(_ActivityMixin):
         if np.ndim(mass_concentration) == 0:
             return self._activity_func(float(mass_concentration))
         result = np.empty_like(mass_concentration, dtype=np.float64)
-        self._activity_kernel(mass_concentration, result)
+        self._kget_activity(mass_concentration, result)
         return result
 
 
@@ -470,7 +470,7 @@ class ActivityKappaParameter(_ActivityMixin):
         return 1.0
 
     @ti.kernel
-    def _activity_kernel(
+    def _kget_activity(
         self,
         mass_concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
@@ -493,7 +493,7 @@ class ActivityKappaParameter(_ActivityMixin):
         Examples:
             ```py
             result = np.empty_like(mass_concentration)
-            self._activity_kernel(mass_concentration, result)
+            self._kget_activity(mass_concentration, result)
             # result now contains the activities
             ```
         """
@@ -501,15 +501,15 @@ class ActivityKappaParameter(_ActivityMixin):
         water_index = self.water_index[None]
 
         # mole fractions -------------------------------------------------
-        mol_sum = ti.f64(0.0)
+        total_moles = ti.f64(0.0)
         for s in range(n_species):
-            mol_sum += mass_concentration[s] / self.molar_mass[s]
+            total_moles += mass_concentration[s] / self.molar_mass[s]
         for s in range(n_species):
-            mol = mass_concentration[s] / self.molar_mass[s]
+            moles_species = mass_concentration[s] / self.molar_mass[s]
             result[s] = (
                 0.0
-                if mol_sum == 0.0
-                else mol / mol_sum
+                if total_moles == 0.0
+                else moles_species / total_moles
             )
 
         # κ-Köhler water activity ---------------------------------------
@@ -576,7 +576,7 @@ class ActivityKappaParameter(_ActivityMixin):
         if np.ndim(mass_concentration) == 0:
             return self._activity_func(float(mass_concentration))
         result = np.empty_like(mass_concentration, dtype=np.float64)
-        self._activity_kernel(mass_concentration, result)
+        self._kget_activity(mass_concentration, result)
         return result
 
 
