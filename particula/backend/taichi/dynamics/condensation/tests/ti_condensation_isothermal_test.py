@@ -132,3 +132,42 @@ class TiCondensationIsothermalTest(unittest.TestCase):
         self.assertEqual(dm_dt.shape, (self.n_particles, self.n_species))
         self.assertTrue(np.all(np.isfinite(dm_dt.to_numpy())))
 
+    # ---------------------------------------------------------------------
+    def test_pressure_delta_shape_and_finite(self):
+        """calculate_pressure_delta returns finite (n_particles,n_species)."""
+        radius = self.particle.get_radius().to_numpy()
+        delta = self.condensation.calculate_pressure_delta(
+            particle=self.particle,
+            gas_species=self.gas,
+            temperature=self.temperature,
+            radius=radius,
+        )
+        self.assertEqual(delta.shape, (self.n_particles, self.n_species))
+        self.assertTrue(np.all(np.isfinite(delta.to_numpy())))
+
+    def test_rate_shape_and_finite(self):
+        """rate (concentration-scaled) is finite and shaped correctly."""
+        scaled = self.condensation.rate(
+            particle=self.particle,
+            gas_species=self.gas,
+            temperature=self.temperature,
+            pressure=self.pressure,
+        )
+        self.assertEqual(scaled.shape, (self.n_particles, self.n_species))
+        self.assertTrue(np.all(np.isfinite(scaled.to_numpy())))
+
+    def test_step_updates_particle_distribution(self):
+        """step updates particle distribution and returns correct objects."""
+        distribution_before = self.particle.get_distribution(clone=True)
+        new_particle, new_gas = self.condensation.step(
+            particle=self.particle,
+            gas_species=self.gas,
+            temperature=self.temperature,
+            pressure=self.pressure,
+            time_step=1.0,
+        )
+        self.assertIsInstance(new_particle, TiParticleRepresentation)
+        self.assertIsInstance(new_gas, TiGasSpecies)
+        distribution_after = new_particle.get_distribution()
+        self.assertTrue(np.any(np.not_equal(distribution_before, distribution_after)))
+
