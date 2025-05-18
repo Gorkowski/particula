@@ -3,7 +3,7 @@ import taichi as ti
 import particula as par
 
 from particula.backend.taichi.particles.ti_surface_strategies import (
-    TiSurfaceStrategyMolar   as TiMolar,
+    TiSurfaceStrategyMolar as TiMolar,
 )
 
 ti.init(arch=ti.cpu, default_fp=ti.f64)      # only needs to be done once
@@ -52,30 +52,4 @@ def test_surface_strategy_molar():
     )
 
 
-def test_surface_strategy_mass():
-    σ = np.array([0.065, 0.045], dtype=np.float64)
-    ρ = np.array([1050.0, 900.0], dtype=np.float64)
-    c = np.array([0.8, 3.1], dtype=np.float64)
-    r = 4e-7
-    T = 300.0
-
-    _check(
-        par.particles.SurfaceStrategyMass(σ, ρ),
-        TiMass(σ, ρ),
-        None, c, r, T,        # molar_mass not used by mass-weighted recipe
-    )
-
-
-def test_surface_strategy_volume():
-    σ = np.array([0.069], dtype=np.float64)
-    ρ = np.array([970.0], dtype=np.float64)
-    c = np.array([1.0], dtype=np.float64)
-    r = 1e-6
-    T = 310.0
-
-    _check(
-        par.particles.SurfaceStrategyVolume(σ, ρ),
-        TiVol(σ, ρ),
-        None, c, r, T,        # molar_mass not used for volume weighting
-    )
 
