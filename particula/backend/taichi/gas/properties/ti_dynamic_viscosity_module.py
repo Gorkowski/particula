@@ -1,8 +1,9 @@
 """
 Taichi implementation of Sutherland’s dynamic-viscosity formula.
 
-This module provides Taichi-accelerated routines for computing the dynamic
-viscosity of gases as a function of temperature using Sutherland’s formula:
+This module provides Taichi-accelerated routines for computing the
+dynamic viscosity of gases as a function of temperature using
+Sutherland’s formula:
 
     μ = μ₀ (T/T₀)³ᐟ² × (T₀ + C)/(T + C)
 
@@ -43,7 +44,8 @@ def fget_dynamic_viscosity(
         - reference_temperature : Reference temperature T₀ [K].
 
     Returns:
-        - dynamic_viscosity : Dynamic viscosity μ at the given temperature [Pa·s].
+        - dynamic_viscosity : Dynamic viscosity μ at the given temperature
+          [Pa·s].
 
     Examples:
         ```py title="Example"
@@ -78,9 +80,12 @@ def kget_dynamic_viscosity(                     # 1-D only
 
     Arguments:
         - temperature : 1-D ndarray of temperatures [K].
-        - reference_viscosity : 1-D ndarray of reference viscosities [Pa·s].
-        - reference_temperature : 1-D ndarray of reference temperatures [K].
-        - dynamic_viscosity : 1-D ndarray to store output viscosities [Pa·s].
+        - reference_viscosity : 1-D ndarray of reference viscosities
+          [Pa·s].
+        - reference_temperature : 1-D ndarray of reference temperatures
+          [K].
+        - dynamic_viscosity : 1-D ndarray to store output viscosities
+          [Pa·s].
 
     Returns:
         - None. Results are written in-place to dynamic_viscosity.

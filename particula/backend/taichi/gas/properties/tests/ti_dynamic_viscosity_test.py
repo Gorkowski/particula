@@ -1,3 +1,6 @@
+"""Tests the Taichi backend against the reference Python implementation
+of Sutherland’s dynamic-viscosity formula."""
+
 import numpy as np
 import taichi as ti
 
@@ -14,6 +17,8 @@ from particula.util.constants import (
 )
 
 def test_wrapper_matches_reference():
+    """Taichi wrapper matches NumPy reference within 1 × 10⁻⁹ relative
+    tolerance."""
     temperatures = np.array([250.0, 300.0, 350.0])
     np.testing.assert_allclose(
         ti_get_dynamic_viscosity(temperatures),
@@ -22,6 +27,8 @@ def test_wrapper_matches_reference():
     )
 
 def test_kernel_direct():
+    """Taichi kernel output equals Python backend for a 1-D temperature
+    array."""
     temperatures = np.array([280.0, 310.0], dtype=np.float64)
     n_temperatures = temperatures.size
     temperatures_ti = ti.ndarray(dtype=ti.f64, shape=n_temperatures)
