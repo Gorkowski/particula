@@ -16,12 +16,12 @@ def _check(py_strat, ti_strat,
 
     np.testing.assert_allclose(
         py_strat.effective_surface_tension(mass_conc),
-        ti_strat.effective_surface_tension(mass_conc),
+        ti_strat.effective_surface_tension(mass_conc).to_numpy(),
         rtol=1e-7,
     )
     np.testing.assert_allclose(
         py_strat.effective_density(mass_conc),
-        ti_strat.effective_density(mass_conc),
+        ti_strat.effective_density(mass_conc).to_numpy(),
         rtol=1e-7,
     )
     np.testing.assert_allclose(
