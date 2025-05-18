@@ -30,47 +30,22 @@ import numpy as np
 from typing import Union
 from numpy.typing import NDArray
 
-from particula.backend.taichi.particles.properties.\
-    ti_kelvin_effect_module import (
+from particula.backend.taichi.particles.properties import (
         ti_get_kelvin_radius,  # <- NEW
         ti_get_kelvin_term,    # <- NEW
         fget_kelvin_radius,    # still used in in-kernel helpers
         fget_kelvin_term,
+        kget_kelvin_radius,
+        kget_kelvin_term,
+        fget_ideal_activity_mass,
+        kget_ideal_activity_mass,
+        fget_ideal_activity_molar,
+        kget_ideal_activity_molar,
+        fget_ideal_activity_volume,
+        kget_ideal_activity_volume,
+        fget_water_activity_from_kappa_row,
+        kget_water_volume_in_mixture,
 )
-
-
-def _store(value):
-    """
-    Store a scalar or array in a Taichi field.
-
-    Converts a scalar or NumPy array to a Taichi field of type float64.
-    Returns the field and the number of elements.
-
-    Arguments:
-        - value : Scalar or array-like to store.
-
-    Returns:
-        - ti_field : Taichi field containing the data.
-        - n_elem : Number of elements stored.
-
-    Examples:
-        >>> field, n = _store(0.072)
-        >>> field[None]
-        0.072
-        >>> arr, n = _store([0.072, 0.073])
-        >>> arr.to_numpy()
-        array([0.072, 0.073])
-
-    """
-    if np.isscalar(value):
-        ti_field = ti.field(ti.f64, shape=())
-        ti_field[None] = float(value)
-        return ti_field, 1
-    np_array = np.asarray(value, dtype=np.float64, order="C")
-    ti_field = ti.field(ti.f64, shape=np_array.size)
-    for i in range(np_array.size):
-        ti_field[i] = np_array[i]
-    return ti_field, np_array.size
 
 
 @ti.data_oriented
