@@ -21,6 +21,7 @@ References:
 """
 
 import taichi as ti
+from typing import Union
 from numpy.typing import NDArray
 import numpy as np
 from particula.backend.taichi.particles.properties.ti_kelvin_effect_module import (
@@ -180,14 +181,15 @@ class TiSurfaceStrategyMolar(SurfaceMixin):
 
     def kelvin_term(
             self,
-            radius: ti.types.ndarray(dtype=ti.f64),
+            radius: Union[float, np.ndarray],
             molar_mass: ti.types.ndarray(dtype=ti.f64),
             mass_concentration: ti.types.ndarray(dtype=ti.f64),
             temperature: float,
         ):
         r_k = self.kelvin_radius(molar_mass, mass_concentration, temperature)
-        n_p = r_k.shape[0]
-        r_array = np.full(n_p, radius, dtype=np.float64) if np.isscalar(radius) else radius
-        result = np.empty(n_p, dtype=np.float64)
-        kget_kelvin_term(r_array, r_k, result)
-        return result
+        r_array = np.asarray(radius, dtype=np.float64)
+        if r_array.ndim == 0:
+            r_array = np.full_like(r_k, r_array)
+        if r_array.shape != r_k.shape:
+            r_array = np.broadcast_to(r_array, r_k.shape)
+        return np.exp(r_k / r_array)

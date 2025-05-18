@@ -26,6 +26,7 @@ class TestTiSurfaceStrategyMolar(unittest.TestCase):
             1e-9, 1e-6, size=(self.n_particles,)
         )
         self.temperature = 298.15
+        self.R = 8.314462618  # J mol⁻¹ K⁻¹
 
         self.py_strat = par.particles.SurfaceStrategyMolar(
             self.surface_tension,
@@ -37,6 +38,11 @@ class TestTiSurfaceStrategyMolar(unittest.TestCase):
             self.density,
             self.molar_mass,
         )
+
+    def _effective_molar_mass(self, mass_row):
+        moles = mass_row / self.molar_mass
+        mole_frac = moles / moles.sum()
+        return (mole_frac * self.molar_mass).sum()
 
     def test_effective_surface_tension(self):
         expected = np.array([
@@ -60,7 +66,10 @@ class TestTiSurfaceStrategyMolar(unittest.TestCase):
 
     def test_kelvin_radius(self):
         expected = np.array([
-            self.py_strat.kelvin_radius(self.molar_mass, row, self.temperature)
+            (2
+             * self.py_strat.effective_surface_tension(row)
+             * self._effective_molar_mass(row))
+            / (self.py_strat.effective_density(row) * self.R * self.temperature)
             for row in self.mass_concentration
         ])
         np.testing.assert_allclose(
@@ -72,12 +81,15 @@ class TestTiSurfaceStrategyMolar(unittest.TestCase):
         )
 
     def test_kelvin_term(self):
-        expected = np.array([
-            self.py_strat.kelvin_term(
-                self.radius, self.molar_mass, row, self.temperature
-            )
+        # Kelvin radius as above
+        r_k = np.array([
+            (2
+             * self.py_strat.effective_surface_tension(row)
+             * self._effective_molar_mass(row))
+            / (self.py_strat.effective_density(row) * self.R * self.temperature)
             for row in self.mass_concentration
         ])
+        expected = np.exp(r_k / self.radius)
         np.testing.assert_allclose(
             expected,
             self.ti_strat.kelvin_term(
