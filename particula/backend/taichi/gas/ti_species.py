@@ -7,6 +7,7 @@ Examples:
     from particula.backend.taichi.gas import ti_create_gas_species
     gas = ti_create_gas_species("H2O", 0.018, concentration=1.0)
 """
+
 import taichi as ti
 import numpy as np
 from typing import Union
@@ -19,13 +20,15 @@ from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     WaterBuckStrategy,
     ClausiusClapeyronStrategy,
 )
+
 # from particula.backend.taichi.gas.properties import (
 #     fget_partial_pressure,          # element-wise helper
 # )
-ti.init(default_fp=ti.f64)          # safe default
+ti.init(default_fp=ti.f64)  # safe default
+
 
 @ti.data_oriented
-class GasSpecies:
+class TiGasSpecies:
     """
     Taichi-based gas species container for vectorized property evaluation.
 
@@ -98,8 +101,7 @@ class GasSpecies:
         concentration_array = np.atleast_1d(
             np.asarray(concentration, dtype=np.float64)
         )
-        if (concentration_array.size == 1
-                and molar_mass_array.size > 1):
+        if concentration_array.size == 1 and molar_mass_array.size > 1:
             concentration_array = np.full(
                 molar_mass_array.size,
                 concentration_array.item(),
@@ -134,7 +136,8 @@ class GasSpecies:
 
     @ti.kernel
     def _pure_vapor_pressure_kernel(
-        self, temperature: ti.f64,
+        self,
+        temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """
@@ -151,11 +154,14 @@ class GasSpecies:
         for species_index, strategy in ti.static(
             enumerate(self.vapor_pressure_strategies)
         ):
-            result[species_index] = strategy.fget_pure_vapor_pressure(temperature)
+            result[species_index] = strategy.fget_pure_vapor_pressure(
+                temperature
+            )
 
     @ti.kernel
     def _partial_pressure_kernel(
-        self, temperature: ti.f64,
+        self,
+        temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """
@@ -180,7 +186,8 @@ class GasSpecies:
 
     @ti.kernel
     def _saturation_ratio_kernel(
-        self, temperature: ti.f64,
+        self,
+        temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """
@@ -203,13 +210,12 @@ class GasSpecies:
                 self.molar_mass[species_index],
                 temperature,
             )
-            result[species_index] = (
-                partial_pressure / vapor_pressure
-            )
+            result[species_index] = partial_pressure / vapor_pressure
 
     @ti.kernel
     def _saturation_concentration_kernel(
-        self, temperature: ti.f64,
+        self,
+        temperature: ti.f64,
         result: ti.types.ndarray(dtype=ti.f64, ndim=1),
     ):
         """
@@ -227,10 +233,12 @@ class GasSpecies:
             enumerate(self.vapor_pressure_strategies)
         ):
             vapor_pressure = strategy.fget_pure_vapor_pressure(temperature)
-            result[species_index] = strategy.fget_concentration_from_pressure_internal(
-                vapor_pressure,
-                self.molar_mass[species_index],
-                temperature,
+            result[species_index] = (
+                strategy.fget_concentration_from_pressure_internal(
+                    vapor_pressure,
+                    self.molar_mass[species_index],
+                    temperature,
+                )
             )
 
     def get_molar_mass(self):
@@ -240,8 +248,11 @@ class GasSpecies:
         Returns:
             - Molar mass scalar or array [kg mol⁻¹].
         """
-        return (self.molar_mass[0] if self.n_species == 1
-                else self.molar_mass.to_numpy())
+        return (
+            self.molar_mass[0]
+            if self.n_species == 1
+            else self.molar_mass.to_numpy()
+        )
 
     def get_concentration(self):
         """
@@ -250,8 +261,11 @@ class GasSpecies:
         Returns:
             - Concentration scalar or array [kg m⁻³].
         """
-        return (self.concentration[0] if self.n_species == 1
-                else self.concentration.to_numpy())
+        return (
+            self.concentration[0]
+            if self.n_species == 1
+            else self.concentration.to_numpy()
+        )
 
     def get_pure_vapor_pressure(self, temperature):
         """
@@ -340,13 +354,15 @@ class GasSpecies:
         Returns:
             - None
         """
-        self.add_concentration(np.asarray(new_value, dtype=np.float64)
-                               - self.get_concentration())
+        self.add_concentration(
+            np.asarray(new_value, dtype=np.float64) - self.get_concentration()
+        )
 
     # meta dunders (str / len / + / +=) can remain python-side only
 
+
 @register("GasSpecies", backend="taichi")
-def ti_create_gas_species(*args, **kwargs):     # noqa: D401
+def ti_create_gas_species(*args, **kwargs):  # noqa: D401
     """
     Factory helper that instantiates :class:`GasSpecies` through the
     backend-dispatch mechanism.
@@ -363,6 +379,7 @@ def ti_create_gas_species(*args, **kwargs):     # noqa: D401
         gas = ti_create_gas_species("H2O", 0.018, concentration=1.0)
         ```
     """
-    return GasSpecies(*args, **kwargs)
+    return TiGasSpecies(*args, **kwargs)
 
-__all__ = ["GasSpecies", "ti_create_gas_species"]
+
+__all__ = ["TiGasSpecies", "ti_create_gas_species"]

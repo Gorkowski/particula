@@ -1,14 +1,16 @@
 import taichi as ti, numpy as np
+
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 from particula.gas.species import GasSpecies as PySpecies
-from particula.backend.taichi.gas.ti_species import GasSpecies as TiSpecies
+from particula.backend.taichi.gas.ti_species import TiGasSpecies as TiSpecies
 from particula.gas.vapor_pressure_strategies import (
     ConstantVaporPressureStrategy as PyVP,
 )
 from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
     ConstantVaporPressureStrategy as TiVP,
 )
+
 
 def test_scalar_species_partial_pressure():
     python_vapor_pressure_strategy = PyVP(2330.0)
@@ -26,6 +28,7 @@ def test_scalar_species_partial_pressure():
         taichi_species.get_partial_pressure(temperature_k),
         rtol=1e-8,
     )
+
 
 def test_vector_species_partial_pressure():
     """Shared-strategy case: same constant vapor-pressure for all species."""

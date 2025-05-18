@@ -1,3 +1,3 @@
-from .ti_species import GasSpecies as TiGasSpecies           # NEW
+from .ti_species import TiGasSpecies as TiGasSpecies  # NEW
 
-__all__ = ["TiGasSpecies"]                                   # create if empty
+__all__ = ["TiGasSpecies"]  # create if empty

@@ -24,17 +24,17 @@ from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
     fget_mass_transfer_rate,
     fget_first_order_mass_transport_via_system_state,
 )
-from particula.particles.representation import ParticleRepresentation
-from particula.gas.species import GasSpecies
-from particula.particles import get_partial_pressure_delta
-from particula.dynamics.condensation.mass_transfer import get_mass_transfer
-import logging
-
-logger = logging.getLogger("particula")
+from particula.backend.taichi.particles.ti_representation import (
+    TiParticleRepresentation,
+)
+from particula.backend.taichi.gas.ti_species import TiGasSpecies
+from particula.backend.taichi.particles.properties import (
+    fget_partial_pressure_delta,
+)
 
 
 @ti.data_oriented
-class CondensationIsothermal:
+class TiCondensationIsothermal:
     """
     Taichi version for CondensationIsothermal.
 
@@ -178,17 +178,17 @@ class CondensationIsothermal:
                 )
 
                 result[particle_i, species_i] = fget_mass_transfer_rate(
-                    dp=pressure_delta[particle_i, species_i],
-                    k=first_order_mass_transport_k,
-                    t=temperature,
-                    m=self.molar_mass[species_i],
+                    pressure_delta=pressure_delta[particle_i, species_i],
+                    first_order_mass_transport=first_order_mass_transport_k,
+                    temperature=temperature,
+                    molar_mass=self.molar_mass[species_i],
                 )
 
     # ─────────────────────── public helpers ────────────────────────────────
     def calculate_pressure_delta(
         self,
-        particle: ParticleRepresentation,
-        gas_species: GasSpecies,
+        particle: TiParticleRepresentation,
+        gas_species: TiGasSpecies,
         temperature: float,
         radius: NDArray[np.float64],
     ) -> NDArray[np.float64]:
@@ -225,7 +225,7 @@ class CondensationIsothermal:
             temperature=temperature,
         )
 
-        return get_partial_pressure_delta(
+        return fget_partial_pressure_delta(
             partial_pressure_gas=partial_pressure_gas,
             partial_pressure_particle=partial_pressure_particle,
             kelvin_term=kelvin_term,
@@ -250,7 +250,9 @@ class CondensationIsothermal:
             - mass_transport_coeff_array : Array of shape
                 (n_particles, n_species)
         """
-        particle_radius_np = np.ascontiguousarray(particle_radius, dtype=np.float64)
+        particle_radius_np = np.ascontiguousarray(
+            particle_radius, dtype=np.float64
+        )
         n_particles = particle_radius_np.shape[0]
         n_species = self.molar_mass.shape[0]
         mass_transport_coeff_array = np.empty(
@@ -269,8 +271,8 @@ class CondensationIsothermal:
     # ───────────────────────── API: dm/dt ───────────────────────────────────
     def mass_transfer_rate(
         self,
-        particle: ParticleRepresentation,
-        gas_species: GasSpecies,
+        particle: TiParticleRepresentation,
+        gas_species: TiGasSpecies,
         temperature: float,
         pressure: float,
         dynamic_viscosity: float | None = None,
@@ -294,6 +296,7 @@ class CondensationIsothermal:
             from particula.gas.properties.dynamic_viscosity import (
                 get_dynamic_viscosity,
             )
+
             dynamic_viscosity = get_dynamic_viscosity(temperature)
 
         pressure_delta_np = np.ascontiguousarray(
@@ -319,8 +322,8 @@ class CondensationIsothermal:
     # ──────────────────── API: concentration-scaled rate ───────────────────
     def rate(
         self,
-        particle: ParticleRepresentation,
-        gas_species: GasSpecies,
+        particle: TiParticleRepresentation,
+        gas_species: TiGasSpecies,
         temperature: float,
         pressure: float,
     ) -> np.ndarray:
@@ -338,8 +341,8 @@ class CondensationIsothermal:
     # ─────────────────────────── API: step ─────────────────────────────────
     def step(
         self,
-        particle: ParticleRepresentation,
-        gas_species: GasSpecies,
+        particle: TiParticleRepresentation,
+        gas_species: TiGasSpecies,
         temperature: float,
         pressure: float,
         time_step: float,
@@ -361,10 +364,3 @@ class CondensationIsothermal:
         if self.update_gases:
             gas_species.add_concentration(-mass_change.sum(axis=0))
         return particle, gas_species
-
-
-# ─────────────────── backend factory registration ───────────────────────────
-@register("condensation_isothermal", backend="taichi")  # factory key
-def TiCondensationIsothermal(**kwargs):
-    """Factory wrapper used by dispatch_register."""
-    return CondensationIsothermal(**kwargs)

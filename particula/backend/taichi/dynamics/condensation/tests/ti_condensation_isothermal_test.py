@@ -4,7 +4,7 @@ ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 # ─── Implementations under test ────────────────────────────────────────────
 from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies import (
-    CondensationIsothermal as TiCondensationIsothermal,
+    TiCondensationIsothermal,
 )
 from particula.dynamics.condensation.condensation_strategies import (
     CondensationIsothermal as PyCondensationIsothermal,

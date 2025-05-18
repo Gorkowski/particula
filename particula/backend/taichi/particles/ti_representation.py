@@ -3,7 +3,6 @@ import taichi as ti
 import numpy as np
 from numpy.typing import NDArray
 from typing import Optional
-from particula.backend.dispatch_register import register
 
 @ti.data_oriented
 class _FieldIO:
