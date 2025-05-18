@@ -14,31 +14,57 @@ ti.init(arch=ti.cpu)
 
 
 def test_wrapper_matches_numpy():
-    pp = np.array([101325.0, 202650.0], dtype=np.float64)
-    mm = np.array([0.02897, 0.02897], dtype=np.float64)
-    tt = np.array([298.15, 300.0], dtype=np.float64)
+    partial_pressure_array = np.array([101325.0, 202650.0], dtype=np.float64)
+    molar_mass_array = np.array([0.02897, 0.02897], dtype=np.float64)
+    temperature_array = np.array([298.15, 300.0], dtype=np.float64)
 
-    expected = get_concentration_from_pressure(pp, mm, tt)
-    result = ti_get_concentration_from_pressure(pp, mm, tt)
+    expected_concentration = get_concentration_from_pressure(
+        partial_pressure_array,
+        molar_mass_array,
+        temperature_array,
+    )
+    result_concentration = ti_get_concentration_from_pressure(
+        partial_pressure_array,
+        molar_mass_array,
+        temperature_array,
+    )
 
-    assert_allclose(result, expected, rtol=1e-8, atol=0)
+    assert_allclose(
+        result_concentration,
+        expected_concentration,
+        rtol=1e-8,
+        atol=0,
+    )
 
 
 def test_kernel_direct_call():
-    pp = np.array([101325.0, 202650.0], dtype=np.float64)
-    mm = np.array([0.02897, 0.02897], dtype=np.float64)
-    tt = np.array([298.15, 300.0], dtype=np.float64)
+    partial_pressure_array = np.array([101325.0, 202650.0], dtype=np.float64)
+    molar_mass_array = np.array([0.02897, 0.02897], dtype=np.float64)
+    temperature_array = np.array([298.15, 300.0], dtype=np.float64)
 
-    n = pp.size
-    pp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    mm_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    tt_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pp_ti.from_numpy(pp)
-    mm_ti.from_numpy(mm)
-    tt_ti.from_numpy(tt)
+    n_points = partial_pressure_array.size
+    partial_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    concentration_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    partial_pressure_ti.from_numpy(partial_pressure_array)
+    molar_mass_ti.from_numpy(molar_mass_array)
+    temperature_ti.from_numpy(temperature_array)
 
-    kget_concentration_from_pressure(pp_ti, mm_ti, tt_ti, res_ti)
+    kget_concentration_from_pressure(
+        partial_pressure_ti,
+        molar_mass_ti,
+        temperature_ti,
+        concentration_ti,
+    )
 
-    assert_allclose(res_ti.to_numpy(), get_concentration_from_pressure(pp, mm, tt),
-                    rtol=1e-8, atol=0)
+    assert_allclose(
+        concentration_ti.to_numpy(),
+        get_concentration_from_pressure(
+            partial_pressure_array,
+            molar_mass_array,
+            temperature_array,
+        ),
+        rtol=1e-8,
+        atol=0,
+    )
