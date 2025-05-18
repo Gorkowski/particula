@@ -239,8 +239,10 @@ class TiCondensationIsothermal:
 
         # --- gather particle-level data -----------------------------------
         mass_ti = particle.get_species_mass()          # ti.ndarray (n_part, n_spec)
-        mass_np = mass_ti                   # NumPy copy
-        mm_np   = self.molar_mass           # NumPy (n_spec,)
+        mass_np = mass_ti.to_numpy()                   # NumPy (n_part, n_spec)
+
+        mm_ti = self.molar_mass                         # ti.ndarray (n_spec,)
+        mm_np = mm_ti.to_numpy()                        # NumPy  (n_spec,)
 
         # --- gas side ------------------------------------------------------
         pure_vp = gas_species.get_pure_vapor_pressure(temperature)   # ti.ndarray
@@ -249,8 +251,8 @@ class TiCondensationIsothermal:
         # --- Kelvin term (computed in Python/NumPy space) ------------------
         kelvin_np = particle.surface.kelvin_term(
             radius=radius,                          # NumPy array
-            molar_mass=mm_np,                       # NumPy array
-            mass_concentration=mass_np,             # NumPy array
+            molar_mass=mm_np,                       # use NumPy version
+            mass_concentration=mass_np,             # NumPy (n_part, n_spec)
             temperature=temperature,
         )
         kelvin_ti = ti.ndarray(dtype=ti.f64, shape=kelvin_np.shape)
