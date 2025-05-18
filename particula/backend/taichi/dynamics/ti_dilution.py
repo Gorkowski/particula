@@ -42,19 +42,22 @@ def ti_get_volume_dilution_coefficient(volume, input_flow_rate):
         raise TypeError("Taichi backend expects numeric scalars or NumPy arrays.")
 
     # 5 b – ensure 1-D NumPy arrays
-    v, q = np.atleast_1d(volume), np.atleast_1d(input_flow_rate)
-    n = v.size
+    volume_array = np.atleast_1d(volume)
+    input_flow_rate_array = np.atleast_1d(input_flow_rate)
+    n_elements = volume_array.size
 
-    v_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    q_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    v_ti.from_numpy(v)
-    q_ti.from_numpy(q)
+    volume_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    input_flow_rate_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    volume_ti.from_numpy(volume_array)
+    input_flow_rate_ti.from_numpy(input_flow_rate_array)
 
-    kget_volume_dilution_coefficient(v_ti, q_ti, result_ti)
+    kget_volume_dilution_coefficient(
+        volume_ti, input_flow_rate_ti, result_ti
+    )
 
-    result_np = result_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    result_array = result_ti.to_numpy()
+    return result_array.item() if result_array.size == 1 else result_array
 
 @register("get_dilution_rate", backend="taichi")
 def ti_get_dilution_rate(coefficient, concentration):
@@ -66,16 +69,17 @@ def ti_get_dilution_rate(coefficient, concentration):
         raise TypeError("Taichi backend expects numeric scalars or NumPy arrays.")
 
     # 5 b – ensure 1-D NumPy arrays
-    a, c = np.atleast_1d(coefficient), np.atleast_1d(concentration)
-    n = a.size
+    coefficient_array = np.atleast_1d(coefficient)
+    concentration_array = np.atleast_1d(concentration)
+    n_elements = coefficient_array.size
 
-    a_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    c_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    a_ti.from_numpy(a)
-    c_ti.from_numpy(c)
+    coefficient_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    concentration_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    coefficient_ti.from_numpy(coefficient_array)
+    concentration_ti.from_numpy(concentration_array)
 
-    kget_dilution_rate(a_ti, c_ti, result_ti)
+    kget_dilution_rate(coefficient_ti, concentration_ti, result_ti)
 
-    result_np = result_ti.to_numpy()
-    return result_np.item() if result_np.size == 1 else result_np
+    result_array = result_ti.to_numpy()
+    return result_array.item() if result_array.size == 1 else result_array
