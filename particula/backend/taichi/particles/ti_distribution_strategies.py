@@ -38,6 +38,14 @@ import numpy as np
 from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
 
+# ADD – helper for transparent field/ndarray handling
+def _to_numpy(x):
+    """
+    Return a NumPy view/copy of `x` if it is a Taichi field,
+    otherwise return `x` unchanged.
+    """
+    return x.to_numpy() if hasattr(x, "to_numpy") else x
+
 ti.init(arch=ti.cpu, default_fp=ti.f64)     # guard against forgotten init
 
 # ─── mix-in holding helpers used in several subclasses ─────────────────
@@ -203,18 +211,9 @@ class MassBasedMovingBin(_DistributionMixin):
         distribution: NDArray[np.float64],
         density: NDArray[np.float64],
     ) -> NDArray[np.float64]:
-        """
-        Compute the species-level mass for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] : Species mass array [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -225,101 +224,45 @@ class MassBasedMovingBin(_DistributionMixin):
         return result
 
     def get_mass(self, distribution, density):
-        """
-        Compute the total mass for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] or float : Total mass per bin/particle [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
         return np.sum(species_mass, axis=1)
 
     def get_total_mass(self, distribution, concentration, density):
-        """
-        Compute the total system mass.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - float : Total mass [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
         return np.sum(self.get_mass(distribution, density) * concentration)
 
     def get_radius(self, distribution, density):
-        """
-        Compute the radius for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] : Radii [m].
-
-        Examples:
-            ```py
-            strategy = MassBasedMovingBin()
-            radii = strategy.get_radius(distribution, density)
-            ```
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         # Calculate the volume of each particle from its mass and density,
         # then calculate the radius.
         volumes = distribution / density
         return (3 * volumes / (4 * np.pi)) ** (1 / 3)
 
     def add_mass(self, distribution, concentration, density, added_mass):
-        """
-        Add mass to the distribution, moving the bins.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-            - added_mass : NDArray[np.float64]
-                Mass to add [kg].
-
-        Returns:
-            - Tuple[NDArray, NDArray] : (updated distribution, concentration)
-        """
+        # NEW – accept taichi fields transparently
+        distribution   = _to_numpy(distribution)
+        concentration  = _to_numpy(concentration)
+        density        = _to_numpy(density)
+        added_mass     = _to_numpy(added_mass)
         return (distribution + added_mass, concentration)
 
     def add_concentration(self, distribution, concentration,
                           added_distribution, added_concentration):
-        """
-        Add concentration to the distribution.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - added_distribution : NDArray[np.float64]
-                Added mass distribution [kg].
-            - added_concentration : NDArray[np.float64]
-                Added concentration [1/m³].
-
-        Returns:
-            - Tuple[NDArray, NDArray] : (distribution, updated concentration)
-        """
+        # NEW – accept taichi fields transparently
+        distribution        = _to_numpy(distribution)
+        concentration       = _to_numpy(concentration)
+        added_distribution  = _to_numpy(added_distribution)
+        added_concentration = _to_numpy(added_concentration)
         if (distribution.shape != added_distribution.shape) and (
             np.allclose(distribution, added_distribution, rtol=1e-6)
         ):
@@ -344,12 +287,11 @@ class MassBasedMovingBin(_DistributionMixin):
         return (distribution, concentration)
 
     def collide_pairs(self, distribution, concentration, density, indices):
-        """
-        Not implemented for this strategy.
-
-        Raises:
-            - NotImplementedError : Always raised for this method.
-        """
+        # NEW – accept taichi fields transparently
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
+        indices       = _to_numpy(indices)
         message = (
             "Colliding pairs in MassBasedMovingBin is not physically "
             "meaningful, change dyanmic or particle strategy."
@@ -428,18 +370,9 @@ class RadiiBasedMovingBin(_DistributionMixin):
         distribution: NDArray[np.float64],
         density: NDArray[np.float64],
     ) -> NDArray[np.float64]:
-        """
-        Compute the species-level mass for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Radii distribution array [m].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] : Species mass array [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -450,72 +383,33 @@ class RadiiBasedMovingBin(_DistributionMixin):
         return result
 
     def get_mass(self, distribution, density):
-        """
-        Compute the total mass for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Radii distribution array [m].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] or float : Total mass per bin/particle [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
         return np.sum(species_mass, axis=1)
 
     def get_total_mass(self, distribution, concentration, density):
-        """
-        Compute the total system mass.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Radii distribution array [m].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - float : Total mass [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
         return np.sum(self.get_mass(distribution, density) * concentration)
 
     def get_radius(self, distribution, density):
-        """
-        Return the radii (identity).
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Radii distribution array [m].
-            - density : NDArray[np.float64]
-                Density array [kg/m³] (unused).
-
-        Returns:
-            - NDArray[np.float64] : Radii [m].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         return distribution
 
     def add_mass(self, distribution, concentration, density, added_mass):
-        """
-        Add mass to the distribution, updating the radii.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Radii distribution array [m].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-            - added_mass : NDArray[np.float64]
-                Mass to add [kg].
-
-        Returns:
-            - Tuple[NDArray, NDArray] : (updated radii, concentration)
-        """
+        # NEW – accept taichi fields transparently
+        distribution   = _to_numpy(distribution)
+        concentration  = _to_numpy(concentration)
+        density        = _to_numpy(density)
+        added_mass     = _to_numpy(added_mass)
         mass_per_particle = np.where(
             concentration > 0, added_mass / concentration, 0
         )
@@ -526,22 +420,11 @@ class RadiiBasedMovingBin(_DistributionMixin):
 
     def add_concentration(self, distribution, concentration,
                           added_distribution, added_concentration):
-        """
-        Add concentration to the distribution.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Radii distribution array [m].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - added_distribution : NDArray[np.float64]
-                Added radii distribution [m].
-            - added_concentration : NDArray[np.float64]
-                Added concentration [1/m³].
-
-        Returns:
-            - Tuple[NDArray, NDArray] : (distribution, updated concentration)
-        """
+        # NEW – accept taichi fields transparently
+        distribution        = _to_numpy(distribution)
+        concentration       = _to_numpy(concentration)
+        added_distribution  = _to_numpy(added_distribution)
+        added_concentration = _to_numpy(added_concentration)
         if (distribution.shape != added_distribution.shape) and (
             np.allclose(distribution, added_distribution, rtol=1e-6)
         ):
@@ -566,12 +449,11 @@ class RadiiBasedMovingBin(_DistributionMixin):
         return (distribution, concentration)
 
     def collide_pairs(self, distribution, concentration, density, indices):
-        """
-        Not implemented for this strategy.
-
-        Raises:
-            - NotImplementedError : Always raised for this method.
-        """
+        # NEW – accept taichi fields transparently
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
+        indices       = _to_numpy(indices)
         message = (
             "Colliding pairs in RadiiBasedMovingBin is not physically "
             "meaningful, change dyanmic or particle strategy."
@@ -650,18 +532,9 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         distribution: NDArray[np.float64],
         density: NDArray[np.float64],
     ) -> NDArray[np.float64]:
-        """
-        Compute the species-level mass for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] : Species mass array [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         result = np.empty_like(distribution)
         if distribution.ndim == 1:
             self._kget_species_mass_1d(distribution, density, result)
@@ -672,73 +545,34 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         return result
 
     def get_mass(self, distribution, density):
-        """
-        Compute the total mass for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] or float : Total mass per bin/particle [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         species_mass = self.get_species_mass(distribution, density)
         if distribution.ndim == 1:
             return species_mass
         return np.sum(species_mass, axis=1)
 
     def get_total_mass(self, distribution, concentration, density):
-        """
-        Compute the total system mass.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - float : Total mass [kg].
-        """
+        # NEW – accept taichi fields transparently
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
         return np.sum(self.get_mass(distribution, density) * concentration)
 
     def get_radius(self, distribution, density):
-        """
-        Compute the radius for each bin/particle.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-
-        Returns:
-            - NDArray[np.float64] : Radii [m].
-        """
+        # NEW – accept taichi fields transparently
+        distribution = _to_numpy(distribution)
+        density      = _to_numpy(density)
         volumes = np.sum(distribution / density, axis=1)
         return (3 * volumes / (4 * np.pi)) ** (1 / 3)
 
     def add_mass(self, distribution, concentration, density, added_mass):
-        """
-        Add mass to the distribution.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - density : NDArray[np.float64]
-                Density array [kg/m³].
-            - added_mass : NDArray[np.float64]
-                Mass to add [kg].
-
-        Returns:
-            - Tuple[NDArray, NDArray] : (updated distribution, concentration)
-        """
+        # NEW – accept taichi fields transparently
+        distribution   = _to_numpy(distribution)
+        concentration  = _to_numpy(concentration)
+        density        = _to_numpy(density)
+        added_mass     = _to_numpy(added_mass)
         if distribution.ndim == 2:
             concentration_expand = concentration[:, np.newaxis]
         else:
@@ -751,22 +585,11 @@ class SpeciatedMassMovingBin(_DistributionMixin):
 
     def add_concentration(self, distribution, concentration,
                           added_distribution, added_concentration):
-        """
-        Add concentration to the distribution.
-
-        Arguments:
-            - distribution : NDArray[np.float64]
-                Mass distribution array [kg].
-            - concentration : NDArray[np.float64]
-                Concentration array [1/m³].
-            - added_distribution : NDArray[np.float64]
-                Added mass distribution [kg].
-            - added_concentration : NDArray[np.float64]
-                Added concentration [1/m³].
-
-        Returns:
-            - Tuple[NDArray, NDArray] : (distribution, updated concentration)
-        """
+        # NEW – accept taichi fields transparently
+        distribution        = _to_numpy(distribution)
+        concentration       = _to_numpy(concentration)
+        added_distribution  = _to_numpy(added_distribution)
+        added_concentration = _to_numpy(added_concentration)
         if (distribution.shape != added_distribution.shape) and (
             np.allclose(distribution, added_distribution, rtol=1e-6)
         ):
@@ -791,12 +614,11 @@ class SpeciatedMassMovingBin(_DistributionMixin):
         return (distribution, concentration)
 
     def collide_pairs(self, distribution, concentration, density, indices):
-        """
-        Not implemented for this strategy.
-
-        Raises:
-            - NotImplementedError : Always raised for this method.
-        """
+        # NEW – accept taichi fields transparently
+        distribution  = _to_numpy(distribution)
+        concentration = _to_numpy(concentration)
+        density       = _to_numpy(density)
+        indices       = _to_numpy(indices)
         message = (
             "Colliding pairs in SpeciatedMassMovingBin is not physically "
             "meaningful, change dyanmic or particle strategy."
