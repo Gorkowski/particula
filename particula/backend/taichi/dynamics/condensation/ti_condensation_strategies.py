@@ -17,8 +17,11 @@ References:
 
 import taichi as ti
 import numpy as np
+import logging
 from numpy.typing import NDArray
 from particula.backend.dispatch_register import register
+
+logger = logging.getLogger("particula")
 
 from particula.backend.taichi.dynamics.condensation.ti_mass_transfer import (
     fget_mass_transfer_rate,
@@ -184,6 +187,44 @@ class TiCondensationIsothermal:
                     molar_mass=self.molar_mass[species_i],
                 )
 
+    @ti.kernel
+    def _kget_pressure_delta(
+        self,
+        particle_mass: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        pure_vp:       ti.types.ndarray(dtype=ti.f64, ndim=1),
+        pp_gas:        ti.types.ndarray(dtype=ti.f64, ndim=1),
+        kelvin:        ti.types.ndarray(dtype=ti.f64, ndim=2),
+        result:        ti.types.ndarray(dtype=ti.f64, ndim=2),
+        activity:      ti.template(),        # particle.activity strategy
+    ):
+        for p, s in result:                  # particle, species
+            pp_part = activity.fget_partial_pressure_internal(
+                particle_mass[p, s], pure_vp[s]
+            )
+            result[p, s] = fget_partial_pressure_delta(
+                pp_gas[s], pp_part, kelvin[p, s]
+            )
+
+    @ti.kernel
+    def _kscale_rate(
+        self,
+        rate_arr: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        conc:     ti.template(),                   # particle.concentration field
+        result:   ti.types.ndarray(dtype=ti.f64, ndim=2),
+    ):
+        for p, s in result:
+            result[p, s] = rate_arr[p, s] * conc[p]
+
+    @ti.kernel
+    def _kapply_mass_change(
+        self,
+        mass_rate: ti.types.ndarray(dtype=ti.f64, ndim=2),
+        dt: ti.f64,
+        mass_change: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    ):
+        for p, s in mass_change:
+            mass_change[p, s] = mass_rate[p, s] * dt
+
     # ─────────────────────── public helpers ────────────────────────────────
     def calculate_pressure_delta(
         self,
@@ -191,82 +232,49 @@ class TiCondensationIsothermal:
         gas_species: TiGasSpecies,
         temperature: float,
         radius: NDArray[np.float64],
-    ) -> NDArray[np.float64]:
-        """Calculate the difference in partial pressure between the gas and
-        particle phases.
-
-        Arguments:
-            - particle : The particle for which the partial pressure difference
-                is to be calculated.
-            - gas_species : The gas species with which the particle is in
-                contact.
-            - temperature : The temperature at which the partial pressure
-                difference is to be calculated.
-            - radius : The radius of the particles.
-
-        Returns:
-            - partial_pressure_delta : The difference in partial pressure
-                between the gas and particle phases.
-        """
-        mass_concentration_in_particle = particle.get_species_mass()
-        pure_vapor_pressure = gas_species.get_pure_vapor_pressure(
-            temperature=temperature
-        )
-        partial_pressure_particle = particle.activity.partial_pressure(
-            pure_vapor_pressure=pure_vapor_pressure,
-            mass_concentration=mass_concentration_in_particle,
-        )
-
-        partial_pressure_gas = gas_species.get_partial_pressure(temperature)
-        kelvin_term = particle.surface.kelvin_term(
+    ) -> ti.ndarray:
+        # all required fields already live in Taichi
+        mass_in_particle   = particle.get_species_mass()          # (N,P) ti.ndarray
+        pure_vp            = gas_species.get_pure_vapor_pressure(temperature)
+        pp_gas             = gas_species.get_partial_pressure(temperature)
+        kelvin_term        = particle.surface.kelvin_term(
             radius=radius,
             molar_mass=self.molar_mass,
-            mass_concentration=mass_concentration_in_particle,
+            mass_concentration=mass_in_particle,
             temperature=temperature,
         )
-
-        return fget_partial_pressure_delta(
-            partial_pressure_gas=partial_pressure_gas,
-            partial_pressure_particle=partial_pressure_particle,
-            kelvin_term=kelvin_term,
+        delta = ti.ndarray(dtype=ti.f64, shape=mass_in_particle.shape)
+        self._kget_pressure_delta(
+            mass_in_particle,
+            pure_vp,
+            pp_gas,
+            kelvin_term,
+            delta,
+            particle.activity,              # template arg
         )
+        return delta
 
     def first_order_mass_transport(
         self,
-        particle_radius: np.ndarray,
+        particle_radius,
         temperature: float,
         pressure: float,
         dynamic_viscosity: float,
-    ) -> np.ndarray:
-        """Vectorised mass_transport_coeff_array (K(r)) using Taichi kernel.
-
-        Arguments:
-            - particle_radius : Particle radii array, shape (n_particles,)
-            - temperature : Temperature [K]
-            - pressure : Pressure [Pa]
-            - dynamic_viscosity : Dynamic viscosity [Pa·s]
-
-        Returns:
-            - mass_transport_coeff_array : Array of shape
-                (n_particles, n_species)
-        """
-        particle_radius_np = np.ascontiguousarray(
-            particle_radius, dtype=np.float64
+    ):
+        if isinstance(particle_radius, np.ndarray):
+            r_ti = ti.ndarray(dtype=ti.f64, shape=particle_radius.shape)
+            r_ti.from_numpy(particle_radius.astype(np.float64))
+        else:
+            r_ti = particle_radius
+        coeff = ti.ndarray(
+            dtype=ti.f64,
+            shape=(r_ti.shape[0], self.molar_mass.shape[0]),
         )
-        n_particles = particle_radius_np.shape[0]
-        n_species = self.molar_mass.shape[0]
-        mass_transport_coeff_array = np.empty(
-            (n_particles, n_species), dtype=np.float64
-        )
-
         self._kget_first_order_mass_transport(
-            particle_radius_np,
-            float(temperature),
-            float(pressure),
-            float(dynamic_viscosity),
-            mass_transport_coeff_array,
+            r_ti, float(temperature), float(pressure),
+            float(dynamic_viscosity), coeff
         )
-        return mass_transport_coeff_array
+        return coeff        # hand back Taichi array (convert in caller if desired)
 
     # ───────────────────────── API: dm/dt ───────────────────────────────────
     def mass_transfer_rate(
@@ -276,48 +284,25 @@ class TiCondensationIsothermal:
         temperature: float,
         pressure: float,
         dynamic_viscosity: float | None = None,
-    ) -> np.ndarray:
-        """
-        Compute mass transfer rate array (dm/dt) for all particles and species.
+    ):
+        # radius handling (still allow zero-guard in NumPy)
+        radius_np = self._fill_zero_radius(particle.get_radius().to_numpy())
+        radius_ti = ti.ndarray(dtype=ti.f64, shape=radius_np.shape)
+        radius_ti.from_numpy(radius_np)
 
-        Arguments:
-            - particle : ParticleRepresentation object
-            - gas_species : GasSpecies object
-            - temperature : Temperature [K]
-            - pressure : Pressure [Pa]
-            - dynamic_viscosity : Dynamic viscosity [Pa·s] (optional)
-
-        Returns:
-            - mass_transfer_rate_array : Array of shape
-                (n_particles, n_species)
-        """
-        radius = self._fill_zero_radius(particle.get_radius())
         if dynamic_viscosity is None:
-            from particula.gas.properties.dynamic_viscosity import (
-                get_dynamic_viscosity,
-            )
-
+            from particula.gas.properties.dynamic_viscosity import get_dynamic_viscosity
             dynamic_viscosity = get_dynamic_viscosity(temperature)
 
-        pressure_delta_np = np.ascontiguousarray(
-            self.calculate_pressure_delta(
-                particle=particle,
-                gas_species=gas_species,
-                temperature=temperature,
-                radius=radius,
-            ),
-            dtype=np.float64,
-        )
-        mass_transfer_rate_array = np.empty_like(pressure_delta_np)
+        Δp = self.calculate_pressure_delta(
+            particle, gas_species, temperature, radius_np
+        )                                          # Ti array
+        dm_dt = ti.ndarray(dtype=ti.f64, shape=Δp.shape)
         self._kget_mass_transfer_rate(
-            radius,
-            float(temperature),
-            float(pressure),
-            float(dynamic_viscosity),
-            pressure_delta_np,
-            mass_transfer_rate_array,
+            radius_ti, float(temperature), float(pressure),
+            float(dynamic_viscosity), Δp, dm_dt
         )
-        return mass_transfer_rate_array
+        return dm_dt
 
     # ──────────────────── API: concentration-scaled rate ───────────────────
     def rate(
@@ -326,17 +311,16 @@ class TiCondensationIsothermal:
         gas_species: TiGasSpecies,
         temperature: float,
         pressure: float,
-    ) -> np.ndarray:
-        mass_transfer_rate_array = self.mass_transfer_rate(
+    ):
+        dm_dt = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
-        concentration = particle.concentration
-        if mass_transfer_rate_array.ndim == 2:
-            concentration = concentration[:, np.newaxis]
-        return mass_transfer_rate_array * concentration
+        scaled = ti.ndarray(dtype=ti.f64, shape=dm_dt.shape)
+        self._kscale_rate(dm_dt, particle.concentration, scaled)
+        return scaled
 
     # ─────────────────────────── API: step ─────────────────────────────────
     def step(
@@ -347,20 +331,19 @@ class TiCondensationIsothermal:
         pressure: float,
         time_step: float,
     ):
-        mass_transfer_rate_array = self.mass_transfer_rate(
+        dm_dt = self.mass_transfer_rate(
             particle=particle,
             gas_species=gas_species,
             temperature=temperature,
             pressure=pressure,
         )
-        mass_change = get_mass_transfer(
-            mass_rate=mass_transfer_rate_array,
-            time_step=time_step,
-            gas_mass=gas_species.get_concentration(),
-            particle_mass=particle.get_species_mass(),
-            particle_concentration=particle.get_concentration(),
-        )
-        particle.add_mass(added_mass=mass_change)
+        mass_change = ti.ndarray(dtype=ti.f64, shape=dm_dt.shape)
+        self._kapply_mass_change(dm_dt, float(time_step), mass_change)
+
+        particle.add_mass(added_mass=mass_change.to_numpy())   # strategy expects NumPy
+
         if self.update_gases:
-            gas_species.add_concentration(-mass_change.sum(axis=0))
+            gas_species.add_concentration(
+                -mass_change.to_numpy().sum(axis=0)
+            )
         return particle, gas_species
