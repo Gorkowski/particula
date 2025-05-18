@@ -4,6 +4,7 @@ import os
 import json
 import numpy as np
 import taichi as ti
+ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 from particula.backend.benchmark import (
     get_function_benchmark,
@@ -120,34 +121,32 @@ if __name__ == "__main__":
     molar_mass_vec = np.linspace(0.018, 0.018 + 0.002 * (N_SPECIES - 1), N_SPECIES)
     condensation_ti = _build_taichi_condensation_isothermal(molar_mass_vec)
 
-    header = ["n_particles", "throughput_steps_per_s", "iterations", "time_s"]
-    rows_ti = []
+    csv_header = ["array_length",
+                  "ti_step_mean_s", "ti_step_std_s",
+                  "ti_step_throughput_ops", "ti_step_gmean_ops",
+                  "ti_step_gstd_ops"]
+    rows = []
 
     for n_particles in PARTICLE_COUNTS:
         particle, gas = _build_particle_and_gas(n_particles, N_SPECIES)
-        bench_res = get_function_benchmark(
-            func=make_step_callable(particle, gas, condensation_ti),
+        stats_ti = get_function_benchmark(
+            make_step_callable(particle, gas, condensation_ti),
             ops_per_call=1,
         )
-        rows_ti.append(
-            [
-                n_particles,
-                bench_res["throughput_ops"],
-                bench_res["iterations"],
-                bench_res["total_time_s"],
-            ]
-        )
+        rows.append([
+            n_particles,
+            *stats_ti["array_stats"],
+        ])
 
     out_dir = os.path.dirname(__file__)
     csv_file = os.path.join(out_dir, "condensation_isothermal_step_benchmark.csv")
-    save_combined_csv(csv_file, header, rows_ti)
+    save_combined_csv(csv_file, csv_header, rows)
 
     plot_throughput_vs_array_length(
-        header=header,
-        rows=rows_ti,
-        title="TiCondensation.step throughput vs #particles (10 species)",
-        output_path=os.path.join(out_dir, "condensation_isothermal_step_benchmark.png"),
-        array_length_key="n_particles",
+        csv_header,
+        rows,
+        "TiCondensation.step throughput vs #particles (10 species)",
+        os.path.join(out_dir, "condensation_isothermal_step_benchmark.png"),
     )
 
     # also stash the machine / environment info
