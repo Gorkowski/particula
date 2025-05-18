@@ -9,6 +9,7 @@ Examples:
 """
 
 import taichi as ti
+import taichi.math as tim
 import numpy as np
 from typing import Union
 from numpy.typing import NDArray
@@ -29,6 +30,22 @@ ti.init(default_fp=ti.f64)  # safe default
 
 @ti.data_oriented
 class TiGasSpecies:
+
+    @ti.kernel
+    def _copy_field_kernel(self, src: ti.template(), dst: ti.types.ndarray()):
+        for i in src:
+            dst[i] = src[i]
+
+    @ti.kernel
+    def _add_concentration_kernel(self, delta: ti.types.ndarray()):
+        for i in self.concentration:
+            new_val = self.concentration[i] + delta[i]
+            self.concentration[i] = ti.select(new_val < 0.0, 0.0, new_val)
+
+    @ti.kernel
+    def _set_concentration_kernel(self, new_vals: ti.types.ndarray()):
+        for i in self.concentration:
+            self.concentration[i] = ti.select(new_vals[i] < 0.0, 0.0, new_vals[i])
     """
     Taichi-based gas species container for vectorized property evaluation.
 
@@ -242,121 +259,54 @@ class TiGasSpecies:
             )
 
     def get_molar_mass(self):
-        """
-        Return molar mass for each species.
-
-        Returns:
-            - Molar mass scalar or array [kg mol⁻¹].
-        """
-        return (
-            self.molar_mass[0]
-            if self.n_species == 1
-            else self.molar_mass.to_numpy()
-        )
+        buf = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        self._copy_field_kernel(self.molar_mass, buf)
+        return buf
 
     def get_concentration(self):
-        """
-        Return concentration for each species.
-
-        Returns:
-            - Concentration scalar or array [kg m⁻³].
-        """
-        return (
-            self.concentration[0]
-            if self.n_species == 1
-            else self.concentration.to_numpy()
-        )
+        buf = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        self._copy_field_kernel(self.concentration, buf)
+        return buf
 
     def get_pure_vapor_pressure(self, temperature):
-        """
-        Compute pure vapor pressure for each species.
-
-        Arguments:
-            - temperature : Temperature in K.
-
-        Returns:
-            - Pure vapor pressure scalar or array [Pa].
-        """
-        buffer = np.empty(self.n_species, dtype=np.float64)
-        self._pure_vapor_pressure_kernel(float(temperature), buffer)
-        return buffer[0] if self.n_species == 1 else buffer
+        buf = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        self._pure_vapor_pressure_kernel(float(temperature), buf)
+        return buf
 
     def get_partial_pressure(self, temperature):
-        """
-        Compute partial pressure for each species.
-
-        Arguments:
-            - temperature : Temperature in K.
-
-        Returns:
-            - Partial pressure scalar or array [Pa].
-        """
-        buffer = np.empty(self.n_species, dtype=np.float64)
-        self._partial_pressure_kernel(float(temperature), buffer)
-        return buffer[0] if self.n_species == 1 else buffer
+        buf = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        self._partial_pressure_kernel(float(temperature), buf)
+        return buf
 
     def get_saturation_ratio(self, temperature):
-        """
-        Compute saturation ratio for each species.
-
-        Arguments:
-            - temperature : Temperature in K.
-
-        Returns:
-            - Saturation ratio scalar or array.
-        """
-        buffer = np.empty(self.n_species, dtype=np.float64)
-        self._saturation_ratio_kernel(float(temperature), buffer)
-        return buffer[0] if self.n_species == 1 else buffer
+        buf = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        self._saturation_ratio_kernel(float(temperature), buf)
+        return buf
 
     def get_saturation_concentration(self, temperature):
-        """
-        Compute saturation concentration for each species.
-
-        Arguments:
-            - temperature : Temperature in K.
-
-        Returns:
-            - Saturation concentration scalar or array [kg m⁻³].
-        """
-        buffer = np.empty(self.n_species, dtype=np.float64)
-        self._saturation_concentration_kernel(float(temperature), buffer)
-        return buffer[0] if self.n_species == 1 else buffer
+        buf = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        self._saturation_concentration_kernel(float(temperature), buf)
+        return buf
 
     def add_concentration(self, delta):
-        """
-        Add delta to concentration for each species.
-
-        Arguments:
-            - delta : Scalar or array to add [kg m⁻³].
-
-        Returns:
-            - None
-        """
-        delta = np.atleast_1d(np.asarray(delta, dtype=np.float64))
-        if delta.size == 1 and self.n_species > 1:
-            delta = np.full(self.n_species, delta.item(), dtype=np.float64)
-        if delta.size != self.n_species:
+        arr_np = np.asarray(delta, dtype=np.float64)
+        if arr_np.size == 1:
+            arr_np = np.full(self.n_species, arr_np.item(), dtype=np.float64)
+        if arr_np.size != self.n_species:
             raise ValueError("delta length mismatch")
-        for species_index in range(self.n_species):
-            self.concentration[species_index] = max(
-                0.0,
-                self.concentration[species_index] + delta[species_index],
-            )
+        arr_ti = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        arr_ti.from_numpy(arr_np)
+        self._add_concentration_kernel(arr_ti)
 
     def set_concentration(self, new_value):
-        """
-        Set concentration for each species.
-
-        Arguments:
-            - new_value : Scalar or array to set [kg m⁻³].
-
-        Returns:
-            - None
-        """
-        self.add_concentration(
-            np.asarray(new_value, dtype=np.float64) - self.get_concentration()
-        )
+        arr_np = np.asarray(new_value, dtype=np.float64)
+        if arr_np.size == 1:
+            arr_np = np.full(self.n_species, arr_np.item(), dtype=np.float64)
+        if arr_np.size != self.n_species:
+            raise ValueError("new_value length mismatch")
+        arr_ti = ti.ndarray(dtype=ti.f64, shape=(self.n_species,))
+        arr_ti.from_numpy(arr_np)
+        self._set_concentration_kernel(arr_ti)
 
     # meta dunders (str / len / + / +=) can remain python-side only
 
