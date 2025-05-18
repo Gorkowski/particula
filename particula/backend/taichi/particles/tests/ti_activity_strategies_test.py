@@ -66,7 +66,7 @@ def test_activity_ideal_volume():
 
 
 def test_activity_kappa_parameter():
-    kappa      = np.array([0.1, 0.0])
+    kappa      = np.array([0.1, 0.5])
     density    = np.array([1000.0, 1200.0])
     molar_mass = np.array([0.018, 0.058])
     conc_arr   = np.array([1.0, 2.0])

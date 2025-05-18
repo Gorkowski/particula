@@ -2,8 +2,8 @@ import taichi as ti
 import numpy as np
 import pytest
 from particula.backend.taichi.particles.ti_distribution_strategies import (
-    TiMassBasedMovingBin, TiRadiiBasedMovingBin,
-    TiSpeciatedMassMovingBin, TiParticleResolvedSpeciatedMass,
+    MassBasedMovingBin, RadiiBasedMovingBin,
+    SpeciatedMassMovingBin, ParticleResolvedSpeciatedMass,
 )
 
 ti.init(arch=ti.cpu, default_fp=ti.f64)
@@ -18,13 +18,11 @@ def _dummy_arrays(ndim=1):
     rho = np.ones_like(d, dtype=np.float64)
     return d, c, rho
 
-import pytest
-
 @pytest.mark.parametrize("cls", [
-    TiMassBasedMovingBin,
-    TiRadiiBasedMovingBin,
-    TiSpeciatedMassMovingBin,
-    TiParticleResolvedSpeciatedMass,
+    MassBasedMovingBin,
+    RadiiBasedMovingBin,
+    SpeciatedMassMovingBin,
+    ParticleResolvedSpeciatedMass,
 ])
 def test_strategy_instantiation(cls):
     d, c, rho = _dummy_arrays()

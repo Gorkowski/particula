@@ -34,7 +34,6 @@
 
 import taichi as ti
 import numpy as np
-from particula.backend.dispatch_register import register
 
 # ─── Existing helpers you want to re-use ────────────────────────────────
 from particula.backend.taichi.gas.properties.ti_vapor_pressure_module import (
@@ -189,7 +188,5 @@ def update_mass_transfer_rate(self):
 
 **Follow these steps and you will obtain a one-to-one, dependency-injected Taichi class that:**
 
-* Matches the original NumPy interface.
 * Uses clean, descriptive `snake_case` names throughout.
 * Re-uses your existing `fget_*` and `kget_*` code.
-* Can be swapped in simply by requesting the `"taichi"` backend.

@@ -25,6 +25,7 @@ from particula.particles.activity_strategies import (
     ActivityIdealMass,
     ActivityIdealMolar,
     ActivityKappaParameter,
+    ActivityIdealVolume,
 )
 from particula.particles.activity_builders import (
     ActivityIdealMassBuilder,

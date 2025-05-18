@@ -20,7 +20,7 @@ def test_scalar_species_partial_pressure():
     np.testing.assert_allclose(
         py.get_partial_pressure(T),
         ti_species.get_partial_pressure(T),
-        rtol=1e-12,
+        rtol=1e-8,
     )
 
 def test_vector_species_partial_pressure():

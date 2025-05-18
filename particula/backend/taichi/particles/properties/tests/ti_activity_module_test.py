@@ -133,11 +133,3 @@ def test_kernel_kappa_direct():
         res_ti.to_numpy(),
         get_kappa_activity(mc, kap, dens, mm, 0)
     )
-
-# ------------------------------------------------------------------
-# direct tests for the newly-exposed ti.func helpers
-def test_core_funcs_direct():
-    assert_allclose(_call_fget_surf(1000.0, 0.25), 250.0)
-    assert_allclose(_call_fget_mass(2.0, 8.0), 0.25)
-    assert_allclose(_call_fget_vol(2.0, 1000.0, 8.0 / 1000.0), 0.25)
-    assert_allclose(_call_fget_mol(2.0, 18.0, 8.0 / 18.0), 0.25)

@@ -90,10 +90,10 @@ class SurfaceStrategyMolar(_SurfaceMixin):
         sigma = self.effective_surface_tension(mass_concentration)
         rho = self.effective_density(mass_concentration)
         # convert to 1-D float64 arrays –  ti_get_kelvin_radius needs ndarrays
-        σ = np.atleast_1d(sigma).astype(np.float64)
-        ρ = np.atleast_1d(rho   ).astype(np.float64)
+        sigma = np.atleast_1d(sigma).astype(np.float64)
+        density = np.atleast_1d(rho   ).astype(np.float64)
         M = np.atleast_1d(molar_mass).astype(np.float64)
-        return ti_get_kelvin_radius(σ, ρ, M, float(temperature))
+        return ti_get_kelvin_radius(sigma, density, M, float(temperature))
 
     def kelvin_term(
         self,
@@ -144,10 +144,10 @@ class SurfaceStrategyMass(_SurfaceMixin):
         sigma = self.effective_surface_tension(mass_concentration)
         rho = self.effective_density(mass_concentration)
         # convert to 1-D float64 arrays –  ti_get_kelvin_radius needs ndarrays
-        σ = np.atleast_1d(sigma).astype(np.float64)
-        ρ = np.atleast_1d(rho   ).astype(np.float64)
+        sigma = np.atleast_1d(sigma).astype(np.float64)
+        density = np.atleast_1d(rho   ).astype(np.float64)
         M = np.atleast_1d(molar_mass).astype(np.float64)
-        return ti_get_kelvin_radius(σ, ρ, M, float(temperature))
+        return ti_get_kelvin_radius(sigma, density, M, float(temperature))
 
     def kelvin_term(
         self,
@@ -202,10 +202,10 @@ class SurfaceStrategyVolume(_SurfaceMixin):
         sigma = self.effective_surface_tension(mass_concentration)
         rho = self.effective_density(mass_concentration)
         # convert to 1-D float64 arrays –  ti_get_kelvin_radius needs ndarrays
-        σ = np.atleast_1d(sigma).astype(np.float64)
-        ρ = np.atleast_1d(rho   ).astype(np.float64)
+        sigma = np.atleast_1d(sigma).astype(np.float64)
+        density = np.atleast_1d(rho   ).astype(np.float64)
         M = np.atleast_1d(molar_mass).astype(np.float64)
-        return ti_get_kelvin_radius(σ, ρ, M, float(temperature))
+        return ti_get_kelvin_radius(sigma, density, M, float(temperature))
 
     def kelvin_term(
         self,
