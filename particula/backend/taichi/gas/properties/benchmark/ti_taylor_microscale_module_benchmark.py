@@ -1,4 +1,27 @@
-"""Benchmarks the reference Python, Taichi wrapper, and raw Taichi kernel."""
+"""
+Benchmark the reference Python, Taichi wrapper, and raw Taichi kernel
+implementations for Taylor microscale-related quantities.
+
+This module measures throughput for three physical quantities:
+- Lagrangian Taylor microscale time
+- Taylor microscale
+- Taylor microscale Reynolds number
+
+It compares pure-Python, Taichi wrapper, and raw Taichi kernel
+implementations, saving results as CSV, PNG, and system info JSON.
+
+Examples:
+    Run all benchmarks from the command line:
+        $ python3 -m particula.backend.taichi.gas.properties.benchmark.\
+ti_taylor_microscale_module_benchmark
+
+    Output files will be saved in a "benchmark_outputs" subdirectory.
+
+References:
+    - "Taylor microscale", Wikipedia.
+      https://en.wikipedia.org/wiki/Taylor_microscale
+"""
+
 # ------------------------- 1. Imports --------------------------------------
 import os
 import json
@@ -18,14 +41,24 @@ from particula.gas import (
     get_taylor_microscale_reynolds_number      as python_get_taylor_microscale_reynolds_number,
 )
 
-# Taichi wrapper functions + raw kernels
-from particula.backend.taichi.gas.properties.ti_taylor_microscale_module import (
-    ti_get_lagrangian_taylor_microscale_time   as taichi_get_lagrangian_taylor_microscale_time,
-    ti_get_taylor_microscale                   as taichi_get_taylor_microscale,
-    ti_get_taylor_microscale_reynolds_number   as taichi_get_taylor_microscale_reynolds_number,
-    kget_lagrangian_taylor_microscale_time,
-    kget_taylor_microscale,
-    kget_taylor_microscale_reynolds_number,
+# Taichi wrapper module (short alias keeps subsequent lines short)
+from particula.backend.taichi.gas.properties import (
+    ti_taylor_microscale_module as tm_module,
+)
+
+ti_get_lagrangian_taylor_microscale_time = (
+    tm_module.ti_get_lagrangian_taylor_microscale_time
+)
+ti_get_taylor_microscale = tm_module.ti_get_taylor_microscale
+ti_get_taylor_microscale_reynolds_number = (
+    tm_module.ti_get_taylor_microscale_reynolds_number
+)
+kget_lagrangian_taylor_microscale_time = (
+    tm_module.kget_lagrangian_taylor_microscale_time
+)
+kget_taylor_microscale = tm_module.kget_taylor_microscale
+kget_taylor_microscale_reynolds_number = (
+    tm_module.kget_taylor_microscale_reynolds_number
 )
 
 # ------------------------- 2. Benchmark config -----------------------------
@@ -36,10 +69,38 @@ ti.init(arch=ti.cpu)
 
 # ------------------------- 3. Helpers --------------------------------------
 def _benchmark_loop(generate_input_data, python_call, taichi_call, kernel_call):
-    """Run benchmark loop for one function, return CSV rows & last stats."""
+    """
+    Execute a throughput benchmark for one physical quantity.
+
+    Arguments:
+        - generate_input_data : Callable[[int], tuple]
+            Factory that returns (numpy_args, taichi_args, result_ti_field).
+        - python_call : Callable
+            Pure-Python implementation.
+        - taichi_call : Callable
+            Taichi wrapper implementation.
+        - kernel_call : ti.kernel
+            Raw Taichi kernel (expects *taichi_args, result_field).
+
+    Returns:
+        - rows : list[list]
+            CSV-ready benchmark rows.
+        - stats_python : dict
+        - stats_taichi : dict
+        - stats_kernel : dict
+
+    Examples:
+        ```py
+        rows, *_ = _benchmark_loop(make_data, py_f, ti_f, ti_k)
+        ```
+    References:
+        - "Taylor microscale", Wikipedia.
+    """
     rows = []
     for array_length in ARRAY_LENGTHS:
-        numpy_args, taichi_args, result_ti_field = generate_input_data(array_length)
+        numpy_args, taichi_args, result_ti_field = generate_input_data(
+            array_length
+        )
         stats_python = get_function_benchmark(
             lambda: python_call(*numpy_args), ops_per_call=array_length
         )
@@ -60,17 +121,55 @@ def _benchmark_loop(generate_input_data, python_call, taichi_call, kernel_call):
 
 
 def _save_outputs(benchmark_stem, rows, stats_python, stats_taichi, stats_kernel):
-    """Write CSV, JSON, and PNG for one benchmark."""
-    python_header = ["python_"        + h for h in stats_python["array_headers"]]
-    taichi_header = ["taichi_"        + h for h in stats_taichi["array_headers"]]
-    kernel_header = ["taichi_kernel_" + h for h in stats_kernel["array_headers"]]
-    header = ["array_length", *python_header, *taichi_header, *kernel_header]
+    """
+    Write CSV, JSON, and PNG outputs for one benchmark.
 
-    output_directory = os.path.join(os.path.dirname(__file__), "benchmark_outputs")
+    Arguments:
+        - benchmark_stem : str
+            Prefix for output filenames.
+        - rows : list[list]
+            Benchmark results for all array lengths.
+        - stats_python : dict
+            Stats for the Python implementation.
+        - stats_taichi : dict
+            Stats for the Taichi wrapper.
+        - stats_kernel : dict
+            Stats for the raw Taichi kernel.
+
+    Returns:
+        - None (writes files as side-effect)
+
+    Examples:
+        ```py
+        _save_outputs("taylor_microscale", rows, s_py, s_ti, s_ker)
+        ```
+    References:
+        - "Taylor microscale", Wikipedia.
+    """
+    python_header = [
+        "python_" + h for h in stats_python["array_headers"]
+    ]
+    taichi_header = [
+        "taichi_" + h for h in stats_taichi["array_headers"]
+    ]
+    kernel_header = [
+        "taichi_kernel_" + h for h in stats_kernel["array_headers"]
+    ]
+    header = [
+        "array_length", *python_header, *taichi_header, *kernel_header
+    ]
+
+    output_directory = os.path.join(
+        os.path.dirname(__file__),
+        "benchmark_outputs"
+    )
     os.makedirs(output_directory, exist_ok=True)
 
     save_combined_csv(
-        os.path.join(output_directory, f"{benchmark_stem}_benchmark.csv"),
+        os.path.join(
+            output_directory,
+            f"{benchmark_stem}_benchmark.csv"
+        ),
         header,
         rows,
     )
@@ -84,13 +183,27 @@ def _save_outputs(benchmark_stem, rows, stats_python, stats_taichi, stats_kernel
         header,
         rows,
         f"{benchmark_stem} throughput benchmark",
-        os.path.join(output_directory, f"{benchmark_stem}_benchmark.png"),
+        os.path.join(
+            output_directory,
+            f"{benchmark_stem}_benchmark.png"
+        ),
     )
 
 
 # ------------------------- 4. Benchmarks -----------------------------------
 def benchmark_lagrangian_taylor_microscale_time_csv():
-    """Benchmark get_lagrangian_taylor_microscale_time."""
+    """
+    Benchmark the get_lagrangian_taylor_microscale_time function.
+
+    Runs throughput benchmarks for the Python, Taichi wrapper, and
+    raw Taichi kernel implementations. No arguments.
+
+    Returns:
+        - None (writes output files)
+
+    Examples:
+        >>> benchmark_lagrangian_taylor_microscale_time_csv()
+    """
     random_generator = np.random.default_rng(RANDOM_SEED)
 
     def generate_input_data(array_length):
@@ -141,7 +254,18 @@ def benchmark_lagrangian_taylor_microscale_time_csv():
 
 
 def benchmark_taylor_microscale_csv():
-    """Benchmark get_taylor_microscale."""
+    """
+    Benchmark the get_taylor_microscale function.
+
+    Runs throughput benchmarks for the Python, Taichi wrapper, and
+    raw Taichi kernel implementations. No arguments.
+
+    Returns:
+        - None (writes output files)
+
+    Examples:
+        >>> benchmark_taylor_microscale_csv()
+    """
     random_generator = np.random.default_rng(RANDOM_SEED)
 
     def generate_input_data(array_length):
@@ -192,7 +316,18 @@ def benchmark_taylor_microscale_csv():
 
 
 def benchmark_taylor_microscale_reynolds_number_csv():
-    """Benchmark get_taylor_microscale_reynolds_number."""
+    """
+    Benchmark the get_taylor_microscale_reynolds_number function.
+
+    Runs throughput benchmarks for the Python, Taichi wrapper, and
+    raw Taichi kernel implementations. No arguments.
+
+    Returns:
+        - None (writes output files)
+
+    Examples:
+        >>> benchmark_taylor_microscale_reynolds_number_csv()
+    """
     random_generator = np.random.default_rng(RANDOM_SEED)
 
     def generate_input_data(array_length):
