@@ -40,17 +40,17 @@ def benchmark_first_order_mass_transport_csv():
     py_impl = PyCondensationIsothermal(molar_mass=MOLAR_MASS_KGPM)
     ti_impl = TiCondensationIsothermal(molar_mass=MOLAR_MASS_KGPM)
 
-    for n in ARRAY_LENGTHS:
+    for array_length in ARRAY_LENGTHS:
         # ── random radii (0.5–1.5 × 10⁻⁷ m) ───────────────────────────
-        radius_np = (0.5 + rng.random(n)) * 1e-7
+        radius_np = (0.5 + rng.random(array_length)) * 1e-7
 
         # ── Taichi buffers ───────────────────────────────────────────
-        radius_ti = ti.ndarray(dtype=ti.f64, shape=n)
-        result_ti = ti.ndarray(dtype=ti.f64, shape=n)
+        radius_ti = ti.ndarray(dtype=ti.f64, shape=array_length)
+        result_ti = ti.ndarray(dtype=ti.f64, shape=array_length)
         radius_ti.from_numpy(radius_np)
 
         # mean free path for the raw kernel
-        mfp = get_molecule_mean_free_path(
+        mean_free_path = get_molecule_mean_free_path(
             molar_mass=MOLAR_MASS_KGPM,
             temperature=TEMPERATURE_K,
             pressure=PRESSURE_PA,
@@ -61,26 +61,28 @@ def benchmark_first_order_mass_transport_csv():
             lambda: py_impl.first_order_mass_transport(
                 radius_np, TEMPERATURE_K, PRESSURE_PA
             ),
-            ops_per_call=n,
+            ops_per_call=array_length,
         )
 
         stats_ti = get_function_benchmark(
             lambda: ti_impl.first_order_mass_transport(
                 radius_np, TEMPERATURE_K, PRESSURE_PA
             ),
-            ops_per_call=n,
+            ops_per_call=array_length,
         )
 
         stats_kernel = get_function_benchmark(
             lambda: ti_impl._kget_first_order_mass_transport(
-                radius_ti, mfp, result_ti
+                radius_ti,
+                mean_free_path,
+                result_ti
             ),
-            ops_per_call=n,
+            ops_per_call=array_length,
         )
 
         # ── CSV row ──────────────────────────────────────────────────
         rows.append([
-            n,
+            array_length,
             *stats_py["array_stats"],
             *stats_ti["array_stats"],
             *stats_kernel["array_stats"],
