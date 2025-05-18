@@ -52,46 +52,60 @@ def kget_saturation_ratio_from_pressure(
 def ti_get_partial_pressure(concentration, molar_mass, temperature):
     """Vectorised Taichi wrapper for gas.properties.get_partial_pressure."""
     # 1 · normalise & broadcast
-    conc_np = np.asarray(concentration, dtype=np.float64)
-    mm_np   = np.asarray(molar_mass,    dtype=np.float64)
-    tt_np   = np.asarray(temperature,   dtype=np.float64)
-    conc_b, mm_b, tt_b = np.broadcast_arrays(conc_np, mm_np, tt_np)
+    concentration_np = np.asarray(concentration, dtype=np.float64)
+    molar_mass_np = np.asarray(molar_mass, dtype=np.float64)
+    temperature_np = np.asarray(temperature, dtype=np.float64)
+    concentration_b, molar_mass_b, temperature_b = np.broadcast_arrays(
+        concentration_np, molar_mass_np, temperature_np
+    )
 
     # 2 · flatten → Taichi ndarrays
-    flat_c, flat_m, flat_t = map(np.ravel, (conc_b, mm_b, tt_b))
-    n = flat_c.size
-    c_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    m_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    t_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    c_ti.from_numpy(flat_c)
-    m_ti.from_numpy(flat_m)
-    t_ti.from_numpy(flat_t)
+    concentration_flat, molar_mass_flat, temperature_flat = map(
+        np.ravel, (concentration_b, molar_mass_b, temperature_b)
+    )
+    n_elements = concentration_flat.size
+    concentration_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    concentration_ti.from_numpy(concentration_flat)
+    molar_mass_ti.from_numpy(molar_mass_flat)
+    temperature_ti.from_numpy(temperature_flat)
 
     # 3 · kernel launch
-    kget_partial_pressure(c_ti, m_ti, t_ti, res_ti)
+    kget_partial_pressure(
+        concentration_ti, molar_mass_ti, temperature_ti, result_ti
+    )
 
     # 4 · reshape back & return scalar or array
-    res_np = res_ti.to_numpy().reshape(conc_b.shape)
-    return res_np.item() if res_np.size == 1 else res_np
+    result_np = result_ti.to_numpy().reshape(concentration_b.shape)
+    return result_np.item() if result_np.size == 1 else result_np
 
 
 @register("get_saturation_ratio_from_pressure", backend="taichi")
 def ti_get_saturation_ratio_from_pressure(partial_pressure, pure_vapor_pressure):
     """Vectorised Taichi wrapper for saturation-ratio calculation."""
-    pp_np  = np.asarray(partial_pressure,    dtype=np.float64)
-    pvp_np = np.asarray(pure_vapor_pressure, dtype=np.float64)
-    pp_b, pvp_b = np.broadcast_arrays(pp_np, pvp_np)
+    partial_pressure_np = np.asarray(partial_pressure, dtype=np.float64)
+    pure_vapor_pressure_np = np.asarray(
+        pure_vapor_pressure, dtype=np.float64
+    )
+    partial_pressure_b, pure_vapor_pressure_b = np.broadcast_arrays(
+        partial_pressure_np, pure_vapor_pressure_np
+    )
 
-    flat_pp, flat_pvp = map(np.ravel, (pp_b, pvp_b))
-    n = flat_pp.size
-    pp_ti  = ti.ndarray(dtype=ti.f64, shape=n)
-    pvp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pp_ti.from_numpy(flat_pp)
-    pvp_ti.from_numpy(flat_pvp)
+    partial_pressure_flat, pure_vapor_pressure_flat = map(
+        np.ravel, (partial_pressure_b, pure_vapor_pressure_b)
+    )
+    n_elements = partial_pressure_flat.size
+    partial_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    pure_vapor_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    partial_pressure_ti.from_numpy(partial_pressure_flat)
+    pure_vapor_pressure_ti.from_numpy(pure_vapor_pressure_flat)
 
-    kget_saturation_ratio_from_pressure(pp_ti, pvp_ti, res_ti)
+    kget_saturation_ratio_from_pressure(
+        partial_pressure_ti, pure_vapor_pressure_ti, result_ti
+    )
 
-    res_np = res_ti.to_numpy().reshape(pp_b.shape)
-    return res_np.item() if res_np.size == 1 else res_np
+    result_np = result_ti.to_numpy().reshape(partial_pressure_b.shape)
+    return result_np.item() if result_np.size == 1 else result_np
