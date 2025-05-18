@@ -3,8 +3,8 @@ Taichi-accelerated dilution utilities
 
 This module provides scalar (`fget_*`) and array (`kget_*`) helpers for
 computing:
-    • the volume-dilution coefficient ϕ = Q ÷ V [s⁻¹]  
-    • the dilution rate                r = −ϕ × n [mol m⁻³ s⁻¹]
+    • the volume-dilution coefficient ϕ = Q ÷ V [s⁻¹]
+    • the dilution rate r = −ϕ × n [mol m⁻³ s⁻¹]
 
 Wrappers (`ti_*`) accept either numeric scalars or 1-D NumPy arrays and
 dispatch the calculations to the Taichi kernels.
@@ -60,24 +60,45 @@ def fget_dilution_rate(coefficient: ti.f64,
 
 @ti.kernel
 def kget_volume_dilution_coefficient(
-    volume: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    input_flow_rate: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    volume_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    input_flow_rate_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    """Kernel version of `fget_volume_dilution_coefficient` for arrays."""
-    for i in range(result.shape[0]):
-        result[i] = fget_volume_dilution_coefficient(
-            volume[i], input_flow_rate[i])
+    """Kernel version of `fget_volume_dilution_coefficient`.
+
+    Arguments:
+        - volume_array : 1-D Ti field of system volumes [m³].
+        - input_flow_rate_array : 1-D Ti field of inflow rates [m³ s⁻¹].
+        - result_array : 1-D Ti field to store ϕ results [s⁻¹].
+
+    Returns:
+        - None (results written in-place to `result_array`).
+    """
+    for i in range(result_array.shape[0]):
+        result_array[i] = fget_volume_dilution_coefficient(
+            volume_array[i], input_flow_rate_array[i]
+        )
 
 @ti.kernel
 def kget_dilution_rate(
-    coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    coefficient_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    concentration_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    result_array: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
-    """Kernel version of `fget_dilution_rate` for arrays."""
-    for i in range(result.shape[0]):
-        result[i] = fget_dilution_rate(coefficient[i], concentration[i])
+    """Kernel version of `fget_dilution_rate`.
+
+    Arguments:
+        - coefficient_array : 1-D Ti field of dilution coefficients [s⁻¹].
+        - concentration_array : 1-D Ti field of species concentrations [mol m⁻³].
+        - result_array : 1-D Ti field to store r results [mol m⁻³ s⁻¹].
+
+    Returns:
+        - None (results written in-place to `result_array`).
+    """
+    for i in range(result_array.shape[0]):
+        result_array[i] = fget_dilution_rate(
+            coefficient_array[i], concentration_array[i]
+        )
 
 @register("get_volume_dilution_coefficient", backend="taichi")
 def ti_get_volume_dilution_coefficient(volume, input_flow_rate):
