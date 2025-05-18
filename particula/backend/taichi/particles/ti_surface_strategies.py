@@ -48,6 +48,22 @@ from particula.backend.taichi.particles.properties import (
         kget_water_volume_in_mixture,
 )
 
+def _store(arr):
+    """Helper to store a scalar or 1D array as a Taichi field and return (field, n)."""
+    if isinstance(arr, (float, int)):
+        f = ti.field(dtype=ti.f64, shape=())
+        f[None] = float(arr)
+        return f, 1
+    arr = np.asarray(arr, dtype=np.float64)
+    if arr.ndim == 0:
+        f = ti.field(dtype=ti.f64, shape=())
+        f[None] = float(arr)
+        return f, 1
+    f = ti.field(dtype=ti.f64, shape=arr.shape)
+    for i in range(arr.shape[0]):
+        f[i] = arr[i]
+    return f, arr.shape[0]
+
 
 @ti.data_oriented
 class _SurfaceMixin:
