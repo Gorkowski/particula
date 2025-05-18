@@ -115,62 +115,37 @@ def update_mass_transport_rate(p_index: int):
 
 
 @ti.func
-def weighted_average(
-    value_array,           # ti.field or ti.ndarray (1-D)
-    weight_array,          # ti.field or ti.ndarray (1-D)
-    number_of_elements: float,
+def fget_weighted_average(
+    value_field: ti.template(),     # 1-D field (density or surface_tension)
+    weight_field: ti.template(),    # 2-D field (species_masses)
+    p_index: int                    # particle index whose weights we use
 ) -> float:
     """
-    Compute the weighted average of *value_array* with *weight_array*.
+    Compute Σ_j value_field[j] * weight_field[p_index, j] / Σ_j weight_field[p_index, j].
 
-    Arguments:
-        value_array: 1-D Taichi field or ndarray that holds the values.
-        weight_array: 1-D Taichi field or ndarray that holds the weights
-            corresponding to each value.
-        number_of_elements: How many elements from the arrays to include in
-            the computation. Must not exceed their length.
-
-    Returns:
-        The weighted average, defined as
-        ``sum(value_array[i] * weight_array[i]) /
-        sum(weight_array[i])``.
+    Returns 0.0 when the weight sum is zero.
     """
-    weighted_sum = 0.0
-    total_weight_sum = 0.0
-    for element_index in range(number_of_elements):
-        weighted_sum += (
-            value_array[element_index] * weight_array[element_index]
-        )
-        total_weight_sum += weight_array[element_index]
-
-    if total_weight_sum > 0.0:
-        result = weighted_sum / total_weight_sum
-    else:
-        result = 0.0
-
-    return result
-
+    w_sum = 0.0
+    v_sum = 0.0
+    for j in range(species_count):
+        w = weight_field[p_index, j]
+        v_sum += value_field[j] * w
+        w_sum += w
+    return ti.select(w_sum > 0.0, v_sum / w_sum, 0.0)
 
 
 @ti.func
 def update_kelvin_radius(p_index: int):
     """
     Update the Kelvin radius for a particle.
-
-    This function is a placeholder for the actual implementation of
-    the Kelvin radius update. It currently does nothing.
     """
+    effective_surface_tension = fget_weighted_average(
+        surface_tension, species_masses, p_index
+    )
+    effective_density = fget_weighted_average(
+        density, species_masses, p_index
+    )
     for j in range(species_count):
-        effective_surface_tension = weighted_average(
-            surface_tension,
-            species_masses[p_index],
-            species_count,
-        )
-        effective_density = weighted_average(
-            density,
-            species_masses[p_index],
-            species_count,
-        )
         kelvin_radius[p_index, j] = particle_properties.fget_kelvin_radius(
             effective_surface_tension,
             effective_density,
