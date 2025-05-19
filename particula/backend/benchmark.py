@@ -33,6 +33,11 @@ def plot_throughput_vs_array_length(
     except ValueError as exc:
         raise ValueError(f"'{array_length_key}' not found in header") from exc
 
+    try:
+        idx_py = header.index("python_throughput_calls_per_s")
+    except ValueError:
+        idx_py = None
+
     thrpt_indices = [
         i for i, h in enumerate(header)
         if h.endswith("throughput_calls_per_s") and i != idx_len
@@ -43,22 +48,39 @@ def plot_throughput_vs_array_length(
     # data ------------------------------------------------------------------
     array_lengths = [row[idx_len] for row in rows]
 
-    plt.figure()
+    fig, ax1 = plt.subplots()
     markers = "os^v><dph"  # cycle through a few markers
+    ax2 = ax1.twinx() if idx_py is not None else None
     for k, idx in enumerate(thrpt_indices):
         values = [row[idx] for row in rows]
         label = header[idx].removesuffix("_throughput_calls_per_s")
-        plt.loglog(array_lengths, values, markers[k % len(markers)] + "-", label=label)
+        marker_style = markers[k % len(markers)]
+        line, = ax1.loglog(
+            array_lengths, values,
+            marker_style + "-", label=label,
+        )
+        if ax2 is not None and idx != idx_py:
+            speedup = [
+                row[idx] / row[idx_py] if row[idx_py] else float("nan")
+                for row in rows
+            ]
+            ax2.loglog(
+                array_lengths, speedup,
+                marker_style + "--",
+                color=line.get_color(),  # match colour
+            )
 
     # cosmetics -------------------------------------------------------------
-    plt.xlabel("Array length")
-    plt.ylabel("Throughput (calls/s)")
-    plt.title(title)
-    plt.legend()
-    plt.grid(True, which="both", ls="--", alpha=0.5)
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=300)
-    plt.close()
+    ax1.set_xlabel("Array length")
+    ax1.set_ylabel("Throughput (calls/s)")
+    ax1.set_title(title)
+    ax1.legend()
+    ax1.grid(True, which="both", ls="--", alpha=0.5)
+    if ax2 is not None:
+        ax2.set_ylabel("Speed-up vs. Python (×)")
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=300)
+    plt.close(fig)
 
 # non-standard libraries for this script
 import psutil
