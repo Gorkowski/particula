@@ -16,7 +16,7 @@ ti.init(arch=ti.cpu, default_fp=ti.f64, default_ip=ti.i32, debug=True)
 GAS_CONSTANT = par.util.constants.GAS_CONSTANT
 
 # particle resolved data, 100 particles, 10 species
-particle_count = 10_000
+particle_count = 20_000
 species_count = 10
 input_species_masses = np.random.rand(particle_count, species_count).astype(
     np_type
