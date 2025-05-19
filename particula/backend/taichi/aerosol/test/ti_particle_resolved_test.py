@@ -1,5 +1,6 @@
 import unittest
 import taichi as ti
+import numpy as np
 
 # import the simulation module (already initialises fields/data)
 from particula.backend.taichi.aerosol import ti_particle_resolved as sim
