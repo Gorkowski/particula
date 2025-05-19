@@ -12,6 +12,7 @@ import particula.backend.taichi.dynamics.condensation as condensation
 np_type = np.float32
 ti.init(arch=ti.cpu, default_fp=ti.f32, default_ip=ti.i32, debug=True)
 
+GAS_CONSTANT = par.util.constants.GAS_CONSTANT
 
 # particle resolved data, 100 particles, 10 species
 particle_count = 100
@@ -28,6 +29,8 @@ pressure = 101325.0  # Pa
 mass_accommodation = 0.5
 dynamic_viscosity = par.gas.get_dynamic_viscosity(temperature=temperature)
 diffusion_coefficient = 2.0e-5  # m^2/s
+time_step = 0.1 # seconds
+simulation_volume = 1.0e-6  # m^3
 
 
 # create fiels that will be internally used
@@ -59,9 +62,12 @@ surface_tension.from_numpy(input_surface_tension)
 radius = ti.field(float, shape=(particle_count,), name="radii")
 mass_transport_rate = ti.field(float, shape=(particle_count, species_count), name="mass_transport_rate")
 first_order_coefficient = ti.field(float, shape=(particle_count, species_count), name="first_order_coefficient")
+partial_pressure = ti.field(float, shape=(particle_count, species_count), name="partial_pressure")
 pressure_delta = ti.field(float, shape=(particle_count, species_count), name="pressure_delta")
 kelvin_term = ti.field(float, shape=(particle_count, species_count), name="kelvin_term")
 kelvin_radius = ti.field(float, shape=(particle_count, species_count), name="kelvin_radius")
+transferable_mass = ti.field(float, shape=(particle_count, species_count), name="transferable_mass")
+
 
 
 @ti.func
@@ -95,7 +101,7 @@ def update_radius(p_index: int):
 
 
 @ti.func
-def update_mass_transport_rate(p_index: int):
+def update_first_order_coefficient(p_index: int):
     """
     Update the first-order mass transport term.
 
@@ -133,11 +139,13 @@ def fget_weighted_average(
         w_sum += w
     return ti.select(w_sum > 0.0, v_sum / w_sum, 0.0)
 
-
 @ti.func
-def update_kelvin_radius(p_index: int):
+def update_kelvin_term(p_index: int):
     """
-    Update the Kelvin radius for a particle.
+    Update the Kelvin term for a particle.
+
+    This function is a placeholder for the actual implementation of
+    the Kelvin term update. It currently does nothing.
     """
     effective_surface_tension = fget_weighted_average(
         surface_tension, species_masses, p_index
@@ -152,21 +160,55 @@ def update_kelvin_radius(p_index: int):
             molar_mass[j],
             temperature,
         )
-
-
-@ti.func
-def update_kelvin_term(p_index: int):
-    """
-    Update the Kelvin term for a particle.
-
-    This function is a placeholder for the actual implementation of
-    the Kelvin term update. It currently does nothing.
-    """
-    for j in range(species_count):
         kelvin_term[p_index, j] = particle_properties.fget_kelvin_term(
             r_p=radius[p_index],
             r_k=kelvin_radius[p_index, j],
         )
+
+@ti.func
+def update_partial_pressure(p_index: int):
+    """
+    Update the partial pressure for a particle.
+
+    This function is a placeholder for the actual implementation of
+    the partial pressure update. It currently does nothing.
+    """
+    for j in range(species_count):
+        partial_pressure[p_index, j] = gas_properties.fget_partial_pressure(
+            concentration=vapor_concentration[j],
+            molar_mass=molar_mass[j],
+            temperature=temperature,
+        )
+        pressure_delta[p_index, j] = particle_properties.fget_partial_pressure_delta(
+            partial_pressure_gas=partial_pressure[p_index, j],
+            partial_pressure_particle=partial_pressure[p_index, j],
+            kelvin_term=kelvin_term[p_index, j],
+        )
+
+@ti.func
+def update_mass_transport_rate(p_index: int):
+    """
+    Update the mass transport rate for a particle.
+
+    This function is a placeholder for the actual implementation of
+    the mass transport rate update. It currently does nothing.
+    """
+    for j in range(species_count):
+        mass_transport_rate[p_index, j] = (
+            first_order_coefficient[p_index, j]
+            * pressure_delta[p_index, j]
+            * molar_mass[j]
+            / (GAS_CONSTANT * temperature)
+        )
+
+@ti.func
+def update_transferable_mass(p_index: int, time_step: float):
+    """
+    Update the transferable mass for a particle.
+
+    """
+
+
 
 
 ## kernels for testing functionality
@@ -193,17 +235,6 @@ def calculate_mass_transport_rate():
         update_mass_transport_rate(i)
 
 @ti.kernel
-def calculate_kelvin_radius():
-    """
-    Taichi kernel that populates `kelvin_radius` for every particle.
-
-    Iterates over all particles, calls `get_kelvin_radius` for each,
-    and stores the resulting Kelvin radii in the dedicated Taichi field.
-    """
-    for i in range(particle_count):
-        update_kelvin_radius(i)
-
-@ti.kernel
 def calculate_kelvin_term():
     """
     Taichi kernel that populates `kelvin_term` for every particle.
@@ -214,16 +245,46 @@ def calculate_kelvin_term():
     for i in range(particle_count):
         update_kelvin_term(i)
 
+@ti.kernel
+def calculate_pressure_delta():
+    """
+    Taichi kernel that populates `pressure_delta` for every particle.
+
+    Iterates over all particles, calls `get_pressure_delta` for each,
+    and stores the resulting pressure deltas in the dedicated Taichi field.
+    """
+    for i in range(particle_count):
+        update_partial_pressure(i)
+
+@ti.kernel
+def calculate_first_order_coefficient():
+    """
+    Taichi kernel that populates `first_order_coefficient` for every particle.
+
+    Iterates over all particles, calls `get_first_order_mass_transport_via_system_state`
+    for each, and stores the resulting first-order coefficients in the dedicated Taichi field.
+    """
+    for i in range(particle_count):
+        update_first_order_coefficient(i)
+
 
 if __name__ == "__main__":
     calculate_radius()
-    calculate_mass_transport_rate()
-    calculate_kelvin_radius()
+    calculate_first_order_coefficient()
     calculate_kelvin_term()
+    calculate_pressure_delta()
+    calculate_mass_transport_rate()
     radius_np = radius.to_numpy()
     first_order_coefficient_np = first_order_coefficient.to_numpy()
     kelvin_radius_np = kelvin_radius.to_numpy()
     kelvin_term_np = kelvin_term.to_numpy()
+    partial_pressure_np = partial_pressure.to_numpy()
+    pressure_delta_np = pressure_delta.to_numpy()
+    mass_transport_rate_np = mass_transport_rate.to_numpy()
     for i, r in enumerate(radius.to_numpy()):
-        print(f"Particle {i}: Radius = {r}, Mass Transport Rate = {first_order_coefficient_np[i]}")
-        print(f"Kelvin Radius = {kelvin_radius_np[i]}, Kelvin Term = {kelvin_term_np[i]}")
+        if i % 10 == 0:
+            # print(f"Particle {i}: Radius = {r}, Mass Transport Rate = {first_order_coefficient_np[i]}")
+            # print(f"Kelvin Radius = {kelvin_radius_np[i]}, Kelvin Term = {kelvin_term_np[i]}")
+            # print(f"Partial Pressure = {partial_pressure_np[i]}, Pressure Delta = {pressure_delta_np[i]}")
+            print(f"Mass Transport Rate = {mass_transport_rate_np[i]}")
+    print("All calculations completed successfully.")
