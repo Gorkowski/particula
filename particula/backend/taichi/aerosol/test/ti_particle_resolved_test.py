@@ -61,16 +61,59 @@ class TestParticleResolvedKernels(unittest.TestCase):
         k_calculate_radius()
         self.assertTrue((sim.radius.to_numpy() > 0.0).all())
 
-    def test_scaling_and_transfer(self):
-        # end-to-end single step
+    def test_first_order_coefficient(self):
+        # radius is prerequisite
+        k_calculate_radius()
+        k_calculate_first_order_coefficient()
+        coef = sim.first_order_coefficient.to_numpy()
+        self.assertTrue(np.isfinite(coef).all())
+        self.assertTrue((coef != 0.0).any())
+
+    def test_kelvin_term(self):
+        k_calculate_radius()
+        k_calculate_kelvin_term()
+        kel = sim.kelvin_term.to_numpy()
+        self.assertTrue(np.isfinite(kel).all())
+
+    def test_pressure_delta(self):
+        k_calculate_radius()
+        k_calculate_kelvin_term()
+        k_calculate_pressure_delta()
+        dP = sim.pressure_delta.to_numpy()
+        self.assertTrue(np.isfinite(dP).all())
+
+    def test_mass_transport_rate(self):
+        k_calculate_radius()
+        k_calculate_first_order_coefficient()
+        k_calculate_kelvin_term()
+        k_calculate_pressure_delta()
+        k_calculate_mass_transport_rate()
+        mtr = sim.mass_transport_rate.to_numpy()
+        self.assertTrue(np.isfinite(mtr).all())
+
+    def test_scaling_factors(self):
+        k_calculate_radius()
+        k_calculate_first_order_coefficient()
+        k_calculate_kelvin_term()
+        k_calculate_pressure_delta()
+        k_calculate_mass_transport_rate()
+        k_calculate_scaling_factors()
+        sf = sim.scaling_factor.to_numpy()
+        self.assertTrue(np.isfinite(sf).all())
+        self.assertTrue(((sf >= 0.0) & (sf <= 1.0)).all())
+
+    def test_transferable_mass(self):
+        # full chain up to transferable mass
+        k_calculate_radius()
         k_calculate_first_order_coefficient()
         k_calculate_kelvin_term()
         k_calculate_pressure_delta()
         k_calculate_mass_transport_rate()
         k_calculate_scaling_factors()
         k_calculate_transferable_mass()
-        # at least one transferable mass value should be non-zero
-        self.assertTrue((sim.transferable_mass.to_numpy() != 0.0).any())
+        tm = sim.transferable_mass.to_numpy()
+        self.assertTrue(np.isfinite(tm).all())
+        self.assertTrue((tm != 0.0).any())
 
     def test_full_simulation_step(self):
         k_simulation_step()         # functional (unfused) path
