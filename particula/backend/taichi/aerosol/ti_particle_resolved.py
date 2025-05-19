@@ -364,8 +364,6 @@ def simulation_step():
     """
     Perform a simulation step.
 
-    This function is a placeholder for the actual implementation of
-    the simulation step. It currently does nothing.
     """
     for i in ti.ndrange(particle_count):
         update_radius(i)
@@ -379,6 +377,12 @@ def simulation_step():
         update_transferable_mass(i, time_step)
     update_gas_mass()
     update_species_masses()
+
+
+
+# taichi data class for input conversion and kernel execution
+@ti.data_oriented
+class TiAerosolParticleResolved:
 
 
 @ti.kernel
