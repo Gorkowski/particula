@@ -46,337 +46,7 @@ input_gas_mass = np.abs(np.random.rand(species_count).astype(np_type))
 input_particle_concentration = np.ones(particle_count, dtype=np_type)
 
 
-# create fiels that will be internally used
-temperature = ti.static(input_temperature)
-pressure = ti.static(input_pressure)
-mass_accommodation = ti.static(input_mass_accommodation)
-dynamic_viscosity = ti.static(input_dynamic_viscosity)
-diffusion_coefficient = ti.static(input_diffusion_coefficient)
-time_step = ti.static(input_time_step)
-simulation_volume = ti.static(input_simulation_volume)
 
-
-# apply input species masses to the field
-species_masses = ti.field(
-    float, shape=(particle_count, species_count), name="species_masses"
-)
-species_masses.from_numpy(input_species_masses)
-
-# create density field
-density = ti.field(float, shape=(species_count,), name="density")
-density.from_numpy(input_density)
-# create molar mass field
-molar_mass = ti.field(float, shape=(species_count,), name="molar_mass")
-molar_mass.from_numpy(input_molar_mass)
-# create pure vapor pressure field
-pure_vapor_pressure = ti.field(
-    float, shape=(species_count,), name="pure_vapor_pressure"
-)
-pure_vapor_pressure.from_numpy(input_pure_vapor_pressure)
-# create vapor concentration field
-vapor_concentration = ti.field(
-    float, shape=(species_count,), name="vapor_concentration"
-)
-vapor_concentration.from_numpy(input_vapor_concentration)
-# create kappa value field
-kappa_value = ti.field(float, shape=(species_count,), name="kappa_value")
-kappa_value.from_numpy(input_kappa_value)
-# create surface tension field
-surface_tension = ti.field(
-    float, shape=(species_count,), name="surface_tension"
-)
-surface_tension.from_numpy(input_surface_tension)
-
-# create gas mass field
-gas_mass = ti.field(float, shape=(species_count,), name="gas_mass")
-gas_mass.from_numpy(input_gas_mass)
-
-# create particle concentration field
-particle_concentration = ti.field(
-    float, shape=(particle_count,), name="particle_concentration"
-)
-particle_concentration.from_numpy(input_particle_concentration)
-
-
-# temperay fields
-radius = ti.field(float, shape=(particle_count,), name="radii")
-mass_transport_rate = ti.field(
-    float, shape=(particle_count, species_count), name="mass_transport_rate"
-)
-first_order_coefficient = ti.field(
-    float,
-    shape=(particle_count, species_count),
-    name="first_order_coefficient",
-)
-partial_pressure = ti.field(
-    float, shape=(particle_count, species_count), name="partial_pressure"
-)
-pressure_delta = ti.field(
-    float, shape=(particle_count, species_count), name="pressure_delta"
-)
-kelvin_term = ti.field(
-    float, shape=(particle_count, species_count), name="kelvin_term"
-)
-kelvin_radius = ti.field(
-    float, shape=(particle_count, species_count), name="kelvin_radius"
-)
-transferable_mass = ti.field(
-    float, shape=(particle_count, species_count), name="transferable_mass"
-)
-total_requested_mass = ti.field(
-    float, shape=(species_count,), name="total_requested_mass"
-)
-scaling_factor = ti.field(float, shape=(species_count,), name="scaling_factor")
-
-
-@ti.func
-def update_radius(p_index: int):
-    """
-    Compute the radius of a single particle.
-
-    Parameters
-    ----------
-    p_index : int
-        Index of the particle whose radius is to be calculated.
-
-    Returns
-    -------
-    float
-        Particle radius (same units as implied by density and mass –
-        typically metres if SI inputs are supplied).
-
-    Notes
-    -----
-    The radius is obtained by first converting each species mass to its
-    partial volume using the species density, summing those volumes, and
-    then inverting the sphere-volume relation:
-
-        r = (3 V / 4π)^(1/3)
-    """
-    volume = 0.0
-    for j in ti.ndrange(species_count):
-        volume += species_masses[p_index, j] / density[j]
-    radius[p_index] = ti.pow(3.0 * volume / (4.0 * ti.math.pi), (1.0 / 3.0))
-
-
-@ti.func
-def update_first_order_coefficient(p_index: int):
-    """
-    Update the first-order mass transport term.
-
-    """
-    for j in ti.ndrange(species_count):
-        first_order_coefficient[p_index, j] = (
-            condensation.fget_first_order_mass_transport_via_system_state(
-                particle_radius=radius[p_index],
-                molar_mass=molar_mass[j],
-                mass_accommodation=mass_accommodation,
-                temperature=temperature,
-                pressure=pressure,
-                dynamic_viscosity=dynamic_viscosity,
-                diffusion_coefficient=diffusion_coefficient,
-            )
-        )
-
-
-@ti.func
-def fget_weighted_average(
-    value_field: ti.template(),  # 1-D field (density or surface_tension)
-    weight_field: ti.template(),  # 2-D field (species_masses)
-    p_index: int,  # particle index whose weights we use
-) -> float:
-    """
-    Compute Σ_j value_field[j] * weight_field[p_index, j] / Σ_j weight_field[p_index, j].
-
-    Returns 0.0 when the weight sum is zero.
-    """
-    w_sum = 0.0
-    v_sum = 0.0
-    for j in ti.ndrange(species_count):
-        w = weight_field[p_index, j]
-        v_sum += value_field[j] * w
-        w_sum += w
-    return ti.select(w_sum > 0.0, v_sum / w_sum, 0.0)
-
-
-@ti.func
-def update_kelvin_term(p_index: int):
-    """
-    Update the Kelvin term for a particle.
-
-    This function is a placeholder for the actual implementation of
-    the Kelvin term update. It currently does nothing.
-    """
-    effective_surface_tension = fget_weighted_average(
-        surface_tension, species_masses, p_index
-    )
-    effective_density = fget_weighted_average(density, species_masses, p_index)
-    for j in ti.ndrange(species_count):
-        kelvin_radius[p_index, j] = particle_properties.fget_kelvin_radius(
-            effective_surface_tension,
-            effective_density,
-            molar_mass[j],
-            temperature,
-        )
-        kelvin_term[p_index, j] = particle_properties.fget_kelvin_term(
-            r_p=radius[p_index],
-            r_k=kelvin_radius[p_index, j],
-        )
-
-
-@ti.func
-def update_partial_pressure(p_index: int):
-    """
-    Update the partial pressure for a particle.
-
-    This function is a placeholder for the actual implementation of
-    the partial pressure update. It currently does nothing.
-    """
-    for j in ti.ndrange(species_count):
-        partial_pressure[p_index, j] = gas_properties.fget_partial_pressure(
-            concentration=vapor_concentration[j],
-            molar_mass=molar_mass[j],
-            temperature=temperature,
-        )
-        pressure_delta[p_index, j] = (
-            particle_properties.fget_partial_pressure_delta(
-                partial_pressure_gas=partial_pressure[p_index, j],
-                partial_pressure_particle=partial_pressure[p_index, j],
-                kelvin_term=kelvin_term[p_index, j],
-            )
-        )
-
-
-@ti.func
-def update_mass_transport_rate(p_index: int):
-    """
-    Update the mass transport rate for a particle.
-
-    This function is a placeholder for the actual implementation of
-    the mass transport rate update. It currently does nothing.
-    """
-    for j in ti.ndrange(species_count):
-        mass_transport_rate[p_index, j] = (
-            first_order_coefficient[p_index, j]
-            * pressure_delta[p_index, j]
-            * molar_mass[j]
-            / (GAS_CONSTANT * temperature)
-        )
-
-
-@ti.func
-def update_transferable_mass(p_index: int, time_step: float):
-    """
-    Update `transferable_mass` for particle `p_index` following
-    the numpy reference algorithm.
-    """
-    for j in ti.ndrange(species_count):
-        # Step-1 & 4 : scaled mass_to_change
-        mass_to_change = (
-            mass_transport_rate[p_index, j]
-            * time_step
-            * particle_concentration[p_index]
-            * scaling_factor[j]
-        )
-
-        # Step-5 : condensation limited by gas mass
-        condensible_mass = ti.min(ti.abs(mass_to_change), gas_mass[j])
-
-        # Step-6 : evaporation limited by particle mass
-        evaporative_mass = ti.max(
-            mass_to_change,
-            -species_masses[p_index, j] * particle_concentration[p_index],
-        )
-
-        # Step-7 : final transferable mass
-        transferable_mass[p_index, j] = ti.select(
-            mass_to_change > 0.0,  # condensation vs evaporation
-            condensible_mass,
-            evaporative_mass,
-        )
-
-
-@ti.func
-def update_scaling_factors(time_step: float):
-    """
-    Internal routine that fills `total_requested_mass` and `scaling_factor`.
-
-    This is the exact logic that used to live inside
-    `calculate_scaling_factors`.
-    """
-    # 1. reset accumulator
-    for j in ti.ndrange(species_count):
-        total_requested_mass[j] = 0.0
-
-    # 2. total requested mass per species
-    for i, j in ti.ndrange(particle_count, species_count):
-        particle_concentration[i] = (
-            1.0 / simulation_volume
-        )  # particle-resolved
-        total_requested_mass[j] += (
-            mass_transport_rate[i, j] * time_step * particle_concentration[i]
-        )
-
-    # 3. build scaling factors
-    for j in ti.ndrange(species_count):
-        scaling_factor[j] = 1.0
-        if total_requested_mass[j] > gas_mass[j]:
-            scaling_factor[j] = gas_mass[j] / total_requested_mass[j]
-
-
-@ti.func
-def update_gas_mass():
-    """
-    Update the gas mass field based on the input gas mass.
-
-    """
-    for j in ti.ndrange(species_count):
-        species_mass = 0.0
-        for i in ti.ndrange(particle_count):
-            species_mass += transferable_mass[i, j]
-        # Update the gas mass for species j
-        gas_mass[j] -= species_mass
-        # Ensure gas mass does not go
-        gas_mass[j] = ti.max(gas_mass[j], 0.0)
-
-
-@ti.func
-def update_species_masses():
-    """
-    Update the species masses field based on the input species masses.
-
-    """
-    for i in ti.ndrange(particle_count):
-        for j in ti.ndrange(species_count):
-            # Update the species mass for particle i and species j
-            if particle_concentration[i] > 0.0:
-                species_masses[i, j] = (
-                    species_masses[i, j] * particle_concentration[i]
-                    + transferable_mass[i, j]
-                ) / particle_concentration[i]
-            else:
-                species_masses[i, j] = 0.0
-            # Ensure species mass does not go negative
-            species_masses[i, j] = ti.max(species_masses[i, j], 0.0)
-
-@ti.func
-def simulation_step():
-    """
-    Perform a simulation step.
-
-    """
-    for i in ti.ndrange(particle_count):
-        update_radius(i)
-        update_first_order_coefficient(i)
-        update_kelvin_term(i)
-        update_partial_pressure(i)
-        update_mass_transport_rate(i)
-
-    update_scaling_factors(time_step)
-    for i in ti.ndrange(particle_count):
-        update_transferable_mass(i, time_step)
-    update_gas_mass()
-    update_species_masses()
 
 
 
@@ -399,15 +69,15 @@ class TiAerosolParticleResolved:
 
     def __init__(
         self,
-        species_masses_np: np.ndarray,
-        density_np: np.ndarray,
-        molar_mass_np: np.ndarray,
-        pure_vapor_pressure_np: np.ndarray,
-        vapor_concentration_np: np.ndarray,
-        kappa_value_np: np.ndarray,
-        surface_tension_np: np.ndarray,
-        gas_mass_np: np.ndarray,
-        particle_concentration_np: np.ndarray,
+        input_species_masses: np.ndarray,
+        input_density: np.ndarray,
+        input_molar_mass: np.ndarray,
+        input_pure_vapor_pressure: np.ndarray,
+        input_vapor_concentration: np.ndarray,
+        input_kappa_value: np.ndarray,
+        input_surface_tension: np.ndarray,
+        input_gas_mass: np.ndarray,
+        input_particle_concentration: np.ndarray,
     ):
         """
         Parameters
@@ -438,31 +108,95 @@ class TiAerosolParticleResolved:
             "`species_count` that were used to allocate Taichi fields."
         )
 
-        # --- copy NumPy inputs into the already-allocated Taichi fields ----------
-        species_masses.from_numpy(species_masses_np.astype(np_type))
-        density.from_numpy(density_np.astype(np_type))
-        molar_mass.from_numpy(molar_mass_np.astype(np_type))
-        pure_vapor_pressure.from_numpy(pure_vapor_pressure_np.astype(np_type))
-        vapor_concentration.from_numpy(vapor_concentration_np.astype(np_type))
-        kappa_value.from_numpy(kappa_value_np.astype(np_type))
-        surface_tension.from_numpy(surface_tension_np.astype(np_type))
-        gas_mass.from_numpy(gas_mass_np.astype(np_type))
-        particle_concentration.from_numpy(particle_concentration_np.astype(np_type))
+        # input data conversion to Taichi fields --------------------------------
+        
+        # create fiels that will be internally used
+        temperature = ti.static(input_temperature)
+        pressure = ti.static(input_pressure)
+        mass_accommodation = ti.static(input_mass_accommodation)
+        dynamic_viscosity = ti.static(input_dynamic_viscosity)
+        diffusion_coefficient = ti.static(input_diffusion_coefficient)
+        time_step = ti.static(input_time_step)
+        simulation_volume = ti.static(input_simulation_volume)
+
+
+        # apply input species masses to the field
+        species_masses = ti.field(
+            float, shape=(particle_count, species_count), name="species_masses"
+        )
+        species_masses.from_numpy(input_species_masses)
+
+        # create density field
+        density = ti.field(float, shape=(species_count,), name="density")
+        density.from_numpy(input_density)
+        # create molar mass field
+        molar_mass = ti.field(float, shape=(species_count,), name="molar_mass")
+        molar_mass.from_numpy(input_molar_mass)
+        # create pure vapor pressure field
+        pure_vapor_pressure = ti.field(
+            float, shape=(species_count,), name="pure_vapor_pressure"
+        )
+        pure_vapor_pressure.from_numpy(input_pure_vapor_pressure)
+        # create vapor concentration field
+        vapor_concentration = ti.field(
+            float, shape=(species_count,), name="vapor_concentration"
+        )
+        vapor_concentration.from_numpy(input_vapor_concentration)
+        # create kappa value field
+        kappa_value = ti.field(float, shape=(species_count,), name="kappa_value")
+        kappa_value.from_numpy(input_kappa_value)
+        # create surface tension field
+        surface_tension = ti.field(
+            float, shape=(species_count,), name="surface_tension"
+        )
+        surface_tension.from_numpy(input_surface_tension)
+
+        # create gas mass field
+        gas_mass = ti.field(float, shape=(species_count,), name="gas_mass")
+        gas_mass.from_numpy(input_gas_mass)
+
+        # create particle concentration field
+        particle_concentration = ti.field(
+            float, shape=(particle_count,), name="particle_concentration"
+        )
+        particle_concentration.from_numpy(input_particle_concentration)
+
+
+        # temperay fields
+        radius = ti.field(float, shape=(particle_count,), name="radii")
+        mass_transport_rate = ti.field(
+            float, shape=(particle_count, species_count), name="mass_transport_rate"
+        )
+        first_order_coefficient = ti.field(
+            float,
+            shape=(particle_count, species_count),
+            name="first_order_coefficient",
+        )
+        partial_pressure = ti.field(
+            float, shape=(particle_count, species_count), name="partial_pressure"
+        )
+        pressure_delta = ti.field(
+            float, shape=(particle_count, species_count), name="pressure_delta"
+        )
+        kelvin_term = ti.field(
+            float, shape=(particle_count, species_count), name="kelvin_term"
+        )
+        kelvin_radius = ti.field(
+            float, shape=(particle_count, species_count), name="kelvin_radius"
+        )
+        transferable_mass = ti.field(
+            float, shape=(particle_count, species_count), name="transferable_mass"
+        )
+        total_requested_mass = ti.field(
+            float, shape=(species_count,), name="total_requested_mass"
+        )
+        scaling_factor = ti.field(float, shape=(species_count,), name="scaling_factor")
+
+
 
     # --------------------------------------------------------------------- #
     # Convenience wrappers that delegate to the module-level kernels
     # --------------------------------------------------------------------- #
-    def step(self):
-        """
-        Execute the full (un-fused) simulation step.
-        """
-        simulation_step()
-
-    def fused_step(self):
-        """
-        Execute the performance-optimised fused kernel.
-        """
-        fused_step()
 
     # quick getters to pull data back to NumPy for analysis ----------------
     def get_radius(self) -> np.ndarray:
@@ -477,71 +211,131 @@ class TiAerosolParticleResolved:
     def get_transferable_mass(self) -> np.ndarray:
         return transferable_mass.to_numpy()
 
+    @ti.kernel
+    def fused_step():
+        # --- species-independent prep (runs once per particle) -------------
+        for p in ti.ndrange(particle_count):
+            # a) radius ------------------------------------------------------
+            volume = 0.0
+            for s in ti.ndrange(species_count):
+                volume += species_masses[p, s] / density[s]
+            r_p = ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
+            radius[p] = r_p
 
-@ti.kernel
-def fused_step():
-    # --- species-independent prep (runs once per particle) -------------
-    for p in ti.ndrange(particle_count):
-        # a) radius ------------------------------------------------------
-        volume = 0.0
-        for s in ti.ndrange(species_count):
-            volume += species_masses[p, s] / density[s]
-        r_p = ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
-        radius[p] = r_p
+            # b) effective bulk properties (weighted averages) ---------------
+            w_mass = 0.0
+            sig_sum = 0.0
+            rho_sum = 0.0
+            for s in ti.ndrange(species_count):
+                w = species_masses[p, s]
+                w_mass += w
+                sig_sum += surface_tension[s] * w
+                rho_sum += density[s] * w
+            sig_eff = sig_sum / w_mass
+            rho_eff = rho_sum / w_mass
 
-        # b) effective bulk properties (weighted averages) ---------------
-        w_mass = 0.0
-        sig_sum = 0.0
-        rho_sum = 0.0
-        for s in ti.ndrange(species_count):
-            w = species_masses[p, s]
-            w_mass += w
-            sig_sum += surface_tension[s] * w
-            rho_sum += density[s] * w
-        sig_eff = sig_sum / w_mass
-        rho_eff = rho_sum / w_mass
+            # ---------- per-species loop (still inside the same kernel) -----
+            for s in ti.ndrange(species_count):
+                # first-order coefficient
+                k1 = condensation.fget_first_order_mass_transport_via_system_state(
+                    particle_radius=r_p,
+                    molar_mass=molar_mass[s],
+                    mass_accommodation=mass_accommodation,
+                    temperature=temperature,
+                    pressure=pressure,
+                    dynamic_viscosity=dynamic_viscosity,
+                    diffusion_coefficient=diffusion_coefficient,
+                )
+                first_order_coefficient[p, s] = k1
 
-        # ---------- per-species loop (still inside the same kernel) -----
-        for s in ti.ndrange(species_count):
-            # first-order coefficient
-            k1 = condensation.fget_first_order_mass_transport_via_system_state(
-                particle_radius=r_p,
-                molar_mass=molar_mass[s],
-                mass_accommodation=mass_accommodation,
-                temperature=temperature,
-                pressure=pressure,
-                dynamic_viscosity=dynamic_viscosity,
-                diffusion_coefficient=diffusion_coefficient,
+                # Kelvin term -------------------------------------------------
+                r_k = particle_properties.fget_kelvin_radius(
+                    sig_eff, rho_eff, molar_mass[s], temperature
+                )
+                kel = particle_properties.fget_kelvin_term(r_p, r_k)
+                kelvin_term[p, s] = kel
+
+                # vapour & ΔP -----------------------------------------------
+                p_g = gas_properties.fget_partial_pressure(
+                    vapor_concentration[s],
+                    molar_mass[s],
+                    temperature,
+                )
+                dP = particle_properties.fget_partial_pressure_delta(p_g, p_g, kel)
+                pressure_delta[p, s] = dP
+
+                # mass-flux ---------------------------------------------------
+                mass_transport_rate[p, s] = (
+                    k1
+                    * dP
+                    * molar_mass[s]
+                    / (par.util.constants.GAS_CONSTANT * temperature)
+                )
+        update_scaling_factors(time_step)
+        for i in ti.ndrange(particle_count):
+            update_transferable_mass(i, time_step)
+        update_gas_mass()
+        update_species_masses()
+
+
+    @ti.func
+    def update_scaling_factors(time_step: float):
+        """
+        Internal routine that fills `total_requested_mass` and `scaling_factor`.
+
+        This is the exact logic that used to live inside
+        `calculate_scaling_factors`.
+        """
+        # 1. reset accumulator
+        for j in ti.ndrange(species_count):
+            total_requested_mass[j] = 0.0
+
+        # 2. total requested mass per species
+        for i, j in ti.ndrange(particle_count, species_count):
+            particle_concentration[i] = (
+                1.0 / simulation_volume
+            )  # particle-resolved
+            total_requested_mass[j] += (
+                mass_transport_rate[i, j] * time_step * particle_concentration[i]
             )
-            first_order_coefficient[p, s] = k1
 
-            # Kelvin term -------------------------------------------------
-            r_k = particle_properties.fget_kelvin_radius(
-                sig_eff, rho_eff, molar_mass[s], temperature
-            )
-            kel = particle_properties.fget_kelvin_term(r_p, r_k)
-            kelvin_term[p, s] = kel
+        # 3. build scaling factors
+        for j in ti.ndrange(species_count):
+            scaling_factor[j] = 1.0
+            if total_requested_mass[j] > gas_mass[j]:
+                scaling_factor[j] = gas_mass[j] / total_requested_mass[j]
 
-            # vapour & ΔP -----------------------------------------------
-            p_g = gas_properties.fget_partial_pressure(
-                vapor_concentration[s],
-                molar_mass[s],
-                temperature,
-            )
-            dP = particle_properties.fget_partial_pressure_delta(p_g, p_g, kel)
-            pressure_delta[p, s] = dP
+    @ti.func
+    def update_gas_mass():
+        """
+        Update the gas mass field based on the input gas mass.
 
-            # mass-flux ---------------------------------------------------
-            mass_transport_rate[p, s] = (
-                k1
-                * dP
-                * molar_mass[s]
-                / (par.util.constants.GAS_CONSTANT * temperature)
-            )
-    update_scaling_factors(time_step)
-    for i in ti.ndrange(particle_count):
-        update_transferable_mass(i, time_step)
-    update_gas_mass()
-    update_species_masses()
+        """
+        for j in ti.ndrange(species_count):
+            species_mass = 0.0
+            for i in ti.ndrange(particle_count):
+                species_mass += transferable_mass[i, j]
+            # Update the gas mass for species j
+            gas_mass[j] -= species_mass
+            # Ensure gas mass does not go
+            gas_mass[j] = ti.max(gas_mass[j], 0.0)
 
 
+    @ti.func
+    def update_species_masses():
+        """
+        Update the species masses field based on the input species masses.
+
+        """
+        for i in ti.ndrange(particle_count):
+            for j in ti.ndrange(species_count):
+                # Update the species mass for particle i and species j
+                if particle_concentration[i] > 0.0:
+                    species_masses[i, j] = (
+                        species_masses[i, j] * particle_concentration[i]
+                        + transferable_mass[i, j]
+                    ) / particle_concentration[i]
+                else:
+                    species_masses[i, j] = 0.0
+                # Ensure species mass does not go negative
+                species_masses[i, j] = ti.max(species_masses[i, j], 0.0)
