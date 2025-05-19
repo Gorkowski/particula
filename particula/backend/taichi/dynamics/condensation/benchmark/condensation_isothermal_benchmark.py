@@ -37,7 +37,7 @@ from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies i
     TiCondensationIsothermal,
 )
 from particula.backend.taichi.aerosol.ti_particle_resolved import (
-    TiParticleResolvedSpeciatedMass,
+    TiAerosolParticleResolved,
 )
 
 # python (NumPy-only) condensation
@@ -141,6 +141,47 @@ def make_step_callable(particle, gas, cond):
 
     return _inner
 
+
+# ── fused particle-resolved aerosol (new benchmark) ────────────────────
+def _build_ti_particle_resolved(n_particles: int, n_species: int = 10):
+    """Create and populate a TiAerosolParticleResolved instance."""
+    rng = np.random.default_rng(0)
+
+    species_masses = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    density = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+    pure_vp = np.full(n_species, 50.0)              # dummy, Pa
+    vapor_conc = np.ones(n_species) * 1.0e-3        # mol m⁻3
+    kappa = np.zeros(n_species)
+    surface_tension = np.full(n_species, 0.072)     # N m⁻1
+    gas_mass = np.ones(n_species) * 1.0e-6          # kg
+    particle_conc = np.ones(n_particles)            # # m⁻3
+
+    sim = TiAerosolParticleResolved(
+        particle_count=n_particles,
+        species_count=n_species,
+        time_step=1.0,
+        simulation_volume=1.0,
+    )
+    sim.setup(
+        species_masses,
+        density,
+        molar_mass,
+        pure_vp,
+        vapor_conc,
+        kappa,
+        surface_tension,
+        gas_mass,
+        particle_conc,
+    )
+    return sim
+
+
+def make_fused_step_callable(sim_obj: TiAerosolParticleResolved):
+    """Return a callable that executes sim_obj.fused_step once."""
+    def _inner():
+        sim_obj.fused_step()
+    return _inner
 
 def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     """
@@ -267,14 +308,30 @@ if __name__ == "__main__":
             ops_per_call=1,
         )
 
+        # ----- Fused particle-resolved solver stats ------------------------
+        pr_sim = _build_ti_particle_resolved(n_particles, N_SPECIES)
+        stats_pr = get_function_benchmark(
+            make_fused_step_callable(pr_sim),
+            ops_per_call=1,
+            max_run_time_s=3.0,
+        )
+
         # ----- build header only once ---------------------------------------
         if csv_header is None:
             taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
             python_headers = ["python_" + h for h in stats_py["array_headers"]]
-            csv_header = ["array_length", *python_headers, *taichi_headers]
+            fused_headers  = ["fused_"  + h for h in stats_pr["array_headers"]]
+            csv_header = ["array_length", *python_headers, *taichi_headers, *fused_headers]
 
         # ----- collect row ---------------------------------------------------
-        rows.append([n_particles, *stats_py["array_stats"], *stats_ti["array_stats"]])
+        rows.append(
+            [
+                n_particles,
+                *stats_py["array_stats"],
+                *stats_ti["array_stats"],
+                *stats_pr["array_stats"],
+            ]
+        )
 
     # ── output directory ───────────────────────────────────────────────────
     output_directory = os.path.join(
