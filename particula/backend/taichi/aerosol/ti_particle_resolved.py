@@ -383,6 +383,99 @@ def simulation_step():
 # taichi data class for input conversion and kernel execution
 @ti.data_oriented
 class TiAerosolParticleResolved:
+    """
+    Lightweight wrapper that converts NumPy inputs to the global Taichi
+    fields defined in this module and exposes convenience methods that
+    call the already-implemented kernels (`simulation_step`, `fused_step`,
+    etc.).
+
+    NOTE
+    ----
+    The class does **not** allocate its own private Taichi fields – it
+    simply writes into the module-level fields that all kernels already
+    reference.  This avoids refactoring the whole solver while still
+    giving users a clean, object-based interface.
+    """
+
+    def __init__(
+        self,
+        species_masses_np: np.ndarray,
+        density_np: np.ndarray,
+        molar_mass_np: np.ndarray,
+        pure_vapor_pressure_np: np.ndarray,
+        vapor_concentration_np: np.ndarray,
+        kappa_value_np: np.ndarray,
+        surface_tension_np: np.ndarray,
+        gas_mass_np: np.ndarray,
+        particle_concentration_np: np.ndarray,
+    ):
+        """
+        Parameters
+        ----------
+        species_masses_np : (P, S) ndarray
+            Mass of each species per particle  [kg].
+        density_np : (S,) ndarray
+            Bulk density of each species       [kg m⁻³].
+        molar_mass_np : (S,) ndarray
+            Molar mass of each species         [kg mol⁻¹].
+        pure_vapor_pressure_np : (S,) ndarray
+            Pure vapor pressure of each species [Pa].
+        vapor_concentration_np : (S,) ndarray
+            Gas-phase vapor concentration      [mol m⁻³].
+        kappa_value_np : (S,) ndarray
+            κ-Köhler hygroscopicity parameter   [–].
+        surface_tension_np : (S,) ndarray
+            Surface tension of each species    [N m⁻¹].
+        gas_mass_np : (S,) ndarray
+            Available gas-phase mass           [kg].
+        particle_concentration_np : (P,) ndarray
+            Number concentration of each particle bin [# m⁻³].
+        """
+        # --- basic shape checks -------------------------------------------------
+        p_count, s_count = species_masses_np.shape
+        assert p_count == particle_count and s_count == species_count, (
+            "Input array shapes must match the global `particle_count` / "
+            "`species_count` that were used to allocate Taichi fields."
+        )
+
+        # --- copy NumPy inputs into the already-allocated Taichi fields ----------
+        species_masses.from_numpy(species_masses_np.astype(np_type))
+        density.from_numpy(density_np.astype(np_type))
+        molar_mass.from_numpy(molar_mass_np.astype(np_type))
+        pure_vapor_pressure.from_numpy(pure_vapor_pressure_np.astype(np_type))
+        vapor_concentration.from_numpy(vapor_concentration_np.astype(np_type))
+        kappa_value.from_numpy(kappa_value_np.astype(np_type))
+        surface_tension.from_numpy(surface_tension_np.astype(np_type))
+        gas_mass.from_numpy(gas_mass_np.astype(np_type))
+        particle_concentration.from_numpy(particle_concentration_np.astype(np_type))
+
+    # --------------------------------------------------------------------- #
+    # Convenience wrappers that delegate to the module-level kernels
+    # --------------------------------------------------------------------- #
+    def step(self):
+        """
+        Execute the full (un-fused) simulation step.
+        """
+        simulation_step()
+
+    def fused_step(self):
+        """
+        Execute the performance-optimised fused kernel.
+        """
+        fused_step()
+
+    # quick getters to pull data back to NumPy for analysis ----------------
+    def get_radius(self) -> np.ndarray:
+        return radius.to_numpy()
+
+    def get_species_masses(self) -> np.ndarray:
+        return species_masses.to_numpy()
+
+    def get_gas_mass(self) -> np.ndarray:
+        return gas_mass.to_numpy()
+
+    def get_transferable_mass(self) -> np.ndarray:
+        return transferable_mass.to_numpy()
 
 
 @ti.kernel
