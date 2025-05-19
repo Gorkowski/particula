@@ -32,6 +32,11 @@ diffusion_coefficient = 2.0e-5  # m^2/s
 time_step = 0.1 # seconds
 simulation_volume = 1.0e-6  # m^3
 
+# available gas-phase mass [kg] per species  (positive values)
+input_gas_mass = np.abs(np.random.rand(species_count).astype(np_type))
+# particle number concentration [#/m³] for every particle (use 1.0 for now)
+input_particle_concentration = np.ones(particle_count, dtype=np_type)
+
 
 # create fiels that will be internally used
 
@@ -57,6 +62,21 @@ kappa_value.from_numpy(input_kappa_value)
 # create surface tension field
 surface_tension = ti.field(float, shape=(species_count,), name="surface_tension")
 surface_tension.from_numpy(input_surface_tension)
+
+# create gas mass field
+gas_mass = ti.field(float, shape=(species_count,), name="gas_mass")
+gas_mass.from_numpy(input_gas_mass)
+
+# create particle concentration field
+particle_concentration = ti.field(float, shape=(particle_count,),
+                                  name="particle_concentration")
+particle_concentration.from_numpy(input_particle_concentration)
+
+# temporary helpers
+total_requested_mass = ti.field(float, shape=(species_count,),
+                                name="total_requested_mass")
+scaling_factor = ti.field(float, shape=(species_count,),
+                          name="scaling_factor")
 
 # intermediate fields
 radius = ti.field(float, shape=(particle_count,), name="radii")
@@ -204,11 +224,33 @@ def update_mass_transport_rate(p_index: int):
 @ti.func
 def update_transferable_mass(p_index: int, time_step: float):
     """
-    Update the transferable mass for a particle.
-
+    Update `transferable_mass` for particle `p_index` following
+    the numpy reference algorithm.
     """
+    for j in range(species_count):
+        # Step-1 & 4 : scaled mass_to_change
+        mass_to_change = (
+            mass_transport_rate[p_index, j]
+            * time_step
+            * particle_concentration[p_index]
+            * scaling_factor[j]
+        )
 
+        # Step-5 : condensation limited by gas mass
+        condensible_mass = ti.min(ti.abs(mass_to_change), gas_mass[j])
 
+        # Step-6 : evaporation limited by particle mass
+        evaporative_mass = ti.max(
+            mass_to_change,
+            -species_masses[p_index, j] * particle_concentration[p_index],
+        )
+
+        # Step-7 : final transferable mass
+        transferable_mass[p_index, j] = ti.select(
+            mass_to_change > 0.0,  # condensation vs evaporation
+            condensible_mass,
+            evaporative_mass,
+        )
 
 
 ## kernels for testing functionality
@@ -268,12 +310,47 @@ def calculate_first_order_coefficient():
         update_first_order_coefficient(i)
 
 
+@ti.kernel
+def calculate_scaling_factors(time_step: float):
+    """
+    1. total_requested_mass[j] = Σ_i (mass_rate[i,j] * time_step
+                                     * particle_concentration[i])
+    2. scaling_factor[j] = 1 if request ≤ gas_mass[j] else
+                           gas_mass[j] / total_requested_mass[j]
+    """
+    # zero the accumulator
+    for j in range(species_count):
+        total_requested_mass[j] = 0.0
+
+    # accumulate requested mass
+    for i, j in ti.ndrange(particle_count, species_count):
+        total_requested_mass[j] += (
+            mass_transport_rate[i, j] * time_step * particle_concentration[i]
+        )
+
+    # build scaling factors
+    for j in range(species_count):
+        scaling_factor[j] = 1.0
+        if total_requested_mass[j] > gas_mass[j]:
+            scaling_factor[j] = gas_mass[j] / total_requested_mass[j]
+
+@ti.kernel
+def calculate_transferable_mass(time_step: float):
+    """
+    Populates `transferable_mass` for every particle after
+    scaling factors have been computed.
+    """
+    for i in range(particle_count):
+        update_transferable_mass(i, time_step)
+
 if __name__ == "__main__":
     calculate_radius()
     calculate_first_order_coefficient()
     calculate_kelvin_term()
     calculate_pressure_delta()
     calculate_mass_transport_rate()
+    calculate_scaling_factors(time_step)       # NEW
+    calculate_transferable_mass(time_step)     # NEW
     radius_np = radius.to_numpy()
     first_order_coefficient_np = first_order_coefficient.to_numpy()
     kelvin_radius_np = kelvin_radius.to_numpy()
@@ -281,6 +358,7 @@ if __name__ == "__main__":
     partial_pressure_np = partial_pressure.to_numpy()
     pressure_delta_np = pressure_delta.to_numpy()
     mass_transport_rate_np = mass_transport_rate.to_numpy()
+    transferable_mass_np = transferable_mass.to_numpy()
     for i, r in enumerate(radius.to_numpy()):
         if i % 10 == 0:
             # print(f"Particle {i}: Radius = {r}, Mass Transport Rate = {first_order_coefficient_np[i]}")
