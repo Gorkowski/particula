@@ -125,8 +125,6 @@ def update_first_order_coefficient(p_index: int):
     """
     Update the first-order mass transport term.
 
-    This function is a placeholder for the actual implementation of
-    first-order mass transport update. It currently does nothing.
     """
     for j in range(species_count):
         first_order_coefficient[p_index, j] = condensation.fget_first_order_mass_transport_via_system_state(
@@ -324,6 +322,7 @@ def calculate_scaling_factors(time_step: float):
 
     # accumulate requested mass
     for i, j in ti.ndrange(particle_count, species_count):
+        particle_concentration[i] = 1 / simulation_volume  # for particle resolved
         total_requested_mass[j] += (
             mass_transport_rate[i, j] * time_step * particle_concentration[i]
         )
