@@ -7,7 +7,7 @@ import numpy as np
 import particula as par  # << NEW – pure-python helpers
 import taichi as ti
 
-ti.init(arch=ti.cpu, default_fp=ti.f64)
+ti.init(arch=ti.cpu, default_fp=ti.f64, default_ip=ti.i32)
 
 from particula.backend.benchmark import (
     get_function_benchmark,

@@ -9,43 +9,7 @@ import particula.backend.taichi.gas.properties as gas_properties
 import particula.backend.taichi.particles.properties as particle_properties
 import particula.backend.taichi.dynamics.condensation as condensation
 
-np_type = np.float64
-ti.init(arch=ti.cpu, default_fp=ti.f64, default_ip=ti.i32, debug=True)
-
-GAS_CONSTANT = par.util.constants.GAS_CONSTANT
-
-# particle resolved data, 100 particles, 10 species
-particle_count = 20_000
-species_count = 10
-input_species_masses = np.random.rand(particle_count, species_count).astype(
-    np_type
-)
-input_density = np.random.rand(species_count).astype(np_type)
-input_molar_mass = np.abs(np.random.rand(species_count).astype(np_type))
-input_pure_vapor_pressure = np.abs(
-    np.random.rand(species_count).astype(np_type)
-)
-input_vapor_concentration = np.abs(
-    np.random.rand(species_count).astype(np_type)
-)
-input_kappa_value = np.abs(np.random.rand(species_count).astype(np_type))
-input_surface_tension = np.abs(np.random.rand(species_count).astype(np_type))
-input_temperature = 298.15  # K
-input_pressure = 101325.0  # Pa
-input_mass_accommodation = 0.5
-input_dynamic_viscosity = par.gas.get_dynamic_viscosity(
-    temperature=input_temperature
-)
-input_diffusion_coefficient = 2.0e-5  # m^2/s
-input_time_step = 10  # seconds
-input_simulation_volume = 1.0e-6  # m^3
-
-
-# available gas-phase mass [kg] per species  (positive values)
-input_gas_mass = np.abs(np.random.rand(species_count).astype(np_type))
-# particle number concentration [#/m³] for every particle (use 1.0 for now)
-input_particle_concentration = np.ones(particle_count, dtype=np_type)
-
+GAS_CONSTANT = ti.static(par.util.constants.GAS_CONSTANT)
 
 # taichi data class for input conversion and kernel execution
 @ti.data_oriented
@@ -53,7 +17,6 @@ class TiAerosolParticleResolved():
     """
     Aerosol particle resolved simulation class. This class is used to
     hold the data and methods for the particle-resolved simulation.
-
     """
 
     def __init__(
@@ -73,8 +36,6 @@ class TiAerosolParticleResolved():
         Arguments:
 
         """
-        # --- basic shape checks -------------------------------------------------
-        # particle_count, species_count are now direct arguments
 
         # input data conversion to Taichi fields --------------------------------
 
@@ -178,20 +139,20 @@ class TiAerosolParticleResolved():
         particle_concentration_np: np.ndarray,
     ) -> None:
         """Copy the supplied NumPy arrays into the internal Taichi fields."""
-        self.species_masses.from_numpy(species_masses_np.astype(np_type))
-        self.density.from_numpy(density_np.astype(np_type))
-        self.molar_mass.from_numpy(molar_mass_np.astype(np_type))
+        self.species_masses.from_numpy(species_masses_np)
+        self.density.from_numpy(density_np)
+        self.molar_mass.from_numpy(molar_mass_np)
         self.pure_vapor_pressure.from_numpy(
-            pure_vapor_pressure_np.astype(np_type)
+            pure_vapor_pressure_np
         )
         self.vapor_concentration.from_numpy(
-            vapor_concentration_np.astype(np_type)
+            vapor_concentration_np
         )
-        self.kappa_value.from_numpy(kappa_value_np.astype(np_type))
-        self.surface_tension.from_numpy(surface_tension_np.astype(np_type))
-        self.gas_mass.from_numpy(gas_mass_np.astype(np_type))
+        self.kappa_value.from_numpy(kappa_value_np)
+        self.surface_tension.from_numpy(surface_tension_np)
+        self.gas_mass.from_numpy(gas_mass_np)
         self.particle_concentration.from_numpy(
-            particle_concentration_np.astype(np_type)
+            particle_concentration_np
         )
 
     # --------------------------------------------------------------------- #

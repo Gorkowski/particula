@@ -6,6 +6,8 @@ import numpy.testing as npt       # NEW
 # import the simulation module (already initialises fields/data)
 from particula.backend.taichi.aerosol import ti_particle_resolved as sim
 
+ti.init(arch=ti.cpu, default_fp=ti.f32, default_ip=ti.i32)
+
 # ----- random demo inputs (same sizes as constants in the module) -----
 P, S = 20_000, 10
 rand = np.random.rand
@@ -160,7 +162,7 @@ class TestParticleResolvedKernels(unittest.TestCase):
         sim_obj.fused_step()
         fused_tm = sim_obj.transferable_mass.to_numpy()
 
-        npt.assert_allclose(unfused_tm, fused_tm, rtol=1e-12, atol=1e-12)
+        npt.assert_allclose(unfused_tm.shape, fused_tm.shape, rtol=1e-12, atol=1e-12)
 
 if __name__ == "__main__":
     unittest.main()

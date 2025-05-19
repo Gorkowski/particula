@@ -64,7 +64,7 @@ def plot_throughput_vs_array_length(
                 row[idx] / row[idx_py] if row[idx_py] else float("nan")
                 for row in rows
             ]
-            ax2.loglog(
+            ax2.semilogx(
                 array_lengths, speedup,
                 marker_style + "--",
                 color=line.get_color(),  # match colour
