@@ -94,7 +94,7 @@ class TiAerosolParticleResolved:
             Number concentration of each particle bin [# m⁻³].
         """
         # --- basic shape checks -------------------------------------------------
-        p_count, s_count = species_masses_np.shape
+        p_count, s_count = input_species_masses.shape
         assert p_count == particle_count and s_count == species_count, (
             "Input array shapes must match the global `particle_count` / "
             "`species_count` that were used to allocate Taichi fields."
