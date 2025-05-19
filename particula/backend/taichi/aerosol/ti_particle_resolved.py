@@ -54,17 +54,9 @@ input_particle_concentration = np.ones(particle_count, dtype=np_type)
 @ti.data_oriented
 class TiAerosolParticleResolved:
     """
-    Lightweight wrapper that converts NumPy inputs to the global Taichi
-    fields defined in this module and exposes convenience methods that
-    call the already-implemented kernels (`simulation_step`, `fused_step`,
-    etc.).
+    Aerosol particle resolved simulation class. This class is used to
+    hold the data and methods for the particle-resolved simulation.
 
-    NOTE
-    ----
-    The class does **not** allocate its own private Taichi fields – it
-    simply writes into the module-level fields that all kernels already
-    reference.  This avoids refactoring the whole solver while still
-    giving users a clean, object-based interface.
     """
 
     def __init__(
