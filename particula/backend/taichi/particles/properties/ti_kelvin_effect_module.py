@@ -25,11 +25,11 @@ def fget_kelvin_term(r_p: float, r_k: float) -> float:
 # 4 – kernels
 @ti.kernel
 def kget_kelvin_radius(
-    σ: ti.types.ndarray(dtype=float, ndim=1),
-    ρ: ti.types.ndarray(dtype=float, ndim=1),
-    M: ti.types.ndarray(dtype=float, ndim=1),
+    σ: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    ρ: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    M: ti.types.ndarray(dtype=ti.f64, ndim=1),
     T: float,
-    res: ti.types.ndarray(dtype=float, ndim=1),
+    res: ti.types.ndarray(dtype=ti.f64, ndim=1),
 ):
     for i in range(res.shape[0]):
         res[i] = fget_kelvin_radius(σ[i], ρ[i], M[i], T)
@@ -37,9 +37,9 @@ def kget_kelvin_radius(
 
 @ti.kernel
 def kget_kelvin_term(
-    r_p: ti.types.ndarray(dtype=float, ndim=2),
-    r_k: ti.types.ndarray(dtype=float, ndim=2),
-    res: ti.types.ndarray(dtype=float, ndim=2),
+    r_p: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    r_k: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    res: ti.types.ndarray(dtype=ti.f64, ndim=2),
 ):
     for I in ti.grouped(res):
         res[I] = fget_kelvin_term(r_p[I], r_k[I])
