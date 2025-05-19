@@ -36,6 +36,9 @@ from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
 from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies import (
     TiCondensationIsothermal,
 )
+from particula.backend.taichi.aerosol.ti_particle_resolved import (
+    TiParticleResolvedSpeciatedMass,
+)
 
 # python (NumPy-only) condensation
 from particula.dynamics.condensation.condensation_strategies import (
