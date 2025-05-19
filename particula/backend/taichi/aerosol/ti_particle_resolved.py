@@ -58,22 +58,23 @@ class TiAerosolParticleResolved():
 
     def __init__(
         self,
-        input_species_masses: np.ndarray,
-        input_density: np.ndarray,
-        input_molar_mass: np.ndarray,
-        input_pure_vapor_pressure: np.ndarray,
-        input_vapor_concentration: np.ndarray,
-        input_kappa_value: np.ndarray,
-        input_surface_tension: np.ndarray,
-        input_gas_mass: np.ndarray,
-        input_particle_concentration: np.ndarray,
+        particle_count: int,
+        species_count: int,
+        *,
+        temperature: float = 298.15,
+        pressure: float = 101_325.0,
+        mass_accommodation: float = 0.5,
+        dynamic_viscosity: float = 1.8e-5,
+        diffusion_coefficient: float = 2.0e-5,
+        time_step: float = 10.0,
+        simulation_volume: float = 1.0e-6,
     ):
         """
         Arguments:
 
         """
         # --- basic shape checks -------------------------------------------------
-        particle_count, species_count = input_species_masses.shape
+        # particle_count, species_count are now direct arguments
 
         # input data conversion to Taichi fields --------------------------------
 
@@ -81,58 +82,48 @@ class TiAerosolParticleResolved():
         self.species_masses = ti.field(
             float, shape=(particle_count, species_count), name="species_masses"
         )
-        self.species_masses.from_numpy(input_species_masses)
 
         # create density field
         self.density = ti.field(float, shape=(species_count,), name="density")
-        self.density.from_numpy(input_density)
         # create molar mass field
         self.molar_mass = ti.field(
             float, shape=(species_count,), name="molar_mass"
         )
-        self.molar_mass.from_numpy(input_molar_mass)
         # create pure vapor pressure field
         self.pure_vapor_pressure = ti.field(
             float, shape=(species_count,), name="pure_vapor_pressure"
         )
-        self.pure_vapor_pressure.from_numpy(input_pure_vapor_pressure)
         # create vapor concentration field
         self.vapor_concentration = ti.field(
             float, shape=(species_count,), name="vapor_concentration"
         )
-        self.vapor_concentration.from_numpy(input_vapor_concentration)
         # create kappa value field
         self.kappa_value = ti.field(
             float, shape=(species_count,), name="kappa_value"
         )
-        self.kappa_value.from_numpy(input_kappa_value)
         # create surface tension field
         self.surface_tension = ti.field(
             float, shape=(species_count,), name="surface_tension"
         )
-        self.surface_tension.from_numpy(input_surface_tension)
 
         # create gas mass field
         self.gas_mass = ti.field(
             float, shape=(species_count,), name="gas_mass"
         )
-        self.gas_mass.from_numpy(input_gas_mass)
 
         # create particle concentration field
         self.particle_concentration = ti.field(
             float, shape=(particle_count,), name="particle_concentration"
         )
-        self.particle_concentration.from_numpy(input_particle_concentration)
 
         # scalar parameters as members
-        self.temperature = ti.static(input_temperature)
-        self.pressure = ti.static(input_pressure)
-        self.mass_accommodation = ti.static(input_mass_accommodation)
-        self.dynamic_viscosity = ti.static(input_dynamic_viscosity)
-        self.diffusion_coefficient = ti.static(input_diffusion_coefficient)
-        self.time_step = ti.static(input_time_step)
-        self.simulation_volume = ti.static(input_simulation_volume)
-
+        self.temperature         = ti.static(temperature)
+        self.pressure            = ti.static(pressure)
+        self.mass_accommodation  = ti.static(mass_accommodation)
+        self.dynamic_viscosity   = ti.static(dynamic_viscosity)
+        self.diffusion_coefficient = ti.static(diffusion_coefficient)
+        self.time_step           = ti.static(time_step)
+        self.simulation_volume   = ti.static(simulation_volume)
         # temporary fields
         self.radius = ti.field(float, shape=(particle_count,), name="radii")
         self.mass_transport_rate = ti.field(
@@ -169,6 +160,38 @@ class TiAerosolParticleResolved():
         )
         self.scaling_factor = ti.field(
             float, shape=(species_count,), name="scaling_factor"
+        )
+
+    # ------------------------------------------------------------------
+    # I/O helper – populate fields from NumPy arrays
+    # ------------------------------------------------------------------
+    def setup(
+        self,
+        species_masses_np: np.ndarray,
+        density_np: np.ndarray,
+        molar_mass_np: np.ndarray,
+        pure_vapor_pressure_np: np.ndarray,
+        vapor_concentration_np: np.ndarray,
+        kappa_value_np: np.ndarray,
+        surface_tension_np: np.ndarray,
+        gas_mass_np: np.ndarray,
+        particle_concentration_np: np.ndarray,
+    ) -> None:
+        """Copy the supplied NumPy arrays into the internal Taichi fields."""
+        self.species_masses.from_numpy(species_masses_np.astype(np_type))
+        self.density.from_numpy(density_np.astype(np_type))
+        self.molar_mass.from_numpy(molar_mass_np.astype(np_type))
+        self.pure_vapor_pressure.from_numpy(
+            pure_vapor_pressure_np.astype(np_type)
+        )
+        self.vapor_concentration.from_numpy(
+            vapor_concentration_np.astype(np_type)
+        )
+        self.kappa_value.from_numpy(kappa_value_np.astype(np_type))
+        self.surface_tension.from_numpy(surface_tension_np.astype(np_type))
+        self.gas_mass.from_numpy(gas_mass_np.astype(np_type))
+        self.particle_concentration.from_numpy(
+            particle_concentration_np.astype(np_type)
         )
 
     # --------------------------------------------------------------------- #
