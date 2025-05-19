@@ -61,10 +61,10 @@ _GAS_CONSTANT = float(GAS_CONSTANT)    # avoid python → kernel capture
 
 @ti.func
 def fget_partial_pressure(
-    concentration: ti.f64,
-    molar_mass: ti.f64,
-    temperature: ti.f64,
-) -> ti.f64:
+    concentration: float,
+    molar_mass: float,
+    temperature: float,
+) -> float:
     """
     Compute the element-wise partial pressure using the ideal gas law.
 
@@ -91,9 +91,9 @@ def fget_partial_pressure(
 
 @ti.func
 def fget_saturation_ratio_from_pressure(
-    partial_pressure: ti.f64,
-    pure_vapor_pressure: ti.f64,
-) -> ti.f64:
+    partial_pressure: float,
+    pure_vapor_pressure: float,
+) -> float:
     """
     Compute the element-wise saturation ratio from partial and pure vapor
     pressures.
@@ -120,10 +120,10 @@ def fget_saturation_ratio_from_pressure(
 
 @ti.kernel
 def kget_partial_pressure(
-    concentration: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    molar_mass: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    concentration: ti.types.ndarray(dtype=float, ndim=1),
+    molar_mass: ti.types.ndarray(dtype=float, ndim=1),
+    temperature: ti.types.ndarray(dtype=float, ndim=1),
+    result: ti.types.ndarray(dtype=float, ndim=1),
 ):
     """
     Taichi kernel for vectorized partial pressure calculation.
@@ -154,9 +154,9 @@ def kget_partial_pressure(
 
 @ti.kernel
 def kget_saturation_ratio_from_pressure(
-    partial_pressure: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    pure_vapor_pressure: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    partial_pressure: ti.types.ndarray(dtype=float, ndim=1),
+    pure_vapor_pressure: ti.types.ndarray(dtype=float, ndim=1),
+    result: ti.types.ndarray(dtype=float, ndim=1),
 ):
     """
     Taichi kernel for vectorized saturation ratio calculation.
@@ -223,10 +223,10 @@ def ti_get_partial_pressure(concentration, molar_mass, temperature):
         np.ravel, (concentration_b, molar_mass_b, temperature_b)
     )
     n_elements = concentration_flat.size
-    concentration_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    concentration_ti = ti.ndarray(dtype=float, shape=n_elements)
+    molar_mass_ti = ti.ndarray(dtype=float, shape=n_elements)
+    temperature_ti = ti.ndarray(dtype=float, shape=n_elements)
+    result_ti = ti.ndarray(dtype=float, shape=n_elements)
     concentration_ti.from_numpy(concentration_flat)
     molar_mass_ti.from_numpy(molar_mass_flat)
     temperature_ti.from_numpy(temperature_flat)
@@ -278,9 +278,9 @@ def ti_get_saturation_ratio_from_pressure(partial_pressure, pure_vapor_pressure)
         np.ravel, (partial_pressure_b, pure_vapor_pressure_b)
     )
     n_elements = partial_pressure_flat.size
-    partial_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    pure_vapor_pressure_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n_elements)
+    partial_pressure_ti = ti.ndarray(dtype=float, shape=n_elements)
+    pure_vapor_pressure_ti = ti.ndarray(dtype=float, shape=n_elements)
+    result_ti = ti.ndarray(dtype=float, shape=n_elements)
     partial_pressure_ti.from_numpy(partial_pressure_flat)
     pure_vapor_pressure_ti.from_numpy(pure_vapor_pressure_flat)
 

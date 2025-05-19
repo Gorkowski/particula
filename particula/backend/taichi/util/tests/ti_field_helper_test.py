@@ -4,9 +4,6 @@ import taichi as ti
 
 from particula.backend.taichi.util.ti_field_helper import FieldIO
 
-if not ti.is_initialized():
-    ti.init(arch=ti.cpu, default_fp=ti.f64)
-
 def test_fieldio_from_numpy_1d():
     src = np.random.rand(10).astype(np.float64)
     dst = ti.field(dtype=ti.f64, shape=src.shape[0])

@@ -6,6 +6,8 @@ import/initalize taichi
 
 import taichi as ti
 
+ti.init(arch=ti.cpu, default_fp=ti.f64, default_ip=ti.i64)
+
 from . import dynamics       # noqa: F401
 from . import particles      # noqa: F401
 from .particles import properties as _particle_properties   # noqa: F401

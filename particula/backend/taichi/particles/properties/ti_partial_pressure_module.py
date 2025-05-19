@@ -5,19 +5,19 @@ from particula.backend.dispatch_register import register
 
 @ti.func
 def fget_partial_pressure_delta(
-    partial_pressure_gas: ti.f64,
-    partial_pressure_particle: ti.f64,
-    kelvin_term: ti.f64,
-) -> ti.f64:
+    partial_pressure_gas: float,
+    partial_pressure_particle: float,
+    kelvin_term: float,
+) -> float:
     return partial_pressure_gas - partial_pressure_particle * kelvin_term
 
 
 @ti.kernel
 def kget_partial_pressure_delta(
-    partial_pressure_gas: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    partial_pressure_particle: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    kelvin_term: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    partial_pressure_gas: ti.types.ndarray(dtype=float, ndim=1),
+    partial_pressure_particle: ti.types.ndarray(dtype=float, ndim=1),
+    kelvin_term: ti.types.ndarray(dtype=float, ndim=1),
+    result: ti.types.ndarray(dtype=float, ndim=1),
 ):
     for i in range(result.shape[0]):
         result[i] = fget_partial_pressure_delta(
@@ -43,10 +43,10 @@ def ti_get_partial_pressure_delta(
         raise ValueError("All input arrays must share the same shape.")
     n = pg.size
 
-    pg_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    pp_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    kt_ti = ti.ndarray(dtype=ti.f64, shape=n)
-    res_ti = ti.ndarray(dtype=ti.f64, shape=n)
+    pg_ti = ti.ndarray(dtype=float, shape=n)
+    pp_ti = ti.ndarray(dtype=float, shape=n)
+    kt_ti = ti.ndarray(dtype=float, shape=n)
+    res_ti = ti.ndarray(dtype=float, shape=n)
     pg_ti.from_numpy(pg)
     pp_ti.from_numpy(pp)
     kt_ti.from_numpy(kt)

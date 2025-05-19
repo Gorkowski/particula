@@ -21,10 +21,10 @@ GAS_R = float(GAS_CONSTANT)
 
 @ti.func
 def fget_first_order_mass_transport_coefficient(
-    particle_radius: ti.f64,
-    vapor_transition: ti.f64,
-    diffusion_coefficient: ti.f64,
-) -> ti.f64:
+    particle_radius: float,
+    vapor_transition: float,
+    diffusion_coefficient: float,
+) -> float:
     """
     Compute the first-order mass-transport coefficient.
 
@@ -56,11 +56,11 @@ def fget_first_order_mass_transport_coefficient(
 
 @ti.func
 def fget_mass_transfer_rate(
-    pressure_delta: ti.f64,
-    first_order_mass_transport: ti.f64,
-    temperature: ti.f64,
-    molar_mass: ti.f64,
-) -> ti.f64:
+    pressure_delta: float,
+    first_order_mass_transport: float,
+    temperature: float,
+    molar_mass: float,
+) -> float:
     """
     Compute mass transfer rate for condensation/evaporation.
 
@@ -96,10 +96,10 @@ def fget_mass_transfer_rate(
 
 @ti.func
 def fget_radius_transfer_rate(
-    mass_rate: ti.f64,
-    particle_radius: ti.f64,
-    density: ti.f64,
-) -> ti.f64:
+    mass_rate: float,
+    particle_radius: float,
+    density: float,
+) -> float:
     """
     Compute rate of change of particle radius.
 
@@ -129,14 +129,14 @@ def fget_radius_transfer_rate(
 
 @ti.func
 def fget_first_order_mass_transport_via_system_state(
-    particle_radius: ti.f64,
-    molar_mass: ti.f64,
-    mass_accommodation: ti.f64,
-    temperature: ti.f64,
-    pressure: ti.f64,
-    dynamic_viscosity: ti.f64,
-    diffusion_coefficient: ti.f64,
-) -> ti.f64:
+    particle_radius: float,
+    molar_mass: float,
+    mass_accommodation: float,
+    temperature: float,
+    pressure: float,
+    dynamic_viscosity: float,
+    diffusion_coefficient: float,
+) -> float:
     """
     Compute first-order mass transport coefficient from system state.
 
@@ -179,10 +179,10 @@ def fget_first_order_mass_transport_via_system_state(
 
 @ti.kernel
 def kget_first_order_mass_transport_coefficient(
-    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    vapor_transition: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    diffusion_coefficient: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    particle_radius: ti.types.ndarray(dtype=float, ndim=1),
+    vapor_transition: ti.types.ndarray(dtype=float, ndim=1),
+    diffusion_coefficient: ti.types.ndarray(dtype=float, ndim=1),
+    result: ti.types.ndarray(dtype=float, ndim=1),
 ):
     for i in range(result.shape[0]):
         result[i] = fget_first_order_mass_transport_coefficient(
@@ -197,11 +197,11 @@ kget_first_order_mass_transport_k = (
 
 @ti.kernel
 def kget_mass_transfer_rate(
-    pressure_delta: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    first_order_mass_transport: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    temperature: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    molar_mass: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    pressure_delta: ti.types.ndarray(dtype=float, ndim=1),
+    first_order_mass_transport: ti.types.ndarray(dtype=float, ndim=1),
+    temperature: ti.types.ndarray(dtype=float, ndim=1),
+    molar_mass: ti.types.ndarray(dtype=float, ndim=1),
+    result: ti.types.ndarray(dtype=float, ndim=1),
 ):
     for i in range(result.shape[0]):
         result[i] = fget_mass_transfer_rate(
@@ -211,10 +211,10 @@ def kget_mass_transfer_rate(
 
 @ti.kernel
 def kget_radius_transfer_rate(
-    mass_rate: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    density: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    result: ti.types.ndarray(dtype=ti.f64, ndim=1),
+    mass_rate: ti.types.ndarray(dtype=float, ndim=1),
+    particle_radius: ti.types.ndarray(dtype=float, ndim=1),
+    density: ti.types.ndarray(dtype=float, ndim=1),
+    result: ti.types.ndarray(dtype=float, ndim=1),
 ):
     for i in range(result.shape[0]):
         result[i] = fget_radius_transfer_rate(
@@ -224,14 +224,14 @@ def kget_radius_transfer_rate(
 
 @ti.kernel
 def kget_first_order_mass_transport_via_system_state(
-    particle_radius: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    molar_mass: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    mass_accommodation: ti.types.ndarray(dtype=ti.f64, ndim=1),
-    temperature: ti.f64,
-    pressure: ti.f64,
-    dynamic_viscosity: ti.f64,
-    diffusion_coefficient: ti.f64,
-    result: ti.types.ndarray(dtype=ti.f64, ndim=2),
+    particle_radius: ti.types.ndarray(dtype=float, ndim=1),
+    molar_mass: ti.types.ndarray(dtype=float, ndim=1),
+    mass_accommodation: ti.types.ndarray(dtype=float, ndim=1),
+    temperature: float,
+    pressure: float,
+    dynamic_viscosity: float,
+    diffusion_coefficient: float,
+    result: ti.types.ndarray(dtype=float, ndim=2),
 ):
     for i in range(particle_radius.shape[0]):  # particles
         for j in range(molar_mass.shape[0]):  # species
@@ -292,10 +292,10 @@ def ti_get_first_order_mass_transport_coefficient(
         diffusion_coefficient_array = np.atleast_1d(diffusion_coefficient).astype(np.float64)
         if diffusion_coefficient_array.size != n_points:
             diffusion_coefficient_array = np.broadcast_to(diffusion_coefficient_array, (n_points,))
-    particle_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    vapor_transition_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    diffusion_coefficient_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    particle_radius_ti = ti.ndarray(dtype=float, shape=n_points)
+    vapor_transition_ti = ti.ndarray(dtype=float, shape=n_points)
+    diffusion_coefficient_ti = ti.ndarray(dtype=float, shape=n_points)
+    result_ti = ti.ndarray(dtype=float, shape=n_points)
     particle_radius_ti.from_numpy(particle_radius_array)
     vapor_transition_ti.from_numpy(vapor_transition_array)
     diffusion_coefficient_ti.from_numpy(diffusion_coefficient_array)
@@ -347,11 +347,11 @@ def ti_get_mass_transfer_rate(
     temperature_array = np.atleast_1d(temperature).astype(np.float64)
     molar_mass_array = np.atleast_1d(molar_mass).astype(np.float64)
     n_points = pressure_delta_array.size
-    pressure_delta_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    first_order_mass_transport_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    temperature_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    pressure_delta_ti = ti.ndarray(dtype=float, shape=n_points)
+    first_order_mass_transport_ti = ti.ndarray(dtype=float, shape=n_points)
+    temperature_ti = ti.ndarray(dtype=float, shape=n_points)
+    molar_mass_ti = ti.ndarray(dtype=float, shape=n_points)
+    result_ti = ti.ndarray(dtype=float, shape=n_points)
     pressure_delta_ti.from_numpy(pressure_delta_array)
     first_order_mass_transport_ti.from_numpy(first_order_mass_transport_array)
     temperature_ti.from_numpy(
@@ -405,10 +405,10 @@ def ti_get_radius_transfer_rate(mass_rate, particle_radius, density):
     particle_radius_array = np.atleast_1d(particle_radius).astype(np.float64)
     density_array = np.atleast_1d(density).astype(np.float64)
     n_points = mass_rate_array.size
-    mass_rate_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    particle_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    density_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=n_points)
+    mass_rate_ti = ti.ndarray(dtype=float, shape=n_points)
+    particle_radius_ti = ti.ndarray(dtype=float, shape=n_points)
+    density_ti = ti.ndarray(dtype=float, shape=n_points)
+    result_ti = ti.ndarray(dtype=float, shape=n_points)
     mass_rate_ti.from_numpy(mass_rate_array)
     particle_radius_ti.from_numpy(particle_radius_array)
     density_ti.from_numpy(
@@ -471,10 +471,10 @@ def ti_get_first_order_mass_transport_via_system_state(
         )
 
     n_particles, n_species = particle_radius_array.size, molar_mass_array.size
-    particle_radius_ti = ti.ndarray(dtype=ti.f64, shape=n_particles)
-    molar_mass_ti = ti.ndarray(dtype=ti.f64, shape=n_species)
-    mass_accommodation_ti = ti.ndarray(dtype=ti.f64, shape=n_particles)
-    result_ti = ti.ndarray(dtype=ti.f64, shape=(n_particles, n_species))
+    particle_radius_ti = ti.ndarray(dtype=float, shape=n_particles)
+    molar_mass_ti = ti.ndarray(dtype=float, shape=n_species)
+    mass_accommodation_ti = ti.ndarray(dtype=float, shape=n_particles)
+    result_ti = ti.ndarray(dtype=float, shape=(n_particles, n_species))
 
     particle_radius_ti.from_numpy(particle_radius_array)
     molar_mass_ti.from_numpy(molar_mass_array)
