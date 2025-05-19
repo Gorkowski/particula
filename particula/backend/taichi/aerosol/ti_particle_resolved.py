@@ -307,31 +307,39 @@ def calculate_first_order_coefficient():
     for i in range(particle_count):
         update_first_order_coefficient(i)
 
+@ti.func
+def _update_scaling_factors(time_step: float):
+    """
+    Internal routine that fills `total_requested_mass` and `scaling_factor`.
 
-@ti.kernel
-def calculate_scaling_factors(time_step: float):
+    This is the exact logic that used to live inside
+    `calculate_scaling_factors`.
     """
-    1. total_requested_mass[j] = Σ_i (mass_rate[i,j] * time_step
-                                     * particle_concentration[i])
-    2. scaling_factor[j] = 1 if request ≤ gas_mass[j] else
-                           gas_mass[j] / total_requested_mass[j]
-    """
-    # zero the accumulator
+    # 1. reset accumulator
     for j in range(species_count):
         total_requested_mass[j] = 0.0
 
-    # accumulate requested mass
+    # 2. total requested mass per species
     for i, j in ti.ndrange(particle_count, species_count):
-        particle_concentration[i] = 1 / simulation_volume  # for particle resolved
+        particle_concentration[i] = 1.0 / simulation_volume  # particle-resolved
         total_requested_mass[j] += (
             mass_transport_rate[i, j] * time_step * particle_concentration[i]
         )
 
-    # build scaling factors
+    # 3. build scaling factors
     for j in range(species_count):
         scaling_factor[j] = 1.0
         if total_requested_mass[j] > gas_mass[j]:
             scaling_factor[j] = gas_mass[j] / total_requested_mass[j]
+
+@ti.kernel
+def calculate_scaling_factors(time_step: float):
+    """
+    Populate `scaling_factor` for every gas species.
+
+    Delegates the actual computation to `_update_scaling_factors`.
+    """
+    _update_scaling_factors(time_step)
 
 @ti.kernel
 def calculate_transferable_mass(time_step: float):
