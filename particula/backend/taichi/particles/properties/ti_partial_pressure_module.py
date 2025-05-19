@@ -19,7 +19,7 @@ def kget_partial_pressure_delta(
     kelvin_term: ti.types.ndarray(dtype=float, ndim=1),
     result: ti.types.ndarray(dtype=float, ndim=1),
 ):
-    for i in range(result.shape[0]):
+    for i in ti.ndrange(result.shape[0]):
         result[i] = fget_partial_pressure_delta(
             partial_pressure_gas[i], partial_pressure_particle[i], kelvin_term[i]
         )
