@@ -271,7 +271,7 @@ def make_python_step_callable(particle, gas, cond):
 if __name__ == "__main__":
     N_SPECIES = 10
     PARTICLE_COUNTS = np.logspace(
-        1, 6, num=10, dtype=np.int64
+        1, 6, num=20, dtype=np.int64
     )  # 10^1 to 10^5 particles
 
     # build a single condensation object (species count is fixed)
@@ -292,12 +292,12 @@ if __name__ == "__main__":
 
     for n_particles in PARTICLE_COUNTS:
         # ----- Taichi objects & stats ---------------------------------------
-        particle, gas = _build_particle_and_gas(n_particles, N_SPECIES)
-        stats_ti = get_function_benchmark(
-            make_step_callable(particle, gas, condensation_ti),
-            ops_per_call=1,
-            max_run_time_s=3.0,
-        )
+        # particle, gas = _build_particle_and_gas(n_particles, N_SPECIES)
+        # stats_ti = get_function_benchmark(
+        #     make_step_callable(particle, gas, condensation_ti),
+        #     ops_per_call=1,
+        #     max_run_time_s=3.0,
+        # )
 
         # ----- Python objects & stats ---------------------------------------
         py_particle, py_gas = _build_particle_and_gas_python(
@@ -318,17 +318,16 @@ if __name__ == "__main__":
 
         # ----- build header only once ---------------------------------------
         if csv_header is None:
-            taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
+            # taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
             python_headers = ["python_" + h for h in stats_py["array_headers"]]
             fused_headers  = ["fused_"  + h for h in stats_pr["array_headers"]]
-            csv_header = ["array_length", *python_headers, *taichi_headers, *fused_headers]
+            csv_header = ["array_length", *python_headers, *fused_headers]
 
         # ----- collect row ---------------------------------------------------
         rows.append(
             [
                 n_particles,
                 *stats_py["array_stats"],
-                *stats_ti["array_stats"],
                 *stats_pr["array_stats"],
             ]
         )
