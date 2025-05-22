@@ -19,11 +19,11 @@ def _compute_mass_weighted(
     density: ti.template(),
     surface_tension: ti.template(),
 ) -> ti.types.vector(2, ti.f64):
-    """Return (surface_tension, density) for the given particle index."""
-    σ_eff, ρ_eff = fget_mass_weighted_density_and_surface_tension(
+    """Return (sigma_eff, rho_eff) for the given particle index."""
+    sigma_eff, rho_eff = fget_mass_weighted_density_and_surface_tension(
         particle_index, species_masses, density, surface_tension
     )
-    return ti.Vector([σ_eff, ρ_eff])
+    return ti.Vector([sigma_eff, rho_eff])
 
 
 class TestMassWeightedProperties(unittest.TestCase):
@@ -51,8 +51,8 @@ class TestMassWeightedProperties(unittest.TestCase):
 
     def test_mass_weighted_properties(self):
         """Compare Taichi results against analytical NumPy reference."""
-        σ_ti = ti.field(dtype=float, shape=self.n_particles)
-        ρ_ti = ti.field(dtype=float, shape=self.n_particles)
+        sigma_ti = ti.field(dtype=float, shape=self.n_particles)
+        rho_ti   = ti.field(dtype=float, shape=self.n_particles)
 
         for p in range(self.n_particles):
             vec = _compute_mass_weighted(
@@ -61,10 +61,10 @@ class TestMassWeightedProperties(unittest.TestCase):
                 self.density,
                 self.surface_tension,
             )
-            σ_ti[p], ρ_ti[p] = vec[0], vec[1]
+            sigma_ti[p], rho_ti[p] = vec[0], vec[1]
 
         mass_sum = np.sum(self.species_masses_np, axis=1, keepdims=True)
-        σ_ref = (
+        sigma_ref = (
             np.sum(
                 self.species_masses_np * self.surface_tension_np,
                 axis=1,
@@ -72,16 +72,16 @@ class TestMassWeightedProperties(unittest.TestCase):
             )
             / mass_sum
         ).squeeze()
-        ρ_ref = (
+        rho_ref = (
             np.sum(self.species_masses_np * self.density_np, axis=1, keepdims=True)
             / mass_sum
         ).squeeze()
 
         np.testing.assert_allclose(
-            σ_ti.to_numpy(), σ_ref, rtol=1e-7, atol=1e-6
+            sigma_ti.to_numpy(), sigma_ref, rtol=1e-7, atol=1e-6
         )
         np.testing.assert_allclose(
-            ρ_ti.to_numpy(), ρ_ref, rtol=1e-7, atol=1e-6
+            rho_ti.to_numpy(),   rho_ref, rtol=1e-7, atol=1e-6
         )
 
 
