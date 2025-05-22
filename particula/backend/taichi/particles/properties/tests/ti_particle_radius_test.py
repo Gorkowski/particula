@@ -1,3 +1,6 @@
+"""Unit tests validating the Taichi implementation of particle-radius
+calculation (fget_particle_radius_via_masses)."""
+
 import math
 import numpy as np
 import taichi as ti
@@ -15,12 +18,15 @@ def _compute_radius(
     species_masses: ti.template(),
     density: ti.template(),
 ) -> ti.f64:
+    """Return particle radius [m] for the given index using Taichi."""
     return fget_particle_radius_via_masses(particle_index, species_masses, density)
 
 
 class TestParticleRadiusSingle(unittest.TestCase):
+    """Test suite for fget_particle_radius_via_masses (matrix input)."""
 
     def setUp(self):
+        """Create random NumPy data and copy it into Taichi fields."""
         n_particles, n_species = 5, 3
         self.species_masses = ti.field(dtype=ti.f64, shape=(n_particles, n_species))
         self.density = ti.field(dtype=ti.f64, shape=n_species)
@@ -32,6 +38,7 @@ class TestParticleRadiusSingle(unittest.TestCase):
         self.density.from_numpy(self.density_np)
 
     def test_mass_matrix(self):
+        """Check Taichi radii against analytical reference for all particles."""
         radius_ti = ti.field(dtype=ti.f64, shape=self.species_masses.shape[0])
         for i in range(self.species_masses.shape[0]):
             radius_ti[i] = _compute_radius(
