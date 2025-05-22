@@ -11,9 +11,10 @@ import particula.backend.taichi.dynamics.condensation as condensation
 
 GAS_CONSTANT = ti.static(par.util.constants.GAS_CONSTANT)
 
+
 # taichi data class for input conversion and kernel execution
 @ti.data_oriented
-class TiAerosolParticleResolved():
+class TiAerosolParticleResolved:
     """
     Aerosol particle resolved simulation class. This class is used to
     hold the data and methods for the particle-resolved simulation.
@@ -48,7 +49,7 @@ class TiAerosolParticleResolved():
         self.density = ti.field(float, shape=(species_count,), name="density")
         # create molar mass field
         self.molar_mass = ti.field(
-            float, shape=(species_count,), name="molar_mass"
+            ti.float64, shape=(species_count,), name="molar_mass"
         )
         # create pure vapor pressure field
         self.pure_vapor_pressure = ti.field(
@@ -78,38 +79,19 @@ class TiAerosolParticleResolved():
         )
 
         # scalar parameters as members
-        self.temperature         = ti.static(temperature)
-        self.pressure            = ti.static(pressure)
-        self.mass_accommodation  = ti.static(mass_accommodation)
-        self.dynamic_viscosity   = ti.static(dynamic_viscosity)
+        self.temperature = ti.static(temperature)
+        self.pressure = ti.static(pressure)
+        self.mass_accommodation = ti.static(mass_accommodation)
+        self.dynamic_viscosity = ti.static(dynamic_viscosity)
         self.diffusion_coefficient = ti.static(diffusion_coefficient)
-        self.time_step           = ti.static(time_step)
-        self.simulation_volume   = ti.static(simulation_volume)
+        self.time_step = ti.static(time_step)
+        self.simulation_volume = ti.static(simulation_volume)
         # temporary fields
         self.radius = ti.field(float, shape=(particle_count,), name="radii")
         self.mass_transport_rate = ti.field(
             float,
             shape=(particle_count, species_count),
             name="mass_transport_rate",
-        )
-        self.first_order_coefficient = ti.field(
-            float,
-            shape=(particle_count, species_count),
-            name="first_order_coefficient",
-        )
-        self.partial_pressure = ti.field(
-            float,
-            shape=(particle_count, species_count),
-            name="partial_pressure",
-        )
-        self.pressure_delta = ti.field(
-            float, shape=(particle_count, species_count), name="pressure_delta"
-        )
-        self.kelvin_term = ti.field(
-            float, shape=(particle_count, species_count), name="kelvin_term"
-        )
-        self.kelvin_radius = ti.field(
-            float, shape=(particle_count, species_count), name="kelvin_radius"
         )
         self.transferable_mass = ti.field(
             float,
@@ -142,77 +124,17 @@ class TiAerosolParticleResolved():
         self.species_masses.from_numpy(species_masses_np)
         self.density.from_numpy(density_np)
         self.molar_mass.from_numpy(molar_mass_np)
-        self.pure_vapor_pressure.from_numpy(
-            pure_vapor_pressure_np
-        )
-        self.vapor_concentration.from_numpy(
-            vapor_concentration_np
-        )
+        self.pure_vapor_pressure.from_numpy(pure_vapor_pressure_np)
+        self.vapor_concentration.from_numpy(vapor_concentration_np)
         self.kappa_value.from_numpy(kappa_value_np)
         self.surface_tension.from_numpy(surface_tension_np)
         self.gas_mass.from_numpy(gas_mass_np)
-        self.particle_concentration.from_numpy(
-            particle_concentration_np
-        )
+        self.particle_concentration.from_numpy(particle_concentration_np)
 
+    # ------------------------------------------------------------------
     # --------------------------------------------------------------------- #
     # Instance-aware Taichi helpers
     # --------------------------------------------------------------------- #
-
-    @ti.func
-    def update_radius(self, p: int):
-        volume = 0.0
-        for s in ti.ndrange(self.density.shape[0]):
-            volume += self.species_masses[p, s] / self.density[s]
-        r_p = ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
-        self.radius[p] = r_p
-
-    @ti.func
-    def update_first_order_coefficient(self, p: int):
-        r_p = self.radius[p]
-        for s in ti.ndrange(self.molar_mass.shape[0]):
-            k1 = condensation.fget_first_order_mass_transport_via_system_state(
-                particle_radius=r_p,
-                molar_mass=self.molar_mass[s],
-                mass_accommodation=self.mass_accommodation,
-                temperature=self.temperature,
-                pressure=self.pressure,
-                dynamic_viscosity=self.dynamic_viscosity,
-                diffusion_coefficient=self.diffusion_coefficient,
-            )
-            self.first_order_coefficient[p, s] = k1
-
-    @ti.func
-    def update_kelvin_term(self, p: int):
-        r_p = self.radius[p]
-        w_mass = 0.0
-        sig_sum = 0.0
-        rho_sum = 0.0
-        for s in ti.ndrange(self.density.shape[0]):
-            w = self.species_masses[p, s]
-            w_mass += w
-            sig_sum += self.surface_tension[s] * w
-            rho_sum += self.density[s] * w
-        sig_eff = sig_sum / w_mass
-        rho_eff = rho_sum / w_mass
-        for s in ti.ndrange(self.density.shape[0]):
-            r_k = particle_properties.fget_kelvin_radius(
-                sig_eff, rho_eff, self.molar_mass[s], self.temperature
-            )
-            kel = particle_properties.fget_kelvin_term(r_p, r_k)
-            self.kelvin_term[p, s] = kel
-
-    @ti.func
-    def update_partial_pressure(self, p: int):
-        for s in ti.ndrange(self.density.shape[0]):
-            p_g = gas_properties.fget_partial_pressure(
-                self.vapor_concentration[s],
-                self.molar_mass[s],
-                self.temperature,
-            )
-            kel = self.kelvin_term[p, s]
-            dP = particle_properties.fget_partial_pressure_delta(p_g, p_g, kel)
-            self.pressure_delta[p, s] = dP
 
     @ti.func
     def update_mass_transport_rate(self, p: int):
@@ -266,8 +188,8 @@ class TiAerosolParticleResolved():
 
     @ti.func
     def update_species_masses(self):
-        for i in ti.ndrange(self.species_masses.shape[0]):
-            for j in ti.ndrange(self.species_masses.shape[1]):
+        for i in range(self.species_masses.shape[0]):
+            for j in range(self.species_masses.shape[1]):
                 if self.particle_concentration[i] > 0.0:
                     self.species_masses[i, j] = (
                         self.species_masses[i, j]
@@ -298,29 +220,27 @@ class TiAerosolParticleResolved():
 
     @ti.kernel
     def fused_step(self):
-        for p in ti.ndrange(self.species_masses.shape[0]):
-            # a) radius
-            volume = 0.0
-            for s in ti.ndrange(self.density.shape[0]):
-                volume += self.species_masses[p, s] / self.density[s]
-            r_p = ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
-            self.radius[p] = r_p
+        for p in ti.ndrange(int(self.species_masses.shape[0])):
 
-            # b) effective bulk properties (weighted averages)
-            w_mass = 0.0
-            sig_sum = 0.0
-            rho_sum = 0.0
-            for s in ti.ndrange(self.density.shape[0]):
-                w = self.species_masses[p, s]
-                w_mass += w
-                sig_sum += self.surface_tension[s] * w
-                rho_sum += self.density[s] * w
-            sig_eff = sig_sum / w_mass
-            rho_eff = rho_sum / w_mass
+            particle_radius = get_particle_radius(
+                particle_index=p,
+                species_masses=self.species_masses,
+                density=self.density,
+            )
 
-            for s in ti.ndrange(self.density.shape[0]):
-                k1 = condensation.fget_first_order_mass_transport_via_system_state(
-                    particle_radius=r_p,
+            effective_surface_tension, effective_density = (
+                get_mass_weighted_properties(
+                    particle_index=p,
+                    species_masses=self.species_masses,
+                    density=self.density,
+                    surface_tension=self.surface_tension,
+                )
+            )
+
+            for s in range(ti.static(self.density.shape[0])): #range(int(self.density.shape[0])):
+
+                first_order_mass_transport_coefficient = condensation.fget_first_order_mass_transport_via_system_state(
+                    particle_radius=particle_radius,
                     molar_mass=self.molar_mass[s],
                     mass_accommodation=self.mass_accommodation,
                     temperature=self.temperature,
@@ -328,27 +248,34 @@ class TiAerosolParticleResolved():
                     dynamic_viscosity=self.dynamic_viscosity,
                     diffusion_coefficient=self.diffusion_coefficient,
                 )
-                self.first_order_coefficient[p, s] = k1
+                # self.first_order_coefficient[p, s] = first_order_mass_transport_coefficient
 
-                r_k = particle_properties.fget_kelvin_radius(
-                    sig_eff, rho_eff, self.molar_mass[s], self.temperature
+                kelvin_radius = particle_properties.fget_kelvin_radius(
+                    effective_surface_tension,
+                    effective_density,
+                    self.molar_mass[s],
+                    self.temperature,
                 )
-                kel = particle_properties.fget_kelvin_term(r_p, r_k)
-                self.kelvin_term[p, s] = kel
+                kelvin_term = particle_properties.fget_kelvin_term(
+                    particle_radius, kelvin_radius
+                )
+                # self.kelvin_term[p, s] = kelvin_term
 
-                p_g = gas_properties.fget_partial_pressure(
+                partial_pressure_gas = gas_properties.fget_partial_pressure(
                     self.vapor_concentration[s],
                     self.molar_mass[s],
                     self.temperature,
                 )
-                dP = particle_properties.fget_partial_pressure_delta(
-                    p_g, p_g, kel
+                pressure_delta = (
+                    particle_properties.fget_partial_pressure_delta(
+                        partial_pressure_gas, partial_pressure_gas, kelvin_term
+                    )
                 )
-                self.pressure_delta[p, s] = dP
+                # self.pressure_delta[p, s] = pressure_delta
 
                 self.mass_transport_rate[p, s] = (
-                    k1
-                    * dP
+                    first_order_mass_transport_coefficient
+                    * pressure_delta
                     * self.molar_mass[s]
                     / (par.util.constants.GAS_CONSTANT * self.temperature)
                 )
@@ -357,3 +284,51 @@ class TiAerosolParticleResolved():
             self.update_transferable_mass(i, self.time_step)
         self.update_gas_mass()
         self.update_species_masses()
+
+
+    # @ti.func
+    # def get_particle_radius(self, p):
+    #     volume = 0.0
+    #     for s in ti.ndrange(self.density.shape[0]):
+    #         volume += self.species_masses[p, s] / self.density[s]
+    #     r_p = ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
+    #     return r_p
+
+
+@ti.func
+def get_particle_radius(
+    particle_index: int,
+    species_masses: ti.template(),
+    density: ti.template(),
+) -> float:
+    """
+    Calculate the radius of a particle based on its species masses and density.
+    """
+    volume = 0.0
+    for s in ti.ndrange(density.shape[0]):
+        volume += species_masses[particle_index, s] / density[s]
+    return ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
+
+
+@ti.func
+def get_mass_weighted_properties(
+    particle_index: int,
+    species_masses: ti.template(),
+    density: ti.template(),
+    surface_tension: ti.template(),
+) -> tuple:
+    """
+    Calculate the effective surface tension and density of a particle based on
+    its species masses and density.
+    """
+    weighted_mass_sum = 0.0
+    surface_tension_sum = 0.0
+    density_sum = 0.0
+    for species_index in range(ti.static(density.shape[0])):
+        mass = species_masses[particle_index, species_index]
+        weighted_mass_sum += mass
+        surface_tension_sum += surface_tension[species_index] * mass
+        density_sum += density[species_index] * mass
+    effective_surface_tension = surface_tension_sum / weighted_mass_sum
+    effective_density = density_sum / weighted_mass_sum
+    return (effective_surface_tension, effective_density)

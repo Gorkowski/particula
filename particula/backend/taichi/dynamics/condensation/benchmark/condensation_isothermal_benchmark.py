@@ -359,3 +359,6 @@ if __name__ == "__main__":
         encoding="utf-8",
     ) as fh:
         json.dump(get_system_info(), fh, indent=2)
+
+    print(f"Benchmark results saved to {csv_file}")
+    print(stats_pr['report'])
