@@ -222,7 +222,7 @@ class TiAerosolParticleResolved:
     def fused_step(self):
         for p in ti.ndrange(int(self.species_masses.shape[0])):
 
-            particle_radius = get_particle_radius(
+            particle_radius = get_particle_radius_via_masses(
                 particle_index=p,
                 species_masses=self.species_masses,
                 density=self.density,
@@ -286,17 +286,8 @@ class TiAerosolParticleResolved:
         self.update_species_masses()
 
 
-    # @ti.func
-    # def get_particle_radius(self, p):
-    #     volume = 0.0
-    #     for s in ti.ndrange(self.density.shape[0]):
-    #         volume += self.species_masses[p, s] / self.density[s]
-    #     r_p = ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
-    #     return r_p
-
-
 @ti.func
-def get_particle_radius(
+def get_particle_radius_via_masses(
     particle_index: int,
     species_masses: ti.template(),
     density: ti.template(),

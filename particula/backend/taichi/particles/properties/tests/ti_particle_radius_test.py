@@ -11,11 +11,11 @@ ti.init(arch=ti.cpu, default_fp=64)
 # -----------------------------  Taichi fields  ----------------------------- #
 n_particles, n_species = 1, 1
 species_masses = ti.field(dtype=ti.f64, shape=(n_particles, n_species))
-density         = ti.field(dtype=ti.f64, shape=n_species)
+density = ti.field(dtype=ti.f64, shape=n_species)
 
 # initialise with simple values → volume = 1
-species_masses[0, 0] = 1.0    # mass  [kg]
-density[0]           = 1.0    # ρ     [kg m⁻³]
+species_masses[0, 0] = 1.0  # mass  [kg]
+density[0] = 1.0  # ρ     [kg m⁻³]
 
 
 @ti.kernel
