@@ -15,7 +15,7 @@ def fget_particle_radius_via_masses(
     """
     Calculate the radius of a particle based on its species masses and density.
     """
-    volume = 0.0
+    volume = ti.cast(0.0, ti.f64)      # keep accumulator in float-64, avoids Taichi precision warning
     for s in range(density.shape[0]):
         volume += species_masses[particle_index, s] / density[s]
     return ti.pow(3.0 * volume / (4.0 * ti.math.pi), 1.0 / 3.0)
