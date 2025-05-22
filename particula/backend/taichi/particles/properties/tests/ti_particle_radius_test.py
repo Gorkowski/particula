@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import taichi as ti
+import unittest
 
 from particula.backend.taichi.particles.properties.ti_particle_radius import (
     get_particle_radius_via_masses,
@@ -23,14 +24,20 @@ def _compute_radius() -> ti.f64:
     return get_particle_radius_via_masses(0, species_masses, density)
 
 
-def test_get_particle_radius_via_masses():
-    """Check that the Taichi helper returns the analytically expected radius."""
-    radius_ti = _compute_radius()
+# --------------------------------------------------------------------------- #
+#  Unit test class using unittest                                             #
+# --------------------------------------------------------------------------- #
+class TestParticleRadius(unittest.TestCase):
 
-    # analytical reference: r = (3 V / 4π)^{1/3}; here V = 1
-    radius_ref = (3.0 / (4.0 * math.pi)) ** (1.0 / 3.0)
+    def test_single_particle_radius(self):
+        radius_ti = _compute_radius()
+        radius_ref = (3.0 / (4.0 * math.pi)) ** (1.0 / 3.0)
+        self.assertTrue(np.isclose(radius_ti, radius_ref, rtol=1e-6))
 
-    assert np.isclose(radius_ti, radius_ref, rtol=1e-6)
+    def test_matrix_particle_radii(self):
+        _compute_radii()
+        radii_ti = radii_field.to_numpy()
+        self.assertTrue(np.allclose(radii_ti, radii_ref, rtol=1e-6))
 
 
  # --------------------------------------------------------------------------- #
