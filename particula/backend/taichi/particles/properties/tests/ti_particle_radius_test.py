@@ -85,3 +85,6 @@ class TestParticleRadius(unittest.TestCase):
      _compute_radii()
      radii_ti = radii_field.to_numpy()
      assert np.allclose(radii_ti, radii_ref, rtol=1e-6)
+
+ if __name__ == "__main__":
+     unittest.main()
