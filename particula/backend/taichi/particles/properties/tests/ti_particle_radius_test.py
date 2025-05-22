@@ -40,51 +40,51 @@ class TestParticleRadius(unittest.TestCase):
         self.assertTrue(np.allclose(radii_ti, radii_ref, rtol=1e-6))
 
 
- # --------------------------------------------------------------------------- #
- #  problem size and reference data (choose values that give easy radii)       #
- # --------------------------------------------------------------------------- #
- n_particles, n_species = 3, 2
-                                                                                                                                                                                                                                                    
- # numpy helpers for reference calculations
- species_masses_np = np.array(
-     [
-         [1.0, 1.0],   # particle 0  → V = 1/ρ₀ + 1/ρ₁
-         [8.0, 0.0],   # particle 1  → V = 8/ρ₀
-         [0.0, 27.0],  # particle 2  → V = 27/ρ₁
-     ],
-     dtype=np.float64,
- )
- density_np = np.array([1.0, 2.0], dtype=np.float64)  # ρ₀ = 1, ρ₁ = 2
-                                                                                                                                                                                                                                                    
- # expected volumes / radii
- volumes = (species_masses_np / density_np).sum(axis=1)
- radii_ref = (3.0 * volumes / (4.0 * math.pi)) ** (1.0 / 3.0)
-                                                                                                                                                                                                                                                    
- # --------------------------------------------------------------------------- #
- #  Taichi fields                                                              #
- # --------------------------------------------------------------------------- #
- species_masses = ti.field(dtype=ti.f64, shape=(n_particles, n_species))
- density        = ti.field(dtype=ti.f64, shape=n_species)
- radii_field    = ti.field(dtype=ti.f64, shape=n_particles)
-                                                                                                                                                                                                                                                    
- # copy data into Taichi fields (plain Python loops to avoid extra helpers)
- for i, j in np.ndindex(species_masses_np.shape):
-     species_masses[i, j] = species_masses_np[i, j]
- for j in range(n_species):
-     density[j] = density_np[j]
-                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                    
- @ti.kernel
- def _compute_radii():
-     for p in range(n_particles):
-         radii_field[p] = get_particle_radius_via_masses(p, species_masses, density)
-                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                    
- def test_get_particle_radius_via_masses_matrix():
-     """Check radii for a particles × species matrix."""
-     _compute_radii()
-     radii_ti = radii_field.to_numpy()
-     assert np.allclose(radii_ti, radii_ref, rtol=1e-6)
+# --------------------------------------------------------------------------- #
+#  problem size and reference data (choose values that give easy radii)       #
+# --------------------------------------------------------------------------- #
+n_particles, n_species = 3, 2
 
- if __name__ == "__main__":
-     unittest.main()
+# numpy helpers for reference calculations
+species_masses_np = np.array(
+    [
+        [1.0, 1.0],   # particle 0  → V = 1/ρ₀ + 1/ρ₁
+        [8.0, 0.0],   # particle 1  → V = 8/ρ₀
+        [0.0, 27.0],  # particle 2  → V = 27/ρ₁
+    ],
+    dtype=np.float64,
+)
+density_np = np.array([1.0, 2.0], dtype=np.float64)  # ρ₀ = 1, ρ₁ = 2
+
+# expected volumes / radii
+volumes = (species_masses_np / density_np).sum(axis=1)
+radii_ref = (3.0 * volumes / (4.0 * math.pi)) ** (1.0 / 3.0)
+
+# --------------------------------------------------------------------------- #
+#  Taichi fields                                                              #
+# --------------------------------------------------------------------------- #
+species_masses = ti.field(dtype=ti.f64, shape=(n_particles, n_species))
+density        = ti.field(dtype=ti.f64, shape=n_species)
+radii_field    = ti.field(dtype=ti.f64, shape=n_particles)
+
+# copy data into Taichi fields (plain Python loops to avoid extra helpers)
+for i, j in np.ndindex(species_masses_np.shape):
+    species_masses[i, j] = species_masses_np[i, j]
+for j in range(n_species):
+    density[j] = density_np[j]
+
+
+@ti.kernel
+def _compute_radii():
+    for p in range(n_particles):
+        radii_field[p] = get_particle_radius_via_masses(p, species_masses, density)
+
+
+def test_get_particle_radius_via_masses_matrix():
+    """Check radii for a particles × species matrix."""
+    _compute_radii()
+    radii_ti = radii_field.to_numpy()
+    assert np.allclose(radii_ti, radii_ref, rtol=1e-6)
+
+if __name__ == "__main__":
+    unittest.main()
