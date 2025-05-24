@@ -6,7 +6,7 @@ import taichi as ti
 
 
 @ti.func
-def update_scaling_factors(
+def update_scaling_factors_old(
     species_masses: ti.template(),
     particle_concentration: ti.template(),
     total_requested_mass: ti.template(),
@@ -36,7 +36,7 @@ def update_scaling_factors(
 
 
 @ti.func
-def update_scaling_factor_refactor2(
+def update_scaling_factor(
     mass_transport_rate: ti.template(),  # [n_particles, n_species]
     gas_mass: ti.template(),  # [n_species]
     total_requested_mass: ti.template(),  # [n_species]  (scratch, overwritten)

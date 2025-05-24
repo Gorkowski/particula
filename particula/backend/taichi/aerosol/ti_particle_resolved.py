@@ -8,6 +8,7 @@ import particula as par
 import particula.backend.taichi.gas.properties as gas_properties
 import particula.backend.taichi.particles.properties as particle_properties
 import particula.backend.taichi.dynamics.condensation as condensation
+import particula.backend.taichi.dynamics as dynamics
 
 GAS_CONSTANT = ti.static(par.util.constants.GAS_CONSTANT)
 
@@ -131,45 +132,6 @@ class TiAerosolParticleResolved:
         self.gas_mass.from_numpy(gas_mass_np)
         self.particle_concentration.from_numpy(particle_concentration_np)
 
-    # ------------------------------------------------------------------
-    # --------------------------------------------------------------------- #
-    # Instance-aware Taichi helpers
-    # --------------------------------------------------------------------- #
-
-    @ti.func
-    def update_transferable_mass(self, p: int, time_step: float):
-        for s in ti.ndrange(self.density.shape[0]):
-            self.transferable_mass[p, s] = (
-                self.mass_transport_rate[p, s]
-                * time_step
-                * self.scaling_factor[s]
-            )
-
-    @ti.func
-    def update_gas_mass(self):
-        for j in ti.ndrange(self.gas_mass.shape[0]):
-            species_mass = 0.0
-            for i in ti.ndrange(self.species_masses.shape[0]):
-                species_mass += self.transferable_mass[i, j]
-            self.gas_mass[j] -= species_mass
-            self.gas_mass[j] = ti.max(self.gas_mass[j], 0.0)
-
-    @ti.func
-    def update_species_masses(self):
-        for i in range(self.species_masses.shape[0]):
-            for j in range(self.species_masses.shape[1]):
-                if self.particle_concentration[i] > 0.0:
-                    self.species_masses[i, j] = (
-                        self.species_masses[i, j]
-                        * self.particle_concentration[i]
-                        + self.transferable_mass[i, j]
-                    ) / self.particle_concentration[i]
-                else:
-                    self.species_masses[i, j] = 0.0
-                self.species_masses[i, j] = ti.max(
-                    self.species_masses[i, j], 0.0
-                )
-
     # --------------------------------------------------------------------- #
     # Convenience wrappers that delegate to the module-level kernels
     # --------------------------------------------------------------------- #
@@ -188,6 +150,12 @@ class TiAerosolParticleResolved:
 
     @ti.kernel
     def fused_step(self):
+        """
+        Perform a single step of the particle-resolved aerosol dynamics simulation.
+        This method calculates the mass transport rates for each particle and species,
+        updates the scaling factors, and adjusts the gas mass and species masses
+        based on the mass transfer rates.
+        """
         for p in range(self.species_masses.shape[0]):
 
             particle_radius = (
@@ -248,7 +216,7 @@ class TiAerosolParticleResolved:
                         molar_mass=self.molar_mass[s],
                     )
                 )
-        update_scaling_factor_refactor2(
+        dynamics.update_scaling_factor(
             mass_transport_rate=self.mass_transport_rate,
             gas_mass=self.gas_mass,
             total_requested_mass=self.total_requested_mass,
@@ -256,8 +224,21 @@ class TiAerosolParticleResolved:
             time_step=self.time_step,
             simulation_volume=self.simulation_volume,
         )
-        for i in ti.ndrange(self.species_masses.shape[0]):
-            self.update_transferable_mass(i, self.time_step)
-        self.update_gas_mass()
-        self.update_species_masses()
+        update_transferable_mass(
+            time_step=self.time_step,
+            mass_transport_rate=self.mass_transport_rate,
+            scaling_factor=self.scaling_factor,
+            transferable_mass=self.transferable_mass,
+        )
+        update_gas_mass(
+            gas_mass=self.gas_mass,
+            species_masses=self.species_masses,
+            transferable_mass=self.transferable_mass,
+        )
+        update_species_masses(
+            species_masses=self.species_masses,
+            particle_concentration=self.particle_concentration,
+            transferable_mass=self.transferable_mass,
+        )
+
 

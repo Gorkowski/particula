@@ -6,8 +6,8 @@ import numpy as np
 import taichi as ti
 import unittest
 from particula.backend.taichi.dynamics.properties.ti_mass_scaling_factor import (
-    update_scaling_factors,
-    update_scaling_factor_refactor2,
+    update_scaling_factors_old,
+    update_scaling_factor,
 )
 
 ti.init(arch=ti.cpu, default_fp=ti.f64)
@@ -24,7 +24,7 @@ def _k_update_scaling_factors(
     volume: float,
     scaling_factor: ti.template(),
 ):
-    update_scaling_factors(
+    update_scaling_factors_old(
         species_masses,
         particle_concentration,
         total_requested_mass,
@@ -45,7 +45,7 @@ def _k_update_scaling_factor_refactor2(
     dt: float,
     volume: float,
 ):
-    update_scaling_factor_refactor2(
+    update_scaling_factor(
         mass_transport_rate,
         gas_mass,
         total_requested_mass,
@@ -54,30 +54,39 @@ def _k_update_scaling_factor_refactor2(
         volume,
     )
 
+
 class TestMassScalingFactor(unittest.TestCase):
     def setUp(self):
         # problem size
         self.n_particles, self.n_species = 12, 5
 
         # numpy reference data
-        self.species_masses_np = np.random.rand(self.n_particles, self.n_species)
+        self.species_masses_np = np.random.rand(
+            self.n_particles, self.n_species
+        )
         self.mass_transport_rate_np = np.random.rand(
             self.n_particles, self.n_species
         )
-        self.gas_mass_np = np.random.rand(self.n_species) + 1e-12  # avoid zeros
+        self.gas_mass_np = (
+            np.random.rand(self.n_species) + 1e-12
+        )  # avoid zeros
 
         # scalar params
         self.dt = 0.3
         self.volume = 2.5
 
         # taichi fields
-        self.species_masses = ti.field(dtype=float, shape=self.species_masses_np.shape)
+        self.species_masses = ti.field(
+            dtype=float, shape=self.species_masses_np.shape
+        )
         self.mass_transport_rate = ti.field(
             dtype=float, shape=self.mass_transport_rate_np.shape
         )
         self.gas_mass = ti.field(dtype=float, shape=self.gas_mass_np.shape)
 
-        self.particle_concentration = ti.field(dtype=float, shape=self.n_particles)
+        self.particle_concentration = ti.field(
+            dtype=float, shape=self.n_particles
+        )
         self.req_mass_1 = ti.field(dtype=float, shape=self.n_species)
         self.req_mass_2 = ti.field(dtype=float, shape=self.n_species)
 
@@ -113,7 +122,10 @@ class TestMassScalingFactor(unittest.TestCase):
 
         # compare
         np.testing.assert_allclose(
-            self.scale_1.to_numpy(), self.scale_2.to_numpy(), rtol=1e-12, atol=0.0
+            self.scale_1.to_numpy(),
+            self.scale_2.to_numpy(),
+            rtol=1e-12,
+            atol=0.0,
         )
 
 
