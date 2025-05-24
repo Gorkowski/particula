@@ -7,3 +7,8 @@ from .ti_mass_transfer import (
     fget_mass_transfer_rate,
     fget_radius_transfer_rate,
 )
+from .ti_update_condensation_masses import (
+    update_gas_mass,
+    update_species_masses,
+    update_transferable_mass,
+)

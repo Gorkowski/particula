@@ -224,18 +224,18 @@ class TiAerosolParticleResolved:
             time_step=self.time_step,
             simulation_volume=self.simulation_volume,
         )
-        update_transferable_mass(
+        condensation.update_transferable_mass(
             time_step=self.time_step,
             mass_transport_rate=self.mass_transport_rate,
             scaling_factor=self.scaling_factor,
             transferable_mass=self.transferable_mass,
         )
-        update_gas_mass(
+        condensation.update_gas_mass(
             gas_mass=self.gas_mass,
             species_masses=self.species_masses,
             transferable_mass=self.transferable_mass,
         )
-        update_species_masses(
+        condensation.update_species_masses(
             species_masses=self.species_masses,
             particle_concentration=self.particle_concentration,
             transferable_mass=self.transferable_mass,
