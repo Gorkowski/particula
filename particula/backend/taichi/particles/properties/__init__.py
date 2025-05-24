@@ -167,3 +167,9 @@ from .ti_collision_radius_module import (
     ti_get_collision_radius_wq2022_rg_df_k0_a13,
 )
 
+from .ti_particle_radius import (
+    fget_particle_radius_via_masses,
+)
+from .ti_mass_weighted import (
+    fget_mass_weighted_density_and_surface_tension,
+)

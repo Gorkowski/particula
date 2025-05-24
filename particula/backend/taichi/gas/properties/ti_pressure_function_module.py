@@ -57,13 +57,13 @@ import taichi as ti
 import numpy as np
 from particula.util.constants import GAS_CONSTANT
 
-_GAS_CONSTANT = float(GAS_CONSTANT)    # avoid python → kernel capture
+GAS_CONSTANT = ti.static(GAS_CONSTANT)
 
 @ti.func
 def fget_partial_pressure(
-    concentration: float,
-    molar_mass: float,
-    temperature: float,
+    concentration: ti.template(),
+    molar_mass: ti.template(),
+    temperature: ti.template(),
 ) -> float:
     """
     Compute the element-wise partial pressure using the ideal gas law.
@@ -87,7 +87,7 @@ def fget_partial_pressure(
         - "Ideal gas law," Wikipedia,
           https://en.wikipedia.org/wiki/Ideal_gas_law
     """
-    return (concentration * _GAS_CONSTANT * temperature) / molar_mass
+    return (concentration * GAS_CONSTANT * temperature) / molar_mass
 
 @ti.func
 def fget_saturation_ratio_from_pressure(

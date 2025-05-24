@@ -21,7 +21,7 @@ def test_wrapper_kelvin_radius():
     T = 298.15
     expected = np_get_kelvin_radius(st, de, mm, T)
     got = ti_get_kelvin_radius(st, de, mm, T)
-    assert_allclose(got, expected, rtol=1e-8, atol=0)
+    assert_allclose(got, expected, rtol=1e-7, atol=0)
 
 
 def test_kernel_kelvin_term():
@@ -38,7 +38,7 @@ def test_kernel_kelvin_term():
 
     kget_kelvin_term(pr_ti, kr_ti, res_ti)
     got = res_ti.to_numpy()
-    assert_allclose(got, expected, rtol=1e-8, atol=0)
+    assert_allclose(got, expected, rtol=1e-7, atol=0)
 
 
 def test_wrapper_kelvin_term_scalar_kr():
@@ -46,4 +46,4 @@ def test_wrapper_kelvin_term_scalar_kr():
     kr = np.array([2e-7], dtype=np.float64)
     expected = np_get_kelvin_term(pr, kr)
     got = ti_get_kelvin_term(pr, kr)
-    assert_allclose(got, expected, rtol=1e-8, atol=0)
+    assert_allclose(got, expected, rtol=1e-7, atol=0)

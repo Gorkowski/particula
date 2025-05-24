@@ -31,7 +31,7 @@ class TestMassWeightedProperties(unittest.TestCase):
 
     def setUp(self):
         """Create random NumPy data and copy them into Taichi fields."""
-        self.n_particles, self.n_species = 8, 3
+        self.n_particles, self.n_species = 8, 4
 
         self.species_masses_np = np.random.rand(
             self.n_particles, self.n_species
@@ -78,10 +78,10 @@ class TestMassWeightedProperties(unittest.TestCase):
         ).squeeze()
 
         np.testing.assert_allclose(
-            sigma_ti.to_numpy(), sigma_ref, rtol=1e-7, atol=1e-6
+            sigma_ti.to_numpy(), sigma_ref, rtol=1e-7, atol=0
         )
         np.testing.assert_allclose(
-            rho_ti.to_numpy(),   rho_ref, rtol=1e-7, atol=1e-6
+            rho_ti.to_numpy(),   rho_ref, rtol=1e-7, atol=0
         )
 
 

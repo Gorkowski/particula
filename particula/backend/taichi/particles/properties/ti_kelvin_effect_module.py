@@ -6,21 +6,30 @@ from particula.backend.dispatch_register import register
 from particula.util.constants import GAS_CONSTANT
 
 # 2 – python-side constants (used inside ti.func with ti.static)
-_EXP_MAX = np.log(np.finfo(np.float64).max)        # ≈ 7.097e2
+_EXP_MAX = np.log(np.finfo(np.float64).max)  # ≈ 7.097e2
+_GAS_CONSTANT = ti.static(GAS_CONSTANT)
+
 
 # 3 – element-wise taichi funcs
 @ti.func
-def fget_kelvin_radius(σ: float, ρ: float, M: float, T: float) -> float:
-    R = ti.static(GAS_CONSTANT)
-    return (2.0 * σ * M) / (R * T * ρ)
+def fget_kelvin_radius(
+    surface_tension: ti.template(),
+    density: ti.template(),
+    molar_mass: ti.template(),
+    temperature: ti.template(),
+) -> float:
+    return (2.0 * surface_tension * molar_mass) / (
+        _GAS_CONSTANT * temperature * density
+    )
 
 
 @ti.func
 def fget_kelvin_term(r_p: float, r_k: float) -> float:
     expo = r_k / r_p
     max_exp = ti.static(_EXP_MAX)
-    expo = ti.min(expo, max_exp)    # overflow protection
+    expo = ti.min(expo, max_exp)  # overflow protection
     return ti.exp(expo)
+
 
 # 4 – kernels
 @ti.kernel
@@ -44,11 +53,17 @@ def kget_kelvin_term(
     for I in ti.grouped(res):
         res[I] = fget_kelvin_term(r_p[I], r_k[I])
 
+
 # 5 – public wrappers with backend registration
 @register("get_kelvin_radius", backend="taichi")
 def ti_get_kelvin_radius(surface_tension, density, molar_mass, temperature):
-    if not all(isinstance(x, np.ndarray) for x in (surface_tension, density, molar_mass)):
-        raise TypeError("Taichi backend expects NumPy arrays for first three inputs.")
+    if not all(
+        isinstance(x, np.ndarray)
+        for x in (surface_tension, density, molar_mass)
+    ):
+        raise TypeError(
+            "Taichi backend expects NumPy arrays for first three inputs."
+        )
     if not np.isscalar(temperature):
         raise TypeError("Temperature must be a scalar.")
 
@@ -67,8 +82,10 @@ def ti_get_kelvin_radius(surface_tension, density, molar_mass, temperature):
 
 @register("get_kelvin_term", backend="taichi")
 def ti_get_kelvin_term(particle_radius, kelvin_radius_value):
-    if not (isinstance(particle_radius, np.ndarray)
-            and isinstance(kelvin_radius_value, np.ndarray)):
+    if not (
+        isinstance(particle_radius, np.ndarray)
+        and isinstance(kelvin_radius_value, np.ndarray)
+    ):
         raise TypeError("Taichi backend expects NumPy arrays for both inputs.")
 
     pr = particle_radius.astype(np.float64).ravel()
@@ -77,21 +94,23 @@ def ti_get_kelvin_term(particle_radius, kelvin_radius_value):
     # replicate NumPy implementation: outer product only if both arrays > 1
     expand = (kr.size > 1) and (pr.size > 1)
 
-    if expand:                                        # outer-product case
+    if expand:  # outer-product case
         pr_mat = np.broadcast_to(pr[:, None], (pr.size, kr.size))
         kr_mat = np.broadcast_to(kr[None, :], (pr.size, kr.size))
-    else:                                             # no expansion
-        pr_mat = pr[:, None]                          # (n, 1)
-        kr_mat = np.broadcast_to(kr, pr_mat.shape)    # (n, 1)
+    else:  # no expansion
+        pr_mat = pr[:, None]  # (n, 1)
+        kr_mat = np.broadcast_to(kr, pr_mat.shape)  # (n, 1)
 
-    shape_2d = pr_mat.shape                           # (rows, cols)
-    pr_ti = ti.ndarray(float, shape_2d);  pr_ti.from_numpy(pr_mat)
-    kr_ti = ti.ndarray(float, shape_2d);  kr_ti.from_numpy(kr_mat)
+    shape_2d = pr_mat.shape  # (rows, cols)
+    pr_ti = ti.ndarray(float, shape_2d)
+    pr_ti.from_numpy(pr_mat)
+    kr_ti = ti.ndarray(float, shape_2d)
+    kr_ti.from_numpy(kr_mat)
     res_ti = ti.ndarray(float, shape_2d)
 
     kget_kelvin_term(pr_ti, kr_ti, res_ti)
     out = res_ti.to_numpy()
 
-    if not expand:                                    # restore 1-D result
+    if not expand:  # restore 1-D result
         out = out[:, 0]
     return out.item() if out.size == 1 else out

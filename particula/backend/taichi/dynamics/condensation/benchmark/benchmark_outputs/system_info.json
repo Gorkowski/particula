@@ -5,14 +5,14 @@
   "min_frequency_mhz": 0.0,
   "current_frequency_mhz": 2995.0,
   "cpu_usage_per_core_%": [
-    41.2,
-    37.5,
-    39.4,
-    31.2,
     40.0,
-    39.1,
-    47.7,
-    39.1
+    33.8,
+    50.0,
+    50.8,
+    24.6,
+    34.8,
+    28.6,
+    44.4
   ],
   "total_cpu_usage_%": 55.4,
   "system": "Windows",
