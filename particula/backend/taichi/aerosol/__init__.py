@@ -12,3 +12,6 @@ from .ti_environmental_conditions_builder import (
 from .ti_particle_resolved_field import (
     ParticleResolvedFieldBuilder,
 )
+from .ti_particle_resolved_var import (
+    TiAerosolParticleResolved_soa
+)
