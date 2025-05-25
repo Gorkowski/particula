@@ -25,8 +25,29 @@ class ParticleResolvedFieldBuilder:
             shape=(variant_count, particle_count, species_count)
         )
 
+        # ensure auxiliary sub-fields start at zero
+        self.field.mass_transport_rate.fill(0.0)
+        self.field.transferable_mass.fill(0.0)
+
     def load(self, v: int, *, species_masses: np.ndarray) -> None:
         """Copy `(particle, species)` mass matrix for one variant."""
-        self.field.species_masses[v, :, :].from_numpy(species_masses)
-        self.field.mass_transport_rate[v].fill(0.0)     # zero-out 2-D slice
-        self.field.transferable_mass[v].fill(0.0)        # zero-out 2-D slice
+        # validate input
+        if species_masses.shape != (self.particle_count, self.species_count):
+            raise ValueError(
+                f"species_masses must have shape "
+                f"({self.particle_count}, {self.species_count})"
+            )
+
+        # copy values element-wise (Taichi fields don’t accept slice assignment)
+        for i in range(self.particle_count):
+            for j in range(self.species_count):
+                self.field.species_masses[v, i, j] = float(
+                    species_masses[i, j]
+                )
+
+        # optional: guarantee the two helper arrays stay zero for this variant
+        # (already zeroed in __init__, but harmless to keep)
+        # for i in range(self.particle_count):
+        #     for j in range(self.species_count):
+        #         self.field.mass_transport_rate[v, i, j] = 0.0
+        #         self.field.transferable_mass[v, i, j] = 0.0
