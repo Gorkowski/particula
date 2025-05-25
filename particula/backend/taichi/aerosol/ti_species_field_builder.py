@@ -37,11 +37,17 @@ class SpeciesFieldBuilder:
         surface_tension: np.ndarray,
         gas_mass: np.ndarray,
     ) -> None:
-        """Fill variant `v` with NumPy arrays (1-D, length = species)."""
-        self.field.density[v].from_numpy(density)
-        self.field.molar_mass[v].from_numpy(molar_mass)
-        self.field.pure_vapor_pressure[v].from_numpy(pure_vapor_pressure)
-        self.field.vapor_concentration[v].from_numpy(vapor_concentration)
-        self.field.kappa[v].from_numpy(kappa)
-        self.field.surface_tension[v].from_numpy(surface_tension)
-        self.field.gas_mass[v].from_numpy(gas_mass)
+        """Fill variant `v` (row) with NumPy arrays (shape = [species])."""
+
+        def _set_row(field_attr, values):
+            full = field_attr.to_numpy()          # shape = (variants, species)
+            full[v, :] = values                   # overwrite one row
+            field_attr.from_numpy(full)
+
+        _set_row(self.field.density,            density)
+        _set_row(self.field.molar_mass,         molar_mass)
+        _set_row(self.field.pure_vapor_pressure, pure_vapor_pressure)
+        _set_row(self.field.vapor_concentration, vapor_concentration)
+        _set_row(self.field.kappa,              kappa)
+        _set_row(self.field.surface_tension,    surface_tension)
+        _set_row(self.field.gas_mass,           gas_mass)
