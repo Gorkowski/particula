@@ -62,19 +62,19 @@ def test_load_single_variant():
     )
 
     _assert_shapes(builder, variants, species)
-    np.testing.assert_array_equal(builder.field.density[0].to_numpy(), arr_density)
-    np.testing.assert_array_equal(builder.field.molar_mass[0].to_numpy(), arr_molar_mass)
+    np.testing.assert_array_equal(builder.field.density.to_numpy()[0], arr_density)
+    np.testing.assert_array_equal(builder.field.molar_mass.to_numpy()[0], arr_molar_mass)
     np.testing.assert_array_equal(
-        builder.field.pure_vapor_pressure[0].to_numpy(), arr_pure_vp
+        builder.field.pure_vapor_pressure.to_numpy()[0], arr_pure_vp
     )
     np.testing.assert_array_equal(
-        builder.field.vapor_concentration[0].to_numpy(), arr_vapor_conc
+        builder.field.vapor_concentration.to_numpy()[0], arr_vapor_conc
     )
-    np.testing.assert_array_equal(builder.field.kappa[0].to_numpy(), arr_kappa)
+    np.testing.assert_array_equal(builder.field.kappa.to_numpy()[0], arr_kappa)
     np.testing.assert_array_equal(
-        builder.field.surface_tension[0].to_numpy(), arr_surface_tension
+        builder.field.surface_tension.to_numpy()[0], arr_surface_tension
     )
-    np.testing.assert_array_equal(builder.field.gas_mass[0].to_numpy(), arr_gas_mass)
+    np.testing.assert_array_equal(builder.field.gas_mass.to_numpy()[0], arr_gas_mass)
 
 
 def test_load_multiple_variants():
@@ -100,21 +100,21 @@ def test_load_multiple_variants():
 
     # verify each field/variant retains the expected offset values
     for v in range(variants):
-        np.testing.assert_array_equal(builder.field.density[v].to_numpy(), base + v)
+        np.testing.assert_array_equal(builder.field.density.to_numpy()[v], base + v)
         np.testing.assert_array_equal(
-            builder.field.molar_mass[v].to_numpy(), base + 10 + v
+            builder.field.molar_mass.to_numpy()[v], base + 10 + v
         )
         np.testing.assert_array_equal(
-            builder.field.pure_vapor_pressure[v].to_numpy(), base + 20 + v
+            builder.field.pure_vapor_pressure.to_numpy()[v], base + 20 + v
         )
         np.testing.assert_array_equal(
-            builder.field.vapor_concentration[v].to_numpy(), base + 30 + v
+            builder.field.vapor_concentration.to_numpy()[v], base + 30 + v
         )
-        np.testing.assert_array_equal(builder.field.kappa[v].to_numpy(), base + 40 + v)
+        np.testing.assert_array_equal(builder.field.kappa.to_numpy()[v], base + 40 + v)
         np.testing.assert_array_equal(
-            builder.field.surface_tension[v].to_numpy(), base + 50 + v
+            builder.field.surface_tension.to_numpy()[v], base + 50 + v
         )
         np.testing.assert_array_equal(
-            builder.field.gas_mass[v].to_numpy(), base + 60 + v
+            builder.field.gas_mass.to_numpy()[v], base + 60 + v
         )
 
