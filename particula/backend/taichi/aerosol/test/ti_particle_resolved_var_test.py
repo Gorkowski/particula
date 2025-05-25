@@ -107,5 +107,26 @@ class TestTiAerosolParticleResolvedSOA(unittest.TestCase):
                 self.base_mass + off,
             )
 
+    # ------------------------------------------------------------------
+    # fused-step checks
+    # ------------------------------------------------------------------
+    def test_single_variant_fused_step(self):
+        """`fused_step` should compile & run for a single variant."""
+        sim = self._make_solver(variants=1)
+        sim.fused_step()                                  # run once
+        r = sim.get_radius()                              # default v = 0
+        self.assertEqual(r.shape, (self.particles,))
+        self.assertTrue(np.all(r > 0.0))                  # radii must be > 0
+
+    def test_multiple_variant_fused_step(self):
+        """`fused_step` should compile & run for several variants."""
+        n_variants = 4
+        sim = self._make_solver(variants=n_variants)
+        sim.fused_step()
+        for v in range(n_variants):
+            r = sim.get_radius(v)
+            self.assertEqual(r.shape, (self.particles,))
+            self.assertTrue(np.all(r > 0.0))
+
 if __name__ == "__main__":
     unittest.main()
