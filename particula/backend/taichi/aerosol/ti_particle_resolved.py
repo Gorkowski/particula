@@ -10,6 +10,9 @@ import particula.backend.taichi.gas.properties as gas_properties
 import particula.backend.taichi.particles.properties as particle_properties
 import particula.backend.taichi.dynamics.condensation as condensation
 import particula.backend.taichi.dynamics as dynamics
+from particula.backend.taichi.aerosol.ti_species_field_builder import (
+    SpeciesFieldBuilder,
+)
 
 
 # taichi data class for input conversion and kernel execution
@@ -244,45 +247,6 @@ class TiAerosolParticleResolved:
 # --------------------------------------------------------------------- #
 # 1.  Builder classes                                                   #
 # --------------------------------------------------------------------- #
-class SpeciesFieldBuilder:
-    """Creates the per-species SoA field and offers handy load helpers."""
-
-    def __init__(self, variant_count: int, species_count: int):
-        self.variant_count = variant_count
-        self.species_count = species_count
-
-        self.Species = ti.types.struct(
-            density=ti.f32,
-            molar_mass=ti.f32,
-            pure_vapor_pressure=ti.f32,
-            vapor_concentration=ti.f32,
-            kappa=ti.f32,
-            surface_tension=ti.f32,
-            gas_mass=ti.f32,
-        )
-        self.field = self.Species.field(shape=(variant_count, species_count))
-
-    # ------------ helper: copy one variant from NumPy -----------------
-    def load(
-        self,
-        v: int,
-        *,
-        density: np.ndarray,
-        molar_mass: np.ndarray,
-        pure_vapor_pressure: np.ndarray,
-        vapor_concentration: np.ndarray,
-        kappa: np.ndarray,
-        surface_tension: np.ndarray,
-        gas_mass: np.ndarray,
-    ) -> None:
-        """Fill variant `v` with NumPy arrays (1-D, length = species)."""
-        self.field[v].density.from_numpy(density)
-        self.field[v].molar_mass.from_numpy(molar_mass)
-        self.field[v].pure_vapor_pressure.from_numpy(pure_vapor_pressure)
-        self.field[v].vapor_conc.from_numpy(vapor_concentration)
-        self.field[v].kappa.from_numpy(kappa)
-        self.field[v].sigma.from_numpy(surface_tension)
-        self.field[v].gas_mass.from_numpy(gas_mass)
 
 
 class P2SFieldBuilder:
@@ -307,7 +271,6 @@ class P2SFieldBuilder:
     def load(self, v: int, *, species_masses: np.ndarray) -> None:
         """Copy `(particle, species)` mass matrix for one variant."""
         self.field[v].mass.from_numpy(species_masses)
-        # mtr and t_mass start at zero → no load needed.
 
 
 # --------------------------------------------------------------------- #

@@ -5,7 +5,6 @@ import taichi as ti
 import numpy as np
 
 
-
 class SpeciesFieldBuilder:
     """Creates the per-species SoA field and offers handy load helpers."""
 
