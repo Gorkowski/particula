@@ -44,12 +44,12 @@ class TiAerosolParticleResolved_soa:
         self.species_builder = SpeciesFieldBuilder(
             variant_count, species_count
         )
-        self.species = self.species_builder.field  # alias
+        self.species = self.species_builder.fields  # list of fields
 
         self.particle_builder = ParticleResolvedFieldBuilder(
             variant_count, particle_count, species_count
         )
-        self.particle_field = self.particle_builder.field  # alias
+        self.particle_field = self.particle_builder.fields  # list of fields
 
         # -------- auxiliary 1-D fields --------------------------------
         self.radius = ti.field(ti.f32, shape=(variant_count, particle_count))
@@ -129,86 +129,86 @@ class TiAerosolParticleResolved_soa:
         """
         One explicit-Euler step for *all* variants.
         """
-        for v, p in ti.ndrange(self.variant_count, self.particle_count):
-            # --- derived single-particle props -------------------------
-            r_p = particle_properties.fget_particle_radius_via_masses(
-                particle_index=p,
-                species_masses=self.particle_field[v].species_masses,
-                density=self.species[v].density,
-            )
-            self.radius[v, p] = r_p
-
-            sigma_eff, rho_eff = (
-                particle_properties.fget_mass_weighted_density_and_surface_tension(
-                    particle_index=p,
-                    species_masses=self.particle_field[v].species_masses,
-                    density=self.species[v].density,
-                    surface_tension=self.species[v].surface_tension,
+        # ---- particle-level loop -----------------------------------
+        for v in ti.static(range(self.variant_count)):
+            for p in range(self.particle_count):
+                r_p = particle_properties.fget_particle_radius_via_masses(
+                    particle_index = p,
+                    species_masses = self.particle_field[v].species_masses,
+                    density        = self.species[v].density,
                 )
-            )
+                self.radius[v, p] = r_p
 
-            for s in range(self.species_count):
-                # alias common scalars
-                M_i = self.species[v, s].molar_mass
-                T = self.env.temperature
-                P = self.env.pressure
-
-                k1 = condensation.fget_first_order_mass_transport_via_system_state(
-                    particle_radius=r_p,
-                    molar_mass=M_i,
-                    mass_accommodation=self.env.mass_accommodation,
-                    temperature=T,
-                    pressure=P,
-                    dynamic_viscosity=self.env.dynamic_viscosity,
-                    diffusion_coefficient=self.env.diffusion_coefficient,
-                )
-
-                kelvin_radius = particle_properties.fget_kelvin_radius(
-                    sigma_eff, rho_eff, M_i, T
-                )
-                kelvin_term = particle_properties.fget_kelvin_term(
-                    r_p, kelvin_radius
-                )
-
-                p_g = gas_properties.fget_partial_pressure(
-                    self.species[v, s].vapor_concentration, M_i, T
-                )
-                delta_p = particle_properties.fget_partial_pressure_delta(
-                    p_g, p_g, kelvin_term
-                )
-
-                self.particle_field[v].mass_transport_rate[p, s] = (
-                    condensation.fget_mass_transfer_rate(
-                        pressure_delta=delta_p,
-                        first_order_mass_transport=k1,
-                        temperature=T,
-                        molar_mass=M_i,
+                sigma_eff, rho_eff = (
+                    particle_properties.fget_mass_weighted_density_and_surface_tension(
+                        particle_index = p,
+                        species_masses = self.particle_field[v].species_masses,
+                        density        = self.species[v].density,
+                        surface_tension= self.species[v].surface_tension,
                     )
                 )
 
-        # --- species-level updates (one loop per variant) --------------
-        for v in range(self.variant_count):
+                for s in range(self.species_count):
+                    M_i = self.species[v].molar_mass[s]
+                    T   = self.env.temperature
+                    P   = self.env.pressure
+
+                    k1 = condensation.fget_first_order_mass_transport_via_system_state(
+                        particle_radius      = r_p,
+                        molar_mass           = M_i,
+                        mass_accommodation   = self.env.mass_accommodation,
+                        temperature          = T,
+                        pressure             = P,
+                        dynamic_viscosity    = self.env.dynamic_viscosity,
+                        diffusion_coefficient= self.env.diffusion_coefficient,
+                    )
+
+                    kelvin_radius = particle_properties.fget_kelvin_radius(
+                        sigma_eff, rho_eff, M_i, T
+                    )
+                    kelvin_term = particle_properties.fget_kelvin_term(
+                        r_p, kelvin_radius
+                    )
+
+                    p_g = gas_properties.fget_partial_pressure(
+                        self.species[v].vapor_concentration[s], M_i, T
+                    )
+                    delta_p = particle_properties.fget_partial_pressure_delta(
+                        p_g, p_g, kelvin_term
+                    )
+
+                    self.particle_field[v].mass_transport_rate[p, s] = (
+                        condensation.fget_mass_transfer_rate(
+                            pressure_delta         = delta_p,
+                            first_order_mass_transport = k1,
+                            temperature            = T,
+                            molar_mass             = M_i,
+                        )
+                    )
+
+        # ---- species-level updates --------------------------------
+        for v in ti.static(range(self.variant_count)):
             dynamics.update_scaling_factor(
-                mass_transport_rate=self.particle_field[v].mass_transport_rate,
-                gas_mass=self.species[v].gas_mass,
-                total_requested_mass=self.total_requested_mass[v],
-                scaling_factor=self.scaling_factor[v],
-                time_step=self.env.time_step,
-                simulation_volume=self.env.simulation_volume,
+                mass_transport_rate = self.particle_field[v].mass_transport_rate,
+                gas_mass            = self.species[v].gas_mass,
+                total_requested_mass= self.total_requested_mass[v],
+                scaling_factor      = self.scaling_factor[v],
+                time_step           = self.env.time_step,
+                simulation_volume   = self.env.simulation_volume,
             )
             condensation.update_transferable_mass(
-                time_step=self.env.time_step,
-                mass_transport_rate=self.particle_field[v].mass_transport_rate,
-                scaling_factor=self.scaling_factor[v],
-                transferable_mass=self.particle_field[v].transferable_mass,
+                time_step           = self.env.time_step,
+                mass_transport_rate = self.particle_field[v].mass_transport_rate,
+                scaling_factor      = self.scaling_factor[v],
+                transferable_mass   = self.particle_field[v].transferable_mass,
             )
             condensation.update_gas_mass(
-                gas_mass=self.species[v].gas_mass,
-                species_masses=self.particle_field[v].species_masses,
-                transferable_mass=self.particle_field[v].transferable_mass,
+                gas_mass            = self.species[v].gas_mass,
+                species_masses      = self.particle_field[v].species_masses,
+                transferable_mass   = self.particle_field[v].transferable_mass,
             )
             condensation.update_species_masses(
-                species_masses=self.particle_field[v].species_masses,
-                particle_concentration=self.particle_concentration[v],
-                transferable_mass=self.particle_field[v].transferable_mass,
+                species_masses      = self.particle_field[v].species_masses,
+                particle_concentration = self.particle_concentration[v],
+                transferable_mass   = self.particle_field[v].transferable_mass,
             )

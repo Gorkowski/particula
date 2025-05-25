@@ -76,18 +76,21 @@ class TestTiAerosolParticleResolvedSOA(unittest.TestCase):
         sim = self._make_solver(variants=1)
 
         # shapes
-        self.assertEqual(sim.species.shape, (1, self.species))
+        self.assertEqual(len(sim.species), 1)
+        self.assertEqual(sim.species[0].shape, (self.species,))
+
+        self.assertEqual(len(sim.particle_field), 1)
         self.assertEqual(
-            sim.particle_field.species_masses.shape,
-            (1, self.particles, self.species),
+            sim.particle_field[0].species_masses.shape,
+            (self.particles, self.species),
         )
 
         # data correctness
         np.testing.assert_array_equal(
-            sim.species.density.to_numpy()[0], self.base_density
+            sim.species[0].density.to_numpy(), self.base_density
         )
         np.testing.assert_array_equal(
-            sim.particle_field.species_masses.to_numpy()[0], self.base_mass
+            sim.particle_field[0].species_masses.to_numpy(), self.base_mass
         )
 
     # ------------------------------------------------------------------
@@ -100,10 +103,10 @@ class TestTiAerosolParticleResolvedSOA(unittest.TestCase):
         for v in range(n_variants):
             off = float(v) * 10.0
             np.testing.assert_array_equal(
-                sim.species.density.to_numpy()[v], self.base_density + off
+                sim.species[v].density.to_numpy(), self.base_density + off
             )
             np.testing.assert_array_equal(
-                sim.particle_field.species_masses.to_numpy()[v],
+                sim.particle_field[v].species_masses.to_numpy(),
                 self.base_mass + off,
             )
 
