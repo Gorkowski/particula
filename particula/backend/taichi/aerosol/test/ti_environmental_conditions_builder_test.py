@@ -3,10 +3,12 @@
 
 import pytest
 
-from path import (  # adapt the import path
+from particula.backend.taichi.aerosol.ti_environmental_conditions_builder import (
     EnvironmentalConditions,
     EnvironmentalConditionsBuilder,
 )
+
+import dataclasses         # needed for FrozenInstanceError
 
 
 # ----------------------------------------------------------------------
