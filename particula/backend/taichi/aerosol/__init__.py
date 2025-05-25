@@ -9,3 +9,6 @@ from .ti_environmental_conditions_builder import (
     EnvironmentalConditionsBuilder,
     EnvironmentalConditions
 )
+from .ti_particle_resolved_field import (
+    ParticleResolvedFieldBuilder,
+)

@@ -12,7 +12,7 @@ ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 def _assert_shapes(builder, variants, particles, species):
     assert builder.field.shape == (variants, particles, species)
-    for name in ("mass", "mtr", "t_mass"):
+    for name in ("mass", "mtr", "transferable_mass"):
         sub_field = getattr(builder.field, name)
         assert sub_field.shape == (variants, particles, species)
 
@@ -50,4 +50,3 @@ def test_load_multiple_variants():
         zero = np.zeros_like(expected)
         np.testing.assert_array_equal(builder.field.mtr.to_numpy()[v], zero)
         np.testing.assert_array_equal(builder.field.t_mass.to_numpy()[v], zero)
-
