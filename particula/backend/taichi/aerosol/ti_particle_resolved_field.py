@@ -28,5 +28,5 @@ class ParticleResolvedFieldBuilder:
     def load(self, v: int, *, species_masses: np.ndarray) -> None:
         """Copy `(particle, species)` mass matrix for one variant."""
         self.field.species_masses[v, :, :].from_numpy(species_masses)
-        self.field.mass_transport_rate[v, :, :].fill(0.0)  # mass transport rate
-        self.field.transferable_mass[v, :, :].fill(0.0)  # transferable mass
+        self.field.mass_transport_rate[v].fill(0.0)     # zero-out 2-D slice
+        self.field.transferable_mass[v].fill(0.0)        # zero-out 2-D slice
