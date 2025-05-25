@@ -104,13 +104,13 @@ class TiAerosolParticleResolved_soa:
         return self.radius[v].to_numpy()
 
     def get_species_masses(self, v: int = 0) -> np.ndarray:
-        return self.particle_field[v].species_mass.to_numpy()
+        return self.particle_field[v].species_masses.to_numpy()
 
     def get_gas_mass(self, v: int = 0) -> np.ndarray:
         return self.species[v].gas_mass.to_numpy()
 
     def get_transferable_mass(self, v: int = 0) -> np.ndarray:
-        return self.particle_field[v].t_mass.to_numpy()
+        return self.particle_field[v].transferable_mass.to_numpy()
 
     # ------------------------------------------------------------------ #
     # core step                                                          #
@@ -133,7 +133,7 @@ class TiAerosolParticleResolved_soa:
             # --- derived single-particle props -------------------------
             r_p = particle_properties.fget_particle_radius_via_masses(
                 particle_index=p,
-                species_masses=self.particle_field[v].species_mass,
+                species_masses=self.particle_field[v].species_masses,
                 density=self.species[v].density,
             )
             self.radius[v, p] = r_p
@@ -141,7 +141,7 @@ class TiAerosolParticleResolved_soa:
             sigma_eff, rho_eff = (
                 particle_properties.fget_mass_weighted_density_and_surface_tension(
                     particle_index=p,
-                    species_masses=self.particle_field[v].species_mass,
+                    species_masses=self.particle_field[v].species_masses,
                     density=self.species[v].density,
                     surface_tension=self.species[v].surface_tension,
                 )
@@ -171,7 +171,7 @@ class TiAerosolParticleResolved_soa:
                 )
 
                 p_g = gas_properties.fget_partial_pressure(
-                    self.species[v, s].vapor_conc, M_i, T
+                    self.species[v, s].vapor_concentration, M_i, T
                 )
                 delta_p = particle_properties.fget_partial_pressure_delta(
                     p_g, p_g, kelvin_term
@@ -204,11 +204,11 @@ class TiAerosolParticleResolved_soa:
             )
             condensation.update_gas_mass(
                 gas_mass=self.species[v].gas_mass,
-                species_masses=self.particle_field[v].species_mass,
+                species_masses=self.particle_field[v].species_masses,
                 transferable_mass=self.particle_field[v].transferable_mass,
             )
             condensation.update_species_masses(
-                species_masses=self.particle_field[v].species_mass,
+                species_masses=self.particle_field[v].species_masses,
                 particle_concentration=self.particle_concentration[v],
                 transferable_mass=self.particle_field[v].transferable_mass,
             )
