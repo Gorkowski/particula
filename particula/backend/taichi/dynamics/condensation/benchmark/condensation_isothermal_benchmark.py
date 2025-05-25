@@ -39,6 +39,9 @@ from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies i
 from particula.backend.taichi.aerosol.ti_particle_resolved import (
     TiAerosolParticleResolved,
 )
+from particula.backend.taichi.aerosol.ti_particle_resolved_var import (
+    TiAerosolParticleResolved_soa,
+)
 
 # python (NumPy-only) condensation
 from particula.dynamics.condensation.condensation_strategies import (
@@ -77,6 +80,47 @@ def _build_ti_particle_resolved(n_particles: int, n_species: int = 10):
         surface_tension,
         gas_mass,
         particle_conc,
+    )
+    return sim
+
+# ── fused particle-resolved aerosol  (SoA, 1-variant) ──────────────
+def _build_ti_particle_resolved_soa(
+    n_particles: int,
+    n_species: int = 10,
+    n_variants: int = 1,
+):
+    """Create and populate a TiAerosolParticleResolved_soa instance."""
+    rng = np.random.default_rng(0)
+
+    species_masses = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    density            = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass         = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+    pure_vp            = np.full(n_species, 50.0)
+    vapor_conc         = np.ones(n_species) * 1.0e-3
+    kappa              = np.zeros(n_species)
+    surface_tension    = np.full(n_species, 0.072)
+    gas_mass           = np.ones(n_species) * 1.0e-6
+    particle_conc      = np.ones(n_particles)
+
+    sim = TiAerosolParticleResolved_soa(
+        particle_count=n_particles,
+        species_count=n_species,
+        variant_count=n_variants,
+        time_step=1.0,
+        simulation_volume=1.0,
+    )
+
+    sim.setup(
+        variant_index=0,
+        species_masses_np=species_masses,
+        density_np=density,
+        molar_mass_np=molar_mass,
+        pure_vapor_pressure_np=pure_vp,
+        vapor_concentration_np=vapor_conc,
+        kappa_value_np=kappa,
+        surface_tension_np=surface_tension,
+        gas_mass_np=gas_mass,
+        particle_concentration_np=particle_conc,
     )
     return sim
 
@@ -213,12 +257,20 @@ if __name__ == "__main__":
             max_run_time_s=5.0,
         )
 
+        # ----- Fused SoA solver stats ---------------------------------------
+        pr_soa_sim = _build_ti_particle_resolved_soa(n_particles, N_SPECIES)
+        stats_pr_soa = get_function_benchmark(
+            make_fused_step_callable(pr_soa_sim),
+            ops_per_call=1,
+            max_run_time_s=5.0,
+        )
+
         # ----- build header only once ---------------------------------------
         if csv_header is None:
-            # taichi_headers = ["taichi_" + h for h in stats_ti["array_headers"]]
             python_headers = ["python_" + h for h in stats_py["array_headers"]]
             fused_headers  = ["fused_"  + h for h in stats_pr["array_headers"]]
-            csv_header = ["array_length", *python_headers, *fused_headers]
+            soa_headers    = ["soa_"    + h for h in stats_pr_soa["array_headers"]]
+            csv_header = ["array_length", *python_headers, *fused_headers, *soa_headers]
 
         # ----- collect row ---------------------------------------------------
         rows.append(
@@ -226,6 +278,7 @@ if __name__ == "__main__":
                 n_particles,
                 *stats_py["array_stats"],
                 *stats_pr["array_stats"],
+                *stats_pr_soa["array_stats"],
             ]
         )
 
@@ -243,7 +296,7 @@ if __name__ == "__main__":
     plot_throughput_vs_array_length(
         csv_header,
         rows,
-        "TiCondensation.step throughput vs #particles (10 species)",
+        "Condensation.step throughput vs #particles (10 species)",
         os.path.join(
             output_directory, "condensation_isothermal_step_benchmark.png"
         ),
