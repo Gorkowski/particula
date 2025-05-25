@@ -10,10 +10,15 @@ import particula.backend.taichi.gas.properties as gas_properties
 import particula.backend.taichi.particles.properties as particle_properties
 import particula.backend.taichi.dynamics.condensation as condensation
 import particula.backend.taichi.dynamics as dynamics
-from particula.backend.taichi.aerosol import (
+from particula.backend.taichi.aerosol.ti_species_field_builder import (
     SpeciesFieldBuilder,
-    EnvironmentalConditions,
+)
+from particula.backend.taichi.aerosol.ti_particle_resolved_field import (
+    ParticleResolvedFieldBuilder,
+)
+from particula.backend.taichi.aerosol.ti_environmental_conditions_builder import (
     EnvironmentalConditionsBuilder,
+    EnvironmentalConditions,
 )
 
 
