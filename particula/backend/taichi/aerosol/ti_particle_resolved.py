@@ -10,9 +10,12 @@ import particula.backend.taichi.gas.properties as gas_properties
 import particula.backend.taichi.particles.properties as particle_properties
 import particula.backend.taichi.dynamics.condensation as condensation
 import particula.backend.taichi.dynamics as dynamics
-from particula.backend.taichi.aerosol.ti_species_field_builder import (
+from particula.backend.taichi.aerosol import (
     SpeciesFieldBuilder,
+    EnvironmentalConditions,
+    EnvironmentalConditionsBuilder,
 )
+
 
 
 # taichi data class for input conversion and kernel execution
@@ -249,43 +252,12 @@ class TiAerosolParticleResolved:
 # --------------------------------------------------------------------- #
 
 
-class P2SFieldBuilder:
-    """Creates the (variant × particle × species) state field."""
 
-    def __init__(
-        self, variant_count: int, particle_count: int, species_count: int
-    ):
-        self.variant_count = variant_count
-        self.particle_count = particle_count
-        self.species_count = species_count
-
-        self.P2S = ti.types.struct(
-            mass=ti.f32,  # species_masses
-            mtr=ti.f32,  # mass_transport_rate
-            t_mass=ti.f32,  # transferable_mass
-        )
-        self.field = self.P2S.field(
-            shape=(variant_count, particle_count, species_count)
-        )
-
-    def load(self, v: int, *, species_masses: np.ndarray) -> None:
-        """Copy `(particle, species)` mass matrix for one variant."""
-        self.field[v].mass.from_numpy(species_masses)
 
 
 # --------------------------------------------------------------------- #
 # 2.  Main solver class (uses the builders)                             #
 # --------------------------------------------------------------------- #
-@dataclass(frozen=True, slots=True)
-class EnvironmentalConditions:
-    temperature: float = 298.15
-    pressure: float = 101_325.0
-    mass_accommodation: float = 0.5
-    dynamic_viscosity: float = 1.8e-5
-    diffusion_coefficient: float = 2.0e-5
-    time_step: float = 10.0
-    simulation_volume: float = 1.0e-6
-
 
 @ti.data_oriented
 class TiAerosolParticleResolved_soa:
@@ -308,7 +280,7 @@ class TiAerosolParticleResolved_soa:
         )
         self.species = self.species_builder.field  # alias
 
-        self.p2s_builder = P2SFieldBuilder(
+        self.p2s_builder = ParticleResolvedFieldBuilder(
             variant_count, particle_count, species_count
         )
         self.p2s = self.p2s_builder.field  # alias
