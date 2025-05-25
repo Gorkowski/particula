@@ -38,16 +38,7 @@ class ParticleResolvedFieldBuilder:
                 f"({self.particle_count}, {self.species_count})"
             )
 
-        # copy values element-wise (Taichi fields don’t accept slice assignment)
-        for i in range(self.particle_count):
-            for j in range(self.species_count):
-                self.field.species_masses[v, i, j] = float(
-                    species_masses[i, j]
-                )
-
-        # optional: guarantee the two helper arrays stay zero for this variant
-        # (already zeroed in __init__, but harmless to keep)
-        # for i in range(self.particle_count):
-        #     for j in range(self.species_count):
-        #         self.field.mass_transport_rate[v, i, j] = 0.0
-        #         self.field.transferable_mass[v, i, j] = 0.0
+        # --- fast copy: overwrite whole variant row then push back ---
+        full = self.field.species_masses.to_numpy()          # shape = (V, P, S)
+        full[v, :, :] = species_masses.astype(np.float32)     # overwrite one 2-D slab
+        self.field.species_masses.from_numpy(full)
