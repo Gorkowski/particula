@@ -52,16 +52,22 @@ class TiAerosolParticleResolved_soa:
         self.particle_field = self.particle_builder.fields  # list of fields
 
         # -------- auxiliary 1-D fields --------------------------------
-        self.radius = ti.field(ti.f32, shape=(variant_count, particle_count))
-        self.total_requested_mass = ti.field(
-            ti.f32, shape=(variant_count, species_count)
-        )
-        self.scaling_factor = ti.field(
-            ti.f32, shape=(variant_count, species_count)
-        )
-        self.particle_concentration = ti.field(
-            ti.f32, shape=(variant_count, particle_count)
-        )
+        self.radius = [
+            ti.field(ti.f32, shape=(particle_count,))
+            for _ in range(variant_count)
+        ]
+        self.total_requested_mass = [
+            ti.field(ti.f32, shape=(species_count,))
+            for _ in range(variant_count)
+        ]
+        self.scaling_factor = [
+            ti.field(ti.f32, shape=(species_count,))
+            for _ in range(variant_count)
+        ]
+        self.particle_concentration = [
+            ti.field(ti.f32, shape=(particle_count,))
+            for _ in range(variant_count)
+        ]
 
     # ---------------------------------------------------------------- #
     # NumPy → Taichi loader (delegates to builders)                    #
@@ -115,14 +121,12 @@ class TiAerosolParticleResolved_soa:
     # ------------------------------------------------------------------ #
     # core step                                                          #
     # ------------------------------------------------------------------ #
-    @ti.kernel
-    def _load_particle_concentration(
-        self,
-        v: ti.i32,
-        data: ti.types.ndarray(dtype=ti.f32, ndim=1),
-    ):
-        for p in range(self.particle_count):
-            self.particle_concentration[v, p] = data[p]
+    def _load_particle_concentration(self, v: int, data: np.ndarray):
+        if data.shape != (self.particle_count,):
+            raise ValueError("wrong shape")
+        self.particle_concentration[v].from_numpy(
+            np.ascontiguousarray(data, dtype=np.float32)
+        )
 
     @ti.kernel
     def fused_step(self):
@@ -137,7 +141,7 @@ class TiAerosolParticleResolved_soa:
                     species_masses = self.particle_field[v].species_masses,
                     density        = self.species[v].density,
                 )
-                self.radius[v, p] = r_p
+                self.radius[v][p] = r_p
 
                 sigma_eff, rho_eff = (
                     particle_properties.fget_mass_weighted_density_and_surface_tension(
