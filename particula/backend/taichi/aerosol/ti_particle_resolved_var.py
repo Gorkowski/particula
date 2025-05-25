@@ -95,7 +95,7 @@ class TiAerosolParticleResolved_soa:
         # particle × species
         self.particle_builder.load(v, species_masses=species_masses_np)
         # per-particle
-        self.particle_concentration[v].from_numpy(particle_concentration_np)
+        self._load_particle_concentration(v, particle_concentration_np)
 
     # ------------------------------------------------------------------ #
     # light-weight getters                                               #
@@ -115,6 +115,15 @@ class TiAerosolParticleResolved_soa:
     # ------------------------------------------------------------------ #
     # core step                                                          #
     # ------------------------------------------------------------------ #
+    @ti.kernel
+    def _load_particle_concentration(
+        self,
+        v: ti.i32,
+        data: ti.types.ndarray(dtype=ti.f32, ndim=1),
+    ):
+        for p in range(self.particle_count):
+            self.particle_concentration[v, p] = data[p]
+
     @ti.kernel
     def fused_step(self):
         """
