@@ -12,7 +12,7 @@ ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 def _assert_shapes(builder, variants, particles, species):
     assert builder.field.shape == (variants, particles, species)
-    for name in ("species_masses", "mass_transport_rate", "transferable_mass"):
+    for name in ("mass", "mtr", "t_mass"):
         sub_field = getattr(builder.field, name)
         assert sub_field.shape == (variants, particles, species)
 
@@ -29,14 +29,14 @@ def test_load_single_variant():
     builder.load(0, species_masses=arr_mass)
 
     np.testing.assert_array_equal(
-        builder.field.species_masses.to_numpy()[0], arr_mass
+        builder.field.mass.to_numpy()[0], arr_mass
     )
     zero = np.zeros_like(arr_mass)
     np.testing.assert_array_equal(
-        builder.field.mass_transport_rate.to_numpy()[0], zero
+        builder.field.mtr.to_numpy()[0], zero
     )
     np.testing.assert_array_equal(
-        builder.field.transferable_mass.to_numpy()[0], zero
+        builder.field.t_mass.to_numpy()[0], zero
     )
 
 def test_load_multiple_variants():
@@ -53,12 +53,12 @@ def test_load_multiple_variants():
     for v in range(variants):
         expected = base + v
         np.testing.assert_array_equal(
-            builder.field.species_masses.to_numpy()[v], expected
+            builder.field.mass.to_numpy()[v], expected
         )
         zero = np.zeros_like(expected)
         np.testing.assert_array_equal(
-            builder.field.mass_transport_rate.to_numpy()[v], zero
+            builder.field.mtr.to_numpy()[v], zero
         )
         np.testing.assert_array_equal(
-            builder.field.transferable_mass.to_numpy()[v], zero
+            builder.field.t_mass.to_numpy()[v], zero
         )
