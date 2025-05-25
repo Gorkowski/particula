@@ -31,9 +31,9 @@ class EnvironmentalConditionsBuilder:
     -------
     >>> env = (
     ...     EnvironmentalConditionsBuilder()
-    ...     .temperature(310.0)
-    ...     .pressure(90_000.0)
-    ...     .dynamic_viscosity(2.1e-5)
+    ...     .set_temperature(310.0)
+    ...     .set_pressure(90_000.0)
+    ...     .set_dynamic_viscosity(2.1e-5)
     ...     .build()
     ... )
     >>> env
@@ -45,37 +45,37 @@ class EnvironmentalConditionsBuilder:
         self._overrides: Dict[str, Any] = {}
 
     # --------- fluent setters ----------------------------------------
-    def temperature(self, value: float) -> "EnvironmentalConditionsBuilder":
+    def set_temperature(self, value: float) -> "EnvironmentalConditionsBuilder":
         self._overrides["temperature"] = value
         return self
 
-    def pressure(self, value: float) -> "EnvironmentalConditionsBuilder":
+    def set_pressure(self, value: float) -> "EnvironmentalConditionsBuilder":
         self._overrides["pressure"] = value
         return self
 
-    def mass_accommodation(
+    def set_mass_accommodation(
         self, value: float
     ) -> "EnvironmentalConditionsBuilder":
         self._overrides["mass_accommodation"] = value
         return self
 
-    def dynamic_viscosity(
+    def set_dynamic_viscosity(
         self, value: float
     ) -> "EnvironmentalConditionsBuilder":
         self._overrides["dynamic_viscosity"] = value
         return self
 
-    def diffusion_coefficient(
+    def set_diffusion_coefficient(
         self, value: float
     ) -> "EnvironmentalConditionsBuilder":
         self._overrides["diffusion_coefficient"] = value
         return self
 
-    def time_step(self, value: float) -> "EnvironmentalConditionsBuilder":
+    def set_time_step(self, value: float) -> "EnvironmentalConditionsBuilder":
         self._overrides["time_step"] = value
         return self
 
-    def simulation_volume(
+    def set_simulation_volume(
         self, value: float
     ) -> "EnvironmentalConditionsBuilder":
         self._overrides["simulation_volume"] = value

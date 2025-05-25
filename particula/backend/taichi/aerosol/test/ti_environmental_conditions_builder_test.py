@@ -39,7 +39,7 @@ def test_builder_returns_defaults():
 def test_single_override(field: str, value: float):
     """Only the specified field should differ from defaults."""
     builder = EnvironmentalConditionsBuilder()
-    getattr(builder, field)(value)  # call the fluent setter
+    getattr(builder, f"set_{field}")(value)  # call the fluent setter
     result = builder.build()
     default = EnvironmentalConditions()
     assert getattr(result, field) == value
@@ -56,9 +56,9 @@ def test_chained_overrides():
     """Multiple fluent calls should accumulate correctly."""
     env = (
         EnvironmentalConditionsBuilder()
-        .temperature(305.0)
-        .pressure(95_000.0)
-        .dynamic_viscosity(1.9e-5)
+        .set_temperature(305.0)
+        .set_pressure(95_000.0)
+        .set_dynamic_viscosity(1.9e-5)
         .build()
     )
     assert env.temperature == 305.0
@@ -83,10 +83,10 @@ def test_dataclass_is_frozen():
 def test_builder_reuse_creates_independent_objects():
     """State should not leak between successive .build() calls."""
     builder = (
-        EnvironmentalConditionsBuilder().temperature(300.0).pressure(95000.0)
+        EnvironmentalConditionsBuilder().set_temperature(300.0).set_pressure(95000.0)
     )
     env1 = builder.build()
-    env2 = builder.temperature(310.0).build()
+    env2 = builder.set_temperature(310.0).build()
     assert env1.temperature == 300.0  # unchanged
     assert env2.temperature == 310.0
     assert env1.pressure == env2.pressure == 95000.0
