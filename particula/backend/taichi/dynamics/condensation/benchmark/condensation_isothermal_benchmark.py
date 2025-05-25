@@ -271,7 +271,7 @@ def make_python_step_callable(particle, gas, cond):
 if __name__ == "__main__":
     N_SPECIES = 10
     PARTICLE_COUNTS = np.logspace(
-        2, 6, num=50, dtype=np.int64
+        1, 6, num=10, dtype=np.int64
     )  # 10^1 to 10^5 particles
 
     # build a single condensation object (species count is fixed)
