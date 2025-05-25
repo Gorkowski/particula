@@ -24,30 +24,29 @@ class SpeciesFieldBuilder:
         self.fields = [self.Species.field(shape=(species_count,))
                        for _ in range(variant_count)]
 
-    # ------------ helper: copy one variant from NumPy -----------------
-    def load(
-        self,
-        v: int,
-        *,
-        density: np.ndarray,
-        molar_mass: np.ndarray,
-        pure_vapor_pressure: np.ndarray,
-        vapor_concentration: np.ndarray,
-        kappa: np.ndarray,
-        surface_tension: np.ndarray,
-        gas_mass: np.ndarray,
-    ) -> None:
-        """Fill variant `v` (row) with NumPy arrays (shape = [species])."""
+    @property
+    def field(self):
+        raise AttributeError(
+            "SpeciesFieldBuilder now stores a list of fields; "
+            "use `builder.fields[i]` or `builder.variant(i)`."
+        )
 
-        def _set_row(field_attr, values):
-            full = field_attr.to_numpy()          # shape = (variants, species)
-            full[v, :] = values                   # overwrite one row
-            field_attr.from_numpy(full)
+    def load(self, v:int, *, density, molar_mass, pure_vapor_pressure,
+             vapor_concentration, kappa, surface_tension, gas_mass):
+        if not 0 <= v < self.variant_count:
+            raise IndexError("variant index out of range")
+        fld = self.fields[v]
+        # upload (all inputs must be 1-D length = species_count)
+        fld.density.from_numpy(np.ascontiguousarray(density, dtype=np.float32))
+        fld.molar_mass.from_numpy(np.ascontiguousarray(molar_mass, dtype=np.float32))
+        fld.pure_vapor_pressure.from_numpy(
+            np.ascontiguousarray(pure_vapor_pressure, dtype=np.float32))
+        fld.vapor_concentration.from_numpy(
+            np.ascontiguousarray(vapor_concentration, dtype=np.float32))
+        fld.kappa.from_numpy(np.ascontiguousarray(kappa, dtype=np.float32))
+        fld.surface_tension.from_numpy(
+            np.ascontiguousarray(surface_tension, dtype=np.float32))
+        fld.gas_mass.from_numpy(np.ascontiguousarray(gas_mass, dtype=np.float32))
 
-        _set_row(self.field.density,            density)
-        _set_row(self.field.molar_mass,         molar_mass)
-        _set_row(self.field.pure_vapor_pressure, pure_vapor_pressure)
-        _set_row(self.field.vapor_concentration, vapor_concentration)
-        _set_row(self.field.kappa,              kappa)
-        _set_row(self.field.surface_tension,    surface_tension)
-        _set_row(self.field.gas_mass,           gas_mass)
+    def variant(self, v:int):
+        return self.fields[v]
