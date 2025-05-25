@@ -38,7 +38,10 @@ class ParticleResolvedFieldBuilder:
                 f"({self.particle_count}, {self.species_count})"
             )
 
-        # --- fast copy: overwrite whole variant row then push back ---
-        full = self.field.species_masses.to_numpy()          # shape = (V, P, S)
-        full[v, :, :] = species_masses.astype(np.float32)     # overwrite one 2-D slab
-        self.field.species_masses.from_numpy(full)
+        # # --- fast copy: overwrite whole variant row then push back ---
+        # full = self.field.species_masses.to_numpy()          # shape = (V, P, S)
+        # full[v, :, :] = species_masses.astype(np.float32)     # overwrite one 2-D slab
+        # self.field.species_masses.from_numpy(full)
+
+        # fast: copy *only* the selected variant slice
+        self.field.species_masses[v].from_numpy(species_masses.astype(np.float32))
