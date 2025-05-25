@@ -21,7 +21,8 @@ class SpeciesFieldBuilder:
             surface_tension=ti.f32,
             gas_mass=ti.f32,
         )
-        self.field = self.Species.field(shape=(variant_count, species_count))
+        self.fields = [self.Species.field(shape=(species_count,))
+                       for _ in range(variant_count)]
 
     # ------------ helper: copy one variant from NumPy -----------------
     def load(

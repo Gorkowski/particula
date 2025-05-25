@@ -11,18 +11,19 @@ from particula.backend.taichi.aerosol.ti_species_field_builder import SpeciesFie
 ti.init(arch=ti.cpu, default_fp=ti.f64)
 
 def _assert_shapes(builder, variants, species):
-    assert builder.field.shape == (variants, species)
-    for name in (
-        "density",
-        "molar_mass",
-        "pure_vapor_pressure",
-        "vapor_concentration",
-        "kappa",
-        "surface_tension",
-        "gas_mass",
-    ):
-        sub_field = getattr(builder.field, name)
-        assert sub_field.shape == (variants, species)
+    assert len(builder.fields) == variants
+    for fld in builder.fields:
+        assert fld.shape == (species,)
+        for name in (
+            "density",
+            "molar_mass",
+            "pure_vapor_pressure",
+            "vapor_concentration",
+            "kappa",
+            "surface_tension",
+            "gas_mass",
+        ):
+            assert getattr(fld, name).shape == (species,)
 
 
 def test_single_variant_three_species():
@@ -62,19 +63,19 @@ def test_load_single_variant():
     )
 
     _assert_shapes(builder, variants, species)
-    np.testing.assert_array_equal(builder.field.density.to_numpy()[0], arr_density)
-    np.testing.assert_array_equal(builder.field.molar_mass.to_numpy()[0], arr_molar_mass)
+    np.testing.assert_array_equal(builder.variant(0).density.to_numpy(), arr_density)
+    np.testing.assert_array_equal(builder.variant(0).molar_mass.to_numpy(), arr_molar_mass)
     np.testing.assert_array_equal(
-        builder.field.pure_vapor_pressure.to_numpy()[0], arr_pure_vp
+        builder.variant(0).pure_vapor_pressure.to_numpy(), arr_pure_vp
     )
     np.testing.assert_array_equal(
-        builder.field.vapor_concentration.to_numpy()[0], arr_vapor_conc
+        builder.variant(0).vapor_concentration.to_numpy(), arr_vapor_conc
     )
-    np.testing.assert_array_equal(builder.field.kappa.to_numpy()[0], arr_kappa)
+    np.testing.assert_array_equal(builder.variant(0).kappa.to_numpy(), arr_kappa)
     np.testing.assert_array_equal(
-        builder.field.surface_tension.to_numpy()[0], arr_surface_tension
+        builder.variant(0).surface_tension.to_numpy(), arr_surface_tension
     )
-    np.testing.assert_array_equal(builder.field.gas_mass.to_numpy()[0], arr_gas_mass)
+    np.testing.assert_array_equal(builder.variant(0).gas_mass.to_numpy(), arr_gas_mass)
 
 
 def test_load_multiple_variants():
@@ -100,21 +101,12 @@ def test_load_multiple_variants():
 
     # verify each field/variant retains the expected offset values
     for v in range(variants):
-        np.testing.assert_array_equal(builder.field.density.to_numpy()[v], base + v)
-        np.testing.assert_array_equal(
-            builder.field.molar_mass.to_numpy()[v], base + 10 + v
-        )
-        np.testing.assert_array_equal(
-            builder.field.pure_vapor_pressure.to_numpy()[v], base + 20 + v
-        )
-        np.testing.assert_array_equal(
-            builder.field.vapor_concentration.to_numpy()[v], base + 30 + v
-        )
-        np.testing.assert_array_equal(builder.field.kappa.to_numpy()[v], base + 40 + v)
-        np.testing.assert_array_equal(
-            builder.field.surface_tension.to_numpy()[v], base + 50 + v
-        )
-        np.testing.assert_array_equal(
-            builder.field.gas_mass.to_numpy()[v], base + 60 + v
-        )
+        fld = builder.variant(v)
+        np.testing.assert_array_equal(fld.density.to_numpy(), base + v)
+        np.testing.assert_array_equal(fld.molar_mass.to_numpy(), base + 10 + v)
+        np.testing.assert_array_equal(fld.pure_vapor_pressure.to_numpy(), base + 20 + v)
+        np.testing.assert_array_equal(fld.vapor_concentration.to_numpy(), base + 30 + v)
+        np.testing.assert_array_equal(fld.kappa.to_numpy(), base + 40 + v)
+        np.testing.assert_array_equal(fld.surface_tension.to_numpy(), base + 50 + v)
+        np.testing.assert_array_equal(fld.gas_mass.to_numpy(), base + 60 + v)
 
