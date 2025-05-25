@@ -38,10 +38,10 @@ class SpeciesFieldBuilder:
         gas_mass: np.ndarray,
     ) -> None:
         """Fill variant `v` with NumPy arrays (1-D, length = species)."""
-        self.field[v].density.from_numpy(density)
-        self.field[v].molar_mass.from_numpy(molar_mass)
-        self.field[v].pure_vapor_pressure.from_numpy(pure_vapor_pressure)
-        self.field[v].vapor_conc.from_numpy(vapor_concentration)
-        self.field[v].kappa.from_numpy(kappa)
-        self.field[v].sigma.from_numpy(surface_tension)
-        self.field[v].gas_mass.from_numpy(gas_mass)
+        self.field.density[v].from_numpy(density)
+        self.field.molar_mass[v].from_numpy(molar_mass)
+        self.field.pure_vapor_pressure[v].from_numpy(pure_vapor_pressure)
+        self.field.vapor_concentration[v].from_numpy(vapor_concentration)
+        self.field.kappa[v].from_numpy(kappa)
+        self.field.surface_tension[v].from_numpy(surface_tension)
+        self.field.gas_mass[v].from_numpy(gas_mass)
