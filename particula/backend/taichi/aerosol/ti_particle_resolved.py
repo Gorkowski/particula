@@ -159,29 +159,19 @@ class TiAerosolParticleResolved:
                         ].surface_tension,
                     )
                 )
-                particle_activity = (
-                    get_kappa_activity(
-                        mass_concentration=self.particle_field[
-                            variant_index
-                        ].species_masses,
-                        kappa=self.species[variant_index].kappa,
-                        density=self.species[variant_index].density,
-                        molar_mass=self.species[variant_index].molar_mass,
-                        water_index=0,
-                        particle_index=particle_index,
-                        activity=self.particle_field[
-                            variant_index
-                        ].activity,
-                    )
+                get_kappa_activity(
+                    mass_concentration=self.particle_field[
+                        variant_index
+                    ].species_masses,
+                    kappa=self.species[variant_index].kappa,
+                    density=self.species[variant_index].density,
+                    molar_mass=self.species[variant_index].molar_mass,
+                    water_index=0,
+                    particle_index=particle_index,
+                    activity=self.particle_field[
+                        variant_index
+                    ].activity,
                 )
-
-                # total_particle_mass = get_total_mass(
-                #     particle_index=particle_index,
-                #     species_count=self.species_count,
-                #     particle_masses=self.particle_field[
-                #         variant_index
-                #     ].species_masses,
-                # )
 
                 for species_index in range(self.species_count):
                     molar_mass_s = self.species[variant_index].molar_mass[
@@ -218,22 +208,14 @@ class TiAerosolParticleResolved:
                         )
                     )
 
-                    # particle_activity = (
-                    #     particle_properties.fget_ideal_activity_mass(
-                    #         mass_single=self.particle_field[
-                    #             variant_index
-                    #         ].species_masses[particle_index, species_index],
-                    #         total_mass=total_particle_mass,
-                    #     )
-                    # )
-
-                    partial_pressure_particle = (
-                        particle_properties.fget_surface_partial_pressure(
-                            pure_vapor_pressure=self.species[
-                                variant_index
-                            ].pure_vapor_pressure[species_index],
-                            activity=particle_activity,
-                        )
+                    activity_val = self.particle_field[variant_index].activity[
+                        particle_index, species_index
+                    ]
+                    partial_pressure_particle = particle_properties.fget_surface_partial_pressure(
+                        pure_vapor_pressure=self.species[
+                            variant_index
+                        ].pure_vapor_pressure[species_index],
+                        activity=activity_val,
                     )
                     delta_p = particle_properties.fget_partial_pressure_delta(
                         partial_pressure_gas=partial_pressure_gas,
@@ -303,11 +285,11 @@ def get_total_mass(
     """
     Get the total mass of a particle by summing up the species masses.
     """
-    total_mass = ti.cast(0.0, float)
+    total_mass = 0.0
     for species_index in range(species_count):
         total_mass += particle_masses[particle_index, species_index]
     if total_mass < 0.0:
-        total_mass = ti.cast(0.0, float)
+        total_mass = 0.0
     return total_mass
 
 
