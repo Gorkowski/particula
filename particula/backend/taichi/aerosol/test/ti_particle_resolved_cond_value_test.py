@@ -77,8 +77,8 @@ class TestCondensationMassEquality(unittest.TestCase):
             time_step=1.0,
         )
 
-        py_species_mass = self._extract_species_masses_py(py_particle)
-        py_gas_mass = self._extract_gas_mass_py(py_gas)
+        py_species_mass = py_particle.distribution
+        py_gas_mass = py_gas.concentration
 
         # ---------- build taichi side objects -------------------------
         ti_sim = _build_ti_particle_resolved_soa(n_particles, n_species)
