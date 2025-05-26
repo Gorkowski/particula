@@ -23,12 +23,14 @@ from particula.backend.taichi.convert.convert_resolved_condensation import (
     update_python_aerosol_from_ti,
 )
 
+ti.init(arch=ti.cpu, default_fp=ti.f64, default_ip=ti.i32)
+
 # ----------------------------------------------------------------------
 # Local builders (identical to those used in earlier tests / benchmark)
 # ----------------------------------------------------------------------
 def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     rng = np.random.default_rng(0)
-    mass = np.abs(rng.standard_normal((n_particles, n_species))) * 1.0e-18
+    mass = np.abs(rng.standard_normal((n_particles, n_species))) * 1.0e-12
 
     densities = np.linspace(1_000.0, 1_500.0, n_species)
     molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
@@ -77,12 +79,16 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
         )
         for i in range(n_species)
     ]
+    gas_concentration = np.abs(
+        rng.standard_normal(n_species)
+    ) * 1.0e-6  # arbitrary concentration in kg/m^3
+
     gas_species = (
         par.gas.GasSpeciesBuilder()
         .set_name([f"X{i}" for i in range(n_species)])
         .set_molar_mass(molar_mass, "kg/mol")
         .set_vapor_pressure_strategy(vp_strategies)
-        .set_concentration(np.ones(n_species), "kg/m^3")
+        .set_concentration(gas_concentration, "kg/m^3")
         .set_partitioning(True)
         .build()
     )
@@ -119,7 +125,7 @@ class TestConvertResolvedCondensation(unittest.TestCase):
 
     # ------------------------------------------------------------------
     def setUp(self):
-        self.n_particles = 32
+        self.n_particles = 100
         self.n_species = 10
         self.temperature = 298.15
         self.pressure = 101_325.0
@@ -173,10 +179,25 @@ class TestConvertResolvedCondensation(unittest.TestCase):
         update_python_aerosol_from_ti(ti_sim, self.aerosol_ti)
 
         # ----- comparisons -------------------------------------------
+        # compare total particle mass
+        total_mass_ti = np.sum(
+            self.aerosol_ti.particles.get_species_mass(clone=True)
+        )
+        total_mass_ref = np.sum(
+            self.aerosol_ref.particles.get_species_mass(clone=True)
+        )
+        assert_allclose(
+            total_mass_ti,
+            total_mass_ref,
+            rtol=1e-6,
+            atol=1e-12,
+            err_msg="Total particle mass diverges after round-trip",
+        )
+
         assert_allclose(
             self.aerosol_ti.particles.distribution,
             self.aerosol_ref.particles.distribution,
-            rtol=1e-6,
+            rtol=1e-8,
             atol=1e-12,
             err_msg="Particle species-mass arrays diverge after round-trip",
         )
@@ -184,8 +205,8 @@ class TestConvertResolvedCondensation(unittest.TestCase):
         assert_allclose(
             self.aerosol_ti.atmosphere.partitioning_species.concentration,
             self.aerosol_ref.atmosphere.partitioning_species.concentration,
-            rtol=1e-6,
-            atol=1e-12,
+            rtol=1e-8,
+            atol=1e-8,
             err_msg="Gas-phase concentration arrays diverge after round-trip",
         )
 
