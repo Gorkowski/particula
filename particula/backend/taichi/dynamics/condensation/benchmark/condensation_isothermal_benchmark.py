@@ -68,7 +68,7 @@ def _build_ti_particle_resolved_soa(
     return sim
 
 
-def make_fused_step_callable(sim_obj: TiAerosolParticleResolved):
+def make_fused_step_callable(sim_obj):
     """Return a callable that executes sim_obj.fused_step once."""
     def _inner():
         sim_obj.fused_step()
