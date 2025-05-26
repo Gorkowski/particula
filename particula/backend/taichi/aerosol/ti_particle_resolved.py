@@ -53,19 +53,19 @@ class TiAerosolParticleResolved:
 
         # -------- auxiliary 1-D fields --------------------------------
         self.radius = [
-            ti.field(ti.f32, shape=(particle_count,))
+            ti.field(ti.f64, shape=(particle_count,))
             for _ in range(variant_count)
         ]
         self.total_requested_mass = [
-            ti.field(ti.f32, shape=(species_count,))
+            ti.field(ti.f64, shape=(species_count,))
             for _ in range(variant_count)
         ]
         self.scaling_factor = [
-            ti.field(ti.f32, shape=(species_count,))
+            ti.field(ti.f64, shape=(species_count,))
             for _ in range(variant_count)
         ]
         self.particle_concentration = [
-            ti.field(ti.f32, shape=(particle_count,))
+            ti.field(ti.f64, shape=(particle_count,))
             for _ in range(variant_count)
         ]
 
@@ -125,7 +125,7 @@ class TiAerosolParticleResolved:
         if data.shape != (self.particle_count,):
             raise ValueError("wrong shape")
         self.particle_concentration[v].from_numpy(
-            np.ascontiguousarray(data, dtype=np.float32)
+            np.ascontiguousarray(data, dtype=np.float64)
         )
 
     @ti.kernel
