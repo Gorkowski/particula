@@ -44,7 +44,7 @@ def update_gas_mass(
     the mass transferred to particles.
     """
     for j in ti.ndrange(gas_mass.shape[0]):
-        species_mass = 0.0
+        species_mass = ti.cast(0.0, float)
         for i in ti.ndrange(species_masses.shape[0]):
             species_mass += transferable_mass[i, j]
         gas_mass[j] -= species_mass

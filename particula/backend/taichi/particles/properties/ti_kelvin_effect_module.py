@@ -24,8 +24,8 @@ def fget_kelvin_radius(
 
 
 @ti.func
-def fget_kelvin_term(r_p: float, r_k: float) -> float:
-    expo = r_k / r_p
+def fget_kelvin_term(radius_particle: float, kelvin_radius: float) -> float:
+    expo = kelvin_radius / radius_particle
     max_exp = ti.static(_EXP_MAX)
     expo = ti.min(expo, max_exp)  # overflow protection
     return ti.exp(expo)

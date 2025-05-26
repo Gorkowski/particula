@@ -7,7 +7,15 @@ import numpy as np
 
 
 class ParticleResolvedFieldBuilder:
-    """Creates the (variant × particle × species) state field."""
+    """
+    Creates the per-particle, per-species SoA field and offers handy load
+    helpers. The field is structured as a list of `P2S` structs, where each
+    struct contains the mass matrix for a specific variant. Each `P2S` struct
+    has the following fields:
+    - `species_masses`: per-particle, per-species mass matrix
+    - `mass_transport_rate`: auxiliary field for mass transport rates
+    - `transferable_mass`: auxiliary field for transferable mass
+    """
 
     def __init__(
         self, variant_count: int, particle_count: int, species_count: int
