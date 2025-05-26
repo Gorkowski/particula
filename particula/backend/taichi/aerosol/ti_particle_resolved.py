@@ -159,13 +159,29 @@ class TiAerosolParticleResolved:
                         ].surface_tension,
                     )
                 )
-                total_particle_mass = get_total_mass(
-                    particle_index=particle_index,
-                    species_count=self.species_count,
-                    particle_masses=self.particle_field[
-                        variant_index
-                    ].species_masses,
+                particle_activity = (
+                    get_kappa_activity(
+                        mass_concentration=self.particle_field[
+                            variant_index
+                        ].species_masses,
+                        kappa=self.species[variant_index].kappa,
+                        density=self.species[variant_index].density,
+                        molar_mass=self.species[variant_index].molar_mass,
+                        water_index=0,
+                        particle_index=particle_index,
+                        activity=self.particle_field[
+                            variant_index
+                        ].activity,
+                    )
                 )
+
+                # total_particle_mass = get_total_mass(
+                #     particle_index=particle_index,
+                #     species_count=self.species_count,
+                #     particle_masses=self.particle_field[
+                #         variant_index
+                #     ].species_masses,
+                # )
 
                 for species_index in range(self.species_count):
                     molar_mass_s = self.species[variant_index].molar_mass[
@@ -202,20 +218,21 @@ class TiAerosolParticleResolved:
                         )
                     )
 
-                    particle_actvity = (
-                        particle_properties.fget_ideal_activity_mass(
-                            mass_single=self.particle_field[
-                                variant_index
-                            ].species_masses[particle_index, species_index],
-                            total_mass=total_particle_mass,
-                        )
-                    )
+                    # particle_activity = (
+                    #     particle_properties.fget_ideal_activity_mass(
+                    #         mass_single=self.particle_field[
+                    #             variant_index
+                    #         ].species_masses[particle_index, species_index],
+                    #         total_mass=total_particle_mass,
+                    #     )
+                    # )
+
                     partial_pressure_particle = (
                         particle_properties.fget_surface_partial_pressure(
                             pure_vapor_pressure=self.species[
                                 variant_index
                             ].pure_vapor_pressure[species_index],
-                            activity=particle_actvity,
+                            activity=particle_activity,
                         )
                     )
                     delta_p = particle_properties.fget_partial_pressure_delta(
@@ -292,3 +309,44 @@ def get_total_mass(
     if total_mass < 0.0:
         total_mass = ti.cast(0.0, float)
     return total_mass
+
+
+@ti.func
+def get_kappa_activity(
+    mass_concentration: ti.template(),
+    kappa: ti.template(),
+    density: ti.template(),
+    molar_mass: ti.template(),
+    water_index: int,
+    particle_index: int,
+    activity: ti.template(),
+):
+    """
+    Calculate the activity of each species in a particle, including water activity.
+    This function computes the mole fraction of each species and the water activity
+    using the κ–Köhler theory.
+    """
+
+    # mole-fraction part (all species first)
+    mole_sum = 0.0
+    for s in range(molar_mass.shape[0]):
+        mole_sum += mass_concentration[particle_index, s] / molar_mass[s]
+    for s in range(molar_mass.shape[0]):
+        moles_of_species = (
+            mass_concentration[particle_index, s] / molar_mass[s]
+        )
+        activity[particle_index, s] = (
+            0.0 if mole_sum == 0.0 else moles_of_species / mole_sum
+        )
+
+    # water activity via κ–Köhler mix
+    water_activity = particle_properties.fget_water_activity_from_kappa_row(
+        mass_concentration,
+        kappa,
+        density,
+        molar_mass,
+        water_index,
+        particle_index,
+        molar_mass.shape[0],
+    )
+    activity[particle_index, water_index] = water_activity
