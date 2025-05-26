@@ -16,29 +16,6 @@ from particula.backend.benchmark import (
     plot_throughput_vs_array_length,
 )
 
-from particula.backend.taichi.particles.ti_distribution_strategies import (
-    TiParticleResolvedSpeciatedMass,
-)
-from particula.backend.taichi.particles.ti_activity_strategies import (
-    ActivityKappaParameter,
-)
-from particula.backend.taichi.particles.ti_surface_strategies import (
-    TiSurfaceStrategyMolar,
-)
-from particula.backend.taichi.particles.ti_representation import (
-    TiParticleRepresentation,
-)
-from particula.backend.taichi.gas.ti_species import TiGasSpecies
-from particula.backend.taichi.gas.ti_vapor_pressure_strategies import (
-    WaterBuckStrategy,
-    ConstantVaporPressureStrategy,
-)
-from particula.backend.taichi.dynamics.condensation.ti_condensation_strategies import (
-    TiCondensationIsothermal,
-)
-from particula.backend.taichi.aerosol.ti_particle_resolved import (
-    TiAerosolParticleResolved,
-)
 from particula.backend.taichi.aerosol.ti_particle_resolved_var import (
     TiAerosolParticleResolved_soa,
 )
@@ -48,40 +25,6 @@ from particula.dynamics.condensation.condensation_strategies import (
     CondensationIsothermal as PyCondensationIsothermal,
 )
 
-
-# ── fused particle-resolved aerosol (new benchmark) ────────────────────
-def _build_ti_particle_resolved(n_particles: int, n_species: int = 10):
-    """Create and populate a TiAerosolParticleResolved instance."""
-    rng = np.random.default_rng(0)
-
-    species_masses = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
-    density = np.linspace(1_000.0, 1_500.0, n_species)
-    molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
-    pure_vp = np.full(n_species, 50.0)              # dummy, Pa
-    vapor_conc = np.ones(n_species) * 1.0e-3        # mol m⁻3
-    kappa = np.zeros(n_species)
-    surface_tension = np.full(n_species, 0.072)     # N m⁻1
-    gas_mass = np.ones(n_species) * 1.0e-6          # kg
-    particle_conc = np.ones(n_particles)            # # m⁻3
-
-    sim = TiAerosolParticleResolved(
-        particle_count=n_particles,
-        species_count=n_species,
-        time_step=1.0,
-        simulation_volume=1.0,
-    )
-    sim.setup(
-        species_masses,
-        density,
-        molar_mass,
-        pure_vp,
-        vapor_conc,
-        kappa,
-        surface_tension,
-        gas_mass,
-        particle_conc,
-    )
-    return sim
 
 # ── fused particle-resolved aerosol  (SoA, 1-variant) ──────────────
 def _build_ti_particle_resolved_soa(
@@ -249,14 +192,6 @@ if __name__ == "__main__":
             max_run_time_s=2.0,
         )
 
-        # ----- Fused particle-resolved solver stats ------------------------
-        pr_sim = _build_ti_particle_resolved(n_particles, N_SPECIES)
-        stats_pr = get_function_benchmark(
-            make_fused_step_callable(pr_sim),
-            ops_per_call=1,
-            max_run_time_s=2.0,
-        )
-
         # ----- Fused SoA solver stats ---------------------------------------
         pr_soa_sim = _build_ti_particle_resolved_soa(n_particles, N_SPECIES)
         stats_pr_soa = get_function_benchmark(
@@ -268,16 +203,14 @@ if __name__ == "__main__":
         # ----- build header only once ---------------------------------------
         if csv_header is None:
             python_headers = ["python_" + h for h in stats_py["array_headers"]]
-            fused_headers  = ["fused_"  + h for h in stats_pr["array_headers"]]
             soa_headers    = ["soa_"    + h for h in stats_pr_soa["array_headers"]]
-            csv_header = ["array_length", *python_headers, *fused_headers, *soa_headers]
+            csv_header = ["array_length", *python_headers, *soa_headers]
 
         # ----- collect row ---------------------------------------------------
         rows.append(
             [
                 n_particles,
                 *stats_py["array_stats"],
-                *stats_pr["array_stats"],
                 *stats_pr_soa["array_stats"],
             ]
         )
@@ -311,4 +244,4 @@ if __name__ == "__main__":
         json.dump(get_system_info(), fh, indent=2)
 
     print(f"Benchmark results saved to {csv_file}")
-    print(stats_pr['report'])
+    print(stats_pr_soa['report'])
