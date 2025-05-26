@@ -246,7 +246,7 @@ if __name__ == "__main__":
         stats_py = get_function_benchmark(
             make_python_step_callable(py_particle, py_gas, condensation_py),
             ops_per_call=1,
-            max_run_time_s=5.0,
+            max_run_time_s=2.0,
         )
 
         # ----- Fused particle-resolved solver stats ------------------------
@@ -254,7 +254,7 @@ if __name__ == "__main__":
         stats_pr = get_function_benchmark(
             make_fused_step_callable(pr_sim),
             ops_per_call=1,
-            max_run_time_s=5.0,
+            max_run_time_s=2.0,
         )
 
         # ----- Fused SoA solver stats ---------------------------------------
@@ -262,7 +262,7 @@ if __name__ == "__main__":
         stats_pr_soa = get_function_benchmark(
             make_fused_step_callable(pr_soa_sim),
             ops_per_call=1,
-            max_run_time_s=5.0,
+            max_run_time_s=2.0,
         )
 
         # ----- build header only once ---------------------------------------
