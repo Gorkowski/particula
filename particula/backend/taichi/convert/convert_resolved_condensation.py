@@ -19,6 +19,9 @@ from particula.dynamics.condensation.condensation_strategies import (
 from particula.backend.taichi.aerosol.ti_particle_resolved import (
     TiAerosolParticleResolved,
 )
+from particula.backend.taichi.aerosol.ti_environmental_conditions_builder import (
+    EnvironmentalConditions,
+)
 
 
 # ----------------------------------------------------------------------
@@ -55,15 +58,24 @@ def build_ti_particle_resolved(
     pressure = aerosol.atmosphere.total_pressure
     simulation_volume = aerosol.particles.volume
 
+    env = EnvironmentalConditions(
+        temperature=temperature,
+        pressure=pressure,
+        time_step=time_step,
+        mass_accommodation=cond_py.accommodation_coefficient,
+        diffusion_coefficient=cond_py.diffusion_coefficient,
+        simulation_volume=simulation_volume,
+        dynamic_viscosity=par.gas.get_dynamic_viscosity(
+            temperature=temperature,
+        )
+    )
+
     # ---- create & load Taichi object --------------------------------
     sim = TiAerosolParticleResolved(
         particle_count=species_masses_np.shape[0],
         species_count=species_masses_np.shape[1],
         variant_count=variant_count,
-        time_step=time_step,
-        simulation_volume=simulation_volume,
-        temperature=temperature,
-        pressure=pressure,
+        environmental_conditions=env,
     )
 
     sim.setup(

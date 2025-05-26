@@ -25,9 +25,10 @@ class ParticleResolvedFieldBuilder:
         self.species_count = species_count
 
         P2S = ti.types.struct(
-            species_masses=ti.f32,  # species_masses
-            mass_transport_rate=ti.f32,  # mass_transport_rate
-            transferable_mass=ti.f32,  # transferable_mass
+            species_masses=float,  # species_masses
+            mass_transport_rate=float,  # mass_transport_rate
+            transferable_mass=float,  # transferable_mass
+            activity=float,  # activity (kappa)
         )
         self.fields = [
             P2S.field(shape=(particle_count, species_count))
@@ -38,6 +39,7 @@ class ParticleResolvedFieldBuilder:
         for fld in self.fields:
             fld.mass_transport_rate.fill(0.0)
             fld.transferable_mass.fill(0.0)
+            fld.activity.fill(0.0)
 
     def load(self, v: int, *, species_masses: np.ndarray) -> None:
         """Copy `(particle, species)` mass matrix for one variant."""

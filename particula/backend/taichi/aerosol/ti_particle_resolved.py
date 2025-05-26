@@ -32,13 +32,15 @@ class TiAerosolParticleResolved:
         particle_count: int,
         species_count: int,
         variant_count: int = 1,
-        **run_kwargs,
+        environmental_conditions: EnvironmentalConditionsBuilder = None,
     ):
         # counts & global options
         self.particle_count = particle_count
         self.species_count = species_count
         self.variant_count = variant_count
-        self.env = EnvironmentalConditions(**run_kwargs)
+        self.env = environmental_conditions
+        if environmental_conditions is None:
+            self.env = EnvironmentalConditions()
 
         # -------- field builders --------------------------------------
         self.species_builder = SpeciesFieldBuilder(
@@ -117,6 +119,18 @@ class TiAerosolParticleResolved:
 
     def get_transferable_mass(self, v: int = 0) -> np.ndarray:
         return self.particle_field[v].transferable_mass.to_numpy()
+
+    def get_mass_transport_rate(self, v: int = 0) -> np.ndarray:
+        return self.particle_field[v].mass_transport_rate.to_numpy()
+
+    def get_activity(self, v: int = 0) -> np.ndarray:
+        return self.particle_field[v].activity.to_numpy()
+
+    def get_particle_concentration(self, v: int = 0) -> np.ndarray:
+        """
+        Get the particle concentration for a given variant.
+        """
+        return self.particle_concentration[v].to_numpy()
 
     # ------------------------------------------------------------------ #
     # core step                                                          #

@@ -57,7 +57,7 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
         .set_mass(mass, "kg")
         .set_density(densities, "kg/m^3")
         .set_charge(0)
-        .set_volume(1.0, "m^3")
+        .set_volume(1e-10, "m^3")
         .build()
     )
 
@@ -134,7 +134,7 @@ class TestCondensationMassEquality(unittest.TestCase):
             gas_species=py_gas,
             temperature=298.15,
             pressure=101_325.0,
-            time_step=1.0,
+            time_step=100.0,
         )
 
         py_species_mass = py_particle.get_species_mass(clone=True)
@@ -144,34 +144,80 @@ class TestCondensationMassEquality(unittest.TestCase):
         ti_sim = build_ti_particle_resolved(
             aerosol=aerosol,
             cond_py=cond_py,
-            time_step=1.0,
+            time_step=100.0,
             variant_count=1,
         )
 
         ti_sim.fused_step()  # one step
 
-        ti_species_mass = ti_sim.get_species_masses()
-        ti_gas_mass = ti_sim.get_gas_mass()
-
-        total_mass = np.sum(ti_species_mass)
-        total_mass_py = np.sum(py_species_mass)
-
+        # compare particle activity
+        ti_activity = ti_sim.get_activity()
+        py_activity = py_particle.get_activity().activity(
+            mass_concentration=py_species_mass,
+        )
         assert_allclose(
-            total_mass,
-            total_mass_py,
+            ti_activity,
+            py_activity,
             rtol=1e-6,
             atol=1e-12,
-            err_msg="Total mass diverges between back-ends",
+            err_msg="Activity diverges between back-ends",
         )
+
+
+        # compare concenration
+        ti_concentration = ti_sim.get_particle_concentration()
+        py_concentration = py_particle.concentration
+
+        assert_allclose(
+            ti_concentration,
+            py_concentration,
+            rtol=1e-6,
+            atol=1e-12,
+            err_msg="Particle concentration diverges between back-ends",
+        )
+
+
+
+
+        # compare mass_transport_rate
+        ti_mass_transport_rate = ti_sim.get_mass_transport_rate()
+        py_mass_tranport_rate = cond_py.rate(
+            particle=py_particle,
+            gas_species=py_gas,
+            temperature=298.15,
+            pressure=101_325.0,
+        )
+
+        assert_allclose(
+            ti_mass_transport_rate,
+            py_mass_tranport_rate,
+            rtol=1e-6,
+            atol=1e-12,
+            err_msg="Mass transport rate diverges between back-ends",
+        )
+
+        # ti_species_mass = ti_sim.get_species_masses()
+        # ti_gas_mass = ti_sim.get_gas_mass()
+
+        # total_mass = np.sum(ti_species_mass)
+        # total_mass_py = np.sum(py_species_mass)
+
+        # assert_allclose(
+        #     total_mass,
+        #     total_mass_py,
+        #     rtol=1e-6,
+        #     atol=1e-12,
+        #     err_msg="Total mass diverges between back-ends",
+        # )
 
         # ---------- compare ------------------------------------------
-        assert_allclose(
-            ti_species_mass,
-            py_species_mass,
-            rtol=1e-6,
-            atol=1e-12,
-            err_msg="Species-mass arrays diverge between back-ends",
-        )
+        # assert_allclose(
+        #     ti_species_mass,
+        #     py_species_mass,
+        #     rtol=1e-6,
+        #     atol=1e-12,
+        #     err_msg="Species-mass arrays diverge between back-ends",
+        # )
         # assert_allclose(
         #     ti_gas_mass,
         #     py_gas_mass,

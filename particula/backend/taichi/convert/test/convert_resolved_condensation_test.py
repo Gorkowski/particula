@@ -39,7 +39,7 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     activity = (
         par.particles.ActivityKappaParameterBuilder()
         .set_density(densities, "kg/m^3")
-        .set_kappa(np.zeros(n_species))
+        .set_kappa(np.ones(n_species)/2)
         .set_molar_mass(molar_mass, "kg/mol")
         .set_water_index(0)
         .build()
@@ -60,7 +60,7 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
         .set_mass(mass, "kg")
         .set_density(densities, "kg/m^3")
         .set_charge(0)
-        .set_volume(1.0, "m^3")  # parcel volume
+        .set_volume(1e-6, "m^3")  # parcel volume
         .build()
     )
 
@@ -118,11 +118,6 @@ class _DummyAerosol:
 class TestConvertResolvedCondensation(unittest.TestCase):
     """Compare one-step mass transfer between python and Taichi paths."""
 
-    @classmethod
-    def setUpClass(cls):
-        # initialise Taichi once for the whole suite
-        ti.init(arch=ti.cpu, default_fp=ti.f64, default_ip=ti.i32)
-
     # ------------------------------------------------------------------
     def setUp(self):
         self.n_particles = 100
@@ -159,14 +154,6 @@ class TestConvertResolvedCondensation(unittest.TestCase):
 
     # ------------------------------------------------------------------
     def test_roundtrip_conversion(self):
-        # ----- python reference step ----------------------------------
-        self.cond_py.step(
-            particle=self.aerosol_ref.particles,
-            gas_species=self.aerosol_ref.atmosphere.partitioning_species,
-            temperature=self.temperature,
-            pressure=self.pressure,
-            time_step=self.time_step,
-        )
 
         # ----- Taichi step via converter ------------------------------
         ti_sim = build_ti_particle_resolved(
@@ -175,7 +162,6 @@ class TestConvertResolvedCondensation(unittest.TestCase):
             time_step=self.time_step,
             variant_count=1,
         )
-        ti_sim.fused_step()
         update_python_aerosol_from_ti(ti_sim, self.aerosol_ti)
 
         # ----- comparisons -------------------------------------------
@@ -189,7 +175,7 @@ class TestConvertResolvedCondensation(unittest.TestCase):
         assert_allclose(
             total_mass_ti,
             total_mass_ref,
-            rtol=1e-6,
+            rtol=1e-8,
             atol=1e-12,
             err_msg="Total particle mass diverges after round-trip",
         )

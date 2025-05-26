@@ -13,7 +13,7 @@ from typing import Dict, Any
 class EnvironmentalConditions:
     temperature: float = 298.15
     pressure: float = 101_325.0
-    mass_accommodation: float = 0.5
+    mass_accommodation: float = 1.0
     dynamic_viscosity: float = 1.8e-5
     diffusion_coefficient: float = 2.0e-5
     time_step: float = 10.0
