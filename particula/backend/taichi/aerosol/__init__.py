@@ -1,17 +1,9 @@
-from .ti_particle_resolved import (
-    TiAerosolParticleResolved
-)
-
-from .ti_species_field_builder import (
-    SpeciesFieldBuilder
-)
+from .ti_species_field_builder import SpeciesFieldBuilder
 from .ti_environmental_conditions_builder import (
     EnvironmentalConditionsBuilder,
-    EnvironmentalConditions
+    EnvironmentalConditions,
 )
 from .ti_particle_resolved_field import (
     ParticleResolvedFieldBuilder,
 )
-from .ti_particle_resolved_var import (
-    TiAerosolParticleResolved_soa
-)
+from .ti_particle_resolved import TiAerosolParticleResolved

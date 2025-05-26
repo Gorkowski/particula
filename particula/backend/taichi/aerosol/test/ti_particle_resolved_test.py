@@ -6,12 +6,13 @@ Taichi fields contain the expected data for both single-variant and
 multi-variant cases.  No physics is evaluated here – we only check data
 placement and basic getters.
 """
+
 import unittest
 import numpy as np
 import taichi as ti
 
-from particula.backend.taichi.aerosol.ti_particle_resolved_var import (
-    TiAerosolParticleResolved_soa,
+from particula.backend.taichi.aerosol.ti_particle_resolved import (
+    TiAerosolParticleResolved,
 )
 
 ti.init(arch=ti.cpu, default_fp=ti.f64)
@@ -40,13 +41,15 @@ class TestTiAerosolParticleResolvedSOA(unittest.TestCase):
         self.base_gas_mass = np.array([7.0, 7.1], dtype=np.float32)
 
         # per-particle concentration (1-D)
-        self.base_particle_conc = np.array([10.0, 11.0, 12.0], dtype=np.float32)
+        self.base_particle_conc = np.array(
+            [10.0, 11.0, 12.0], dtype=np.float32
+        )
 
     # ------------------------------------------------------------------
     # internal helper: build & fill a solver with a chosen #variants
     # ------------------------------------------------------------------
-    def _make_solver(self, variants: int) -> TiAerosolParticleResolved_soa:
-        sim = TiAerosolParticleResolved_soa(
+    def _make_solver(self, variants: int) -> TiAerosolParticleResolved:
+        sim = TiAerosolParticleResolved(
             particle_count=self.particles,
             species_count=self.species,
             variant_count=variants,
@@ -116,7 +119,7 @@ class TestTiAerosolParticleResolvedSOA(unittest.TestCase):
     def test_single_variant_fused_step(self):
         """`fused_step` should compile & run for a single variant."""
         sim = self._make_solver(variants=1)
-        sim.fused_step()                                  # run once
+        sim.fused_step()  # run once
         assert True
 
     def test_multiple_variant_fused_step(self):
@@ -128,6 +131,7 @@ class TestTiAerosolParticleResolvedSOA(unittest.TestCase):
             r = sim.get_radius(v)
             self.assertEqual(r.shape, (self.particles,))
             self.assertTrue(np.all(r > 0.0))
+
 
 if __name__ == "__main__":
     unittest.main()

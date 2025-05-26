@@ -16,8 +16,8 @@ from particula.backend.benchmark import (
     plot_throughput_vs_array_length,
 )
 
-from particula.backend.taichi.aerosol.ti_particle_resolved_var import (
-    TiAerosolParticleResolved_soa,
+from particula.backend.taichi.aerosol.ti_particle_resolved import (
+    TiAerosolParticleResolved,
 )
 
 # python (NumPy-only) condensation
@@ -35,17 +35,19 @@ def _build_ti_particle_resolved_soa(
     """Create and populate a TiAerosolParticleResolved_soa instance."""
     rng = np.random.default_rng(0)
 
-    species_masses = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
-    density            = np.linspace(1_000.0, 1_500.0, n_species)
-    molar_mass         = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
-    pure_vp            = np.full(n_species, 50.0)
-    vapor_conc         = np.ones(n_species) * 1.0e-3
-    kappa              = np.zeros(n_species)
-    surface_tension    = np.full(n_species, 0.072)
-    gas_mass           = np.ones(n_species) * 1.0e-6
-    particle_conc      = np.ones(n_particles)
+    species_masses = (
+        np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    )
+    density = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+    pure_vp = np.full(n_species, 50.0)
+    vapor_conc = np.ones(n_species) * 1.0e-3
+    kappa = np.zeros(n_species)
+    surface_tension = np.full(n_species, 0.072)
+    gas_mass = np.ones(n_species) * 1.0e-6
+    particle_conc = np.ones(n_particles)
 
-    sim = TiAerosolParticleResolved_soa(
+    sim = TiAerosolParticleResolved(
         particle_count=n_particles,
         species_count=n_species,
         variant_count=n_variants,
@@ -70,9 +72,12 @@ def _build_ti_particle_resolved_soa(
 
 def make_fused_step_callable(sim_obj):
     """Return a callable that executes sim_obj.fused_step once."""
+
     def _inner():
         sim_obj.fused_step()
+
     return _inner
+
 
 def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     """
@@ -203,7 +208,7 @@ if __name__ == "__main__":
         # ----- build header only once ---------------------------------------
         if csv_header is None:
             python_headers = ["python_" + h for h in stats_py["array_headers"]]
-            soa_headers    = ["soa_"    + h for h in stats_pr_soa["array_headers"]]
+            soa_headers = ["soa_" + h for h in stats_pr_soa["array_headers"]]
             csv_header = ["array_length", *python_headers, *soa_headers]
 
         # ----- collect row ---------------------------------------------------
@@ -244,4 +249,4 @@ if __name__ == "__main__":
         json.dump(get_system_info(), fh, indent=2)
 
     print(f"Benchmark results saved to {csv_file}")
-    print(stats_pr_soa['report'])
+    print(stats_pr_soa["report"])

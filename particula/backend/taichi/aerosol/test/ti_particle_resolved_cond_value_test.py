@@ -10,14 +10,15 @@ import numpy as np
 from numpy.testing import assert_allclose
 
 import particula as par
-from particula.backend.taichi.aerosol.ti_particle_resolved_var import (
-    TiAerosolParticleResolved_soa,
+from particula.backend.taichi.aerosol.ti_particle_resolved import (
+    TiAerosolParticleResolved,
 )
 
 # python reference solver
 from particula.dynamics.condensation.condensation_strategies import (
     CondensationIsothermal as PyCondensationIsothermal,
 )
+
 
 # ----------------------------------------------------------------------
 # Local builders (copied from the benchmark to keep the test self-contained)
@@ -28,17 +29,19 @@ def _build_ti_particle_resolved_soa(
     n_variants: int = 1,
 ):
     rng = np.random.default_rng(0)
-    species_masses = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
-    density         = np.linspace(1_000.0, 1_500.0, n_species)
-    molar_mass      = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
-    pure_vp         = np.full(n_species, 50.0)
-    vapor_conc      = np.ones(n_species) * 1.0e-3
-    kappa           = np.zeros(n_species)
+    species_masses = (
+        np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    )
+    density = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+    pure_vp = np.full(n_species, 50.0)
+    vapor_conc = np.ones(n_species) * 1.0e-3
+    kappa = np.zeros(n_species)
     surface_tension = np.full(n_species, 0.072)
-    gas_mass        = np.ones(n_species) * 1.0e-6
-    particle_conc   = np.ones(n_particles)
+    gas_mass = np.ones(n_species) * 1.0e-6
+    particle_conc = np.ones(n_particles)
 
-    sim = TiAerosolParticleResolved_soa(
+    sim = TiAerosolParticleResolved(
         particle_count=n_particles,
         species_count=n_species,
         variant_count=n_variants,
@@ -64,8 +67,8 @@ def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
     rng = np.random.default_rng(0)
     mass = np.abs(rng.standard_normal((n_particles, n_species))) * 1.0e-18
 
-    densities   = np.linspace(1_000.0, 1_500.0, n_species)
-    molar_mass  = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+    densities = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
 
     # ---------- particle ----------
     activity = (
@@ -140,7 +143,9 @@ class TestCondensationMassEquality(unittest.TestCase):
             return np.asarray(particle.mass)
         if hasattr(particle, "_mass"):
             return np.asarray(particle._mass)
-        raise AttributeError("Cannot locate species-mass array in python particle")
+        raise AttributeError(
+            "Cannot locate species-mass array in python particle"
+        )
 
     @staticmethod
     def _extract_gas_mass_py(gas_species, simulation_volume: float = 1.0):
@@ -153,7 +158,9 @@ class TestCondensationMassEquality(unittest.TestCase):
         elif hasattr(gas_species, "_concentration"):
             conc = np.asarray(gas_species._concentration)
         else:
-            raise AttributeError("Cannot locate concentration array in python gas")
+            raise AttributeError(
+                "Cannot locate concentration array in python gas"
+            )
         return conc * simulation_volume
 
     # ---- actual comparison test --------------------------------------
@@ -162,9 +169,13 @@ class TestCondensationMassEquality(unittest.TestCase):
         n_species = 10
 
         # ---------- build python side objects -------------------------
-        py_particle, py_gas = _build_particle_and_gas_python(n_particles, n_species)
+        py_particle, py_gas = _build_particle_and_gas_python(
+            n_particles, n_species
+        )
 
-        molar_mass_vec = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+        molar_mass_vec = np.linspace(
+            0.018, 0.018 + 0.002 * (n_species - 1), n_species
+        )
         cond_py = PyCondensationIsothermal(
             molar_mass=molar_mass_vec,
             diffusion_coefficient=2.0e-5,
@@ -181,7 +192,7 @@ class TestCondensationMassEquality(unittest.TestCase):
         )
 
         py_species_mass = self._extract_species_masses_py(py_particle)
-        py_gas_mass     = self._extract_gas_mass_py(py_gas)
+        py_gas_mass = self._extract_gas_mass_py(py_gas)
 
         # ---------- build taichi side objects -------------------------
         ti_sim = _build_ti_particle_resolved_soa(n_particles, n_species)
@@ -205,5 +216,3 @@ class TestCondensationMassEquality(unittest.TestCase):
             atol=1e-12,
             err_msg="Gas-mass arrays diverge between back-ends",
         )
-
-
