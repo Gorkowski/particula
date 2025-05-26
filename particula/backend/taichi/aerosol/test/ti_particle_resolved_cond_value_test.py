@@ -9,16 +9,119 @@ import unittest
 import numpy as np
 from numpy.testing import assert_allclose
 
-# helpers & reference implementations straight from the benchmark
-from particula.backend.taichi.dynamics.condensation.benchmark.condensation_isothermal_benchmark import (
-    _build_ti_particle_resolved_soa,
-    _build_particle_and_gas_python,
+import particula as par
+from particula.backend.taichi.aerosol.ti_particle_resolved_var import (
+    TiAerosolParticleResolved_soa,
 )
 
 # python reference solver
 from particula.dynamics.condensation.condensation_strategies import (
     CondensationIsothermal as PyCondensationIsothermal,
 )
+
+# ----------------------------------------------------------------------
+# Local builders (copied from the benchmark to keep the test self-contained)
+# ----------------------------------------------------------------------
+def _build_ti_particle_resolved_soa(
+    n_particles: int,
+    n_species: int = 10,
+    n_variants: int = 1,
+):
+    rng = np.random.default_rng(0)
+    species_masses = np.abs(rng.standard_normal((n_particles, n_species))) * 1e-18
+    density         = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass      = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+    pure_vp         = np.full(n_species, 50.0)
+    vapor_conc      = np.ones(n_species) * 1.0e-3
+    kappa           = np.zeros(n_species)
+    surface_tension = np.full(n_species, 0.072)
+    gas_mass        = np.ones(n_species) * 1.0e-6
+    particle_conc   = np.ones(n_particles)
+
+    sim = TiAerosolParticleResolved_soa(
+        particle_count=n_particles,
+        species_count=n_species,
+        variant_count=n_variants,
+        time_step=1.0,
+        simulation_volume=1.0,
+    )
+    sim.setup(
+        variant_index=0,
+        species_masses_np=species_masses,
+        density_np=density,
+        molar_mass_np=molar_mass,
+        pure_vapor_pressure_np=pure_vp,
+        vapor_concentration_np=vapor_conc,
+        kappa_value_np=kappa,
+        surface_tension_np=surface_tension,
+        gas_mass_np=gas_mass,
+        particle_concentration_np=particle_conc,
+    )
+    return sim
+
+
+def _build_particle_and_gas_python(n_particles: int, n_species: int = 10):
+    rng = np.random.default_rng(0)
+    mass = np.abs(rng.standard_normal((n_particles, n_species))) * 1.0e-18
+
+    densities   = np.linspace(1_000.0, 1_500.0, n_species)
+    molar_mass  = np.linspace(0.018, 0.018 + 0.002 * (n_species - 1), n_species)
+
+    # ---------- particle ----------
+    activity = (
+        par.particles.ActivityKappaParameterBuilder()
+        .set_density(densities, "kg/m^3")
+        .set_kappa(np.zeros(n_species))
+        .set_molar_mass(molar_mass, "kg/mol")
+        .set_water_index(0)
+        .build()
+    )
+    surface = (
+        par.particles.SurfaceStrategyVolumeBuilder()
+        .set_density(densities, "kg/m^3")
+        .set_surface_tension(np.full(n_species, 0.072), "N/m")
+        .build()
+    )
+    particle = (
+        par.particles.ResolvedParticleMassRepresentationBuilder()
+        .set_distribution_strategy(
+            par.particles.ParticleResolvedSpeciatedMass()
+        )
+        .set_activity_strategy(activity)
+        .set_surface_strategy(surface)
+        .set_mass(mass, "kg")
+        .set_density(densities, "kg/m^3")
+        .set_charge(0)
+        .set_volume(1.0, "m^3")
+        .build()
+    )
+
+    # ---------- gas ----------
+    vp_strategies = [
+        par.gas.VaporPressureFactory().get_strategy(
+            "water_buck" if i == 0 else "constant",
+            (
+                None
+                if i == 0
+                else {
+                    "vapor_pressure": 100.0 + i * 50.0,
+                    "vapor_pressure_units": "Pa",
+                }
+            ),
+        )
+        for i in range(n_species)
+    ]
+    gas_species = (
+        par.gas.GasSpeciesBuilder()
+        .set_name([f"X{i}" for i in range(n_species)])
+        .set_molar_mass(molar_mass, "kg/mol")
+        .set_vapor_pressure_strategy(vp_strategies)
+        .set_concentration(np.ones(n_species), "kg/m^3")
+        .set_partitioning(True)
+        .build()
+    )
+
+    return particle, gas_species
 
 
 class TestCondensationMassEquality(unittest.TestCase):
@@ -77,8 +180,8 @@ class TestCondensationMassEquality(unittest.TestCase):
             time_step=1.0,
         )
 
-        py_species_mass = py_particle.distribution
-        py_gas_mass = py_gas.concentration
+        py_species_mass = self._extract_species_masses_py(py_particle)
+        py_gas_mass     = self._extract_gas_mass_py(py_gas)
 
         # ---------- build taichi side objects -------------------------
         ti_sim = _build_ti_particle_resolved_soa(n_particles, n_species)
