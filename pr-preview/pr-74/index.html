@@ -14170,9 +14170,11 @@ and validation for geometry and diffusivity. Distribution type defaults to
 <span class="n">factory</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">WallLossFactory</span><span class="p">()</span>
 <span class="n">rectangular_loss</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">get_strategy</span><span class="p">(</span>
     <span class="n">strategy_type</span><span class="o">=</span><span class="s2">&quot;rectangular&quot;</span><span class="p">,</span>
-    <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
-    <span class="n">chamber_dimensions</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
-    <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;particle_resolved&quot;</span><span class="p">,</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;wall_eddy_diffusivity&quot;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+        <span class="s2">&quot;chamber_dimensions&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>
+        <span class="s2">&quot;distribution_type&quot;</span><span class="p">:</span> <span class="s2">&quot;particle_resolved&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>The legacy function-based API (<code>get_spherical_wall_loss_rate</code>,
