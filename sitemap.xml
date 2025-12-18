@@ -305,6 +305,14 @@
          <lastmod>2025-12-18</lastmod>
     </url>
     <url>
+         <loc>https://uncscode.github.io/particula/API/particula/dynamics/wall_loss/wall_loss_builders/</loc>
+         <lastmod>2025-12-18</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/API/particula/dynamics/wall_loss/wall_loss_factories/</loc>
+         <lastmod>2025-12-18</lastmod>
+    </url>
+    <url>
          <loc>https://uncscode.github.io/particula/API/particula/dynamics/wall_loss/wall_loss_strategies/</loc>
          <lastmod>2025-12-18</lastmod>
     </url>
@@ -809,6 +817,10 @@
          <lastmod>2025-12-18</lastmod>
     </url>
     <url>
+         <loc>https://uncscode.github.io/particula/Agent/development_plans/features/wall-loss-builders-factory/</loc>
+         <lastmod>2025-12-18</lastmod>
+    </url>
+    <url>
          <loc>https://uncscode.github.io/particula/Agent/feature/</loc>
          <lastmod>2025-12-18</lastmod>
     </url>
@@ -870,6 +882,14 @@
     </url>
     <url>
          <loc>https://uncscode.github.io/particula/Examples/Dynamics/</loc>
+         <lastmod>2025-12-18</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/Examples/Dynamics/wall_loss_builders_factory/</loc>
+         <lastmod>2025-12-18</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/Examples/Dynamics/wall_loss_builders_factory/</loc>
          <lastmod>2025-12-18</lastmod>
     </url>
     <url>
