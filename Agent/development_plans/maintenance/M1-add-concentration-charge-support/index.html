@@ -8,31 +8,31 @@
       
       
       
-        <link rel="canonical" href="https://uncscode.github.io/particula/Examples/Setup_Particula/">
+        <link rel="canonical" href="https://uncscode.github.io/particula/Agent/development_plans/maintenance/M1-add-concentration-charge-support/">
       
       
-        <link rel="prev" href="../Particle_Phase/Notebooks/Functional/Activity_Functions/">
+        <link rel="prev" href="../../features/wall-loss-runnable/">
       
       
-        <link rel="next" href="Details/Contributor_Setup/">
+        <link rel="next" href="../../../feature/">
       
       
         
       
       
-      <link rel="icon" href="../../images/icon_dark.svg">
+      <link rel="icon" href="../../../../images/icon_dark.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Setup Particula - Particula</title>
+        <title>Maintenance: Add Charge Support to add_concentration - Particula</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,11 +51,11 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#setup-particula" class="md-skip">
+        <a href="#maintenance-add-charge-support-to-add_concentration" class="md-skip">
           Skip to content
         </a>
       
@@ -96,9 +96,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Particula" class="md-header__button md-logo" aria-label="Particula" data-md-component="logo">
+    <a href="../../../.." title="Particula" class="md-header__button md-logo" aria-label="Particula" data-md-component="logo">
       
-  <img src="../../images/icon_light_clear.svg" alt="logo">
+  <img src="../../../../images/icon_light_clear.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Setup Particula
+              Maintenance: Add Charge Support to add_concentration
             
           </span>
         </div>
@@ -232,7 +232,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -253,7 +253,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../API/" class="md-tabs__link">
+        <a href="../../../../API/" class="md-tabs__link">
           
   
   
@@ -271,11 +271,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../Agent/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
           
   
   
@@ -293,13 +295,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../../Examples/" class="md-tabs__link">
           
   
   
@@ -321,7 +321,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../Features/wall_loss_strategy_system/" class="md-tabs__link">
+        <a href="../../../../Features/wall_loss_strategy_system/" class="md-tabs__link">
           
   
   
@@ -343,7 +343,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../Theory/" class="md-tabs__link">
+        <a href="../../../../Theory/" class="md-tabs__link">
           
   
   
@@ -365,7 +365,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../contribute/" class="md-tabs__link">
+        <a href="../../../../contribute/" class="md-tabs__link">
           
   
   
@@ -407,9 +407,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Particula" class="md-nav__button md-logo" aria-label="Particula" data-md-component="logo">
+    <a href="../../../.." title="Particula" class="md-nav__button md-logo" aria-label="Particula" data-md-component="logo">
       
-  <img src="../../images/icon_light_clear.svg" alt="logo">
+  <img src="../../../../images/icon_light_clear.svg" alt="logo">
 
     </a>
     Particula
@@ -436,7 +436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -490,7 +490,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../API/" class="md-nav__link ">
+            <a href="../../../../API/" class="md-nav__link ">
               
   
   
@@ -534,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/" class="md-nav__link">
+      <a href="../../../../API/particula/" class="md-nav__link">
         
   
   
@@ -654,7 +654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/abc_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/abc_builder/" class="md-nav__link">
         
   
   
@@ -682,7 +682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/abc_factory/" class="md-nav__link">
+      <a href="../../../../API/particula/abc_factory/" class="md-nav__link">
         
   
   
@@ -710,7 +710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/" class="md-nav__link">
         
   
   
@@ -738,7 +738,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/aerosol/" class="md-nav__link">
+      <a href="../../../../API/particula/aerosol/" class="md-nav__link">
         
   
   
@@ -766,7 +766,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/aerosol_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/aerosol_builder/" class="md-nav__link">
         
   
   
@@ -794,7 +794,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/builder_mixin/" class="md-nav__link">
+      <a href="../../../../API/particula/builder_mixin/" class="md-nav__link">
         
   
   
@@ -822,7 +822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/" class="md-nav__link">
         
   
   
@@ -850,7 +850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/equilibria/" class="md-nav__link">
+      <a href="../../../../API/particula/equilibria/" class="md-nav__link">
         
   
   
@@ -878,7 +878,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/" class="md-nav__link">
         
   
   
@@ -906,7 +906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/logger_setup/" class="md-nav__link">
+      <a href="../../../../API/particula/logger_setup/" class="md-nav__link">
         
   
   
@@ -934,7 +934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/" class="md-nav__link">
         
   
   
@@ -962,7 +962,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/runnable/" class="md-nav__link">
+      <a href="../../../../API/particula/runnable/" class="md-nav__link">
         
   
   
@@ -990,7 +990,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/" class="md-nav__link">
+      <a href="../../../../API/particula/util/" class="md-nav__link">
         
   
   
@@ -1090,7 +1090,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/activity_coefficients/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/activity_coefficients/" class="md-nav__link">
         
   
   
@@ -1118,7 +1118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/bat_blending/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/bat_blending/" class="md-nav__link">
         
   
   
@@ -1146,7 +1146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/bat_coefficients/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/bat_coefficients/" class="md-nav__link">
         
   
   
@@ -1174,7 +1174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/convert_functional_group/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/convert_functional_group/" class="md-nav__link">
         
   
   
@@ -1202,7 +1202,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/gibbs/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/gibbs/" class="md-nav__link">
         
   
   
@@ -1230,7 +1230,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/gibbs_mixing/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/gibbs_mixing/" class="md-nav__link">
         
   
   
@@ -1258,7 +1258,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/phase_separation/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/phase_separation/" class="md-nav__link">
         
   
   
@@ -1286,7 +1286,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/ratio/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/ratio/" class="md-nav__link">
         
   
   
@@ -1314,7 +1314,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/activity/water_activity/" class="md-nav__link">
+      <a href="../../../../API/particula/activity/water_activity/" class="md-nav__link">
         
   
   
@@ -1424,7 +1424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/" class="md-nav__link">
         
   
   
@@ -1452,7 +1452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/" class="md-nav__link">
         
   
   
@@ -1480,7 +1480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/dilution/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/dilution/" class="md-nav__link">
         
   
   
@@ -1508,7 +1508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/particle_process/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/particle_process/" class="md-nav__link">
         
   
   
@@ -1536,7 +1536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/properties/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/properties/" class="md-nav__link">
         
   
   
@@ -1564,7 +1564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/wall_loss/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/wall_loss/" class="md-nav__link">
         
   
   
@@ -1678,7 +1678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/brownian_kernel/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/brownian_kernel/" class="md-nav__link">
         
   
   
@@ -1706,7 +1706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/charged_dimensional_kernel/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/charged_dimensional_kernel/" class="md-nav__link">
         
   
   
@@ -1734,7 +1734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/charged_dimensionless_kernel/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/charged_dimensionless_kernel/" class="md-nav__link">
         
   
   
@@ -1762,7 +1762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/charged_kernel_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/charged_kernel_strategy/" class="md-nav__link">
         
   
   
@@ -1790,7 +1790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/" class="md-nav__link">
         
   
   
@@ -1818,7 +1818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_factories/" class="md-nav__link">
         
   
   
@@ -1846,7 +1846,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_rate/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_rate/" class="md-nav__link">
         
   
   
@@ -1874,7 +1874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -1902,7 +1902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/particle_resolved_step/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/particle_resolved_step/" class="md-nav__link">
         
   
   
@@ -1930,7 +1930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/sedimentation_kernel/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/sedimentation_kernel/" class="md-nav__link">
         
   
   
@@ -1958,7 +1958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/" class="md-nav__link">
         
   
   
@@ -1986,7 +1986,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_shear_kernel/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_shear_kernel/" class="md-nav__link">
         
   
   
@@ -2082,7 +2082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/brownian_coagulation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/brownian_coagulation_builder/" class="md-nav__link">
         
   
   
@@ -2110,7 +2110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/charged_coagulation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/charged_coagulation_builder/" class="md-nav__link">
         
   
   
@@ -2138,7 +2138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/coagulation_builder_mixin/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/coagulation_builder_mixin/" class="md-nav__link">
         
   
   
@@ -2166,7 +2166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/combine_coagulation_strategy_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/combine_coagulation_strategy_builder/" class="md-nav__link">
         
   
   
@@ -2194,7 +2194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/sedimentation_coagulation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/sedimentation_coagulation_builder/" class="md-nav__link">
         
   
   
@@ -2222,7 +2222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/turbulent_dns_coagulation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/turbulent_dns_coagulation_builder/" class="md-nav__link">
         
   
   
@@ -2250,7 +2250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_builder/turbulent_shear_coagulation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_builder/turbulent_shear_coagulation_builder/" class="md-nav__link">
         
   
   
@@ -2354,7 +2354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/brownian_coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/brownian_coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -2382,7 +2382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/charged_coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/charged_coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -2410,7 +2410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/coagulation_strategy_abc/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/coagulation_strategy_abc/" class="md-nav__link">
         
   
   
@@ -2438,7 +2438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/combine_coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/combine_coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -2466,7 +2466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/sedimentation_coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/sedimentation_coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -2494,7 +2494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/turbulent_dns_coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/turbulent_dns_coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -2522,7 +2522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/coagulation_strategy/turbulent_shear_coagulation_strategy/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/coagulation_strategy/turbulent_shear_coagulation_strategy/" class="md-nav__link">
         
   
   
@@ -2616,7 +2616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/particle_resolved_step/particle_resolved_method/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/particle_resolved_step/particle_resolved_method/" class="md-nav__link">
         
   
   
@@ -2644,7 +2644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/particle_resolved_step/super_droplet_method/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/particle_resolved_step/super_droplet_method/" class="md-nav__link">
         
   
   
@@ -2750,7 +2750,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/g12_radial_distribution_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/g12_radial_distribution_ao2008/" class="md-nav__link">
         
   
   
@@ -2778,7 +2778,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/phi_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/phi_ao2008/" class="md-nav__link">
         
   
   
@@ -2806,7 +2806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/psi_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/psi_ao2008/" class="md-nav__link">
         
   
   
@@ -2834,7 +2834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/radial_velocity_module/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/radial_velocity_module/" class="md-nav__link">
         
   
   
@@ -2862,7 +2862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/sigma_relative_velocity_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/sigma_relative_velocity_ao2008/" class="md-nav__link">
         
   
   
@@ -2890,7 +2890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/turbulent_dns_kernel_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/turbulent_dns_kernel_ao2008/" class="md-nav__link">
         
   
   
@@ -2918,7 +2918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/velocity_correlation_f2_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/velocity_correlation_f2_ao2008/" class="md-nav__link">
         
   
   
@@ -2946,7 +2946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/coagulation/turbulent_dns_kernel/velocity_correlation_terms_ao2008/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/coagulation/turbulent_dns_kernel/velocity_correlation_terms_ao2008/" class="md-nav__link">
         
   
   
@@ -3056,7 +3056,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/condensation_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/condensation_builder/" class="md-nav__link">
         
   
   
@@ -3084,7 +3084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/condensation_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/condensation_factories/" class="md-nav__link">
         
   
   
@@ -3112,7 +3112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/condensation_strategies/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/condensation_strategies/" class="md-nav__link">
         
   
   
@@ -3140,7 +3140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/mass_transfer/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/mass_transfer/" class="md-nav__link">
         
   
   
@@ -3168,7 +3168,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/mass_transfer_utils/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/mass_transfer_utils/" class="md-nav__link">
         
   
   
@@ -3254,7 +3254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/condensation_builder/condensation_builder_mixin/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/condensation_builder/condensation_builder_mixin/" class="md-nav__link">
         
   
   
@@ -3282,7 +3282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/condensation/condensation_builder/condensation_isothermal_builder/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/condensation/condensation_builder/condensation_isothermal_builder/" class="md-nav__link">
         
   
   
@@ -3382,7 +3382,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/properties/wall_loss_coefficient/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/properties/wall_loss_coefficient/" class="md-nav__link">
         
   
   
@@ -3480,7 +3480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/wall_loss/rate/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/wall_loss/rate/" class="md-nav__link">
         
   
   
@@ -3508,7 +3508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/wall_loss/wall_loss_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/wall_loss/wall_loss_builders/" class="md-nav__link">
         
   
   
@@ -3536,7 +3536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/wall_loss/wall_loss_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/wall_loss/wall_loss_factories/" class="md-nav__link">
         
   
   
@@ -3564,7 +3564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/dynamics/wall_loss/wall_loss_strategies/" class="md-nav__link">
+      <a href="../../../../API/particula/dynamics/wall_loss/wall_loss_strategies/" class="md-nav__link">
         
   
   
@@ -3664,7 +3664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/equilibria/partitioning/" class="md-nav__link">
+      <a href="../../../../API/particula/equilibria/partitioning/" class="md-nav__link">
         
   
   
@@ -3774,7 +3774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/atmosphere/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/atmosphere/" class="md-nav__link">
         
   
   
@@ -3802,7 +3802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/atmosphere_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/atmosphere_builders/" class="md-nav__link">
         
   
   
@@ -3830,7 +3830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/" class="md-nav__link">
         
   
   
@@ -3858,7 +3858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/species/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/species/" class="md-nav__link">
         
   
   
@@ -3886,7 +3886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/species_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/species_builders/" class="md-nav__link">
         
   
   
@@ -3914,7 +3914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/species_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/species_factories/" class="md-nav__link">
         
   
   
@@ -3942,7 +3942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/vapor_pressure_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/vapor_pressure_builders/" class="md-nav__link">
         
   
   
@@ -3970,7 +3970,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/vapor_pressure_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/vapor_pressure_factories/" class="md-nav__link">
         
   
   
@@ -3998,7 +3998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/vapor_pressure_strategies/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/vapor_pressure_strategies/" class="md-nav__link">
         
   
   
@@ -4104,7 +4104,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/concentration_function/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/concentration_function/" class="md-nav__link">
         
   
   
@@ -4132,7 +4132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/dynamic_viscosity/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/dynamic_viscosity/" class="md-nav__link">
         
   
   
@@ -4160,7 +4160,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/fluid_rms_velocity/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/fluid_rms_velocity/" class="md-nav__link">
         
   
   
@@ -4188,7 +4188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/integral_scale_module/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/integral_scale_module/" class="md-nav__link">
         
   
   
@@ -4216,7 +4216,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/kinematic_viscosity/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/kinematic_viscosity/" class="md-nav__link">
         
   
   
@@ -4244,7 +4244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/kolmogorov_module/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/kolmogorov_module/" class="md-nav__link">
         
   
   
@@ -4272,7 +4272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/mean_free_path/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/mean_free_path/" class="md-nav__link">
         
   
   
@@ -4300,7 +4300,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/normalize_accel_variance/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/normalize_accel_variance/" class="md-nav__link">
         
   
   
@@ -4328,7 +4328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/pressure_function/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/pressure_function/" class="md-nav__link">
         
   
   
@@ -4356,7 +4356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/taylor_microscale_module/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/taylor_microscale_module/" class="md-nav__link">
         
   
   
@@ -4384,7 +4384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/thermal_conductivity/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/thermal_conductivity/" class="md-nav__link">
         
   
   
@@ -4412,7 +4412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/gas/properties/vapor_pressure_module/" class="md-nav__link">
+      <a href="../../../../API/particula/gas/properties/vapor_pressure_module/" class="md-nav__link">
         
   
   
@@ -4542,7 +4542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/activity_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/activity_builders/" class="md-nav__link">
         
   
   
@@ -4570,7 +4570,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/activity_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/activity_factories/" class="md-nav__link">
         
   
   
@@ -4598,7 +4598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/activity_strategies/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/activity_strategies/" class="md-nav__link">
         
   
   
@@ -4626,7 +4626,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/change_particle_representation/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/change_particle_representation/" class="md-nav__link">
         
   
   
@@ -4654,7 +4654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_builders/" class="md-nav__link">
         
   
   
@@ -4682,7 +4682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_factories/" class="md-nav__link">
         
   
   
@@ -4710,7 +4710,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_strategies/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_strategies/" class="md-nav__link">
         
   
   
@@ -4738,7 +4738,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/" class="md-nav__link">
         
   
   
@@ -4766,7 +4766,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/representation/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/representation/" class="md-nav__link">
         
   
   
@@ -4794,7 +4794,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/representation_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/representation_builders/" class="md-nav__link">
         
   
   
@@ -4822,7 +4822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/representation_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/representation_factories/" class="md-nav__link">
         
   
   
@@ -4850,7 +4850,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/surface_builders/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/surface_builders/" class="md-nav__link">
         
   
   
@@ -4878,7 +4878,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/surface_factories/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/surface_factories/" class="md-nav__link">
         
   
   
@@ -4906,7 +4906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/surface_strategies/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/surface_strategies/" class="md-nav__link">
         
   
   
@@ -4998,7 +4998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_strategies/base/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_strategies/base/" class="md-nav__link">
         
   
   
@@ -5026,7 +5026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_strategies/mass_based_moving_bin/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_strategies/mass_based_moving_bin/" class="md-nav__link">
         
   
   
@@ -5054,7 +5054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_strategies/particle_resolved_speciated_mass/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_strategies/particle_resolved_speciated_mass/" class="md-nav__link">
         
   
   
@@ -5082,7 +5082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_strategies/radii_based_moving_bin/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_strategies/radii_based_moving_bin/" class="md-nav__link">
         
   
   
@@ -5110,7 +5110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/distribution_strategies/speciated_mass_moving_bin/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/distribution_strategies/speciated_mass_moving_bin/" class="md-nav__link">
         
   
   
@@ -5254,7 +5254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/activity_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/activity_module/" class="md-nav__link">
         
   
   
@@ -5282,7 +5282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/aerodynamic_mobility_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/aerodynamic_mobility_module/" class="md-nav__link">
         
   
   
@@ -5310,7 +5310,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/aerodynamic_size/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/aerodynamic_size/" class="md-nav__link">
         
   
   
@@ -5338,7 +5338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/collision_radius_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/collision_radius_module/" class="md-nav__link">
         
   
   
@@ -5366,7 +5366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/convert_kappa_volumes/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/convert_kappa_volumes/" class="md-nav__link">
         
   
   
@@ -5394,7 +5394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/convert_mass_concentration/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/convert_mass_concentration/" class="md-nav__link">
         
   
   
@@ -5422,7 +5422,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/convert_mole_fraction/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/convert_mole_fraction/" class="md-nav__link">
         
   
   
@@ -5450,7 +5450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/convert_size_distribution/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/convert_size_distribution/" class="md-nav__link">
         
   
   
@@ -5478,7 +5478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/coulomb_enhancement/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/coulomb_enhancement/" class="md-nav__link">
         
   
   
@@ -5506,7 +5506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/diffusion_coefficient/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/diffusion_coefficient/" class="md-nav__link">
         
   
   
@@ -5534,7 +5534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/diffusive_knudsen_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/diffusive_knudsen_module/" class="md-nav__link">
         
   
   
@@ -5562,7 +5562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/friction_factor_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/friction_factor_module/" class="md-nav__link">
         
   
   
@@ -5590,7 +5590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/inertia_time/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/inertia_time/" class="md-nav__link">
         
   
   
@@ -5618,7 +5618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/kelvin_effect_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/kelvin_effect_module/" class="md-nav__link">
         
   
   
@@ -5646,7 +5646,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/knudsen_number_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/knudsen_number_module/" class="md-nav__link">
         
   
   
@@ -5674,7 +5674,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/lognormal_size_distribution/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/lognormal_size_distribution/" class="md-nav__link">
         
   
   
@@ -5702,7 +5702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/mean_thermal_speed_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/mean_thermal_speed_module/" class="md-nav__link">
         
   
   
@@ -5730,7 +5730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/mixing_state_index/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/mixing_state_index/" class="md-nav__link">
         
   
   
@@ -5758,7 +5758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/organic_density_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/organic_density_module/" class="md-nav__link">
         
   
   
@@ -5786,7 +5786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/partial_pressure_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/partial_pressure_module/" class="md-nav__link">
         
   
   
@@ -5814,7 +5814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/reynolds_number/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/reynolds_number/" class="md-nav__link">
         
   
   
@@ -5842,7 +5842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/settling_velocity/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/settling_velocity/" class="md-nav__link">
         
   
   
@@ -5870,7 +5870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/slip_correction_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/slip_correction_module/" class="md-nav__link">
         
   
   
@@ -5898,7 +5898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/sort_bins/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/sort_bins/" class="md-nav__link">
         
   
   
@@ -5926,7 +5926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/special_functions/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/special_functions/" class="md-nav__link">
         
   
   
@@ -5954,7 +5954,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/stokes_number/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/stokes_number/" class="md-nav__link">
         
   
   
@@ -5982,7 +5982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/particles/properties/vapor_correction_module/" class="md-nav__link">
+      <a href="../../../../API/particula/particles/properties/vapor_correction_module/" class="md-nav__link">
         
   
   
@@ -6106,7 +6106,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/arbitrary_round/" class="md-nav__link">
+      <a href="../../../../API/particula/util/arbitrary_round/" class="md-nav__link">
         
   
   
@@ -6134,7 +6134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/chemical/" class="md-nav__link">
+      <a href="../../../../API/particula/util/chemical/" class="md-nav__link">
         
   
   
@@ -6162,7 +6162,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/colors/" class="md-nav__link">
+      <a href="../../../../API/particula/util/colors/" class="md-nav__link">
         
   
   
@@ -6190,7 +6190,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/constants/" class="md-nav__link">
+      <a href="../../../../API/particula/util/constants/" class="md-nav__link">
         
   
   
@@ -6218,7 +6218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/convert_dtypes/" class="md-nav__link">
+      <a href="../../../../API/particula/util/convert_dtypes/" class="md-nav__link">
         
   
   
@@ -6246,7 +6246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/convert_units/" class="md-nav__link">
+      <a href="../../../../API/particula/util/convert_units/" class="md-nav__link">
         
   
   
@@ -6274,7 +6274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/lf2013_coagulation/" class="md-nav__link">
+      <a href="../../../../API/particula/util/lf2013_coagulation/" class="md-nav__link">
         
   
   
@@ -6302,7 +6302,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/machine_limit/" class="md-nav__link">
+      <a href="../../../../API/particula/util/machine_limit/" class="md-nav__link">
         
   
   
@@ -6330,7 +6330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/reduced_quantity/" class="md-nav__link">
+      <a href="../../../../API/particula/util/reduced_quantity/" class="md-nav__link">
         
   
   
@@ -6358,7 +6358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/refractive_index_mixing/" class="md-nav__link">
+      <a href="../../../../API/particula/util/refractive_index_mixing/" class="md-nav__link">
         
   
   
@@ -6386,7 +6386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/validate_inputs/" class="md-nav__link">
+      <a href="../../../../API/particula/util/validate_inputs/" class="md-nav__link">
         
   
   
@@ -6478,7 +6478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/chemical/chemical_properties/" class="md-nav__link">
+      <a href="../../../../API/particula/util/chemical/chemical_properties/" class="md-nav__link">
         
   
   
@@ -6506,7 +6506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/chemical/chemical_search/" class="md-nav__link">
+      <a href="../../../../API/particula/util/chemical/chemical_search/" class="md-nav__link">
         
   
   
@@ -6534,7 +6534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/chemical/chemical_surface_tension/" class="md-nav__link">
+      <a href="../../../../API/particula/util/chemical/chemical_surface_tension/" class="md-nav__link">
         
   
   
@@ -6562,7 +6562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/chemical/chemical_vapor_pressure/" class="md-nav__link">
+      <a href="../../../../API/particula/util/chemical/chemical_vapor_pressure/" class="md-nav__link">
         
   
   
@@ -6590,7 +6590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/chemical/thermo_import/" class="md-nav__link">
+      <a href="../../../../API/particula/util/chemical/thermo_import/" class="md-nav__link">
         
   
   
@@ -6682,7 +6682,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../API/particula/util/lf2013_coagulation/src_lf2013_coagulation/" class="md-nav__link">
+      <a href="../../../../API/particula/util/lf2013_coagulation/src_lf2013_coagulation/" class="md-nav__link">
         
   
   
@@ -6738,6 +6738,8 @@
       
   
   
+    
+  
   
   
     
@@ -6801,20 +6803,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Agent/" class="md-nav__link ">
+            <a href="../../../" class="md-nav__link ">
               
   
   
@@ -6832,13 +6837,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -6858,7 +6863,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/architecture_reference/" class="md-nav__link">
+      <a href="../../../architecture_reference/" class="md-nav__link">
         
   
   
@@ -6886,7 +6891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/code_culture/" class="md-nav__link">
+      <a href="../../../code_culture/" class="md-nav__link">
         
   
   
@@ -6914,7 +6919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/code_style/" class="md-nav__link">
+      <a href="../../../code_style/" class="md-nav__link">
         
   
   
@@ -6942,7 +6947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/commit_conventions/" class="md-nav__link">
+      <a href="../../../commit_conventions/" class="md-nav__link">
         
   
   
@@ -6970,7 +6975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/conditional_docs/" class="md-nav__link">
+      <a href="../../../conditional_docs/" class="md-nav__link">
         
   
   
@@ -6998,7 +7003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/docstring_class/" class="md-nav__link">
+      <a href="../../../docstring_class/" class="md-nav__link">
         
   
   
@@ -7026,7 +7031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/docstring_function/" class="md-nav__link">
+      <a href="../../../docstring_function/" class="md-nav__link">
         
   
   
@@ -7054,7 +7059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/docstring_guide/" class="md-nav__link">
+      <a href="../../../docstring_guide/" class="md-nav__link">
         
   
   
@@ -7082,7 +7087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/documentation_guide/" class="md-nav__link">
+      <a href="../../../documentation_guide/" class="md-nav__link">
         
   
   
@@ -7110,7 +7115,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/issue_interpret_guide/" class="md-nav__link">
+      <a href="../../../issue_interpret_guide/" class="md-nav__link">
         
   
   
@@ -7138,7 +7143,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/linting_guide/" class="md-nav__link">
+      <a href="../../../linting_guide/" class="md-nav__link">
         
   
   
@@ -7166,7 +7171,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/pr_conventions/" class="md-nav__link">
+      <a href="../../../pr_conventions/" class="md-nav__link">
         
   
   
@@ -7194,7 +7199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/review_guide/" class="md-nav__link">
+      <a href="../../../review_guide/" class="md-nav__link">
         
   
   
@@ -7222,7 +7227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/testing_guide/" class="md-nav__link">
+      <a href="../../../testing_guide/" class="md-nav__link">
         
   
   
@@ -7250,7 +7255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/workflow-conditionals/" class="md-nav__link">
+      <a href="../../../workflow-conditionals/" class="md-nav__link">
         
   
   
@@ -7278,7 +7283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/workflow-engine/" class="md-nav__link">
+      <a href="../../../workflow-engine/" class="md-nav__link">
         
   
   
@@ -7306,7 +7311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/workflow-examples/" class="md-nav__link">
+      <a href="../../../workflow-examples/" class="md-nav__link">
         
   
   
@@ -7334,7 +7339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/workflow-json-schema/" class="md-nav__link">
+      <a href="../../../workflow-json-schema/" class="md-nav__link">
         
   
   
@@ -7362,7 +7367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/workflow-migration-from-python/" class="md-nav__link">
+      <a href="../../../workflow-migration-from-python/" class="md-nav__link">
         
   
   
@@ -7390,7 +7395,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/workflow-migration-guide/" class="md-nav__link">
+      <a href="../../../workflow-migration-guide/" class="md-nav__link">
         
   
   
@@ -7450,10 +7455,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -7461,7 +7469,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Agent/agents/" class="md-nav__link ">
+            <a href="../../../agents/" class="md-nav__link ">
               
   
   
@@ -7479,7 +7487,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_22" id="__nav_3_22_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_22" id="__nav_3_22_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -7505,7 +7513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/QUICK_REFERENCE/" class="md-nav__link">
+      <a href="../../../agents/QUICK_REFERENCE/" class="md-nav__link">
         
   
   
@@ -7533,7 +7541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/adw-default/" class="md-nav__link">
+      <a href="../../../agents/adw-default/" class="md-nav__link">
         
   
   
@@ -7561,7 +7569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/agent-creator/" class="md-nav__link">
+      <a href="../../../agents/agent-creator/" class="md-nav__link">
         
   
   
@@ -7589,7 +7597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/documentation-system/" class="md-nav__link">
+      <a href="../../../agents/documentation-system/" class="md-nav__link">
         
   
   
@@ -7617,7 +7625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/execute-plan/" class="md-nav__link">
+      <a href="../../../agents/execute-plan/" class="md-nav__link">
         
   
   
@@ -7645,7 +7653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/git-commit/" class="md-nav__link">
+      <a href="../../../agents/git-commit/" class="md-nav__link">
         
   
   
@@ -7673,7 +7681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/linter/" class="md-nav__link">
+      <a href="../../../agents/linter/" class="md-nav__link">
         
   
   
@@ -7701,7 +7709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/plan-work/" class="md-nav__link">
+      <a href="../../../agents/plan-work/" class="md-nav__link">
         
   
   
@@ -7729,7 +7737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/setup-update/" class="md-nav__link">
+      <a href="../../../agents/setup-update/" class="md-nav__link">
         
   
   
@@ -7757,7 +7765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/agents/shipper/" class="md-nav__link">
+      <a href="../../../agents/shipper/" class="md-nav__link">
         
   
   
@@ -7809,17 +7817,20 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_23" >
         
           
-          <label class="md-nav__link" for="__nav_3_23" id="__nav_3_23_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_23" id="__nav_3_23_label" tabindex="">
             
   
   
@@ -7855,7 +7866,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/architecture/architecture_guide/" class="md-nav__link">
+      <a href="../../../architecture/architecture_guide/" class="md-nav__link">
         
   
   
@@ -7883,7 +7894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/architecture/architecture_outline/" class="md-nav__link">
+      <a href="../../../architecture/architecture_outline/" class="md-nav__link">
         
   
   
@@ -7911,7 +7922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/architecture/workflow_execution_patterns/" class="md-nav__link">
+      <a href="../../../architecture/workflow_execution_patterns/" class="md-nav__link">
         
   
   
@@ -7966,7 +7977,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Agent/architecture/decisions/" class="md-nav__link ">
+            <a href="../../../architecture/decisions/" class="md-nav__link ">
               
   
   
@@ -8010,7 +8021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/architecture/decisions/ADR-001-strategy-based-wall-loss-subsystem/" class="md-nav__link">
+      <a href="../../../architecture/decisions/ADR-001-strategy-based-wall-loss-subsystem/" class="md-nav__link">
         
   
   
@@ -8038,7 +8049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/architecture/decisions/template/" class="md-nav__link">
+      <a href="../../../architecture/decisions/template/" class="md-nav__link">
         
   
   
@@ -8079,6 +8090,8 @@
                 
   
   
+    
+  
   
   
     
@@ -8098,18 +8111,21 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_24" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_24" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Agent/development_plans/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -8127,13 +8143,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_24" id="__nav_3_24_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_24" id="__nav_3_24_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_24_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_24_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_24">
             <span class="md-nav__icon md-icon"></span>
             
@@ -8213,7 +8229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/development_plans/features/rectangular-wall-loss-strategy/" class="md-nav__link">
+      <a href="../../features/rectangular-wall-loss-strategy/" class="md-nav__link">
         
   
   
@@ -8241,7 +8257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/development_plans/features/wall-loss-builders-factory/" class="md-nav__link">
+      <a href="../../features/wall-loss-builders-factory/" class="md-nav__link">
         
   
   
@@ -8269,7 +8285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/development_plans/features/wall-loss-runnable/" class="md-nav__link">
+      <a href="../../features/wall-loss-runnable/" class="md-nav__link">
         
   
   
@@ -8302,8 +8318,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -8318,11 +8336,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_24_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_24_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3_24_3" id="__nav_3_24_3_label" tabindex="0">
@@ -8343,7 +8361,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_24_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_24_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_24_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -8358,10 +8376,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../Agent/development_plans/maintenance/M1-add-concentration-charge-support/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maintenance: Add Charge Support to add_concentration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -8377,6 +8422,398 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#priority-justification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priority Justification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guidelines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-particleresolved-strategy-charge-support-m1-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: ParticleResolved Strategy Charge Support (M1-P1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-bin-based-strategy-charge-support-m1-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Bin-Based Strategy Charge Support (M1-P2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-documentation-update-m1-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Documentation Update (M1-P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior-by-strategy-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior by Strategy Type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concentration-weighted-average-formula-bin-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concentration-Weighted Average Formula (Bin-Based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upstream-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upstream Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downstream-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Downstream Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests-phase-1-particleresolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Tests (Phase 1 - ParticleResolved)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests-phase-2-bin-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Tests (Phase 2 - Bin-Based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desired-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desired State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#change-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Change Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+
+    
+    
+  
+</nav>
+      
     </li>
   
 
@@ -8423,10 +8860,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -8434,7 +8874,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Agent/feature/" class="md-nav__link ">
+            <a href="../../../feature/" class="md-nav__link ">
               
   
   
@@ -8452,7 +8892,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_25" id="__nav_3_25_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_25" id="__nav_3_25_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -8478,7 +8918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/feature/P2-charge-conservation-coagulation/" class="md-nav__link">
+      <a href="../../../feature/P2-charge-conservation-coagulation/" class="md-nav__link">
         
   
   
@@ -8506,7 +8946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/feature/P2-wall-loss-strategy-system/" class="md-nav__link">
+      <a href="../../../feature/P2-wall-loss-strategy-system/" class="md-nav__link">
         
   
   
@@ -8534,7 +8974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/feature/template/" class="md-nav__link">
+      <a href="../../../feature/template/" class="md-nav__link">
         
   
   
@@ -8584,10 +9024,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -8595,7 +9038,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Agent/maintenance/" class="md-nav__link ">
+            <a href="../../../maintenance/" class="md-nav__link ">
               
   
   
@@ -8613,7 +9056,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_26" id="__nav_3_26_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_26" id="__nav_3_26_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -8639,7 +9082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Agent/maintenance/template/" class="md-nav__link">
+      <a href="../../../maintenance/template/" class="md-nav__link">
         
   
   
@@ -8679,8 +9122,6 @@
       
   
   
-    
-  
   
   
     
@@ -8712,23 +9153,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../../Examples/" class="md-nav__link ">
               
   
   
@@ -8746,13 +9184,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -8786,13 +9224,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -8800,7 +9235,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Aerosol/" class="md-nav__link ">
+            <a href="../../../../Examples/Aerosol/" class="md-nav__link ">
               
   
   
@@ -8818,7 +9253,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -8844,7 +9279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Aerosol/Aerosol_Tutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Aerosol/Aerosol_Tutorial/" class="md-nav__link">
         
   
   
@@ -8898,13 +9333,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -8912,7 +9344,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Chamber_Wall_Loss/" class="md-nav__link ">
+            <a href="../../../../Examples/Chamber_Wall_Loss/" class="md-nav__link ">
               
   
   
@@ -8930,7 +9362,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -8956,7 +9388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Chamber_Wall_Loss/rectangular_wall_loss_strategy/" class="md-nav__link">
+      <a href="../../../../Examples/Chamber_Wall_Loss/rectangular_wall_loss_strategy/" class="md-nav__link">
         
   
   
@@ -8984,7 +9416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Chamber_Wall_Loss/wall_loss_strategy/" class="md-nav__link">
+      <a href="../../../../Examples/Chamber_Wall_Loss/wall_loss_strategy/" class="md-nav__link">
         
   
   
@@ -9074,7 +9506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Chamber_Wall_Loss/Notebooks/Chamber_Forward_Simulation/" class="md-nav__link">
+      <a href="../../../../Examples/Chamber_Wall_Loss/Notebooks/Chamber_Forward_Simulation/" class="md-nav__link">
         
   
   
@@ -9102,7 +9534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Chamber_Wall_Loss/Notebooks/Rectangular_Wall_Loss_Strategy/" class="md-nav__link">
+      <a href="../../../../Examples/Chamber_Wall_Loss/Notebooks/Rectangular_Wall_Loss_Strategy/" class="md-nav__link">
         
   
   
@@ -9130,7 +9562,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Chamber_Wall_Loss/Notebooks/Spherical_Wall_Loss_Strategy/" class="md-nav__link">
+      <a href="../../../../Examples/Chamber_Wall_Loss/Notebooks/Spherical_Wall_Loss_Strategy/" class="md-nav__link">
         
   
   
@@ -9158,7 +9590,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Chamber_Wall_Loss/Notebooks/Wall_Loss_Tutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Chamber_Wall_Loss/Notebooks/Wall_Loss_Tutorial/" class="md-nav__link">
         
   
   
@@ -9224,13 +9656,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -9238,7 +9667,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Dynamics/" class="md-nav__link ">
+            <a href="../../../../Examples/Dynamics/" class="md-nav__link ">
               
   
   
@@ -9256,7 +9685,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -9282,7 +9711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/wall_loss_builders_factory/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/wall_loss_builders_factory/" class="md-nav__link">
         
   
   
@@ -9310,7 +9739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/wall_loss_builders_factory/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/wall_loss_builders_factory/" class="md-nav__link">
         
   
   
@@ -9402,7 +9831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Coagulation_1_PMF_Pattern/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Coagulation_1_PMF_Pattern/" class="md-nav__link">
         
   
   
@@ -9430,7 +9859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Coagulation_3_Particle_Resolved_Pattern/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Coagulation_3_Particle_Resolved_Pattern/" class="md-nav__link">
         
   
   
@@ -9458,7 +9887,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Coagulation_4_Compared/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Coagulation_4_Compared/" class="md-nav__link">
         
   
   
@@ -9544,7 +9973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Charge/Coagulation_with_Charge_functional/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Charge/Coagulation_with_Charge_functional/" class="md-nav__link">
         
   
   
@@ -9572,7 +10001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Charge/Coagulation_with_Charge_objects/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Charge/Coagulation_with_Charge_objects/" class="md-nav__link">
         
   
   
@@ -9670,7 +10099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Functional/Coagulation_Basic_1_PMF/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Functional/Coagulation_Basic_1_PMF/" class="md-nav__link">
         
   
   
@@ -9698,7 +10127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Functional/Coagulation_Basic_2_PDF/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Functional/Coagulation_Basic_2_PDF/" class="md-nav__link">
         
   
   
@@ -9726,7 +10155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Functional/Coagulation_Basic_3_compared/" class="md-nav__link">
         
   
   
@@ -9754,7 +10183,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Coagulation/Functional/Coagulation_Basic_4_ParticleResolved/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Coagulation/Functional/Coagulation_Basic_4_ParticleResolved/" class="md-nav__link">
         
   
   
@@ -9858,7 +10287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Condensation/Condensation_1_Bin/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Condensation/Condensation_1_Bin/" class="md-nav__link">
         
   
   
@@ -9886,7 +10315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Condensation/Condensation_2_MassBin/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Condensation/Condensation_2_MassBin/" class="md-nav__link">
         
   
   
@@ -9914,7 +10343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Condensation/Condensation_3_MassResolved/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Condensation/Condensation_3_MassResolved/" class="md-nav__link">
         
   
   
@@ -10006,7 +10435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Dynamics/Customization/Adding_Particles_During_Simulation/" class="md-nav__link">
+      <a href="../../../../Examples/Dynamics/Customization/Adding_Particles_During_Simulation/" class="md-nav__link">
         
   
   
@@ -10064,13 +10493,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -10078,7 +10504,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Equilibria/" class="md-nav__link ">
+            <a href="../../../../Examples/Equilibria/" class="md-nav__link ">
               
   
   
@@ -10096,7 +10522,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -10180,7 +10606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Equilibria/Notebooks/activity_part1/" class="md-nav__link">
+      <a href="../../../../Examples/Equilibria/Notebooks/activity_part1/" class="md-nav__link">
         
   
   
@@ -10208,7 +10634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Equilibria/Notebooks/equilibria_part1/" class="md-nav__link">
+      <a href="../../../../Examples/Equilibria/Notebooks/equilibria_part1/" class="md-nav__link">
         
   
   
@@ -10266,13 +10692,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -10280,7 +10703,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Gas_Phase/" class="md-nav__link ">
+            <a href="../../../../Examples/Gas_Phase/" class="md-nav__link ">
               
   
   
@@ -10298,7 +10721,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_6" id="__nav_4_6_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -10384,7 +10807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gas_Phase/Notebooks/AtmosphereTutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Gas_Phase/Notebooks/AtmosphereTutorial/" class="md-nav__link">
         
   
   
@@ -10412,7 +10835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gas_Phase/Notebooks/Gas_Species/" class="md-nav__link">
+      <a href="../../../../Examples/Gas_Phase/Notebooks/Gas_Species/" class="md-nav__link">
         
   
   
@@ -10440,7 +10863,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Gas_Phase/Notebooks/Vapor_Pressure/" class="md-nav__link">
+      <a href="../../../../Examples/Gas_Phase/Notebooks/Vapor_Pressure/" class="md-nav__link">
         
   
   
@@ -10498,13 +10921,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -10512,7 +10932,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Nucleation/" class="md-nav__link ">
+            <a href="../../../../Examples/Nucleation/" class="md-nav__link ">
               
   
   
@@ -10530,7 +10950,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -10612,7 +11032,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Nucleation/Notebooks/Custom_Nucleation_Single_Species/" class="md-nav__link">
+      <a href="../../../../Examples/Nucleation/Notebooks/Custom_Nucleation_Single_Species/" class="md-nav__link">
         
   
   
@@ -10670,13 +11090,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -10684,7 +11101,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Particle_Phase/" class="md-nav__link ">
+            <a href="../../../../Examples/Particle_Phase/" class="md-nav__link ">
               
   
   
@@ -10702,7 +11119,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -10794,7 +11211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Particle_Phase/Notebooks/Activity_Tutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Particle_Phase/Notebooks/Activity_Tutorial/" class="md-nav__link">
         
   
   
@@ -10822,7 +11239,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Particle_Phase/Notebooks/Aerosol_Distributions/" class="md-nav__link">
+      <a href="../../../../Examples/Particle_Phase/Notebooks/Aerosol_Distributions/" class="md-nav__link">
         
   
   
@@ -10850,7 +11267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Particle_Phase/Notebooks/Distribution_Tutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Particle_Phase/Notebooks/Distribution_Tutorial/" class="md-nav__link">
         
   
   
@@ -10878,7 +11295,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Particle_Phase/Notebooks/Particle_Representation_Tutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Particle_Phase/Notebooks/Particle_Representation_Tutorial/" class="md-nav__link">
         
   
   
@@ -10906,7 +11323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Particle_Phase/Notebooks/Particle_Surface_Tutorial/" class="md-nav__link">
+      <a href="../../../../Examples/Particle_Phase/Notebooks/Particle_Surface_Tutorial/" class="md-nav__link">
         
   
   
@@ -10990,7 +11407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Particle_Phase/Notebooks/Functional/Activity_Functions/" class="md-nav__link">
+      <a href="../../../../Examples/Particle_Phase/Notebooks/Functional/Activity_Functions/" class="md-nav__link">
         
   
   
@@ -11039,8 +11456,6 @@
                 
   
   
-    
-  
   
   
     
@@ -11058,21 +11473,18 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_9" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../../../Examples/Setup_Particula/" class="md-nav__link ">
               
   
   
@@ -11090,13 +11502,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_4_9" id="__nav_4_9_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_9" id="__nav_4_9_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_9">
             <span class="md-nav__icon md-icon"></span>
             
@@ -11180,7 +11592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Details/Contributor_Setup/" class="md-nav__link">
+      <a href="../../../../Examples/Setup_Particula/Details/Contributor_Setup/" class="md-nav__link">
         
   
   
@@ -11208,7 +11620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Details/New_to_Python/" class="md-nav__link">
+      <a href="../../../../Examples/Setup_Particula/Details/New_to_Python/" class="md-nav__link">
         
   
   
@@ -11236,7 +11648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Details/Setup_Conda/" class="md-nav__link">
+      <a href="../../../../Examples/Setup_Particula/Details/Setup_Conda/" class="md-nav__link">
         
   
   
@@ -11264,7 +11676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Details/Setup_PIP/" class="md-nav__link">
+      <a href="../../../../Examples/Setup_Particula/Details/Setup_PIP/" class="md-nav__link">
         
   
   
@@ -11292,7 +11704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Details/Setup_UV/" class="md-nav__link">
+      <a href="../../../../Examples/Setup_Particula/Details/Setup_UV/" class="md-nav__link">
         
   
   
@@ -11350,13 +11762,10 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
@@ -11364,7 +11773,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../Simulations/" class="md-nav__link ">
+            <a href="../../../../Examples/Simulations/" class="md-nav__link ">
               
   
   
@@ -11382,7 +11791,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_10" id="__nav_4_10_label" tabindex="">
+              <label class="md-nav__link " for="__nav_4_10" id="__nav_4_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -11470,7 +11879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Simulations/Notebooks/Biomass_Burning_Cloud_Interactions/" class="md-nav__link">
+      <a href="../../../../Examples/Simulations/Notebooks/Biomass_Burning_Cloud_Interactions/" class="md-nav__link">
         
   
   
@@ -11498,7 +11907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Simulations/Notebooks/Cough_Droplets_Partitioning/" class="md-nav__link">
+      <a href="../../../../Examples/Simulations/Notebooks/Cough_Droplets_Partitioning/" class="md-nav__link">
         
   
   
@@ -11526,7 +11935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Simulations/Notebooks/Organic_Partitioning_and_Coagulation/" class="md-nav__link">
+      <a href="../../../../Examples/Simulations/Notebooks/Organic_Partitioning_and_Coagulation/" class="md-nav__link">
         
   
   
@@ -11554,7 +11963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../Simulations/Notebooks/Soot_Formation_in_Flames/" class="md-nav__link">
+      <a href="../../../../Examples/Simulations/Notebooks/Soot_Formation_in_Flames/" class="md-nav__link">
         
   
   
@@ -11661,7 +12070,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Features/wall_loss_strategy_system/" class="md-nav__link">
+      <a href="../../../../Features/wall_loss_strategy_system/" class="md-nav__link">
         
   
   
@@ -11727,7 +12136,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Theory/" class="md-nav__link ">
+            <a href="../../../../Theory/" class="md-nav__link ">
               
   
   
@@ -11796,7 +12205,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Theory/Accelerating_Python/" class="md-nav__link ">
+            <a href="../../../../Theory/Accelerating_Python/" class="md-nav__link ">
               
   
   
@@ -11898,7 +12307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Accelerating_Python/Details/One-Line_Vision/" class="md-nav__link">
+      <a href="../../../../Theory/Accelerating_Python/Details/One-Line_Vision/" class="md-nav__link">
         
   
   
@@ -11926,7 +12335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Accelerating_Python/Details/Taichi_Exploration/" class="md-nav__link">
+      <a href="../../../../Theory/Accelerating_Python/Details/Taichi_Exploration/" class="md-nav__link">
         
   
   
@@ -11995,7 +12404,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Theory/Code_Concepts/" class="md-nav__link ">
+            <a href="../../../../Theory/Code_Concepts/" class="md-nav__link ">
               
   
   
@@ -12099,7 +12508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Code_Concepts/Details/Design_Patterns/" class="md-nav__link">
+      <a href="../../../../Theory/Code_Concepts/Details/Design_Patterns/" class="md-nav__link">
         
   
   
@@ -12127,7 +12536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Code_Concepts/Details/Object_Oriented_Patterns/" class="md-nav__link">
+      <a href="../../../../Theory/Code_Concepts/Details/Object_Oriented_Patterns/" class="md-nav__link">
         
   
   
@@ -12155,7 +12564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Code_Concepts/Details/WARMED_principle/" class="md-nav__link">
+      <a href="../../../../Theory/Code_Concepts/Details/WARMED_principle/" class="md-nav__link">
         
   
   
@@ -12224,7 +12633,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Theory/OpenAI_Models/" class="md-nav__link ">
+            <a href="../../../../Theory/OpenAI_Models/" class="md-nav__link ">
               
   
   
@@ -12328,7 +12737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/OpenAI_Models/Models/Agents/" class="md-nav__link">
+      <a href="../../../../Theory/OpenAI_Models/Models/Agents/" class="md-nav__link">
         
   
   
@@ -12356,7 +12765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/OpenAI_Models/Models/Chat/" class="md-nav__link">
+      <a href="../../../../Theory/OpenAI_Models/Models/Chat/" class="md-nav__link">
         
   
   
@@ -12384,7 +12793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/OpenAI_Models/Models/Reasoning/" class="md-nav__link">
+      <a href="../../../../Theory/OpenAI_Models/Models/Reasoning/" class="md-nav__link">
         
   
   
@@ -12455,7 +12864,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Theory/Technical/" class="md-nav__link ">
+            <a href="../../../../Theory/Technical/" class="md-nav__link ">
               
   
   
@@ -12559,7 +12968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Condensation_Equations/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Condensation_Equations/" class="md-nav__link">
         
   
   
@@ -12587,7 +12996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/ionparticle_coagulation/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/ionparticle_coagulation/" class="md-nav__link">
         
   
   
@@ -12650,7 +13059,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/" class="md-nav__link ">
+            <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/" class="md-nav__link ">
               
   
   
@@ -12694,7 +13103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Fluid_and_Particle_Properties_Comparison/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Fluid_and_Particle_Properties_Comparison/" class="md-nav__link">
         
   
   
@@ -12722,7 +13131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Horizontal_Velocity_Comparison/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Horizontal_Velocity_Comparison/" class="md-nav__link">
         
   
   
@@ -12750,7 +13159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Kernel_Comparison/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Kernel_Comparison/" class="md-nav__link">
         
   
   
@@ -12778,7 +13187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Radial_Distribution_Comparison/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Radial_Distribution_Comparison/" class="md-nav__link">
         
   
   
@@ -12806,7 +13215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Radial_Relative_Velocity_Comparison/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/DNS_Radial_Relative_Velocity_Comparison/" class="md-nav__link">
         
   
   
@@ -12834,7 +13243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/Droplet_Coagulation_Kernel_Ayala2008/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Dynamics/Cloud_Droplet_Coagulation/Droplet_Coagulation_Kernel_Ayala2008/" class="md-nav__link">
         
   
   
@@ -12936,7 +13345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Properties/dynamic_viscosity/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Properties/dynamic_viscosity/" class="md-nav__link">
         
   
   
@@ -12964,7 +13373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../Theory/Technical/Properties/mean_free_path/" class="md-nav__link">
+      <a href="../../../../Theory/Technical/Properties/mean_free_path/" class="md-nav__link">
         
   
   
@@ -13046,7 +13455,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../contribute/" class="md-nav__link ">
+            <a href="../../../../contribute/" class="md-nav__link ">
               
   
   
@@ -13090,7 +13499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/CODE_OF_CONDUCT/" class="md-nav__link">
+      <a href="../../../../contribute/CODE_OF_CONDUCT/" class="md-nav__link">
         
   
   
@@ -13118,7 +13527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/CONTRIBUTING/" class="md-nav__link">
+      <a href="../../../../contribute/CONTRIBUTING/" class="md-nav__link">
         
   
   
@@ -13171,7 +13580,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../contribute/Code_Specifications/" class="md-nav__link ">
+            <a href="../../../../contribute/Code_Specifications/" class="md-nav__link ">
               
   
   
@@ -13275,7 +13684,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Code_Specifications/Details/Class_docstring_format/" class="md-nav__link">
+      <a href="../../../../contribute/Code_Specifications/Details/Class_docstring_format/" class="md-nav__link">
         
   
   
@@ -13303,7 +13712,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Code_Specifications/Details/Function_docstring_format/" class="md-nav__link">
+      <a href="../../../../contribute/Code_Specifications/Details/Function_docstring_format/" class="md-nav__link">
         
   
   
@@ -13331,7 +13740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Code_Specifications/Details/Linear_Git_Repository/" class="md-nav__link">
+      <a href="../../../../contribute/Code_Specifications/Details/Linear_Git_Repository/" class="md-nav__link">
         
   
   
@@ -13400,7 +13809,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../contribute/Feature_Workflow/" class="md-nav__link ">
+            <a href="../../../../contribute/Feature_Workflow/" class="md-nav__link ">
               
   
   
@@ -13510,7 +13919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Feature_Workflow/Details/Add_Class/" class="md-nav__link">
+      <a href="../../../../contribute/Feature_Workflow/Details/Add_Class/" class="md-nav__link">
         
   
   
@@ -13538,7 +13947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Feature_Workflow/Details/Add_Example/" class="md-nav__link">
+      <a href="../../../../contribute/Feature_Workflow/Details/Add_Example/" class="md-nav__link">
         
   
   
@@ -13566,7 +13975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Feature_Workflow/Details/Add_Function/" class="md-nav__link">
+      <a href="../../../../contribute/Feature_Workflow/Details/Add_Function/" class="md-nav__link">
         
   
   
@@ -13594,7 +14003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Feature_Workflow/Details/Add_Theory/" class="md-nav__link">
+      <a href="../../../../contribute/Feature_Workflow/Details/Add_Theory/" class="md-nav__link">
         
   
   
@@ -13622,7 +14031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Feature_Workflow/Details/Add_Unit_Test/" class="md-nav__link">
+      <a href="../../../../contribute/Feature_Workflow/Details/Add_Unit_Test/" class="md-nav__link">
         
   
   
@@ -13650,7 +14059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contribute/Feature_Workflow/Details/Add_to_init/" class="md-nav__link">
+      <a href="../../../../contribute/Feature_Workflow/Details/Add_to_init/" class="md-nav__link">
         
   
   
@@ -13724,22 +14133,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quickstart-for-experienced-users" class="md-nav__link">
+  <a href="#priority-justification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Quick‑start for Experienced Users
+        Priority Justification
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Quick‑start for Experienced Users">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Story
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Guidelines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Guidelines">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#create-isolated-environment" class="md-nav__link">
+  <a href="#requirements" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Create Isolated Environment
+        Requirements
       
     </span>
   </a>
@@ -13747,10 +14189,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#install-particula" class="md-nav__link">
+  <a href="#standards" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Install Particula
+        Standards
       
     </span>
   </a>
@@ -13758,32 +14200,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#uv-installation" class="md-nav__link">
+  <a href="#constraints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        uv Installation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pypi-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PyPI Installation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#conda-installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Conda Installation
+        Constraints
       
     </span>
   </a>
@@ -13792,6 +14212,289 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-particleresolved-strategy-charge-support-m1-p1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: ParticleResolved Strategy Charge Support (M1-P1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-bin-based-strategy-charge-support-m1-p2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Bin-Based Strategy Charge Support (M1-P2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-documentation-update-m1-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Documentation Update (M1-P3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#behavior-by-strategy-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior by Strategy Type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concentration-weighted-average-formula-bin-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concentration-Weighted Average Formula (Bin-Based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#success-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Success Criteria
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#upstream-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upstream Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downstream-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Downstream Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests-phase-1-particleresolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Tests (Phase 1 - ParticleResolved)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit-tests-phase-2-bin-based" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unit Tests (Phase 2 - Bin-Based)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#desired-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Desired State
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#change-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Change Log
+      
+    </span>
+  </a>
   
 </li>
       
@@ -13818,44 +14521,308 @@
   
 
 
-<h1 id="setup-particula">Setup Particula<a class="headerlink" href="#setup-particula" title="Permanent link">&para;</a></h1>
-<p>Welcome!  Choose the route that matches your comfort level:</p>
+<h1 id="maintenance-add-charge-support-to-add_concentration">Maintenance: Add Charge Support to add_concentration<a class="headerlink" href="#maintenance-add-charge-support-to-add_concentration" title="Permanent link">&para;</a></h1>
+<p><strong>ID:</strong> M1
+<strong>Priority:</strong> P2
+<strong>Status:</strong> Not Started
+<strong>Last Updated:</strong> 2025-12-19</p>
+<h2 id="priority-justification">Priority Justification<a class="headerlink" href="#priority-justification" title="Permanent link">&para;</a></h2>
+<p>Users simulating ion-aerosol interactions need to periodically refresh ion
+concentrations during coagulation simulations. Currently, <code>add_concentration()</code>
+does not support specifying charge for newly added particles, forcing
+workarounds or preventing accurate charged particle injection.</p>
+<p>The <code>collide_pairs()</code> method already handles charge conservation, but
+<code>add_concentration()</code> lacks parity, creating an inconsistent API for particle
+operations.</p>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h2>
+<p><strong>Affected Modules/Components:</strong>
+- <code>particula.particles.representation</code> - Main <code>ParticleRepresentation</code> class
+- <code>particula.particles.distribution_strategies.base</code> - Abstract base class
+- <code>particula.particles.distribution_strategies.particle_resolved_speciated_mass</code> - Primary target
+- <code>particula.particles.distribution_strategies.mass_based_moving_bin</code> - Bin-based strategy
+- <code>particula.particles.distribution_strategies.radii_based_moving_bin</code> - Bin-based strategy
+- <code>particula.particles.distribution_strategies.speciated_mass_moving_bin</code> - Bin-based strategy</p>
+<p><strong>Affected Files/Directories:</strong>
+- <code>particula/particles/representation.py</code>
+- <code>particula/particles/distribution_strategies/base.py</code>
+- <code>particula/particles/distribution_strategies/particle_resolved_speciated_mass.py</code>
+- <code>particula/particles/distribution_strategies/mass_based_moving_bin.py</code>
+- <code>particula/particles/distribution_strategies/radii_based_moving_bin.py</code>
+- <code>particula/particles/distribution_strategies/speciated_mass_moving_bin.py</code>
+- <code>particula/particles/distribution_strategies/tests/</code></p>
+<h2 id="user-story">User Story<a class="headerlink" href="#user-story" title="Permanent link">&para;</a></h2>
+<p><strong>As a</strong> researcher simulating ion-aerosol coagulation
+<strong>I want</strong> to add charged particles (e.g., 5 nm ions) to an existing aerosol population
+<strong>So that</strong> I can refresh ion concentrations periodically during simulations of
+ion/small-particle interactions with larger aerosol particles (e.g., 20 nm)</p>
+<p><strong>Example Scenario:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Simulation loop for ion-aerosol coagulation</span>
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+    <span class="c1"># Coagulation removes ions as they attach to aerosol</span>
+    <span class="n">aerosol</span> <span class="o">=</span> <span class="n">coagulation</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+
+    <span class="c1"># Refresh ion concentration every N steps</span>
+    <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="n">refresh_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">aerosol</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">add_concentration</span><span class="p">(</span>
+            <span class="n">added_concentration</span><span class="o">=</span><span class="n">ion_concentration</span><span class="p">,</span>
+            <span class="n">added_distribution</span><span class="o">=</span><span class="n">ion_mass_distribution</span><span class="p">,</span>
+            <span class="n">added_charge</span><span class="o">=</span><span class="n">ion_charges</span><span class="p">,</span>  <span class="c1"># NEW: specify charge for ions</span>
+        <span class="p">)</span>
+</code></pre></div></p>
+<h2 id="guidelines">Guidelines<a class="headerlink" href="#guidelines" title="Permanent link">&para;</a></h2>
+<h3 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Add <code>added_charge</code> parameter to <code>ParticleRepresentation.add_concentration()</code></li>
+<li>Update strategy <code>add_concentration()</code> signatures to accept optional charge</li>
+<li>Implement charge handling appropriate to each strategy type:</li>
+<li><strong>ParticleResolved</strong>: Append/assign charge values for new particles</li>
+<li><strong>Bin-based</strong>: Update charge via concentration-weighted average</li>
+<li>Default to charge=0 for new particles when <code>added_charge=None</code></li>
+<li>Maintain backward compatibility (existing code without charge arg still works)</li>
+</ol>
+<h3 id="standards">Standards<a class="headerlink" href="#standards" title="Permanent link">&para;</a></h3>
 <ul>
-<li>I already use Python every day → <strong><em>Quick‑start for Experienced Users</em></strong></li>
-<li>I’m new to Python → <a href="Details/New_to_Python/"><strong><em>Guide for New Users</em></strong></a></li>
-<li>I want to contribute to Particula → <a href="Details/Contributor_Setup/"><strong><em>Contributing to Particula</em></strong></a></li>
+<li>Follow existing pattern from <code>collide_pairs()</code> for charge handling</li>
+<li>Use keyword-only argument for <code>added_charge</code> to improve API clarity</li>
+<li>Update docstrings to document behavior differences between strategies</li>
+<li>Maintain 80-character line length and Google-style docstrings</li>
+</ul>
+<h3 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Must not break existing <code>add_concentration()</code> calls (backward compatible)</li>
+<li>Charge array shapes must match concentration array shapes</li>
+<li>For bin-based strategies, charge update is concentration-weighted average</li>
+</ul>
+<h2 id="phases">Phases<a class="headerlink" href="#phases" title="Permanent link">&para;</a></h2>
+<h3 id="phase-1-particleresolved-strategy-charge-support-m1-p1">Phase 1: ParticleResolved Strategy Charge Support (M1-P1)<a class="headerlink" href="#phase-1-particleresolved-strategy-charge-support-m1-p1" title="Permanent link">&para;</a></h3>
+<p><strong>Scope:</strong> Add charge support to <code>ParticleResolvedSpeciatedMass.add_concentration()</code>
+and <code>ParticleRepresentation.add_concentration()</code>.</p>
+<p><strong>Size:</strong> S (~50-70 LOC including tests)</p>
+<p><strong>Tasks:</strong>
+- [ ] Update <code>DistributionStrategy.add_concentration()</code> abstract signature to
+      include <code>added_charge: Optional[NDArray[np.float64]] = None</code>
+- [ ] Update return type to include optional charge array
+- [ ] Implement charge handling in <code>ParticleResolvedSpeciatedMass.add_concentration()</code>:
+  - Append charge values for new particles
+  - Fill empty bins with provided charge or default to 0
+- [ ] Update <code>ParticleRepresentation.add_concentration()</code> to:
+  - Accept <code>*, added_charge: Optional[NDArray[np.float64]] = None</code> (keyword-only)
+  - Pass charge to strategy and update <code>self.charge</code>
+- [ ] Add tests for particle-resolved charge addition scenarios
+- [ ] Update docstrings documenting ParticleResolved behavior</p>
+<p><strong>Acceptance Criteria:</strong>
+- [ ] New ions can be added with specified charges
+- [ ] Missing charge defaults to 0 for new particles
+- [ ] Existing calls without <code>added_charge</code> continue to work
+- [ ] Tests cover append, fill-empty, and partial-fill scenarios with charge</p>
+<h3 id="phase-2-bin-based-strategy-charge-support-m1-p2">Phase 2: Bin-Based Strategy Charge Support (M1-P2)<a class="headerlink" href="#phase-2-bin-based-strategy-charge-support-m1-p2" title="Permanent link">&para;</a></h3>
+<p><strong>Scope:</strong> Add charge support to bin-based strategies with concentration-weighted
+averaging.</p>
+<p><strong>Size:</strong> S (~50-70 LOC including tests)</p>
+<p><strong>Tasks:</strong>
+- [ ] Implement charge handling in <code>MassBasedMovingBin.add_concentration()</code>:
+  - Compute concentration-weighted average charge when adding to bins
+  - Default to existing charge when <code>added_charge=None</code>
+- [ ] Implement same pattern in <code>RadiiBasedMovingBin.add_concentration()</code>
+- [ ] Implement same pattern in <code>SpeciatedMassMovingBin.add_concentration()</code>
+- [ ] Add tests for bin-based charge averaging scenarios
+- [ ] Update docstrings documenting bin-based behavior differences</p>
+<p><strong>Acceptance Criteria:</strong>
+- [ ] Adding concentration updates charge via weighted average
+- [ ] Missing charge preserves existing bin charges
+- [ ] Docstrings clearly explain bin-based vs particle-resolved behavior</p>
+<h3 id="phase-3-documentation-update-m1-p3">Phase 3: Documentation Update (M1-P3)<a class="headerlink" href="#phase-3-documentation-update-m1-p3" title="Permanent link">&para;</a></h3>
+<p><strong>Scope:</strong> Update development documentation with completion notes.</p>
+<p><strong>Size:</strong> XS</p>
+<p><strong>Tasks:</strong>
+- [ ] Update this maintenance document status to Shipped
+- [ ] Add completion notes and lessons learned
+- [ ] Update README.md in development_plans if needed</p>
+<h2 id="technical-approach">Technical Approach<a class="headerlink" href="#technical-approach" title="Permanent link">&para;</a></h2>
+<h3 id="api-changes">API Changes<a class="headerlink" href="#api-changes" title="Permanent link">&para;</a></h3>
+<p><strong><code>ParticleRepresentation.add_concentration()</code> (updated signature):</strong>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">add_concentration</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">added_concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">added_distribution</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">added_charge</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add concentration to the particle distribution.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        added_concentration: The concentration to be added per bin (1/m^3).</span>
+<span class="sd">        added_distribution: Optional distribution array to merge into the</span>
+<span class="sd">            existing distribution. If None, the current distribution is reused.</span>
+<span class="sd">        added_charge: Optional charge array for newly added particles.</span>
+<span class="sd">            For ParticleResolved strategies, these are assigned to new particles.</span>
+<span class="sd">            For bin-based strategies, charge is updated via concentration-weighted</span>
+<span class="sd">            average. If None, defaults to 0 for new particles or preserves</span>
+<span class="sd">            existing charge for bin-based strategies.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></p>
+<p><strong><code>DistributionStrategy.add_concentration()</code> (updated signature):</strong>
+<div class="highlight"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_concentration</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">added_distribution</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">added_concentration</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
+    <span class="n">charge</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">added_charge</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add concentration to the distribution of particles.</span>
+
+<span class="sd">    Arguments:</span>
+<span class="sd">        distribution: The distribution of particle sizes or masses.</span>
+<span class="sd">        concentration: The concentration of each particle size or mass.</span>
+<span class="sd">        added_distribution: The distribution to be added.</span>
+<span class="sd">        added_concentration: The concentration to be added.</span>
+<span class="sd">        charge: Current charge array (optional).</span>
+<span class="sd">        added_charge: Charge for added particles (optional).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple of (updated distribution, updated concentration, updated charge).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></p>
+<h3 id="behavior-by-strategy-type">Behavior by Strategy Type<a class="headerlink" href="#behavior-by-strategy-type" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Charge Behavior</th>
+<th>Default (added_charge=None)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ParticleResolvedSpeciatedMass</td>
+<td>Assign/append charge values</td>
+<td>New particles get charge=0</td>
+</tr>
+<tr>
+<td>MassBasedMovingBin</td>
+<td>Concentration-weighted average</td>
+<td>Preserve existing charge</td>
+</tr>
+<tr>
+<td>RadiiBasedMovingBin</td>
+<td>Concentration-weighted average</td>
+<td>Preserve existing charge</td>
+</tr>
+<tr>
+<td>SpeciatedMassMovingBin</td>
+<td>Concentration-weighted average</td>
+<td>Preserve existing charge</td>
+</tr>
+</tbody>
+</table>
+<h3 id="concentration-weighted-average-formula-bin-based">Concentration-Weighted Average Formula (Bin-Based)<a class="headerlink" href="#concentration-weighted-average-formula-bin-based" title="Permanent link">&para;</a></h3>
+<p>For bin <code>i</code> when adding concentration:
+<div class="highlight"><pre><span></span><code>new_charge[i] = (old_concentration[i] * old_charge[i] + added_concentration[i] * added_charge[i]) 
+                / (old_concentration[i] + added_concentration[i])
+</code></pre></div></p>
+<h2 id="success-criteria">Success Criteria<a class="headerlink" href="#success-criteria" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>add_concentration()</code> accepts optional <code>added_charge</code> parameter</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> ParticleResolved strategy assigns charge to new particles</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Bin-based strategies update charge via concentration-weighted average</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Default behavior (no charge arg) maintains backward compatibility</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Docstrings clearly document strategy-specific behavior</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> All tests passing with &gt;95% coverage on new code</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Code review approved</li>
+</ul>
+<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
+<h3 id="upstream-dependencies">Upstream Dependencies<a class="headerlink" href="#upstream-dependencies" title="Permanent link">&para;</a></h3>
+<ul>
+<li>None (self-contained change)</li>
+</ul>
+<h3 id="downstream-dependencies">Downstream Dependencies<a class="headerlink" href="#downstream-dependencies" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Coagulation simulations using ion injection</li>
+<li>Any future code relying on <code>add_concentration()</code> with charged particles</li>
+</ul>
+<h2 id="testing-strategy">Testing Strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="unit-tests-phase-1-particleresolved">Unit Tests (Phase 1 - ParticleResolved)<a class="headerlink" href="#unit-tests-phase-1-particleresolved" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add particles with specified charges (append case)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add particles with charges filling empty bins</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add particles with charges (partial fill + append)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add particles without charge arg (defaults to 0)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Shape mismatch between added_concentration and added_charge raises error</li>
+</ul>
+<h3 id="unit-tests-phase-2-bin-based">Unit Tests (Phase 2 - Bin-Based)<a class="headerlink" href="#unit-tests-phase-2-bin-based" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add concentration with charge updates weighted average</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add concentration without charge preserves existing charge</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Weighted average calculation correctness</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Edge case: adding to bin with zero concentration</li>
+</ul>
+<h3 id="integration-tests">Integration Tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Full workflow: create representation, add charged particles, verify state</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Coagulation + ion refresh simulation pattern works correctly</li>
+</ul>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<h3 id="current-state">Current State<a class="headerlink" href="#current-state" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>add_concentration()</code> ignores charge entirely</li>
+<li><code>collide_pairs()</code> handles charge correctly (sets precedent)</li>
+<li>Users cannot inject charged particles without manual array manipulation</li>
+</ul>
+<h3 id="desired-state">Desired State<a class="headerlink" href="#desired-state" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>add_concentration()</code> has parity with <code>collide_pairs()</code> for charge handling</li>
+<li>Users can refresh ion concentrations with specified charges in simulations</li>
+<li>Clear documentation explains behavior differences between strategies</li>
+</ul>
+<h3 id="impact">Impact<a class="headerlink" href="#impact" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>User Impact:</strong> Enables ion-aerosol coagulation simulations with periodic ion refresh</li>
+<li><strong>Developer Impact:</strong> Consistent charge handling across particle operations</li>
+<li><strong>System Impact:</strong> Minor API addition, fully backward compatible</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Related Architecture: Strategy pattern in <code>distribution_strategies/</code></li>
+<li>Related Code: <code>collide_pairs()</code> charge handling pattern</li>
+<li>Related Issues: None yet (to be created)</li>
+</ul>
+<h2 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The keyword-only <code>added_charge</code> parameter (using <code>*</code>) ensures clear API usage
+  and prevents positional argument confusion.</li>
+<li>Bin-based strategies use concentration-weighted averaging because bins represent
+  populations, not individual particles. Adding concentration to a bin is like
+  mixing two populations with potentially different average charges.</li>
+<li>ParticleResolved strategies assign charges directly because each array element
+  represents an individual particle.</li>
 </ul>
 <hr />
-<h2 id="quickstart-for-experienced-users">Quick‑start for Experienced Users<a class="headerlink" href="#quickstart-for-experienced-users" title="Permanent link">&para;</a></h2>
-<h3 id="create-isolated-environment">Create Isolated Environment<a class="headerlink" href="#create-isolated-environment" title="Permanent link">&para;</a></h3>
-<p><em>See the <a href="Details/Setup_Conda/">conda</a>, <a href="Details/Setup_PIP/">pip</a>, or <a href="Details/Setup_UV/">uv</a> guides for exact commands.</em></p>
-<h3 id="install-particula">Install Particula<a class="headerlink" href="#install-particula" title="Permanent link">&para;</a></h3>
-<p>If your Python Environment is already set up, install Particula directly using one of the following methods:</p>
-<hr />
-<h3 id="uv-installation"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m0 .106.05 11.95.04 9.56a2.39 2.39 0 0 0 2.4 2.379l9.56-.04 5.975-.026.608-.002c1.316-.006 2.38-1.097 2.38-2.413h1.094v2.39H24L23.9.005 12.905.051l.046 9.525v5.963h-1.958l.046-5.955-.046-9.525Z"/></svg></span> <strong>uv</strong> Installation<a class="headerlink" href="#uv-installation" title="Permanent link">&para;</a></h3>
-<p><a href="Details/Setup_UV/"><strong>uv</strong></a> is a fast rust-based Python package manager.</p>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>particula<span class="w">                   </span><span class="c1"># uv ≈ much faster pip drop‑in </span>
-</code></pre></div>
-<p>with optional extras:
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;particula[extra]&quot;</span>
-</code></pre></div></p>
-<hr />
-<h3 id="pypi-installation"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.922 13.58v3.912L20.55 18.72l-.078.055.052.037 3.45-1.256.026-.036v-3.997l-.053-.036-.025.092zm-.301-7.962-3.04 1.107v3.912l3.339-1.215V5.509zm.299 7.839V9.544l-3.336 1.215v3.913zm-3.45 1.253V10.8l-3.3 1.2v3.913zm-3.436 5.286v-3.912l-3.313 1.206v3.912zm.136-3.939v3.868l3.314-1.206V14.85zm2.093 1.882c-.367.134-.663-.074-.663-.463s.296-.814.663-.947c.365-.133.662.075.662.464s-.297.814-.662.946m-6.038-8.624.365-.132-3.285-1.197-3.323 1.21.102.037 3.184 1.16zm7.282 1.349V6.751L17.17 7.965v3.913zm-3.449 1.254V8.005l-3.302 1.202v3.912zm-3.415-2.672-3.336 1.215v3.913l3.336-1.215zm-6.736 3.919 3.322 1.209v-3.913L6.907 9.252zm3.433-5.292 3.281 1.193V5.198l-3.28-1.193zm10.167-5.158L17.19 3.922v3.913l3.317-1.207zM16.95 3.903 13.724 2.73l-3.269 1.19 3.225 1.174zm-1.585.703-1.624.592v3.868l3.317-1.207V3.991zm-.391 2.778c-.367.134-.662-.074-.662-.464s.295-.813.662-.946c.366-.133.663.074.663.464s-.297.813-.663.946M10.229 18.41v-3.914l-3.322-1.209V17.2zm3.449-1.228v-3.913l-3.371 1.227v3.913zm.078-.028 3.3-1.2V12.04l-3.3 1.2zm-.078 4.063-3.371 1.227v-3.912h-.078v3.912l-3.322-1.209v-3.913l-.053-.058-.025-.06-3.336-1.21v-3.948l.034.013 3.287 1.196.015-.078-3.261-1.187 3.26-1.187v-.109L3.876 9.62l-.307-.112 3.26-1.188v.877l.079-.055V6.769l3.257 1.185.058-.061L7.084 6.75l-.102-.037 3.24-1.179v-.083L6.854 6.677v.018l-.025.018v1.523L3.44 9.47v.02l-.025.017v4.007l-3.39 1.233v.019L0 14.784v3.995l.025.037 3.4 1.237.008-.006.007.01 3.4 1.238.008-.006.006.01 3.4 1.237.014-.009.012.01 3.45-1.256.026-.037zM3.493 9.563l3.257 1.185-3.257 1.187V9.562zM3.4 19.96.078 18.752v-3.913l2.361.86.96.349zm.015-3.99-3.08-1.12-.182-.066 3.262-1.187zm3.399 5.231-3.321-1.209V16.08l3.321 1.209zM23.791 5.434l-3.21-1.17v2.338zm-3.404-2.791-3.24-1.18-3.27 1.19 3.247 1.182z"/></svg></span> PyPI Installation<a class="headerlink" href="#pypi-installation" title="Permanent link">&para;</a></h3>
-<p><a href="Details/Setup_PIP/"><strong>pip</strong></a> is Python’s default package manager and installs packages from the Python Package Index (PyPI).</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>particula<span class="w">                   </span><span class="c1"># PyPI</span>
-</code></pre></div>
-<p>with optional extras:
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;particula[extra]&quot;</span>
-</code></pre></div></p>
-<hr />
-<h3 id="conda-installation"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.206 5.866.005.396H6.754l.006.655v.005l-6.758.002v.211L0 7.973l.02.041c.212.467.663.901 1.257 1.313s1.335.796 2.145 1.13c1.62.664 3.502 1.12 5.006 1.1.746-.01 1.265.228 1.62.672.341.426.51 1.092.524 1.92l-2.632 2.09.008 1.896H20.29l-.004-1.76-2.63-2.22c.055-2.013.708-3.443 1.777-4.405 1.087-.979 2.61-1.49 4.37-1.616l.195-.015L24 5.872zm.425.422 14.946.006-.004 1.457c-1.737.155-3.29.666-4.424 1.685-.912.822-1.433 2.062-1.691 3.534l-1.617.004.002.422 1.535-.004c-.027.226-.113.4-.123.64l-.893-.003-.002.422.995.004 2.138 1.802-2.941.002c-.724-.675-1.552-1.116-2.416-1.158-.817-.04-1.638.324-2.387 1.04l-2.978-.024 2.248-1.781v-.102c.002-.943-.2-1.72-.64-2.269-.396-.496-1.007-.749-1.741-.79l-.008-4.49h.008zm-1.45.396h1.026l.008 4.404c-1.387-.02-3.125-.404-4.631-1.023-.787-.324-1.507-.698-2.066-1.086C.968 8.6.587 8.203.424 7.86v-.514l6.336-.002v2.16h.422v-2.16h.004l-.004-.435zm6.935 8.839c.75.037 1.503.436 2.18 1.078l-.002 1.112h-4.345l-.006-1.2c.706-.717 1.443-1.026 2.173-.99M8.36 16.537l3.16.023.006 1.153h-3.16zm11.5.142.002 1.034h-3.148V16.68z"/></svg></span> Conda Installation<a class="headerlink" href="#conda-installation" title="Permanent link">&para;</a></h3>
-<p><a href="Details/Setup_Conda/"><strong>conda</strong></a> is a cross‑platform environment &amp; package manager; Particula is distributed via the community‑maintained conda‑forge channel.</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>particula
-</code></pre></div>
-<p>Optional extras:
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>particula<span class="w"> </span>matplotlib<span class="w"> </span>pandas<span class="w"> </span>tqdm<span class="w"> </span>pint<span class="w"> </span>
-</code></pre></div></p>
-<hr />
+<p><strong>Instructions for ADW Workflow:</strong>
+When generating issues from this maintenance plan:
+1. Create Phase 1 issue first (ParticleResolved + representation changes)
+2. Create Phase 2 issue after Phase 1 merges (bin-based strategies)
+3. Reference this document in issue descriptions
+4. Apply labels: <code>maintenance</code>, <code>priority:P2</code>, <code>particles</code>, <code>enhancement</code></p>
+<h2 id="change-log">Change Log<a class="headerlink" href="#change-log" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Change</th>
+<th>Author</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025-12-19</td>
+<td>Initial maintenance plan created</td>
+<td>ADW Workflow</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -13920,12 +14887,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../../../../javascripts/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
