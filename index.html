@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="images/icon_dark.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -744,10 +744,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#wall-loss-strategies" class="md-nav__link">
+  <a href="#wall-loss-strategies-and-runnable" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Wall loss strategies
+        Wall loss strategies and runnable
       
     </span>
   </a>
@@ -8471,6 +8471,8 @@
       
         
       
+        
+      
     
     
     
@@ -8559,6 +8561,34 @@
     
   
     Feature: Wall Loss Builders, Mixins, and Factory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Agent/development_plans/features/wall-loss-runnable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature: WallLoss Runnable Process
   
 
     
@@ -9199,6 +9229,8 @@
       
         
       
+        
+      
     
     
     
@@ -9315,6 +9347,34 @@
     
   
     Spherical Wall Loss Strategy Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Examples/Chamber_Wall_Loss/Notebooks/Wall_Loss_Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wall Loss Tutorial: Spherical vs Rectangular Chambers
   
 
     
@@ -13952,10 +14012,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#wall-loss-strategies" class="md-nav__link">
+  <a href="#wall-loss-strategies-and-runnable" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Wall loss strategies
+        Wall loss strategies and runnable
       
     </span>
   </a>
@@ -14102,11 +14162,11 @@
 <span class="c1">#   The result is an Aerosol instance with updated particle properties.</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="wall-loss-strategies">Wall loss strategies<a class="headerlink" href="#wall-loss-strategies" title="Permanent link">&para;</a></h3>
+<h3 id="wall-loss-strategies-and-runnable">Wall loss strategies and runnable<a class="headerlink" href="#wall-loss-strategies-and-runnable" title="Permanent link">&para;</a></h3>
 <p>In addition to condensation and coagulation, Particula models particle loss to
 chamber walls. The wall loss API lives in <code>particula.dynamics.wall_loss</code> and is
 exposed through the <code>particula.dynamics</code> namespace.</p>
-<p>The strategy-based wall loss API is built around these classes:</p>
+<p>The wall loss API is built around:</p>
 <ul>
 <li><code>particula.dynamics.WallLossStrategy</code> – abstract base class for wall loss
   models.</li>
@@ -14115,6 +14175,9 @@ exposed through the <code>particula.dynamics</code> namespace.</p>
 <li><code>particula.dynamics.RectangularWallLossStrategy</code> – rectangular chamber wall
   loss strategy with <code>(x, y, z)</code> dimensions (meters) validated for
   positivity.</li>
+<li><code>particula.dynamics.WallLoss</code> – Runnable entry point that wraps a strategy,
+  splits <code>time_step</code> across <code>sub_steps</code>, clamps concentrations to non-negative
+  after each sub-step, and composes with other runnables using <code>|</code>.</li>
 </ul>
 <p>Strategies operate on
 <code>particula.particles.representation.ParticleRepresentation</code> instances and
@@ -14133,27 +14196,44 @@ distribution types.</p>
     <span class="o">.</span><span class="n">build</span><span class="p">()</span>
 <span class="p">)</span>
 
-<span class="n">wall_loss</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">RectangularWallLossStrategy</span><span class="p">(</span>
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">AtmosphereBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_temperature</span><span class="p">(</span><span class="mf">298.15</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_pressure</span><span class="p">(</span><span class="mi">101325</span><span class="p">,</span> <span class="s2">&quot;Pa&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">aerosol</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">AerosolBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_particles</span><span class="p">(</span><span class="n">particle</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">set_atmosphere</span><span class="p">(</span><span class="n">atmosphere</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">wall_loss_strategy</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">RectangularWallLossStrategy</span><span class="p">(</span>
     <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>  <span class="c1"># m^2/s</span>
     <span class="n">chamber_dimensions</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>  <span class="c1"># m</span>
     <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;discrete&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># Instantaneous wall loss rate</span>
-<span class="n">rate</span> <span class="o">=</span> <span class="n">wall_loss</span><span class="o">.</span><span class="n">rate</span><span class="p">(</span>
-    <span class="n">particle</span><span class="o">=</span><span class="n">particle</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mf">298.15</span><span class="p">,</span>
-    <span class="n">pressure</span><span class="o">=</span><span class="mf">101325.0</span><span class="p">,</span>
+<span class="n">wall_loss</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">WallLoss</span><span class="p">(</span>
+    <span class="n">wall_loss_strategy</span><span class="o">=</span><span class="n">wall_loss_strategy</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># Apply wall loss for 10 seconds</span>
-<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">particle</span> <span class="o">=</span> <span class="n">wall_loss</span><span class="o">.</span><span class="n">step</span><span class="p">(</span>
-        <span class="n">particle</span><span class="o">=</span><span class="n">particle</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="mf">298.15</span><span class="p">,</span>
-        <span class="n">pressure</span><span class="o">=</span><span class="mf">101325.0</span><span class="p">,</span>
-        <span class="n">time_step</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-    <span class="p">)</span>
+<span class="c1"># Apply wall loss with sub-steps; concentrations clamp non-negative each time</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">wall_loss</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">aerosol</span><span class="p">,</span>
+    <span class="n">time_step</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">sub_steps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Chain with other processes using Runnable composition</span>
+<span class="n">coagulation_strategy</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">BrownianCoagulationStrategy</span><span class="p">(</span>
+    <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;discrete&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">coagulation</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">Coagulation</span><span class="p">(</span><span class="n">coagulation_strategy</span><span class="p">)</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">coagulation</span> <span class="o">|</span> <span class="n">wall_loss</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
 </code></pre></div>
 <p>You can configure wall loss strategies through builders with unit conversion
 and validation for geometry and diffusivity. Distribution type defaults to
@@ -14180,7 +14260,9 @@ and validation for geometry and diffusivity. Distribution type defaults to
 <p>The legacy function-based API (<code>get_spherical_wall_loss_rate</code>,
 <code>get_rectangle_wall_loss_rate</code>) remains available for lower-level
 calculations; the strategy classes provide a more consistent interface
-alongside condensation and coagulation strategies.</p>
+alongside condensation and coagulation strategies. For a full
+geometry comparison plus chaining with coagulation and condensation,
+see the <a href="Examples/Chamber_Wall_Loss/Notebooks/Wall_Loss_Tutorial/">Wall Loss Tutorial notebook</a>.</p>
 
 
 
@@ -14252,10 +14334,10 @@ alongside condensation and coagulation strategies.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="javascripts/mathjax.js"></script>
       

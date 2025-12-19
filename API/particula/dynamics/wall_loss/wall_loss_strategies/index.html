@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../../../images/icon_dark.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -8402,6 +8402,8 @@
       
         
       
+        
+      
     
     
     
@@ -8490,6 +8492,34 @@
     
   
     Feature: Wall Loss Builders, Mixins, and Factory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Agent/development_plans/features/wall-loss-runnable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature: WallLoss Runnable Process
   
 
     
@@ -9130,6 +9160,8 @@
       
         
       
+        
+      
     
     
     
@@ -9246,6 +9278,34 @@
     
   
     Spherical Wall Loss Strategy Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Examples/Chamber_Wall_Loss/Notebooks/Wall_Loss_Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wall Loss Tutorial: Spherical vs Rectangular Chambers
   
 
     
@@ -14186,27 +14246,7 @@ three positive values.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/dynamics/wall_loss/wall_loss_strategies.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
-<span class="normal">513</span>
-<span class="normal">514</span>
-<span class="normal">515</span>
-<span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span>
-<span class="normal">519</span>
-<span class="normal">520</span>
-<span class="normal">521</span>
-<span class="normal">522</span>
-<span class="normal">523</span>
-<span class="normal">524</span>
-<span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">530</span>
 <span class="normal">531</span>
 <span class="normal">532</span>
 <span class="normal">533</span>
@@ -14221,7 +14261,27 @@ three positive values.</p>
 <span class="normal">542</span>
 <span class="normal">543</span>
 <span class="normal">544</span>
-<span class="normal">545</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;wall_eddy_diffusivity&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;wall_eddy_diffusivity&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -14332,30 +14392,50 @@ three positive values.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/wall_loss/wall_loss_strategies.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span>
-<span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">567</span>
 <span class="normal">568</span>
 <span class="normal">569</span>
-<span class="normal">570</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient</span><span class="p">(</span>
+<span class="normal">570</span>
+<span class="normal">571</span>
+<span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span>
+<span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
+<span class="normal">590</span>
+<span class="normal">591</span>
+<span class="normal">592</span>
+<span class="normal">593</span>
+<span class="normal">594</span>
+<span class="normal">595</span>
+<span class="normal">596</span>
+<span class="normal">597</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span>
+<span class="normal">603</span>
+<span class="normal">604</span>
+<span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -14371,10 +14451,30 @@ three positive values.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        Wall loss coefficient [1/s] for each particle bin.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())</span>
+    <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">get_effective_density</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;particle_resolved&quot;</span><span class="p">:</span>
+        <span class="n">concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">get_concentration</span><span class="p">())</span>
+        <span class="n">active</span> <span class="o">=</span> <span class="p">(</span><span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">concentration</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">coefficient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">concentration</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">active</span><span class="p">):</span>
+            <span class="n">coefficient</span><span class="p">[</span><span class="n">active</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">get_rectangle_wall_loss_coefficient_via_system_state</span><span class="p">(</span>
+                    <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span><span class="p">,</span>
+                    <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius</span><span class="p">[</span><span class="n">active</span><span class="p">],</span>
+                    <span class="n">particle_density</span><span class="o">=</span><span class="n">density</span><span class="p">[</span><span class="n">active</span><span class="p">],</span>
+                    <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+                    <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
+                    <span class="n">chamber_dimensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber_dimensions</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">coefficient</span>
+
     <span class="k">return</span> <span class="n">get_rectangle_wall_loss_coefficient_via_system_state</span><span class="p">(</span>
         <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span><span class="p">,</span>
-        <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle</span><span class="o">.</span><span class="n">get_radius</span><span class="p">(),</span>
-        <span class="n">particle_density</span><span class="o">=</span><span class="n">particle</span><span class="o">.</span><span class="n">get_effective_density</span><span class="p">(),</span>
+        <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+        <span class="n">particle_density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
         <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
         <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
         <span class="n">chamber_dimensions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber_dimensions</span><span class="p">,</span>
@@ -14455,37 +14555,37 @@ representation.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/wall_loss/wall_loss_strategies.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient_for_particles</span><span class="p">(</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">612</span>
+<span class="normal">613</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
+<span class="normal">616</span>
+<span class="normal">617</span>
+<span class="normal">618</span>
+<span class="normal">619</span>
+<span class="normal">620</span>
+<span class="normal">621</span>
+<span class="normal">622</span>
+<span class="normal">623</span>
+<span class="normal">624</span>
+<span class="normal">625</span>
+<span class="normal">626</span>
+<span class="normal">627</span>
+<span class="normal">628</span>
+<span class="normal">629</span>
+<span class="normal">630</span>
+<span class="normal">631</span>
+<span class="normal">632</span>
+<span class="normal">633</span>
+<span class="normal">634</span>
+<span class="normal">635</span>
+<span class="normal">636</span>
+<span class="normal">637</span>
+<span class="normal">638</span>
+<span class="normal">639</span>
+<span class="normal">640</span>
+<span class="normal">641</span>
+<span class="normal">642</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient_for_particles</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle_radius</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
     <span class="n">particle_density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -14800,7 +14900,27 @@ using turbulent diffusion and gravitational settling.</p>
 <span class="normal">429</span>
 <span class="normal">430</span>
 <span class="normal">431</span>
-<span class="normal">432</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient</span><span class="p">(</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -14819,10 +14939,30 @@ using turbulent diffusion and gravitational settling.</p>
 <span class="sd">    Returns:</span>
 <span class="sd">        Wall loss coefficient [1/s].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">get_radius</span><span class="p">())</span>
+    <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">get_effective_density</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span> <span class="o">==</span> <span class="s2">&quot;particle_resolved&quot;</span><span class="p">:</span>
+        <span class="n">concentration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle</span><span class="o">.</span><span class="n">get_concentration</span><span class="p">())</span>
+        <span class="n">active</span> <span class="o">=</span> <span class="p">(</span><span class="n">radius</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">concentration</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">coefficient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">concentration</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">active</span><span class="p">):</span>
+            <span class="n">coefficient</span><span class="p">[</span><span class="n">active</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">get_spherical_wall_loss_coefficient_via_system_state</span><span class="p">(</span>
+                    <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span><span class="p">,</span>
+                    <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius</span><span class="p">[</span><span class="n">active</span><span class="p">],</span>
+                    <span class="n">particle_density</span><span class="o">=</span><span class="n">density</span><span class="p">[</span><span class="n">active</span><span class="p">],</span>
+                    <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+                    <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
+                    <span class="n">chamber_radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber_radius</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">coefficient</span>
+
     <span class="k">return</span> <span class="n">get_spherical_wall_loss_coefficient_via_system_state</span><span class="p">(</span>
         <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span><span class="p">,</span>
-        <span class="n">particle_radius</span><span class="o">=</span><span class="n">particle</span><span class="o">.</span><span class="n">get_radius</span><span class="p">(),</span>
-        <span class="n">particle_density</span><span class="o">=</span><span class="n">particle</span><span class="o">.</span><span class="n">get_effective_density</span><span class="p">(),</span>
+        <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+        <span class="n">particle_density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span>
         <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
         <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
         <span class="n">chamber_radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber_radius</span><span class="p">,</span>
@@ -14902,27 +15042,7 @@ need to calculate coefficients for a subset of active particles.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/wall_loss/wall_loss_strategies.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">434</span>
-<span class="normal">435</span>
-<span class="normal">436</span>
-<span class="normal">437</span>
-<span class="normal">438</span>
-<span class="normal">439</span>
-<span class="normal">440</span>
-<span class="normal">441</span>
-<span class="normal">442</span>
-<span class="normal">443</span>
-<span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span>
-<span class="normal">447</span>
-<span class="normal">448</span>
-<span class="normal">449</span>
-<span class="normal">450</span>
-<span class="normal">451</span>
-<span class="normal">452</span>
-<span class="normal">453</span>
-<span class="normal">454</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">454</span>
 <span class="normal">455</span>
 <span class="normal">456</span>
 <span class="normal">457</span>
@@ -14931,7 +15051,27 @@ need to calculate coefficients for a subset of active particles.</p>
 <span class="normal">460</span>
 <span class="normal">461</span>
 <span class="normal">462</span>
-<span class="normal">463</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient_for_particles</span><span class="p">(</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">loss_coefficient_for_particles</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle_radius</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
     <span class="n">particle_density</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">],</span>
@@ -16206,10 +16346,10 @@ geometry should be bound via closure.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../../../javascripts/mathjax.js"></script>
       

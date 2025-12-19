@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../../images/icon_dark.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -8157,6 +8157,8 @@
       
         
       
+        
+      
     
     
     
@@ -8245,6 +8247,34 @@
     
   
     Feature: Wall Loss Builders, Mixins, and Factory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Agent/development_plans/features/wall-loss-runnable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature: WallLoss Runnable Process
   
 
     
@@ -8947,6 +8977,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#runnable-entry-point-wallloss-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runnable entry point: WallLoss wrapper
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runnable entry point: WallLoss wrapper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chaining-with-other-runnables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chaining with other runnables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-start-spherical-wall-loss-on-a-lognormal-distribution" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9156,6 +9214,8 @@
       
         
       
+        
+      
     
     
     
@@ -9272,6 +9332,34 @@
     
   
     Spherical Wall Loss Strategy Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Notebooks/Wall_Loss_Tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wall Loss Tutorial: Spherical vs Rectangular Chambers
   
 
     
@@ -13850,6 +13938,34 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#runnable-entry-point-wallloss-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runnable entry point: WallLoss wrapper
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Runnable entry point: WallLoss wrapper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chaining-with-other-runnables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chaining with other runnables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-start-spherical-wall-loss-on-a-lognormal-distribution" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -14103,6 +14219,51 @@ consistent with condensation and coagulation strategies:</p>
   <code>"particle_resolved"</code>.</li>
 <li>Exposes a consistent interface: <code>loss_coefficient</code>, <code>rate</code>, and <code>step</code>.</li>
 </ul>
+<h2 id="runnable-entry-point-wallloss-wrapper">Runnable entry point: <code>WallLoss</code> wrapper<a class="headerlink" href="#runnable-entry-point-wallloss-wrapper" title="Permanent link">&para;</a></h2>
+<p>Use <code>particula.dynamics.WallLoss</code> when you want a runnable that splits
+<code>time_step</code> across <code>sub_steps</code>, clamps concentrations to non-negative values,
+and plugs into runnable chaining with <code>|</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">particula</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">par</span>
+
+<span class="n">particle</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">PresetParticleRadiusBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">gas</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">(</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">298.15</span><span class="p">,</span>
+    <span class="n">total_pressure</span><span class="o">=</span><span class="mf">101325.0</span><span class="p">,</span>
+    <span class="n">partitioning_species</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">gas_only_species</span><span class="o">=</span><span class="p">[],</span>
+<span class="p">)</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">Aerosol</span><span class="p">(</span><span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">particles</span><span class="o">=</span><span class="n">particle</span><span class="p">)</span>
+
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">SphericalWallLossStrategy</span><span class="p">(</span>
+    <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">chamber_radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">distribution_type</span><span class="o">=</span><span class="s2">&quot;discrete&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">wall_loss</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">WallLoss</span><span class="p">(</span><span class="n">wall_loss_strategy</span><span class="o">=</span><span class="n">strategy</span><span class="p">)</span>
+
+<span class="c1"># Split 60 s into 3 sub-steps; concentrations clamp after each sub-step</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">wall_loss</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="o">=</span><span class="mf">60.0</span><span class="p">,</span> <span class="n">sub_steps</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total concentration:&quot;</span><span class="p">,</span> <span class="n">aerosol</span><span class="o">.</span><span class="n">particles</span><span class="o">.</span><span class="n">get_total_concentration</span><span class="p">())</span>
+</code></pre></div>
+<h3 id="chaining-with-other-runnables">Chaining with other runnables<a class="headerlink" href="#chaining-with-other-runnables" title="Permanent link">&para;</a></h3>
+<p>Combine wall loss with coagulation (or any other runnable) using the <code>|</code>
+operator.</p>
+<div class="highlight"><pre><span></span><code><span class="n">coag_strategy</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">BrownianCoagulationBuilder</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">set_distribution_type</span><span class="p">(</span><span class="s2">&quot;discrete&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="n">coagulation</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">dynamics</span><span class="o">.</span><span class="n">Coagulation</span><span class="p">(</span>
+    <span class="n">coagulation_strategy</span><span class="o">=</span><span class="n">coag_strategy</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Wall loss runs first, then Brownian coagulation in one call</span>
+<span class="n">combined</span> <span class="o">=</span> <span class="n">wall_loss</span> <span class="o">|</span> <span class="n">coagulation</span>
+<span class="n">aerosol</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">aerosol</span><span class="p">,</span> <span class="n">time_step</span><span class="o">=</span><span class="mf">60.0</span><span class="p">,</span> <span class="n">sub_steps</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<p>Switch <code>SphericalWallLossStrategy</code> for <code>RectangularWallLossStrategy</code>, or
+change the distribution type as needed; the runnable handles the sub-step
+splitting and clamping for any supported strategy.</p>
 <h2 id="quick-start-spherical-wall-loss-on-a-lognormal-distribution">Quick Start: Spherical Wall Loss on a Lognormal Distribution<a class="headerlink" href="#quick-start-spherical-wall-loss-on-a-lognormal-distribution" title="Permanent link">&para;</a></h2>
 <p>The fastest way to try the strategy-based API is to:</p>
 <ol>
@@ -14393,7 +14554,7 @@ API lets you perform the same type of simulation using
 <li>Learn more about particle representations:</li>
 <li><a href="../../Particle_Phase/">Particle Phase Examples</a></li>
 <li>Read more about wall loss strategies in the main docs:</li>
-<li><a href="../../../#dynamics-and-wall-loss">Dynamics and wall loss overview</a></li>
+<li><a href="../../../#wall-loss-strategies-and-runnable">Dynamics and wall loss overview</a></li>
 </ul>
 
 
@@ -14459,10 +14620,10 @@ API lets you perform the same type of simulation using
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.tracking", "navigation.top", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "header.autohide", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       
