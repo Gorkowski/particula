@@ -1,4 +1,8 @@
-"""Calculates wall loss rate for particles in various geometries."""
+"""Calculate wall loss rates for particles in various geometries.
+
+Supports neutral spherical and rectangular rate helpers plus charged wall
+loss with image-charge enhancement and optional electric-field drift.
+"""
 
 from typing import Tuple, Union
 
@@ -8,6 +12,9 @@ from numpy.typing import NDArray
 from particula.dynamics.properties.wall_loss_coefficient import (
     get_rectangle_wall_loss_coefficient_via_system_state,
     get_spherical_wall_loss_coefficient_via_system_state,
+)
+from particula.dynamics.wall_loss.wall_loss_strategies import (
+    ChargedWallLossStrategy,
 )
 
 
@@ -130,3 +137,72 @@ def get_rectangle_wall_loss_rate(
 
     # Step 2: Calculate and return the wall loss rate
     return -loss_coefficient * particle_concentration
+
+
+def get_charged_wall_loss_rate(
+    wall_eddy_diffusivity: float,
+    particle_radius: Union[float, NDArray[np.float64]],
+    particle_density: Union[float, NDArray[np.float64]],
+    particle_concentration: Union[float, NDArray[np.float64]],
+    particle_charge: Union[float, NDArray[np.float64]],
+    temperature: float,
+    pressure: float,
+    chamber_geometry: str,
+    chamber_radius: Union[float, None] = None,
+    chamber_dimensions: Union[Tuple[float, float, float], None] = None,
+    wall_potential: float = 0.0,
+    wall_electric_field: Union[float, Tuple[float, float, float]] = 0.0,
+) -> Union[float, NDArray[np.float64]]:
+    """Calculate charged wall loss rate for spherical or rectangular chambers.
+
+    Combines neutral deposition with image-charge enhancement and optional
+    electric-field drift. Image-charge effects apply when particles carry
+    charge even if ``wall_potential`` is zero; drift is applied only when
+    ``wall_electric_field`` is non-zero. Reduces to the neutral rate when
+    both charge and electric field are zero.
+
+    Args:
+        wall_eddy_diffusivity: Wall eddy diffusivity in s⁻¹.
+        particle_radius: Particle radius in meters.
+        particle_density: Particle density in kg/m³.
+        particle_concentration: Particle concentration in #/m³.
+        particle_charge: Particle charge in elementary charge units.
+        temperature: Gas temperature in kelvin.
+        pressure: Gas pressure in pascals.
+        chamber_geometry: Geometry name, ``"spherical"`` or
+            ``"rectangular"``.
+        chamber_radius: Chamber radius in meters for spherical geometry.
+        chamber_dimensions: ``(length, width, height)`` in meters for
+            rectangular geometry.
+        wall_potential: Wall potential in volts. Zero still enables
+            image-charge effects when charge is non-zero.
+        wall_electric_field: Electric field magnitude in V/m (scalar for
+            spherical or tuple for rectangular). Zero disables drift.
+
+    Returns:
+        Charged wall loss rate in #/m³·s as scalar or array matching
+        ``particle_concentration``.
+
+    Raises:
+        ValueError: If geometry arguments are inconsistent or not finite.
+    """
+    strategy = ChargedWallLossStrategy(
+        wall_eddy_diffusivity=wall_eddy_diffusivity,
+        chamber_geometry=chamber_geometry,
+        chamber_radius=chamber_radius,
+        chamber_dimensions=chamber_dimensions,
+        wall_potential=wall_potential,
+        wall_electric_field=wall_electric_field,
+        distribution_type="discrete",
+    )
+    radius_array = np.asarray(particle_radius, dtype=float)
+    density_array = np.asarray(particle_density, dtype=float)
+    charge_array = np.asarray(particle_charge, dtype=float)
+    coefficient = strategy.compute_coefficient_from_arrays(
+        particle_radius=radius_array,
+        particle_density=density_array,
+        particle_charge=charge_array,
+        temperature=temperature,
+        pressure=pressure,
+    )
+    return -coefficient * np.asarray(particle_concentration, dtype=float)
