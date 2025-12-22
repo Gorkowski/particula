@@ -12273,11 +12273,11 @@ otherwise charge is passed through as None to preserve compatibility.</p>
     <span class="n">empty_bins_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">empty_bins</span><span class="p">)</span>
     <span class="n">added_bins_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">added_concentration</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">empty_bins_count</span> <span class="o">&gt;=</span> <span class="n">added_bins_count</span><span class="p">:</span>
-        <span class="n">distribution</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">]</span> <span class="o">=</span> <span class="n">added_distribution</span>
-        <span class="n">concentration</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">]</span> <span class="o">=</span> <span class="n">added_concentration</span>
+        <span class="n">distribution</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">[:</span><span class="n">added_bins_count</span><span class="p">]]</span> <span class="o">=</span> <span class="n">added_distribution</span>
+        <span class="n">concentration</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">[:</span><span class="n">added_bins_count</span><span class="p">]]</span> <span class="o">=</span> <span class="n">added_concentration</span>
         <span class="k">if</span> <span class="n">charge</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">charge_added</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="n">charge</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">]</span> <span class="o">=</span> <span class="n">charge_added</span>
+            <span class="n">charge</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">[:</span><span class="n">added_bins_count</span><span class="p">]]</span> <span class="o">=</span> <span class="n">charge_added</span>
         <span class="k">return</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">concentration</span><span class="p">,</span> <span class="n">charge</span>
     <span class="k">if</span> <span class="n">empty_bins_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">distribution</span><span class="p">[</span><span class="n">empty_bins</span><span class="p">]</span> <span class="o">=</span> <span class="n">added_distribution</span><span class="p">[:</span><span class="n">empty_bins_count</span><span class="p">]</span>
