@@ -12188,19 +12188,7 @@ spherical or tuple for rectangular). Zero disables drift.</p>
 <span class="normal">205</span>
 <span class="normal">206</span>
 <span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_charged_wall_loss_rate</span><span class="p">(</span>
+<span class="normal">208</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_charged_wall_loss_rate</span><span class="p">(</span>
     <span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">particle_radius</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">particle_density</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
@@ -12259,24 +12247,12 @@ spherical or tuple for rectangular). Zero disables drift.</p>
     <span class="n">radius_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle_radius</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">density_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle_density</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">charge_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle_charge</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">coefficient</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">_combine_coefficients</span><span class="p">(</span>  <span class="c1"># pylint: disable=protected-access</span>
-        <span class="n">neutral</span><span class="o">=</span><span class="n">strategy</span><span class="o">.</span><span class="n">_neutral_coefficient</span><span class="p">(</span>  <span class="c1"># pylint: disable=protected-access</span>
-            <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius_array</span><span class="p">,</span>
-            <span class="n">particle_density</span><span class="o">=</span><span class="n">density_array</span><span class="p">,</span>
-            <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
-            <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">electrostatic_factor</span><span class="o">=</span><span class="n">strategy</span><span class="o">.</span><span class="n">_electrostatic_factor</span><span class="p">(</span>  <span class="c1"># pylint: disable=protected-access</span>
-            <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius_array</span><span class="p">,</span>
-            <span class="n">particle_charge</span><span class="o">=</span><span class="n">charge_array</span><span class="p">,</span>
-            <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">drift_term</span><span class="o">=</span><span class="n">strategy</span><span class="o">.</span><span class="n">_drift_term</span><span class="p">(</span>  <span class="c1"># pylint: disable=protected-access</span>
-            <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius_array</span><span class="p">,</span>
-            <span class="n">particle_charge</span><span class="o">=</span><span class="n">charge_array</span><span class="p">,</span>
-            <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
-            <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
-        <span class="p">),</span>
+    <span class="n">coefficient</span> <span class="o">=</span> <span class="n">strategy</span><span class="o">.</span><span class="n">compute_coefficient_from_arrays</span><span class="p">(</span>
+        <span class="n">particle_radius</span><span class="o">=</span><span class="n">radius_array</span><span class="p">,</span>
+        <span class="n">particle_density</span><span class="o">=</span><span class="n">density_array</span><span class="p">,</span>
+        <span class="n">particle_charge</span><span class="o">=</span><span class="n">charge_array</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+        <span class="n">pressure</span><span class="o">=</span><span class="n">pressure</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">coefficient</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">particle_concentration</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>

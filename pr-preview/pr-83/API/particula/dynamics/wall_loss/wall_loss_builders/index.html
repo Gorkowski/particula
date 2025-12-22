@@ -12220,10 +12220,7 @@ missing, or required values are not provided.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/wall_loss/wall_loss_builders.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
-<span class="normal">243</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">243</span>
 <span class="normal">244</span>
 <span class="normal">245</span>
 <span class="normal">246</span>
@@ -12259,7 +12256,10 @@ missing, or required values are not provided.</p>
 <span class="normal">276</span>
 <span class="normal">277</span>
 <span class="normal">278</span>
-<span class="normal">279</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChargedWallLossStrategy</span><span class="p">:</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChargedWallLossStrategy</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Build and return a charged wall loss strategy.</span>
 
 <span class="sd">    Returns:</span>
@@ -12521,7 +12521,10 @@ provided.</p>
 <span class="normal">235</span>
 <span class="normal">236</span>
 <span class="normal">237</span>
-<span class="normal">238</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set required and optional parameters from mapping.</span>
 
 <span class="sd">    Args:</span>
@@ -12543,6 +12546,7 @@ provided.</p>
         <span class="s2">&quot;chamber_dimensions&quot;</span><span class="p">,</span>
         <span class="s2">&quot;wall_potential&quot;</span><span class="p">,</span>
         <span class="s2">&quot;wall_electric_field&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;distribution_type&quot;</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">valid</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">required</span>
@@ -12582,6 +12586,8 @@ provided.</p>
             <span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;wall_electric_field&quot;</span><span class="p">],</span>
             <span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wall_electric_field_units&quot;</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">),</span>
         <span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;distribution_type&quot;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_distribution_type</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;distribution_type&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
             </details>

@@ -14237,9 +14237,9 @@ Defaults to "discrete" and validates against supported types.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1066</span>
-<span class="normal">1067</span>
-<span class="normal">1068</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1062</span>
+<span class="normal">1063</span>
+<span class="normal">1064</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize distribution type mixin.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span>
 </code></pre></div></td></tr></table></div>
@@ -14313,7 +14313,11 @@ Defaults to "discrete" and validates against supported types.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1070</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1066</span>
+<span class="normal">1067</span>
+<span class="normal">1068</span>
+<span class="normal">1069</span>
+<span class="normal">1070</span>
 <span class="normal">1071</span>
 <span class="normal">1072</span>
 <span class="normal">1073</span>
@@ -14329,11 +14333,7 @@ Defaults to "discrete" and validates against supported types.</p>
 <span class="normal">1083</span>
 <span class="normal">1084</span>
 <span class="normal">1085</span>
-<span class="normal">1086</span>
-<span class="normal">1087</span>
-<span class="normal">1088</span>
-<span class="normal">1089</span>
-<span class="normal">1090</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribution_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">1086</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribution_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the distribution type.</span>
 
 <span class="sd">    Args:</span>
@@ -17204,8 +17204,7 @@ finite.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 997</span>
-<span class="normal"> 998</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 998</span>
 <span class="normal"> 999</span>
 <span class="normal">1000</span>
 <span class="normal">1001</span>
@@ -17256,11 +17255,7 @@ finite.</p>
 <span class="normal">1046</span>
 <span class="normal">1047</span>
 <span class="normal">1048</span>
-<span class="normal">1049</span>
-<span class="normal">1050</span>
-<span class="normal">1051</span>
-<span class="normal">1052</span>
-<span class="normal">1053</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_wall_electric_field</span><span class="p">(</span>
+<span class="normal">1049</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_wall_electric_field</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">wall_electric_field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
     <span class="n">wall_electric_field_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span>
@@ -17308,11 +17303,6 @@ finite.</p>
     <span class="k">if</span> <span class="n">wall_electric_field_units</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="s2">&quot;volt/m&quot;</span><span class="p">,</span> <span class="s2">&quot;volts/m&quot;</span><span class="p">}:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">validated_field</span>
         <span class="k">return</span> <span class="bp">self</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">get_unit_conversion</span><span class="p">(</span>
-        <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="bp">self</span>
-
     <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">get_unit_conversion</span><span class="p">(</span>
         <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span>
     <span class="p">)</span>
