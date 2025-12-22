@@ -76,11 +76,18 @@ class MassBasedMovingBin(DistributionStrategy):
         NDArray[np.float64],
         Optional[NDArray[np.float64]],
     ]:
-        """Add concentration to the distribution.
+        """Add concentration to the distribution with optional charge.
+
+        Charge is updated via concentration-weighted averaging when both
+        ``charge`` and ``added_charge`` are provided. If ``added_charge`` is
+        ``None``, the existing charge is preserved. When charge tracking is
+        disabled (``charge`` is ``None``), ``None`` is returned to satisfy
+        representation expectations. Zero-total concentration bins fall back
+        to ``added_charge`` using the ``out`` argument during division to
+        avoid divide-by-zero warnings.
 
         Returns:
-            Updated distribution, concentration, and charge arrays
-            (charge unchanged for this strategy).
+            Updated distribution, concentration, and charge arrays.
         """
         if (distribution.shape != added_distribution.shape) or (
             not np.allclose(distribution, added_distribution, rtol=1e-6)
@@ -99,7 +106,31 @@ class MassBasedMovingBin(DistributionStrategy):
             logger.error(message)
             raise ValueError(message)
 
+        old_conc = concentration.copy()
         concentration += added_concentration
+
+        if charge is None:
+            return distribution, concentration, None
+
+        if added_charge is None:
+            return distribution, concentration, charge
+
+        if charge.shape != added_charge.shape:
+            message = (
+                "When adding charge to MassBasedMovingBin, the arrays should "
+                "have the same shape."
+            )
+            logger.error(message)
+            raise ValueError(message)
+
+        total_conc = old_conc + added_concentration
+        charge = np.divide(
+            old_conc * charge + added_concentration * added_charge,
+            total_conc,
+            out=added_charge.copy(),  # fallback for bins with zero total conc
+            where=total_conc != 0,
+        )
+
         return distribution, concentration, charge
 
     def collide_pairs(  # pylint: disable=too-many-positional-arguments
