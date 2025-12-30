@@ -13146,9 +13146,9 @@ chamber geometry and stores dimensions in meters.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">869</span>
-<span class="normal">870</span>
-<span class="normal">871</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">875</span>
+<span class="normal">876</span>
+<span class="normal">877</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize chamber dimensions mixin.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">chamber_dimensions</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
@@ -13175,7 +13175,7 @@ chamber geometry and stores dimensions in meters.</p>
 
 
 <a href="#particula.builder_mixin.BuilderChamberDimensionsMixin.set_chamber_dimensions" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_chamber_dimensions</span><span class="p">(</span><span class="n">chamber_dimensions</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">chamber_dimensions_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;m&#39;</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_chamber_dimensions</span><span class="p">(</span><span class="n">chamber_dimensions</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">chamber_dimensions_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;m&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BuilderChamberDimensionsMixin</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -13209,7 +13209,8 @@ chamber geometry and stores dimensions in meters.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-<b><code>BuilderChamberDimensionsMixin</code></b>          –
+<b><code>BuilderChamberDimensionsMixin</code></b> (              <code><a class="autorefs autorefs-internal" title="            BuilderChamberDimensionsMixin (particula.builder_mixin.BuilderChamberDimensionsMixin)" href="#particula.builder_mixin.BuilderChamberDimensionsMixin">BuilderChamberDimensionsMixin</a></code>
+)          –
           <div class="doc-md-description">
             <p>Self for method chaining.</p>
           </div>
@@ -13232,13 +13233,7 @@ value is non-positive.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">873</span>
-<span class="normal">874</span>
-<span class="normal">875</span>
-<span class="normal">876</span>
-<span class="normal">877</span>
-<span class="normal">878</span>
-<span class="normal">879</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">879</span>
 <span class="normal">880</span>
 <span class="normal">881</span>
 <span class="normal">882</span>
@@ -13288,12 +13283,27 @@ value is non-positive.</p>
 <span class="normal">926</span>
 <span class="normal">927</span>
 <span class="normal">928</span>
-<span class="normal">929</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;chamber_dimensions&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
+<span class="normal">929</span>
+<span class="normal">930</span>
+<span class="normal">931</span>
+<span class="normal">932</span>
+<span class="normal">933</span>
+<span class="normal">934</span>
+<span class="normal">935</span>
+<span class="normal">936</span>
+<span class="normal">937</span>
+<span class="normal">938</span>
+<span class="normal">939</span>
+<span class="normal">940</span>
+<span class="normal">941</span>
+<span class="normal">942</span>
+<span class="normal">943</span>
+<span class="normal">944</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;chamber_dimensions&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_chamber_dimensions</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chamber_dimensions</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
     <span class="n">chamber_dimensions_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BuilderChamberDimensionsMixin&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set rectangular chamber dimensions in meters.</span>
 
 <span class="sd">    Args:</span>
@@ -13328,20 +13338,29 @@ value is non-positive.</p>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">chamber_dimensions</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">get_unit_conversion</span><span class="p">(</span>
-            <span class="n">chamber_dimensions_units</span><span class="p">,</span>
-            <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-            <span class="n">length</span><span class="p">,</span>
+        <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="n">get_unit_conversion</span><span class="p">(</span>
+                <span class="n">chamber_dimensions_units</span><span class="p">,</span>
+                <span class="s2">&quot;m&quot;</span><span class="p">,</span>
+                <span class="n">length</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">),</span>
-        <span class="n">get_unit_conversion</span><span class="p">(</span>
-            <span class="n">chamber_dimensions_units</span><span class="p">,</span>
-            <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-            <span class="n">width</span><span class="p">,</span>
+        <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="n">get_unit_conversion</span><span class="p">(</span>
+                <span class="n">chamber_dimensions_units</span><span class="p">,</span>
+                <span class="s2">&quot;m&quot;</span><span class="p">,</span>
+                <span class="n">width</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">),</span>
-        <span class="n">get_unit_conversion</span><span class="p">(</span>
-            <span class="n">chamber_dimensions_units</span><span class="p">,</span>
-            <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-            <span class="n">height</span><span class="p">,</span>
+        <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="n">get_unit_conversion</span><span class="p">(</span>
+                <span class="n">chamber_dimensions_units</span><span class="p">,</span>
+                <span class="s2">&quot;m&quot;</span><span class="p">,</span>
+                <span class="n">height</span><span class="p">,</span>
+            <span class="p">),</span>
         <span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span>
@@ -13403,9 +13422,9 @@ geometry and stores the value in meters.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">823</span>
-<span class="normal">824</span>
-<span class="normal">825</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">826</span>
+<span class="normal">827</span>
+<span class="normal">828</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize chamber radius mixin.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">chamber_radius</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
@@ -13432,7 +13451,7 @@ geometry and stores the value in meters.</p>
 
 
 <a href="#particula.builder_mixin.BuilderChamberRadiusMixin.set_chamber_radius" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_chamber_radius</span><span class="p">(</span><span class="n">chamber_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">chamber_radius_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;m&#39;</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_chamber_radius</span><span class="p">(</span><span class="n">chamber_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">chamber_radius_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;m&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BuilderChamberRadiusMixin</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -13466,7 +13485,8 @@ geometry and stores the value in meters.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-<b><code>BuilderChamberRadiusMixin</code></b>          –
+<b><code>BuilderChamberRadiusMixin</code></b> (              <code><a class="autorefs autorefs-internal" title="            BuilderChamberRadiusMixin (particula.builder_mixin.BuilderChamberRadiusMixin)" href="#particula.builder_mixin.BuilderChamberRadiusMixin">BuilderChamberRadiusMixin</a></code>
+)          –
           <div class="doc-md-description">
             <p>Self for method chaining.</p>
           </div>
@@ -13488,10 +13508,7 @@ geometry and stores the value in meters.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">827</span>
-<span class="normal">828</span>
-<span class="normal">829</span>
-<span class="normal">830</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">830</span>
 <span class="normal">831</span>
 <span class="normal">832</span>
 <span class="normal">833</span>
@@ -13517,12 +13534,18 @@ geometry and stores the value in meters.</p>
 <span class="normal">853</span>
 <span class="normal">854</span>
 <span class="normal">855</span>
-<span class="normal">856</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;chamber_radius&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
+<span class="normal">856</span>
+<span class="normal">857</span>
+<span class="normal">858</span>
+<span class="normal">859</span>
+<span class="normal">860</span>
+<span class="normal">861</span>
+<span class="normal">862</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;chamber_radius&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_chamber_radius</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chamber_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">chamber_radius_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BuilderChamberRadiusMixin&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the chamber radius in meters.</span>
 
 <span class="sd">    Args:</span>
@@ -13541,10 +13564,13 @@ geometry and stores the value in meters.</p>
     <span class="k">if</span> <span class="n">chamber_radius_units</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;cm&quot;</span><span class="p">,</span> <span class="s2">&quot;centimeter&quot;</span><span class="p">,</span> <span class="s2">&quot;centimeters&quot;</span><span class="p">}:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chamber_radius</span> <span class="o">=</span> <span class="n">chamber_radius</span> <span class="o">*</span> <span class="mf">0.01</span>
         <span class="k">return</span> <span class="bp">self</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">chamber_radius</span> <span class="o">=</span> <span class="n">get_unit_conversion</span><span class="p">(</span>
-        <span class="n">chamber_radius_units</span><span class="p">,</span>
-        <span class="s2">&quot;m&quot;</span><span class="p">,</span>
-        <span class="n">chamber_radius</span><span class="p">,</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">chamber_radius</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+        <span class="nb">float</span><span class="p">,</span>
+        <span class="n">get_unit_conversion</span><span class="p">(</span>
+            <span class="n">chamber_radius_units</span><span class="p">,</span>
+            <span class="s2">&quot;m&quot;</span><span class="p">,</span>
+            <span class="n">chamber_radius</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
@@ -14237,9 +14263,9 @@ Defaults to "discrete" and validates against supported types.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1062</span>
-<span class="normal">1063</span>
-<span class="normal">1064</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1089</span>
+<span class="normal">1090</span>
+<span class="normal">1091</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize distribution type mixin.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">distribution_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span>
 </code></pre></div></td></tr></table></div>
@@ -14313,27 +14339,27 @@ Defaults to "discrete" and validates against supported types.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1066</span>
-<span class="normal">1067</span>
-<span class="normal">1068</span>
-<span class="normal">1069</span>
-<span class="normal">1070</span>
-<span class="normal">1071</span>
-<span class="normal">1072</span>
-<span class="normal">1073</span>
-<span class="normal">1074</span>
-<span class="normal">1075</span>
-<span class="normal">1076</span>
-<span class="normal">1077</span>
-<span class="normal">1078</span>
-<span class="normal">1079</span>
-<span class="normal">1080</span>
-<span class="normal">1081</span>
-<span class="normal">1082</span>
-<span class="normal">1083</span>
-<span class="normal">1084</span>
-<span class="normal">1085</span>
-<span class="normal">1086</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribution_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1093</span>
+<span class="normal">1094</span>
+<span class="normal">1095</span>
+<span class="normal">1096</span>
+<span class="normal">1097</span>
+<span class="normal">1098</span>
+<span class="normal">1099</span>
+<span class="normal">1100</span>
+<span class="normal">1101</span>
+<span class="normal">1102</span>
+<span class="normal">1103</span>
+<span class="normal">1104</span>
+<span class="normal">1105</span>
+<span class="normal">1106</span>
+<span class="normal">1107</span>
+<span class="normal">1108</span>
+<span class="normal">1109</span>
+<span class="normal">1110</span>
+<span class="normal">1111</span>
+<span class="normal">1112</span>
+<span class="normal">1113</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_distribution_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distribution_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set the distribution type.</span>
 
 <span class="sd">    Args:</span>
@@ -16956,7 +16982,7 @@ diffusivity and stores the value in 1/s.</p>
 
 
 <a href="#particula.builder_mixin.BuilderWallEddyDiffusivityMixin.set_wall_eddy_diffusivity" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_wall_eddy_diffusivity</span><span class="p">(</span><span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wall_eddy_diffusivity_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1/s&#39;</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_wall_eddy_diffusivity</span><span class="p">(</span><span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wall_eddy_diffusivity_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;1/s&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BuilderWallEddyDiffusivityMixin</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -16991,7 +17017,8 @@ diffusivity and stores the value in 1/s.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-<b><code>BuilderWallEddyDiffusivityMixin</code></b>          –
+<b><code>BuilderWallEddyDiffusivityMixin</code></b> (              <code><a class="autorefs autorefs-internal" title="            BuilderWallEddyDiffusivityMixin (particula.builder_mixin.BuilderWallEddyDiffusivityMixin)" href="#particula.builder_mixin.BuilderWallEddyDiffusivityMixin">BuilderWallEddyDiffusivityMixin</a></code>
+)          –
           <div class="doc-md-description">
             <p>Self for method chaining.</p>
           </div>
@@ -17040,12 +17067,15 @@ diffusivity and stores the value in 1/s.</p>
 <span class="normal">807</span>
 <span class="normal">808</span>
 <span class="normal">809</span>
-<span class="normal">810</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;wall_eddy_diffusivity&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
+<span class="normal">810</span>
+<span class="normal">811</span>
+<span class="normal">812</span>
+<span class="normal">813</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;wall_eddy_diffusivity&quot;</span><span class="p">:</span> <span class="s2">&quot;positive&quot;</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_wall_eddy_diffusivity</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">wall_eddy_diffusivity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">wall_eddy_diffusivity_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;1/s&quot;</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BuilderWallEddyDiffusivityMixin&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set wall eddy diffusivity in 1/s.</span>
 
 <span class="sd">    Args:</span>
@@ -17062,10 +17092,13 @@ diffusivity and stores the value in 1/s.</p>
     <span class="k">if</span> <span class="n">wall_eddy_diffusivity_units</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;1/s&quot;</span><span class="p">,</span> <span class="s2">&quot;s^-1&quot;</span><span class="p">}:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span> <span class="o">=</span> <span class="n">wall_eddy_diffusivity</span>
         <span class="k">return</span> <span class="bp">self</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span> <span class="o">=</span> <span class="n">get_unit_conversion</span><span class="p">(</span>
-        <span class="n">wall_eddy_diffusivity_units</span><span class="p">,</span>
-        <span class="s2">&quot;1/s&quot;</span><span class="p">,</span>
-        <span class="n">wall_eddy_diffusivity</span><span class="p">,</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wall_eddy_diffusivity</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+        <span class="nb">float</span><span class="p">,</span>
+        <span class="n">get_unit_conversion</span><span class="p">(</span>
+            <span class="n">wall_eddy_diffusivity_units</span><span class="p">,</span>
+            <span class="s2">&quot;1/s&quot;</span><span class="p">,</span>
+            <span class="n">wall_eddy_diffusivity</span><span class="p">,</span>
+        <span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
@@ -17115,9 +17148,9 @@ drift.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">978</span>
-<span class="normal">979</span>
-<span class="normal">980</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">993</span>
+<span class="normal">994</span>
+<span class="normal">995</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize wall electric field mixin.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.0</span>
 </code></pre></div></td></tr></table></div>
@@ -17144,7 +17177,7 @@ drift.</p>
 
 
 <a href="#particula.builder_mixin.BuilderWallElectricFieldMixin.set_wall_electric_field" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_wall_electric_field</span><span class="p">(</span><span class="n">wall_electric_field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">wall_electric_field_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;V/m&#39;</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_wall_electric_field</span><span class="p">(</span><span class="n">wall_electric_field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">wall_electric_field_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;V/m&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BuilderWallElectricFieldMixin</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -17181,7 +17214,8 @@ Defaults to "V/m".</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-<b><code>BuilderWallElectricFieldMixin</code></b>          –
+<b><code>BuilderWallElectricFieldMixin</code></b> (              <code><a class="autorefs autorefs-internal" title="            BuilderWallElectricFieldMixin (particula.builder_mixin.BuilderWallElectricFieldMixin)" href="#particula.builder_mixin.BuilderWallElectricFieldMixin">BuilderWallElectricFieldMixin</a></code>
+)          –
           <div class="doc-md-description">
             <p>Self for method chaining.</p>
           </div>
@@ -17204,22 +17238,7 @@ finite.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 998</span>
-<span class="normal"> 999</span>
-<span class="normal">1000</span>
-<span class="normal">1001</span>
-<span class="normal">1002</span>
-<span class="normal">1003</span>
-<span class="normal">1004</span>
-<span class="normal">1005</span>
-<span class="normal">1006</span>
-<span class="normal">1007</span>
-<span class="normal">1008</span>
-<span class="normal">1009</span>
-<span class="normal">1010</span>
-<span class="normal">1011</span>
-<span class="normal">1012</span>
-<span class="normal">1013</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1013</span>
 <span class="normal">1014</span>
 <span class="normal">1015</span>
 <span class="normal">1016</span>
@@ -17255,11 +17274,38 @@ finite.</p>
 <span class="normal">1046</span>
 <span class="normal">1047</span>
 <span class="normal">1048</span>
-<span class="normal">1049</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_wall_electric_field</span><span class="p">(</span>
+<span class="normal">1049</span>
+<span class="normal">1050</span>
+<span class="normal">1051</span>
+<span class="normal">1052</span>
+<span class="normal">1053</span>
+<span class="normal">1054</span>
+<span class="normal">1055</span>
+<span class="normal">1056</span>
+<span class="normal">1057</span>
+<span class="normal">1058</span>
+<span class="normal">1059</span>
+<span class="normal">1060</span>
+<span class="normal">1061</span>
+<span class="normal">1062</span>
+<span class="normal">1063</span>
+<span class="normal">1064</span>
+<span class="normal">1065</span>
+<span class="normal">1066</span>
+<span class="normal">1067</span>
+<span class="normal">1068</span>
+<span class="normal">1069</span>
+<span class="normal">1070</span>
+<span class="normal">1071</span>
+<span class="normal">1072</span>
+<span class="normal">1073</span>
+<span class="normal">1074</span>
+<span class="normal">1075</span>
+<span class="normal">1076</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_wall_electric_field</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">wall_electric_field</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
     <span class="n">wall_electric_field_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BuilderWallElectricFieldMixin&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set wall electric field magnitude in V/m.</span>
 
 <span class="sd">    Args:</span>
@@ -17286,14 +17332,23 @@ finite.</p>
             <span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span>
         <span class="n">converted_field</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">get_unit_conversion</span><span class="p">(</span>
-                <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cast</span><span class="p">(</span>
+                <span class="nb">float</span><span class="p">,</span>
+                <span class="n">get_unit_conversion</span><span class="p">(</span>
+                    <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">get_unit_conversion</span><span class="p">(</span>
-                <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">cast</span><span class="p">(</span>
+                <span class="nb">float</span><span class="p">,</span>
+                <span class="n">get_unit_conversion</span><span class="p">(</span>
+                    <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">get_unit_conversion</span><span class="p">(</span>
-                <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">cast</span><span class="p">(</span>
+                <span class="nb">float</span><span class="p">,</span>
+                <span class="n">get_unit_conversion</span><span class="p">(</span>
+                    <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="p">),</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
@@ -17303,8 +17358,11 @@ finite.</p>
     <span class="k">if</span> <span class="n">wall_electric_field_units</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="s2">&quot;volt/m&quot;</span><span class="p">,</span> <span class="s2">&quot;volts/m&quot;</span><span class="p">}:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">validated_field</span>
         <span class="k">return</span> <span class="bp">self</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">get_unit_conversion</span><span class="p">(</span>
-        <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wall_electric_field</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+        <span class="nb">float</span><span class="p">,</span>
+        <span class="n">get_unit_conversion</span><span class="p">(</span>
+            <span class="n">wall_electric_field_units</span><span class="p">,</span> <span class="s2">&quot;V/m&quot;</span><span class="p">,</span> <span class="n">validated_field</span>
+        <span class="p">),</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
@@ -17353,9 +17411,9 @@ charge is non-zero.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">940</span>
-<span class="normal">941</span>
-<span class="normal">942</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">955</span>
+<span class="normal">956</span>
+<span class="normal">957</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize wall potential mixin.&quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">wall_potential</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
 </code></pre></div></td></tr></table></div>
@@ -17382,7 +17440,7 @@ charge is non-zero.</p>
 
 
 <a href="#particula.builder_mixin.BuilderWallPotentialMixin.set_wall_potential" class="headerlink" title="Permanent link">&para;</a></h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_wall_potential</span><span class="p">(</span><span class="n">wall_potential</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wall_potential_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;V&#39;</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">set_wall_potential</span><span class="p">(</span><span class="n">wall_potential</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wall_potential_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;V&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BuilderWallPotentialMixin</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -17419,7 +17477,8 @@ charged particles.</p>
 <p><span class="doc-section-title">Returns:</span></p>
     <ul>
         <li class="doc-section-item field-body">
-<b><code>BuilderWallPotentialMixin</code></b>          –
+<b><code>BuilderWallPotentialMixin</code></b> (              <code><a class="autorefs autorefs-internal" title="            BuilderWallPotentialMixin (particula.builder_mixin.BuilderWallPotentialMixin)" href="#particula.builder_mixin.BuilderWallPotentialMixin">BuilderWallPotentialMixin</a></code>
+)          –
           <div class="doc-md-description">
             <p>Self for method chaining.</p>
           </div>
@@ -17429,32 +17488,32 @@ charged particles.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/builder_mixin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">944</span>
-<span class="normal">945</span>
-<span class="normal">946</span>
-<span class="normal">947</span>
-<span class="normal">948</span>
-<span class="normal">949</span>
-<span class="normal">950</span>
-<span class="normal">951</span>
-<span class="normal">952</span>
-<span class="normal">953</span>
-<span class="normal">954</span>
-<span class="normal">955</span>
-<span class="normal">956</span>
-<span class="normal">957</span>
-<span class="normal">958</span>
-<span class="normal">959</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">959</span>
 <span class="normal">960</span>
 <span class="normal">961</span>
 <span class="normal">962</span>
 <span class="normal">963</span>
 <span class="normal">964</span>
 <span class="normal">965</span>
-<span class="normal">966</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;wall_potential&quot;</span><span class="p">:</span> <span class="s2">&quot;finite&quot;</span><span class="p">})</span>
+<span class="normal">966</span>
+<span class="normal">967</span>
+<span class="normal">968</span>
+<span class="normal">969</span>
+<span class="normal">970</span>
+<span class="normal">971</span>
+<span class="normal">972</span>
+<span class="normal">973</span>
+<span class="normal">974</span>
+<span class="normal">975</span>
+<span class="normal">976</span>
+<span class="normal">977</span>
+<span class="normal">978</span>
+<span class="normal">979</span>
+<span class="normal">980</span>
+<span class="normal">981</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@validate_inputs</span><span class="p">({</span><span class="s2">&quot;wall_potential&quot;</span><span class="p">:</span> <span class="s2">&quot;finite&quot;</span><span class="p">})</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_wall_potential</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">wall_potential</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wall_potential_units</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;V&quot;</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BuilderWallPotentialMixin&quot;</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Set wall potential in volts.</span>
 
 <span class="sd">    Args:</span>
@@ -17470,8 +17529,8 @@ charged particles.</p>
     <span class="k">if</span> <span class="n">wall_potential_units</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="s2">&quot;volt&quot;</span><span class="p">,</span> <span class="s2">&quot;volts&quot;</span><span class="p">}:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wall_potential</span> <span class="o">=</span> <span class="n">wall_potential</span>
         <span class="k">return</span> <span class="bp">self</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">wall_potential</span> <span class="o">=</span> <span class="n">get_unit_conversion</span><span class="p">(</span>
-        <span class="n">wall_potential_units</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="n">wall_potential</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">wall_potential</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+        <span class="nb">float</span><span class="p">,</span> <span class="n">get_unit_conversion</span><span class="p">(</span><span class="n">wall_potential_units</span><span class="p">,</span> <span class="s2">&quot;V&quot;</span><span class="p">,</span> <span class="n">wall_potential</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="bp">self</span>
 </code></pre></div></td></tr></table></div>
