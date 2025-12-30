@@ -11,7 +11,6 @@ from typing import Any, TextIO, Union
 
 def _read_stream(stream: TextIO) -> str:
     """Read YAML content from an open text stream."""
-
     return stream.read()
 
 
@@ -36,9 +35,8 @@ def load_yaml(
         ValueError: If YAML parsing fails.
         TypeError: If an unsupported input type is provided.
     """
-
     try:
-        import yaml
+        import yaml  # type: ignore[import]
     except ImportError as exc:
         raise ImportError("Install pyyaml to use load_yaml") from exc
 

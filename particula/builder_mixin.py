@@ -976,7 +976,8 @@ class BuilderWallPotentialMixin:
             self.wall_potential = wall_potential
             return self
         self.wall_potential = cast(
-            float, get_unit_conversion(wall_potential_units, "V", wall_potential)
+            float,
+            get_unit_conversion(wall_potential_units, "V", wall_potential),
         )
         return self
 
