@@ -40,9 +40,13 @@ dev = [
 extra = [
     "matplotlib", "pandas", "pint", "thermo", "tqdm",
 ]
+yaml = [
+    "pyyaml>=6",
+]
 all = [
     "particula[dev]",
     "particula[extra]",
+    "particula[yaml]",
 ]
 
 [build-system]

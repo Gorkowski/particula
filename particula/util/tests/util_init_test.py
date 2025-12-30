@@ -21,6 +21,7 @@ EXPECTED_EXPORTS = {
     "get_chemical_surface_tension",
     "get_chemical_vapor_pressure",
     "get_chemical_stp_properties",
+    "load_yaml",
 }
 
 

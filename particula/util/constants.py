@@ -1,6 +1,8 @@
-"""A centralized location for important, unchanged physics parameters.
+"""Centralized physics constants in SI base units.
 
-All constants are given in their base units. We use scipy constants.
+Values are sourced from :mod:`scipy.constants` to ensure consistency with
+standard references. Units are documented per symbol; values are not
+expected to change at runtime.
 """
 
 import scipy
