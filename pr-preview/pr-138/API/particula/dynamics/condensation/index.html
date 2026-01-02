@@ -13501,7 +13501,12 @@ inventory limits.</p>
 <span class="normal">775</span>
 <span class="normal">776</span>
 <span class="normal">777</span>
-<span class="normal">778</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span>
+<span class="normal">778</span>
+<span class="normal">779</span>
+<span class="normal">780</span>
+<span class="normal">781</span>
+<span class="normal">782</span>
+<span class="normal">783</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="n">gas_species</span><span class="p">:</span> <span class="n">GasSpecies</span><span class="p">,</span>
@@ -13560,7 +13565,12 @@ inventory limits.</p>
         <span class="n">particle_mass</span><span class="o">=</span><span class="n">particle</span><span class="o">.</span><span class="n">get_species_mass</span><span class="p">(),</span>
         <span class="n">particle_concentration</span><span class="o">=</span><span class="n">particle</span><span class="o">.</span><span class="n">get_concentration</span><span class="p">(),</span>
     <span class="p">)</span>
-    <span class="n">species_count</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">get_species_mass</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">species_mass</span> <span class="o">=</span> <span class="n">particle</span><span class="o">.</span><span class="n">get_species_mass</span><span class="p">()</span>
+    <span class="c1"># Handle both 1D (single species) and 2D (multi-species) arrays</span>
+    <span class="k">if</span> <span class="n">species_mass</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">species_count</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">species_count</span> <span class="o">=</span> <span class="n">species_mass</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">mass_transfer</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">mass_transfer</span> <span class="o">=</span> <span class="n">mass_transfer</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">species_count</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">mass_transfer</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">species_count</span><span class="p">:</span>
@@ -13914,12 +13924,7 @@ less than 1.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>particula/dynamics/condensation/condensation_strategies.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">798</span>
-<span class="normal">799</span>
-<span class="normal">800</span>
-<span class="normal">801</span>
-<span class="normal">802</span>
-<span class="normal">803</span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">803</span>
 <span class="normal">804</span>
 <span class="normal">805</span>
 <span class="normal">806</span>
@@ -13968,7 +13973,12 @@ less than 1.</p>
 <span class="normal">849</span>
 <span class="normal">850</span>
 <span class="normal">851</span>
-<span class="normal">852</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">852</span>
+<span class="normal">853</span>
+<span class="normal">854</span>
+<span class="normal">855</span>
+<span class="normal">856</span>
+<span class="normal">857</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">molar_mass</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]],</span>
     <span class="n">theta_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;half&quot;</span><span class="p">,</span>
@@ -14128,12 +14138,7 @@ converted to mass-transfer rates.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/condensation/condensation_strategies.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 971</span>
-<span class="normal"> 972</span>
-<span class="normal"> 973</span>
-<span class="normal"> 974</span>
-<span class="normal"> 975</span>
-<span class="normal"> 976</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 976</span>
 <span class="normal"> 977</span>
 <span class="normal"> 978</span>
 <span class="normal"> 979</span>
@@ -14175,7 +14180,12 @@ converted to mass-transfer rates.</p>
 <span class="normal">1015</span>
 <span class="normal">1016</span>
 <span class="normal">1017</span>
-<span class="normal">1018</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">mass_transfer_rate</span><span class="p">(</span>
+<span class="normal">1018</span>
+<span class="normal">1019</span>
+<span class="normal">1020</span>
+<span class="normal">1021</span>
+<span class="normal">1022</span>
+<span class="normal">1023</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">mass_transfer_rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="n">gas_species</span><span class="p">:</span> <span class="n">GasSpecies</span><span class="p">,</span>
@@ -14303,12 +14313,7 @@ converted to mass-transfer rates.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/condensation/condensation_strategies.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1020</span>
-<span class="normal">1021</span>
-<span class="normal">1022</span>
-<span class="normal">1023</span>
-<span class="normal">1024</span>
-<span class="normal">1025</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1025</span>
 <span class="normal">1026</span>
 <span class="normal">1027</span>
 <span class="normal">1028</span>
@@ -14340,7 +14345,12 @@ converted to mass-transfer rates.</p>
 <span class="normal">1054</span>
 <span class="normal">1055</span>
 <span class="normal">1056</span>
-<span class="normal">1057</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rate</span><span class="p">(</span>
+<span class="normal">1057</span>
+<span class="normal">1058</span>
+<span class="normal">1059</span>
+<span class="normal">1060</span>
+<span class="normal">1061</span>
+<span class="normal">1062</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="n">gas_species</span><span class="p">:</span> <span class="n">GasSpecies</span><span class="p">,</span>
@@ -14468,12 +14478,7 @@ improved stability.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>particula/dynamics/condensation/condensation_strategies.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1194</span>
-<span class="normal">1195</span>
-<span class="normal">1196</span>
-<span class="normal">1197</span>
-<span class="normal">1198</span>
-<span class="normal">1199</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1199</span>
 <span class="normal">1200</span>
 <span class="normal">1201</span>
 <span class="normal">1202</span>
@@ -14579,7 +14584,12 @@ improved stability.</p>
 <span class="normal">1302</span>
 <span class="normal">1303</span>
 <span class="normal">1304</span>
-<span class="normal">1305</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span>
+<span class="normal">1305</span>
+<span class="normal">1306</span>
+<span class="normal">1307</span>
+<span class="normal">1308</span>
+<span class="normal">1309</span>
+<span class="normal">1310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">particle</span><span class="p">:</span> <span class="n">ParticleRepresentation</span><span class="p">,</span>
     <span class="n">gas_species</span><span class="p">:</span> <span class="n">GasSpecies</span><span class="p">,</span>
