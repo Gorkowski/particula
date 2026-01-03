@@ -12732,7 +12732,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
@@ -12786,13 +12786,13 @@ np.random.seed(RANDOM_SEED)</div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
@@ -12886,6 +12886,20 @@ print(f"Saturation concentration: {saturation_concentration:.6e} kg/m^3")</div>
 </div>
 </div>
 </div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Initial water concentration: 2.360191e-02 kg/m^3
+Saturation concentration: 2.302625e-02 kg/m^3
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
@@ -12898,13 +12912,13 @@ print(f"Saturation concentration: {saturation_concentration:.6e} kg/m^3")</div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
@@ -12920,7 +12934,7 @@ print(f"Saturation concentration: {saturation_concentration:.6e} kg/m^3")</div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Particle parameters</span>
 <span class="n">density</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c1"># kg/m^3 (water droplets)</span>
 <span class="n">volume_sim</span> <span class="o">=</span> <span class="mf">1e-6</span>  <span class="c1"># m^3 (1 cm^3)</span>
-<span class="n">n_particles</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># Moderate number for demonstration</span>
+<span class="n">n_particles</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Moderate number for demonstration</span>
 
 <span class="c1"># Generate lognormal particle distribution</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
@@ -12957,7 +12971,7 @@ print(f"Saturation concentration: {saturation_concentration:.6e} kg/m^3")</div>
 <div class="clipboard-copy-txt" id="cell-3"># Particle parameters
 density = 1000.0  # kg/m^3 (water droplets)
 volume_sim = 1e-6  # m^3 (1 cm^3)
-n_particles = 200  # Moderate number for demonstration
+n_particles = 1000  # Moderate number for demonstration
 
 # Generate lognormal particle distribution
 rng = np.random.default_rng(RANDOM_SEED)
@@ -12990,6 +13004,21 @@ particles = (
 print(f"Created {n_particles} particles")
 print(f"Initial total particle mass: {np.sum(particle_masses):.6e} kg")
 print(f"Mean particle radius: {np.mean(particle_radii)*1e9:.1f} nm")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Created 1000 particles
+Initial total particle mass: 1.186594e-14 kg
+Mean particle radius: 111.3 nm
+</pre>
 </div>
 </div>
 </div>
@@ -13033,8 +13062,8 @@ print(f"Mean particle radius: {np.mean(particle_radii)*1e9:.1f} nm")</div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -13165,6 +13194,27 @@ for mode in modes:
         "total_mass": particle_mass + gas_mass,
     }
     print(f"Mode '{mode}': Final particle mass = {particle_mass[-1]:.6e} kg")</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>/tmp/ipykernel_811482/2011549078.py:22: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  gas_mass = float(current_aerosol.atmosphere.partitioning_species.get_concentration())
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Mode 'half': Final particle mass = 1.187235e-14 kg
+</pre>
 </div>
 </div>
 </div>
