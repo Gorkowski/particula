@@ -541,5 +541,5 @@ via `SedimentationCoagulationBuilder` or construct
 ## See Also
 
 - [Wall loss strategy system](./wall_loss_strategy_system.md)
-- [Condensation strategies](../Examples/Simulations/index.md)
+- [Simulation examples](../Examples/Simulations/index.md)
 - [Particle phase examples](../Examples/Particle_Phase/index.md)
