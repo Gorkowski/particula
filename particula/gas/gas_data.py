@@ -28,9 +28,14 @@ Example:
 """
 
 from dataclasses import dataclass
+from typing import Sequence
 
 import numpy as np
 from numpy.typing import NDArray
+
+from particula.gas.species import GasSpecies
+from particula.gas.vapor_pressure_strategies import VaporPressureStrategy
+from particula.util.constants import AVOGADRO_NUMBER
 
 
 @dataclass
@@ -127,3 +132,119 @@ class GasData:
             concentration=np.copy(self.concentration),
             partitioning=np.copy(self.partitioning),
         )
+
+
+def from_species(species: GasSpecies, n_boxes: int = 1) -> GasData:
+    """Create a GasData instance from a GasSpecies object.
+
+    Concentration is converted from kg/m^3 (GasSpecies) to molecules/m^3
+    (GasData) using Avogadro's number and molar mass. Supports scalar or
+    array inputs for names, molar masses, concentrations, and partitioning.
+
+    Args:
+        species: Source GasSpecies instance (single or multi-species).
+        n_boxes: Number of boxes to replicate concentration into.
+
+    Returns:
+        GasData with concentration shaped (n_boxes, n_species).
+
+    Raises:
+        ValueError: If n_boxes < 1.
+    """
+    if n_boxes < 1:
+        raise ValueError("n_boxes must be at least 1")
+
+    names = species.get_name()
+    names_list = [str(names)] if isinstance(names, str) else list(names)
+
+    molar_mass = np.asarray(species.get_molar_mass(), dtype=np.float64)
+    molar_mass = np.atleast_1d(molar_mass)
+
+    mass_conc = np.asarray(species.get_concentration(), dtype=np.float64)
+    mass_conc = np.atleast_1d(mass_conc)
+
+    number_conc = (mass_conc / molar_mass) * AVOGADRO_NUMBER
+    concentration = np.tile(number_conc, (n_boxes, 1))
+
+    partitioning_raw = np.asarray(species.get_partitioning(), dtype=np.bool_)
+    partitioning = np.atleast_1d(partitioning_raw)
+    if partitioning.size == 1 and molar_mass.size > 1:
+        partitioning = np.full(
+            molar_mass.shape, partitioning.item(), dtype=bool
+        )
+    elif partitioning.shape != molar_mass.shape:
+        partitioning = np.asarray(partitioning, dtype=np.bool_).reshape(
+            molar_mass.shape
+        )
+
+    return GasData(
+        name=names_list,
+        molar_mass=molar_mass,
+        concentration=concentration,
+        partitioning=partitioning,
+    )
+
+
+def to_species(
+    data: GasData,
+    vapor_pressure_strategies: Sequence[VaporPressureStrategy],
+    box_index: int = 0,
+) -> GasSpecies:
+    """Create a GasSpecies instance from a GasData object.
+
+    Converts concentration from molecules/m^3 (GasData) to kg/m^3
+    (GasSpecies) using molar mass and Avogadro's number. Requires a
+    vapor pressure strategy for each species because GasData is
+    behavior-free.
+
+    Args:
+        data: Source GasData instance.
+        vapor_pressure_strategies: Strategy per species.
+        box_index: Row index to extract concentrations from.
+
+    Returns:
+        GasSpecies built from the selected box.
+
+    Raises:
+        ValueError: If strategies length != n_species or partitioning differs
+            across species.
+        IndexError: If box_index is out of range.
+    """
+    if len(vapor_pressure_strategies) != data.n_species:
+        raise ValueError(
+            "vapor_pressure_strategies length must match data.n_species"
+        )
+
+    if box_index < 0 or box_index >= data.n_boxes:
+        raise IndexError("box_index out of range")
+
+    if not np.all(data.partitioning == data.partitioning[0]):
+        raise ValueError("GasData partitioning must be uniform to convert")
+
+    partitioning_flag = bool(data.partitioning[0])
+
+    concentration_row = data.concentration[box_index]
+    concentration_mass = (concentration_row * data.molar_mass) / AVOGADRO_NUMBER
+
+    names = [str(name) for name in data.name]
+    partitioning_flag = bool(data.partitioning[0])
+
+    base_species = GasSpecies(
+        name=names[0],
+        molar_mass=data.molar_mass[0],
+        vapor_pressure_strategy=vapor_pressure_strategies[0],
+        partitioning=partitioning_flag,
+        concentration=concentration_mass[0],
+    )
+
+    for idx in range(1, data.n_species):
+        next_species = GasSpecies(
+            name=names[idx],
+            molar_mass=data.molar_mass[idx],
+            vapor_pressure_strategy=vapor_pressure_strategies[idx],
+            partitioning=partitioning_flag,
+            concentration=concentration_mass[idx],
+        )
+        base_species += next_species
+
+    return base_species
