@@ -2,10 +2,8 @@
 
 import numpy as np
 import pytest
-
 from particula.gas.gas_data import GasData
 from particula.gas.gas_data_builder import GasDataBuilder
-
 
 pint = pytest.importorskip("pint")
 
