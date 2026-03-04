@@ -1674,7 +1674,7 @@ class TestCondensationLatentHeat(unittest.TestCase):
         cond = CondensationLatentHeat(molar_mass=0.018, latent_heat=2.26e6)
 
         self.assertIsInstance(cond._latent_heat_strategy, ConstantLatentHeat)
-        assert cond._latent_heat_strategy is not None
+        self.assertIsNotNone(cond._latent_heat_strategy)
         self.assertEqual(cond._latent_heat_strategy.latent_heat_ref, 2.26e6)
 
     def test_instantiation_isothermal_fallback(self):
@@ -1694,21 +1694,20 @@ class TestCondensationLatentHeat(unittest.TestCase):
 
         self.assertIs(cond._latent_heat_strategy, strategy)
 
-    def test_resolution_with_array_latent_heat_logs_and_falls_back(self):
-        """Array latent heat logs warning and falls back to isothermal."""
-        with self.assertLogs("particula", level="WARNING") as cm:
-            cond = CondensationLatentHeat(
+    def test_resolution_with_array_latent_heat_raises(self):
+        """Array-like latent heat inputs are rejected."""
+        with self.assertRaises(ValueError):
+            CondensationLatentHeat(
                 molar_mass=0.018,
                 latent_heat=np.array([2.26e6, 1.5e6]),
             )
 
-        self.assertIsNone(cond._latent_heat_strategy)
-        self.assertTrue(
-            any(
-                "Array-like latent_heat" in record.getMessage()
-                for record in cm.records
-            )
-        )
+    def test_resolution_with_non_finite_latent_heat_raises(self):
+        """Non-finite latent heat values are rejected."""
+        for value in (np.nan, np.inf, -np.inf):
+            with self.subTest(value=value):
+                with self.assertRaises(ValueError):
+                    CondensationLatentHeat(molar_mass=0.018, latent_heat=value)
 
     def test_resolution_with_negative_latent_heat_logs_and_falls_back(self):
         """Negative latent heat logs warning and falls back to isothermal."""

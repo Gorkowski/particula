@@ -1709,6 +1709,9 @@ class CondensationLatentHeat(CondensationStrategy):
     non-isothermal mass-transfer implementation to later phases. It resolves
     latent heat either from a provided strategy or a scalar fallback value.
 
+    TODO(E5-F3-P2): Support non-isothermal mass-transfer rates and per-species
+        latent heat inputs once the underlying strategy implementation lands.
+
     Attributes:
         latent_heat_strategy_input: Strategy input provided at initialization.
         latent_heat_input: Raw latent heat value provided at initialization.
@@ -1746,7 +1749,9 @@ class CondensationLatentHeat(CondensationStrategy):
             vapor_pressure_strategy: Vapor pressure strategy used for GasData
                 inputs.
             latent_heat_strategy: Optional latent heat strategy to use.
-            latent_heat: Scalar latent heat fallback [J/kg].
+            latent_heat: Scalar latent heat fallback [J/kg]. Must be finite;
+                positive values use ConstantLatentHeat, zero/negative values
+                fall back to isothermal behavior.
         """
         super().__init__(
             molar_mass=molar_mass,
@@ -1774,35 +1779,41 @@ class CondensationLatentHeat(CondensationStrategy):
         """Resolve the latent heat strategy from inputs.
 
         Prefers an explicit strategy, otherwise converts scalar latent heat
-        values into a constant strategy. Array-like or negative latent heat
-        values log a warning and fall back to isothermal behavior.
+        values into a constant strategy. Array-like inputs are rejected;
+        negative scalar values log a warning and fall back to isothermal
+        behavior.
 
         Args:
             latent_heat_strategy: Optional strategy to use directly.
-            latent_heat: Scalar or array-like latent heat input [J/kg].
+            latent_heat: Scalar latent heat input [J/kg].
 
         Returns:
             Resolved latent heat strategy, or None for isothermal fallback.
+
+        Raises:
+            ValueError: If latent_heat is non-finite or array-like.
         """
         if latent_heat_strategy is not None:
             return latent_heat_strategy
 
         latent_heat_array = np.asarray(latent_heat, dtype=np.float64)
-        if latent_heat_array.shape == ():
-            latent_heat_value = float(latent_heat_array)
-            if latent_heat_value > 0:
-                return ConstantLatentHeat(latent_heat_value)
-            if latent_heat_value < 0:
-                logger.warning(
-                    "Negative latent_heat provided; falling back to "
-                    "isothermal behavior."
-                )
-            return None
+        if latent_heat_array.shape != ():
+            raise ValueError(
+                "latent_heat must be a finite scalar; use a LatentHeatStrategy "
+                "for per-species values."
+            )
 
-        logger.warning(
-            "Array-like latent_heat provided; use a LatentHeatStrategy "
-            "for per-species values."
-        )
+        latent_heat_value = float(latent_heat_array)
+        if not np.isfinite(latent_heat_value):
+            raise ValueError("latent_heat must be finite.")
+
+        if latent_heat_value > 0:
+            return ConstantLatentHeat(latent_heat_ref=latent_heat_value)
+        if latent_heat_value < 0:
+            logger.warning(
+                "Negative latent_heat provided; falling back to "
+                "isothermal behavior."
+            )
         return None
 
     def mass_transfer_rate(
@@ -1838,7 +1849,6 @@ class CondensationLatentHeat(CondensationStrategy):
         gas_species: GasSpecies | GasData,
         temperature: float,
         pressure: float,
-        dynamic_viscosity: Optional[float] = None,
     ) -> NDArray[np.float64]:
         """Return the condensation rate (stub).
 
@@ -1849,7 +1859,6 @@ class CondensationLatentHeat(CondensationStrategy):
                 concentrations.
             temperature: System temperature in Kelvin.
             pressure: System pressure in Pascals.
-            dynamic_viscosity: Optional dynamic viscosity override.
 
         Returns:
             Condensation rate per particle and per species in kg/s.
@@ -1866,10 +1875,7 @@ class CondensationLatentHeat(CondensationStrategy):
         temperature: float,
         pressure: float,
         time_step: float,
-        dynamic_viscosity: Optional[float] = None,
-    ) -> (
-        Tuple[ParticleRepresentation, GasSpecies] | Tuple[ParticleData, GasData]
-    ):
+    ) -> Tuple[ParticleRepresentation | ParticleData, GasSpecies | GasData]:
         """Advance one condensation step (stub).
 
         Args:
@@ -1878,7 +1884,6 @@ class CondensationLatentHeat(CondensationStrategy):
             temperature: System temperature in Kelvin.
             pressure: System pressure in Pascals.
             time_step: Integration timestep in seconds.
-            dynamic_viscosity: Optional dynamic viscosity override.
 
         Returns:
             Tuple containing updated particle and gas species objects.
