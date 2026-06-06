@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Workflow state fields were unreadable for ADW 600b6808, but recent workflow messages show planning failed before usable review scope was produced. Plan creation hit registry fallback issues around research plan support, and downstream review stages could not proceed because review_plan_ids were never handed off.",
+  "architecture_notes": "Architecture review did not run meaningfully because no review_plan_ids handoff was available after plan creation failed; spec content was also unavailable.",
+  "discovered_context": "plan-scope-analyzer classified work as epic with auto tracks | plan-orchestrator failed creating research plan after E1 and E1-F1, citing registry support gap | downstream splitter, architecture, testing, and consistency reviewers all reported missing review_plan_ids",
+  "review_findings": "No substantive review findings were produced. Review agents consistently reported missing review_plan_ids handoff, and spec_content reads were unavailable."
+}
