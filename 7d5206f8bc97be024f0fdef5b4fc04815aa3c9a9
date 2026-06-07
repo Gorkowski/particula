@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "f437f8bb",
+  "issue_number": "1157",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1157-adw-f437f8bb",
+  "shipped_at": "2026-06-07T03:28:19.398344Z",
+  "plan_phase": "E1-F1-P1",
+  "plan_summary": "Implement a scoped CondensationLatentHeatBuilder for issue #1157 that mirrors the existing fluent condensation builder pattern while constructing CondensationLatentHeat instead of the isothermal strategy. Keep the phase limited to a new builder module, builder-package export, and focused tests, reusing existing mixins and pre-build validation while adding latent-heat-specific setters, optional-key-aware set_parameters(), and constructor forwarding that preserves CondensationLatentHeat precedence semantics.",
+  "discovered_context": "No recent workflow messages recorded",
+  "review_findings": "Review retained five actionable warnings. Main fixes requested: make set_parameters apply default units when unit keys are omitted, clear stale optional latent-heat state across reused builder calls, validate latent_heat_strategy inputs earlier, and address separate particle representation regressions where multidimensional density and invalid charge array shapes are silently coerced or truncated."
+}
