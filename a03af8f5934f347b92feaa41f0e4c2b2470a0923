@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "409bd997",
+  "issue_number": "1159",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1159-adw-409bd997",
+  "shipped_at": "2026-06-07T05:42:06.293969Z",
+  "plan_phase": "E1-F1-P3",
+  "plan_summary": "This workflow restores public API symmetry for CondensationLatentHeatBuilder by re-exporting it through both particula.dynamics.condensation and particula.dynamics. The change is intentionally limited to namespace wiring plus export smoke tests that verify imports, __all__ membership, and shared object identity across both surfaces.",
+  "discovered_context": "",
+  "review_findings": "One review warning remains: docs currently advertise par.dynamics.CondensationStrategy as a top-level import even though particula.dynamics does not export that symbol. Update the docs to use par.dynamics.condensation.CondensationStrategy, or add the top-level re-export if that API is intended."
+}
