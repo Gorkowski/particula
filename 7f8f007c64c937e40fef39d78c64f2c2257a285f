@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "26e89047",
+  "issue_number": "1158",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1158-adw-26e89047",
+  "shipped_at": "2026-06-07T04:15:33.282597Z",
+  "plan_phase": "E1-F1-P2",
+  "plan_summary": "This workflow registers the latent-heat condensation builder in CondensationFactory so configuration dictionaries can construct CondensationLatentHeat via the existing generic factory path. The change stays narrow: add the \"latent_heat\" registry key, extend the builder typing/imports, and preserve the builder-driven parameter contract for latent_heat_strategy, scalar latent_heat fallback, and update_gases behavior. Tests focus on the new latent-heat factory path, precedence/error propagation, and unchanged unknown-strategy handling.",
+  "discovered_context": "",
+  "review_findings": "Review feedback and findings were recorded in workflow state during the auto review/fix flow; available values are redacted in this context, so only their presence is preserved here."
+}
