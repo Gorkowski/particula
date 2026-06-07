@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "3f56e5c0",
+  "issue_number": "1160",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1160-adw-3f56e5c0",
+  "shipped_at": "2026-06-07T06:52:07.509654Z",
+  "plan_phase": "E1-F1-P4",
+  "plan_summary": "Docs-only follow-up for issue #1160 to verify and, only if needed, minimally correct `docs/Features/condensation_strategy_system.md` so it matches the shipped latent-heat builder, factory, and direct-constructor API. The work is scoped to truth-checking public export paths, the `\"latent_heat\"` factory key, and supported builder/direct input styles, while keeping any diff small and focused on documentation accuracy. Validation should reuse targeted condensation builder, factory, export, and latent-heat constructor tests with `pytest -Werror`.",
+  "discovered_context": "",
+  "review_findings": "Review feedback and findings are present in ADW state and indicate follow-up review context exists; preserve the workflow artifacts as the detailed source of record."
+}
