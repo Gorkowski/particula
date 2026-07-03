@@ -1025,6 +1025,18 @@
          <lastmod>2026-07-03</lastmod>
     </url>
     <url>
+         <loc>https://uncscode.github.io/particula/Features/Roadmap/</loc>
+         <lastmod>2026-07-03</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/Features/Roadmap/data-oriented-gpu/</loc>
+         <lastmod>2026-07-03</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/Features/Roadmap/warp-autodiff-limitations/</loc>
+         <lastmod>2026-07-03</lastmod>
+    </url>
+    <url>
          <loc>https://uncscode.github.io/particula/Theory/</loc>
          <lastmod>2026-07-03</lastmod>
     </url>
@@ -1090,6 +1102,10 @@
     </url>
     <url>
          <loc>https://uncscode.github.io/particula/Theory/Technical/Dynamics/Condensation_Equations/</loc>
+         <lastmod>2026-07-03</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/Theory/Technical/Dynamics/Nucleation_Equations/</loc>
          <lastmod>2026-07-03</lastmod>
     </url>
     <url>
