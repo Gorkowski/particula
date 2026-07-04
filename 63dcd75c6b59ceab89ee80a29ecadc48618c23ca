@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "4a744888",
+  "issue_number": "1185",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1185-adw-4a744888",
+  "shipped_at": "2026-07-04T06:49:27.115739Z",
+  "plan_phase": "E2-F1-P3",
+  "plan_summary": "This workflow documents the canonical shape conventions for container workflows in the data-oriented GPU roadmap. It should add one anchor-friendly subsection covering ParticleData, GasData, future EnvironmentData, WarpParticleData, and WarpGasData, with explicit field-by-field shape rules and minimal discoverability links. It also reinforces that multi-box storage does not imply current CPU condensation/coagulation support beyond single-box execution.",
+  "discovered_context": ""
+}
