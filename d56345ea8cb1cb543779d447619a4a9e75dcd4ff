@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Docs-only phase for issue #1190 to align the migration guide and GPU roadmap with the shipped CPU EnvironmentData contract. It clarifies that EnvironmentData owns per-box temperature, pressure, and saturation_ratio, while ParticleData.volume remains the simulation-volume authority. It also preserves the current scalar temperature/pressure API compatibility boundary and leaves GPU mirrors/conversion/runtime work downstream.",
+  "architecture_notes": "No code architecture change; this is a documentation alignment pass that sharpens ownership and mutation-boundary terminology across the migration guide and roadmap.",
+  "discovered_context": "docs/Features/particle-data-migration.md update ownership/compatibility wording | docs/Features/Roadmap/data-oriented-gpu.md align shipped CPU baseline with downstream GPU work"
+}
