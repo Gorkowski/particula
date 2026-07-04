@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f0c20fd7",
+  "issue_number": "1195",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1195-adw-f0c20fd7",
+  "shipped_at": "2026-07-04T23:05:44.870866Z",
+  "plan_phase": "E2-F3-P4",
+  "plan_summary": "Add a narrow follow-up for GPU environment transfer coverage. The work is to add a single device-parametrized round-trip test for EnvironmentData using warp_devices(wp), then update feature and theory docs to make the explicit helper-only CPU↔GPU boundary and shape rules clear. CUDA remains optional, and CPU-only runs must still pass.",
+  "discovered_context": ""
+}
