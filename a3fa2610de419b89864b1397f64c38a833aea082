@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "5a940697",
+  "issue_number": "1186",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1186-adw-5a940697",
+  "shipped_at": "2026-07-04T08:18:22.842956Z",
+  "plan_phase": "E2-F1-P4",
+  "plan_summary": "Docs-only phase for issue #1186 publishing the finalized E2-F1 ownership and shape decisions as a downstream handoff map for E2-F2 through E2-F9. It strengthens discoverability from the roadmap, migration, and entry-point docs without reopening approved schema semantics. It also records the docs validation command used for the publication note.",
+  "discovered_context": ""
+}
