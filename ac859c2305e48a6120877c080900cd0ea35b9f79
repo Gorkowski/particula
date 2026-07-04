@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "364782c4",
+  "issue_number": "1184",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1184-adw-364782c4",
+  "shipped_at": "2026-07-04T05:41:38.833762Z",
+  "plan_phase": "E2-F1-P2",
+  "plan_summary": "Docs-first update to establish an authoritative ownership contract for field ownership decisions in the data-oriented GPU roadmap. Add a dedicated section to docs/Features/Roadmap/data-oriented-gpu.md, preserving the current inventory as evidence while documenting authoritative ownership, round-trip behavior, and future environment-field decisions. Update roadmap and migration cross-links, then validate with existing regression tests and a mkdocs strict build if available.",
+  "architecture_notes": "Prior design intent already sets ParticleData.volume as authoritative, ParticleData.density as shared-across-boxes state, vapor_pressure as non-owned CPU/environment state, and WarpGasData restoration as dependent on external metadata. This phase is docs-only and should preserve the shipped inventory while codifying the ownership contract.",
+  "discovered_context": ""
+}
