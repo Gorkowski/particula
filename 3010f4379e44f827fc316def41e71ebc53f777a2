@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "8c64acae",
+  "issue_number": "1183",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1183-adw-8c64acae",
+  "shipped_at": "2026-07-04T04:43:56.850584Z",
+  "plan_phase": "E2-F1-P1",
+  "plan_summary": "Docs-first inventory pass for issue #1183 to document the current container schema for ParticleData, GasData, WarpParticleData, and WarpGasData. The work should not change runtime behavior; it will publish an evidence-backed markdown inventory in the roadmap docs with exact field shapes, dtypes, validation/coercion hooks, and CPU↔GPU transfer behavior. It must also call out derived ParticleData properties plus the lossy gas round-trip details around placeholder species names and GPU-only vapor_pressure.",
+  "discovered_context": ""
+}
