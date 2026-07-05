@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "0d18a875",
+  "issue_number": "1206",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1206-adw-0d18a875",
+  "shipped_at": "2026-07-05T18:20:27.246287Z",
+  "plan_phase": "E2-F5-P4",
+  "plan_summary": "This workflow plans the final GPU coagulation phase for issue #1206. The work is intentionally narrow: confirm the existing shared environment normalization path in coagulation, add missing regression coverage for scalar/direct-array and non-uniform environment behavior, and add a developer-facing roadmap note about the environment contract.",
+  "discovered_context": "No recent workflow messages | Coagulation GPU API already normalizes environment inputs through shared helpers | Existing docs mention the shared temperature/pressure call forms but need a roadmap handoff note | Scope stays limited to coagulation follow-up tests and documentation"
+}
