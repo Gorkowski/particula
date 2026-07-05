@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "7d1262bd",
+  "issue_number": "1197",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1197-adw-7d1262bd",
+  "shipped_at": "2026-07-05T02:23:29.356787Z",
+  "plan_phase": "E2-F4-P1",
+  "plan_summary": "This phase locks the current CPU↔GPU gas conversion contract in focused regression tests, especially around GasData vs WarpGasData authority and round-trip behavior. It keeps production edits minimal, mainly extending existing conversion tests to assert shapes, dtypes, bool↔int32 partitioning, vapor_pressure defaults/preservation, placeholder names, and discard behavior on restore.",
+  "discovered_context": ""
+}
