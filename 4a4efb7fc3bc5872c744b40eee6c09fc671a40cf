@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "29257f7a",
+  "issue_number": "1209",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1209-adw-29257f7a",
+  "shipped_at": "2026-07-05T21:59:48.795798Z",
+  "plan_phase": "E2-F6-P2",
+  "plan_summary": "This phase extends the fp64 mass-precision baseline into a study-only comparison layer that evaluates three explicit storage candidates against the four shipped baseline cases. Changes should stay confined to focused GPU tests and roadmap docs, preserving current production dtypes, runtime defaults, and Warp schemas.",
+  "discovered_context": ""
+}
