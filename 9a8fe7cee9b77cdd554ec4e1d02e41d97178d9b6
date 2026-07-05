@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "239963cb",
+  "issue_number": "1210",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1210-adw-239963cb",
+  "shipped_at": "2026-07-05T23:27:19.941262Z",
+  "plan_phase": "E2-F6-P3",
+  "plan_summary": "Phase P3 extends the mass-precision study into decision-ready evidence without changing production schemas or dtype defaults. It adds conservation-oriented metrics, mixed-scale small-particle fidelity checks, clamp accounting, and skip-safe throughput evidence on the existing GPU test and benchmark surfaces. Roadmap documentation is updated with concrete tradeoff results and reproduction commands.",
+  "architecture_notes": "Keep study-only logic in particula/gpu/tests and docs, reuse public CPU condensation reference functions, avoid coupling fast study tests to kernel-test internals, and preserve bounded deterministic coverage with cached fixtures and optional benchmark-only throughput evidence.",
+  "discovered_context": ""
+}
