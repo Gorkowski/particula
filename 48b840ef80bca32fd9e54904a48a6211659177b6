@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "24b9700f",
+  "issue_number": "1208",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1208-adw-24b9700f",
+  "shipped_at": "2026-07-05T20:55:20.690942Z",
+  "plan_phase": "E2-F6-P1",
+  "plan_summary": "Implement deterministic mass-precision baseline cases for the NPF-to-droplet study without changing production particle or GPU storage schema. Add focused GPU tests that build reproducible fp64 cases across NPF, 5-10 nm, accumulation-mode, and droplet-scale bands, then validate shape, dtype, finiteness, and round-trip stability. Document the baseline assumptions and exact reproduction command in a new roadmap page for later comparison phases.",
+  "discovered_context": ""
+}
