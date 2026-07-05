@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "This workflow defines the P1 compatibility contract for GPU condensation/coagulation entry points as they transition toward explicit per-box environment inputs. The current phase preserves scalar temperature/pressure callers, adds a keyword-only environment parameter, and codifies deterministic early ValueErrors for mixed inputs or unsupported explicit-environment execution. Tests lock the contract without implementing normalization or kernel migration yet.",
+  "discovered_context": "",
+  "review_findings": "Review feedback and findings are present in state but redacted here; preserve the phase boundaries and early-failure contract as documented."
+}
