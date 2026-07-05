@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "196fe4a0",
+  "issue_number": "1198",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1198-adw-196fe4a0",
+  "shipped_at": "2026-07-05T03:20:51.312878Z",
+  "plan_phase": "E2-F4-P2",
+  "plan_summary": "This issue tightens the restore contract for `from_warp_gas_data()` without changing GPU container ownership. The branch already implements placeholder-name fallback, strict binary `partitioning` restore, and focused tests, so the remaining work is to align docstrings, nearby wording, and any small assertion updates with the tested behavior.",
+  "discovered_context": ""
+}
