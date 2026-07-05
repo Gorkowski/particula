@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "49bc945e",
+  "issue_number": "1199",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1199-adw-49bc945e",
+  "shipped_at": "2026-07-05T04:14:19.535139Z",
+  "plan_phase": "E2-F4-P3",
+  "plan_summary": "Clarify the vapor_pressure transfer contract at the GPU boundary for issue #1199. Keep CPU GasData unchanged, preserve the current zero-fill default when vapor_pressure is omitted, and document that from_warp_gas_data() intentionally drops GPU-only vapor_pressure on restore. Update tests to make the valid-shape, invalid-shape, omitted-buffer, and lossy-restore behaviors explicit.",
+  "discovered_context": ""
+}
