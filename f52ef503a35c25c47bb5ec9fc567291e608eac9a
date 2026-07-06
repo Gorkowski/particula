@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adw_id": "ca30df28",
+  "issue_number": "1216",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1216-adw-ca30df28",
+  "shipped_at": "2026-07-06T17:29:50.518765Z",
+  "plan_phase": "E2-F7-P4"
+}
