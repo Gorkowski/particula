@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f42bd760",
+  "issue_number": "1211",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1211-adw-f42bd760",
+  "shipped_at": "2026-07-06T00:28:44.464769Z",
+  "plan_phase": "E2-F6-P4",
+  "plan_summary": "Publish the final E2-F6 precision recommendation report as a documentation-only change. The work updates the mass-precision study page to state the accepted policy, summarize shipped P1-P3 evidence, and keep production CPU/GPU defaults unchanged.",
+  "discovered_context": "Issue #1211 docs-report phase for final mass-precision recommendation | Canonical report target is docs/Features/Roadmap/mass-precision-study.md | Downstream links in data-oriented-gpu.md and optionally particle-data-migration.md should point to the canonical report | Validation focuses on focused pytest reruns, link checks, and optional mkdocs build --strict"
+}
