@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3cdd80d4",
+  "issue_number": "1214",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1214-adw-3cdd80d4",
+  "shipped_at": "2026-07-06T14:46:40.646375Z",
+  "plan_phase": "E2-F7-P2",
+  "plan_summary": "Measure the stable explicit timestep envelope for GPU particle-only condensation in issue #1214 by reusing the deterministic P1 cases and a fixed timestep grid. The work should validate `condensation_step_gpu` with a caller-owned `mass_transfer` buffer, confirm stable/unstable behavior across `nanometer`, `accumulation_mode`, and `droplet_like`, and then publish the measured results in the roadmap note. Keep the implementation test-first, preserve the particle-only contract, and add optional guarded CUDA parity only if it stays lightweight.",
+  "discovered_context": ""
+}
