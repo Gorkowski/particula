@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "605055f0",
+  "issue_number": "1215",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1215-adw-605055f0",
+  "shipped_at": "2026-07-06T16:00:02.470142Z",
+  "plan_phase": "E2-F7-P3",
+  "plan_summary": "Evaluate fixed-shape condensation integration candidates for issue #1215. The work stays evidence-driven: extend deterministic GPU condensation tests to compare a fixed-count sub-step candidate and a semi-implicit/asymptotic candidate against the existing particle-only baseline and CPU reference. Add only a narrowly scoped private production helper if tests cannot exercise the candidate credibly, and update the roadmap study with the final boundary and evidence.",
+  "discovered_context": ""
+}
