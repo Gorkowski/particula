@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "11bdd3ef",
+  "issue_number": "1218",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1218-adw-11bdd3ef",
+  "shipped_at": "2026-07-07T13:03:53.025802Z",
+  "plan_phase": "E2-F8-P1",
+  "plan_summary": "Audit the current CPU baseline for `ParticleData`/`GasData` container use in condensation and coagulation without changing runtime support boundaries. Confirm condensation’s existing single-box guard, document coagulation’s box-0-only adapters/mutations, and add small co-located regressions that lock in present behavior. Keep any documentation clarification narrowly scoped for later phases.",
+  "discovered_context": "No recent messages | Issue #1218 feature: audit CPU dynamics container boundaries | Condensation currently enforces `n_boxes=1`; coagulation CPU paths read/mutate box 0 only"
+}
