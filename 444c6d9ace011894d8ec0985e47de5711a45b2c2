@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "e9abde5e",
+  "issue_number": "1223",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1223-adw-e9abde5e",
+  "shipped_at": "2026-07-07T20:10:40.508973Z",
+  "plan_phase": "E2-F9-P2",
+  "plan_summary": "Implement a runnable docs example for data containers and GPU transfer foundations. The work adds a top-level entrypoint plus a topic-directory implementation that demonstrates public ParticleData and GasData construction with guarded Warp CPU-backend round trips, while keeping the example optional-feature safe in default dev environments.",
+  "discovered_context": ""
+}
