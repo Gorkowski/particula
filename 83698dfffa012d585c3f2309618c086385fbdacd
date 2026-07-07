@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "26f3fbe7",
+  "issue_number": "1219",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1219-adw-26f3fbe7",
+  "shipped_at": "2026-07-07T14:13:01.432199Z",
+  "plan_phase": "E2-F8-P2",
+  "plan_summary": "Implement contract enforcement for issue #1219 by clarifying CPU single-box behavior across condensation and coagulation. Condensation keeps its existing `n_boxes=1` guard while broadening tests to reject multi-box `ParticleData` and `GasData`; coagulation adds a reusable guard in shared `ParticleData` helper paths and `step()` so unsupported multi-box inputs fail before reading or mutating box 0.",
+  "discovered_context": ""
+}
