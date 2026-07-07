@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "7ac3cdcd",
+  "issue_number": "1220",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1220-adw-7ac3cdcd",
+  "shipped_at": "2026-07-07T15:07:23.617432Z",
+  "plan_phase": "E2-F8-P3",
+  "plan_summary": "This issue is a docs-contract cleanup for the CPU dynamics container migration. Update the migration guide to make the single-box CPU execution boundary explicit for condensation and coagulation, keep the roadmap wording aligned, and only touch runtime messages if a docs/runtime mismatch remains.",
+  "discovered_context": ""
+}
