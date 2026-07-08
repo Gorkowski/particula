@@ -14195,6 +14195,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#epic-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epic Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Epic Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shipped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shipped
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pending
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#roadmap-artifacts" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -14307,22 +14357,60 @@ schedule.</p>
 <li>Improve links between examples, feature guides, theory pages, and API
   reference material.</li>
 </ul>
+<h2 id="epic-status">Epic Status<a class="headerlink" href="#epic-status" title="Permanent link">&para;</a></h2>
+<p>The data-oriented and GPU work is tracked as a single ordered epic sequence
+with explicit exit bars in the
+<a href="data-oriented-gpu/#epic-sequence-and-status">Data-Oriented Design and GPU Roadmap</a>.
+Each epic targets roughly 5-10 features of 5-15 phases each; when an epic
+meets its exit bar, the next pending epic in the sequence becomes active.</p>
+<h3 id="shipped">Shipped<a class="headerlink" href="#shipped" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="data-oriented-gpu/#epic-a-data-model-and-numerical-foundations">Epic A: Data-Model and Numerical Foundations</a>
+  (ADW plan E2) — container schemas, <code>EnvironmentData</code>, CPU↔GPU transfer
+  boundary, precision baseline, and stiffness recommendation. Shipped
+  artifacts:<ul>
+<li><a href="../data-containers-and-gpu-foundations/">Data Containers and GPU Foundations</a>
+  — shipped guide for the current container, transfer-helper, and support
+  boundary baseline</li>
+<li><a href="../../Examples/Data_Containers/">Data Containers example</a> —
+  canonical runnable entrypoint linked from the roadmap handoff notes</li>
+<li><a href="mass-precision-study/">Mass Precision Recommendation Report</a> —
+  canonical reference for downstream dtype/schema decisions</li>
+<li><a href="condensation-stiffness-study/">Condensation stiffness study baseline</a>
+  — recorded timestep grid, particle-only GPU contract, inclusive
+  threshold semantics, and accepted <code>(n_boxes,)</code> environment inputs</li>
+</ul>
+</li>
+<li><a href="data-oriented-gpu/#epic-b-non-isothermal-condensation-public-api-cpu">Epic B: Non-Isothermal Condensation Public API (CPU)</a>
+  (ADW plan E1) — public builder/factory access, validation, and
+  documentation for latent-heat condensation on the CPU reference path.</li>
+</ul>
+<h3 id="next-up">Next Up<a class="headerlink" href="#next-up" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="data-oriented-gpu/#epic-c-gpu-kernel-correctness-and-low-level-api-hardening">Epic C: GPU Kernel Correctness and Low-Level API Hardening</a>
+  — the next epic in the sequence; not yet scheduled as an ADW plan.</li>
+</ul>
+<h3 id="pending">Pending<a class="headerlink" href="#pending" title="Permanent link">&para;</a></h3>
+<p>Listed in execution order; each becomes active when the previous epic ships.</p>
+<ul>
+<li><a href="data-oriented-gpu/#epic-d-gpu-condensation-physics-parity">Epic D: GPU Condensation Physics Parity</a></li>
+<li><a href="data-oriented-gpu/#epic-e-gpu-coagulation-physics-coverage">Epic E: GPU Coagulation Physics Coverage</a></li>
+<li><a href="data-oriented-gpu/#epic-f-gpu-process-completeness">Epic F: GPU Process Completeness</a></li>
+<li><a href="data-oriented-gpu/#epic-g-backend-selection-and-gpu-resident-simulation">Epic G: Backend Selection and GPU-Resident Simulation</a></li>
+<li><a href="data-oriented-gpu/#epic-h-graph-capture-and-performance">Epic H: Graph Capture and Performance</a></li>
+<li><a href="data-oriented-gpu/#epic-i-differentiability-and-global-optimization">Epic I: Differentiability and Global Optimization</a>
+  — implementation companion:
+  <a href="warp-autodiff-limitations/">Warp autodiff limitations</a></li>
+</ul>
 <h2 id="roadmap-artifacts">Roadmap Artifacts<a class="headerlink" href="#roadmap-artifacts" title="Permanent link">&para;</a></h2>
 <p>This folder can also hold supporting artifacts for planning and examples, such
 as design notes, example outputs, prototype workflows, and milestone-specific
 pages.</p>
 <ul>
 <li><a href="data-oriented-gpu/">Data-Oriented Design and GPU Roadmap</a></li>
-<li><a href="condensation-stiffness-study/">Condensation stiffness study baseline</a></li>
-<li>documents the recorded timestep grid, particle-only GPU contract,
-    inclusive threshold semantics, and accepted <code>(n_boxes,)</code> environment inputs</li>
-<li><a href="mass-precision-study/">Mass Precision Recommendation Report</a> — canonical
-  reference for downstream dtype/schema decisions</li>
-<li><a href="../data-containers-and-gpu-foundations/">Data Containers and GPU Foundations</a>
-  — shipped guide for the current container, transfer-helper, and support
-  boundary baseline referenced by the roadmap</li>
-<li><a href="../../Examples/Data_Containers/">Data Containers example</a> —
-  canonical runnable entrypoint linked from the roadmap handoff notes</li>
+</ul>
+<p>Reference anchors used by other documentation:</p>
+<ul>
 <li><a href="data-oriented-gpu/#current-container-schema-inventory">Current container schema inventory</a></li>
 <li><a href="data-oriented-gpu/#authoritative-field-ownership-decisions">Authoritative field ownership decisions</a></li>
 <li><a href="data-oriented-gpu/#canonical-shape-conventions-for-container-workflows">Canonical shape conventions for container workflows</a></li>
