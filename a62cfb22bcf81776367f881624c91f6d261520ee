@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "870de796",
+  "issue_number": "1227",
+  "workflow_type": "planner",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1227-adw-870de796",
+  "shipped_at": "2026-07-08T14:10:17.921265Z",
+  "plan_phase": null,
+  "plan_summary": "ADW state for 870de796 had no spec_content, so this note is derived from the recent workflow messages. They show epic E3 and its child feature plans were drafted and validated, then reviewed across architecture, sizing, testing, dependencies, completeness, and consistency, with only a bounded metadata-completeness follow-up left open.",
+  "discovered_context": "E3 epic plus E3-F1..E3-F7 drafted and orchestrated | architecture, sizing, testing, dependency, completeness, and consistency reviews passed | remaining follow-up: incomplete structured metadata and one open question in E3/open_questions"
+}
