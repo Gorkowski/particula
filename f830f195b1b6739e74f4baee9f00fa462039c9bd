@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "da71b3b1",
+  "issue_number": "1237",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1237-adw-da71b3b1",
+  "shipped_at": "2026-07-09T02:26:24.140411Z",
+  "plan_phase": "E3-F1-P2",
+  "plan_summary": "This phase adds regression tests for the GPU coagulation RNG-state contract. It verifies that a caller-owned rng_states buffer advances across repeated valid coagulation_step_gpu calls even when the same rng_seed is reused, and that an invalid follow-up call fails before mutating the already-advanced buffer. Scope stays test-only in particula/gpu/kernels/tests/coagulation_test.py and uses the existing CPU/CUDA device parametrization.",
+  "discovered_context": ""
+}
