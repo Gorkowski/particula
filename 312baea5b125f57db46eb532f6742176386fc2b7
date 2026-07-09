@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "32073fab",
+  "issue_number": "1239",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1239-adw-32073fab",
+  "shipped_at": "2026-07-09T04:34:11.800407Z",
+  "plan_phase": "E3-F1-P4",
+  "plan_summary": "Documentation-only phase for issue #1239 to align GPU coagulation RNG guidance with the shipped seed-once contract. Update the coagulation docstring, roadmap, and related GPU boundary/benchmark guidance so they clearly distinguish caller-owned persistent rng_states from call-local convenience allocation, and explain reset/graph-capture timing without changing runtime behavior.",
+  "discovered_context": ""
+}
