@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b0f253ce",
+  "issue_number": "1241",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1241-adw-b0f253ce",
+  "shipped_at": "2026-07-09T13:53:47.566193Z",
+  "plan_phase": "E3-F2-P1",
+  "plan_summary": "Phase adds a deterministic mixed NPF/droplet GPU coagulation test fixture and test-local acceptance diagnostics for issue #1241. Work stays in `particula/gpu/kernels/tests/coagulation_test.py`, preserves `coagulation_step_gpu(...)` API stability, and keeps RNG/state semantics unchanged. It also adds CPU/CUDA-parameterized regression coverage for mixed-scale acceptance plus sparse and degenerate edge cases.",
+  "discovered_context": ""
+}
