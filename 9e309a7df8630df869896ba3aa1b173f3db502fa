@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "0c9e4fbe",
+  "issue_number": "1238",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1238-adw-0c9e4fbe",
+  "shipped_at": "2026-07-09T03:40:08.912860Z",
+  "plan_phase": "E3-F1-P3",
+  "plan_summary": "Implement persisted coagulation RNG state semantics so caller-provided `rng_states` persist across valid repeated calls without hidden reseeding, while the omitted-`rng_states` path still allocates and seeds an internal buffer. Preserve validation-before-mutation ordering for device, shape, time_step, environment, and volume checks, and keep benchmark seed behavior consistent with the final ownership contract.",
+  "discovered_context": ""
+}
