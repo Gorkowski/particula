@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Issue #1243 focuses on verifying the current GPU coagulation path still matches the intended Brownian sampler within explicit stochastic tolerances. The work is test-and-doc only: extend the existing co-located mixed-scale GPU coagulation tests with repeated seeded checks, conservation assertions, and caller-owned rng_states reuse/reset coverage, then record the measured result in the roadmap note.",
+  "architecture_notes": "Keep diagnostics test-local in particula/gpu/kernels/tests/coagulation_test.py; no production API or synchronization changes are intended. Make the evaluated path traceable in test names/docstrings and the roadmap evidence note.",
+  "discovered_context": ""
+}
