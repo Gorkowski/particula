@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "01ba902c",
+  "issue_number": "1244",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1244-adw-01ba902c",
+  "shipped_at": "2026-07-09T16:57:16.704627Z",
+  "plan_phase": "E3-F2-P4",
+  "plan_summary": "Docs-only issue #1244: expand the roadmap’s mixed-scale GPU coagulation note into a clear decision record. The doc should state that E3-F2 shipped bounded selector hardening in P2, explain the remaining global-k_max/one-thread-per-box limitation, and preserve exact reproduction and evidence wording.",
+  "discovered_context": "No recent messages | Docs-only plan for issue #1244 to update docs/Features/Roadmap/data-oriented-gpu.md | Preserve exact mixed-scale test names, numeric evidence (139 vs 143.846, sigma 11.994, 3-sigma 35.981), and copy/paste pytest commands"
+}
