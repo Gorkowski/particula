@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6bfb04c3",
+  "issue_number": "1253",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1253-adw-6bfb04c3",
+  "shipped_at": "2026-07-10T18:56:36.365477Z",
+  "plan_phase": "E3-F4-P2",
+  "plan_summary": "Harden the public GPU direct-kernel import surface by expanding regression coverage in `particula/gpu/tests/kernel_exports_test.py`. The tests should confirm that only `coagulation_step_gpu` and `condensation_step_gpu` are exported from `particula.gpu.kernels`, that top-level `particula.gpu` does not re-export them, and that representative internal helpers remain excluded from the package surface. This is a regression-test-only change with no kernel launches, no CUDA requirement, and no numerical behavior changes.",
+  "discovered_context": ""
+}
