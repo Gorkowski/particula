@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "7bd3c9f3",
+  "issue_number": "1246",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1246-adw-7bd3c9f3",
+  "shipped_at": "2026-07-10T02:16:14.287239Z",
+  "plan_phase": "E3-F3-P1",
+  "plan_summary": "Update the coagulation benchmark path so it uses a dedicated mixed-scale ParticleData fixture aligned with the shipped E3-F2 baseline, while leaving condensation benchmarks and existing opt-in CUDA/benchmark gating unchanged. Add focused helper coverage to verify deterministic mixed-scale fixture construction, routing to the coagulation-only helper, and persistent RNG-state behavior. Capture opt-in benchmark evidence or the clean skip outcome, then record a compact roadmap note with the exact command and single-box vs multi-box context.",
+  "discovered_context": ""
+}
