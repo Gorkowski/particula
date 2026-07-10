@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "39370754",
+  "issue_number": "1247",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1247-adw-39370754",
+  "shipped_at": "2026-07-10T03:34:25.361421Z",
+  "plan_phase": "E3-F3-P2",
+  "plan_summary": "Docs follow-up for issue #1247 to turn the recorded E3-F3-P1 coagulation benchmark capture into a measured decision record about one-thread-per-box scaling. The scope is limited to roadmap and, only if needed, matching notebook-source wording; no new benchmarks, kernel changes, or infrastructure are in scope.",
+  "discovered_context": ""
+}
