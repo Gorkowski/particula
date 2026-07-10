@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "fb3ffae2",
+  "issue_number": "1249",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1249-adw-fb3ffae2",
+  "shipped_at": "2026-07-10T05:35:17.401405Z",
+  "plan_phase": "E3-F3-P4",
+  "plan_summary": "Issue #1249 is a docs-only closeout for E3-F3 P4. It confirms the shipped P2/P3 evidence still supports the accepted-with-caveat one-thread-per-box coagulation path, and the default outcome is to record that no new parallel-within-box follow-up track was opened unless maintainers explicitly choose a bounded future investigation.",
+  "discovered_context": ""
+}
