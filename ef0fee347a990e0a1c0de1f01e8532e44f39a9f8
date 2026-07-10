@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "1aef2a67",
+  "issue_number": "1248",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1248-adw-1aef2a67",
+  "shipped_at": "2026-07-10T04:36:50.889320Z",
+  "plan_phase": "E3-F3-P3",
+  "plan_summary": "Issue #1248 is a docs-only follow-up to the shipped E3-F3-P2 GPU coagulation benchmark decision record. It updates the Epic C roadmap and the user-facing GPU foundations guide so the current low-level `coagulation_step_gpu` path has an explicit, measured decision boundary. The work keeps Warp/CUDA optionality and explicit CPU↔GPU transfer semantics unchanged.",
+  "architecture_notes": "No runtime or kernel architecture changes are intended; this issue only tightens documentation around the already-shipped low-level GPU path and preserves the existing explicit-transfer and optional-device contracts.",
+  "discovered_context": "",
+  "review_findings": ""
+}
