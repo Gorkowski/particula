@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "9891c14a",
+  "issue_number": "1255",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1255-adw-9891c14a",
+  "shipped_at": "2026-07-10T21:23:11.560458Z",
+  "plan_phase": "E3-F4-P4",
+  "plan_summary": "Phase E3-F4-P4 closes the direct-kernel quick-start work by aligning the published GPU docs with the shipped example, import surface, and smoke-test behavior. The focus is troubleshooting guidance for missing Warp/CUDA, explicit CPU↔GPU transfer boundaries, device mismatches, and the supported low-level `particula.gpu.kernels` path.",
+  "discovered_context": ""
+}
