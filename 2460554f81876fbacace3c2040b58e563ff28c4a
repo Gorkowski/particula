@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "704643d9",
+  "issue_number": "1254",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1254-adw-704643d9",
+  "shipped_at": "2026-07-10T20:12:35.958562Z",
+  "plan_phase": "E3-F4-P3",
+  "plan_summary": "Add one canonical runnable GPU direct-kernel quick-start under docs/Examples that makes the low-level Warp path discoverable without hidden transfer behavior. The example should build deterministic CPU-side ParticleData and GasData fixtures, default to device=\"cpu\", guard Warp execution with WARP_AVAILABLE, and explicitly round-trip through to_warp_* / from_warp_* helpers.",
+  "discovered_context": ""
+}
