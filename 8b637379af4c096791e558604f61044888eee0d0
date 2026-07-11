@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "08d77d7d",
+  "issue_number": "1257",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1257-adw-08d77d7d",
+  "shipped_at": "2026-07-11T00:26:52.415649Z",
+  "plan_phase": "E3-F5-P1",
+  "plan_summary": "Extend pytest policy for Warp-related GPU testing without changing CPU-only defaults. Add the shared marker vocabulary (`warp`, `cuda`, `gpu_parity`, `stochastic`) to both `particula/conftest.py` and `pyproject.toml`, and keep any device-policy option opt-in or absent. Add focused hook-level regression tests to guard marker/config parity, default collection behavior, and benchmark-only gating.",
+  "discovered_context": ""
+}
