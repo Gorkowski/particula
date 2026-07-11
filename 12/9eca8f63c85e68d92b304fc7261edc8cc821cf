@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adw_id": "f96614a5",
+  "issue_number": "1263",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1263-adw-f96614a5",
+  "shipped_at": "2026-07-11T13:52:04.474586Z",
+  "plan_phase": "E3-F6-P1"
+}
