@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Extend the CPU-only latent-heat integration baseline so it proves water inventory conservation and final-step latent-heat bookkeeping through the public MassCondensation.execute() path. The work is tightly scoped to particula/integration_tests/condensation_latent_heat_conservation_test.py and avoids production API, GPU, CUDA, Warp, or documentation changes.",
+  "discovered_context": ""
+}
