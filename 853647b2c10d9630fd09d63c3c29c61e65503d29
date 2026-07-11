@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d951cf04",
+  "issue_number": "1259",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1259-adw-d951cf04",
+  "shipped_at": "2026-07-11T02:24:20.091867Z",
+  "plan_phase": "E3-F5-P3",
+  "plan_summary": "Document the GPU testing policy for deterministic parity, conservation checks, and stochastic validation across the testing guide and roadmap. The issue is documentation-only and aims to keep Warp CPU as the default parity backend while allowing optional local CUDA checks. It also preserves the existing marker taxonomy and avoids changes to code or test modules.",
+  "discovered_context": ""
+}
