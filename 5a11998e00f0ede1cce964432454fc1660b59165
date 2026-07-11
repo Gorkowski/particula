@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Issue #1258 standardizes GPU test device selection and the CUDA skip reason in `particula/gpu/tests/cuda_availability.py`. Keep `cuda_available()` and `warp_devices()` stable, add a shared `CUDA_SKIP_REASON`, update the benchmark consumer, and add fake-driven tests so the suite remains CPU-only runnable.",
+  "discovered_context": "",
+  "review_findings": "review_feedback and review_findings are present in workflow state but redacted in the source output."
+}
