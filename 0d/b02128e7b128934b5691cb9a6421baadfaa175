@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "55247bd6",
+  "issue_number": "1260",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1260-adw-55247bd6",
+  "shipped_at": "2026-07-11T03:29:43.162947Z",
+  "plan_phase": "E3-F5-P4",
+  "plan_summary": "Phase E3-F5-P4 applies the repo's existing GPU pytest policy to the main Warp-backed test suites without changing production kernels or tolerance behavior. The work focuses on adding module and function markers such as `warp`, `cuda`, `gpu_parity`, and `stochastic`, while preserving `pytest.importorskip(\"warp\")`, the CPU-first `warp_devices()` contract, and the discoverable condensation wrappers. Validation is centered on collect-only checks, marker-selection checks, and warning-clean focused pytest runs across coagulation, condensation, environment, and conversion tests.",
+  "discovered_context": ""
+}
