@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6d19619d",
+  "issue_number": "1267",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1267-adw-6d19619d",
+  "shipped_at": "2026-07-11T19:08:48.720975Z",
+  "plan_phase": "E3-F7-P1",
+  "plan_summary": "Add a new CPU-only integration test module, `condensation_latent_heat_conservation_test.py`, to exercise a deterministic latent-heat condensation fixture through public `particula` APIs. The fixture uses a single-species supersaturated water setup with a constant latent-heat strategy and `MassCondensation.execute()` for a short fixed run. This slice is intentionally limited to a stable runnable baseline; detailed conservation and latent-energy equality checks are reserved for a later phase.",
+  "discovered_context": ""
+}
