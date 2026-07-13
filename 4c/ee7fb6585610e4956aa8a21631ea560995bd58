@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement refresh_vapor_pressure_gpu in particula/gpu/kernels/thermodynamics.py to update WarpGasData.vapor_pressure from validated ThermodynamicsConfig and device-local temperatures in one kernel launch. Support constant mode via parameters[:,0] and canonical Buck mode with reserved ignored parameter slots, keeping condensation integration out of P2. Add co-located parity and contract tests for constant/Buck branches, overwrite behavior, API surface, failure-before-mutation, and optional CUDA parity.",
+  "discovered_context": ""
+}
