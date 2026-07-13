@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "71c44483",
+  "issue_number": "1288",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1288-adw-71c44483",
+  "shipped_at": "2026-07-13T15:02:03.119628Z",
+  "plan_phase": "E4-F2-P2",
+  "plan_summary": "Implement internal fp64 Warp helper `effective_surface_tension_wp()` in `particula/gpu/dynamics/condensation_funcs.py` to support legacy static selection and composition-weighted surface tension with a zero-volume arithmetic-mean fallback. Add co-located Warp/NumPy tests to verify static indexing, weighted volume behavior, zero-volume handling, and Kelvin property parity, without changing public exports, APIs, or orchestration.",
+  "discovered_context": ""
+}
