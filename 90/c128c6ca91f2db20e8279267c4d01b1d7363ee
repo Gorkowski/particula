@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "776f61b7",
+  "issue_number": "1287",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1287-adw-776f61b7",
+  "shipped_at": "2026-07-13T13:49:21.452267Z",
+  "plan_phase": "E4-F2-P1",
+  "plan_summary": "Implementation plan for issue #1287 adds two internal Warp helpers in `particula/gpu/dynamics/condensation_funcs.py` for ideal and κ activity calculations, with unit tests in the co-located test module. Scope stays tightly limited to those helpers and tests, leaving exports, kernels, containers, and orchestration unchanged.",
+  "discovered_context": "Issue #1287 feature on branch `issue-1287-adw-776f61b7` | add `water_activity_ideal_wp` and `water_activity_kappa_wp` in `particula/gpu/dynamics/condensation_funcs.py` after `particle_radius_from_volume_wp` | add co-located parity tests in `particula/gpu/dynamics/tests/condensation_funcs_test.py` with a collection-safe Warp import guard and CPU/CUDA device fixture | use fp64 masses/property arrays and independent NumPy references for ideal and κ branches"
+}
