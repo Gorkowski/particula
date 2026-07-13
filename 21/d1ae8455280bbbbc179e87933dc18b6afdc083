@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add integration coverage for the public condensation_step_gpu boundary to prove caller-owned ThermodynamicsConfig, vapor-pressure buffers, and mass-transfer buffers can be reused safely across repeated calls. The tests also verify missing or cross-device thermodynamics fail atomically before any caller-owned state changes, using CPU-resident fixtures and Warp/CUDA gating.",
+  "discovered_context": "particula/integration_tests/gpu_thermodynamics_contract_test.py planned for reusable-state and atomicity coverage | particula/gpu/kernels/condensation.py and thermodynamics.py preflight ordering is the key production boundary | existing thermodynamics and CUDA availability helpers provide expected values and skip logic"
+}
