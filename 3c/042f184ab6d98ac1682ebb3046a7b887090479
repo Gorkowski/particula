@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c7dd00e4",
+  "issue_number": "1285",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1285-adw-c7dd00e4",
+  "shipped_at": "2026-07-13T08:48:53.900793Z",
+  "plan_phase": "E4-F1-P5",
+  "plan_summary": "Issue #1285 is a documentation-only update for E4-F1 thermodynamics. It documents the shipped GPU condensation contract, clarifies derived vapor-pressure ownership and refresh ordering, and updates roadmap/plan records to mark P5 complete without changing production code or supported models.",
+  "discovered_context": ""
+}
