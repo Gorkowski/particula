@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3bf00a64",
+  "issue_number": "1283",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1283-adw-3bf00a64",
+  "shipped_at": "2026-07-13T06:27:15.418957Z",
+  "plan_phase": "E4-F1-P3",
+  "plan_summary": "Implement issue #1283 by making condensation_step_gpu refresh caller-owned vapor_pressure from the required ThermodynamicsConfig and current per-box temperature before mass transfer, while preserving existing positional arguments and device-resident execution. Add a private float64 temperature-cast path only when needed, keep refresh behind validation/setup, and extend tests for launch order, overwrite/parity, repeated calls, float32 compatibility, and failure atomicity.",
+  "discovered_context": ""
+}
