@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "067cbcda",
+  "issue_number": "1290",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1290-adw-067cbcda",
+  "shipped_at": "2026-07-13T17:28:39.893456Z",
+  "plan_phase": "E4-F2-P4",
+  "plan_summary": "Implement deterministic fp64 parity coverage and documentation for direct GPU condensation activity/surface sidecars. The work adds CPU and optional CUDA tests for two fixed P4 fixtures across four activity/surface combinations, with independent NumPy references and named parity/invariant tolerances. It also updates foundation and roadmap docs to describe supported direct-kernel behavior, ownership boundaries, and device policy.",
+  "discovered_context": ""
+}
