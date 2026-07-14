@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "416c0abe",
+  "issue_number": "1295",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1295-adw-416c0abe",
+  "shipped_at": "2026-07-14T05:50:47.413417Z",
+  "plan_phase": "E4-F3-P4",
+  "plan_summary": "Issue #1295 is a documentation-only update for the shipped low-level Warp condensation step. It replaces prototype language with the fixed-four `condensation_step_gpu` behavior, updates the roadmap and CPU guide, and normalizes the related planning records to the actual completion date.",
+  "discovered_context": ""
+}
