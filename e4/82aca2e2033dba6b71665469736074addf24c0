@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add a frozen `CondensationScratchBuffers` sidecar to the GPU condensation kernel so callers can reuse stable-shape fp64 scratch buffers for transfer work, total transfer, viscosity, and mean free path. Keep existing positional calls and the legacy/no-sidecar path valid, while validating any supplied sidecar atomically before allocation, refresh, launch, or mutation. Update the co-located Warp tests to cover complete, partial, overlap-conflict, and fail-fast rejection cases.",
+  "discovered_context": ""
+}
