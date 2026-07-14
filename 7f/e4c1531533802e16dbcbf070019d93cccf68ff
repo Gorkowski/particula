@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "202d69ea",
+  "issue_number": "1303",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1303-adw-202d69ea",
+  "shipped_at": "2026-07-14T23:20:34.725641Z",
+  "plan_phase": "E4-F5-P2",
+  "plan_summary": "Add a private fp64 condensation inventory-finalization helper that bounds evaporation by owned particle mass and scales uptake by same-box/species gas inventory plus permitted release. Add direct-helper tests and keep the public four-substep condensation path unchanged.",
+  "discovered_context": "",
+  "review_findings": "Critical: reject overlapping P2 demand/release/scale, gas input, and energy_transfer buffers. Also preflight finite/nonnegative P2 inputs, prove the public path never launches P2 kernels, cover gated zero/inactive entries, fix doc accuracy, and include release-sidecar repeatability."
+}
