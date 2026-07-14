@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "fa380a07",
+  "issue_number": "1300",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1300-adw-fa380a07",
+  "shipped_at": "2026-07-14T19:46:55.250331Z",
+  "plan_phase": "E4-F4-P4",
+  "plan_summary": "Issue #1300 adds regression and documentation evidence for the shipped Warp condensation latent-rate correction and energy_transfer sidecar. The work must keep production physics, container schemas, and direct-step return behavior unchanged while extending existing CPU fixtures and adding an optional CUDA parity case. Documentation must map the shipped signed energy diagnostic to #1272 and state the supported limits and ownership contracts.",
+  "discovered_context": ""
+}
