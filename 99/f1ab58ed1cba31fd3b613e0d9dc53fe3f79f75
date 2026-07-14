@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add partitioning gates and gas-coupling validation for condensation GPU kernels. The plan introduces strict preflight checks for partitioning metadata and scratch buffers, then adds a gate so disabled species and inactive slots are zeroed before reductions while preserving the current no-gas-mutation contract.",
+  "discovered_context": ""
+}
