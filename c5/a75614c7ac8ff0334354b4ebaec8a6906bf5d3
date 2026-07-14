@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "cbe8ee95",
+  "issue_number": "1294",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1294-adw-cbe8ee95",
+  "shipped_at": "2026-07-14T04:34:00.914146Z",
+  "plan_phase": "E4-F3-P3",
+  "plan_summary": "Test-only regression coverage for issue #1294 to validate the shipped fixed-four-substep `condensation_step_gpu(...)` path. The scope is limited to the existing Warp CPU stiffness harness: record production trials across the three named cases and recorded timesteps, then add focused assertions for final mass, vapor-pressure refresh, unchanged gas concentration, nonzero transfer, and deterministic repeatability without changing production code or docs.",
+  "architecture_notes": "Keep the validation centered on the existing condensation GPU test harness and its complete caller-owned scratch buffers; do not alter `particula/gpu/kernels/condensation.py` or public API behavior.",
+  "discovered_context": ""
+}
