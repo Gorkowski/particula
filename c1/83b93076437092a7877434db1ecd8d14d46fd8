@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "30287d20",
+  "issue_number": "1297",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1297-adw-30287d20",
+  "shipped_at": "2026-07-14T13:52:04.700996Z",
+  "plan_phase": "E4-F4-P1",
+  "plan_summary": "Implement the P1 GPU condensation latent-heat foundation: add private Warp helpers for air thermal conductivity, thermal-resistance factor, and latent-corrected mass transfer, mirroring the verified CPU equations. Extend `condensation_step_gpu()` with keyword-only `latent_heat` and `thermal_work` sidecars, validating them as caller-owned fp64 species arrays without consuming them yet. Preserve the existing isothermal path and all current positional callers while keeping the new sidecars validation-only in this phase.",
+  "discovered_context": "",
+  "review_findings": "No blocking issues. Non-blocking suggestion: strengthen rejected latent-sidecar atomicity assertions by checking the candidate snapshot and adding CUDA mismatch atomicity guards."
+}
