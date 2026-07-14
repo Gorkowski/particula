@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add an optional caller-owned `energy_transfer` Warp output to `condensation_step_gpu()` that records signed whole-call bounded mass transfer times latent heat for each box/species after the four fixed substeps. Keep the existing two-item return, validate the output on-device and by shape/dtype/device before any mutation, and write the result with a single-writer reduction after clearing the buffer. Preserve the current energy-disabled path and atomic failure boundaries.",
+  "discovered_context": "",
+  "review_findings": "Two warnings: reject `energy_transfer` buffers that alias mutable gas state (`gas.concentration`/`gas.vapor_pressure`) to prevent physics-state mutation, and update `condensation_latent_heat_docs_test.py` docs-index assertions because energy bookkeeping is now supported."
+}
