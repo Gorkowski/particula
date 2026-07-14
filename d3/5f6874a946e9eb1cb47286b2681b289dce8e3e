@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "023646f6",
+  "issue_number": "1298",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1298-adw-023646f6",
+  "shipped_at": "2026-07-14T16:25:01.728574Z",
+  "plan_phase": "E4-F4-P2",
+  "plan_summary": "Implement [E4-F4-P2] by applying a per-substep latent-heat correction inside `condensation_step_gpu()` across the four fixed substeps. The change should keep the existing public contract intact while using a shared Kelvin/activity-adjusted surface vapor pressure for both the gas delta and thermal correction, with omitted or zero latent entries preserving the original isothermal path.",
+  "discovered_context": "",
+  "review_findings": "Critical: current latent_heat/thermal_work validation calls `.numpy()` during runtime, creating CUDA D2H sync and violating the no-host-sync contract. Also noted: numerical overflow/zero-denominator robustness risk in condensation helpers, and coverage gaps for nonzero-activity latent branches and scratch/total identity checks."
+}
