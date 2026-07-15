@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "816d8342",
+  "issue_number": "1316",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1316-adw-816d8342",
+  "shipped_at": "2026-07-15T16:13:29.370603Z",
+  "plan_phase": "E4-F7-P3",
+  "plan_summary": "Documentation-only update for the GPU direct-kernel condensation workflow. Add deterministic troubleshooting and focused reproduction guidance to the foundations and migration docs, plus text-only regression tests that lock the published commands, headings, and scope. No runtime behavior or public API changes are introduced.",
+  "discovered_context": ""
+}
