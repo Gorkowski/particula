@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "96b8633f",
+  "issue_number": "1308",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1308-adw-96b8633f",
+  "shipped_at": "2026-07-15T05:16:19.269988Z",
+  "plan_phase": "E4-F6-P1",
+  "plan_summary": "Add deterministic fp64 parity coverage for the GPU condensation entry point using two explicit cases: one-box uptake with latent heat and inventory-limited transfer, and a multi-box mixed-phase fixture covering uptake, evaporation, disabled partitioning, and zero slots. Compare final particle masses and coupled gas concentrations against an independent NumPy four-substep reference, exercising Warp CPU and optional CUDA without changing production kernels or APIs.",
+  "discovered_context": "",
+  "review_findings": "Review warned the first parity case does not force P2 limiting, matching vapor-pressure inputs can hide refresh bugs, the latent-heat effect may be too small to distinguish, and the docs plan understates scope."
+}
