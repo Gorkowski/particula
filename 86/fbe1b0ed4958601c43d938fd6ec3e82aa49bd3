@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "fabaf595",
+  "issue_number": "1311",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1311-adw-fabaf595",
+  "shipped_at": "2026-07-15T09:07:47.370476Z",
+  "plan_phase": "E4-F6-P4",
+  "plan_summary": "The workflow plans a new Warp-marked test module for bounded condensation autodiff-readiness. It probes the raw out-of-place mass transfer kernel with a single gas-concentration gradient path, verifies Tape against centered finite differences, and adds forward-only boundary-semantic tests for evaporation clamp, inventory-limited uptake, and in-place mutation.",
+  "discovered_context": ""
+}
