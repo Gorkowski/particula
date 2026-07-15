@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f74eefa5",
+  "issue_number": "1309",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1309-adw-f74eefa5",
+  "shipped_at": "2026-07-15T06:17:46.830543Z",
+  "plan_phase": "E4-F6-P2",
+  "plan_summary": "Add Warp condensation regression coverage for P2 conservation and mutation-contract behavior without changing production APIs or physics. Tests focus on per-box/per-species inventory, energy accounting, inventory-limited uptake, deterministic repeats, and atomic validation failures, all in the two condensation test modules.",
+  "discovered_context": ""
+}
