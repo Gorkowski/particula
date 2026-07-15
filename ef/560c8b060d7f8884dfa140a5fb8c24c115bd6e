@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "7146a7bd",
+  "issue_number": "1304",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1304-adw-7146a7bd",
+  "shipped_at": "2026-07-15T00:54:33.199892Z",
+  "plan_phase": "E4-F5-P3",
+  "plan_summary": "Implement public GPU condensation orchestration so each successful `condensation_step_gpu()` call runs four equal substeps, finalizes every P1-gated proposal through P2 inventory limiting, applies the finalized transfer to particle mass and gas concentration, and accumulates the whole-call total. Keep the public API and package boundary unchanged, with production changes in `particula/gpu/kernels/condensation.py` and co-located Warp tests in `particula/gpu/kernels/tests/`.",
+  "discovered_context": "Issue #1304 [E4-F5-P3] four-substep condensation orchestration on branch `issue-1304-adw-7146a7bd` | preserve API and package boundary | add co-located Warp regressions in `particula/gpu/kernels/tests/`"
+}
