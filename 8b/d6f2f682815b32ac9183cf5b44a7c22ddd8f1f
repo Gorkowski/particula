@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "0281096d",
+  "issue_number": "1314",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1314-adw-0281096d",
+  "shipped_at": "2026-07-15T13:55:43.370628Z",
+  "plan_phase": "E4-F7-P1",
+  "plan_summary": "This workflow publishes the bounded direct GPU condensation contract in the two feature docs and keeps runtime APIs untouched. It also updates the existing text-only publication regression test so the docs remain aligned with current direct-kernel behavior, including required thermodynamics, in-place mutation, and the supported GPU policy.",
+  "discovered_context": "",
+  "review_findings": "Fixes needed: thermal_work is deferred only; whole-call bookkeeping belongs to energy_transfer. Qualify no-hidden-sync and preflight language, and strengthen tests for scoped section checks, particles_out return, and active-device fp64 sidecars."
+}
