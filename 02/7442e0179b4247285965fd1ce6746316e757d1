@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adw_id": "dfdd1cdb",
+  "issue_number": "1306",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1306-adw-dfdd1cdb",
+  "shipped_at": "2026-07-15T02:53:50.026595Z",
+  "plan_phase": "E4-F5-P5"
+}
