@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6c0571fe",
+  "issue_number": "1310",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1310-adw-6c0571fe",
+  "shipped_at": "2026-07-15T07:28:39.458695Z",
+  "plan_phase": "E4-F6-P3",
+  "plan_summary": "Add a new test-only module to prove reusable-buffer graph-capture readiness for condensation_step_gpu in issue #1310. The test uses lazy Warp imports, fully preallocated fp64 scratch and sidecar buffers, and checks normal-vs-captured replay parity, inventory conservation, and energy contracts on Warp CPU and CUDA with precise skip handling for unsupported capture paths.",
+  "discovered_context": ""
+}
