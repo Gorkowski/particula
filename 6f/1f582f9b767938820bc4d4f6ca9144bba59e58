@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "3c5e02ec",
+  "issue_number": "1312",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1312-adw-3c5e02ec",
+  "shipped_at": "2026-07-15T10:33:41.323625Z",
+  "plan_phase": "E4-F6-P5",
+  "plan_summary": "Documentation-only issue #1312. Publish bounded condensation evidence across the strategy, roadmap, and testing docs: add a P1-P4 matrix, record autodiff limits, reconcile the stiffness study with current evidence, and update reusable GPU-condensation guidance. No production code, public API, or workflow behavior changes are intended.",
+  "architecture_notes": "Keep low-level GPU evidence separate from CPU strategy/Runnable parity, graph replay, and general autodiff claims; document Warp CPU as the baseline where supported and CUDA as optional.",
+  "discovered_context": ""
+}
