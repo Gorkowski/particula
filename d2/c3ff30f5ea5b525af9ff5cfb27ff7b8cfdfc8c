@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement keyword-only preflight support for `coagulation_step_gpu` so `mechanism_config` defaults to Brownian, rejects invalid/reserved configs before any runtime state access, and dispatches the resolved Brownian mask. The change is scoped to the existing Brownian particle-resolved path and preserves legacy call compatibility, allocation order, and unchanged valid-path behavior.",
+  "discovered_context": "",
+  "review_findings": "PR #1333 review warning: missing hybrid-input Brownian equivalence coverage. Add tests comparing omitted `mechanism_config` with explicit Brownian config for scalar-temperature/Warp-pressure and Warp-temperature/scalar-pressure hybrid inputs."
+}
