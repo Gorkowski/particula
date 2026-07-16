@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adw_id": "9d1ca83b",
+  "issue_number": "1331",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1331-adw-9d1ca83b",
+  "shipped_at": "2026-07-16T15:41:32.083872Z",
+  "plan_phase": "E5-F1-P1"
+}
