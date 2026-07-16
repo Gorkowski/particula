@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3d1bc4d7",
+  "issue_number": "1334",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1334-adw-3d1bc4d7",
+  "shipped_at": "2026-07-16T19:31:25.499546Z",
+  "plan_phase": "E5-F1-P4",
+  "plan_summary": "Document the E5-F1 GPU coagulation developer contract without changing runtime behavior. Clarify that CoagulationMechanismConfig is host-owned metadata, while particle state, collision outputs, and persistent RNG sidecars are caller-owned Warp resources. Reinforce that Brownian with particle_resolved is the only executable mechanism and record the documentation-only scope in the planning artifacts.",
+  "discovered_context": ""
+}
