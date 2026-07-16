@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d0289d45",
+  "issue_number": "1332",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1332-adw-d0289d45",
+  "shipped_at": "2026-07-16T16:51:26.823637Z",
+  "plan_phase": "E5-F1-P2",
+  "plan_summary": "Refactor the GPU Brownian rejection sampler in `particula.gpu.kernels.coagulation` to use an internal mechanism mask, one additive total pair-rate, one safe total majorant, and exactly one acceptance draw per valid candidate. Keep the public `coagulation_step_gpu` signature unchanged while preserving active-set construction, selection, swap-pop behavior, and collision-capacity checks. Add focused Warp tests for helper parity, sanitizer coverage, synthetic counter probes, guard cases, deterministic Brownian regression, conservation, and a stochastic aggregate check.",
+  "discovered_context": ""
+}
