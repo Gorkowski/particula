@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d9360aff",
+  "issue_number": "1320",
+  "workflow_type": "planner",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1320-adw-d9360aff",
+  "shipped_at": "2026-07-16T03:59:36.372000Z",
+  "plan_phase": null,
+  "plan_summary": "Planner workflow for issue #1320 completed an epic plan breakdown: E5 plus nine child feature plans were drafted and validated, with the workflow currently at ship-implementation context. The available state shows no spec content, so this note uses the workflow metadata and review trail as the source of truth.",
+  "discovered_context": "Epic E5 and E5-F1 through E5-F9 were drafted successfully | architecture, sizing, dependency, completeness, and consistency reviews passed with limited warnings | E5-F8 link was auto-fixed to the canonical child-plans path; E5 metadata still reports empty child_plans despite the canonical list | codebase-researcher dispatch was previously blocked by subagent-depth limits but did not affect final plan validation"
+}
