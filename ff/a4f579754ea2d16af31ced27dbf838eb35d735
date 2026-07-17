@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "2c248ea3",
+  "issue_number": "1345",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1345-adw-2c248ea3",
+  "shipped_at": "2026-07-17T18:51:22.514759Z",
+  "plan_phase": "E5-F3-P4",
+  "plan_summary": "Documentation-only issue to update direct GPU coagulation docs for the approved charged_hard_sphere particle-resolved kernel contract. It clarifies the exact charged-only and Brownian-plus-charged configurations, caller-owned charge/RNG/collision-buffer semantics, and the one-pass additive selection model. No runtime behavior changes are intended.",
+  "architecture_notes": "Direct Warp kernel API only: charged_hard_sphere and Brownian+charged particle-resolved modes are supported with caller-owned same-device charge buffers, persistent RNG state, and one shared selection/apply path. Active-pair work/storage is O(A^2); no Runnable, CPU strategy composition, or parity/throughput claim.",
+  "discovered_context": ""
+}
