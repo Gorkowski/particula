@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "2188de48",
+  "issue_number": "1342",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1342-adw-2188de48",
+  "shipped_at": "2026-07-17T14:08:36.446777Z",
+  "plan_phase": "E5-F3-P1",
+  "plan_summary": "Implement a private charged hard-sphere term-majorant in particula/gpu/kernels/coagulation.py. It exhaustively scans unique active compact pairs, sanitizes each candidate, and exposes the bound through the existing term-majorant dispatcher only; public coagulation execution remains unchanged.",
+  "discovered_context": ""
+}
