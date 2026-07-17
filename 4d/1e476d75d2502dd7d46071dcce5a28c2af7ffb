@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "54192467",
+  "issue_number": "1336",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1336-adw-54192467",
+  "shipped_at": "2026-07-17T02:36:24.779773Z",
+  "plan_phase": "E5-F2-P1",
+  "plan_summary": "This issue adds deterministic scalar fp64 Warp pair-physics helpers for Coulomb potential, reduced value, Coulomb limits, and the diffusive Knudsen number. Scope is limited to internal device helpers in coagulation_funcs.py plus parity tests in its test module, with no public exports or Brownian execution changes. Validation centers on Warp compilation and parity across safe and guarded scalar fixtures, including clipped repulsion and the extreme-threshold zero fallback.",
+  "discovered_context": ""
+}
