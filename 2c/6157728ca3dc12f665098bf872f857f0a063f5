@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "61c95f50",
+  "issue_number": "1348",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1348-adw-61c95f50",
+  "shipped_at": "2026-07-17T23:48:30.411961Z",
+  "plan_phase": "E5-F4-P2",
+  "plan_summary": "Add internal-only sedimentation scheduling to the direct GPU coagulation sampler. The private exact sedimentation mask should compute a safe exhaustive compact-pair majorant from Stokes settling velocities, then reuse the existing bounded candidate/acceptance path. Public sedimentation and mixed sedimentation masks remain rejected before allocation or mutation.",
+  "discovered_context": ""
+}
