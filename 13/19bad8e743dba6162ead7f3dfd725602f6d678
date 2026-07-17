@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "2f981f80",
+  "issue_number": "1337",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1337-adw-2f981f80",
+  "shipped_at": "2026-07-17T03:55:51.177975Z",
+  "plan_phase": "E5-F2-P2",
+  "plan_summary": "Implement an internal scalar Warp helper `charged_hard_sphere_wp` for issue #1337 to reproduce the CPU hard-sphere charged kernel via parity-only calculations. Add independent NumPy oracle coverage and GPU parity tests for valid, symmetry, neutral, extreme-repulsion, and safe-zero lanes, while leaving public charged execution and dispatch unchanged.",
+  "discovered_context": ""
+}
