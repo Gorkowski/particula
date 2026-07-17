@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c555b9fc",
+  "issue_number": "1344",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1344-adw-c555b9fc",
+  "shipped_at": "2026-07-17T17:10:32.117624Z",
+  "plan_phase": "E5-F3-P3",
+  "plan_summary": "Plan to enable only canonical particle-resolved Brownian + charged_hard_sphere support in the low-level Warp coagulation_step_gpu entry point. Preserve preflight safety and caller-owned buffers, use additive Brownian+charged rates with a single shared selector/apply path, and back it with focused deterministic and stochastic tests; docs and higher-level runnable support stay out of scope.",
+  "discovered_context": ""
+}
