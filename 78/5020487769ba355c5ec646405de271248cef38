@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "bb375ed9",
+  "issue_number": "1340",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1340-adw-bb375ed9",
+  "shipped_at": "2026-07-17T06:35:01.027955Z",
+  "plan_phase": "E5-F2-P5",
+  "plan_summary": "Documentation-only plan for issue #1340: update the E5-F2 GPU coagulation docs to describe completed foundations without claiming public charged execution. Keep Brownian particle-resolved coagulation as the only executable GPU mechanism, reserve `charged_hard_sphere` for the downstream E5-F3 track, and preserve the CPU/GPU boundary plus maintainer-plan status updates.",
+  "discovered_context": ""
+}
