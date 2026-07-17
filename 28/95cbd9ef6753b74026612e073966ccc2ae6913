@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "a6e06c02",
+  "issue_number": "1339",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1339-adw-a6e06c02",
+  "shipped_at": "2026-07-17T05:43:58.727728Z",
+  "plan_phase": "E5-F2-P4",
+  "plan_summary": "The workflow plan is to implement transfer and clearing of charge during accepted particle-resolved GPU coagulation merges while preserving the existing public step API and RNG/sidecar behavior. The change is narrowly scoped to the merge application kernel and its regression tests. It also includes signed-charge conservation coverage and zero-mutation no-op cases.",
+  "discovered_context": "Implementation plan for issue #1339 on branch issue-1339-adw-a6e06c02 | GPU coagulation merge kernel currently mutates only mass and concentration | direct tests already cover mixed-scale diagnostics, merge cases, zero-count reruns, self-pairs, and empty-pairs"
+}
