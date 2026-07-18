@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adw_id": "cee8431d",
+  "issue_number": "1349",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1349-adw-cee8431d",
+  "shipped_at": "2026-07-18T01:05:43.630227Z",
+  "plan_phase": "E5-F4-P3"
+}
