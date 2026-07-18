@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement two device-native fp64 GPU coagulation helpers: `kinematic_viscosity_wp(mu, rho) = mu / rho` and the ST1956 turbulent-shear pair-rate expression in `particula/gpu/dynamics/coagulation_funcs.py`. Add co-located Warp parity tests with independent NumPy oracles for viscosity, direct pair-rate behavior, symmetry, cubic scaling, and explicit zero-dissipation handling, while keeping public APIs, dispatch, and CPU fallbacks unchanged.",
+  "discovered_context": ""
+}
