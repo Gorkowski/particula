@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "7529896a",
+  "issue_number": "1350",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1350-adw-7529896a",
+  "shipped_at": "2026-07-18T02:01:21.866910Z",
+  "plan_phase": "E5-F4-P4",
+  "plan_summary": "Record the #1350 documentation follow-up for the shipped, deliberately narrow GPU sedimentation mode. Keep production behavior and ownership boundaries unchanged while adding the missing user-facing SP2016 equation/citation, units, fixed-efficiency scope, and focused-test descriptions in docs and workflow records.",
+  "discovered_context": "",
+  "review_findings": "WARNING: Sedimentation-only preflight does not enforce finite particle charge, but shared selection later requires finite charge sums, so NaN charge can suppress valid collisions and conflict with merge bookkeeping. Update the contract/docs to require finite charge or define a policy, and replace NaN acceptance with early rejection plus rejected-call state checks."
+}
