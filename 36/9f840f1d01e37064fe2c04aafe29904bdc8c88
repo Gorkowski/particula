@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "5f523f63",
+  "issue_number": "1357",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1357-adw-5f523f63",
+  "shipped_at": "2026-07-18T21:05:32.995014Z",
+  "plan_phase": "E5-F6-P1",
+  "plan_summary": "Freeze P1 coagulation mask recognition for the additive-combination matrix. Eleven masks are recognized for preflight only: four singletons, six unordered pairs, and the four-term mask, while three-term, duplicate, unknown, malformed, and unsupported-distribution requests stay fail-closed.",
+  "discovered_context": ""
+}
