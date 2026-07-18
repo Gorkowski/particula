@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "11882e07",
+  "issue_number": "1358",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1358-adw-11882e07",
+  "shipped_at": "2026-07-18T22:28:17.291666Z",
+  "plan_phase": "E5-F6-P2",
+  "plan_summary": "This implementation plan targets P2 internal/device-side aggregation for recognized additive coagulation masks while keeping public P1 preflight and deferred-mask rejection unchanged. It adds fail-closed checked accumulation for pair rates and majorants, bounded selector-ratio safety, and private deterministic tests/oracles. The goal is to preserve existing supported behavior and regression coverage without changing exports or adding CPU fallbacks.",
+  "discovered_context": "",
+  "review_findings": "Review found one critical blocker: P2 additive execution is still deferred and lacks production-path implementation/coverage. Additional warnings note the eight-ULP bound is relative-tolerance based, RNG advancement may occur before the guard, and deferred validation may change public error semantics."
+}
