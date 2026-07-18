@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "85f8089f",
+  "issue_number": "1353",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1353-adw-85f8089f",
+  "shipped_at": "2026-07-18T14:28:28.475917Z",
+  "plan_phase": "E5-F5-P2",
+  "plan_summary": "Add keyword-only turbulent-dissipation and fluid-density inputs to the GPU coagulation entry point for the ST1956 turbulent-shear P2 boundary. Validate positive finite scalar or active-device (n_boxes,) Warp-array forms before any mutable runtime work, then fail closed at the existing reserved-capability gate without adding turbulent dispatch or merge behavior.",
+  "architecture_notes": "Keep turbulent inputs as explicit per-box entry-point arguments, not shared-container fields. Use a private local normalizer in particula/gpu/kernels/coagulation.py to mirror existing scalar/array validation patterns and preserve current non-turbulent Brownian/charged/sedimentation behavior.",
+  "discovered_context": ""
+}
