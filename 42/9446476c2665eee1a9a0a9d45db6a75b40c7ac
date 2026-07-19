@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d4191786",
+  "issue_number": "1365",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1365-adw-d4191786",
+  "shipped_at": "2026-07-19T07:26:11.564819Z",
+  "plan_phase": "E5-F7-P4",
+  "plan_summary": "Documentation-only update to publish the E5-F7 GPU-coagulation validation contract for maintainers and reviewers. It records the exact executable/deferred mask matrix, the deterministic/P2/P3 evidence boundaries, and the required Warp CPU baseline with optional clean-skip CUDA behavior. The work also updates the testing guide and the scoped E5-F7 planning records without changing production code, APIs, physics, or performance claims.",
+  "discovered_context": ""
+}
