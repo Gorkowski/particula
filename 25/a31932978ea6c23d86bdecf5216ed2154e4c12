@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "da18b81e",
+  "issue_number": "1373",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1373-adw-da18b81e",
+  "shipped_at": "2026-07-19T23:23:42.067378Z",
+  "plan_phase": "E5-F9-P2",
+  "plan_summary": "Example adds a standalone docs/Examples/gpu_coagulation_direct.py demonstrating low-level particle-resolved GPU coagulation with explicit CPU->Warp transfers, two Brownian calls on Warp CPU, caller-owned collision/RNG sidecars, and CPU restore. It is import-safe without Warp via lazy imports and a forced-disable guard, and it does not change kernels, exports, or high-level APIs. Test coverage is added in particula/gpu/tests to verify disabled behavior, enabled path, lazy import order, error propagation, and Warp CPU invariants.",
+  "discovered_context": ""
+}
