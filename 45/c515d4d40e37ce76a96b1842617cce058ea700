@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "4dc6c368",
+  "issue_number": "1369",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1369-adw-4dc6c368",
+  "shipped_at": "2026-07-19T15:40:59.582671Z",
+  "plan_phase": "E5-F8-P3",
+  "plan_summary": "Publish the P3 ownership record for the bounded E5-F8 direct-condensation walkthrough, distinguishing independent fp64 fixed-four-substep NumPy-oracle/direct-kernel evidence from unsupported high-level CPU or Runnable parity. Document approved downstream owners and entry gates for deferred capabilities without changing kernels, walkthrough calculations, result categories, P4-owned canonical indexes, or Epic F scope. Add a narrow docs regression test and keep the focused reproduction commands valid.",
+  "discovered_context": ""
+}
