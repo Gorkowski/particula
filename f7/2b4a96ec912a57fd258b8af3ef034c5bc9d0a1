@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "47fde7e2",
+  "issue_number": "1370",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1370-adw-47fde7e2",
+  "shipped_at": "2026-07-19T16:39:39.152029Z",
+  "plan_phase": "E5-F8-P4",
+  "plan_summary": "Close out documentation work for issue #1370 by making the GPU condensation parity walkthrough and its ownership record discoverable from five canonical docs. The change is documentation-only: no production code, oracle math, P1/P2 acceptance logic, or P3 routes change, and the verification plan stays focused on the existing fixed-four-substep direct-kernel evidence.",
+  "discovered_context": "Issue #1370 documentation closeout on branch issue-1370-adw-47fde7e2 | Add P4 link-coverage regression and cross-link the walkthrough and ownership record across condensation strategy, GPU foundations, Examples index, roadmap index, and data-oriented GPU roadmap | Preserve fixed-four-substep direct-kernel boundary with separate physics, conservation, and energy evidence; Warp CPU baseline, CUDA optional"
+}
