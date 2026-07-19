@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "e3300840",
+  "issue_number": "1360",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1360-adw-e3300840",
+  "shipped_at": "2026-07-19T01:05:19.945588Z",
+  "plan_phase": "E5-F6-P4",
+  "plan_summary": "Issue #1360 is a documentation-only update to record the shipped direct-kernel additive GPU coagulation contract. It documents the exact executable and rejected mask matrix, the shared one-pass selection/apply behavior, conditional turbulent inputs, and caller-owned RNG/collision resources without changing production behavior.",
+  "discovered_context": ""
+}
