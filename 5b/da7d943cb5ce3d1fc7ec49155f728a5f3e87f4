@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "2b0fe8de",
+  "issue_number": "1364",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1364-adw-2b0fe8de",
+  "shipped_at": "2026-07-19T06:38:12.466797Z",
+  "plan_phase": "E5-F7-P3",
+  "plan_summary": "Add validation-only stochastic coverage for all 11 supported GPU coagulation mechanism masks. The suite runs 100 fresh seeded public-step trials per row/device, compares aggregate accepted collisions against an independent expectation with a 3-sigma bound, and keeps changes confined to GPU coagulation test support modules plus the new collectable stochastic matrix.",
+  "discovered_context": ""
+}
