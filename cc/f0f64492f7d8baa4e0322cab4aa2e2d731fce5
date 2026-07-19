@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6addf735",
+  "issue_number": "1363",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1363-adw-6addf735",
+  "shipped_at": "2026-07-19T05:24:21.073076Z",
+  "plan_phase": "E5-F7-P2",
+  "plan_summary": "This workflow is a test-only validation task for issue #1363 in the GPU coagulation kernel area. It adds end-to-end invariant coverage in `coagulation_validation_test.py` for public-step state integrity, ownership, edge cases, and preflight atomicity without changing production code or P1 fixture contracts. The work stays Warp-lazy, avoids new public API behavior, and keeps required tests off slow/performance markers.",
+  "discovered_context": ""
+}
