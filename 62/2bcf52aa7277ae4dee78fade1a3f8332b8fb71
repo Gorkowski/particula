@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "dc3a5385",
+  "issue_number": "1368",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1368-adw-dc3a5385",
+  "shipped_at": "2026-07-19T14:56:45.264515Z",
+  "plan_phase": "E5-F8-P2",
+  "plan_summary": "Extend the GPU condensation parity walkthrough with three independent acceptance blocks: physics, conservation, and energy. Keep the existing immutable fixture, fixed four-substep oracle, explicit Warp sidecars, backend policy, and no production kernel/API changes while adding categorized readback, exact vapor-pressure checks, and all-results reporting. Add focused tests for no-Warp, enabled Warp CPU/optional CUDA, and isolated multi-failure behavior.",
+  "discovered_context": ""
+}
