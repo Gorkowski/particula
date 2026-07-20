@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "2227166a",
+  "issue_number": "1375",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1375-adw-2227166a",
+  "shipped_at": "2026-07-20T03:27:09.438286Z",
+  "plan_phase": "E5-F9-P4",
+  "plan_summary": "Close out issue #1375 by reconciling E5-F2 and E5-F9-P3 authoritative records, validating the local GPU-coagulation documentation gate, and recording the required prerequisite test/lint evidence before any final status projection. The final transaction updates roadmap inventories, E5/E5-F9 metadata, child-plan status, and E5-F9 narratives atomically so Epic E ships only after the gate passes.",
+  "discovered_context": ""
+}
