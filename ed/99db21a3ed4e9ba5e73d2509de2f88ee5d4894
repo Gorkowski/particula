@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f65eb5f4",
+  "issue_number": "1374",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1374-adw-f65eb5f4",
+  "shipped_at": "2026-07-20T00:36:25.510353Z",
+  "plan_phase": "E5-F9-P3",
+  "plan_summary": "Update the GPU coagulation documentation roadmap to reconcile Epic E / E5 IDs, statuses, and artifact links across the detailed roadmap and roadmap index. Add a strict E5 roadmap inventory with the verified ten rows, preserve the Epic E/F status wording, and extend regression tests to enforce the exact inventory, links, and anti-duplication rules.",
+  "discovered_context": ""
+}
