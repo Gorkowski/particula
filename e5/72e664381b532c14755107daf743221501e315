@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "27c75e6b",
+  "issue_number": "1377",
+  "workflow_type": "planner",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1377-adw-27c75e6b",
+  "shipped_at": "2026-07-21T13:27:02.404946Z",
+  "plan_phase": null,
+  "plan_summary": "Planner workflow for issue 1377 is at the ship-implementation stage. The ADW state has no spec content, so this note records the minimal workflow context available from the active run. Planning appears complete and the workflow is positioned for implementation/ship follow-through.",
+  "discovered_context": "E6 epic drafted with feature tracks E6-F1 through E6-F9 | architecture review passed without changes | sizing review found all scoped phases XS/S | dependency review flagged missing metadata dependencies on E6-F2 and E6-F4 | completeness review noted incomplete structured metadata | plan orchestrator reported 10/10 success and no failures"
+}
