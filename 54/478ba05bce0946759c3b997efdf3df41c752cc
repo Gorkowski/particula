@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "8ca6c9a5",
+  "issue_number": "1392",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1392-adw-8ca6c9a5",
+  "shipped_at": "2026-07-22T07:10:20.587757Z",
+  "plan_phase": "E6-F1-P4",
+  "plan_summary": "Harden the supported CPU dilution boundary so direct dilution, `DilutionStrategy.step`, and runnable `Dilution.execute` all complete full aerosol-state preflight before any concentration write. Preserve the existing decay/no-op semantics, exact setter rollback, and equal-substep delegation for custom strategies, while exporting only `DilutionStrategy` and `Dilution` from `particula.dynamics`.",
+  "discovered_context": ""
+}
