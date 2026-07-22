@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d959bd7c",
+  "issue_number": "1393",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1393-adw-d959bd7c",
+  "shipped_at": "2026-07-22T08:54:09.648343Z",
+  "plan_phase": "E6-F1-P5",
+  "plan_summary": "Documentation-only feature for issue 1393 to publish the CPU dilution contract without changing production code or exports. Add a deterministic CPU-only executable example, a canonical feature guide, discoverability links, and documentation regression tests.",
+  "discovered_context": ""
+}
