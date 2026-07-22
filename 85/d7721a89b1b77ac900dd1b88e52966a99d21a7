@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "81eb1067",
+  "issue_number": "1398",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1398-adw-81eb1067",
+  "shipped_at": "2026-07-22T16:53:17.437094Z",
+  "plan_phase": "E6-F2-P4",
+  "plan_summary": "Add test-only deterministic NumPy-reference evidence for the finite-step dilution contract without changing production behavior. The suite adds Warp-CPU parity coverage, optional CUDA parity when available, explicit float64 tolerances, and separate exact no-op checks. It keeps delayed Warp imports and avoids claims about new physics, performance, or API changes.",
+  "discovered_context": ""
+}
