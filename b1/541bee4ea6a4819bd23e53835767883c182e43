@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement concrete-only P2 dilution in particula.dynamics.dilution for Aerosol, applying exponential decay to physical particle concentration and both gas groups with strict scalar validation, source-shape exact preflight, and rollback-safe mutation. Add focused tests for success, no-ops, underflow, invalid inputs, atomic failures, and setter rollback; keep it unexported and preserve identities/metadata.",
+  "discovered_context": "",
+  "review_findings": "Review flagged overflow/non-finite helper results needing clear ValueError, rollback safety after partial setter mutation, and updating E6-F1-P2 registry status to completed/shipped."
+}
