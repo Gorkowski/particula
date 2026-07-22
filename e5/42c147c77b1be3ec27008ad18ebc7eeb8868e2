@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d8ba30ba",
+  "issue_number": "1396",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1396-adw-d8ba30ba",
+  "shipped_at": "2026-07-22T14:52:09.272238Z",
+  "plan_phase": "E6-F2-P2",
+  "plan_summary": "Implement issue #1396 P2 direct GPU dilution: add `dilution_step_gpu` as a fixed-shape in-place kernel that applies `exp(-alpha * time_step)` to particle and gas concentrations while preserving caller-owned Warp containers and protected fields. Keep the P1 metadata contract and P3 deferrals intact, document the shipped low-level API, and extend co-located tests for scalar and per-box coefficients, no-op behavior, zero-extent cases, and identity preservation.",
+  "discovered_context": ""
+}
