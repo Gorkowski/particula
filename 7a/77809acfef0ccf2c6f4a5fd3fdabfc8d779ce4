@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "a358959c",
+  "issue_number": "1395",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1395-adw-a358959c",
+  "shipped_at": "2026-07-22T13:37:15.378900Z",
+  "plan_phase": "E6-F2-P1",
+  "plan_summary": "Implement E6-F2 P1 of the GPU dilution contract in a new concrete kernel module. The work freezes the scalar and per-box coefficient input rules, preserves identity returns, and explicitly defers kernel launch, mutation, and full state validation to later phases. Co-located tests lock the public signature, rejection order, no-write behavior, and zero-box handling.",
+  "discovered_context": "No recent messages | Plan centers on `particula/gpu/kernels/dilution.py` and `particula/gpu/kernels/tests/dilution_test.py` | E6-F1 scalar dilution contract and future `c_new = c * exp(-alpha * time_step)` update are the reference behavior"
+}
