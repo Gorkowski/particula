@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f3e9d87c",
+  "issue_number": "1397",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1397-adw-f3e9d87c",
+  "shipped_at": "2026-07-22T15:54:31.486342Z",
+  "plan_phase": "E6-F2-P3",
+  "plan_summary": "Harden `dilution_step_gpu` with deterministic, read-only preflight so invalid host inputs fail before any private allocation, kernel launch, or particle/gas mutation. Preserve the existing P1 signature and P2 `c_new = c * exp(-alpha * time_step)` behavior for valid calls; kernel-failure rollback and CPU/Warp parity remain out of scope.",
+  "discovered_context": ""
+}
