@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "57da3bce",
+  "issue_number": "1403",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1403-adw-57da3bce",
+  "shipped_at": "2026-07-23T04:51:57.275288Z",
+  "plan_phase": "E6-F3-P3",
+  "plan_summary": "Add the first direct GPU wall-loss input boundary for issue #1403. Introduce a frozen neutral wall-loss configuration and a write-free P3 preflight API that validates configuration, particle schemas, environment inputs, and RNG metadata without coefficient assembly, stochastic removal, RNG initialization, or particle mutation.",
+  "discovered_context": ""
+}
