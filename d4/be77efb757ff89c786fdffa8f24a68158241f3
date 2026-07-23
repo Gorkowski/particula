@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement P5 caller-owned persistent RNG lifecycle for direct neutral GPU wall loss. Positive-time calls should use a private per-call RNG buffer when omitted, or mutate a supplied same-device `(n_boxes,)` `wp.uint32` sidecar in place, with `initialize_rng=True` as the only reset path. Tests and docs should cover sequential per-box consumption, zero-time no-op behavior, and ownership/atomicity guarantees.",
+  "discovered_context": "",
+  "review_findings": "State contains redacted review feedback and findings covering the P5 RNG lifecycle, sequential per-box consumption, explicit reset semantics, and the required test/doc updates."
+}
