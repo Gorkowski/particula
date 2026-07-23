@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "c1eab653",
+  "issue_number": "1401",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1401-adw-c1eab653",
+  "shipped_at": "2026-07-23T02:30:24.770362Z",
+  "plan_phase": "E6-F3-P1",
+  "plan_summary": "This phase ports and validates reusable neutral fp64 GPU transport primitives into the canonical particle-properties module, with no wall-loss assembly or CPU behavior changes. It moves shared transport helpers, adds Debye and x_coth_x geometry factors, and updates tests, consumers, and exports to the new import surface. The work also preserves existing gas-property behavior while expanding parity and edge-case coverage.",
+  "discovered_context": "",
+  "review_findings": "Redacted review_feedback and review_findings are present in state; details are unavailable in this snapshot."
+}
