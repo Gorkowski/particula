@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "7dd46c50",
+  "issue_number": "1411",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1411-adw-7dd46c50",
+  "shipped_at": "2026-07-23T15:37:36.257752Z",
+  "plan_phase": "E6-F4-P3",
+  "plan_summary": "Implement P3 private fp64 Warp helpers for charged wall-loss physics. Add geometry-scale resolution, signed spherical/rectangular electric-field resolution, electric-field drift, and final coefficient composition, while keeping CPU physics, configuration boundaries, RNG behavior, and direct-kernel integration unchanged.",
+  "discovered_context": ""
+}
