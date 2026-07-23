@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b600bcfc",
+  "issue_number": "1413",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1413-adw-b600bcfc",
+  "shipped_at": "2026-07-23T18:18:48.055618Z",
+  "plan_phase": "E6-F4-P5",
+  "plan_summary": "Add regression evidence for the existing charged direct GPU wall-loss boundary without changing production code. Focus on deterministic coefficient parity, zero-charge fallback and ownership/no-op regressions, and frozen exact-binomial survival validation across spherical and rectangular charged configurations. Tests stay module-local in wall_loss_test.py and wall_loss_parity_test.py, with Warp CPU as the baseline and CUDA optional.",
+  "discovered_context": ""
+}
