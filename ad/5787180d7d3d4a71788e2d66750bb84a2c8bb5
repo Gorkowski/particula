@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "adw_id": "aa2065ed",
+  "issue_number": "1402",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1402-adw-aa2065ed",
+  "shipped_at": "2026-07-23T03:36:10.292195Z",
+  "plan_phase": "E6-F3-P2"
+}
