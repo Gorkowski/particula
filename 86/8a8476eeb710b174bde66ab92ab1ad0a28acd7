@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement fp64 Warp helpers and parity tests for image-charge wall-loss physics: a Coulomb self-potential ratio helper and an image-charge enhancement helper. The work targets GPU dynamic wall-loss utilities and adds independent NumPy/Warp coverage for signed, zero, and clipping-domain lanes while keeping direct-step integration deferred.",
+  "architecture_notes": "Adds concrete device-side helper functions only; no public exports, validation path, or wall-loss kernel composition changes are included. The design keeps CPU authority with existing wall-loss math and passes physical constants as fp64 arguments into future integration layers.",
+  "discovered_context": ""
+}
