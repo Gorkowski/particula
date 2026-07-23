@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "747bd868",
+  "issue_number": "1406",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1406-adw-747bd868",
+  "shipped_at": "2026-07-23T08:59:15.771650Z",
+  "plan_phase": "E6-F3-P6",
+  "plan_summary": "Add a Warp-backed, test-only parity suite for the completed direct neutral wall-loss step. The suite compares deterministic fp64 coefficients against CPU system-state equations and adds statistical survival checks, while leaving transport physics, RNG lifecycle, preflight, mutation, and public exports unchanged. The new coverage is collection-safe when Warp/CUDA are unavailable and keeps the lazy wall_loss_step_gpu export and concrete-module-only config boundary intact.",
+  "discovered_context": ""
+}
