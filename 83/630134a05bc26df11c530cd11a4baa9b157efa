@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "5f0189c0",
+  "issue_number": "1412",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1412-adw-5f0189c0",
+  "shipped_at": "2026-07-23T17:01:19.960411Z",
+  "plan_phase": "E6-F4-P4",
+  "plan_summary": "Implement charged mode inside wall_loss_step_gpu by wiring private image-charge and electric-field drift helpers into fixed-shape GPU wall-loss dispatch. Preserve the neutral path, frozen preflight, caller-owned charge/RNG semantics, and the existing no-hidden-transfer contract while adding geometry-specific charged kernels for spherical and rectangular execution. Update docs and tests so nonzero charge, zero-charge fallback, vector ownership, preflight atomicity, and charged overflow behavior are covered.",
+  "discovered_context": ""
+}
