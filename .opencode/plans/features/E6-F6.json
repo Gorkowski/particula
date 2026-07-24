@@ -99,11 +99,11 @@
     {
       "id": "E6-F6-P6",
       "title": "Validate sparse, full, and over-capacity conservation across CPU and Warp",
-      "status": "Not Started",
+      "status": "Shipped",
       "size": "S",
       "issue_number": null,
       "start_date": null,
-      "completion_date": null,
+      "completion_date": "2026-07-24",
       "estimates": null,
       "actuals": null,
       "notes_ref": null,
