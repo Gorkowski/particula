@@ -5,6 +5,9 @@
 - **E6-F5 / T5 is mandatory.** E6-F6 consumes its authoritative active/free
   truth table, ascending free indices, exact int32 counts, deterministic
   activation, fixed-shape ownership, and failure-before-mutation contract.
+- **E6-F6-P5 (#1426) is currently blocked pending E6-F5.** No P5
+  implementation is present; resume only after E6-F5 supplies the authoritative
+  discovery-to-activation boundary.
 - Shipped E5 coagulation supplies fixed-slot merge/deactivation, charge
   conservation, persistent-state, and Warp validation conventions.
 - `ParticleData`/`WarpParticleData`, NumPy, and Warp are runtime foundations.

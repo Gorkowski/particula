@@ -65,7 +65,10 @@ validation; P7 documents only the validated policy, precedence, and bounds.
     or runnable API.
 
 - [ ] **E6-F6-P5:** Enforce independent controls, resampling-first precedence, and fail-closed validation
-  - Issue: TBD | Size: S | Status: Not Started
+  - Issue: #1426 | Size: S | Status: Blocked pending E6-F5
+  - Blocker: The authoritative E6-F5 discovery-to-activation boundary is not
+    present in this worktree. P5 must not duplicate discovery, free-slot
+    classification, activation, or a parallel orchestration boundary.
   - Goal: Compose E6-F5 discovery with exhaustion planning so resampling is attempted first and scaling is only a configured fallback.
   - Files: CPU/GPU exhaustion and slot-management modules plus their tests
   - Tests: Four control combinations, resampling-sufficient and fallback cases, both-off pre-mutation error, unsatisfiable request, diagnostics, and no silent truncation.
