@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Issue #1425 adds an opt-in, concrete-only P4 representative-volume scaling API for CPU and Warp. It validates all sidecars and particle state up front, then scales only selected rows by the resolved factor, updating volume, concentration, and provisional demand while leaving protected and unselected state unchanged.",
+  "discovered_context": ""
+}
