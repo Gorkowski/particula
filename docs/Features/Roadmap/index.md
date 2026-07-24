@@ -13,7 +13,7 @@ schedule.
 - **Particle and gas data containers**: Complete migration from legacy facades
   toward explicit `ParticleData` and `GasData` containers.
 - **GPU process completeness**: Deliver dilution, wall loss, nucleation, and
-  fixed-slot particle management through
+  fixed-capacity slot management through
   [Epic F](data-oriented-gpu.md#epic-f-gpu-process-completeness).
 - **GPU-resident user workflows**: Prepare backend selection and high-level
   simulation integration for on-deck
@@ -140,7 +140,7 @@ meets its exit bar, the next pending epic in the sequence becomes active.
 
 - [Epic F: GPU Process Completeness](data-oriented-gpu.md#epic-f-gpu-process-completeness)
   is the next and currently active epic. It adds CPU/GPU dilution, GPU wall
-  loss, CPU/GPU nucleation, and fixed-slot activation and exhaustion handling
+  loss, CPU/GPU nucleation, and fixed-capacity slot activation and exhaustion handling
   needed for complete GPU-resident timesteps.
 
 ### E5 roadmap inventory

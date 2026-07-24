@@ -205,7 +205,7 @@ print(result)
   reusable CPU plan. Zero-demand boxes are write-free; planning failure skips
   the commit and preserves particles, while rollback after commit launch is not
   promised.
-- GPU wall loss is a direct, caller-managed fixed-slot boundary imported with
+- GPU wall loss is a direct, caller-managed fixed-capacity slot boundary imported with
     `from particula.gpu.kernels import wall_loss_step_gpu`. Construct
     `NeutralWallLossConfig` only from `particula.gpu.kernels.wall_loss`; it is
     deliberately not re-exported from `particula.gpu.kernels` or `particula.gpu`.
