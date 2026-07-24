@@ -126,6 +126,18 @@ def test_both_disabled_exhaustion_fails_without_mutating_inputs() -> None:
     assert _sidecar_snapshots(inputs) == snapshot
 
 
+def test_insufficient_resampling_without_scaling_fails_without_writes() -> None:
+    """Insufficient resampling fails closed when scaling is disabled."""
+    inputs = _inputs([4], [2], [1], [[0, 2, -1, -1]])
+    snapshot = _sidecar_snapshots(inputs)
+    with pytest.raises(
+        ValueError,
+        match="exhaustion policy cannot represent requested capacity",
+    ):
+        resolve_exhaustion(inputs, ExhaustionControls(True, False))
+    assert _sidecar_snapshots(inputs) == snapshot
+
+
 def test_later_invalid_box_blocks_earlier_resolution_and_mutation() -> None:
     """All boxes validate before a successful plan can be returned."""
     inputs = _inputs([1, 1], [2, 2], [0, 0], [[0, 1, -1], [2, 1, -1]])
