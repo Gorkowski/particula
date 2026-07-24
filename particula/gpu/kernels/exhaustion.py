@@ -126,7 +126,7 @@ def _radius(
 def _less_source(
     masses: wp.array3d(dtype=wp.float64),
     charge: wp.array2d(dtype=wp.float64),
-    density: wp.array(dtype=wp.float64),
+    source_radii: wp.array2d(dtype=wp.float64),
     box: Any,
     left: Any,
     right: Any,
@@ -137,8 +137,8 @@ def _less_source(
         return False
     if right < 0:
         return True
-    left_radius = _radius(masses, density, box, left, species_count)
-    right_radius = _radius(masses, density, box, right, species_count)
+    left_radius = source_radii[box, left]
+    right_radius = source_radii[box, right]
     if left_radius != right_radius:
         return left_radius < right_radius
     left_total = wp.float64(0.0)
@@ -318,6 +318,17 @@ def _scan_particle_values(  # noqa: C901
 
 
 @wp.kernel
+def _scan_density(
+    density: wp.array(dtype=wp.float64),
+    invalid: wp.array(dtype=wp.int32),
+) -> None:
+    """Validate global density when a batch has no particle rows."""
+    density_index = wp.tid()
+    if not wp.isfinite(density[density_index]) or density[density_index] <= 0.0:
+        wp.atomic_add(invalid, 0, 1)
+
+
+@wp.kernel
 def _scan_slot_state(
     masses: wp.array3d(dtype=wp.float64),
     concentration: wp.array2d(dtype=wp.float64),
@@ -443,7 +454,7 @@ def _plan_resampling(  # noqa: C901, PLR0915
                     swap = _less_source(
                         masses,
                         charge,
-                        density,
+                        source_radii,
                         box,
                         right if ascending else left,
                         left if ascending else right,
@@ -779,7 +790,7 @@ def _scan_representative_volume_scaling(  # noqa: C901
 
 
 @wp.kernel
-def _scan_density(
+def _scan_density_p4(
     density: wp.array(dtype=wp.float64),
     status: wp.array(dtype=wp.int32),
 ) -> None:
@@ -942,7 +953,7 @@ def _validate_buffers(
                 raise ValueError("resampling arrays must not overlap")
 
 
-def resampling_step_gpu(  # noqa: PLR0913
+def resampling_step_gpu(  # noqa: C901, PLR0913
     particles: Any,
     required_release_counts: Any,
     buffers: ResamplingBuffers,
@@ -1046,9 +1057,19 @@ def resampling_step_gpu(  # noqa: PLR0913
             required_release_counts,
         ],
     )
-    if b == 0:
-        return particles
     invalid = wp.zeros(1, dtype=wp.int32, device=device)
+    if b == 0:
+        wp.launch(
+            _scan_density,
+            dim=s,
+            inputs=[density, invalid],
+            device=device,
+        )
+        if invalid.numpy()[0] != 0:
+            raise ValueError(
+                "particles or required_release_counts have invalid values"
+            )
+        return particles
     wp.launch(
         _scan_particle_values,
         dim=(b, n, s),
@@ -1243,7 +1264,7 @@ def representative_volume_scaling_step_gpu(  # noqa: C901, PLR0913
                 )
     status = wp.zeros(2, dtype=wp.int32, device=device)
     wp.launch(
-        _scan_density,
+        _scan_density_p4,
         dim=s,
         inputs=[density, status],
         device=device,

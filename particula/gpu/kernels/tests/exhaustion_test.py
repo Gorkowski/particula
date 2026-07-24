@@ -356,6 +356,43 @@ def test_resampling_empty_box_with_zero_demand_is_write_free() -> None:
     _assert_snapshot(snapshots, particles, count_container, buffers)
 
 
+def test_resampling_empty_batch_validates_density_before_write_free_return() -> (
+    None
+):
+    """An empty batch validates global density and preserves valid caller data."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    masses = np.empty((0, 1, 1), dtype=np.float64)
+    concentration = np.empty((0, 1), dtype=np.float64)
+    charge = np.empty((0, 1), dtype=np.float64)
+    particles, counts, buffers = _custom_state(
+        masses,
+        concentration,
+        charge,
+        np.array([1.0], dtype=np.float64),
+        np.empty(0, dtype=np.int32),
+    )
+    snapshots = _snapshot(particles, SimpleNamespace(counts=counts), buffers)
+    assert resampling_step_gpu(particles, counts, buffers) is particles
+    _assert_snapshot(
+        snapshots, particles, SimpleNamespace(counts=counts), buffers
+    )
+
+    particles, counts, buffers = _custom_state(
+        masses,
+        concentration,
+        charge,
+        np.array([np.nan], dtype=np.float64),
+        np.empty(0, dtype=np.int32),
+    )
+    snapshots = _snapshot(particles, SimpleNamespace(counts=counts), buffers)
+    with pytest.raises(ValueError, match="invalid values"):
+        resampling_step_gpu(particles, counts, buffers)
+    _assert_snapshot(
+        snapshots, particles, SimpleNamespace(counts=counts), buffers
+    )
+
+
 def test_resampling_accepts_maximum_valid_release_count() -> None:
     """Releasing active-count minus one leaves exactly one retained slot."""
     from particula.gpu.kernels.exhaustion import resampling_step_gpu

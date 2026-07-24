@@ -508,6 +508,12 @@ def _validate_particle_schema(  # noqa: C901
         raise ValueError("density must have shape (S,)")
     if particles.volume.shape != (box_count,):
         raise ValueError("volume must have shape (B,)")
+    for index, (name, values, _) in enumerate(arrays):
+        for other_name, other_values, _ in arrays[index + 1 :]:
+            if np.shares_memory(values, other_values):
+                raise ValueError(
+                    f"{name} and {other_name} must not share writable memory"
+                )
     return particles
 
 
@@ -631,6 +637,12 @@ def _validate_p1_plan(  # noqa: C901
                 )
             ):
                 raise ValueError("invalid deferred resampling P1 sentinel")
+        elif box_plan.policy_code == POLICY_SCALE_DEFERRED:
+            if box_plan.release_indices or not (
+                type(box_plan.scale_factor) is float
+                and np.isnan(box_plan.scale_factor)
+            ):
+                raise ValueError("invalid deferred scaling P1 sentinel")
         elif (
             box_plan.required_release_count != 0
             or box_plan.release_indices

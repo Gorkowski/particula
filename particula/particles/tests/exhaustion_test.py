@@ -476,6 +476,76 @@ def test_resampling_multibox_and_zero_release_are_fixed_capacity() -> None:
     assert particles.masses.shape == (2, 5, 2)
 
 
+def test_resampling_skips_valid_scaling_deferred_p1_rows() -> None:
+    """P2 plans resampling rows while accepting scaling-deferred sentinels."""
+    particles = _resampling_particles(2)
+    resampling = _resampling_p1(2).box_plans[0]
+    scaling = ExhaustionBoxPlan(
+        3, 3, 2, 0, POLICY_SCALE_DEFERRED, (), (), float("nan")
+    )
+    plan = plan_resampling(particles, ExhaustionPlan((resampling, scaling)))
+    assert plan.box_plans[0].released_indices == (2, 3)
+    assert plan.box_plans[1] == _ResamplingBoxPlan((), (), (), (), ())
+
+
+@pytest.mark.parametrize(
+    "scaling",
+    [
+        ExhaustionBoxPlan(
+            3, 3, 2, 0, POLICY_SCALE_DEFERRED, (), (1,), float("nan")
+        ),
+        ExhaustionBoxPlan(3, 3, 2, 0, POLICY_SCALE_DEFERRED, (), (), 1.0),
+    ],
+)
+def test_resampling_rejects_malformed_scaling_deferred_p1_rows(
+    scaling: ExhaustionBoxPlan,
+) -> None:
+    """P2 continues to reject malformed deferred-scaling sentinels."""
+    with pytest.raises(ValueError, match="deferred scaling P1 sentinel"):
+        plan_resampling(_resampling_particles(), ExhaustionPlan((scaling,)))
+
+
+@pytest.mark.parametrize("field_name", ["charge", "volume"])
+def test_resampling_rejects_aliased_writable_particle_fields(
+    field_name: str,
+) -> None:
+    """P2 rejects writable-field aliases before planning or commit mutation."""
+    particles = _resampling_particles()
+    if field_name == "charge":
+        particles.charge = particles.concentration.view()
+    else:
+        particles = ParticleData(
+            masses=particles.masses,
+            concentration=particles.concentration,
+            charge=particles.charge,
+            density=np.array([1000.0, 2000.0], dtype=np.float64),
+            volume=np.array([1000.0], dtype=np.float64),
+        )
+        particles.volume = particles.density[:1]
+    snapshot = tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+        )
+    )
+    with pytest.raises(ValueError, match="must not share writable memory"):
+        plan_resampling(particles, _resampling_p1())
+    assert snapshot == tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+        )
+    )
+
+
 def test_resampling_rejects_invalid_state_and_atomic_later_plan_failure() -> (
     None
 ):
