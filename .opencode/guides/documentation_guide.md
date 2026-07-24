@@ -67,6 +67,12 @@ help users understand model behavior or equations.
 - New validation rules or testing workflows.
 - Architecture changes affecting module boundaries.
 
+Concrete modules that are intentionally unexported are implementation-boundary
+APIs, not user-facing features. Document their bounded contract in module
+docstrings and colocated tests when needed, but do not add them to public API
+references, homepage navigation, or user-facing examples unless they become a
+supported public interface.
+
 ## Link Hygiene
 
 Prefer relative links within the repository. After documentation changes, run

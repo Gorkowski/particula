@@ -1,4 +1,4 @@
-"""Public GPU kernel entry points.
+"""Expose supported public GPU direct-kernel entry points lazily.
 
 Import direct low-level step functions from this package:
 
@@ -7,10 +7,12 @@ Import direct low-level step functions from this package:
         activate_slots_gpu,
         condensation_step_gpu,
         dilution_step_gpu,
+        resampling_step_gpu,
         wall_loss_step_gpu,
     )
 
-Lower-level helper kernels remain importable from their concrete modules.
+Lower-level helper kernels and concrete planning records, including
+``ResamplingBuffers``, remain importable only from their concrete modules.
 """
 
 from __future__ import annotations
@@ -23,6 +25,7 @@ __all__ = [
     "activate_slots_gpu",
     "condensation_step_gpu",
     "dilution_step_gpu",
+    "resampling_step_gpu",
     "wall_loss_step_gpu",
 ]
 
@@ -31,6 +34,7 @@ _SYMBOL_TO_MODULE = {
     "activate_slots_gpu": "particula.gpu.kernels.slot_management",
     "condensation_step_gpu": "particula.gpu.kernels.condensation",
     "dilution_step_gpu": "particula.gpu.kernels.dilution",
+    "resampling_step_gpu": "particula.gpu.kernels.exhaustion",
     "wall_loss_step_gpu": "particula.gpu.kernels.wall_loss",
 }
 

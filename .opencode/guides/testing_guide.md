@@ -1,7 +1,7 @@
 # Testing Guide
 
 **Project:** particula  
-**Last Updated:** 2026-07-23
+**Last Updated:** 2026-07-24
 
 particula uses pytest as its primary testing framework. Tests should be close to
 the code they validate and should exercise scientific correctness, edge cases,
@@ -183,6 +183,7 @@ pytest particula/gpu/tests/cuda_availability_test.py -q
 pytest particula/gpu/kernels/tests/environment_test.py -q
 pytest particula/gpu/kernels/tests/thermodynamics_test.py -q -Werror
 pytest particula/gpu/kernels/tests/dilution_test.py -q -Werror
+pytest particula/gpu/kernels/tests/exhaustion_test.py -q -Werror
 pytest particula/gpu/kernels/tests/slot_management_test.py -q -Werror
 pytest particula/gpu/kernels/tests/wall_loss_test.py particula/gpu/kernels/tests/wall_loss_parity_test.py -q -Werror
 pytest particula/gpu/kernels/tests/condensation_test.py -q -Werror
@@ -265,6 +266,20 @@ Keep particle and gas parity assertions separate, preserve caller-owned per-box
 coefficient identity and values, and use exact equality for no-op checks. This
 is direct-kernel test evidence only; it does not establish CPU-runnable parity.
 
+GPU resampling coverage belongs in
+`particula/gpu/kernels/tests/exhaustion_test.py`. Mark device cases `warp` and
+`gpu_parity`, defer Warp imports, and import only `resampling_step_gpu` from
+`particula.gpu.kernels`; `ResamplingBuffers` remains concrete-module-only at
+`particula.gpu.kernels.exhaustion`. Test against an independent NumPy P2
+equal-weight remapping oracle, including stable source ordering, original-slot
+retention/release, diagnostics, and separate tight inventory conservation.
+Preflight failures must preserve every caller array. Planning failures may alter
+documented buffer lanes but must skip commit and preserve particles; all-zero
+demand and empty-box calls must be exact write-free no-ops. Warp CPU is the
+baseline and CUDA is optional with clean skips. Keep scaling evidence marked
+`slow`, `performance`, and `benchmark`, behind `--benchmark`; it must not imply
+a CPU fallback, resizing, policy-resolution, runnable, or broad performance
+claim.
 GPU slot activation P4 coverage belongs in
 `particula/gpu/kernels/tests/slot_management_test.py`. Defer Warp imports so
 missing Warp skips cleanly, import only `activate_slots_gpu` from

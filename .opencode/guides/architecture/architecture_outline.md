@@ -8,14 +8,21 @@ strategies, and focused particle-domain helpers.
 ### particula/particles/
 
 **Key Components:**
+- `exhaustion.py` - Concrete, deliberately unexported CPU P1 read-only
+  fixed-shape capacity exhaustion planning boundary, P2 validated resampling
+  apply commit, and P4 direct all-box-preflighted representative-volume scaling
+  commit with caller-owned sidecars and float64 weighted
+  inventory accounting. P1 validates every box before resolution, applies
+  resampling-first deferred-policy selection, and returns immutable plans
+  without mutating state. P2 and P4 each own their separate CPU commit
+  boundaries; the module owns no GPU work or container schema.
+- `distribution_strategies/` - Particle distribution implementations
 - `particle_data.py` - Fixed-shape CPU particle-data container and conversion
   helpers
 - `slot_management.py` - CPU-only fixed-slot classification, discovery, and
   direct-import activation; exports only `get_slot_diagnostics` through
   `particula.particles`. Activation preserves fixed capacity and excludes
   `ParticleData` API changes, GPU support, and a top-level particles export
-- `distribution_strategies/` - Particle distribution representations and
-  update strategies
 - `properties/` - Particle property calculations
 - `tests/` - Test coverage
 
@@ -46,6 +53,16 @@ private helpers for cross-kernel setup.
 - `dilution.py` - Concrete P1 GPU dilution input boundary; validation scans may
   allocate or launch, but rejected calls have no update-kernel launch or caller
   mutation
+- `exhaustion.py` - Direct Warp fixed-capacity equal-weight resampling boundary;
+  `resampling_step_gpu` remains the only exhaustion package export. Resampling
+  consumes explicit per-box release counts, uses caller-owned planning and
+  diagnostic buffers, and atomically commits only after all boxes pass
+  diagnostics. The concrete-only P4 representative-volume scaling helper uses
+  caller-owned sidecars and a separate all-box-preflighted scaling commit; it
+  adds no policy, transfer, resizing, or runnable behavior. Only
+  `resampling_step_gpu` is exported; `ResamplingBuffers`, P4 sidecars, status
+  codes, and kernels remain concrete-module-only. Neither boundary provides a
+  runnable, policy resolution, CPU fallback or transfer, or resizing.
 - `wall_loss.py` - Concrete fixed-slot neutral/charged GPU wall-loss boundary;
   owns immutable host configuration, frozen preflight, bounded fixed-slot
   removal, and the external caller-owned per-box RNG sidecar lifecycle. Charged

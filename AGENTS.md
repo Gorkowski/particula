@@ -503,6 +503,91 @@ Focused P1–P4 contract run:
 pytest particula/gpu/kernels/tests/dilution_test.py -q -Werror
 ```
 
+### GPU resampling direct-kernel contract
+
+- Import the direct low-level entry point with
+  `from particula.gpu.kernels import resampling_step_gpu`.
+- It performs fixed-capacity, deterministic P2 equal-weight remapping from
+  already-resolved same-device per-box release counts. It does not resolve an
+  exhaustion policy and has no CPU fallback or transfer, resizing, or
+  `Runnable` wrapper.
+- `ResamplingBuffers` is intentionally concrete-module-only at
+  `particula.gpu.kernels.exhaustion`. Its caller-owned same-device Warp arrays
+  provide planning, diagnostic, and sorting storage; it is neither re-exported
+  by `particula.gpu.kernels` nor a reusable CPU plan.
+- Read-only preflight validates particle/count/buffer schemas, physical state,
+  and nonaliasing. For nonzero demand, planning may overwrite documented buffer
+  lanes and diagnostics; any planning failure raises before the single commit
+  and leaves particles unchanged. Rollback is not promised after commit launch.
+- Zero-demand boxes are write-free. A nonzero count must be between `0` and
+  `active_count - 1`, where active means positive concentration. Successful
+  remapping retains and releases original active slots in ascending slot order.
+- The planner uses caller-owned scratch and a deterministic bitonic sort with
+  `O(B * N * log2(N)^2)` compare-exchange work; other planning and commit work
+  is `O(B * N * S)`. This is a bounded-work contract, not a broad performance
+  claim.
+- Parity tests use an independent NumPy oracle, Warp CPU as the baseline, and
+  optional CUDA rows that skip cleanly when unavailable. Benchmark coverage is
+  opt-in behind `--benchmark`.
+
+Focused contract runs:
+
+```bash
+pytest particula/gpu/kernels/tests/exhaustion_test.py -q -Werror
+pytest particula/gpu/kernels/tests/exhaustion_test.py -q \
+  --cov=particula.gpu.kernels.exhaustion --cov-report=term-missing \
+  --cov-fail-under=80 -Werror
+pytest particula/gpu/tests/kernel_exports_test.py -q -Werror
+```
+
+### GPU representative-volume scaling P4 contract
+
+- Import the concrete-only direct helper with
+  `from particula.gpu.kernels.exhaustion import representative_volume_scaling_step_gpu`.
+  It is not re-exported by `particula.gpu.kernels` or `particula.gpu`.
+- Callers own same-device, contiguous sidecars: float64 `(B,)` provisional
+  demand, requested/minimum scales, minimum volumes, and resolved-scale output;
+  plus an int32 `(B,)` scaling-required flag. Sidecars must not overlap each
+  other or particle fields.
+- Read-only preflight validates all physical state and sidecars before writing.
+  It performs one bounded status readback; rejected calls leave every
+  caller-owned field and sidecar unchanged. Even empty box inputs validate
+  global density state before their write-free return.
+- Selection is captured before mutation. Selected rows alone scale volume,
+  every concentration lane, and provisional demand; `resolved_scale` records
+  the selected factor or `1.0`. Successful calls are asynchronous, so callers
+  synchronize explicitly before reading state.
+- Policy resolution, exports, host/device transfers, resizing, a runnable,
+  CPU fallback, and broader orchestration remain deferred.
+
+### Slot exhaustion policy boundaries
+
+- CPU `resolve_exhaustion()` is planning only: `ExhaustionControls()` defaults
+  to resampling enabled and representative-volume scaling disabled. For
+  exhausted capacity, sufficiently releasable enabled resampling takes
+  precedence; enabled scaling is its fallback. Neither viable policy raises
+  before returning a plan, and source demand is never silently truncated.
+- E6-F5 ships authoritative slot discovery, free-index classification, and
+  activation on the CPU and direct-Warp boundaries. E6-F6 ships read-only
+  exhaustion resolution plus CPU/Warp resampling and representative-volume
+  scaling primitives. No shipped process composes those primitives with source
+  construction, gas depletion, or a high-level nucleation loop.
+- Direct Warp P2 and P4 primitives consume caller-owned same-device state;
+  callers synchronize successful asynchronous P4 work before reading results.
+  See [Fixed-Capacity Slot Exhaustion Primitives](docs/Features/slot_exhaustion_policies.md)
+  for imports, schemas, diagnostics, and mutation boundaries.
+- Dynamic allocation, resizing, compaction, hidden transfers or CPU fallback,
+  runnable/scheduler/backend integration, graph capture, autodiff, performance
+  guarantees, and exact CPU/Warp/CUDA RNG replay remain outside this contract.
+
+Focused contract runs:
+
+```bash
+pytest particula/particles/tests/exhaustion_test.py \
+  particula/gpu/kernels/tests/exhaustion_test.py -q -Werror
+mkdocs build --strict
+```
+
 ### GPU wall-loss direct-kernel contract
 
 - Import the direct low-level boundary with
@@ -820,6 +905,6 @@ adw workflow list         # List available workflows
 
 ---
 
-**Last Updated:** 2026-07-18  
+**Last Updated:** 2026-07-24  
 **For questions about ADW:** See `.opencode/guides/README.md`  
 **For questions about particula:** See main `readme.md`

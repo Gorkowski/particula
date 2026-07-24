@@ -123,7 +123,7 @@ aerosol = combined.execute(aerosol, time_step=60.0)
 
 ## Direct GPU charged wall loss
 
-The GPU boundary is a low-level, caller-managed fixed-slot operation. It is
+The GPU boundary is a low-level, caller-managed fixed-capacity slot operation. It is
 not an extension of `WallLoss`, does not create a runnable, and does not
 transfer data between CPU and Warp. Import only the direct step from the kernel
 package; the configuration intentionally remains a concrete-module import:
@@ -389,7 +389,7 @@ This pattern matches how other dynamics strategies are combined in chamber simul
 - **Hands-on guide**: [Wall loss tutorial](../Examples/Chamber_Wall_Loss/Notebooks/Wall_Loss_Tutorial.ipynb)
 - **Notebooks**: [Spherical wall loss strategy](../Examples/Chamber_Wall_Loss/Notebooks/Spherical_Wall_Loss_Strategy.ipynb)
 - **Dynamics overview**:
-  [Wall loss strategies](../index.md#feature-deep-dives)
+  [Wall loss strategies](../index.md#feature-guides)
 
 ## FAQ
 

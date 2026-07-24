@@ -211,9 +211,20 @@ print(result)
    skips cleanly when unavailable. This is tolerance-based evidence, not
    bitwise parity. GPU runnables, orchestration, resizing, graph capture,
    autodiff, and performance claims remain deferred. See
-    [Data containers and GPU foundations](Features/data-containers-and-gpu-foundations.md)
-    for the complete contract.
-- GPU wall loss is a direct, caller-managed fixed-slot boundary imported with
+     [Data containers and GPU foundations](Features/data-containers-and-gpu-foundations.md)
+     for the complete contract.
+- GPU resampling is a direct fixed-capacity equal-weight remapping operation
+  imported with `from particula.gpu.kernels import resampling_step_gpu`. It
+  consumes already-resolved per-box release counts and caller-owned Warp data;
+  read-only preflight and planning diagnostics must succeed before one commit
+  mutates particle state. It has no policy resolution, CPU fallback or
+  transfers, resizing, or `Runnable` wrapper. The required `ResamplingBuffers`
+  record is deliberately concrete-module-only at
+  `particula.gpu.kernels.exhaustion`, so it is not a general top-level API or a
+  reusable CPU plan. Zero-demand boxes are write-free; planning failure skips
+  the commit and preserves particles, while rollback after commit launch is not
+  promised.
+- GPU wall loss is a direct, caller-managed fixed-capacity slot boundary imported with
     `from particula.gpu.kernels import wall_loss_step_gpu`. Construct
     `NeutralWallLossConfig` only from `particula.gpu.kernels.wall_loss`; it is
     deliberately not re-exported from `particula.gpu.kernels` or `particula.gpu`.

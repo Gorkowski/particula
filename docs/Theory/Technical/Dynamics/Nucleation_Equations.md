@@ -177,8 +177,23 @@ dCᵢ/dt |_nucleation = − J × n*ᵢ × (molar massᵢ / N_A)
 Each nucleation event moves a small but nonzero mass of each participating vapor into the particle phase, so number production and gas depletion must be applied together to conserve mass. Numerical treatment differs by representation:
 
 - **Binned/sectional:** add **J × Δt** particles (and the corresponding mass) to the smallest bin each timestep.
-- **Particle-resolved with fixed slots:** activate inactive particle slots with the injection-size mass and composition. Because nucleation rates can be large, one computational particle typically represents many real particles via its concentration/weighting factor; the number of slots activated per step and the weight assigned to each is a resolution decision. When inactive slots run out, a resampling or volume-scaling policy is required.
+- **Particle-resolved with fixed-capacity slots:** activate inactive particle slots with the injection-size mass and composition. Because nucleation rates can be large, one computational particle typically represents many real particles via its concentration/weighting factor; the number of slots activated per step and the weight assigned to each is a resolution decision. When inactive slots run out, a resampling or volume-scaling policy is required.
 - **Stiffness coupling:** freshly nucleated particles sit at the fast-equilibration end of the condensation stiffness range, so the nucleation source interacts directly with the time-integration scheme chosen for condensation.
+
+### Fixed-capacity primitive boundary
+
+Particula ships bounded CPU slot-exhaustion primitives for planning,
+resampling, and representative-volume scaling, plus direct Warp primitives for
+fixed-shape resampling and representative-volume scaling. Their ownership,
+planning, and mutation boundaries are documented in the
+[Fixed-Capacity Slot Exhaustion Primitives](../../../Features/slot_exhaustion_policies.md).
+
+These are slot-management primitives, not a nucleation process: they do not
+discover free slots, activate slots, construct a particle source, or deplete
+gas. E6-F5 owns authoritative slot discovery and activation, and the blocked
+E6-F6-P5 work will compose that boundary with policy selection. High-level
+nucleation and timestep orchestration remain deferred; see the
+[Data-Oriented Design and GPU Roadmap](../../../Features/Roadmap/data-oriented-gpu.md).
 
 **Implementation status:**
 

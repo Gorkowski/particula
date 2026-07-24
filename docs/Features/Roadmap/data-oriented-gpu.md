@@ -1215,7 +1215,7 @@ Epic D carry-forward walkthrough and ownership record are published.
 
 Add the remaining processes a complete aerosol simulation needs to stay
 GPU-resident between checkpoints — dilution, wall loss, and nucleation —
-plus the fixed-slot particle management that nucleation and graph capture
+ plus the fixed-capacity slot management that nucleation and graph capture
 depend on.
 
 Delivered dilution scope:
@@ -1238,7 +1238,7 @@ Delivered dilution scope:
 Delivered bounded wall-loss P1–P6 scope:
 
 - E6-F3 provides `from particula.gpu.kernels import wall_loss_step_gpu` for
-   direct particle-resolved spherical or rectangular fixed-slot wall loss.
+   direct particle-resolved spherical or rectangular fixed-capacity slot wall loss.
    `NeutralWallLossConfig` remains concrete-module-only at
   `particula.gpu.kernels.wall_loss`. SI inputs are wall eddy diffusivity in
   m²/s, chamber dimensions in m, temperature in K, pressure in Pa, and time in
@@ -1316,6 +1316,13 @@ Delivered bounded wall-loss P1–P6 scope:
   graph capture, differentiability, performance guarantees, and exact RNG
   replay. E6-F9 remains the future integration and closeout work.
 
+Delivered bounded slot-exhaustion primitives are documented in the
+[Fixed-Capacity Slot Exhaustion Primitives](../slot_exhaustion_policies.md): CPU P1
+makes immutable activation-prefix or deferred-policy records, CPU P2 plans and
+commits equal-weight resampling, CPU P4 scales selected rows, and direct Warp
+P2/P4 provide the corresponding caller-owned fixed-shape boundaries. They do
+not discover or activate slots, construct a source, deplete gas, or compose
+runtime policy.
 ### Shipped E6-F5 fixed-slot primitives
 
 - E6-F5 ships matching CPU and direct-Warp fixed-shape slot diagnostics and
@@ -1332,20 +1339,41 @@ Delivered bounded wall-loss P1–P6 scope:
   preflight may launch read-only validation, classification, or workspace
   kernels, but does not mutate caller-owned state before its writer launches;
   it does not promise rollback after a writer has launched.
-- E6-F6 owns exhaustion, resampling, and volume-scaling policy. E6-F7 owns CPU
-  particle-source physics, E6-F8 owns direct-Warp consumption, and E6-F9 owns
-  integration and the direct-step example. These later features do not alter
-  the shipped E6-F5 storage contract.
+- E6-F6 ships exhaustion resolution, resampling, and volume-scaling primitives.
+  E6-F7 owns CPU particle-source physics, E6-F8 owns direct-Warp consumption,
+  and E6-F9 owns integration and the direct-step example. These later features
+  do not alter the shipped fixed-slot storage contract.
 
-Future features:
+Deferred orchestration and physics:
 
-1. E6-F6 exhaustion, resampling, and volume-scaling policy for fixed slots.
-2. E6-F7 CPU nucleation/particle-source physics following the
-   [nucleation equations](../../Theory/Technical/Dynamics/Nucleation_Equations.md)
-   (no nucleation code exists in particula today).
-3. E6-F8 direct-Warp consumption of the source contract (see
-   [Particle Slot Management](#particle-slot-management)).
-4. E6-F9 integration, closeout validation, and a direct-step example.
+1. E6-F7 CPU nucleation/particle-source physics following the
+    [nucleation equations](../../Theory/Technical/Dynamics/Nucleation_Equations.md)
+    (no nucleation code exists in particula today).
+2. GPU nucleation via slot activation (see
+    [Fixed-Capacity Slot Boundary](#fixed-capacity-slot-boundary)).
+3. Source/gas inventory handling and complete-sequence slot-exhaustion
+   validation.
+4. Fixed-shape workflow extensions and the deferred capabilities: dynamic
+   allocation/resizing/compaction, hidden transfers/CPU fallback, high-level
+   runnable/scheduler/backend orchestration, graph capture, autodiff,
+   performance guarantees, and exact CPU/Warp/CUDA RNG replay.
+
+### Fixed-Capacity Slot Boundary
+
+- Use fixed particle slot counts per box for GPU-resident simulations.
+- Represent inactive particle slots as particles with zero mass, zero radius,
+  and zero concentration or count.
+- Avoid dynamic allocation inside timestep kernels. Processes that create new
+  particles, including the planned nucleation process, should activate
+  inactive slots when available.
+- Shipped exhaustion primitives resolve fixed-slot capacity and provide
+  resampling or volume-scaling operations; their caller owns source, gas, and
+  process-level orchestration.
+- Shipped diagnostics track per-box active particle counts while keeping the
+  arrays fixed-shape for GPU kernels and graph capture.
+- Define compaction rules only if needed; inactive zero-mass slots are simpler
+  and graph-friendly.
+
 
 ### Particle Slot Management
 
@@ -1483,8 +1511,8 @@ Candidate GPU process coverage:
 - Validate simple 1D advection and expansion cases against CPU references before
   adding more complex coupling.
 
-Fixed-slot particle management for these loops is defined in
-[Particle Slot Management](#particle-slot-management) under Epic F.
+Fixed-capacity slot management for these loops is defined in
+[Fixed-Capacity Slot Boundary](#fixed-capacity-slot-boundary) under Epic F.
 
 ### Random Number Strategy
 
@@ -1562,6 +1590,9 @@ scaling numbers across box counts plus a recorded memory-budget model.
   a new setup/capture step.
 - Handle changing active particle counts through inactive slots rather than
   resizing arrays.
+- A future graph-captured loop may compose resampling, merging, or volume
+  scaling with authoritative slot management; no shipped loop does so before
+  exhaustion.
 - E6-F6 will define any resampling, merging, or volume-scaling capacity policy
   before a box exhausts inactive particle slots.
 - Keep graph-captured loops focused on repeated timesteps with stable process
@@ -1574,6 +1605,11 @@ re-seeding; explicit initialization happens only during omitted-buffer
 convenience allocation or when `initialize_rng=True` is requested before the
 captured loop or repeated-step run.
 
+For a future graph-captured loop, particle count changes should be represented
+as changes in active slots, not changes in array shape. If a future simulation
+would create more particles than fixed-capacity slots allow, it must use a documented
+fixed-capacity slot boundary and E6-F6-P5 policy-composition boundary; no shipped loop triggers a
+policy before exhaustion.
 For graph capture, particle count changes should be represented as changes in
 active slots, not changes in array shape. If a simulation would create more
 particles than the fixed slots allow, the deferred E6-F6 capacity policy must

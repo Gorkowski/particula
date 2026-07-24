@@ -19,6 +19,7 @@ SUPPORTED_STEP_SYMBOLS = (
     "activate_slots_gpu",
     "condensation_step_gpu",
     "dilution_step_gpu",
+    "resampling_step_gpu",
     "wall_loss_step_gpu",
 )
 
@@ -51,6 +52,7 @@ def test_public_kernels_package_exports_supported_step_function(
     from particula.gpu.kernels.coagulation import coagulation_step_gpu
     from particula.gpu.kernels.condensation import condensation_step_gpu
     from particula.gpu.kernels.dilution import dilution_step_gpu
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
     from particula.gpu.kernels.slot_management import activate_slots_gpu
     from particula.gpu.kernels.wall_loss import wall_loss_step_gpu
 
@@ -59,6 +61,7 @@ def test_public_kernels_package_exports_supported_step_function(
         "activate_slots_gpu": activate_slots_gpu,
         "condensation_step_gpu": condensation_step_gpu,
         "dilution_step_gpu": dilution_step_gpu,
+        "resampling_step_gpu": resampling_step_gpu,
         "wall_loss_step_gpu": wall_loss_step_gpu,
     }
 
@@ -76,8 +79,48 @@ def test_kernels_package_all_is_exact_supported_surface() -> None:
         "activate_slots_gpu",
         "condensation_step_gpu",
         "dilution_step_gpu",
+        "resampling_step_gpu",
         "wall_loss_step_gpu",
     ]
+
+
+def test_kernels_package_keeps_resampling_buffers_concrete_module_only() -> (
+    None
+):
+    """Resampling buffer storage is not part of the public kernel surface."""
+    import particula.gpu.kernels as kernels
+
+    assert "ResamplingBuffers" not in kernels.__all__
+    assert not hasattr(kernels, "ResamplingBuffers")
+
+
+def test_kernels_package_keeps_p4_scaling_concrete_module_only() -> None:
+    """P4 scaling is importable only from the concrete exhaustion module."""
+    pytest.importorskip("warp")
+    import particula.gpu.kernels as kernels
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    assert representative_volume_scaling_step_gpu is not None
+    assert "representative_volume_scaling_step_gpu" not in kernels.__all__
+    assert not hasattr(kernels, "representative_volume_scaling_step_gpu")
+    assert (
+        "representative_volume_scaling_step_gpu"
+        not in kernels._SYMBOL_TO_MODULE
+    )
+
+
+def test_kernels_package_registers_resampling_as_a_lazy_public_step() -> None:
+    """Resampling has a public lazy mapping without exporting its buffers."""
+    import particula.gpu.kernels as kernels
+
+    assert (
+        kernels._SYMBOL_TO_MODULE["resampling_step_gpu"]
+        == "particula.gpu.kernels.exhaustion"
+    )
+    assert "resampling_step_gpu" in kernels.__all__
+    assert "ResamplingBuffers" not in kernels.__all__
 
 
 def test_kernels_package_keeps_dilution_module_lazy_in_fresh_process() -> None:

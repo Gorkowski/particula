@@ -30,18 +30,22 @@ raw-count semantics and the developer-approved bounded compatibility policy.
     `represented_event_count` records `E_new`, and
     `representation_reduction_event_count` records their difference. No demand
     is truncated within the scaled representative domain.
+  - P4 implementation note (#1425): the direct helpers do not select the
+    largest feasible scale or package indivisible source demand. They validate
+    caller-provided `requested_scale`, `minimum_scale`, and `minimum_volume`,
+    then scale only flagged rows with positive provisional demand; P5+ owns
+    policy selection and packaging integration.
 - [x] Which diagnostics must E6-F7/E6-F8 retain?
   - Decision: fixed caller-owned per-box active/free, requested/released/
     activated counts, policy code, scale factor, and number/charge/`radius^3`/
     per-species-mass residuals. Nucleation-specific event and gas fields remain
     on its own sidecar.
 - [x] Which fixed exhaustion work fields does E6-F8 consume?
-  - Decision: one E6-F6-owned `ExhaustionScratchBuffers` object provides
-    `sorted_indices`, `retained_indices`, `output_count`, `output_weight`,
-    `output_mass`, and `output_charge`. Integer fields are `int32`; weights,
-    mass, and charge are float64; shapes are `(n_boxes, n_particles)` except
-    `output_count` `(n_boxes,)` and `output_mass`
-    `(n_boxes, n_particles, n_species)`.
+  - Decision: P3 provides concrete-only `ResamplingBuffers` to
+    `resampling_step_gpu`; it contains caller-owned same-device plan outputs,
+    diagnostic outputs, planning status, and sort/interval-sweep scratch. It is
+    not exported through `particula.gpu.kernels`, not a reusable CPU plan, and
+    does not bind future E6-F8 source inputs.
 - [x] Does scaling run before resampling when both are enabled?
   - Decision: no. Resampling-first precedence is mandatory; scaling is
     considered only when planned resampling remains insufficient.
