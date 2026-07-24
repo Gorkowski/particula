@@ -1318,10 +1318,11 @@ Delivered bounded wall-loss P1–P6 scope:
 
 Delivered bounded slot-exhaustion primitives are documented in the
 [Fixed-Capacity Slot Exhaustion Primitives](../slot_exhaustion_policies.md): CPU P1
-selects a deferred representation, CPU P2 plans and commits equal-weight
-resampling, CPU P4 scales selected rows, and direct Warp P2/P4 provide the
-corresponding caller-owned fixed-shape boundaries. They do not discover or
-activate slots, construct a source, deplete gas, or compose runtime policy.
+makes immutable activation-prefix or deferred-policy records, CPU P2 plans and
+commits equal-weight resampling, CPU P4 scales selected rows, and direct Warp
+P2/P4 provide the corresponding caller-owned fixed-shape boundaries. They do
+not discover or activate slots, construct a source, deplete gas, or compose
+runtime policy.
 
 Future features:
 

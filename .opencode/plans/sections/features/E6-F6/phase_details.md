@@ -26,10 +26,12 @@ validation; P7 documents only the validated policy, precedence, and bounds.
     validating conservation and named distribution/mixing diagnostics.
   - Files: `particula/particles/exhaustion.py`,
     `particula/particles/tests/exhaustion_test.py`
-  - Tests: Co-located tests cover deterministic stable ties, independent
-    interval-sweep conservation oracle, sparse/full/multi-box/zero-release
-    remaps, literal released-slot clearing, strict input/bound validation, and
-    stale or later-box-invalid plan no-mutation behavior.
+   - Tests: Co-located tests cover deterministic stable ties, an independent
+     interval-sweep conservation oracle, sparse/full/multi-box/zero-release
+     remaps, literal released-slot clearing, strict input/bound validation, and
+     stale or later-box-invalid plan no-mutation behavior. Conservation is a
+     tolerance-bounded diagnostic; radius-cubed, mean-radius, surface-area,
+     and Riemer-diversity diagnostics remain separate non-exact checks.
   - Boundary: P2 is CPU-only, fixed-capacity, and plan-then-commit; it adds no
     package export, scaling, slot discovery/activation, GPU parity, or resize.
 
@@ -39,10 +41,10 @@ validation; P7 documents only the validated policy, precedence, and bounds.
     with caller-owned active-device buffers, staged deterministic planning, and
     one gated commit.
   - Files: `particula/gpu/kernels/exhaustion.py`, `particula/gpu/kernels/tests/exhaustion_test.py`, `particula/gpu/kernels/__init__.py`
-  - Tests: Focused tests cover Warp CPU deterministic parity, supplied-buffer
-    ownership, shape/dtype/device/value/nonaliasing validation, diagnostics,
-    failed-planning no-commit behavior, exported entry-point resolution, and
-    optional CUDA clean skips.
+   - Tests: Focused tests cover Warp CPU deterministic parity, supplied-buffer
+     ownership, shape/dtype/device/value/nonaliasing validation,
+     `planning_status`, failed-planning no-commit behavior, exported entry-point
+     resolution, and optional CUDA clean skips.
   - Boundary: P3 does not add scaling, P1 policy resolution, capacity discovery
     or activation, resizing, hidden transfer/fallback, or a runnable API.
 
@@ -93,10 +95,15 @@ validation; P7 documents only the validated policy, precedence, and bounds.
 
 - [x] **E6-F6-P7:** Update development documentation for slot exhaustion policies
   - Issue: #1428 | Size: XS | Status: Implemented (2026-07-24)
-  - Goal: Publish CPU planning defaults and precedence, primitive equations and
+  - Goal: Publish CPU planning defaults and precedence, final primitive
     diagnostics, valid direct imports, failure boundaries, dependencies, and
     deferred capabilities without promoting a runtime nucleation loop.
   - Files: `AGENTS.md`, `docs/Features/slot_exhaustion_policies.md`, feature
     index/roadmap, nucleation theory, and E6 plan sections.
-  - Validation: Manual import/shape/link/terminology review plus focused
-    exhaustion tests and `mkdocs build --strict`. No pytest module is added.
+  - Validation: Manual import/shape/link/terminology review plus:
+    ```bash
+    pytest particula/particles/tests/exhaustion_test.py \
+      particula/gpu/kernels/tests/exhaustion_test.py -q -Werror
+    mkdocs build --strict
+    ```
+    P7 is documentation-only; no pytest module is added.

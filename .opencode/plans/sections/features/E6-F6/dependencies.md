@@ -2,12 +2,14 @@
 
 ## Upstream
 
-- **E6-F5 / T5 is mandatory.** E6-F6 consumes its authoritative active/free
-  truth table, ascending free indices, exact int32 counts, deterministic
-  activation, fixed-shape ownership, and failure-before-mutation contract.
-- **E6-F6-P5 (#1426) is currently blocked pending E6-F5.** No P5
-  implementation is present; resume only after E6-F5 supplies the authoritative
-  discovery-to-activation boundary.
+- **E6-F5 is deferred and mandatory for composition.** It owns authoritative
+  slot discovery, free-index classification, and activation, including the
+  active/free truth table, ascending free indices, exact int32 counts,
+  fixed-shape ownership, and failure-before-mutation contract.
+- **E6-F6-P5 (#1426) remains deferred pending E6-F5.** No P5 implementation
+  is present; resume only after E6-F5 supplies the authoritative
+  discovery-to-activation boundary. E6-F6's shipped primitives must not
+  duplicate that boundary or imply an integrated runtime policy loop.
 - Shipped E5 coagulation supplies fixed-slot merge/deactivation, charge
   conservation, persistent-state, and Warp validation conventions.
 - `ParticleData`/`WarpParticleData`, NumPy, and Warp are runtime foundations.
@@ -15,11 +17,12 @@
 
 ## Downstream
 
-- **E6-F7 / T7** requires E6-F5 and E6-F6 before CPU nucleation may finalize
-  source demand and mutate gas/particle inventory.
-- **E6-F8 / T8** requires E6-F5, E6-F6, and E6-F7 for direct Warp nucleation.
-- **E6-F9 / T9** consumes all E6 tracks and validates exhaustion in the complete
-  direct process sequence.
+- **E6-F7** owns downstream CPU source construction and gas/particle-inventory
+  mutation after E6-F5 and E6-F6 are available.
+- **E6-F8** owns downstream direct Warp nucleation after E6-F5, E6-F6, and
+  E6-F7.
+- **E6-F9** owns downstream integrated direct-process sequencing and complete
+  exhaustion validation; E6-F6 does not provide that orchestration.
 - Epic G may schedule these primitives later but may not change E6-F6 policy
   defaults or ownership implicitly.
 
@@ -34,5 +37,6 @@
 ## Phase Ordering
 
 P1 freezes the contract before P2 CPU resampling; P3 ports it to Warp; P4 adds
-the optional scaling path; P5 composes controls and precedence; P6 supplies the
-cross-backend conservation matrix; P7 is the required documentation phase.
+the optional scaling path; P5 remains deferred pending E6-F5 composition; P6
+supplies a no-public-contract cross-backend conservation matrix; P7 is the
+documentation-only phase and adds no pytest module.

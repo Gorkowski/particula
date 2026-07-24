@@ -182,13 +182,17 @@ Each nucleation event moves a small but nonzero mass of each participating vapor
 
 ### Fixed-capacity primitive boundary
 
-Particula ships bounded CPU planning and direct Warp resampling and
-representative-volume-scaling primitives, documented in the
+Particula ships bounded CPU slot-exhaustion primitives for planning,
+resampling, and representative-volume scaling, plus direct Warp primitives for
+fixed-shape resampling and representative-volume scaling. Their ownership,
+planning, and mutation boundaries are documented in the
 [Fixed-Capacity Slot Exhaustion Primitives](../../../Features/slot_exhaustion_policies.md).
-They neither discover nor activate slots, construct a source, nor deplete gas.
-E6-F5 owns slot discovery and activation, while the blocked E6-F6-P5 work will
-compose it with policy selection. These primitives are not a nucleation loop;
-the broader deferred design remains in the
+
+These are slot-management primitives, not a nucleation process: they do not
+discover free slots, activate slots, construct a particle source, or deplete
+gas. E6-F5 owns authoritative slot discovery and activation, and the blocked
+E6-F6-P5 work will compose that boundary with policy selection. High-level
+nucleation and timestep orchestration remain deferred; see the
 [Data-Oriented Design and GPU Roadmap](../../../Features/Roadmap/data-oriented-gpu.md).
 
 **Implementation status:**

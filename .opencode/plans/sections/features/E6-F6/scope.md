@@ -73,6 +73,12 @@ activation contracts.
   tested boundary; they prove per-box `pre + source` and, for P4,
   volume-inclusive `scale * pre + source` accounting without implementing a
   policy or source-construction surrogate.
+
+P6 is a no-public-contract phase: it changes neither production behavior nor
+public APIs, exports, or documentation contracts.
+
+### Delivered in P7 (#1428)
+
 - Documentation-only P7 updates for CPU planning and direct Warp primitive
   contracts, including validation commands and explicit deferred boundaries;
   P7 adds no pytest module or runtime behavior.
@@ -81,12 +87,15 @@ activation contracts.
 
 - Dynamic allocation, array resizing/appending, compaction, hidden transfers,
   CPU fallback, or container-schema changes.
-- Nucleation rate physics, gas depletion, or source-record construction, which
-  belong to E6-F7/E6-F8.
+- E6-F5 authoritative slot discovery, free-index classification, and
+  activation; E6-F6-P5 runtime policy composition remains deferred until that
+  boundary exists.
+- Nucleation rate physics, CPU source construction and gas-inventory mutation
+  (E6-F7), or direct Warp nucleation (E6-F8).
+- E6-F9 integrated direct-process sequencing and runtime exhaustion handling.
 - High-level GPU `Runnable` APIs, backend selection, scheduling, resident loops,
   graph-capture claims, differentiability, and performance claims (Epic G+).
 - Exact CPU/CUDA RNG-stream matching; the bounded design is deterministic and
   does not add policy-owned stochastic state.
-- Runtime policy composition, slot discovery/activation, or source packaging
-  integration for the P4 direct helpers; E6-F5/E6-F6-P5 remain blocked.
-- Production API, export, policy, and public-documentation changes for P6.
+- Runtime policy composition or source-packaging integration for the P4 direct
+  helpers; E6-F5/E6-F6-P5 remain deferred.

@@ -524,18 +524,23 @@ pytest particula/gpu/tests/kernel_exports_test.py -q -Werror
 
 ### Slot exhaustion policy boundaries
 
-- CPU `resolve_exhaustion()` planning defaults to resampling enabled and
-  representative-volume scaling disabled. For exhausted capacity, sufficiently
-  releasable enabled resampling takes precedence over enabled scaling; neither
-  viable policy raises before a plan returns and source demand is not silently
-  truncated. These are CPU planning rules, not a runtime loop.
-- E6-F5 slot discovery/free-index classification/activation and E6-F6-P5 policy
-  composition are unimplemented. No shipped process applies defaults, discovers
-  slots, activates particles, constructs a source, or depletes gas.
+- CPU `resolve_exhaustion()` is planning only: `ExhaustionControls()` defaults
+  to resampling enabled and representative-volume scaling disabled. For
+  exhausted capacity, sufficiently releasable enabled resampling takes
+  precedence; enabled scaling is its fallback. Neither viable policy raises
+  before returning a plan, and source demand is never silently truncated.
+- E6-F5 authoritative slot discovery, free-index classification, and activation
+  remain unimplemented. E6-F6-P5 policy composition remains unimplemented too;
+  no shipped process applies resolver defaults, discovers or activates slots,
+  constructs a source, or depletes gas. This is not a high-level nucleation
+  loop.
 - Direct Warp P2 and P4 primitives consume caller-owned same-device state;
   callers synchronize successful asynchronous P4 work before reading results.
   See [Fixed-Capacity Slot Exhaustion Primitives](docs/Features/slot_exhaustion_policies.md)
   for imports, schemas, diagnostics, and mutation boundaries.
+- Dynamic allocation, resizing, compaction, hidden transfers or CPU fallback,
+  runnable/scheduler/backend integration, graph capture, autodiff, performance
+  guarantees, and exact CPU/Warp/CUDA RNG replay remain outside this contract.
 
 Focused contract runs:
 

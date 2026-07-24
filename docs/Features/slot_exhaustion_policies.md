@@ -54,6 +54,13 @@ implementation plan, so applications must not expose or depend on
 box and the target state before its first assignment, then commits the complete
 fixed-capacity remap.
 
+CPU P2 consumes writable `ParticleData` NumPy `float64` arrays with these
+schemas: `masses (B, N, S)`, `concentration (B, N)`, `charge (B, N)`,
+`density (S,)`, and `volume (B,)`. The arrays must not share writable memory.
+An inactive slot has zero concentration and literal-zero mass and charge.
+These are CPU-only planning and commit helpers, not a CPU-to-Warp transfer or
+parity interface.
+
 P4 scaling consumes writable, contiguous, nonaliasing NumPy sidecars:
 
 | Sidecar | CPU dtype and shape |
@@ -167,6 +174,9 @@ transfers, CPU fallback, a high-level runnable, scheduler, backend
 orchestration, graph capture, autodiff, performance guarantees, or exact
 CPU/Warp/CUDA RNG replay. They do not establish a loop that invokes a policy
 before exhaustion.
+
+For the delivered-versus-deferred GPU roadmap, see
+[Data-Oriented GPU Roadmap](Roadmap/data-oriented-gpu.md).
 
 ## Focused validation
 
