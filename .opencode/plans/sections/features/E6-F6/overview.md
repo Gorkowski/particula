@@ -36,3 +36,17 @@ uses resampling-first policy selection. It also supplies float64 tuple-backed
 weighted number, species-mass, and charge inventories. This baseline makes no
 commit, release selection, resampling, scaling-feasibility, discovery,
 re-export, or GPU change; those remain later phases.
+
+## Delivered P2 Reference
+
+Issue #1423 delivered the CPU-only deterministic fixed-capacity equal-weight
+resampling reference in `particula/particles/exhaustion.py`. It builds frozen,
+detached plans from cached validated state, stable-sorts active sources by
+radius, composition, charge, and slot index, then uses a linear interval sweep
+to form equal-weight retained records and release the requested trailing active
+slots. Diagnostics validate represented number, species mass, signed charge,
+radius-cubed, mean-radius, surface, and diversity/mixing bounds before an
+all-box-preflighted atomic apply clears released slots. Focused co-located tests
+cover deterministic, conservation, validation, and later-box atomicity paths.
+P2 does not add a package re-export, scaling, GPU parity, discovery, or resize
+behavior.

@@ -168,7 +168,12 @@ class _ResamplingBoxPlan:
 
 @dataclass(frozen=True)
 class _ResamplingPlan:
-    """Hold detached P2 remaps in particle-box order."""
+    """Hold detached P2 remaps in particle-box order for one commit.
+
+    Empty per-box remaps preserve boxes that do not resample, including
+    zero-release resampling boxes. The tuple-backed records retain no views
+    into the P1 plan or particle storage.
+    """
 
     box_plans: tuple[_ResamplingBoxPlan, ...]
 
@@ -853,20 +858,32 @@ def plan_resampling(
 ) -> _ResamplingPlan:
     """Create an immutable, deterministic CPU fixed-capacity resampling plan.
 
-    The function only plans. It neither activates nor scales particles, and
-    does not mutate P1 records or particle state. Pass the returned detached
-    plan to :func:`apply_resampling` for its all-box commit boundary.
+    The function validates all boxes and only plans; it does not mutate P1
+    records or particle state. The detached plan retains existing active
+    capacity only, so it neither activates, scales, resizes, nor compacts
+    particles, and it provides no GPU-parity path. Pass it to
+    :func:`apply_resampling` for the all-box commit boundary.
 
     Args:
-        particles: Writable fixed-shape CPU particle data.
-        exhaustion_plan: Immutable P1 capacity decisions.
-        radius_cubed_relative_error: Finite bound for weighted radius cubed.
-        mean_radius_relative_error: Finite bound for number-weighted radius.
-        surface_relative_error: Finite bound for weighted surface area.
-        diversity_absolute_error: Finite bound for Riemer bulk diversity.
+        particles: Writable, fixed-shape CPU particle data.
+        exhaustion_plan: Immutable P1 capacity decisions to consume unchanged.
+        radius_cubed_relative_error: Exact Python float, finite nonnegative
+            bound for the weighted radius-cubed diagnostic.
+        mean_radius_relative_error: Exact Python float, finite nonnegative
+            bound for the number-weighted-radius diagnostic.
+        surface_relative_error: Exact Python float, finite nonnegative bound
+            for the weighted-surface-area diagnostic.
+        diversity_absolute_error: Exact Python float, finite nonnegative bound
+            for the Riemer bulk-diversity diagnostic.
 
     Returns:
         A detached immutable plan, one remap record per particle box.
+
+    Raises:
+        TypeError: If particle storage, P1 records, or diagnostic bounds have
+            an unsupported type or dtype.
+        ValueError: If the fixed-capacity state or P1 decisions are invalid,
+            resampling is infeasible, or a diagnostic exceeds its bound.
     """
     bounds = _validate_resampling_bounds(
         radius_cubed_relative_error,
@@ -976,14 +993,22 @@ def apply_resampling(
 
     Every plan and target-state validation runs before the first assignment, so
     ordinary validation errors cannot partially mutate an earlier box. This
-    commit performs no policy resolution, selection, activation, or scaling.
+    commit performs no policy resolution, selection, activation, scaling,
+    resizing, or compaction, and has no GPU-parity path.
 
     Args:
-        particles: Writable fixed-shape particle storage to update in place.
+        particles: Writable fixed-shape CPU particle storage to update in
+            place.
         plan: Detached plan returned by :func:`plan_resampling`.
 
     Returns:
         The identical ``particles`` container after the commit.
+
+    Raises:
+        TypeError: If the target storage or detached plan has an unsupported
+            type or dtype.
+        ValueError: If the target state or plan is invalid, or the plan no
+            longer exactly covers the active slots in a resampling box.
     """
     particle_data = _validate_particle_schema(particles)
     cached_state = _cache_particle_state(particle_data)

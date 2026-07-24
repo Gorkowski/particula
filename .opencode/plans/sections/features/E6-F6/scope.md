@@ -23,13 +23,25 @@ activation contracts.
   enabled.
 ### Planned and Deferred After P1
 
-- Deterministic CPU resampling and allocation-stable Warp parity.
+- Allocation-stable Warp resampling parity.
 - Optional per-box representative-volume scaling with same-direction raw-weight
   and source-demand updates plus explicit pre-scale/represented diagnostics.
 - Sparse, exact-capacity, full, and over-capacity multi-box tests for number,
   species mass, charge, fixed identities, and distribution-preservation targets.
 - Caller-owned fixed-shape diagnostics/work buffers and Warp CPU evidence with
   optional CUDA execution.
+
+### Delivered in P2 (#1423)
+
+- CPU-only immutable plan-then-commit equal-weight resampling in
+  `particula/particles/exhaustion.py`, with no resize, append, compaction, or
+  activation.
+- Cached all-box physical-state/P1-record preflight; deterministic stable-order
+  interval-sweep remaps; conservation and named-moment diagnostics; and a
+  single all-box-preflighted mutation boundary.
+- Co-located coverage in `particula/particles/tests/exhaustion_test.py` for
+  conservation, tie ordering, detached plans, fixed-capacity slot clearing, and
+  invalid/stale/later-box plan atomicity.
 
 ## Out of Scope
 

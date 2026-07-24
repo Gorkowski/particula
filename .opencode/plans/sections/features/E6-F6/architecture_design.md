@@ -24,6 +24,26 @@ inventory oracle as tuple-backed results. Its documented accounting boundary is
 `pre_state + source` without scaling or `scale * pre_state + source` with
 scaling; it makes no exact radius-cubed or other moment-preservation claim.
 
+### Delivered P2 CPU resampling boundary
+
+Issue #1423 adds private frozen P2 remap records plus `plan_resampling` and
+`apply_resampling` in `particula/particles/exhaustion.py`. Planning validates
+the complete fixed `ParticleData` schema and P1 records once, caches active
+state, and retains no caller-array or P1-record views. For each eligible box,
+it retains the first `K=A-R` active slots, releases the last `R`, stable-sorts
+the active sources by radius, mass fractions, charge, and original slot, and
+uses a monotonic two-cursor cumulative-weight interval sweep to calculate
+float64 equal-weight replacements. The plan independently checks represented
+number, species mass, signed charge, weighted radius cubed, mean radius,
+surface, and Riemer diversity/mixing bounds.
+
+`apply_resampling` only validates and commits a detached plan; it performs no
+policy resolution or remap selection. It validates every box and confirms the
+plan still exactly covers current active slots before any assignment, then
+bulk-writes retained replacements and literal float64 zeroes to released slots.
+P2 is CPU-only and leaves scaling, discovery/activation, package exports, and
+Warp behavior deferred.
+
 ```text
 particle state + E6-F5 capacity + fixed-shape demand + policy config
                               |

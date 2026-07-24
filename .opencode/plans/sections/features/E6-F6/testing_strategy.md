@@ -13,9 +13,13 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
   and the independent float64 weighted-inventory oracle at `rtol=1e-12`,
   `atol=1e-30`. It intentionally contains no commit, resampling/scaling,
   discovery, particle/RNG, GPU, or distribution-moment tests.
-- **P2:** CPU deterministic tests for sparse/full boxes, tie breaks, exact slot
-  clearing, number/species-mass/charge conservation, repeated plans, and
-  predeclared radius/composition-moment bounds.
+- **P2 (delivered, #1423):** `particula/particles/tests/exhaustion_test.py`
+  covers deterministic detached plans and repeated application; sparse, full,
+  multi-box, and zero-release fixed-capacity remaps; stable equal-strata tie
+  ordering; exact release clearing; independent weighted conservation checks;
+  strict diagnostic-bound and malformed-P1 rejection; and stale, overlapping,
+  and later-box malformed-plan atomicity. The focused oracle independently
+  verifies the equal-stratum remap without production remap helpers.
 - **P3:** `particula/gpu/kernels/tests/exhaustion_test.py` compares Warp CPU with
   the independent NumPy oracle; validates sidecar identity/shape/dtype/device,
   failure ordering, and optional CUDA clean skips.

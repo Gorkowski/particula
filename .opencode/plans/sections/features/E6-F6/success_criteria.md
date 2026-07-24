@@ -15,9 +15,9 @@
 - [ ] Per-box post represented number, every species mass, and charge equal
   `s * pre_state + represented_demand` at recorded float64 tolerances. Existing
   and source intensive concentrations are unchanged by representation scaling.
-- [ ] The future resampling phase (P2+) satisfies the named
-  radius/composition distribution-moment bounds and deterministic tie-break
-  rules; read-only P1 does not claim to deliver those bounds.
+- [x] P2 satisfies deterministic tie-break rules and validates represented
+  number, species mass, signed charge, weighted radius cubed, mean-radius,
+  surface, and Riemer diversity/mixing bounds before commit.
 - [ ] CPU and Warp CPU agree on plans, policy diagnostics, and resulting state;
   CUDA executes the same matrix when available and skips cleanly otherwise.
 - [ ] Arrays remain fixed shape and preserve container/array identity, dtype,
@@ -47,3 +47,12 @@
 - [x] Focused tests establish capacity activation independent of flags and
   resampling-first selection with deferred releases/scaling; later commit,
   resampling, scaling, discovery, GPU, and export criteria remain open.
+
+## Delivered P2 Evidence (#1423)
+
+- [x] `plan_resampling` creates immutable detached CPU plans from cached,
+  validated all-box state, and `apply_resampling` validates all plan/state
+  inputs before its only mutation boundary.
+- [x] Co-located tests demonstrate stable equal-stratum remapping, independent
+  conservation-oracle agreement, exact released-slot clearing, and no mutation
+  for malformed, stale, overlapping, or later-box-invalid plans.

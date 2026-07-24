@@ -19,11 +19,19 @@ validation; P7 documents only the validated policy, precedence, and bounds.
   - Boundary: P1 does not commit, choose releases, resample, assess scaling
     feasibility, discover slots, add re-exports, or add GPU behavior.
 
-- [ ] **E6-F6-P2:** Implement deterministic CPU resampling reference with unit tests
-  - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Precompute and apply deterministic equal-weight conservative remapping that frees enough slots while preserving required moments.
-  - Files: `particula/particles/exhaustion.py`, `particula/particles/tests/exhaustion_test.py`, `particula/particles/__init__.py`
-  - Tests: Sparse/full boxes, stable ordering/tie breaks, multi-species mass/number/charge conservation, free-slot clearing, and bounded distribution distortion.
+- [x] **E6-F6-P2:** Implement deterministic CPU resampling reference with unit tests
+  - Issue: #1423 | Size: S | Status: Implemented (2026-07-24)
+  - Goal: Delivered immutable detached CPU equal-weight remap plans and an
+    all-box-preflighted commit that frees the P1-required active slots while
+    validating conservation and named distribution/mixing diagnostics.
+  - Files: `particula/particles/exhaustion.py`,
+    `particula/particles/tests/exhaustion_test.py`
+  - Tests: Co-located tests cover deterministic stable ties, independent
+    interval-sweep conservation oracle, sparse/full/multi-box/zero-release
+    remaps, literal released-slot clearing, strict input/bound validation, and
+    stale or later-box-invalid plan no-mutation behavior.
+  - Boundary: P2 is CPU-only, fixed-capacity, and plan-then-commit; it adds no
+    package export, scaling, slot discovery/activation, GPU parity, or resize.
 
 - [ ] **E6-F6-P3:** Implement allocation-stable Warp resampling with parity tests
   - Issue: TBD | Size: S | Status: Not Started

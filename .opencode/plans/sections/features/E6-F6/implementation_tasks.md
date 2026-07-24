@@ -10,8 +10,9 @@
 - [x] Implement read-only all-box validation and deferred-policy planning.
 - [x] Add float64 tuple-backed weighted number, species-mass, and charge
   inventories with documented later-commit accounting.
-- [ ] Implement deterministic resampling selection, moment accounting, and one
-  commit boundary without resizing.
+- [x] Implement deterministic stable interval-sweep resampling selection,
+  conservation/moment accounting, and one all-box-preflighted commit boundary
+  without resizing.
 - [ ] Implement bounded same-direction representative-volume, raw-weight, and
   source-demand scaling.
 - [x] Keep the P1 API concrete-only; no `particula.particles` re-export was
@@ -33,6 +34,9 @@
 - [x] Add `particula/particles/tests/exhaustion_test.py` covering strict frozen
   controls and records, all-box validation/no-mutation, policy precedence,
   empty dimensions, and an independent float64 weighted-inventory oracle.
+- [x] Extend the co-located CPU suite with deterministic detached P2 plans,
+  fixed-capacity clearing, independent equal-stratum remap checks, diagnostic
+  bound validation, and stale/later-box malformed-plan atomicity.
 - [ ] Add `particula/gpu/kernels/tests/exhaustion_test.py` for Warp CPU parity,
   optional CUDA, supplied identity, and invalid-call snapshots.
 - [ ] Cover capacity-sufficient no-op, sparse, full, repeated, and demand larger
