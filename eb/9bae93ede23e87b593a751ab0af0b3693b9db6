@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Documentation-only E6-F5 work to publish the CPU and direct-Warp fixed-slot contract without changing production behavior. Update the foundation guide, AGENTS guidance, roadmap, testing guide, and E6-F5 records so the shipped predicate, shapes, ownership, and focused verification commands are all consistent.",
+  "discovered_context": ""
+}
