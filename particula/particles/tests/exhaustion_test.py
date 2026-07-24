@@ -499,7 +499,7 @@ def test_resampling_rejects_invalid_state_and_atomic_later_plan_failure() -> (
             ),
         )
     )
-    snapshot = tuple(
+    snapshot_fields: tuple[bytes, ...] = tuple(
         field.tobytes()
         for field in (
             particles.masses,
@@ -509,7 +509,7 @@ def test_resampling_rejects_invalid_state_and_atomic_later_plan_failure() -> (
     )
     with pytest.raises(ValueError, match="out of range"):
         apply_resampling(particles, malformed)
-    assert snapshot == tuple(
+    assert snapshot_fields == tuple(
         field.tobytes()
         for field in (
             particles.masses,
