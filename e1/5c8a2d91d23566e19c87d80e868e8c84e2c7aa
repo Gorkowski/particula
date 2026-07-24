@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3b7a3555",
+  "issue_number": "1422",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1422-adw-3b7a3555",
+  "shipped_at": "2026-07-24T14:46:38.194687Z",
+  "plan_phase": "E6-F6-P1",
+  "plan_summary": "Plan adds a new CPU-only particula/particles/exhaustion.py module and co-located tests for a read-only P1 exhaustion resolver. It introduces strict frozen control/input records, linear all-box validation, policy precedence for activate/resample/scale-or-fail, and float64 inventory helpers, with no state mutation or GPU work. The test suite covers strict defaults, immutability, malformed sidecars, zero-capacity cases, and exact diagnostics.",
+  "discovered_context": ""
+}
