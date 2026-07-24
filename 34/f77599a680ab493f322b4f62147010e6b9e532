@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "86e3b372",
+  "issue_number": "1426",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1426-adw-86e3b372",
+  "shipped_at": "2026-07-24T19:22:13.907778Z",
+  "plan_phase": "E6-F6-P5",
+  "plan_summary": "Implement the E6-F6-P5 boundary for independent controls, with resampling taking precedence only when explicitly enabled and feasible. The branch is still blocked on the authoritative E6-F5 discovery-to-activation merge, so the work should stay limited to private policy planning, feasibility checks, and commit adapters once that boundary exists.",
+  "discovered_context": ""
+}
