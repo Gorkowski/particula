@@ -1,25 +1,21 @@
 # Architecture Guide
 
-## Particle Capacity-Planning Boundary
+## CPU Particle Slot Management Boundary
 
-- `particula.particles.exhaustion` is a deliberately unexported concrete CPU
-  module for P1 capacity planning, P2 resampling application, and P4
-  representative-volume scaling. Callers that need these helpers import the
-  concrete module explicitly; do not add them to package re-exports.
-- It accepts fixed-shape `int32` capacity sidecars, validates all boxes before
-  resolving any plan, and returns immutable plan records. It applies
-  resampling-first deferred-policy selection, but does not choose releases or
-  scaling feasibility.
-- P1 policy resolution is read-only: it owns no particle, RNG, diagnostic,
-  work-buffer, or container state mutation. P2 creates a detached CPU remap
-  plan and then performs a separately validated, all-box atomic commit. P4 is
-  a separate all-box-preflighted commit using caller-owned sidecars; it scales
-  only selected rows and does not consume a P1 plan or resolve policy. Neither
-  commit provides GPU work. A caller may safely retry P1 with corrected
-  sidecars after validation or policy failure.
-- Its weighted inventory helper provides float64 number, mass, and charge
-  accounting only. Commit conservation and any moment-preservation guarantee
-  remain responsibilities of later commit phases.
+- `particula.particles.slot_management` owns CPU-only fixed-slot classification,
+  discovery, and direct-import activation for `ParticleData`.
+- `get_slot_diagnostics` is its sole package-level export through
+  `particula.particles`; `activate_slots` remains a direct import from
+  `particula.particles.slot_management`, and validation helpers remain
+  module-private.
+- Discovery preserves all `ParticleData` storage and returns newly allocated
+  fixed-shape `int32` free-index and count sidecars. Activation maps request
+  prefixes to ascending free slots after complete read-only preflight, then
+  mutates only mass, concentration, and charge storage in place.
+- Storage resize or compaction, `ParticleData` mutation API changes, CPU↔GPU
+  transfer, GPU execution, and a top-level particles activation export remain
+  outside this boundary. Its fixed-shape behavior provides a deterministic CPU
+  reference for later parity work.
 
 ## GPU Module Boundaries
 
@@ -65,24 +61,21 @@ kernel-entry responsibilities.
 - The preflight guarantee ends at launch: post-launch rollback is not
   provided. This direct entry point does not imply CPU fallback or runnable
   support.
-- Import the supported fixed-capacity equal-weight resampling boundary with
-  `from particula.gpu.kernels import resampling_step_gpu`. Its
-  `ResamplingBuffers`, planning-status codes, and implementation kernels are
-  deliberately concrete-module-only at
-  `particula.gpu.kernels.exhaustion`; do not re-export them through
-  `particula.gpu.kernels` or `particula.gpu`.
-- `resampling_step_gpu` consumes explicit per-box release counts rather than
-  resolving exhaustion policy. Caller-owned same-device buffers hold all
-  particle-scale plan, sort, and diagnostic storage. Read-only preflight
-  precedes planning; a diagnostic failure leaves particles uncommitted, while
-  successful all-box planning performs one fixed-capacity commit. Runnables,
-  resizing, hidden CPU transfers or fallbacks, and CPU policy resolution remain
-  outside this boundary.
-- `representative_volume_scaling_step_gpu` remains concrete-module-only at
-  `particula.gpu.kernels.exhaustion`. It uses caller-owned same-device sidecars
-  and completes all-box read-only preflight before its diagnostic and selected-
-  row scaling writes. It does not consume a resampling plan or add policy,
-  transfer, resizing, CPU fallback, or runnable behavior.
+- Import the supported fixed-slot activation boundary with
+  `from particula.gpu.kernels import activate_slots_gpu`. Its P3
+  `get_slot_diagnostics_gpu` helper remains concrete-module-only at
+  `particula.gpu.kernels.slot_management` and must not be re-exported.
+- `activate_slots_gpu` maps selected request-prefix ranks to ascending free
+  slots in caller-owned, fixed-capacity Warp storage. It reads and writes only
+  particle mass, concentration, and charge; density and volume are
+  intentionally unobserved. Requests and all activation/diagnostic `int32`
+  sidecars are caller-owned, same-device inputs and outputs.
+- P4 validates schema, ownership, current slot state, selected requests, and
+  capacity before launching its writer. Rejected calls make no caller mutation
+  or hidden CPU↔GPU transfer; after a writer launches, rollback is not
+  promised. This direct boundary does not establish resizing, compaction,
+  hidden fallback, or a higher-level runnable API. See
+  [ADR-002](decisions/ADR-002-gpu-fixed-slot-activation-boundary.md).
 - Import the supported fixed-slot wall-loss boundary with
   `from particula.gpu.kernels import wall_loss_step_gpu`. Its
   `NeutralWallLossConfig` is deliberately concrete-module-only at

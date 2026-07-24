@@ -4,6 +4,7 @@ Import direct low-level step functions from this package:
 
     from particula.gpu.kernels import (
         coagulation_step_gpu,
+        activate_slots_gpu,
         condensation_step_gpu,
         dilution_step_gpu,
         resampling_step_gpu,
@@ -21,6 +22,7 @@ from typing import Any
 
 __all__ = [
     "coagulation_step_gpu",
+    "activate_slots_gpu",
     "condensation_step_gpu",
     "dilution_step_gpu",
     "resampling_step_gpu",
@@ -29,6 +31,7 @@ __all__ = [
 
 _SYMBOL_TO_MODULE = {
     "coagulation_step_gpu": "particula.gpu.kernels.coagulation",
+    "activate_slots_gpu": "particula.gpu.kernels.slot_management",
     "condensation_step_gpu": "particula.gpu.kernels.condensation",
     "dilution_step_gpu": "particula.gpu.kernels.dilution",
     "resampling_step_gpu": "particula.gpu.kernels.exhaustion",

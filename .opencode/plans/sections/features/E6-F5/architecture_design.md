@@ -43,8 +43,24 @@ floating-point reduction.
   the valid prefix per box.
 - **API Surface:** Add CPU inspection/activation helpers under
   `particula.particles.slot_management` and low-level GPU entry points under
-  `particula.gpu.kernels.slot_management`. Expose only the intended step helper
-  through lazy package exports; keep kernels and scratch helpers private.
+  `particula.gpu.kernels.slot_management`. P3 shipped the concrete-module-only
+  `get_slot_diagnostics_gpu`; it is deliberately not exported through
+  `particula.gpu.kernels` or a package-level API. Keep kernels and scratch
+  helpers private.
+  P1 delivered the read-only CPU API
+  `get_slot_diagnostics(data)`, re-exported from `particula.particles`.
+  P2 delivered the CPU-only direct-import
+  `activate_slots(data, request_masses, request_concentration, request_charge,
+  requested_counts)` API; it is intentionally not re-exported from
+  `particula.particles`. P3 returns the supplied same-device `wp.int32`
+   `free_indices`, `active_counts`, and `free_counts` sidecars by identity after
+   read-only classification of mass, concentration, and charge; density and
+   volume are neither read nor validated. P4 ships package-exported
+   `activate_slots_gpu`, which returns supplied `activated_counts`,
+   `free_indices`, `active_counts`, and `free_counts` sidecars by identity.
+   It validates same-device schemas, ownership and aliasing, existing state,
+   selected request prefixes, and per-box capacity before mapping each prefix
+   rank to an ascending free slot.
 - **Mutation Contract:** Activation mutates only selected slot mass,
   concentration, and charge cells. Density, volume, requests, unselected slots,
   shapes, dtypes, devices, array objects, and container identity are unchanged.
@@ -54,6 +70,17 @@ floating-point reduction.
 - **Failure Boundary:** Every host-detectable and device-data error is resolved
   before caller diagnostics are cleared or any particle write launches. A
   runtime device failure after successful preflight has no rollback guarantee.
+  The shipped P1 discovery path raises exactly
+  `ValueError("Invalid particle slot state.")` before allocating or returning
+  diagnostics when any slot is neither active nor free. P2 validates destination
+  schema and writability, request schema and non-aliasing, selected prefixes,
+  and free capacity globally before its first assignment; it then uses P1's
+  ascending free-index ordering and returns a fresh per-box `np.int32`
+  activated-count array. P3 schema and state rejection occur before a writer
+  launch, preserving all supplied diagnostic sidecars. Its single device status
+  readback is limited to the private invalid-state flag; successful diagnostics
+   remain device-resident. P4 similarly rejects before any caller mutation and
+   does not promise rollback after its activation writer launches.
 
 ## Security & Compliance
 

@@ -2,8 +2,8 @@
 
 ## Particle Package
 
-`particula/particles/` contains particle data, representations, distribution
-strategies, and concrete particle-domain helpers.
+`particula/particles/` contains particle-data representations, distribution
+strategies, and focused particle-domain helpers.
 
 ### particula/particles/
 
@@ -17,6 +17,12 @@ strategies, and concrete particle-domain helpers.
   without mutating state. P2 and P4 each own their separate CPU commit
   boundaries; the module owns no GPU work or container schema.
 - `distribution_strategies/` - Particle distribution implementations
+- `particle_data.py` - Fixed-shape CPU particle-data container and conversion
+  helpers
+- `slot_management.py` - CPU-only fixed-slot classification, discovery, and
+  direct-import activation; exports only `get_slot_diagnostics` through
+  `particula.particles`. Activation preserves fixed capacity and excludes
+  `ParticleData` API changes, GPU support, and a top-level particles export
 - `properties/` - Particle property calculations
 - `tests/` - Test coverage
 
@@ -65,6 +71,15 @@ private helpers for cross-kernel setup.
   zero-charge slots retain the neutral path. The sidecar is not added to Warp
   particle schemas or package exports, and sequential per-box ownership
   advances it only for eligible slots.
+- `slot_management.py` - Concrete-only P3 read-only direct-Warp diagnostics
+  classify particle mass, concentration, and charge into caller-owned `int32`
+  sidecars without accessing density or volume. Package-exported P4
+  `activate_slots_gpu` maps selected request prefixes to ascending
+  fixed-capacity free slots. It reads and writes only caller-owned mass,
+  concentration, and charge storage; its activation and diagnostics sidecars
+  are caller-owned device `int32` arrays. P4 completes preflight before its
+  writer launches, makes no hidden transfers, and does not promise rollback
+  after a launched writer.
 - `environment.py` - Shared private normalization and validation for kernel
   environment inputs
 - `tests/` - Test coverage

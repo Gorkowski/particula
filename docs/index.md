@@ -28,6 +28,25 @@ Whether you’re a researcher, educator, or industry expert, Particula is design
 - **Providing a Python-based API** for reproducible and modular simulations.
 - **Building gas-phase properties** with builder/factory patterns (vapor
   pressure and latent heat) that support unit-aware setters and exports.
+- **Inspecting fixed particle-resolved slots** with the read-only CPU
+  [`get_slot_diagnostics()`](Features/data-containers-and-gpu-foundations.md#cpu-slot-diagnostics)
+  API, which reports deterministic free-slot indices and per-box active/free
+  counts without changing `ParticleData`.
+- **Activating fixed particle-resolved slots** with the CPU-only direct import
+  `from particula.particles.slot_management import activate_slots`. It maps
+  each declared request prefix into ascending free slots, performs all
+  validation before mutating mass, concentration, or charge, and returns fresh
+  per-box `np.int32` activation counts. It is not exported through
+  `particula.particles` and does not resize storage. For caller-managed Warp
+  storage, import `activate_slots_gpu` from `particula.gpu.kernels`. This P4
+  boundary maps selected request-prefix records to ascending free slots in
+  place and returns supplied `wp.int32` activation/diagnostic sidecars.
+  Particle/request storage must be same-device `wp.float64`; it performs no
+  implicit transfer. Preflight validates metadata, aliasing, state, counts,
+  capacity, and selected records before its writer launches, so rejected calls
+  preserve accessible caller-owned arrays. Rollback is not promised after a
+  writer launch, and concrete-module-only `get_slot_diagnostics_gpu` remains
+  outside the package exports.
 - **Supporting CPU latent-heat-corrected condensation diagnostics** with
   thermal resistance, latent-heat mass transfer rate utilities,
   latent-heat energy-density bookkeeping, and the

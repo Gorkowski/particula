@@ -1,17 +1,20 @@
 # Success Criteria
 
-- [ ] CPU and Warp use the same active/free/invalid truth table.
-- [ ] Free indices are ascending per box and unused fixed-shape entries are
+- [x] CPU and Warp discovery use the same active/free/invalid truth table.
+- [x] Discovery free indices are ascending per box and unused fixed-shape entries are
   exactly `-1`.
-- [ ] Active, free, and activated diagnostics equal independent NumPy oracle
+- [x] Discovery active and free diagnostics equal independent NumPy oracle
   counts exactly for every tested box.
-- [ ] Request rank maps to the same slot on CPU, Warp CPU, and optional CUDA.
-- [ ] Activation preserves container and array identities, shapes, dtypes,
+- [x] Request rank maps to the same slot on CPU, Warp CPU, and optional CUDA.
+- [x] Activation preserves container and array identities, shapes, dtypes,
   devices, density, volume, request arrays, and every unselected slot.
-- [ ] Zero-request activation is an exact particle no-op with zero activated
+- [x] Zero-request activation is an exact particle no-op with zero activated
   counts.
-- [ ] Contradictory state, malformed requests/sidecars, and insufficient
+- [x] Contradictory state, malformed requests/sidecars, and insufficient
   capacity fail before any particle or caller-owned diagnostic mutation.
+- [x] Development documentation records the authoritative CPU/direct-Warp
+  contract, focused commands, and downstream ownership without adding a user
+  example.
 - [ ] E6-F6/F7/F8 can consume the documented discovery and activation contract
   without dynamic allocation or hidden transfer.
 - [ ] Focused tests, full regressions, lint, type checking, and documentation

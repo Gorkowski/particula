@@ -5,15 +5,34 @@ in module-level `tests/` directories using the `*_test.py` suffix.
 
 ## Per-Phase Coverage
 
-- **P1:** CPU predicate truth table for active, free, and every contradictory
-  state; exact sparse multi-box counts and ascending indices; no mutation.
-- **P2:** CPU zero/partial/exact-capacity activation, multi-species requests,
-  deterministic mapping, identity preservation, and full preflight atomicity.
-- **P3:** Warp CPU discovery parity, fixed-shape `-1` index tails, exact `int32`
-  counts, caller-owned identity, dtype/device/shape rejection, optional CUDA.
-- **P4:** CPU/Warp activation parity, post-operation diagnostics, repeated
-  activation, untouched sentinels, insufficient capacity, malformed state and
-  requests, alias checks, and failure-before-mutation snapshots.
+- **P1 (shipped, issue #1416):**
+  `particula/particles/tests/slot_management_test.py` covers active/free and
+  contradictory truth-table states, exact invalid-state errors, zero-species
+  and zero-slot cases, sparse multi-box ascending indices with `-1` tails,
+  `np.int32` counts, package export identity, and success/error-path source
+  non-mutation with fresh-output allocation.
+- **P2 (shipped, issue #1417):**
+  `particula/particles/tests/slot_management_test.py` covers zero, empty, and
+  zero-slot no-op boundaries; sparse multi-box/multi-species and exact-capacity
+  mappings; fresh `np.int32` counts; request/destination identity and untouched
+  storage; and atomic failures for malformed data/schema, selected-prefix
+  values, aliasing, invalid existing state, and later-box capacity exhaustion.
+- **P3 (shipped, issue #1418):**
+  `particula/gpu/kernels/tests/slot_management_test.py` covers direct-Warp
+  CPU-oracle discovery parity for sparse multi-box/multi-species, all-free,
+  all-active, zero-box, zero-particle, and zero-species states; ascending
+  `-1`-tailed indices; exact `int32` counts and sidecar identity; stale-output
+  overwrite; malformed dtype/rank/shape/device and invalid-state rejection
+  before output writes; density/volume non-access; and Warp CPU plus clean
+  optional CUDA execution.
+- **P4 (shipped, issue #1419):**
+  `particula/gpu/kernels/tests/slot_management_test.py` compares particles and
+  all four caller-owned `int32` sidecars exactly with independent CPU activation
+  and post-call diagnostics. It covers ascending mapping, selected-prefix-only
+  validation, zero prefixes/boxes/capacity, exact and sparse capacity, repeated
+  activation, package export identity, and optional CUDA clean skips. Snapshot
+  tests prove non-mutation for schema, state, count, selected-record, capacity,
+  and direct/partial alias rejection.
 - **P5:** Documentation link/import/shape-table validation and focused command
   review.
 

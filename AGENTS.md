@@ -425,6 +425,44 @@ restored = from_warp_gas_data(gpu_gas, name=gas_data.name)
   transfer. Call it directly only when vapor pressure must be refreshed outside
   a condensation step.
 
+### CPU and direct-Warp fixed-slot contract
+
+- The authoritative table is in
+  `docs/Features/data-containers-and-gpu-foundations.md`. Import CPU diagnostics
+  with `from particula.particles import get_slot_diagnostics`, CPU activation
+  from `particula.particles.slot_management`, and GPU activation with
+  `from particula.gpu.kernels import activate_slots_gpu`.
+- A slot is active only with finite positive concentration, finite nonnegative
+  mass lanes with finite positive total mass, and finite charge. It is free
+  only when concentration, every mass lane, and charge are exactly zero; every
+  other state raises `ValueError("Invalid particle slot state.")`.
+- Selected request rank maps to the matching ascending free slot; free-index
+  rows have `-1` tails. Storage is fixed capacity: no resize or compaction.
+  Both activation APIs mutate only `masses`, `concentration`, and `charge`.
+  CPU preflight also reads `density` and `volume` to reject protected-field
+  storage aliasing; direct-Warp activation does not observe those fields.
+- CPU diagnostics and activation-count results are fresh `np.int32` arrays.
+  GPU count/diagnostic sidecars are caller-owned same-device `wp.int32` and
+  return by identity as `(activated_counts, free_indices, active_counts,
+  free_counts)`; request and particle fields are same-device `wp.float64`.
+- Callers own CPU↔Warp transfer and synchronization. There is no CPU fallback
+  or hidden transfer. CPU performs global read-only preflight; GPU preflight
+  validates metadata/schema/device, aliasing, state, counts, capacity, and the
+  selected request prefix. Rejections preserve accessible state; rollback is
+  not promised after a GPU writer launches.
+- `get_slot_diagnostics_gpu` is concrete-only at
+  `particula.gpu.kernels.slot_management`, not package-exported.
+- E6-F6 owns exhaustion policy, E6-F7/E6-F8 own source policy and physics, and
+  E6-F9 owns the integrated direct-step example; none is claimed here.
+
+Focused contract runs use Warp CPU as the installed-Warp baseline; CUDA is
+optional and skips cleanly when unavailable:
+
+```bash
+pytest particula/particles/tests/slot_management_test.py -q -Werror
+pytest particula/gpu/kernels/tests/slot_management_test.py -q -Werror
+```
+
 ### GPU dilution P1–P4 contract
 
 - Import the supported direct low-level entry point with
