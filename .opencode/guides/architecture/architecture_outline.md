@@ -1,5 +1,22 @@
 # Architecture Outline
 
+## Particle Package
+
+`particula/particles/` contains particle data, representations, distribution
+strategies, and concrete particle-domain helpers.
+
+### particula/particles/
+
+**Key Components:**
+- `exhaustion.py` - Concrete, deliberately unexported CPU P1 boundary for
+  read-only fixed-shape capacity exhaustion planning and float64 weighted
+  inventory accounting. It validates every box before resolution, applies
+  resampling-first deferred-policy selection, and returns immutable plans; it
+  owns neither state mutation nor commit, GPU work, or container schema.
+- `distribution_strategies/` - Particle distribution implementations
+- `properties/` - Particle property calculations
+- `tests/` - Test coverage
+
 ## GPU Package
 
 `particula/gpu/` contains Warp-backed data containers, explicit CPU↔GPU

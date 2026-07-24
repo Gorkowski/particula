@@ -25,3 +25,14 @@ or unsatisfiable requests fail without particle, volume, sidecar, or RNG writes.
   parity so exhaustion handling remains device-resident and allocation-stable.
 
 This is feature track T6 under E6 and depends on E6-F5.
+
+## Delivered P1 Baseline
+
+Issue #1422 delivered the CPU-only, concrete
+`particula.particles.exhaustion` planning boundary and its focused unit suite.
+It validates fixed-shape `int32` capacity sidecars for every box before
+resolving, returns frozen tuple-backed activation or deferred-policy plans, and
+uses resampling-first policy selection. It also supplies float64 tuple-backed
+weighted number, species-mass, and charge inventories. This baseline makes no
+commit, release selection, resampling, scaling-feasibility, discovery,
+re-export, or GPU change; those remain later phases.

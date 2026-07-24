@@ -5,9 +5,14 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
 
 ## Per-Phase Coverage
 
-- **P1:** CPU unit tests for defaults (`True`/`False`), all control combinations,
-  precedence resolution, weighted inventory formulas, malformed values, and
-  full-state no-mutation snapshots.
+- **P1 (delivered, #1422):** `particula/particles/tests/exhaustion_test.py`
+  covers defaults (`True`/`False`), exact-bool rejection, frozen/tuple-backed
+  records, the policy truth table and resampling-first precedence, exact
+  diagnostics and sentinels, schema/value validation, later-invalid-box
+  no-mutation, zero-box/zero-capacity cases, activation-prefix independence,
+  and the independent float64 weighted-inventory oracle at `rtol=1e-12`,
+  `atol=1e-30`. It intentionally contains no commit, resampling/scaling,
+  discovery, particle/RNG, GPU, or distribution-moment tests.
 - **P2:** CPU deterministic tests for sparse/full boxes, tie breaks, exact slot
   clearing, number/species-mass/charge conservation, repeated plans, and
   predeclared radius/composition-moment bounds.
@@ -33,8 +38,8 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
 - Number/species-mass/charge inventory uses independent float64 reductions with
   explicit `rtol`/`atol` recorded in tests; mixed scales receive species-level
   checks so large particles cannot hide small-particle loss.
-- Distribution preservation uses named moments and thresholds fixed in P1, not
-  exact slot-by-slot identity after resampling.
+- Later resampling phases define named distribution moments and thresholds;
+  P1 makes no distribution-preservation guarantee because it does not resample.
 - Invalid calls snapshot particles, volume, requests, diagnostics, work buffers,
   and any RNG state before asserting equality.
 

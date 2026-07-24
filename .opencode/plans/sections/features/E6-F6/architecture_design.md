@@ -7,6 +7,23 @@ E6-F5 diagnostics, source demand, configuration, and caller-owned scratch. It
 computes a complete feasible policy plan and expected conservation totals.
 Only a valid complete plan reaches commit.
 
+### Delivered P1 boundary
+
+Issue #1422 implements only the first, concrete CPU planning boundary in
+`particula/particles/exhaustion.py`. It consumes already-discovered fixed-shape
+capacity sidecars (`requested_count`, `free_count`, releasable count, and
+ascending free-index prefixes), validates all boxes before resolution, and
+returns frozen tuple-backed records. Capacity-sufficient boxes expose the exact
+activation prefix; exhausted boxes select deferred resampling before deferred
+scaling when enabled. Release selection and scale feasibility remain absent:
+release tuples are empty and `nan` is the no-scale sentinel. No caller state is
+accepted or written, so P1 has neither a commit nor rollback path.
+
+P1 also implements the float64 weighted number, species-mass, and charge
+inventory oracle as tuple-backed results. Its documented accounting boundary is
+`pre_state + source` without scaling or `scale * pre_state + source` with
+scaling; it makes no exact radius-cubed or other moment-preservation claim.
+
 ```text
 particle state + E6-F5 capacity + fixed-shape demand + policy config
                               |

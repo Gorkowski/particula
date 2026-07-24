@@ -30,7 +30,17 @@ POLICY_SCALE_DEFERRED = 2
 
 @dataclass(frozen=True)
 class ExhaustionControls:
-    """Control which deferred exhaustion policies may represent a request."""
+    """Control which deferred policies may represent exhausted capacity.
+
+    Attributes:
+        resampling: Whether a sufficiently releasable box may use the deferred
+            resampling policy.
+        representative_volume_scaling: Whether a box not represented by
+            resampling may use the deferred scaling policy.
+
+    Raises:
+        TypeError: If either control is not an exact Python ``bool``.
+    """
 
     resampling: bool = True
     representative_volume_scaling: bool = False
@@ -50,7 +60,21 @@ class ExhaustionControls:
 
 @dataclass(frozen=True)
 class ExhaustionInputs:
-    """Fixed-shape capacity sidecars used by :func:`resolve_exhaustion`."""
+    """Hold fixed-shape capacity sidecars for exhaustion planning.
+
+    Attributes:
+        requested_count: Requested activation count per box, as int32 values
+            with shape ``(B,)``.
+        free_count: Available free-slot count per box, as int32 values with
+            shape ``(B,)``.
+        resampling_releasable_count: Count per box that deferred resampling
+            could release, as int32 values with shape ``(B,)``.
+        free_indices: Ascending free-slot prefixes followed by ``-1`` unused
+            sentinels, as int32 values with shape ``(B, N)``.
+
+    Validation occurs when :func:`resolve_exhaustion` consumes this record;
+    record construction intentionally performs no coercion or mutation.
+    """
 
     requested_count: NDArray[np.int32]
     free_count: NDArray[np.int32]
@@ -60,7 +84,22 @@ class ExhaustionInputs:
 
 @dataclass(frozen=True)
 class ExhaustionBoxPlan:
-    """Immutable deferred capacity decision for one box."""
+    """Describe one immutable capacity decision at the later commit boundary.
+
+    Attributes:
+        requested_count: Requested activation count for the box.
+        admitted_count: Count admitted by this plan; equals ``requested_count``
+            in P1.
+        required_release_count: Additional slots needed after free capacity is
+            exhausted.
+        releasable_count: Capacity reported as releasable by resampling.
+        policy_code: ``POLICY_ACTIVATE``, ``POLICY_RESAMPLE_DEFERRED``, or
+            ``POLICY_SCALE_DEFERRED``.
+        activation_indices: Exact free-index prefix for activation plans; empty
+            for deferred plans.
+        release_indices: Empty in P1 because release selection is deferred.
+        scale_factor: ``float("nan")`` in P1 because scaling is deferred.
+    """
 
     requested_count: int
     admitted_count: int
@@ -74,14 +113,27 @@ class ExhaustionBoxPlan:
 
 @dataclass(frozen=True)
 class ExhaustionPlan:
-    """Immutable per-box exhaustion plan for a later commit boundary."""
+    """Hold immutable per-box decisions for one later commit boundary.
+
+    Attributes:
+        box_plans: One plan per validated input box, in input-box order.
+    """
 
     box_plans: tuple[ExhaustionBoxPlan, ...]
 
 
 @dataclass(frozen=True)
 class WeightedInventory:
-    """Float64 extensive and volume-normalized inventories, tuple-backed."""
+    """Hold tuple-backed float64 extensive and intensive inventories.
+
+    Attributes:
+        number: Weighted particle number, ``sum(weights)``, per box.
+        mass: Weighted mass, ``sum(weights * masses)``, per box and species.
+        charge: Weighted charge, ``sum(weights * charge)``, per box.
+        number_per_volume: Weighted number divided by box volume.
+        mass_per_volume: Weighted species mass divided by box volume.
+        charge_per_volume: Weighted charge divided by box volume.
+    """
 
     number: tuple[np.float64, ...]
     mass: tuple[tuple[np.float64, ...], ...]
@@ -177,6 +229,11 @@ def resolve_exhaustion(
 ) -> ExhaustionPlan:
     """Resolve immutable capacity decisions after complete sidecar validation.
 
+    The resolver validates every input box before creating a returned plan.
+    Activation uses the exact requested free-index prefix. Exhausted capacity
+    uses sufficiently releasable resampling before enabled scaling; both remain
+    deferred and therefore have empty release indices and a ``nan`` scale.
+
     Args:
         inputs: Fixed-shape, int32 capacity sidecars.
         controls: Strict policy enablement controls.
@@ -250,6 +307,10 @@ def get_weighted_inventory(
     volume: object,
 ) -> WeightedInventory:
     """Calculate float64 weighted inventories without retaining caller arrays.
+
+    Array-like inputs are converted to float64. The mass reduction avoids a
+    full weighted-mass broadcast product. Returned tuples do not retain caller
+    array storage.
 
     Args:
         masses: Array-like particle masses with shape ``(B, N, S)``.

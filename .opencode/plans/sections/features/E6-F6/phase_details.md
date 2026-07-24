@@ -5,11 +5,19 @@
 E6-F5 is required. Complete P1 through P5 in order before P6 conservation
 validation; P7 documents only the validated policy, precedence, and bounds.
 
-- [ ] **E6-F6-P1:** Freeze exhaustion policy, precedence, and conservation contracts with unit tests
-  - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Define defaults, independent controls, transactional failure ordering, diagnostics, and exact versus bounded invariants.
+- [x] **E6-F6-P1:** Freeze exhaustion policy, precedence, and conservation contracts with unit tests
+  - Issue: #1422 | Size: S | Status: Implemented (2026-07-24)
+  - Goal: Delivered strict defaults, independent controls, all-box validation
+    before resolution, exact planning diagnostics, and bounded/deferred
+    conservation language.
   - Files: `particula/particles/exhaustion.py`, `particula/particles/tests/exhaustion_test.py`
-  - Tests: Config defaults, policy truth table, capacity/no-op paths, invalid controls, weighted-inventory oracle, and no-write snapshots.
+  - Tests: Focused unit coverage verifies config defaults and immutability,
+    policy truth table and resampling-first precedence, exact activation
+    prefixes/deferred sentinels, malformed sidecars, later-invalid-box
+    no-mutation, empty dimensions, and a float64 multi-box/species inventory
+    oracle at `rtol=1e-12`, `atol=1e-30`.
+  - Boundary: P1 does not commit, choose releases, resample, assess scaling
+    feasibility, discover slots, add re-exports, or add GPU behavior.
 
 - [ ] **E6-F6-P2:** Implement deterministic CPU resampling reference with unit tests
   - Issue: TBD | Size: S | Status: Not Started

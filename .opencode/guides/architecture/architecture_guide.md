@@ -1,5 +1,21 @@
 # Architecture Guide
 
+## Particle Capacity-Planning Boundary
+
+- `particula.particles.exhaustion` is a deliberately unexported concrete CPU
+  P1 boundary. Callers that need it import the concrete module explicitly; do
+  not add it to package re-exports.
+- It accepts fixed-shape `int32` capacity sidecars, validates all boxes before
+  resolving any plan, and returns immutable plan records. It applies
+  resampling-first deferred-policy selection, but does not choose releases or
+  scaling feasibility.
+- This boundary is read-only: it owns no particle, RNG, diagnostic, work-buffer,
+  or container state mutation and performs no commit or GPU work. A caller may
+  safely retry it with corrected sidecars after validation or policy failure.
+- Its weighted inventory helper provides float64 number, mass, and charge
+  accounting only. Commit conservation and any moment-preservation guarantee
+  remain responsibilities of later commit phases.
+
 ## GPU Module Boundaries
 
 The GPU package keeps a strict separation between transfer, schema, and
