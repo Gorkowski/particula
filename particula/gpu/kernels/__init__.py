@@ -1,4 +1,4 @@
-"""Public GPU kernel entry points.
+"""Expose supported public GPU direct-kernel entry points lazily.
 
 Import direct low-level step functions from this package:
 
@@ -10,7 +10,8 @@ Import direct low-level step functions from this package:
         wall_loss_step_gpu,
     )
 
-Lower-level helper kernels remain importable from their concrete modules.
+Lower-level helper kernels and concrete planning records, including
+``ResamplingBuffers``, remain importable only from their concrete modules.
 """
 
 from __future__ import annotations

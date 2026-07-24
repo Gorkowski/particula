@@ -1,15 +1,17 @@
-"""Fixed-capacity direct Warp equal-weight resampling.
+"""Provide fixed-capacity direct Warp equal-weight resampling.
 
-This concrete-module-only boundary consumes already resolved release counts.
-It has no policy resolution, CPU fallback, host particle transfers, resizing, or
-runnable wrapper.  Callers own every particle-scale planning and diagnostic
-buffer.  Preflight is read-only; planning may replace buffer contents, and a
-single commit is launched only after all boxes pass their diagnostics.
+This concrete-module-only boundary consumes already-resolved per-box release
+counts. It has no policy resolution, CPU fallback, host particle transfer,
+resizing, or runnable wrapper. Callers own every particle-scale planning and
+diagnostic buffer. Read-only preflight precedes planning; planning can replace
+documented buffer contents, and one commit launches only after every box passes
+its diagnostics.
 
-The planner uses a deterministic bitonic sorting network followed by a linear
-equal-weight interval sweep.  Sorting costs ``O(B * N * log2(N)**2)``
-compare-exchanges; all other planning and commit work is ``O(B * N * S)``.
-Its scratch footprint is entirely supplied by :class:`ResamplingBuffers`.
+The planner uses a deterministic bitonic sorting network and a linear
+equal-weight interval sweep. Sorting costs ``O(B * N * log2(N)**2)``
+compare-exchanges; all other planning and commit work costs ``O(B * N * S)``.
+The caller supplies its entire particle-scale scratch footprint through
+:class:`ResamplingBuffers`.
 """
 
 # mypy: disable-error-code="valid-type, misc"
@@ -41,11 +43,42 @@ PLANNING_DIVERSITY_FAILURE = 5
 
 @dataclass(frozen=True)
 class ResamplingBuffers:
-    """Caller-owned fixed-shape planning, sorting, and diagnostic storage.
+    """Hold caller-owned fixed-shape Warp storage for resampling.
 
-    All fields must be same-device Warp arrays.  Index and count fields use
-    ``int32``; all other fields use ``float64`` except ``planning_status``.
-    Buffer records never bind a reusable CPU plan to particle state.
+    The record is concrete-module-only and does not bind a reusable CPU plan
+    to particle state. Every field must be a distinct, same-device Warp array
+    with the shape implied by particle boxes ``B``, capacity ``N``, and species
+    count ``S``. Successful nonzero-demand planning initializes every output
+    and scratch lane deterministically; zero-demand buffer lanes are unchanged.
+
+    Attributes:
+        retained_counts: ``int32`` array shaped ``(B,)`` of planned retained
+            active slots.
+        released_counts: ``int32`` array shaped ``(B,)`` of planned releases.
+        retained_indices: ``int32`` array shaped ``(B, N)`` of retained
+            original slot indices, with unused lanes set to ``-1``.
+        released_indices: ``int32`` array shaped ``(B, N)`` of released
+            original slot indices, with unused lanes set to ``-1``.
+        sorted_indices: ``int32`` array shaped ``(B, N)`` used for the sorted
+            source sequence, with unused lanes set to ``-1``.
+        replacement_masses: ``float64`` array shaped ``(B, N, S)`` containing
+            planned per-particle species masses; unused rows are zero.
+        replacement_concentration: ``float64`` array shaped ``(B, N)`` of
+            planned concentrations; unused lanes are zero.
+        replacement_charge: ``float64`` array shaped ``(B, N)`` of planned
+            charges; unused lanes are zero.
+        source_radii: ``float64`` array shaped ``(B, N)`` for planning radii.
+        radius_cubed_relative_error: ``float64`` array shaped ``(B,)`` of
+            radius-cubed diagnostic errors.
+        mean_radius_relative_error: ``float64`` array shaped ``(B,)`` of
+            mean-radius diagnostic errors.
+        surface_relative_error: ``float64`` array shaped ``(B,)`` of surface
+            area diagnostic errors.
+        diversity_absolute_error: ``float64`` array shaped ``(B,)`` of
+            Riemer-diversity diagnostic errors.
+        planning_status: ``int32`` array shaped ``(B,)`` with ``0`` for
+            success, ``1`` for inventory failure, and ``2`` through ``5`` for
+            radius-cubed, mean-radius, surface, and diversity failures.
     """
 
     retained_counts: Any
@@ -756,25 +789,38 @@ def resampling_step_gpu(  # noqa: PLR0913
 ) -> Any:
     """Apply deterministic fixed-capacity P2 equal-weight remapping in place.
 
-    Nonzero per-box counts select remapping; zero-demand boxes are write-free.
-    The caller owns particles, counts, and all buffer arrays.  Planning failure
-    raises before the single commit launch and therefore preserves particles.
+    A nonzero per-box count selects remapping and must not exceed active slots
+    minus one; zero-demand boxes are write-free. The caller owns particles,
+    counts, and all buffer arrays. Preflight validates schemas, physical state,
+    and nonaliasing without writing caller storage. Planning may overwrite its
+    documented buffer lanes. A planning failure raises before the single commit
+    launch and therefore preserves particles; rollback is not promised after a
+    commit launch.
 
     Args:
-        particles: Fixed-capacity Warp particle container.
-        required_release_counts: Same-device per-box ``int32`` release counts.
-        buffers: Caller-owned planning, sorting, and diagnostic Warp storage.
-        radius_cubed_relative_error: Finite nonnegative radius-cubed bound.
-        mean_radius_relative_error: Finite nonnegative mean-radius bound.
-        surface_relative_error: Finite nonnegative surface-area bound.
-        diversity_absolute_error: Finite nonnegative diversity-error bound.
+        particles: Fixed-capacity Warp particle container with masses,
+            concentration, charge, density, and volume fields.
+        required_release_counts: Same-device ``int32`` release counts shaped
+            ``(B,)``. Counts are explicit inputs and are not modified.
+        buffers: Caller-owned, nonaliasing :class:`ResamplingBuffers` storage.
+        radius_cubed_relative_error: Exact Python ``float`` bound for the
+            finite, nonnegative relative radius-cubed error.
+        mean_radius_relative_error: Exact Python ``float`` bound for the
+            finite, nonnegative relative mean-radius error.
+        surface_relative_error: Exact Python ``float`` bound for the finite,
+            nonnegative relative surface-area error.
+        diversity_absolute_error: Exact Python ``float`` bound for the finite,
+            nonnegative absolute Riemer-diversity error.
 
     Returns:
-        The identical particle container after a successful in-place commit.
+        The identical particle container after a successful in-place commit or
+        a write-free empty/all-zero-demand call.
 
     Raises:
-        TypeError: If bounds or required array objects have unsupported types.
-        ValueError: If schemas, values, ownership, or diagnostics are invalid.
+        TypeError: If a bound, caller array, or buffer record has an unsupported
+            type.
+        ValueError: If schemas, physical values, ownership, release counts, or
+            planning diagnostics are invalid.
     """
     bounds = (
         _require_exact_bound(
