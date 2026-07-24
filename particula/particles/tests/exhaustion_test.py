@@ -1326,3 +1326,387 @@ def test_representative_volume_scaling_rejects_zero_capacity(
             np.ones(boxes, dtype=np.float64),
             np.zeros(boxes, dtype=np.float64),
         )
+
+
+def _direct_ledger(
+    masses: np.ndarray,
+    concentration: np.ndarray,
+    charge: np.ndarray,
+    volume: np.ndarray,
+    *,
+    include_volume: bool,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Reduce represented number, species mass, and signed charge directly."""
+    number = np.sum(concentration, axis=1, dtype=np.float64)
+    mass = np.einsum(
+        "bn,bns->bs", concentration, masses, dtype=np.float64, optimize=True
+    )
+    signed_charge = np.sum(concentration * charge, axis=1, dtype=np.float64)
+    if include_volume:
+        number *= volume
+        mass *= volume[:, None]
+        signed_charge *= volume
+    return number, mass, signed_charge
+
+
+def _commit_admitted_source(
+    particles: ParticleData,
+    indices: np.ndarray,
+    source_masses: np.ndarray,
+    source_concentration: np.ndarray,
+    source_charge: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Write fixed external source state into already available fixture slots."""
+    boxes, _, species = particles.masses.shape
+    if (
+        indices.shape != (boxes,)
+        or source_masses.shape != (boxes, species)
+        or source_concentration.shape != (boxes,)
+        or source_charge.shape != (boxes,)
+    ):
+        raise ValueError("invalid test source fixture shape")
+    source_mass_state = np.zeros_like(particles.masses)
+    source_concentration_state = np.zeros_like(particles.concentration)
+    source_charge_state = np.zeros_like(particles.charge)
+    for box, index in enumerate(indices):
+        if index < 0 or index >= particles.n_particles:
+            raise ValueError("test source fixture index is out of range")
+        if particles.concentration[box, index] != 0.0:
+            raise ValueError("test source fixture requires an available slot")
+        source_mass_state[box, index] = source_masses[box]
+        source_concentration_state[box, index] = source_concentration[box]
+        source_charge_state[box, index] = source_charge[box]
+        particles.masses[box, index] = source_masses[box]
+        particles.concentration[box, index] = source_concentration[box]
+        particles.charge[box, index] = source_charge[box]
+    return _direct_ledger(
+        source_mass_state,
+        source_concentration_state,
+        source_charge_state,
+        np.ones(boxes, dtype=np.float64),
+        include_volume=False,
+    )
+
+
+def _assert_ledger_equal(
+    actual: tuple[np.ndarray, np.ndarray, np.ndarray],
+    expected: tuple[np.ndarray, np.ndarray, np.ndarray],
+) -> None:
+    """Assert independent number, species-mass, and charge ledger equality."""
+    for actual_values, expected_values in zip(actual, expected, strict=True):
+        npt.assert_allclose(
+            actual_values, expected_values, rtol=1e-12, atol=1e-30
+        )
+
+
+def test_resampling_sparse_source_fixture_and_highest_release_conserve() -> (
+    None
+):
+    """P2 preserves each box ledger before fixed downstream source insertion."""
+    particles = _resampling_particles(2)
+    before = _direct_ledger(
+        particles.masses,
+        particles.concentration,
+        particles.charge,
+        particles.volume,
+        include_volume=False,
+    )
+    p1 = _resampling_p1(2)
+    zero = ExhaustionBoxPlan(
+        0, 0, 0, 0, POLICY_RESAMPLE_DEFERRED, (), (), float("nan")
+    )
+    plan = plan_resampling(particles, ExhaustionPlan((p1.box_plans[0], zero)))
+    assert apply_resampling(particles, plan) is particles
+    source = _commit_admitted_source(
+        particles,
+        np.array([2, 4], dtype=np.intp),
+        np.array([[1.0e-18, 2.0e-12], [3.0e-21, 4.0e-15]], dtype=np.float64),
+        np.array([7.0, 0.5], dtype=np.float64),
+        np.array([-3.0, 2.0], dtype=np.float64),
+    )
+    _assert_ledger_equal(
+        _direct_ledger(
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.volume,
+            include_volume=False,
+        ),
+        tuple(pre + added for pre, added in zip(before, source, strict=True)),
+    )
+    assert plan.box_plans[0].retained_indices == (0, 1)
+    assert plan.box_plans[0].released_indices == (2, 3)
+    assert particles.masses.shape == (2, 5, 2)
+
+    highest = _resampling_particles()
+    highest_before = _direct_ledger(
+        highest.masses,
+        highest.concentration,
+        highest.charge,
+        highest.volume,
+        include_volume=False,
+    )
+    highest_p1 = resolve_exhaustion(
+        ExhaustionInputs(
+            np.array([4], dtype=np.int32),
+            np.array([1], dtype=np.int32),
+            np.array([3], dtype=np.int32),
+            np.array([[4, -1, -1, -1, -1]], dtype=np.int32),
+        ),
+        ExhaustionControls(),
+    )
+    highest_plan = plan_resampling(highest, highest_p1)
+    apply_resampling(highest, highest_plan)
+    _assert_ledger_equal(
+        _direct_ledger(
+            highest.masses,
+            highest.concentration,
+            highest.charge,
+            highest.volume,
+            include_volume=False,
+        ),
+        highest_before,
+    )
+    assert highest_plan.box_plans[0].released_indices == (1, 2, 3)
+
+
+def test_resampling_all_inactive_zero_request_is_exact_noop() -> None:
+    """A valid empty P2 row does not alter particles or its immutable plan."""
+    particles = _resampling_particles()
+    particles.masses[:] = 0.0
+    particles.concentration[:] = 0.0
+    particles.charge[:] = 0.0
+    p1 = ExhaustionPlan(
+        (ExhaustionBoxPlan(0, 0, 0, 0, POLICY_ACTIVATE, (), (), float("nan")),)
+    )
+    snapshot = tuple(
+        value.tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+        )
+    )
+    plan = plan_resampling(particles, p1)
+    plan_snapshot = repr(plan)
+    assert apply_resampling(particles, plan) is particles
+    assert repr(plan) == plan_snapshot
+    assert snapshot == tuple(
+        value.tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+        )
+    )
+
+
+def test_resampling_full_capacity_and_over_capacity_plan_rejection() -> None:
+    """Full P2 rows conserve directly; active-count releases fail before writes."""
+    particles = ParticleData(
+        masses=np.array(
+            [
+                [
+                    [1e-21, 2e-18],
+                    [3e-15, 4e-12],
+                    [5e-9, 6e-6],
+                    [7e-3, 8.0],
+                    [9.0, 1e-12],
+                ]
+            ],
+            dtype=np.float64,
+        ),
+        concentration=np.array([[1.0, 2.0, 3.0, 4.0, 5.0]], dtype=np.float64),
+        charge=np.array([[1.0, -2.0, 3.0, -4.0, 5.0]], dtype=np.float64),
+        density=np.array([1000.0, 2000.0], dtype=np.float64),
+        volume=np.array([1.0], dtype=np.float64),
+    )
+    before = _direct_ledger(
+        particles.masses,
+        particles.concentration,
+        particles.charge,
+        particles.volume,
+        include_volume=False,
+    )
+    valid = ExhaustionPlan(
+        (
+            ExhaustionBoxPlan(
+                2, 2, 2, 2, POLICY_RESAMPLE_DEFERRED, (), (), float("nan")
+            ),
+        )
+    )
+    apply_resampling(particles, plan_resampling(particles, valid))
+    _assert_ledger_equal(
+        _direct_ledger(
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.volume,
+            include_volume=False,
+        ),
+        before,
+    )
+
+    rejected = _resampling_particles()
+    forged = ExhaustionPlan(
+        (
+            ExhaustionBoxPlan(
+                4, 4, 4, 4, POLICY_RESAMPLE_DEFERRED, (), (), float("nan")
+            ),
+        )
+    )
+    snapshot = tuple(
+        value.tobytes()
+        for value in (
+            rejected.masses,
+            rejected.concentration,
+            rejected.charge,
+            rejected.density,
+            rejected.volume,
+        )
+    )
+    with pytest.raises(ValueError, match="retain at least one"):
+        plan_resampling(rejected, forged)
+    assert snapshot == tuple(
+        value.tobytes()
+        for value in (
+            rejected.masses,
+            rejected.concentration,
+            rejected.charge,
+            rejected.density,
+            rejected.volume,
+        )
+    )
+
+
+def test_representative_scaling_source_fixture_uses_volume_ledger() -> None:
+    """P4 accounting is scaled particle inventory plus fixed external source."""
+    particles = _resampling_particles(2)
+    particles.volume[:] = [4.0, 9.0]
+    before = _direct_ledger(
+        particles.masses,
+        particles.concentration,
+        particles.charge,
+        particles.volume,
+        include_volume=True,
+    )
+    unselected = tuple(
+        value[1].tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+        )
+    )
+    demand = np.array([3.0, 2.0], dtype=np.float64)
+    resolved = np.zeros(2, dtype=np.float64)
+    apply_representative_volume_scaling(
+        particles,
+        demand,
+        np.array([True, False]),
+        np.array([0.5, 0.8]),
+        np.array([0.25, 0.5]),
+        np.array([1.0, 1.0]),
+        resolved,
+    )
+    source = _commit_admitted_source(
+        particles,
+        np.array([4, 4], dtype=np.intp),
+        np.array([[1e-18, 2e-12], [0.0, 0.0]], dtype=np.float64),
+        np.array([6.0, 0.0], dtype=np.float64),
+        np.array([2.0, 0.0], dtype=np.float64),
+    )
+    source_with_volume = tuple(
+        values * particles.volume[:, None]
+        if values.ndim == 2
+        else values * particles.volume
+        for values in source
+    )
+    # P4 scales both concentration and representative volume, so this
+    # volume-inclusive ledger carries both selected-row factors.
+    scale = np.array([0.25, 1.0], dtype=np.float64)
+    expected = tuple(
+        values * scale[:, None] if values.ndim == 2 else values * scale
+        for values in before
+    )
+    _assert_ledger_equal(
+        _direct_ledger(
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.volume,
+            include_volume=True,
+        ),
+        tuple(
+            base + added
+            for base, added in zip(expected, source_with_volume, strict=True)
+        ),
+    )
+    npt.assert_allclose(demand, [1.5, 2.0])
+    npt.assert_allclose(resolved, [0.5, 1.0])
+    assert unselected == tuple(
+        value[1].tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+        )
+    )
+
+
+def _direct_moment_diagnostics(
+    masses: np.ndarray,
+    concentration: np.ndarray,
+    density: np.ndarray,
+) -> tuple[float, float, float, float]:
+    """Calculate separate direct-NumPy particle moments and diversity."""
+    radii = np.cbrt(3.0 * np.sum(masses / density, axis=1) / (4.0 * np.pi))
+    number = np.sum(concentration, dtype=np.float64)
+    radius_cubed = np.sum(concentration * radii**3, dtype=np.float64)
+    mean_radius = np.sum(concentration * radii, dtype=np.float64) / number
+    surface = np.sum(
+        concentration * 4.0 * np.pi * radii**2,
+        dtype=np.float64,
+    )
+    particle_mass = np.sum(masses, axis=1)
+    represented_mass = concentration * particle_mass
+    total_mass = np.sum(represented_mass, dtype=np.float64)
+    diversity_entropy = 0.0
+    for particle, mass in enumerate(particle_mass):
+        if mass <= 0.0 or represented_mass[particle] <= 0.0:
+            continue
+        fractions = masses[particle] / mass
+        positive = fractions[fractions > 0.0]
+        diversity_entropy -= (
+            represented_mass[particle]
+            / total_mass
+            * np.sum(positive * np.log(positive))
+        )
+    return radius_cubed, mean_radius, surface, float(np.exp(diversity_entropy))
+
+
+def test_resampling_moment_diagnostics_remain_separate_from_inventory() -> None:
+    """Direct moment diagnostics use their configured bounds, not conservation."""
+    particles = _resampling_particles()
+    before = _direct_moment_diagnostics(
+        particles.masses[0],
+        particles.concentration[0],
+        particles.density,
+    )
+    apply_resampling(particles, plan_resampling(particles, _resampling_p1()))
+    after = _direct_moment_diagnostics(
+        particles.masses[0],
+        particles.concentration[0],
+        particles.density,
+    )
+    npt.assert_allclose(after[0], before[0], rtol=1e-12, atol=1e-30)
+    for actual, expected in zip(after[1:], before[1:], strict=True):
+        assert abs(actual - expected) / expected < 1.0

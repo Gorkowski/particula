@@ -1062,3 +1062,333 @@ def test_gpu_representative_volume_scaling_empty_invalid_density_rejects() -> (
             resolved,
         )
     npt.assert_array_equal(resolved.numpy(), np.empty(0, dtype=np.float64))
+
+
+def _direct_particle_ledger(
+    masses: np.ndarray,
+    concentration: np.ndarray,
+    charge: np.ndarray,
+    volume: np.ndarray,
+    *,
+    include_volume: bool,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Independently reduce per-box number, species mass, and charge."""
+    number = np.sum(concentration, axis=1, dtype=np.float64)
+    mass = np.einsum(
+        "bn,bns->bs", concentration, masses, dtype=np.float64, optimize=True
+    )
+    signed_charge = np.sum(concentration * charge, axis=1, dtype=np.float64)
+    if include_volume:
+        number *= volume
+        mass *= volume[:, None]
+        signed_charge *= volume
+    return number, mass, signed_charge
+
+
+def _assert_direct_ledger(
+    actual: tuple[np.ndarray, np.ndarray, np.ndarray],
+    expected: tuple[np.ndarray, np.ndarray, np.ndarray],
+) -> None:
+    """Keep tight conservation assertions separate from field parity."""
+    for actual_values, expected_values in zip(actual, expected, strict=True):
+        npt.assert_allclose(
+            actual_values, expected_values, rtol=1e-12, atol=1e-30
+        )
+
+
+def _commit_fixed_source(
+    particles: Any,
+    indices: np.ndarray,
+    source_masses: np.ndarray,
+    source_concentration: np.ndarray,
+    source_charge: np.ndarray,
+    device: str,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Commit fixed external fixture values only into available P2/P4 slots."""
+    wp = _warp()
+    wp.synchronize_device(device)
+    masses = particles.masses.numpy()
+    concentration = particles.concentration.numpy()
+    charge = particles.charge.numpy()
+    boxes, _, species = masses.shape
+    if (
+        indices.shape != (boxes,)
+        or source_masses.shape != (boxes, species)
+        or source_concentration.shape != (boxes,)
+        or source_charge.shape != (boxes,)
+    ):
+        raise ValueError("invalid test source fixture shape")
+    source_mass_state = np.zeros_like(masses)
+    source_concentration_state = np.zeros_like(concentration)
+    source_charge_state = np.zeros_like(charge)
+    for box, index in enumerate(indices):
+        if concentration[box, index] != 0.0:
+            raise ValueError("test source fixture requires an available slot")
+        source_mass_state[box, index] = source_masses[box]
+        source_concentration_state[box, index] = source_concentration[box]
+        source_charge_state[box, index] = source_charge[box]
+        masses[box, index] = source_masses[box]
+        concentration[box, index] = source_concentration[box]
+        charge[box, index] = source_charge[box]
+    wp.copy(particles.masses, wp.array(masses, dtype=wp.float64, device=device))
+    wp.copy(
+        particles.concentration,
+        wp.array(concentration, dtype=wp.float64, device=device),
+    )
+    wp.copy(particles.charge, wp.array(charge, dtype=wp.float64, device=device))
+    return _direct_particle_ledger(
+        source_mass_state,
+        source_concentration_state,
+        source_charge_state,
+        np.ones(boxes, dtype=np.float64),
+        include_volume=False,
+    )
+
+
+def _assert_source_and_resampling_matrix(device: str) -> None:
+    """Exercise sparse, zero-demand sibling, and repeated P2 ledger evidence."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    masses = np.array(
+        [
+            [[1e-21, 2e-18], [3e-15, 4e-12], [5e-9, 6e-6], [0.0, 0.0]],
+            [[7e-3, 8.0], [9.0, 1e-12], [2e-18, 3e-15], [0.0, 0.0]],
+        ],
+        dtype=np.float64,
+    )
+    concentration = np.array([[1.0, 2.0, 4.0, 0.0], [3.0, 5.0, 7.0, 0.0]])
+    charge = np.array([[1.0, -2.0, 3.0, 0.0], [-4.0, 5.0, -6.0, 0.0]])
+    counts = np.array([1, 0], dtype=np.int32)
+    particles, warp_counts, buffers = _custom_state(
+        masses,
+        concentration,
+        charge,
+        np.array([1000.0, 2000.0]),
+        counts,
+        device,
+    )
+    before = _direct_particle_ledger(
+        masses, concentration, charge, np.ones(2), include_volume=False
+    )
+    identities = (id(particles), id(buffers), id(warp_counts))
+    assert resampling_step_gpu(particles, warp_counts, buffers) is particles
+    wp.synchronize_device(device)
+    source = _commit_fixed_source(
+        particles,
+        np.array([2, 3], dtype=np.intp),
+        np.array([[1e-24, 2e-20], [3e-16, 4e-12]], dtype=np.float64),
+        np.array([11.0, 0.25], dtype=np.float64),
+        np.array([2.0, -3.0], dtype=np.float64),
+        device,
+    )
+    wp.synchronize_device(device)
+    _assert_direct_ledger(
+        _direct_particle_ledger(
+            particles.masses.numpy(),
+            particles.concentration.numpy(),
+            particles.charge.numpy(),
+            particles.volume.numpy(),
+            include_volume=False,
+        ),
+        tuple(pre + added for pre, added in zip(before, source, strict=True)),
+    )
+    after_source = _direct_particle_ledger(
+        particles.masses.numpy(),
+        particles.concentration.numpy(),
+        particles.charge.numpy(),
+        particles.volume.numpy(),
+        include_volume=False,
+    )
+    assert resampling_step_gpu(particles, warp_counts, buffers) is particles
+    wp.synchronize_device(device)
+    _assert_direct_ledger(
+        _direct_particle_ledger(
+            particles.masses.numpy(),
+            particles.concentration.numpy(),
+            particles.charge.numpy(),
+            particles.volume.numpy(),
+            include_volume=False,
+        ),
+        after_source,
+    )
+    assert identities == (id(particles), id(buffers), id(warp_counts))
+    npt.assert_array_equal(buffers.retained_indices.numpy()[0, :2], [0, 1])
+    npt.assert_array_equal(buffers.released_indices.numpy()[0, :1], [2])
+    assert particles.masses.shape == (2, 4, 2)
+
+
+def test_resampling_source_fixture_conserves_each_box_and_species() -> None:
+    """Warp CPU P2 ledger includes only already-admitted external source state."""
+    _assert_source_and_resampling_matrix("cpu")
+
+
+@pytest.mark.cuda
+def test_resampling_cuda_source_fixture_conserves_each_box_and_species() -> (
+    None
+):
+    """CUDA source-plus-particle P2 evidence remains optional."""
+    if not _warp().is_cuda_available():
+        pytest.skip("CUDA is unavailable")
+    _assert_source_and_resampling_matrix("cuda:0")
+
+
+def test_resampling_active_count_rejection_preserves_count_and_buffers() -> (
+    None
+):
+    """Count equal to active capacity is a write-free preflight failure."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    particles, _, buffers = _state()
+    wp = _warp()
+    counts = wp.array([3], dtype=wp.int32, device="cpu")
+    count_container = SimpleNamespace(counts=counts)
+    snapshot = _snapshot(particles, count_container, buffers)
+    with pytest.raises(ValueError, match="invalid values"):
+        resampling_step_gpu(particles, counts, buffers)
+    _assert_snapshot(snapshot, particles, count_container, buffers)
+
+
+def test_resampling_full_capacity_fixture_conserves_particle_ledger() -> None:
+    """A five-slot, two-species full row preserves each particle ledger lane."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    masses = np.array(
+        [
+            [
+                [1.0e-21, 2.0e-18],
+                [3.0e-15, 4.0e-12],
+                [5.0e-9, 6.0e-6],
+                [7.0e-3, 8.0],
+                [9.0, 1.0e-12],
+            ]
+        ],
+        dtype=np.float64,
+    )
+    concentration = np.array([[1.0, 2.0, 3.0, 4.0, 5.0]])
+    charge = np.array([[1.0, -2.0, 3.0, -4.0, 5.0]])
+    particles, counts, buffers = _custom_state(
+        masses,
+        concentration,
+        charge,
+        np.array([1000.0, 2000.0]),
+        np.array([2], dtype=np.int32),
+    )
+    before = _direct_particle_ledger(
+        masses,
+        concentration,
+        charge,
+        np.ones(1, dtype=np.float64),
+        include_volume=False,
+    )
+    assert resampling_step_gpu(particles, counts, buffers) is particles
+    _assert_direct_ledger(
+        _direct_particle_ledger(
+            particles.masses.numpy(),
+            particles.concentration.numpy(),
+            particles.charge.numpy(),
+            particles.volume.numpy(),
+            include_volume=False,
+        ),
+        before,
+    )
+    npt.assert_array_equal(buffers.released_indices.numpy()[0, :2], [3, 4])
+
+
+def _assert_p4_source_ledger(device: str) -> None:
+    """Check selected P4 volume accounting before fixed source insertion."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    masses = np.array(
+        [
+            [[1e-21, 2e-18], [3e-15, 4e-12], [0.0, 0.0]],
+            [[5e-9, 6e-6], [7e-3, 8.0], [0.0, 0.0]],
+        ],
+        dtype=np.float64,
+    )
+    concentration = np.array([[2.0, 3.0, 0.0], [5.0, 7.0, 0.0]])
+    charge = np.array([[1.0, -2.0, 0.0], [3.0, -4.0, 0.0]])
+    particles, _, _ = _custom_state(
+        masses,
+        concentration,
+        charge,
+        np.array([1000.0, 2000.0]),
+        np.zeros(2, dtype=np.int32),
+        device,
+    )
+    particles.volume = wp.array([4.0, 9.0], dtype=wp.float64, device=device)
+    before = _direct_particle_ledger(
+        masses, concentration, charge, np.array([4.0, 9.0]), include_volume=True
+    )
+    untouched = tuple(
+        value.numpy()[1].copy() for value in vars(particles).values()
+    )
+    demand = wp.array([3.0, 2.0], dtype=wp.float64, device=device)
+    resolved = wp.zeros(2, dtype=wp.float64, device=device)
+    returned = representative_volume_scaling_step_gpu(
+        particles,
+        demand,
+        wp.array([1, 0], dtype=wp.int32, device=device),
+        wp.array([0.5, 0.8], dtype=wp.float64, device=device),
+        wp.array([0.25, 0.5], dtype=wp.float64, device=device),
+        wp.array([1.0, 1.0], dtype=wp.float64, device=device),
+        resolved,
+    )
+    assert returned == (particles, demand, resolved)
+    source = _commit_fixed_source(
+        particles,
+        np.array([2, 2], dtype=np.intp),
+        np.array([[1e-24, 2e-20], [0.0, 0.0]], dtype=np.float64),
+        np.array([6.0, 0.0], dtype=np.float64),
+        np.array([2.0, 0.0]),
+        device,
+    )
+    wp.synchronize_device(device)
+    source_volume = tuple(
+        values * particles.volume.numpy()[:, None]
+        if values.ndim == 2
+        else values * particles.volume.numpy()
+        for values in source
+    )
+    scale = np.array([0.25, 1.0])
+    expected = tuple(
+        values * scale[:, None] if values.ndim == 2 else values * scale
+        for values in before
+    )
+    _assert_direct_ledger(
+        _direct_particle_ledger(
+            particles.masses.numpy(),
+            particles.concentration.numpy(),
+            particles.charge.numpy(),
+            particles.volume.numpy(),
+            include_volume=True,
+        ),
+        tuple(
+            base + added
+            for base, added in zip(expected, source_volume, strict=True)
+        ),
+    )
+    npt.assert_allclose(demand.numpy(), [1.5, 2.0])
+    npt.assert_allclose(resolved.numpy(), [0.5, 1.0])
+    for value, expected_value in zip(
+        vars(particles).values(), untouched, strict=True
+    ):
+        npt.assert_array_equal(value.numpy()[1], expected_value)
+
+
+def test_gpu_representative_scaling_source_fixture_uses_volume_ledger() -> None:
+    """Warp CPU P4 selected rows preserve explicit volume-ledger accounting."""
+    _assert_p4_source_ledger("cpu")
+
+
+@pytest.mark.cuda
+def test_gpu_representative_scaling_cuda_source_fixture_uses_volume_ledger() -> (
+    None
+):
+    """CUDA P4 source-ledger evidence is optional and guarded."""
+    if not _warp().is_cuda_available():
+        pytest.skip("CUDA is unavailable")
+    _assert_p4_source_ledger("cuda:0")
