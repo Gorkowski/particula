@@ -103,11 +103,11 @@ caller-owned `ResamplingBuffers` fields are all distinct, same-device arrays:
 | `replacement_concentration`, `replacement_charge`, `source_radii` | `float64 (B, N)` |
 | `radius_cubed_relative_error`, `mean_radius_relative_error`, `surface_relative_error`, `diversity_absolute_error` | `float64 (B,)` |
 
-Unused index lanes are `-1`; unused replacement lanes are zero. P2 preflight
-rejects before caller writes. A zero-demand call is write-free. Planning may
-alter documented buffer lanes; if a planning diagnostic fails, particles remain
-unchanged and the commit is skipped. No rollback is promised after a commit
-launch.
+After successful nonzero-demand planning, unused index lanes are `-1` and
+unused replacement lanes are zero. P2 preflight rejects before caller writes.
+A zero-demand call is write-free. Planning may alter documented buffer lanes;
+if a planning diagnostic fails, particles remain unchanged and the commit is
+skipped. No rollback is promised after a commit launch.
 
 Warp P4 sidecars are same-device, contiguous, nonaliasing arrays: all numeric
 sidecars (`provisional_source_demand`, `requested_scale`, `minimum_scale`,
@@ -169,10 +169,11 @@ implement nucleation physics.
 
 ## Explicitly deferred capabilities
 
-The primitives do not provide dynamic allocation, resizing, compaction, hidden
-transfers, CPU fallback, a high-level runnable, scheduler, backend
-orchestration, graph capture, autodiff, performance guarantees, or exact
-CPU/Warp/CUDA RNG replay. They do not establish a loop that invokes a policy
+The primitives do not provide dynamic allocation, resizing, compaction,
+particle-state transfers, CPU fallback, a high-level runnable, scheduler,
+backend orchestration, graph capture, autodiff, performance guarantees, or
+exact CPU/Warp/CUDA RNG replay. Validation and planning may perform bounded
+scalar status readbacks. They do not establish a loop that invokes a policy
 before exhaustion.
 
 For the delivered-versus-deferred GPU roadmap, see
