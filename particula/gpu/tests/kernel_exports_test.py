@@ -90,6 +90,23 @@ def test_kernels_package_keeps_resampling_buffers_concrete_module_only() -> (
     assert not hasattr(kernels, "ResamplingBuffers")
 
 
+def test_kernels_package_keeps_p4_scaling_concrete_module_only() -> None:
+    """P4 scaling is importable only from the concrete exhaustion module."""
+    pytest.importorskip("warp")
+    import particula.gpu.kernels as kernels
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    assert representative_volume_scaling_step_gpu is not None
+    assert "representative_volume_scaling_step_gpu" not in kernels.__all__
+    assert not hasattr(kernels, "representative_volume_scaling_step_gpu")
+    assert (
+        "representative_volume_scaling_step_gpu"
+        not in kernels._SYMBOL_TO_MODULE
+    )
+
+
 def test_kernels_package_registers_resampling_as_a_lazy_public_step() -> None:
     """Resampling has a public lazy mapping without exporting its buffers."""
     import particula.gpu.kernels as kernels

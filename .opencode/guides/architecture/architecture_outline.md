@@ -8,11 +8,14 @@ strategies, and concrete particle-domain helpers.
 ### particula/particles/
 
 **Key Components:**
-- `exhaustion.py` - Concrete, deliberately unexported CPU P1 boundary for
-  read-only fixed-shape capacity exhaustion planning and float64 weighted
-  inventory accounting. It validates every box before resolution, applies
-  resampling-first deferred-policy selection, and returns immutable plans; it
-  owns neither state mutation nor commit, GPU work, or container schema.
+- `exhaustion.py` - Concrete, deliberately unexported CPU P1 read-only
+  fixed-shape capacity exhaustion planning boundary, P2 validated resampling
+  apply commit, and P4 direct all-box-preflighted representative-volume scaling
+  commit with caller-owned sidecars and float64 weighted
+  inventory accounting. P1 validates every box before resolution, applies
+  resampling-first deferred-policy selection, and returns immutable plans
+  without mutating state. P2 and P4 each own their separate CPU commit
+  boundaries; the module owns no GPU work or container schema.
 - `distribution_strategies/` - Particle distribution implementations
 - `properties/` - Particle property calculations
 - `tests/` - Test coverage
@@ -44,7 +47,10 @@ private helpers for cross-kernel setup.
 - `dilution.py` - Concrete P1 GPU dilution input boundary; validation scans may
   allocate or launch, but rejected calls have no update-kernel launch or caller
   mutation
-- `exhaustion.py` - Direct Warp fixed-capacity equal-weight resampling boundary.
+- `exhaustion.py` - Direct Warp fixed-capacity equal-weight resampling boundary;
+  `resampling_step_gpu` remains the only exhaustion package export. The
+  concrete-only P4 representative-volume scaling helper uses caller-owned
+  sidecars and adds no policy, transfer, resizing, or runnable behavior.
   It consumes explicit per-box release counts, uses caller-owned planning and
   diagnostic buffers, and atomically commits only after all boxes pass
   diagnostics. Only `resampling_step_gpu` is exported; `ResamplingBuffers`,

@@ -761,3 +761,178 @@ def test_resampling_benchmark_smoke_uses_opt_in_marker() -> None:
 
     particles, counts, buffers = _state()
     assert resampling_step_gpu(particles, counts, buffers) is particles
+
+
+def test_gpu_representative_volume_scaling_matches_numpy_oracle() -> None:
+    """Concrete P4 scales only selected Warp rows and emits diagnostics."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    masses = np.array(
+        [[[1.0, 0.0], [2.0, 1.0]], [[3.0, 0.0], [4.0, 2.0]]],
+        dtype=np.float64,
+    )
+    concentration = np.array([[2.0, 3.0], [5.0, 7.0]], dtype=np.float64)
+    particles = SimpleNamespace(
+        masses=wp.array(masses, dtype=wp.float64, device="cpu"),
+        concentration=wp.array(concentration, dtype=wp.float64, device="cpu"),
+        charge=wp.array(
+            [[1.0, 2.0], [3.0, 4.0]], dtype=wp.float64, device="cpu"
+        ),
+        density=wp.array([1.0, 1.0], dtype=wp.float64, device="cpu"),
+        volume=wp.array([4.0, 6.0], dtype=wp.float64, device="cpu"),
+    )
+    demand = wp.array([3.0, 2.0], dtype=wp.float64, device="cpu")
+    flags = wp.array([1, 0], dtype=wp.int32, device="cpu")
+    requested = wp.array([0.5, 0.75], dtype=wp.float64, device="cpu")
+    minimum = wp.array([0.25, 0.5], dtype=wp.float64, device="cpu")
+    minimum_volume = wp.array([1.0, 1.0], dtype=wp.float64, device="cpu")
+    resolved = wp.zeros(2, dtype=wp.float64, device="cpu")
+    original_mass = particles.masses.numpy().copy()
+    original_charge = particles.charge.numpy().copy()
+
+    returned = representative_volume_scaling_step_gpu(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+
+    assert returned[0] is particles
+    assert returned[1] is demand
+    assert returned[2] is resolved
+    wp.synchronize_device("cpu")
+    npt.assert_allclose(particles.volume.numpy(), [2.0, 6.0])
+    npt.assert_allclose(
+        particles.concentration.numpy(), [[1.0, 1.5], [5.0, 7.0]]
+    )
+    npt.assert_allclose(demand.numpy(), [1.5, 2.0])
+    npt.assert_allclose(resolved.numpy(), [0.5, 1.0])
+    npt.assert_array_equal(particles.masses.numpy(), original_mass)
+    npt.assert_array_equal(particles.charge.numpy(), original_charge)
+
+
+def test_gpu_representative_volume_scaling_rejects_late_invalid_row() -> None:
+    """A later P4 bound failure leaves particles and every sidecar unchanged."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles, _, _ = _custom_state(
+        np.array([[[1.0]], [[2.0]]]),
+        np.array([[1.0], [2.0]]),
+        np.zeros((2, 1)),
+        np.array([1.0]),
+        np.zeros(2, dtype=np.int32),
+    )
+    particles.volume = wp.array([2.0, 1.0], dtype=wp.float64, device="cpu")
+    demand = wp.array([1.0, 1.0], dtype=wp.float64, device="cpu")
+    flags = wp.array([1, 1], dtype=wp.int32, device="cpu")
+    requested = wp.array([0.5, 0.5], dtype=wp.float64, device="cpu")
+    minimum = wp.array([0.25, 0.25], dtype=wp.float64, device="cpu")
+    minimum_volume = wp.array([0.5, 1.0], dtype=wp.float64, device="cpu")
+    resolved = wp.array([9.0, 9.0], dtype=wp.float64, device="cpu")
+    sidecars = SimpleNamespace(
+        demand=demand,
+        flags=flags,
+        requested=requested,
+        minimum=minimum,
+        minimum_volume=minimum_volume,
+        resolved=resolved,
+    )
+    snapshot = _snapshot(particles, sidecars)
+    with pytest.raises(ValueError, match="representative scaling sidecars"):
+        representative_volume_scaling_step_gpu(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    _assert_snapshot(snapshot, particles, sidecars)
+
+
+def test_gpu_representative_volume_scaling_zero_demand_writes_diagnostic_only() -> (
+    None
+):
+    """P4 leaves non-diagnostic Warp storage untouched for zero demand."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles, _, _ = _custom_state(
+        np.array([[[1.0]], [[2.0]]]),
+        np.array([[1.0], [2.0]]),
+        np.zeros((2, 1)),
+        np.array([1.0]),
+        np.zeros(2, dtype=np.int32),
+    )
+    demand = wp.zeros(2, dtype=wp.float64, device="cpu")
+    flags = wp.array([1, 1], dtype=wp.int32, device="cpu")
+    requested = wp.array([0.5, 0.5], dtype=wp.float64, device="cpu")
+    minimum = wp.array([0.25, 0.25], dtype=wp.float64, device="cpu")
+    minimum_volume = wp.array([0.1, 0.1], dtype=wp.float64, device="cpu")
+    resolved = wp.zeros(2, dtype=wp.float64, device="cpu")
+    sidecars = SimpleNamespace(
+        demand=demand,
+        flags=flags,
+        requested=requested,
+        minimum=minimum,
+        minimum_volume=minimum_volume,
+    )
+    snapshot = _snapshot(particles, sidecars)
+
+    returned = representative_volume_scaling_step_gpu(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+
+    assert returned == (particles, demand, resolved)
+    wp.synchronize_device("cpu")
+    _assert_snapshot(snapshot, particles, sidecars)
+    npt.assert_array_equal(resolved.numpy(), np.ones(2))
+
+
+def test_gpu_representative_volume_scaling_false_flags_write_diagnostic_only() -> (
+    None
+):
+    """False P4 flags leave positive-demand Warp rows unchanged and report one."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles, _, _ = _custom_state(
+        np.array([[[1.0]], [[2.0]]]),
+        np.array([[1.0], [2.0]]),
+        np.zeros((2, 1)),
+        np.array([1.0]),
+        np.zeros(2, dtype=np.int32),
+    )
+    demand = wp.array([1.0, 2.0], dtype=wp.float64, device="cpu")
+    flags = wp.zeros(2, dtype=wp.int32, device="cpu")
+    requested = wp.array([0.5, 0.5], dtype=wp.float64, device="cpu")
+    minimum = wp.array([0.25, 0.25], dtype=wp.float64, device="cpu")
+    minimum_volume = wp.array([0.1, 0.1], dtype=wp.float64, device="cpu")
+    resolved = wp.zeros(2, dtype=wp.float64, device="cpu")
+    sidecars = SimpleNamespace(
+        demand=demand,
+        flags=flags,
+        requested=requested,
+        minimum=minimum,
+        minimum_volume=minimum_volume,
+    )
+    snapshot = _snapshot(particles, sidecars)
+
+    returned = representative_volume_scaling_step_gpu(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+
+    assert returned[0] is particles
+    assert returned[1] is demand
+    assert returned[2] is resolved
+    wp.synchronize_device("cpu")
+    _assert_snapshot(snapshot, particles, sidecars)
+    npt.assert_array_equal(resolved.numpy(), np.ones(2))

@@ -1,4 +1,4 @@
-"""Provide fixed-capacity direct Warp equal-weight resampling.
+"""Provide fixed-capacity direct Warp exhaustion helpers.
 
 This concrete-module-only boundary consumes already-resolved per-box release
 counts. It has no policy resolution, CPU fallback, host particle transfer,
@@ -12,6 +12,10 @@ equal-weight interval sweep. Sorting costs ``O(B * N * log2(N)**2)``
 compare-exchanges; all other planning and commit work costs ``O(B * N * S)``.
 The caller supplies its entire particle-scale scratch footprint through
 :class:`ResamplingBuffers`.
+
+The concrete-only P4 representative-volume helper validates all caller-owned
+state before writing its diagnostic or scaling selected rows. It has no policy,
+transfer, resizing, or runnable integration.
 """
 
 # mypy: disable-error-code="valid-type, misc"
@@ -722,6 +726,95 @@ def _aggregate_planning_status(
         wp.atomic_add(result, 0, 1)
 
 
+@wp.kernel
+def _scan_representative_volume_scaling(  # noqa: C901
+    masses: wp.array3d(dtype=wp.float64),
+    concentration: wp.array2d(dtype=wp.float64),
+    charge: wp.array2d(dtype=wp.float64),
+    density: wp.array(dtype=wp.float64),
+    volume: wp.array(dtype=wp.float64),
+    demand: wp.array(dtype=wp.float64),
+    scaling_required: wp.array(dtype=wp.int32),
+    requested_scale: wp.array(dtype=wp.float64),
+    minimum_scale: wp.array(dtype=wp.float64),
+    minimum_volume: wp.array(dtype=wp.float64),
+    status: wp.array(dtype=wp.int32),
+) -> None:
+    """Fuse physical and P4 sidecar checks into one read-only scan."""
+    box, particle, species = wp.tid()
+    if not wp.isfinite(masses[box, particle, species]) or (
+        masses[box, particle, species] < 0.0
+    ):
+        wp.atomic_add(status, 0, 1)
+    if species == 0:
+        if not wp.isfinite(concentration[box, particle]) or (
+            concentration[box, particle] < 0.0
+        ):
+            wp.atomic_add(status, 0, 1)
+        if not wp.isfinite(charge[box, particle]):
+            wp.atomic_add(status, 0, 1)
+    if particle == 0 and species == 0:
+        if not wp.isfinite(volume[box]) or volume[box] <= 0.0:
+            wp.atomic_add(status, 0, 1)
+        if not wp.isfinite(demand[box]) or demand[box] < 0.0:
+            wp.atomic_add(status, 0, 1)
+        if scaling_required[box] != 0 and scaling_required[box] != 1:
+            wp.atomic_add(status, 0, 1)
+        if (
+            not wp.isfinite(requested_scale[box])
+            or not wp.isfinite(minimum_scale[box])
+            or not wp.isfinite(minimum_volume[box])
+            or minimum_scale[box] <= 0.0
+            or requested_scale[box] < minimum_scale[box]
+            or requested_scale[box] > 1.0
+            or minimum_volume[box] <= 0.0
+        ):
+            wp.atomic_add(status, 0, 1)
+        if scaling_required[box] == 1 and demand[box] > 0.0:
+            wp.atomic_add(status, 1, 1)
+            if volume[box] * requested_scale[box] < minimum_volume[box]:
+                wp.atomic_add(status, 0, 1)
+        if box == 0:
+            for density_index in range(density.shape[0]):
+                if not wp.isfinite(density[density_index]) or (
+                    density[density_index] <= 0.0
+                ):
+                    wp.atomic_add(status, 0, 1)
+
+
+@wp.kernel
+def _write_resolved_representative_scale(
+    demand: wp.array(dtype=wp.float64),
+    scaling_required: wp.array(dtype=wp.int32),
+    requested_scale: wp.array(dtype=wp.float64),
+    resolved_scale: wp.array(dtype=wp.float64),
+) -> None:
+    """Write the P4 diagnostic after complete read-only preflight."""
+    box = wp.tid()
+    if scaling_required[box] == 1 and demand[box] > 0.0:
+        resolved_scale[box] = requested_scale[box]
+    else:
+        resolved_scale[box] = wp.float64(1.0)
+
+
+@wp.kernel
+def _apply_representative_volume_scaling(
+    concentration: wp.array2d(dtype=wp.float64),
+    volume: wp.array(dtype=wp.float64),
+    demand: wp.array(dtype=wp.float64),
+    scaling_required: wp.array(dtype=wp.int32),
+    requested_scale: wp.array(dtype=wp.float64),
+) -> None:
+    """Scale only selected volume, concentration, and demand storage."""
+    box, particle = wp.tid()
+    if scaling_required[box] == 1 and demand[box] > 0.0:
+        factor = requested_scale[box]
+        concentration[box, particle] *= factor
+        if particle == 0:
+            volume[box] *= factor
+            demand[box] *= factor
+
+
 def _require_exact_bound(name: str, value: Any) -> float:
     """Return a finite nonnegative exact Python-float diagnostic bound."""
     if type(value) is not float:
@@ -1025,3 +1118,119 @@ def resampling_step_gpu(  # noqa: PLR0913
         device=device,
     )
     return particles
+
+
+def representative_volume_scaling_step_gpu(  # noqa: C901, PLR0913
+    particles: Any,
+    provisional_source_demand: Any,
+    scaling_required: Any,
+    requested_scale: Any,
+    minimum_scale: Any,
+    minimum_volume: Any,
+    resolved_scale: Any,
+) -> tuple[Any, Any, Any]:
+    """Apply the concrete P4 representative-volume transform on one device.
+
+    Rejected calls perform only read-only validation scans. On success, the
+    diagnostic is written once, followed by a scaling launch only when a row is
+    selected. Callers own synchronization and every supplied sidecar.
+    """
+    masses = _field(particles, "masses")
+    if not _is_warp_array_like(masses):
+        raise TypeError("masses must be a Warp array")
+    if masses.ndim != 3:
+        raise ValueError("masses must have rank 3")
+    if masses.dtype != wp.float64:
+        raise ValueError("masses must have dtype float64")
+    _require_contiguous_array(masses, "masses")
+    b, n, s = tuple(masses.shape)
+    if n == 0:
+        raise ValueError("particle capacity must be positive")
+    if s == 0:
+        raise ValueError("species capacity must be positive")
+    device = masses.device
+    concentration = _field(particles, "concentration")
+    charge = _field(particles, "charge")
+    density = _field(particles, "density")
+    volume = _field(particles, "volume")
+    _validate_array(
+        concentration, "concentration", 2, (b, n), wp.float64, device
+    )
+    _validate_array(charge, "charge", 2, (b, n), wp.float64, device)
+    _validate_array(density, "density", 1, (s,), wp.float64, device)
+    _validate_array(volume, "volume", 1, (b,), wp.float64, device)
+    schema = (
+        ("provisional_source_demand", provisional_source_demand, wp.float64),
+        ("scaling_required", scaling_required, wp.int32),
+        ("requested_scale", requested_scale, wp.float64),
+        ("minimum_scale", minimum_scale, wp.float64),
+        ("minimum_volume", minimum_volume, wp.float64),
+        ("resolved_scale", resolved_scale, wp.float64),
+    )
+    sidecars: list[Any] = []
+    for name, values, dtype in schema:
+        if not _is_warp_array_like(values):
+            raise TypeError(f"{name} must be a Warp array")
+        if values.dtype != dtype:
+            raise TypeError(f"{name} must have dtype {dtype}")
+        _validate_array(values, name, 1, (b,), dtype, device)
+        sidecars.append(values)
+    protected = [masses, concentration, charge, density, volume]
+    all_arrays = protected + sidecars
+    for index, left in enumerate(all_arrays):
+        for right in all_arrays[index + 1 :]:
+            if _ranges_overlap(left, right):
+                raise ValueError(
+                    "representative scaling arrays must not overlap"
+                )
+    if b == 0:
+        return particles, provisional_source_demand, resolved_scale
+    status = wp.zeros(2, dtype=wp.int32, device=device)
+    wp.launch(
+        _scan_representative_volume_scaling,
+        dim=(b, n, s),
+        inputs=[
+            masses,
+            concentration,
+            charge,
+            density,
+            volume,
+            provisional_source_demand,
+            scaling_required,
+            requested_scale,
+            minimum_scale,
+            minimum_volume,
+            status,
+        ],
+        device=device,
+    )
+    status_values = status.numpy()
+    if status_values[0] != 0:
+        raise ValueError(
+            "particles or representative scaling sidecars have invalid values"
+        )
+    wp.launch(
+        _write_resolved_representative_scale,
+        dim=b,
+        inputs=[
+            provisional_source_demand,
+            scaling_required,
+            requested_scale,
+            resolved_scale,
+        ],
+        device=device,
+    )
+    if status_values[1] != 0:
+        wp.launch(
+            _apply_representative_volume_scaling,
+            dim=(b, n),
+            inputs=[
+                concentration,
+                volume,
+                provisional_source_demand,
+                scaling_required,
+                requested_scale,
+            ],
+            device=device,
+        )
+    return particles, provisional_source_demand, resolved_scale

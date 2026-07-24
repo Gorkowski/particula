@@ -1,4 +1,4 @@
-"""Read-only particle-capacity exhaustion planning.
+"""Particle-capacity exhaustion planning and concrete apply helpers.
 
 P1 consumes fixed-shape capacity sidecars and creates an immutable, later
 commit-boundary plan.  It validates every box before resolving any box, writes
@@ -20,10 +20,13 @@ tolerance before a commit can rely on it.
 P2 adds a CPU-only deterministic equal-weight resampling reference. It plans
 detached fixed-capacity remaps without mutation, then commits one validated
 all-box plan. P2 neither provides GPU parity nor implements activation,
-representative-volume scaling, resizing, or compaction.
+resizing, or compaction. P4 is a separate direct, all-box-preflighted
+representative-volume scaling commit; it consumes caller-owned sidecars and
+does not consume a P1 plan or resolve capacity policy.
 """
 
 from dataclasses import dataclass
+from typing import Any, cast
 
 import numpy as np
 from numpy.typing import NDArray
@@ -1118,3 +1121,136 @@ def apply_resampling(
             particle_data.concentration[box_index, released] = np.float64(0.0)
             particle_data.charge[box_index, released] = np.float64(0.0)
     return particle_data
+
+
+def _validate_p4_sidecar(
+    name: str,
+    values: object,
+    dtype: np.dtype[np.generic],
+    box_count: int,
+) -> NDArray[Any]:
+    """Validate one writable contiguous P4 per-box sidecar."""
+    if not isinstance(values, np.ndarray):
+        raise TypeError(f"{name} must be a numpy array")
+    if values.dtype != dtype:
+        raise TypeError(f"{name} must have dtype {dtype.name}")
+    if values.ndim != 1:
+        raise ValueError(f"{name} must have rank 1")
+    if values.shape != (box_count,):
+        raise ValueError(f"{name} must have shape (B,)")
+    if not values.flags.c_contiguous:
+        raise ValueError(f"{name} must be contiguous")
+    if not values.flags.writeable:
+        raise ValueError(f"{name} must be writable")
+    return values
+
+
+def apply_representative_volume_scaling(  # noqa: C901, PLR0913
+    particles: ParticleData,
+    provisional_source_demand: NDArray[np.float64],
+    scaling_required: NDArray[np.bool_],
+    requested_scale: NDArray[np.float64],
+    minimum_scale: NDArray[np.float64],
+    minimum_volume: NDArray[np.float64],
+    resolved_scale: NDArray[np.float64],
+) -> tuple[ParticleData, NDArray[np.float64], NDArray[np.float64]]:
+    """Apply the concrete P4 representative-volume transform in place.
+
+    Every particle field and caller-owned sidecar is validated before the
+    diagnostic or selected-row writes. Selection is exactly ``flag & demand >
+    0``; unselected rows receive a diagnostic scale of one.
+    """
+    particle_data = _validate_particle_schema(particles)
+    box_count = particle_data.n_boxes
+    demand = cast(
+        NDArray[np.float64],
+        _validate_p4_sidecar(
+            "provisional_source_demand",
+            provisional_source_demand,
+            np.dtype(np.float64),
+            box_count,
+        ),
+    )
+    flags = cast(
+        NDArray[np.bool_],
+        _validate_p4_sidecar(
+            "scaling_required", scaling_required, np.dtype(np.bool_), box_count
+        ),
+    )
+    requested = cast(
+        NDArray[np.float64],
+        _validate_p4_sidecar(
+            "requested_scale", requested_scale, np.dtype(np.float64), box_count
+        ),
+    )
+    minimum = cast(
+        NDArray[np.float64],
+        _validate_p4_sidecar(
+            "minimum_scale", minimum_scale, np.dtype(np.float64), box_count
+        ),
+    )
+    minimum_box_volume = cast(
+        NDArray[np.float64],
+        _validate_p4_sidecar(
+            "minimum_volume", minimum_volume, np.dtype(np.float64), box_count
+        ),
+    )
+    resolved = cast(
+        NDArray[np.float64],
+        _validate_p4_sidecar(
+            "resolved_scale", resolved_scale, np.dtype(np.float64), box_count
+        ),
+    )
+
+    if not np.all(np.isfinite(particle_data.masses)) or np.any(
+        particle_data.masses < 0.0
+    ):
+        raise ValueError("masses must be finite and nonnegative")
+    if not np.all(np.isfinite(particle_data.concentration)) or np.any(
+        particle_data.concentration < 0.0
+    ):
+        raise ValueError("concentration must be finite and nonnegative")
+    if not np.all(np.isfinite(particle_data.charge)):
+        raise ValueError("charge must be finite")
+    if not np.all(np.isfinite(particle_data.density)) or np.any(
+        particle_data.density <= 0.0
+    ):
+        raise ValueError("density must be finite and positive")
+    if not np.all(np.isfinite(particle_data.volume)) or np.any(
+        particle_data.volume <= 0.0
+    ):
+        raise ValueError("volume must be finite and positive")
+    if not np.all(np.isfinite(demand)) or np.any(demand < 0.0):
+        raise ValueError(
+            "provisional_source_demand must be finite and nonnegative"
+        )
+    if (
+        not np.all(np.isfinite(requested))
+        or not np.all(np.isfinite(minimum))
+        or not np.all(np.isfinite(minimum_box_volume))
+    ):
+        raise ValueError("scaling factors and minimum_volume must be finite")
+    if (
+        np.any(minimum <= 0.0)
+        or np.any(requested < minimum)
+        or np.any(requested > 1.0)
+    ):
+        raise ValueError(
+            "scaling factors must satisfy 0 < minimum <= requested <= 1"
+        )
+    if np.any(minimum_box_volume <= 0.0):
+        raise ValueError("minimum_volume must be finite and positive")
+
+    selected = flags & (demand > 0.0)
+    if np.any(
+        particle_data.volume[selected] * requested[selected]
+        < minimum_box_volume[selected]
+    ):
+        raise ValueError("selected scaled volume must meet minimum_volume")
+    factors = np.where(selected, requested, 1.0)
+    resolved[:] = factors
+    if np.any(selected):
+        particle_data.volume[selected] *= factors[selected]
+        particle_data.concentration[selected, :] *= factors[selected, None]
+        demand[selected] *= factors[selected]
+    return particle_data, demand, resolved

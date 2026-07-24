@@ -17,6 +17,7 @@ from particula.particles.exhaustion import (
     _ResamplingBoxPlan,
     _ResamplingPlan,
     _riemer_diversity,
+    apply_representative_volume_scaling,
     apply_resampling,
     get_weighted_inventory,
     plan_resampling,
@@ -800,3 +801,403 @@ def test_resampling_apply_rejects_overlapping_plan_without_mutation() -> None:
             particles.charge,
         )
     )
+
+
+def test_representative_volume_scaling_scales_only_selected_rows() -> None:
+    """P4 scales selected extensive state and preserves protected siblings."""
+    particles = _resampling_particles(2)
+    particles.volume[:] = [4.0, 5.0]
+    demand = np.array([3.0, 2.0], dtype=np.float64)
+    flags = np.array([True, False], dtype=np.bool_)
+    requested = np.array([0.5, 0.8], dtype=np.float64)
+    minimum = np.array([0.25, 0.5], dtype=np.float64)
+    minimum_volume = np.array([1.0, 1.0], dtype=np.float64)
+    resolved = np.zeros(2, dtype=np.float64)
+    before = tuple(
+        field.copy()
+        for field in (particles.masses, particles.charge, particles.density)
+    )
+    original_second = particles.concentration[1].copy()
+
+    result = apply_representative_volume_scaling(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+
+    assert result == (particles, demand, resolved)
+    npt.assert_allclose(particles.volume, [2.0, 5.0])
+    npt.assert_allclose(demand, [1.5, 2.0])
+    npt.assert_allclose(resolved, [0.5, 1.0])
+    npt.assert_allclose(particles.concentration[0], [0.5, 1.0, 1.5, 2.0, 0.0])
+    npt.assert_array_equal(particles.concentration[1], original_second)
+    for actual, expected in zip(
+        (particles.masses, particles.charge, particles.density),
+        before,
+        strict=True,
+    ):
+        npt.assert_array_equal(actual, expected)
+
+
+@pytest.mark.parametrize(
+    ("demand", "flags"),
+    [([2.0, 3.0], [False, False]), ([0.0, 0.0], [True, True])],
+)
+def test_representative_volume_scaling_no_selected_rows_writes_diagnostic_only(
+    demand: list[float], flags: list[bool]
+) -> None:
+    """P4 emits one diagnostics for all-false and zero-demand selections."""
+    particles = _resampling_particles(2)
+    demand_values = np.array(demand, dtype=np.float64)
+    flags_values = np.array(flags, dtype=np.bool_)
+    requested = np.array([0.5, 0.5], dtype=np.float64)
+    minimum = np.array([0.25, 0.25], dtype=np.float64)
+    minimum_volume = np.array([0.1, 0.1], dtype=np.float64)
+    resolved = np.zeros(2, dtype=np.float64)
+    snapshot = tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand_values,
+        )
+    )
+    apply_representative_volume_scaling(
+        particles,
+        demand_values,
+        flags_values,
+        requested,
+        minimum,
+        minimum_volume,
+        resolved,
+    )
+    assert np.array_equal(resolved, np.ones(2))
+    assert snapshot == tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand_values,
+        )
+    )
+
+
+def test_representative_volume_scaling_selected_unity_scale_is_exact_noop() -> (
+    None
+):
+    """A selected row with scale one preserves data and reports one exactly."""
+    particles = _resampling_particles()
+    demand = np.array([2.0], dtype=np.float64)
+    flags = np.array([True], dtype=np.bool_)
+    requested = np.array([1.0], dtype=np.float64)
+    minimum = np.array([1.0], dtype=np.float64)
+    minimum_volume = np.array([0.1], dtype=np.float64)
+    resolved = np.array([9.0], dtype=np.float64)
+    snapshot = tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+        )
+    )
+
+    returned = apply_representative_volume_scaling(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+
+    assert returned[0] is particles
+    assert returned[1] is demand
+    assert returned[2] is resolved
+    assert snapshot == tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+        )
+    )
+    npt.assert_array_equal(resolved, [1.0])
+
+
+def test_representative_volume_scaling_rejects_invalid_volume_atomically() -> (
+    None
+):
+    """A later infeasible P4 row prevents earlier selected-row mutation."""
+    particles = _resampling_particles(2)
+    demand = np.array([2.0, 2.0], dtype=np.float64)
+    flags = np.array([True, True], dtype=np.bool_)
+    requested = np.array([0.5, 0.5], dtype=np.float64)
+    minimum = np.array([0.25, 0.25], dtype=np.float64)
+    minimum_volume = np.array([0.1, 1.0], dtype=np.float64)
+    resolved = np.array([9.0, 9.0], dtype=np.float64)
+    snapshot = tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    )
+    with pytest.raises(ValueError, match="scaled volume"):
+        apply_representative_volume_scaling(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    assert snapshot == tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    )
+
+
+def test_representative_volume_scaling_preserves_intensities_and_surface() -> (
+    None
+):
+    """P4 scales selected extensive inventories while preserving intensities."""
+    import particula.particles as particles_package
+
+    particles = _resampling_particles()
+    particles.volume[:] = 4.0
+    demand = np.array([2.0], dtype=np.float64)
+    flags = np.array([True], dtype=np.bool_)
+    requested = np.array([0.5], dtype=np.float64)
+    minimum = np.array([0.25], dtype=np.float64)
+    minimum_volume = np.array([1.0], dtype=np.float64)
+    resolved = np.zeros(1, dtype=np.float64)
+    before = get_weighted_inventory(
+        particles.masses,
+        particles.concentration,
+        particles.charge,
+        particles.volume,
+    )
+
+    returned = apply_representative_volume_scaling(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+    after = get_weighted_inventory(
+        particles.masses,
+        particles.concentration,
+        particles.charge,
+        particles.volume,
+    )
+
+    assert returned[0] is particles
+    assert returned[1] is demand
+    assert returned[2] is resolved
+    assert not hasattr(particles_package, "apply_representative_volume_scaling")
+    npt.assert_allclose(after.number, np.asarray(before.number) * 0.5)
+    npt.assert_allclose(after.mass, np.asarray(before.mass) * 0.5)
+    npt.assert_allclose(after.charge, np.asarray(before.charge) * 0.5)
+    npt.assert_allclose(after.number_per_volume, before.number_per_volume)
+    npt.assert_allclose(after.mass_per_volume, before.mass_per_volume)
+    npt.assert_allclose(after.charge_per_volume, before.charge_per_volume)
+    npt.assert_allclose(demand / particles.volume, [0.5])
+
+
+def test_representative_volume_scaling_accepts_empty_boxes() -> None:
+    """P4 accepts B=0 while preserving every supplied empty array identity."""
+    particles = ParticleData(
+        masses=np.empty((0, 1, 1), dtype=np.float64),
+        concentration=np.empty((0, 1), dtype=np.float64),
+        charge=np.empty((0, 1), dtype=np.float64),
+        density=np.array([1.0], dtype=np.float64),
+        volume=np.empty(0, dtype=np.float64),
+    )
+    demand = np.empty(0, dtype=np.float64)
+    flags = np.empty(0, dtype=np.bool_)
+    requested = np.empty(0, dtype=np.float64)
+    minimum = np.empty(0, dtype=np.float64)
+    minimum_volume = np.empty(0, dtype=np.float64)
+    resolved = np.empty(0, dtype=np.float64)
+
+    returned = apply_representative_volume_scaling(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+
+    assert returned == (particles, demand, resolved)
+
+
+def test_representative_volume_scaling_rejects_factor_bounds_atomically() -> (
+    None
+):
+    """P4 validates unselected factor bounds before writing its diagnostic."""
+    particles = _resampling_particles()
+    demand = np.array([0.0], dtype=np.float64)
+    flags = np.array([False], dtype=np.bool_)
+    requested = np.array([0.4], dtype=np.float64)
+    minimum = np.array([0.5], dtype=np.float64)
+    minimum_volume = np.array([0.1], dtype=np.float64)
+    resolved = np.array([9.0], dtype=np.float64)
+    snapshot = tuple(
+        value.tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    )
+
+    with pytest.raises(ValueError, match="0 < minimum <= requested <= 1"):
+        apply_representative_volume_scaling(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+
+    assert snapshot == tuple(
+        value.tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    )
+
+
+@pytest.mark.parametrize(
+    ("name", "replacement", "error", "message"),
+    [
+        ("provisional_source_demand", [1.0], TypeError, "numpy array"),
+        ("scaling_required", np.array([1], dtype=np.int32), TypeError, "dtype"),
+        ("requested_scale", np.ones((1, 1)), ValueError, "rank 1"),
+        ("minimum_scale", np.ones(2), ValueError, "shape"),
+    ],
+)
+def test_representative_volume_scaling_rejects_sidecar_schema_atomically(
+    name: str,
+    replacement: object,
+    error: type[Exception],
+    message: str,
+) -> None:
+    """P4 reports stable sidecar schema failures before any caller write."""
+    particles = _resampling_particles()
+    sidecars: dict[str, object] = {
+        "provisional_source_demand": np.array([1.0], dtype=np.float64),
+        "scaling_required": np.array([True], dtype=np.bool_),
+        "requested_scale": np.array([0.5], dtype=np.float64),
+        "minimum_scale": np.array([0.25], dtype=np.float64),
+        "minimum_volume": np.array([0.1], dtype=np.float64),
+        "resolved_scale": np.array([9.0], dtype=np.float64),
+    }
+    sidecars[name] = replacement
+    snapshot = tuple(
+        value.tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            *(
+                value
+                for value in sidecars.values()
+                if isinstance(value, np.ndarray)
+            ),
+        )
+    )
+
+    with pytest.raises(error, match=message):
+        apply_representative_volume_scaling(particles, **sidecars)  # type: ignore[arg-type]
+
+    assert snapshot == tuple(
+        value.tobytes()
+        for value in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            *(
+                value
+                for value in sidecars.values()
+                if isinstance(value, np.ndarray)
+            ),
+        )
+    )
+
+
+@pytest.mark.parametrize(
+    ("masses", "message"),
+    [
+        (np.empty((1, 0, 1), dtype=np.float64), "particle capacity"),
+        (np.empty((1, 1, 0), dtype=np.float64), "species capacity"),
+    ],
+)
+def test_representative_volume_scaling_rejects_zero_capacity(
+    masses: np.ndarray,
+    message: str,
+) -> None:
+    """P4 distinguishes valid empty boxes from rejected zero capacities."""
+    boxes, particles_count, species = masses.shape
+    particles = ParticleData(
+        masses=masses,
+        concentration=np.zeros((boxes, particles_count), dtype=np.float64),
+        charge=np.zeros((boxes, particles_count), dtype=np.float64),
+        density=np.ones(species, dtype=np.float64),
+        volume=np.ones(boxes, dtype=np.float64),
+    )
+    with pytest.raises(ValueError, match=message):
+        apply_representative_volume_scaling(
+            particles,
+            np.ones(boxes, dtype=np.float64),
+            np.ones(boxes, dtype=np.bool_),
+            np.ones(boxes, dtype=np.float64),
+            np.ones(boxes, dtype=np.float64),
+            np.ones(boxes, dtype=np.float64),
+            np.zeros(boxes, dtype=np.float64),
+        )
