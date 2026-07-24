@@ -1171,6 +1171,61 @@ def test_representative_volume_scaling_rejects_sidecar_schema_atomically(
     )
 
 
+@pytest.mark.parametrize("alias_target", ["demand", "requested", "volume"])
+def test_representative_volume_scaling_rejects_aliases_atomically(
+    alias_target: str,
+) -> None:
+    """P4 rejects diagnostic overlap before mutating particle state or sidecars."""
+    particles = _resampling_particles()
+    demand = np.array([1.0], dtype=np.float64)
+    resolved = (
+        demand
+        if alias_target == "demand"
+        else particles.volume
+        if alias_target == "volume"
+        else np.array([0.5], dtype=np.float64)
+    )
+    requested = (
+        resolved
+        if alias_target == "requested"
+        else np.array([0.5], dtype=np.float64)
+    )
+    sidecars = (
+        demand,
+        np.array([True], dtype=np.bool_),
+        requested,
+        np.array([0.25], dtype=np.float64),
+        np.array([0.1], dtype=np.float64),
+        resolved,
+    )
+    snapshot = tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            *sidecars,
+        )
+    )
+
+    with pytest.raises(ValueError, match="representative scaling arrays"):
+        apply_representative_volume_scaling(particles, *sidecars)
+
+    assert snapshot == tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            *sidecars,
+        )
+    )
+
+
 @pytest.mark.parametrize(
     ("masses", "message"),
     [

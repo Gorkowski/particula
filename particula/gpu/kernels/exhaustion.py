@@ -776,24 +776,42 @@ def _scan_representative_volume_scaling(  # noqa: C901
             wp.atomic_add(status, 1, 1)
             if volume[box] * requested_scale[box] < minimum_volume[box]:
                 wp.atomic_add(status, 0, 1)
-        if box == 0:
-            for density_index in range(density.shape[0]):
-                if not wp.isfinite(density[density_index]) or (
-                    density[density_index] <= 0.0
-                ):
-                    wp.atomic_add(status, 0, 1)
+
+
+@wp.kernel
+def _scan_density(
+    density: wp.array(dtype=wp.float64),
+    status: wp.array(dtype=wp.int32),
+) -> None:
+    """Validate global density state, including empty particle-box inputs."""
+    density_index = wp.tid()
+    if not wp.isfinite(density[density_index]) or density[density_index] <= 0.0:
+        wp.atomic_add(status, 0, 1)
+
+
+@wp.kernel
+def _resolve_representative_volume_selection(
+    demand: wp.array(dtype=wp.float64),
+    scaling_required: wp.array(dtype=wp.int32),
+    selected: wp.array(dtype=wp.int32),
+) -> None:
+    """Capture the immutable selected-row predicate before any writes."""
+    box = wp.tid()
+    if scaling_required[box] == 1 and demand[box] > 0.0:
+        selected[box] = 1
+    else:
+        selected[box] = 0
 
 
 @wp.kernel
 def _write_resolved_representative_scale(
-    demand: wp.array(dtype=wp.float64),
-    scaling_required: wp.array(dtype=wp.int32),
+    selected: wp.array(dtype=wp.int32),
     requested_scale: wp.array(dtype=wp.float64),
     resolved_scale: wp.array(dtype=wp.float64),
 ) -> None:
     """Write the P4 diagnostic after complete read-only preflight."""
     box = wp.tid()
-    if scaling_required[box] == 1 and demand[box] > 0.0:
+    if selected[box] == 1:
         resolved_scale[box] = requested_scale[box]
     else:
         resolved_scale[box] = wp.float64(1.0)
@@ -804,12 +822,12 @@ def _apply_representative_volume_scaling(
     concentration: wp.array2d(dtype=wp.float64),
     volume: wp.array(dtype=wp.float64),
     demand: wp.array(dtype=wp.float64),
-    scaling_required: wp.array(dtype=wp.int32),
+    selected: wp.array(dtype=wp.int32),
     requested_scale: wp.array(dtype=wp.float64),
 ) -> None:
     """Scale only selected volume, concentration, and demand storage."""
     box, particle = wp.tid()
-    if scaling_required[box] == 1 and demand[box] > 0.0:
+    if selected[box] == 1:
         factor = requested_scale[box]
         concentration[box, particle] *= factor
         if particle == 0:
@@ -1223,9 +1241,20 @@ def representative_volume_scaling_step_gpu(  # noqa: C901, PLR0913
                 raise ValueError(
                     "representative scaling arrays must not overlap"
                 )
-    if b == 0:
-        return particles, provisional_source_demand, resolved_scale
     status = wp.zeros(2, dtype=wp.int32, device=device)
+    wp.launch(
+        _scan_density,
+        dim=s,
+        inputs=[density, status],
+        device=device,
+    )
+    if b == 0:
+        if status.numpy()[0] != 0:
+            raise ValueError(
+                "particles or representative scaling sidecars have "
+                "invalid values"
+            )
+        return particles, provisional_source_demand, resolved_scale
     wp.launch(
         _scan_representative_volume_scaling,
         dim=(b, n, s),
@@ -1249,12 +1278,18 @@ def representative_volume_scaling_step_gpu(  # noqa: C901, PLR0913
         raise ValueError(
             "particles or representative scaling sidecars have invalid values"
         )
+    selected = wp.zeros(b, dtype=wp.int32, device=device)
+    wp.launch(
+        _resolve_representative_volume_selection,
+        dim=b,
+        inputs=[provisional_source_demand, scaling_required, selected],
+        device=device,
+    )
     wp.launch(
         _write_resolved_representative_scale,
         dim=b,
         inputs=[
-            provisional_source_demand,
-            scaling_required,
+            selected,
             requested_scale,
             resolved_scale,
         ],
@@ -1268,7 +1303,7 @@ def representative_volume_scaling_step_gpu(  # noqa: C901, PLR0913
                 concentration,
                 volume,
                 provisional_source_demand,
-                scaling_required,
+                selected,
                 requested_scale,
             ],
             device=device,

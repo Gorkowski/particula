@@ -502,6 +502,26 @@ pytest particula/gpu/kernels/tests/exhaustion_test.py -q \
 pytest particula/gpu/tests/kernel_exports_test.py -q -Werror
 ```
 
+### GPU representative-volume scaling P4 contract
+
+- Import the concrete-only direct helper with
+  `from particula.gpu.kernels.exhaustion import representative_volume_scaling_step_gpu`.
+  It is not re-exported by `particula.gpu.kernels` or `particula.gpu`.
+- Callers own same-device, contiguous sidecars: float64 `(B,)` provisional
+  demand, requested/minimum scales, minimum volumes, and resolved-scale output;
+  plus an int32 `(B,)` scaling-required flag. Sidecars must not overlap each
+  other or particle fields.
+- Read-only preflight validates all physical state and sidecars before writing.
+  It performs one bounded status readback; rejected calls leave every
+  caller-owned field and sidecar unchanged. Even empty box inputs validate
+  global density state before their write-free return.
+- Selection is captured before mutation. Selected rows alone scale volume,
+  every concentration lane, and provisional demand; `resolved_scale` records
+  the selected factor or `1.0`. Successful calls are asynchronous, so callers
+  synchronize explicitly before reading state.
+- Policy resolution, exports, host/device transfers, resizing, a runnable,
+  CPU fallback, and broader orchestration remain deferred.
+
 ### GPU wall-loss direct-kernel contract
 
 - Import the direct low-level boundary with

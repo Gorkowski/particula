@@ -936,3 +936,92 @@ def test_gpu_representative_volume_scaling_false_flags_write_diagnostic_only() -
     wp.synchronize_device("cpu")
     _assert_snapshot(snapshot, particles, sidecars)
     npt.assert_array_equal(resolved.numpy(), np.ones(2))
+
+
+def _assert_p4_subnormal_demand_scaling(device: str) -> None:
+    """Assert an immutable P4 selection scales every selected row lane."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles, _, _ = _custom_state(
+        np.ones((1, 3, 1), dtype=np.float64),
+        np.array([[2.0, 4.0, 8.0]], dtype=np.float64),
+        np.zeros((1, 3), dtype=np.float64),
+        np.array([1.0], dtype=np.float64),
+        np.zeros(1, dtype=np.int32),
+        device=device,
+    )
+    particles.volume = wp.array([1.0], dtype=wp.float64, device=device)
+    demand = wp.array(
+        [np.nextafter(np.float64(0.0), np.float64(1.0))],
+        dtype=wp.float64,
+        device=device,
+    )
+    flags = wp.array([1], dtype=wp.int32, device=device)
+    requested = wp.array([0.5], dtype=wp.float64, device=device)
+    minimum = wp.array([0.25], dtype=wp.float64, device=device)
+    minimum_volume = wp.array([0.1], dtype=wp.float64, device=device)
+    resolved = wp.zeros(1, dtype=wp.float64, device=device)
+
+    representative_volume_scaling_step_gpu(
+        particles, demand, flags, requested, minimum, minimum_volume, resolved
+    )
+    wp.synchronize_device(device)
+    npt.assert_array_equal(particles.concentration.numpy(), [[1.0, 2.0, 4.0]])
+    npt.assert_array_equal(particles.volume.numpy(), [0.5])
+    npt.assert_array_equal(demand.numpy(), [0.0])
+    npt.assert_array_equal(resolved.numpy(), [0.5])
+
+
+def test_gpu_representative_volume_scaling_subnormal_demand_is_atomic() -> None:
+    """Warp CPU P4 selection remains immutable when demand underflows on write."""
+    _assert_p4_subnormal_demand_scaling(device="cpu")
+
+
+@pytest.mark.cuda
+def test_gpu_representative_volume_scaling_cuda_matches_subnormal_oracle() -> (
+    None
+):
+    """CUDA P4 subnormal-demand parity is optional and cleanly guarded."""
+    wp = _warp()
+    if not wp.is_cuda_available():
+        pytest.skip("CUDA is unavailable")
+    _assert_p4_subnormal_demand_scaling(device="cuda:0")
+
+
+def test_gpu_representative_volume_scaling_empty_invalid_density_rejects() -> (
+    None
+):
+    """Empty P4 inputs still reject invalid global density before output writes."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles = SimpleNamespace(
+        masses=wp.zeros((0, 1, 1), dtype=wp.float64, device="cpu"),
+        concentration=wp.zeros((0, 1), dtype=wp.float64, device="cpu"),
+        charge=wp.zeros((0, 1), dtype=wp.float64, device="cpu"),
+        density=wp.array([-1.0], dtype=wp.float64, device="cpu"),
+        volume=wp.zeros(0, dtype=wp.float64, device="cpu"),
+    )
+    demand = wp.zeros(0, dtype=wp.float64, device="cpu")
+    flags = wp.zeros(0, dtype=wp.int32, device="cpu")
+    requested = wp.zeros(0, dtype=wp.float64, device="cpu")
+    minimum = wp.zeros(0, dtype=wp.float64, device="cpu")
+    minimum_volume = wp.zeros(0, dtype=wp.float64, device="cpu")
+    resolved = wp.zeros(0, dtype=wp.float64, device="cpu")
+
+    with pytest.raises(ValueError, match="representative scaling sidecars"):
+        representative_volume_scaling_step_gpu(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+    npt.assert_array_equal(resolved.numpy(), np.empty(0, dtype=np.float64))

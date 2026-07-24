@@ -1148,6 +1148,24 @@ def _validate_p4_sidecar(
     return values
 
 
+def _validate_p4_non_aliasing(
+    particles: ParticleData,
+    sidecars: tuple[NDArray[Any], ...],
+) -> None:
+    """Reject P4 sidecar and writable particle-storage overlap before writes."""
+    arrays = (
+        particles.masses,
+        particles.concentration,
+        particles.charge,
+        particles.density,
+        particles.volume,
+        *sidecars,
+    )
+    for index, left in enumerate(arrays):
+        if any(np.shares_memory(left, right) for right in arrays[index + 1 :]):
+            raise ValueError("representative scaling arrays must not overlap")
+
+
 def apply_representative_volume_scaling(  # noqa: C901, PLR0913
     particles: ParticleData,
     provisional_source_demand: NDArray[np.float64],
@@ -1234,6 +1252,11 @@ def apply_representative_volume_scaling(  # noqa: C901, PLR0913
         _validate_p4_sidecar(
             "resolved_scale", resolved_scale, np.dtype(np.float64), box_count
         ),
+    )
+
+    _validate_p4_non_aliasing(
+        particle_data,
+        (demand, flags, requested, minimum, minimum_box_volume, resolved),
     )
 
     if not np.all(np.isfinite(particle_data.masses)) or np.any(
