@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "e43f9806",
+  "issue_number": "1418",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1418-adw-e43f9806",
+  "shipped_at": "2026-07-24T03:37:02.962139Z",
+  "plan_phase": "E6-F5-P3",
+  "plan_summary": "Add a concrete-module-only direct Warp primitive `get_slot_diagnostics_gpu` for particle slot classification in `particula/gpu/kernels/slot_management.py`. It mirrors the CPU slot-management authority to return supplied `free_indices`, `active_counts`, and `free_counts` sidecars by identity, while rejecting invalid particle slot state with a stable `ValueError` and preserving all inputs read-only.",
+  "discovered_context": "New GPU slot-diagnostics kernel classifies active/free/invalid slots from mass, concentration, and charge; uses same-device int32 sidecars with ascending free indices and -1 tails; adds tests for parity, malformed inputs, invalid states, zero-box/zero-particle/zero-species cases, and no-export boundary."
+}
