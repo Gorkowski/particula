@@ -14,8 +14,10 @@ The caller supplies its entire particle-scale scratch footprint through
 :class:`ResamplingBuffers`.
 
 The concrete-only P4 representative-volume helper validates all caller-owned
-state before writing its diagnostic or scaling selected rows. It has no policy,
-transfer, resizing, or runnable integration.
+state before writing its diagnostic or scaling selected rows. It writes the
+resolved requested factor for selected rows and ``1.0`` otherwise. It has no
+package export, policy, transfer, resizing, or runnable integration; callers
+own device placement and explicitly synchronize before observing results.
 """
 
 # mypy: disable-error-code="valid-type, misc"
@@ -1129,11 +1131,49 @@ def representative_volume_scaling_step_gpu(  # noqa: C901, PLR0913
     minimum_volume: Any,
     resolved_scale: Any,
 ) -> tuple[Any, Any, Any]:
-    """Apply the concrete P4 representative-volume transform on one device.
+    """Apply P4 scaling to selected Warp particle-container rows in place.
 
-    Rejected calls perform only read-only validation scans. On success, the
-    diagnostic is written once, followed by a scaling launch only when a row is
-    selected. Callers own synchronization and every supplied sidecar.
+    A row is selected exactly when its ``int32`` flag is ``1`` and its
+    provisional demand is positive. Selected rows scale box volume, every
+    particle concentration, and provisional demand by the requested factor;
+    masses, charge, density, configuration sidecars, and unselected rows are
+    unchanged. A read-only all-box preflight runs before the diagnostic or
+    scaling launch, so rejected calls do not write caller-owned state.
+    ``resolved_scale`` receives the requested factor for selected rows and
+    ``1.0`` otherwise. Successful work is asynchronous: callers own all
+    sidecars, device placement, and explicit Warp synchronization before
+    reading results. This concrete-module-only boundary does not resolve
+    policy, transfer data, resize storage, or provide a runnable or package
+    export.
+
+    Args:
+        particles: Fixed-capacity Warp particle container whose masses,
+            concentration, charge, density, and volume fields are same-device
+            contiguous ``float64`` arrays.
+        provisional_source_demand: Caller-owned same-device contiguous
+            ``float64`` demand array shaped ``(B,)``.
+        scaling_required: Caller-owned same-device contiguous ``int32`` flag
+            array shaped ``(B,)`` containing only ``0`` or ``1``.
+        requested_scale: Caller-owned same-device contiguous ``float64``
+            requested factors shaped ``(B,)``.
+        minimum_scale: Caller-owned same-device contiguous ``float64`` lower
+            factor bounds shaped ``(B,)``.
+        minimum_volume: Caller-owned same-device contiguous ``float64``
+            post-scaling box-volume bounds in m³, shaped ``(B,)``.
+        resolved_scale: Caller-owned same-device contiguous ``float64``
+            diagnostic output shaped ``(B,)``.
+
+    Returns:
+        The identical particle container, demand sidecar, and resolved-scale
+        sidecar after successful asynchronous diagnostic and, when selected,
+        scaling launches.
+
+    Raises:
+        TypeError: If a particle field or sidecar is not a supported Warp array
+            or has the required dtype.
+        ValueError: If schemas, devices, contiguity, ownership, physical
+            values, factor bounds, flags, or selected scaled-volume bounds are
+            invalid. Rejection occurs before any diagnostic or scaling write.
     """
     masses = _field(particles, "masses")
     if not _is_warp_array_like(masses):

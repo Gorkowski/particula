@@ -30,6 +30,11 @@ raw-count semantics and the developer-approved bounded compatibility policy.
     `represented_event_count` records `E_new`, and
     `representation_reduction_event_count` records their difference. No demand
     is truncated within the scaled representative domain.
+  - P4 implementation note (#1425): the direct helpers do not select the
+    largest feasible scale or package indivisible source demand. They validate
+    caller-provided `requested_scale`, `minimum_scale`, and `minimum_volume`,
+    then scale only flagged rows with positive provisional demand; P5+ owns
+    policy selection and packaging integration.
 - [x] Which diagnostics must E6-F7/E6-F8 retain?
   - Decision: fixed caller-owned per-box active/free, requested/released/
     activated counts, policy code, scale factor, and number/charge/`radius^3`/

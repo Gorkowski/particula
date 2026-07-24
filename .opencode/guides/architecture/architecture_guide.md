@@ -3,17 +3,20 @@
 ## Particle Capacity-Planning Boundary
 
 - `particula.particles.exhaustion` is a deliberately unexported concrete CPU
-  P1 boundary. Callers that need it import the concrete module explicitly; do
-  not add it to package re-exports.
+  module for P1 capacity planning, P2 resampling application, and P4
+  representative-volume scaling. Callers that need these helpers import the
+  concrete module explicitly; do not add them to package re-exports.
 - It accepts fixed-shape `int32` capacity sidecars, validates all boxes before
   resolving any plan, and returns immutable plan records. It applies
   resampling-first deferred-policy selection, but does not choose releases or
   scaling feasibility.
 - P1 policy resolution is read-only: it owns no particle, RNG, diagnostic,
   work-buffer, or container state mutation. P2 creates a detached CPU remap
-  plan and then performs a separately validated, all-box atomic commit; neither
-  phase provides GPU work. A caller may safely retry P1 with corrected sidecars
-  after validation or policy failure.
+  plan and then performs a separately validated, all-box atomic commit. P4 is
+  a separate all-box-preflighted commit using caller-owned sidecars; it scales
+  only selected rows and does not consume a P1 plan or resolve policy. Neither
+  commit provides GPU work. A caller may safely retry P1 with corrected
+  sidecars after validation or policy failure.
 - Its weighted inventory helper provides float64 number, mass, and charge
   accounting only. Commit conservation and any moment-preservation guarantee
   remain responsibilities of later commit phases.
@@ -75,6 +78,11 @@ kernel-entry responsibilities.
   successful all-box planning performs one fixed-capacity commit. Runnables,
   resizing, hidden CPU transfers or fallbacks, and CPU policy resolution remain
   outside this boundary.
+- `representative_volume_scaling_step_gpu` remains concrete-module-only at
+  `particula.gpu.kernels.exhaustion`. It uses caller-owned same-device sidecars
+  and completes all-box read-only preflight before its diagnostic and selected-
+  row scaling writes. It does not consume a resampling plan or add policy,
+  transfer, resizing, CPU fallback, or runnable behavior.
 - Import the supported fixed-slot wall-loss boundary with
   `from particula.gpu.kernels import wall_loss_step_gpu`. Its
   `NeutralWallLossConfig` is deliberately concrete-module-only at

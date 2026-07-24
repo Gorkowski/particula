@@ -55,6 +55,20 @@ activation contracts.
   focused tests in `particula/gpu/kernels/tests/exhaustion_test.py` for parity,
   validation, diagnostics, ownership, and optional CUDA execution.
 
+### Delivered in P4 (#1425)
+
+- Concrete-only CPU `apply_representative_volume_scaling` and direct Warp
+  `representative_volume_scaling_step_gpu` in their respective exhaustion
+  modules. Neither API is re-exported.
+- All-box preflight of particle state and caller-owned length-`B` sidecars,
+  including factor/minimum-volume bounds and selected-row scaled-volume
+  feasibility. Successful selected rows scale volume, concentration, and
+  provisional source demand by the same requested factor; other rows retain
+  state and receive `resolved_scale == 1.0`.
+- Focused CPU and Warp tests for independent-oracle parity, isolation,
+  protected-state preservation, atomic rejection, diagnostic-only no-selected
+  calls, valid empty boxes, optional CUDA, and concrete-only export surfaces.
+
 ## Out of Scope
 
 - Dynamic allocation, array resizing/appending, compaction, hidden transfers,
@@ -65,3 +79,5 @@ activation contracts.
   graph-capture claims, differentiability, and performance claims (Epic G+).
 - Exact CPU/CUDA RNG-stream matching; the bounded design is deterministic and
   does not add policy-owned stochastic state.
+- P1 policy resolution, resampling precedence, slot activation, or source
+  packaging integration for the P4 direct helpers.

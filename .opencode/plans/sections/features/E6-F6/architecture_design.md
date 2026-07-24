@@ -44,6 +44,28 @@ bulk-writes retained replacements and literal float64 zeroes to released slots.
 P2 is CPU-only and leaves scaling, discovery/activation, package exports, and
 Warp behavior deferred.
 
+### Delivered P4 representative-volume scaling boundaries
+
+Issue #1425 adds separate direct scaling commits rather than extending P1
+policy resolution. The CPU `apply_representative_volume_scaling` and Warp
+`representative_volume_scaling_step_gpu` take caller-owned per-box provisional
+source demand, scaling flag, requested/minimum factors, minimum volume, and
+resolved-scale output. Every factor and minimum-volume bound is validated for
+every row. A row is selected only when its flag is set and its provisional
+demand is positive; selected rows must also satisfy the scaled-volume bound.
+After successful preflight, selected rows apply exactly `V *= s`,
+`concentration *= s`, and `provisional_source_demand *= s`; `resolved_scale`
+is set to `s` for selected rows and `1.0` otherwise. Mass, charge, density,
+unselected rows, and configuration sidecars are protected.
+
+The CPU implementation uses a vectorized selected-row commit. The Warp
+boundary uses read-only active-device validation and a bounded status gate,
+writes diagnostics once, and skips its scaling kernel if no row is selected.
+Both return caller objects by identity and reject invalid calls without writes.
+The helpers are concrete-module-only and neither consumes `ExhaustionPlan` nor
+performs policy selection, resampling, activation, resizing, transfer, or
+runnable orchestration.
+
 ### Delivered P3 direct Warp resampling boundary
 
 Issue #1424 adds `resampling_step_gpu` in
@@ -105,22 +127,19 @@ breaks. Distribution shape is assessed using the formulas and configured bounds
 frozen in `open_questions.md`, not an unsupported claim of sample identity.
 
 Representative-volume scaling applies `V_new=s*V_old` and `w_new=s*w_old` as
-one per-box operation. Source demand transforms as `E_new=s*E_old` before final
-slot packaging, so source and existing intensive concentrations are preserved.
-The planner chooses the largest feasible finite `0<s<=1` that satisfies the
-caller-configured minimum scale or volume. Pre-scale demand, represented demand,
-and scale remain explicit diagnostics; no demand is truncated within the scaled
-domain. Density, per-particle composition, and charge values are not scaling
-knobs.
+one per-box operation. Source demand transforms as `E_new=s*E_old`, so source
+and existing intensive concentrations are preserved. P4 validates caller-supplied
+finite `0 < minimum_scale <= requested_scale <= 1` and minimum-volume inputs;
+it does not choose a scale or package source records. Density, per-particle
+composition, and charge values are not scaling knobs.
 
 ## Data / API / Workflow Changes
 
 - **Data Model:** No `ParticleData` or `WarpParticleData` field is added.
   Configuration and fixed-shape plan/diagnostic sidecars remain caller-owned.
-- **API Surface:** Add CPU helpers under `particula.particles.exhaustion` and
-  direct Warp entry points under `particula.gpu.kernels.exhaustion`. The public
-  result reports requested/admitted counts, slots released, policy code, and
-  per-box scale factor without host fallback.
+- **API Surface:** P4 supplies concrete-only CPU and direct Warp scaling helpers
+  in their exhaustion modules; neither is re-exported. They return supplied
+  particle/demand/diagnostic objects without host fallback.
 - **Defaults:** Resampling `True`; representative-volume scaling `False`.
   Controls are independent. Both `False` is legal only when capacity is already
   sufficient; an exhausted box raises before mutation.

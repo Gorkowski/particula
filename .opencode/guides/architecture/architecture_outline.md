@@ -48,13 +48,14 @@ private helpers for cross-kernel setup.
   allocate or launch, but rejected calls have no update-kernel launch or caller
   mutation
 - `exhaustion.py` - Direct Warp fixed-capacity equal-weight resampling boundary;
-  `resampling_step_gpu` remains the only exhaustion package export. The
-  concrete-only P4 representative-volume scaling helper uses caller-owned
-  sidecars and adds no policy, transfer, resizing, or runnable behavior.
-  It consumes explicit per-box release counts, uses caller-owned planning and
+  `resampling_step_gpu` remains the only exhaustion package export. Resampling
+  consumes explicit per-box release counts, uses caller-owned planning and
   diagnostic buffers, and atomically commits only after all boxes pass
-  diagnostics. Only `resampling_step_gpu` is exported; `ResamplingBuffers`,
-  status codes, and kernels remain concrete-module-only. It provides no
+  diagnostics. The concrete-only P4 representative-volume scaling helper uses
+  caller-owned sidecars and a separate all-box-preflighted scaling commit; it
+  adds no policy, transfer, resizing, or runnable behavior. Only
+  `resampling_step_gpu` is exported; `ResamplingBuffers`, P4 sidecars, status
+  codes, and kernels remain concrete-module-only. Neither boundary provides a
   runnable, policy resolution, CPU fallback or transfer, or resizing.
 - `wall_loss.py` - Concrete fixed-slot neutral/charged GPU wall-loss boundary;
   owns immutable host configuration, frozen preflight, bounded fixed-slot

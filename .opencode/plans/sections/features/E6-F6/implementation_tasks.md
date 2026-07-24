@@ -13,8 +13,9 @@
 - [x] Implement deterministic stable interval-sweep resampling selection,
   conservation/moment accounting, and one all-box-preflighted commit boundary
   without resizing.
-- [ ] Implement bounded same-direction representative-volume, raw-weight, and
-  source-demand scaling.
+- [x] Implement bounded same-direction representative-volume, raw-weight, and
+  source-demand scaling as the concrete CPU helper
+  `apply_representative_volume_scaling`.
 - [x] Keep the P1 API concrete-only; no `particula.particles` re-export was
   added.
 
@@ -29,8 +30,9 @@
   buffers before caller mutation; diagnostic planning failures skip commit.
 - [x] Export only `resampling_step_gpu` through `particula.gpu.kernels`; keep
   `ResamplingBuffers` concrete-module-only.
-- [ ] Add representative-volume scaling and policy/P1 resolution to a later
-  direct Warp phase.
+- [x] Add concrete-only direct Warp representative-volume scaling with fused
+  read-only preflight, bounded status gating, diagnostic output, and a
+  selected-row-only commit; P1 policy resolution remains deferred.
 
 ## Tooling / Tests
 
@@ -43,6 +45,9 @@
 - [x] Add `particula/gpu/kernels/tests/exhaustion_test.py` for Warp CPU parity,
   optional CUDA, supplied-buffer ownership, diagnostics, and invalid-call
   snapshots.
+- [x] Extend CPU/Warp exhaustion and kernel-export tests for P4 schema/value/
+  atomicity, independent-oracle parity, no-selected diagnostics, empty boxes,
+  optional CUDA, and concrete-only import surfaces.
 - [ ] Cover capacity-sufficient no-op, sparse, full, repeated, and demand larger
   than releasable capacity cases for every policy combination.
 - [ ] Run focused tests, full fast regressions, Ruff, mypy, and docs validation

@@ -20,9 +20,12 @@ tolerance before a commit can rely on it.
 P2 adds a CPU-only deterministic equal-weight resampling reference. It plans
 detached fixed-capacity remaps without mutation, then commits one validated
 all-box plan. P2 neither provides GPU parity nor implements activation,
-resizing, or compaction. P4 is a separate direct, all-box-preflighted
-representative-volume scaling commit; it consumes caller-owned sidecars and
-does not consume a P1 plan or resolve capacity policy.
+resizing, or compaction. P4 is an opt-in, concrete-module-only direct commit:
+after all-box preflight, it scales selected rows' box volume, particle
+concentration, and provisional demand by a resolved factor. It consumes
+caller-owned sidecars, reports the resolved factor, and neither consumes a P1
+plan nor resolves capacity policy, transfers data, resizes capacity, or adds a
+runnable.
 """
 
 from dataclasses import dataclass
@@ -1154,11 +1157,42 @@ def apply_representative_volume_scaling(  # noqa: C901, PLR0913
     minimum_volume: NDArray[np.float64],
     resolved_scale: NDArray[np.float64],
 ) -> tuple[ParticleData, NDArray[np.float64], NDArray[np.float64]]:
-    """Apply the concrete P4 representative-volume transform in place.
+    """Apply P4 scaling to selected CPU particle-data rows in place.
 
-    Every particle field and caller-owned sidecar is validated before the
-    diagnostic or selected-row writes. Selection is exactly ``flag & demand >
-    0``; unselected rows receive a diagnostic scale of one.
+    A row is selected exactly when ``scaling_required`` is true and its
+    provisional demand is positive. Each selected row scales its box volume,
+    every particle concentration, and provisional demand by its requested
+    factor. Masses, charge, density, all configuration sidecars, and
+    unselected rows remain unchanged. Complete all-box preflight precedes the
+    diagnostic write and commit, so validation rejection leaves every
+    caller-owned array unchanged. ``resolved_scale`` receives the requested
+    factor for selected rows and ``1.0`` otherwise.
+
+    Args:
+        particles: Writable fixed-shape CPU particle data to update.
+        provisional_source_demand: Writable contiguous ``float64`` demand per
+            box, shaped ``(B,)``.
+        scaling_required: Writable contiguous ``bool`` selection flags per
+            box, shaped ``(B,)``.
+        requested_scale: Writable contiguous ``float64`` requested factors per
+            box, shaped ``(B,)``.
+        minimum_scale: Writable contiguous ``float64`` lower factor bounds per
+            box, shaped ``(B,)``.
+        minimum_volume: Writable contiguous ``float64`` post-scaling box-volume
+            bounds in m³, shaped ``(B,)``.
+        resolved_scale: Writable contiguous ``float64`` diagnostic output per
+            box, shaped ``(B,)``.
+
+    Returns:
+        The identical particle container, demand sidecar, and resolved-scale
+        sidecar after a successful in-place diagnostic write and selected-row
+        commit.
+
+    Raises:
+        TypeError: If particle storage or a sidecar has an unsupported type or
+            dtype.
+        ValueError: If schemas, physical values, factor bounds, or selected
+            scaled-volume bounds are invalid. Rejection is atomic.
     """
     particle_data = _validate_particle_schema(particles)
     box_count = particle_data.n_boxes

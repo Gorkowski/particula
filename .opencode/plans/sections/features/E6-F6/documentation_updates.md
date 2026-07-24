@@ -9,11 +9,15 @@
   combinations, fixed-shape sidecars, failure behavior, and downstream use.
 - Update `AGENTS.md` with direct imports, focused test commands, Warp CPU/CUDA
   policy, and supported/deferred boundaries.
-- Update `.opencode/guides/architecture/` only if the policy transaction or
-  sidecar ownership establishes a repository-wide decision.
+- [x] Updated `.opencode/guides/architecture/architecture_outline.md` for the
+  shipped P4 direct CPU/Warp scaling boundary, caller-owned sidecars,
+  concrete-only exports, and its deferred policy/transfer/runnable scope.
 - Update E6/E6-F5/E6-F7/E6-F8/E6-F9 plan cross-references if final API names or
   diagnostics differ from this first pass.
 
 Documentation must state that resampling defaults on, volume scaling defaults
 off, resampling runs first when both are enabled, disabling both fails on actual
 exhaustion before mutation, and no demand is silently discarded.
+
+The remaining user-facing policy/integration documentation is deferred to P5–P7;
+P4 does not establish a public policy API.

@@ -27,9 +27,20 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
   failures that skip commit, fixed-slot clearing, and optional CUDA clean
   skips. The independent NumPy oracle checks the stable sort and interval-sweep
   remap without CPU exhaustion helpers.
-- **P4:** CPU/Warp tests for per-box scale factors, same-direction raw-weight
-  and source-demand updates, allowed bounds, unaffected boxes/fields, and
-  represented-inventory parity.
+- **P4 (delivered, #1425):**
+  `particula/particles/tests/exhaustion_test.py` and
+  `particula/gpu/kernels/tests/exhaustion_test.py` cover selected-row scaling,
+  independent NumPy-oracle Warp parity, identities, diagnostic-only
+  all-unselected and zero-demand calls, valid empty boxes, exact protected and
+  sibling-row preservation, and intensive/extensive invariants at
+  `rtol=1e-12`, `atol=1e-30`. Compact invalid matrices assert stable exception
+  types/messages and snapshot atomicity for particle fields and every sidecar,
+  including later-invalid Warp rows. Warp CPU is the baseline and one guarded
+  CUDA representative row skips cleanly when unavailable.
+- **P4 export surface (delivered, #1425):** CPU tests assert the helper is not
+  on `particula.particles`; `particula/gpu/tests/kernel_exports_test.py` asserts
+  the Warp helper is absent from `particula.gpu.kernels`, its `__all__`, and its
+  lazy-symbol map.
 - **P5:** Integration tests cover enough-capacity bypass, resampling-only,
   scaling-only, resampling-sufficient, resampling-then-scaling, both-off
   exhausted error, and unsatisfiable demand without any write or truncation.

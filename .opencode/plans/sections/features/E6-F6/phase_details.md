@@ -46,11 +46,23 @@ validation; P7 documents only the validated policy, precedence, and bounds.
   - Boundary: P3 does not add scaling, P1 policy resolution, capacity discovery
     or activation, resizing, hidden transfer/fallback, or a runnable API.
 
-- [ ] **E6-F6-P4:** Add optional CPU and Warp representative-volume scaling with tests
-  - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Scale per-box representative volume, raw weights, and source demand in the same direction under explicit bounds while preserving intensive concentrations.
-  - Files: `particula/particles/exhaustion.py`, `particula/gpu/kernels/exhaustion.py`, corresponding `*_test.py` files
-  - Tests: CPU/Warp scale-factor parity, per-box isolation, exact same-direction updates, source-demand transformation, identity preservation, bound failures, and concentration conservation.
+- [x] **E6-F6-P4:** Add optional CPU and Warp representative-volume scaling with tests
+  - Issue: #1425 | Size: S | Status: Implemented (2026-07-24)
+  - Goal: Delivered opt-in direct, all-box-preflighted scaling of representative
+    volume, concentration/raw weight, and provisional source demand under
+    caller-supplied bounds, preserving intensive concentrations.
+  - Files: `particula/particles/exhaustion.py`,
+    `particula/gpu/kernels/exhaustion.py`, corresponding exhaustion tests,
+    `particula/gpu/tests/kernel_exports_test.py`, and
+    `.opencode/guides/architecture/architecture_outline.md`.
+  - Tests: CPU and independent-NumPy Warp CPU parity cover selected and
+    unselected rows, sidecar diagnostics, protected state, identities,
+    conservation, schema/value/bound/alias rejection, and atomicity; guarded
+    CUDA coverage skips cleanly when unavailable. Export tests retain both APIs
+    as concrete-module-only.
+  - Boundary: P4 consumes neither P1 plans nor exhaustion-policy controls and
+    adds no resampling, activation, source packaging, resize, transfer, fallback,
+    or runnable API.
 
 - [ ] **E6-F6-P5:** Enforce independent controls, resampling-first precedence, and fail-closed validation
   - Issue: TBD | Size: S | Status: Not Started

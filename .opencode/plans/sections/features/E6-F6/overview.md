@@ -69,3 +69,22 @@ direct export, validation and ownership boundary, deterministic planning and
 commit behavior, diagnostics, and Warp CPU parity with optional CUDA coverage.
 Scaling, policy/P1 resolution, discovery/activation, and a high-level runnable
 remain deferred.
+
+## Delivered P4 Representative-Volume Scaling
+
+Issue #1425 delivered opt-in direct CPU and Warp representative-volume scaling
+without integrating policy resolution. The concrete CPU helper
+`apply_representative_volume_scaling` lives only in
+`particula.particles.exhaustion`; the concrete Warp step
+`representative_volume_scaling_step_gpu` lives only in
+`particula.gpu.kernels.exhaustion`. Both require caller-owned per-box sidecars,
+validate every box before writes, select only rows with a true scaling flag and
+positive provisional source demand, set `resolved_scale` to the requested scale
+for selected rows and `1.0` otherwise, and scale only volume, concentration,
+and provisional demand. Invalid schemas, values, bounds, or scaled volumes
+reject atomically.
+
+Neither P4 API is re-exported through `particula.particles` or
+`particula.gpu.kernels`. P4 adds no P1-policy consumption, resampling choice,
+activation, resize, transfer, fallback, or runnable. Focused CPU, Warp CPU,
+optional CUDA, and export-surface tests cover the bounded direct contract.

@@ -21,6 +21,13 @@
 - [x] P3 direct Warp resampling agrees with the independent deterministic
   remapping/diagnostic oracle on its explicit-release-count boundary; CUDA
   coverage is optional and skips cleanly when unavailable.
+- [x] P4 direct CPU and Warp helpers validate every supplied sidecar before
+  writes, scale only selected rows' volume, concentration, and provisional
+  demand, return the required resolved-scale diagnostic, and preserve protected
+  state and caller identities.
+- [x] P4 tests establish CPU/Warp independent-oracle parity, atomic invalid and
+  later-invalid rejection, diagnostic-only no-selected behavior, valid empty
+  boxes, optional CUDA skips, and concrete-only import surfaces.
 - [ ] Arrays remain fixed shape and preserve container/array identity, dtype,
   device, density, requests, and untouched boxes/slots.
 - [ ] Focused/full tests, Ruff, mypy, and documentation validation pass without
@@ -66,3 +73,12 @@
 - [x] Only the direct step is exported; focused tests cover ownership,
   validation, deterministic parity, diagnostic no-commit behavior, and optional
   CUDA skips.
+
+## Delivered P4 Evidence (#1425)
+
+- [x] `apply_representative_volume_scaling` and
+  `representative_volume_scaling_step_gpu` implement the bounded direct P4
+  transform with all-box preflight and selected-row-only writes.
+- [x] The CPU and Warp helpers remain intentionally unexported; focused
+  exhaustion and kernel-export tests verify their concrete-only boundaries and
+  the CPU/Warp validation, isolation, conservation, and optional-CUDA contract.
