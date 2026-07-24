@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "e284374b",
+  "issue_number": "1424",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1424-adw-e284374b",
+  "shipped_at": "2026-07-24T17:29:31.157200Z",
+  "plan_phase": "E6-F6-P3",
+  "plan_summary": "Implement a direct Warp resampling boundary that performs fixed-capacity, P2 equal-weight remapping from explicit release counts. The work adds concrete-module-only buffers, bounded preflight/diagnostic validation, and a single staged commit without host fallback, resizing, or policy resolution.",
+  "discovered_context": ""
+}
