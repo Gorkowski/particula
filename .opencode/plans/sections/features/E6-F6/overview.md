@@ -88,3 +88,19 @@ Neither P4 API is re-exported through `particula.particles` or
 `particula.gpu.kernels`. P4 adds no P1-policy consumption, resampling choice,
 activation, resize, transfer, fallback, or runnable. Focused CPU, Warp CPU,
 optional CUDA, and export-surface tests cover the bounded direct contract.
+
+## Delivered P6 Conservation Validation
+
+Issue #1427 added test-only CPU and Warp conservation evidence for the existing
+P2 fixed-capacity resampling and P4 representative-volume-scaling boundaries.
+`particula/particles/tests/exhaustion_test.py` and
+`particula/gpu/kernels/tests/exhaustion_test.py` now use independent NumPy
+float64 ledgers and deterministic, already-admitted source fixtures to check
+per-box number, per-species mass, and signed charge across sparse, full,
+zero-demand/no-op, and over-capacity cases. P4 coverage additionally checks
+volume-inclusive `scale * pre_state + source` accounting for selected and
+unselected rows. The tests retain separate remap-parity and moment diagnostics,
+exact preflight/no-op preservation, Warp CPU coverage, and guarded CUDA rows.
+
+P6 changes only those test suites: no production APIs, policy behavior, exports,
+or public documentation changed.

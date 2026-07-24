@@ -21,15 +21,6 @@ activation contracts.
   `representative_volume_scaling=False` defaults.
 - Independent controls and explicit resampling-first precedence when both are
   enabled.
-### Planned and Deferred After P1
-
-- Optional per-box representative-volume scaling with same-direction raw-weight
-  and source-demand updates plus explicit pre-scale/represented diagnostics.
-- Sparse, exact-capacity, full, and over-capacity multi-box tests for number,
-  species mass, charge, fixed identities, and distribution-preservation targets.
-- Caller-owned fixed-shape diagnostics/work buffers and Warp CPU evidence with
-  optional CUDA execution.
-
 ### Delivered in P2 (#1423)
 
 - CPU-only immutable plan-then-commit equal-weight resampling in
@@ -69,6 +60,20 @@ activation contracts.
   protected-state preservation, atomic rejection, diagnostic-only no-selected
   calls, valid empty boxes, optional CUDA, and concrete-only export surfaces.
 
+### Delivered in P6 (#1427)
+
+- Test-only conservation validation in
+  `particula/particles/tests/exhaustion_test.py` and
+  `particula/gpu/kernels/tests/exhaustion_test.py` for existing P2 resampling
+  and P4 representative-volume scaling.
+- Independent NumPy float64 particle/source ledgers cover multi-box,
+  multi-species sparse and full rows, zero-demand and all-inactive no-ops,
+  highest valid releases, and over-capacity rejection without caller mutation.
+- Deterministic downstream-shaped source fixtures are committed only after the
+  tested boundary; they prove per-box `pre + source` and, for P4,
+  volume-inclusive `scale * pre + source` accounting without implementing a
+  policy or source-construction surrogate.
+
 ## Out of Scope
 
 - Dynamic allocation, array resizing/appending, compaction, hidden transfers,
@@ -81,3 +86,4 @@ activation contracts.
   does not add policy-owned stochastic state.
 - P1 policy resolution, resampling precedence, slot activation, or source
   packaging integration for the P4 direct helpers.
+- Production API, export, policy, and public-documentation changes for P6.

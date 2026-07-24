@@ -73,11 +73,23 @@ validation; P7 documents only the validated policy, precedence, and bounds.
   - Files: CPU/GPU exhaustion and slot-management modules plus their tests
   - Tests: Four control combinations, resampling-sufficient and fallback cases, both-off pre-mutation error, unsatisfiable request, diagnostics, and no silent truncation.
 
-- [ ] **E6-F6-P6:** Validate sparse, full, and over-capacity conservation across CPU and Warp
-  - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Prove cross-backend behavior with an independent NumPy oracle and downstream-shaped source requests.
-  - Files: `particula/particles/tests/exhaustion_test.py`, `particula/gpu/kernels/tests/exhaustion_test.py`, integration fixtures
-  - Tests: Multi-box/species matrix, physical inventory before/after plus admitted demand, moment/error bounds, repeated calls, exact no-ops, and CUDA clean skips.
+- [x] **E6-F6-P6:** Validate sparse, full, and over-capacity conservation across CPU and Warp
+  - Issue: #1427 | Size: S | Status: Implemented (2026-07-24)
+  - Goal: Add test-only, independent conservation evidence for the existing P2
+    resampling and P4 representative-volume-scaling boundaries without adding
+    policy, source-construction, or production behavior.
+  - Files: `particula/particles/tests/exhaustion_test.py`,
+    `particula/gpu/kernels/tests/exhaustion_test.py`
+  - Tests: Independent NumPy float64 ledgers and fixed admitted-source fixtures
+    cover sparse/full multi-box and multi-species rows, all-inactive no-ops,
+    valid-highest-release/repeated paths, and exact preflight rejection for
+    over-capacity requests. They assert per-box number, per-species mass, and
+    signed charge at `rtol=1e-12`, `atol=1e-30`; P4 also asserts
+    volume-inclusive `scale * pre + source` accounting. Remap parity and
+    moment/mixing checks remain separate; Warp CPU is covered with guarded CUDA
+    clean skips.
+  - Boundary: P6 changes only tests. It adds no P1/P5 policy integration,
+    downstream source runtime, production API/export, or public documentation.
 
 - [ ] **E6-F6-P7:** Update development documentation for slot exhaustion policies
   - Issue: TBD | Size: XS | Status: Not Started

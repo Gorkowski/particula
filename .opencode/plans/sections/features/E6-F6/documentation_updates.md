@@ -21,3 +21,7 @@ exhaustion before mutation, and no demand is silently discarded.
 
 The remaining user-facing policy/integration documentation is deferred to P5–P7;
 P4 does not establish a public policy API.
+
+Issue #1427 (P6) required no public documentation update: it adds only
+conservation validation in existing CPU and Warp test modules and changes no
+production or public API behavior.

@@ -48,7 +48,8 @@
 - [x] Extend CPU/Warp exhaustion and kernel-export tests for P4 schema/value/
   atomicity, independent-oracle parity, no-selected diagnostics, empty boxes,
   optional CUDA, and concrete-only import surfaces.
-- [ ] Cover capacity-sufficient no-op, sparse, full, repeated, and demand larger
-  than releasable capacity cases for every policy combination.
+- [x] Add test-only independent CPU/Warp conservation ledgers and admitted-source
+  fixtures for P2 sparse/full/no-op/over-capacity cases and P4 selected/
+  unselected representative-volume accounting.
 - [ ] Run focused tests, full fast regressions, Ruff, mypy, and docs validation
   without reducing the repository coverage threshold.

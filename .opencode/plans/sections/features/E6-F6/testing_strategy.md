@@ -44,9 +44,17 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
 - **P5:** Integration tests cover enough-capacity bypass, resampling-only,
   scaling-only, resampling-sufficient, resampling-then-scaling, both-off
   exhausted error, and unsatisfiable demand without any write or truncation.
-- **P6:** Multi-box/multi-species matrix covers zero/sparse/full/over-capacity
-  states, repeated calls, downstream-shaped requests, CPU/Warp tolerances, and
-  source-plus-particle conservation.
+- **P6 (delivered, #1427):**
+  `particula/particles/tests/exhaustion_test.py` and
+  `particula/gpu/kernels/tests/exhaustion_test.py` add independent NumPy
+  float64 particle/source ledgers for multi-box/multi-species sparse, full,
+  all-inactive no-op, valid-highest-release, and over-capacity cases. Fixed
+  admitted-source fixtures are applied only after successful P2/P4 boundaries,
+  proving per-box/per-species number, mass, and signed-charge accounting at
+  `rtol=1e-12`, `atol=1e-30`; P4 additionally includes volume-inclusive
+  `scale * pre + source` assertions. Remap parity and moment/mixing diagnostics
+  remain separate from conservation checks; Warp CPU is the baseline and CUDA
+  rows skip cleanly when unavailable. The change is test-only.
 - **P7:** Link, import-snippet, equation, shape-table, and supported/deferred
   boundary validation.
 
