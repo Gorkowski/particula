@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b7f21ba9",
+  "issue_number": "1427",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1427-adw-b7f21ba9",
+  "shipped_at": "2026-07-24T20:16:41.924439Z",
+  "plan_phase": "E6-F6-P6",
+  "plan_summary": "Validation-only plan to add final conservation evidence for existing CPU and Warp exhaustion paths. It introduces independent NumPy ledgers and source-integration fixtures for P2 resampling and concrete-only P4 representative-volume scaling, covering sparse, full, no-op, and over-capacity cases without changing production behavior.",
+  "discovered_context": ""
+}
