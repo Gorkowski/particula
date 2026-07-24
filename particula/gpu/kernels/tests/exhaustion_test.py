@@ -891,6 +891,98 @@ def test_gpu_representative_volume_scaling_rejects_late_invalid_row() -> None:
     _assert_snapshot(snapshot, particles, sidecars)
 
 
+def test_gpu_representative_volume_scaling_rejects_zeroing_active_slot() -> (
+    None
+):
+    """P4 rejects an active concentration that would underflow to zero."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles, _, _ = _custom_state(
+        np.array([[[1.0]]]),
+        np.array([[np.nextafter(0.0, 1.0)]]),
+        np.zeros((1, 1)),
+        np.array([1.0]),
+        np.zeros(1, dtype=np.int32),
+    )
+    demand = wp.array([1.0], dtype=wp.float64, device="cpu")
+    flags = wp.array([1], dtype=wp.int32, device="cpu")
+    requested = wp.array([0.5], dtype=wp.float64, device="cpu")
+    minimum = wp.array([0.25], dtype=wp.float64, device="cpu")
+    minimum_volume = wp.array([0.1], dtype=wp.float64, device="cpu")
+    resolved = wp.array([9.0], dtype=wp.float64, device="cpu")
+    sidecars = SimpleNamespace(
+        demand=demand,
+        flags=flags,
+        requested=requested,
+        minimum=minimum,
+        minimum_volume=minimum_volume,
+        resolved=resolved,
+    )
+    snapshot = _snapshot(particles, sidecars)
+
+    with pytest.raises(ValueError, match="representative scaling sidecars"):
+        representative_volume_scaling_step_gpu(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+
+    _assert_snapshot(snapshot, particles, sidecars)
+
+
+def test_gpu_representative_volume_scaling_preflights_every_active_slot() -> (
+    None
+):
+    """P4 rejects a later active lane that would underflow on scaling."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import (
+        representative_volume_scaling_step_gpu,
+    )
+
+    particles, _, _ = _custom_state(
+        np.array([[[1.0], [1.0]]]),
+        np.array([[1.0, np.nextafter(0.0, 1.0)]]),
+        np.zeros((1, 2)),
+        np.array([1.0]),
+        np.zeros(1, dtype=np.int32),
+    )
+    demand = wp.array([1.0], dtype=wp.float64, device="cpu")
+    flags = wp.array([1], dtype=wp.int32, device="cpu")
+    requested = wp.array([0.5], dtype=wp.float64, device="cpu")
+    minimum = wp.array([0.25], dtype=wp.float64, device="cpu")
+    minimum_volume = wp.array([0.1], dtype=wp.float64, device="cpu")
+    resolved = wp.array([9.0], dtype=wp.float64, device="cpu")
+    sidecars = SimpleNamespace(
+        demand=demand,
+        flags=flags,
+        requested=requested,
+        minimum=minimum,
+        minimum_volume=minimum_volume,
+        resolved=resolved,
+    )
+    snapshot = _snapshot(particles, sidecars)
+
+    with pytest.raises(ValueError, match="representative scaling sidecars"):
+        representative_volume_scaling_step_gpu(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+
+    _assert_snapshot(snapshot, particles, sidecars)
+
+
 def test_gpu_representative_volume_scaling_zero_demand_writes_diagnostic_only() -> (
     None
 ):

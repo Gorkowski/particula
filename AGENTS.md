@@ -567,11 +567,11 @@ pytest particula/gpu/tests/kernel_exports_test.py -q -Werror
   exhausted capacity, sufficiently releasable enabled resampling takes
   precedence; enabled scaling is its fallback. Neither viable policy raises
   before returning a plan, and source demand is never silently truncated.
-- E6-F5 authoritative slot discovery, free-index classification, and activation
-  remain unimplemented. E6-F6-P5 policy composition remains unimplemented too;
-  no shipped process applies resolver defaults, discovers or activates slots,
-  constructs a source, or depletes gas. This is not a high-level nucleation
-  loop.
+- E6-F5 ships authoritative slot discovery, free-index classification, and
+  activation on the CPU and direct-Warp boundaries. E6-F6 ships read-only
+  exhaustion resolution plus CPU/Warp resampling and representative-volume
+  scaling primitives. No shipped process composes those primitives with source
+  construction, gas depletion, or a high-level nucleation loop.
 - Direct Warp P2 and P4 primitives consume caller-owned same-device state;
   callers synchronize successful asynchronous P4 work before reading results.
   See [Fixed-Capacity Slot Exhaustion Primitives](docs/Features/slot_exhaustion_policies.md)

@@ -297,13 +297,6 @@ def _scan_particle_values(  # noqa: C901
         wp.atomic_add(invalid, 0, 1)
     if particle == 0 and (not wp.isfinite(volume[box]) or volume[box] <= 0.0):
         wp.atomic_add(invalid, 0, 1)
-    if box == 0 and particle == 0:
-        for density_index in range(density.shape[0]):
-            if (
-                not wp.isfinite(density[density_index])
-                or density[density_index] <= 0.0
-            ):
-                wp.atomic_add(invalid, 0, 1)
     if species == 0:
         if (
             not wp.isfinite(concentration[box, particle])
@@ -619,13 +612,13 @@ def _plan_resampling(  # noqa: C901, PLR0915
     status[box] = PLANNING_SUCCESS
     # The interval sweep preserves number, species inventory, and charge.  The
     # explicit check makes finite precision drift a planning (not commit) error.
-    if wp.abs(replacement_number - source_number) > (
-        wp.float64(1e-12) * wp.abs(source_number) + wp.float64(1e-30)
-    ):
+    if status[box] == PLANNING_SUCCESS and wp.abs(
+        replacement_number - source_number
+    ) > (wp.float64(1e-12) * wp.abs(source_number) + wp.float64(1e-30)):
         status[box] = PLANNING_EXACT_INVENTORY_FAILURE
-    if wp.abs(replacement_charge_total - source_charge_total) > (
-        wp.float64(1e-12) * wp.abs(source_charge_total) + wp.float64(1e-30)
-    ):
+    if status[box] == PLANNING_SUCCESS and wp.abs(
+        replacement_charge_total - source_charge_total
+    ) > (wp.float64(1e-12) * wp.abs(source_charge_total) + wp.float64(1e-30)):
         status[box] = PLANNING_EXACT_INVENTORY_FAILURE
     for species in range(n_species):
         source_mass = wp.float64(0.0)
@@ -641,11 +634,11 @@ def _plan_resampling(  # noqa: C901, PLR0915
             source_species_count += 1
         if not wp.isfinite(source_mass) or not wp.isfinite(replacement_mass):
             replacement_values_finite = False
-        elif wp.abs(replacement_mass - source_mass) > (
-            wp.float64(1e-12) * wp.abs(source_mass) + wp.float64(1e-30)
-        ):
+        elif status[box] == PLANNING_SUCCESS and wp.abs(
+            replacement_mass - source_mass
+        ) > (wp.float64(1e-12) * wp.abs(source_mass) + wp.float64(1e-30)):
             status[box] = PLANNING_EXACT_INVENTORY_FAILURE
-    if (
+    if status[box] == PLANNING_SUCCESS and (
         not replacement_values_finite
         or not wp.isfinite(total_number)
         or not wp.isfinite(equal)
@@ -759,6 +752,10 @@ def _scan_representative_volume_scaling(  # noqa: C901
         masses[box, particle, species] < 0.0
     ):
         wp.atomic_add(status, 0, 1)
+    if concentration[box, particle] == 0.0 and (
+        masses[box, particle, species] != 0.0
+    ):
+        wp.atomic_add(status, 0, 1)
     if species == 0:
         if not wp.isfinite(concentration[box, particle]) or (
             concentration[box, particle] < 0.0
@@ -766,6 +763,23 @@ def _scan_representative_volume_scaling(  # noqa: C901
             wp.atomic_add(status, 0, 1)
         if not wp.isfinite(charge[box, particle]):
             wp.atomic_add(status, 0, 1)
+        if concentration[box, particle] == 0.0 and charge[box, particle] != 0.0:
+            wp.atomic_add(status, 0, 1)
+        if concentration[box, particle] > 0.0:
+            total_mass = wp.float64(0.0)
+            for mass_species in range(density.shape[0]):
+                total_mass += masses[box, particle, mass_species]
+            if not wp.isfinite(total_mass) or total_mass <= 0.0:
+                wp.atomic_add(status, 0, 1)
+        if scaling_required[box] == 1 and demand[box] > 0.0:
+            scaled_concentration = (
+                concentration[box, particle] * requested_scale[box]
+            )
+            if concentration[box, particle] > 0.0 and (
+                not wp.isfinite(scaled_concentration)
+                or scaled_concentration <= 0.0
+            ):
+                wp.atomic_add(status, 0, 1)
     if particle == 0 and species == 0:
         if not wp.isfinite(volume[box]) or volume[box] <= 0.0:
             wp.atomic_add(status, 0, 1)
@@ -1074,6 +1088,12 @@ def resampling_step_gpu(  # noqa: C901, PLR0913
         _scan_particle_values,
         dim=(b, n, s),
         inputs=[masses, concentration, charge, density, volume, invalid],
+        device=device,
+    )
+    wp.launch(
+        _scan_density,
+        dim=s,
+        inputs=[density, invalid],
         device=device,
     )
     wp.launch(

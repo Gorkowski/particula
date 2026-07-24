@@ -1339,24 +1339,21 @@ runtime policy.
   preflight may launch read-only validation, classification, or workspace
   kernels, but does not mutate caller-owned state before its writer launches;
   it does not promise rollback after a writer has launched.
-- E6-F6 owns exhaustion, resampling, and volume-scaling policy. E6-F7 owns CPU
-  particle-source physics, E6-F8 owns direct-Warp consumption, and E6-F9 owns
-  integration and the direct-step example. These later features do not alter
-  the shipped E6-F5 storage contract.
+- E6-F6 ships exhaustion resolution, resampling, and volume-scaling primitives.
+  E6-F7 owns CPU particle-source physics, E6-F8 owns direct-Warp consumption,
+  and E6-F9 owns integration and the direct-step example. These later features
+  do not alter the shipped fixed-slot storage contract.
 
-Future features:
+Deferred orchestration and physics:
 
-1. E6-F6 exhaustion, resampling, and volume-scaling policy for fixed slots.
-2. E6-F7 CPU nucleation/particle-source physics following the
-   [nucleation equations](../../Theory/Technical/Dynamics/Nucleation_Equations.md)
-   (no nucleation code exists in particula today).
-3. GPU nucleation via slot activation (see
-   [Fixed-Capacity Slot Boundary](#fixed-capacity-slot-boundary)).
-4. Particle slot discovery, inactive-slot activation, per-box active-count
-   diagnostics, and E6-F6-P5 policy composition with that boundary.
-5. Source/gas inventory handling and complete-sequence slot-exhaustion
+1. E6-F7 CPU nucleation/particle-source physics following the
+    [nucleation equations](../../Theory/Technical/Dynamics/Nucleation_Equations.md)
+    (no nucleation code exists in particula today).
+2. GPU nucleation via slot activation (see
+    [Fixed-Capacity Slot Boundary](#fixed-capacity-slot-boundary)).
+3. Source/gas inventory handling and complete-sequence slot-exhaustion
    validation.
-6. Fixed-shape workflow extensions and the deferred capabilities: dynamic
+4. Fixed-shape workflow extensions and the deferred capabilities: dynamic
    allocation/resizing/compaction, hidden transfers/CPU fallback, high-level
    runnable/scheduler/backend orchestration, graph capture, autodiff,
    performance guarantees, and exact CPU/Warp/CUDA RNG replay.
@@ -1369,10 +1366,10 @@ Future features:
 - Avoid dynamic allocation inside timestep kernels. Processes that create new
   particles, including the planned nucleation process, should activate
   inactive slots when available.
-- Future policy composition must select resampling or volume scaling for cases
-  that would exceed available particle slots; shipped primitives do not invoke
-  a policy before exhaustion.
-- Track per-box active particle counts as diagnostics, but keep the underlying
+- Shipped exhaustion primitives resolve fixed-slot capacity and provide
+  resampling or volume-scaling operations; their caller owns source, gas, and
+  process-level orchestration.
+- Shipped diagnostics track per-box active particle counts while keeping the
   arrays fixed-shape for GPU kernels and graph capture.
 - Define compaction rules only if needed; inactive zero-mass slots are simpler
   and graph-friendly.

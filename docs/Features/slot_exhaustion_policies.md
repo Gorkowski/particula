@@ -138,11 +138,11 @@ The CPU float64 ledger uses concentration-weighted reductions:
 N = \sum w, \qquad M_s = \sum w m_s, \qquad Q = \sum w q.
 \]
 
-Here, $w$ is particle concentration `[m^-3]`, $m_s$ is species mass `[kg]`,
-and $V$ is box volume `[m^3]`. The helper-normalized values are $N/V$,
-$M_s/V$, and $Q/V$. These are not physical extensive totals: the reductions
-are concentration-weighted quantities, whereas physical totals require an
-additional volume interpretation.
+Here, $w$ is the dimensionless computational particle weight/count, $m_s$ is
+species mass `[kg]`, and $V$ is box volume `[m^3]`. Thus $N$, $M_s$, and $Q$
+are box totals, while the helper-normalized values $N/V$, $M_s/V$, and $Q/V$
+are their corresponding volume densities. Callers using concentration-valued
+storage must not apply a second volume normalization outside this ledger.
 
 P2 has tolerance-bounded conservation diagnostics. Its radius-cubed,
 mean-radius, surface-area, and Riemer-diversity diagnostics are separate,

@@ -258,6 +258,12 @@ def _validate_capacity_counts(
             raise ValueError(f"{name} must be nonnegative")
         if np.any(values > particle_count):
             raise ValueError(f"{name} exceeds particle capacity")
+    maximum_releasable = np.maximum(particle_count - inputs.free_count - 1, 0)
+    if np.any(inputs.resampling_releasable_count > maximum_releasable):
+        raise ValueError(
+            "resampling_releasable_count exceeds active capacity retaining "
+            "one slot"
+        )
 
 
 def _validate_free_indices(
@@ -365,7 +371,7 @@ def resolve_exhaustion(
     return ExhaustionPlan(box_plans=tuple(box_plans))
 
 
-def get_weighted_inventory(
+def get_weighted_inventory(  # noqa: C901
     masses: object,
     weights: object,
     charge: object,
@@ -412,31 +418,50 @@ def get_weighted_inventory(
             raise ValueError(f"{name} must contain only finite values")
     if np.any(volume_values <= 0):
         raise ValueError("volume must be positive")
+    if np.any(mass_values < 0.0):
+        raise ValueError("masses must be nonnegative")
+    if np.any(weight_values < 0.0):
+        raise ValueError("weights must be nonnegative")
 
-    number = np.sum(weight_values, axis=1, dtype=np.float64)
-    mass = np.einsum(
-        "bn,bns->bs",
-        weight_values,
-        mass_values,
-        dtype=np.float64,
-        optimize=True,
-    )
-    total_charge = np.sum(
-        weight_values * charge_values, axis=1, dtype=np.float64
-    )
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        number = np.sum(weight_values, axis=1, dtype=np.float64)
+        mass = np.einsum(
+            "bn,bns->bs",
+            weight_values,
+            mass_values,
+            dtype=np.float64,
+            optimize=True,
+        )
+        total_charge = np.sum(
+            weight_values * charge_values, axis=1, dtype=np.float64
+        )
+        number_per_volume = number / volume_values
+        mass_per_volume = mass / volume_values[:, None]
+        charge_per_volume = total_charge / volume_values
+    if not all(
+        np.all(np.isfinite(values))
+        for values in (
+            number,
+            mass,
+            total_charge,
+            number_per_volume,
+            mass_per_volume,
+            charge_per_volume,
+        )
+    ):
+        raise ValueError("weighted inventory reductions must be finite")
     return WeightedInventory(
         number=tuple(np.float64(value) for value in number),
         mass=tuple(tuple(np.float64(value) for value in row) for row in mass),
         charge=tuple(np.float64(value) for value in total_charge),
         number_per_volume=tuple(
-            np.float64(value) for value in number / volume_values
+            np.float64(value) for value in number_per_volume
         ),
         mass_per_volume=tuple(
-            tuple(np.float64(value) for value in row)
-            for row in mass / volume_values[:, None]
+            tuple(np.float64(value) for value in row) for row in mass_per_volume
         ),
         charge_per_volume=tuple(
-            np.float64(value) for value in total_charge / volume_values
+            np.float64(value) for value in charge_per_volume
         ),
     )
 
@@ -1271,24 +1296,7 @@ def apply_representative_volume_scaling(  # noqa: C901, PLR0913
         (demand, flags, requested, minimum, minimum_box_volume, resolved),
     )
 
-    if not np.all(np.isfinite(particle_data.masses)) or np.any(
-        particle_data.masses < 0.0
-    ):
-        raise ValueError("masses must be finite and nonnegative")
-    if not np.all(np.isfinite(particle_data.concentration)) or np.any(
-        particle_data.concentration < 0.0
-    ):
-        raise ValueError("concentration must be finite and nonnegative")
-    if not np.all(np.isfinite(particle_data.charge)):
-        raise ValueError("charge must be finite")
-    if not np.all(np.isfinite(particle_data.density)) or np.any(
-        particle_data.density <= 0.0
-    ):
-        raise ValueError("density must be finite and positive")
-    if not np.all(np.isfinite(particle_data.volume)) or np.any(
-        particle_data.volume <= 0.0
-    ):
-        raise ValueError("volume must be finite and positive")
+    _cache_particle_state(particle_data)
     if not np.all(np.isfinite(demand)) or np.any(demand < 0.0):
         raise ValueError(
             "provisional_source_demand must be finite and nonnegative"
@@ -1317,6 +1325,12 @@ def apply_representative_volume_scaling(  # noqa: C901, PLR0913
     ):
         raise ValueError("selected scaled volume must meet minimum_volume")
     factors = np.where(selected, requested, 1.0)
+    scaled_concentration = particle_data.concentration * factors[:, None]
+    active = particle_data.concentration > 0.0
+    if np.any(active & (~np.isfinite(scaled_concentration))) or np.any(
+        active & (scaled_concentration <= 0.0)
+    ):
+        raise ValueError("selected scale must preserve active concentrations")
     resolved[:] = factors
     if np.any(selected):
         particle_data.volume[selected] *= factors[selected]

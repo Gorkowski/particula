@@ -93,9 +93,9 @@ def test_strict_controls_defaults_and_frozen_records() -> None:
     [
         (ExhaustionControls(), 2, 3, 0, POLICY_ACTIVATE),
         (ExhaustionControls(False, False), 2, 3, 0, POLICY_ACTIVATE),
-        (ExhaustionControls(True, True), 4, 2, 2, POLICY_RESAMPLE_DEFERRED),
+        (ExhaustionControls(True, True), 3, 1, 2, POLICY_RESAMPLE_DEFERRED),
         (ExhaustionControls(False, True), 4, 2, 0, POLICY_SCALE_DEFERRED),
-        (ExhaustionControls(True, False), 4, 2, 2, POLICY_RESAMPLE_DEFERRED),
+        (ExhaustionControls(True, False), 3, 1, 2, POLICY_RESAMPLE_DEFERRED),
         (ExhaustionControls(True, True), 4, 2, 1, POLICY_SCALE_DEFERRED),
     ],
 )
@@ -107,7 +107,13 @@ def test_policy_precedence_and_exact_diagnostics(
     policy: int,
 ) -> None:
     """Activation is flag-independent and resampling precedes scaling."""
-    indices = [[0, 2, 3, -1]] if free >= 3 else [[0, 2, -1, -1]]
+    indices = (
+        [[0, 2, 3, -1]]
+        if free >= 3
+        else [[0, 2, -1, -1]]
+        if free == 2
+        else [[0, -1, -1, -1]]
+    )
     inputs = _inputs([requested], [free], [releasable], indices)
     box_plan = resolve_exhaustion(inputs, controls).box_plans[0]
     assert box_plan.requested_count == requested
@@ -123,7 +129,7 @@ def test_policy_precedence_and_exact_diagnostics(
 
 def test_both_disabled_exhaustion_fails_without_mutating_inputs() -> None:
     """Unrepresentable capacity fails closed without partial plans or writes."""
-    inputs = _inputs([4], [2], [2], [[0, 2, -1, -1]])
+    inputs = _inputs([4], [1], [2], [[0, -1, -1, -1]])
     snapshot = _sidecar_snapshots(inputs)
     with pytest.raises(
         ValueError,
@@ -193,6 +199,10 @@ def test_sidecar_schema_validation(
         (_inputs([1], [3], [0], [[0, -1]]), "free_count exceeds"),
         (_inputs([3], [1], [0], [[0, -1]]), "requested_count exceeds"),
         (_inputs([1], [1], [3], [[0, -1]]), "releasable_count exceeds"),
+        (
+            _inputs([1], [3], [1], [[0, 1, 2, -1]]),
+            "retaining one slot",
+        ),
         (_inputs([1], [1], [0], [[2, -1]]), "out-of-range"),
         (_inputs([1], [2], [0], [[1, 0]]), "strictly ascending"),
         (_inputs([1], [1], [0], [[0, 1]]), "unused suffix"),
@@ -357,6 +367,20 @@ def test_weighted_inventory_accepts_lists_and_zero_particles() -> None:
             [np.inf],
             "finite",
         ),
+        (
+            np.array([[[-1.0]]]),
+            np.ones((1, 1)),
+            np.ones((1, 1)),
+            [1.0],
+            "masses must be nonnegative",
+        ),
+        (
+            np.ones((1, 1, 1)),
+            np.array([[-1.0]]),
+            np.ones((1, 1)),
+            [1.0],
+            "weights must be nonnegative",
+        ),
     ],
 )
 def test_weighted_inventory_rejects_invalid_shapes_and_values(
@@ -369,6 +393,17 @@ def test_weighted_inventory_rejects_invalid_shapes_and_values(
     """Inventory helper rejects malformed and nonphysical converted inputs."""
     with pytest.raises(ValueError, match=message):
         get_weighted_inventory(masses, weights, charge, volume)
+
+
+def test_weighted_inventory_rejects_overflowing_reduction() -> None:
+    """Inventory reductions reject finite inputs whose result overflows."""
+    with pytest.raises(ValueError, match="reductions must be finite"):
+        get_weighted_inventory(
+            np.array([[[np.finfo(np.float64).max]]]),
+            np.array([[2.0]]),
+            np.zeros((1, 1)),
+            np.ones(1),
+        )
 
 
 def _resampling_particles(boxes: int = 1) -> ParticleData:
@@ -1050,6 +1085,56 @@ def test_representative_volume_scaling_rejects_invalid_volume_atomically() -> (
             requested,
             minimum,
             minimum_volume,
+            resolved,
+        )
+    )
+
+
+def test_representative_volume_scaling_rejects_zeroing_active_slot_atomically() -> (
+    None
+):
+    """P4 rejects underflowing active concentrations before every write."""
+    particles = _resampling_particles()
+    particles.concentration[0, 0] = np.nextafter(0.0, 1.0)
+    demand = np.array([1.0], dtype=np.float64)
+    flags = np.array([True], dtype=np.bool_)
+    requested = np.array([0.5], dtype=np.float64)
+    minimum = np.array([0.25], dtype=np.float64)
+    minimum_volume = np.array([0.1], dtype=np.float64)
+    resolved = np.array([9.0], dtype=np.float64)
+    snapshot = tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
+            resolved,
+        )
+    )
+
+    with pytest.raises(ValueError, match="preserve active concentrations"):
+        apply_representative_volume_scaling(
+            particles,
+            demand,
+            flags,
+            requested,
+            minimum,
+            minimum_volume,
+            resolved,
+        )
+
+    assert snapshot == tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+            particles.density,
+            particles.volume,
+            demand,
             resolved,
         )
     )
