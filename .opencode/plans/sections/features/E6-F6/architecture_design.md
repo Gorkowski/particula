@@ -44,6 +44,26 @@ bulk-writes retained replacements and literal float64 zeroes to released slots.
 P2 is CPU-only and leaves scaling, discovery/activation, package exports, and
 Warp behavior deferred.
 
+### Delivered P3 direct Warp resampling boundary
+
+Issue #1424 adds `resampling_step_gpu` in
+`particula.gpu.kernels.exhaustion`. The direct boundary consumes explicit
+already-resolved per-box release counts rather than P1 policy records and uses
+concrete-only `ResamplingBuffers` for all particle-scale plan, diagnostic, and
+sort storage. Read-only preflight validates particle fields, counts, bounds,
+same-device buffer schemas, and buffer nonaliasing without writing caller
+storage. For nonzero demand, active-device staged bitonic sorting uses the CPU
+source key (radius, mass fractions, charge, original active index), followed by
+an interval sweep that writes remap output into caller buffers.
+
+Planning records per-box diagnostic status, performs an aggregate status gate,
+and launches one all-box commit only if every box succeeds. The commit writes
+replacement rows to retained original slots and clears released slots. Failed
+planning may leave attempted plan data but does not mutate particles; rollback
+after a launched commit is not promised. The entry point is exported from
+`particula.gpu.kernels`, while `ResamplingBuffers` and implementation details
+remain concrete-module-only.
+
 ```text
 particle state + E6-F5 capacity + fixed-shape demand + policy config
                               |

@@ -23,7 +23,6 @@ activation contracts.
   enabled.
 ### Planned and Deferred After P1
 
-- Allocation-stable Warp resampling parity.
 - Optional per-box representative-volume scaling with same-direction raw-weight
   and source-demand updates plus explicit pre-scale/represented diagnostics.
 - Sparse, exact-capacity, full, and over-capacity multi-box tests for number,
@@ -42,6 +41,19 @@ activation contracts.
 - Co-located coverage in `particula/particles/tests/exhaustion_test.py` for
   conservation, tie ordering, detached plans, fixed-capacity slot clearing, and
   invalid/stale/later-box plan atomicity.
+
+### Delivered in P3 (#1424)
+
+- Allocation-stable direct Warp resampling in
+  `particula/gpu/kernels/exhaustion.py` using explicit release counts and
+  concrete-only caller-owned `ResamplingBuffers`.
+- Read-only preflight, active-device staged bitonic-sort/interval-sweep
+  planning, diagnostic status gating, and one all-box commit; failed planning
+  skips commit and successful calls preserve fixed capacity and caller
+  ownership.
+- Export of `resampling_step_gpu` only through `particula.gpu.kernels`, plus
+  focused tests in `particula/gpu/kernels/tests/exhaustion_test.py` for parity,
+  validation, diagnostics, ownership, and optional CUDA execution.
 
 ## Out of Scope
 

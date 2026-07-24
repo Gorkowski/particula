@@ -18,8 +18,9 @@
 - [x] P2 satisfies deterministic tie-break rules and validates represented
   number, species mass, signed charge, weighted radius cubed, mean-radius,
   surface, and Riemer diversity/mixing bounds before commit.
-- [ ] CPU and Warp CPU agree on plans, policy diagnostics, and resulting state;
-  CUDA executes the same matrix when available and skips cleanly otherwise.
+- [x] P3 direct Warp resampling agrees with the independent deterministic
+  remapping/diagnostic oracle on its explicit-release-count boundary; CUDA
+  coverage is optional and skips cleanly when unavailable.
 - [ ] Arrays remain fixed shape and preserve container/array identity, dtype,
   device, density, requests, and untouched boxes/slots.
 - [ ] Focused/full tests, Ruff, mypy, and documentation validation pass without
@@ -56,3 +57,12 @@
 - [x] Co-located tests demonstrate stable equal-stratum remapping, independent
   conservation-oracle agreement, exact released-slot clearing, and no mutation
   for malformed, stale, overlapping, or later-box-invalid plans.
+
+## Delivered P3 Evidence (#1424)
+
+- [x] `resampling_step_gpu` provides allocation-stable, fixed-capacity direct
+  Warp remapping with caller-owned `ResamplingBuffers`, read-only preflight,
+  active-device staged planning, diagnostic gating, and one commit.
+- [x] Only the direct step is exported; focused tests cover ownership,
+  validation, deterministic parity, diagnostic no-commit behavior, and optional
+  CUDA skips.

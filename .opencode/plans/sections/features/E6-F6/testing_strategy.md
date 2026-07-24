@@ -20,9 +20,13 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
   strict diagnostic-bound and malformed-P1 rejection; and stale, overlapping,
   and later-box malformed-plan atomicity. The focused oracle independently
   verifies the equal-stratum remap without production remap helpers.
-- **P3:** `particula/gpu/kernels/tests/exhaustion_test.py` compares Warp CPU with
-  the independent NumPy oracle; validates sidecar identity/shape/dtype/device,
-  failure ordering, and optional CUDA clean skips.
+- **P3 (delivered, #1424):**
+  `particula/gpu/kernels/tests/exhaustion_test.py` covers the exported direct
+  entry point, deterministic Warp CPU parity, caller-buffer ownership,
+  shape/dtype/device/value/count/nonaliasing rejection, staged-plan diagnostic
+  failures that skip commit, fixed-slot clearing, and optional CUDA clean
+  skips. The independent NumPy oracle checks the stable sort and interval-sweep
+  remap without CPU exhaustion helpers.
 - **P4:** CPU/Warp tests for per-box scale factors, same-direction raw-weight
   and source-demand updates, allowed bounds, unaffected boxes/fields, and
   represented-inventory parity.

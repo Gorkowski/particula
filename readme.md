@@ -65,7 +65,7 @@ Legacy facades remain available, with deprecation planned for v0.3.0.
 `particula.gpu.{to_warp_environment_data, from_warp_environment_data}` for
 single-box and multi-box round trips.
 Import GPU kernel entry points `condensation_step_gpu`, `coagulation_step_gpu`,
-and `wall_loss_step_gpu` from `particula.gpu.kernels`. Top-level
+`resampling_step_gpu`, and `wall_loss_step_gpu` from `particula.gpu.kernels`. Top-level
 `particula.gpu` remains the transfer/context-helper surface and does not
 re-export those direct kernel step functions. The kernel entry points accept
 scalar `temperature` / `pressure` inputs, per-box Warp arrays with shape
@@ -77,6 +77,17 @@ environment inputs must match the particle/gas device and use `(n_boxes,)`
 temperature and pressure arrays. All accepted temperature, pressure, and
 coagulation volume inputs are validated as positive finite physical values
 before launch.
+
+`resampling_step_gpu` is the bounded direct fixed-capacity equal-weight
+remapping step. It consumes already-resolved same-device per-box release counts
+and mutates caller-owned Warp particle data only after read-only preflight and
+successful planning diagnostics. It has no exhaustion-policy resolution, CPU
+fallback or transfers, resizing, or `Runnable` wrapper. Its required
+`ResamplingBuffers` record is intentionally concrete-module-only at
+`particula.gpu.kernels.exhaustion`; it supplies caller-owned planning,
+diagnostic, and sorting storage rather than a reusable public plan. Zero-demand
+boxes are write-free; planning failures leave particle data unchanged, while
+rollback after its single commit launch is not promised.
 
 `wall_loss_step_gpu` is the bounded P5 direct, particle-resolved wall-loss
 boundary. Construct `NeutralWallLossConfig` from

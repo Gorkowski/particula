@@ -465,6 +465,43 @@ Focused P1–P4 contract run:
 pytest particula/gpu/kernels/tests/dilution_test.py -q -Werror
 ```
 
+### GPU resampling direct-kernel contract
+
+- Import the direct low-level entry point with
+  `from particula.gpu.kernels import resampling_step_gpu`.
+- It performs fixed-capacity, deterministic P2 equal-weight remapping from
+  already-resolved same-device per-box release counts. It does not resolve an
+  exhaustion policy and has no CPU fallback or transfer, resizing, or
+  `Runnable` wrapper.
+- `ResamplingBuffers` is intentionally concrete-module-only at
+  `particula.gpu.kernels.exhaustion`. Its caller-owned same-device Warp arrays
+  provide planning, diagnostic, and sorting storage; it is neither re-exported
+  by `particula.gpu.kernels` nor a reusable CPU plan.
+- Read-only preflight validates particle/count/buffer schemas, physical state,
+  and nonaliasing. For nonzero demand, planning may overwrite documented buffer
+  lanes and diagnostics; any planning failure raises before the single commit
+  and leaves particles unchanged. Rollback is not promised after commit launch.
+- Zero-demand boxes are write-free. A nonzero count must be between `0` and
+  `active_count - 1`, where active means positive concentration. Successful
+  remapping retains and releases original active slots in ascending slot order.
+- The planner uses caller-owned scratch and a deterministic bitonic sort with
+  `O(B * N * log2(N)^2)` compare-exchange work; other planning and commit work
+  is `O(B * N * S)`. This is a bounded-work contract, not a broad performance
+  claim.
+- Parity tests use an independent NumPy oracle, Warp CPU as the baseline, and
+  optional CUDA rows that skip cleanly when unavailable. Benchmark coverage is
+  opt-in behind `--benchmark`.
+
+Focused contract runs:
+
+```bash
+pytest particula/gpu/kernels/tests/exhaustion_test.py -q -Werror
+pytest particula/gpu/kernels/tests/exhaustion_test.py -q \
+  --cov=particula.gpu.kernels.exhaustion --cov-report=term-missing \
+  --cov-fail-under=80 -Werror
+pytest particula/gpu/tests/kernel_exports_test.py -q -Werror
+```
+
 ### GPU wall-loss direct-kernel contract
 
 - Import the direct low-level boundary with
@@ -782,6 +819,6 @@ adw workflow list         # List available workflows
 
 ---
 
-**Last Updated:** 2026-07-18  
+**Last Updated:** 2026-07-24  
 **For questions about ADW:** See `.opencode/guides/README.md`  
 **For questions about particula:** See main `readme.md`

@@ -62,6 +62,19 @@ kernel-entry responsibilities.
 - The preflight guarantee ends at launch: post-launch rollback is not
   provided. This direct entry point does not imply CPU fallback or runnable
   support.
+- Import the supported fixed-capacity equal-weight resampling boundary with
+  `from particula.gpu.kernels import resampling_step_gpu`. Its
+  `ResamplingBuffers`, planning-status codes, and implementation kernels are
+  deliberately concrete-module-only at
+  `particula.gpu.kernels.exhaustion`; do not re-export them through
+  `particula.gpu.kernels` or `particula.gpu`.
+- `resampling_step_gpu` consumes explicit per-box release counts rather than
+  resolving exhaustion policy. Caller-owned same-device buffers hold all
+  particle-scale plan, sort, and diagnostic storage. Read-only preflight
+  precedes planning; a diagnostic failure leaves particles uncommitted, while
+  successful all-box planning performs one fixed-capacity commit. Runnables,
+  resizing, hidden CPU transfers or fallbacks, and CPU policy resolution remain
+  outside this boundary.
 - Import the supported fixed-slot wall-loss boundary with
   `from particula.gpu.kernels import wall_loss_step_gpu`. Its
   `NeutralWallLossConfig` is deliberately concrete-module-only at

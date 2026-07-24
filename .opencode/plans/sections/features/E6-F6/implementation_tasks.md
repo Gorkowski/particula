@@ -20,14 +20,17 @@
 
 ## Direct Warp
 
-- [ ] Mirror the CPU resolver and plan representation with same-device,
-  fixed-shape `wp.int32`/`wp.float64` caller-owned sidecars.
-- [ ] Add allocation-stable validation, resampling, scaling, and commit kernels
-  in `particula/gpu/kernels/exhaustion.py`.
-- [ ] Reject bad shape, dtype, device, values, capacity, controls, or scratch
-  before clearing outputs, launching mutation, or changing volume.
-- [ ] Keep concrete configuration/scratch APIs out of broad exports unless an
-  existing direct-step convention requires them.
+- [x] Add `resampling_step_gpu` and concrete-only `ResamplingBuffers` in
+  `particula/gpu/kernels/exhaustion.py` for explicit release-count direct Warp
+  remapping.
+- [x] Implement allocation-stable read-only validation, device-resident staged
+  bitonic-sort/interval-sweep planning, diagnostic gating, and a single commit.
+- [x] Reject invalid schema, values, counts, bounds, devices, and aliased
+  buffers before caller mutation; diagnostic planning failures skip commit.
+- [x] Export only `resampling_step_gpu` through `particula.gpu.kernels`; keep
+  `ResamplingBuffers` concrete-module-only.
+- [ ] Add representative-volume scaling and policy/P1 resolution to a later
+  direct Warp phase.
 
 ## Tooling / Tests
 
@@ -37,8 +40,9 @@
 - [x] Extend the co-located CPU suite with deterministic detached P2 plans,
   fixed-capacity clearing, independent equal-stratum remap checks, diagnostic
   bound validation, and stale/later-box malformed-plan atomicity.
-- [ ] Add `particula/gpu/kernels/tests/exhaustion_test.py` for Warp CPU parity,
-  optional CUDA, supplied identity, and invalid-call snapshots.
+- [x] Add `particula/gpu/kernels/tests/exhaustion_test.py` for Warp CPU parity,
+  optional CUDA, supplied-buffer ownership, diagnostics, and invalid-call
+  snapshots.
 - [ ] Cover capacity-sufficient no-op, sparse, full, repeated, and demand larger
   than releasable capacity cases for every policy combination.
 - [ ] Run focused tests, full fast regressions, Ruff, mypy, and docs validation

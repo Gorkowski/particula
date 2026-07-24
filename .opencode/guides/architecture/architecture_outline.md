@@ -44,6 +44,12 @@ private helpers for cross-kernel setup.
 - `dilution.py` - Concrete P1 GPU dilution input boundary; validation scans may
   allocate or launch, but rejected calls have no update-kernel launch or caller
   mutation
+- `exhaustion.py` - Direct Warp fixed-capacity equal-weight resampling boundary.
+  It consumes explicit per-box release counts, uses caller-owned planning and
+  diagnostic buffers, and atomically commits only after all boxes pass
+  diagnostics. Only `resampling_step_gpu` is exported; `ResamplingBuffers`,
+  status codes, and kernels remain concrete-module-only. It provides no
+  runnable, policy resolution, CPU fallback or transfer, or resizing.
 - `wall_loss.py` - Concrete fixed-slot neutral/charged GPU wall-loss boundary;
   owns immutable host configuration, frozen preflight, bounded fixed-slot
   removal, and the external caller-owned per-box RNG sidecar lifecycle. Charged

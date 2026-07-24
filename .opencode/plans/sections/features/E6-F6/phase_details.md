@@ -33,11 +33,18 @@ validation; P7 documents only the validated policy, precedence, and bounds.
   - Boundary: P2 is CPU-only, fixed-capacity, and plan-then-commit; it adds no
     package export, scaling, slot discovery/activation, GPU parity, or resize.
 
-- [ ] **E6-F6-P3:** Implement allocation-stable Warp resampling with parity tests
-  - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Port the CPU plan/commit algorithm using caller-owned active-device sidecars and stable launches.
+- [x] **E6-F6-P3:** Implement allocation-stable Warp resampling with parity tests
+  - Issue: #1424 | Size: S | Status: Implemented (2026-07-24)
+  - Goal: Delivered a direct explicit-release-count Warp remapping boundary
+    with caller-owned active-device buffers, staged deterministic planning, and
+    one gated commit.
   - Files: `particula/gpu/kernels/exhaustion.py`, `particula/gpu/kernels/tests/exhaustion_test.py`, `particula/gpu/kernels/__init__.py`
-  - Tests: Warp CPU deterministic parity, supplied-buffer identity, shape/dtype/device validation, exact diagnostics, optional CUDA, and failure atomicity.
+  - Tests: Focused tests cover Warp CPU deterministic parity, supplied-buffer
+    ownership, shape/dtype/device/value/nonaliasing validation, diagnostics,
+    failed-planning no-commit behavior, exported entry-point resolution, and
+    optional CUDA clean skips.
+  - Boundary: P3 does not add scaling, P1 policy resolution, capacity discovery
+    or activation, resizing, hidden transfer/fallback, or a runnable API.
 
 - [ ] **E6-F6-P4:** Add optional CPU and Warp representative-volume scaling with tests
   - Issue: TBD | Size: S | Status: Not Started

@@ -50,3 +50,22 @@ all-box-preflighted atomic apply clears released slots. Focused co-located tests
 cover deterministic, conservation, validation, and later-box atomicity paths.
 P2 does not add a package re-export, scaling, GPU parity, discovery, or resize
 behavior.
+
+## Delivered P3 Warp Resampling
+
+Issue #1424 delivered the direct fixed-capacity Warp boundary
+`resampling_step_gpu` in `particula.gpu.kernels.exhaustion`. It accepts
+explicit per-box release counts and concrete-only caller-owned
+`ResamplingBuffers`, performs read-only schema/physical-value/count/buffer
+validation, then plans entirely on the active device with staged bitonic sort
+and interval-sweep remapping. Planning records diagnostic status and gates one
+all-box commit, so failed planning leaves particles unchanged while successful
+calls remap retained original slots and clear released slots without resizing
+or hidden transfer.
+
+Only `resampling_step_gpu` is exported through `particula.gpu.kernels`;
+`ResamplingBuffers` remains concrete-module-only. Focused tests cover the
+direct export, validation and ownership boundary, deterministic planning and
+commit behavior, diagnostics, and Warp CPU parity with optional CUDA coverage.
+Scaling, policy/P1 resolution, discovery/activation, and a high-level runnable
+remain deferred.
