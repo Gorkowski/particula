@@ -16,6 +16,7 @@ from particula.particles.exhaustion import (
     WeightedInventory,
     _ResamplingBoxPlan,
     _ResamplingPlan,
+    _riemer_diversity,
     apply_resampling,
     get_weighted_inventory,
     plan_resampling,
@@ -550,6 +551,112 @@ def test_resampling_apply_rejects_stale_active_slots_without_mutation() -> None:
     )
 
 
+def test_resampling_apply_rejects_stale_source_and_forged_replacement() -> None:
+    """P2 binds replacements to source values and validates conservation."""
+    particles = _resampling_particles()
+    plan = plan_resampling(particles, _resampling_p1())
+    particles.masses[0, 0, 0] = 1.5
+    snapshot = tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+        )
+    )
+    with pytest.raises(ValueError, match="source state is stale"):
+        apply_resampling(particles, plan)
+    assert snapshot == tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+        )
+    )
+
+    particles = _resampling_particles()
+    valid = plan_resampling(particles, _resampling_p1()).box_plans[0]
+    forged = _ResamplingPlan(
+        (
+            _ResamplingBoxPlan(
+                valid.retained_indices,
+                valid.released_indices,
+                ((np.float64(9.0), np.float64(9.0)),) * 2,
+                valid.replacement_concentrations,
+                valid.replacement_charges,
+                valid.source_concentrations,
+                valid.source_masses,
+                valid.source_charges,
+            ),
+        )
+    )
+    snapshot = tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+        )
+    )
+    with pytest.raises(ValueError, match="does not conserve inventory"):
+        apply_resampling(particles, forged)
+    assert snapshot == tuple(
+        field.tobytes()
+        for field in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+        )
+    )
+
+
+@pytest.mark.parametrize("field_name", ["concentration", "charge"])
+def test_resampling_apply_rejects_stale_source_sidecars_without_mutation(
+    field_name: str,
+) -> None:
+    """Apply binds remaps to the planned concentration and charge sidecars."""
+    particles = _resampling_particles()
+    plan = plan_resampling(particles, _resampling_p1())
+    field = getattr(particles, field_name)
+    field[0, 0] += 0.5
+    snapshot = tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+        )
+    )
+
+    with pytest.raises(ValueError, match="source state is stale"):
+        apply_resampling(particles, plan)
+
+    assert snapshot == tuple(
+        values.tobytes()
+        for values in (
+            particles.masses,
+            particles.concentration,
+            particles.charge,
+        )
+    )
+
+
+def test_riemer_diversity_uses_particle_mixing_not_bulk_inventory() -> None:
+    """Equal bulk inventory can have distinct particle mixing diversity."""
+    concentrations = np.array([1.0, 1.0], dtype=np.float64)
+    externally_mixed = np.array([[1.0, 0.0], [0.0, 1.0]], dtype=np.float64)
+    internally_mixed = np.array([[0.5, 0.5], [0.5, 0.5]], dtype=np.float64)
+    npt.assert_allclose(
+        _riemer_diversity(externally_mixed, concentrations), 1.0
+    )
+    assert _riemer_diversity(internally_mixed, concentrations) > 1.9
+    assert (
+        _riemer_diversity(np.zeros((2, 2), dtype=np.float64), concentrations)
+        == 0.0
+    )
+
+
 def test_resampling_equal_strata_matches_independent_weighted_oracle() -> None:
     """P2 assigns crossing source intervals to equal-number strata."""
     particles = _resampling_particles()
@@ -638,6 +745,27 @@ def test_resampling_rejects_malformed_p1_record_without_mutation() -> None:
     with pytest.raises(ValueError, match="deferred resampling P1 sentinel"):
         plan_resampling(particles, invalid_p1)
     assert particles.masses.tobytes() == snapshot
+
+
+def test_resampling_rejects_p1_release_count_above_requested() -> None:
+    """P2 rejects forged P1 release counts before remap planning."""
+    particles = _resampling_particles()
+    invalid_p1 = ExhaustionPlan(
+        (
+            ExhaustionBoxPlan(
+                1,
+                1,
+                2,
+                2,
+                POLICY_RESAMPLE_DEFERRED,
+                (),
+                (),
+                float("nan"),
+            ),
+        )
+    )
+    with pytest.raises(ValueError, match="exceeds requested"):
+        plan_resampling(particles, invalid_p1)
 
 
 def test_resampling_apply_rejects_overlapping_plan_without_mutation() -> None:

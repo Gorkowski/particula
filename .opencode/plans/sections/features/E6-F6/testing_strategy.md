@@ -11,7 +11,7 @@ thresholds are never lowered; changed code must retain at least 80% coverage.
   diagnostics and sentinels, schema/value validation, later-invalid-box
   no-mutation, zero-box/zero-capacity cases, activation-prefix independence,
   and the independent float64 weighted-inventory oracle at `rtol=1e-12`,
-  `atol=1e-30`. It intentionally contains no commit, resampling/scaling,
+  `atol=1e-30`. It intentionally contains no P1 commit, resampling/scaling,
   discovery, particle/RNG, GPU, or distribution-moment tests.
 - **P2 (delivered, #1423):** `particula/particles/tests/exhaustion_test.py`
   covers deterministic detached plans and repeated application; sparse, full,

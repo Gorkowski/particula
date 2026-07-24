@@ -9,9 +9,11 @@
   resolving any plan, and returns immutable plan records. It applies
   resampling-first deferred-policy selection, but does not choose releases or
   scaling feasibility.
-- This boundary is read-only: it owns no particle, RNG, diagnostic, work-buffer,
-  or container state mutation and performs no commit or GPU work. A caller may
-  safely retry it with corrected sidecars after validation or policy failure.
+- P1 policy resolution is read-only: it owns no particle, RNG, diagnostic,
+  work-buffer, or container state mutation. P2 creates a detached CPU remap
+  plan and then performs a separately validated, all-box atomic commit; neither
+  phase provides GPU work. A caller may safely retry P1 with corrected sidecars
+  after validation or policy failure.
 - Its weighted inventory helper provides float64 number, mass, and charge
   accounting only. Commit conservation and any moment-preservation guarantee
   remain responsibilities of later commit phases.

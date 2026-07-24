@@ -164,6 +164,9 @@ class _ResamplingBoxPlan:
     replacement_masses: tuple[tuple[np.float64, ...], ...]
     replacement_concentrations: tuple[np.float64, ...]
     replacement_charges: tuple[np.float64, ...]
+    source_concentrations: tuple[np.float64, ...] = ()
+    source_masses: tuple[tuple[np.float64, ...], ...] = ()
+    source_charges: tuple[np.float64, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -534,7 +537,9 @@ def _cache_particle_state(  # noqa: C901
         ):
             raise ValueError("inactive slots must contain literal zero state")
         indices = np.flatnonzero(active)
-        masses = particles.masses[box_index, indices].copy()
+        # Integer indexing already detaches compact active storage; avoid a
+        # second full source copy while preserving the immutable plan boundary.
+        masses = particles.masses[box_index, indices]
         material_volume = np.sum(
             masses / particles.density, axis=1, dtype=np.float64
         )
@@ -546,11 +551,9 @@ def _cache_particle_state(  # noqa: C901
         cached.append(
             _CachedBoxState(
                 active_indices=indices.astype(np.intp, copy=False),
-                concentrations=particles.concentration[
-                    box_index, indices
-                ].copy(),
+                concentrations=particles.concentration[box_index, indices],
                 masses=masses,
-                charges=particles.charge[box_index, indices].copy(),
+                charges=particles.charge[box_index, indices],
                 radii=radii,
             )
         )
@@ -585,6 +588,8 @@ def _validate_p1_plan(  # noqa: C901
             raise ValueError("exhaustion counts exceed particle capacity")
         if box_plan.requested_count != box_plan.admitted_count:
             raise ValueError("requested and admitted counts must match")
+        if box_plan.required_release_count > box_plan.requested_count:
+            raise ValueError("required release count exceeds requested count")
         if box_plan.policy_code not in (
             POLICY_ACTIVATE,
             POLICY_RESAMPLE_DEFERRED,
@@ -652,18 +657,33 @@ def _riemer_diversity(
     masses: NDArray[np.float64],
     concentrations: NDArray[np.float64],
 ) -> np.float64:
-    """Calculate bulk represented-mass diversity using natural logarithms."""
-    inventory = np.sum(
-        concentrations[:, None] * masses, axis=0, dtype=np.float64
-    )
-    total = np.sum(inventory, dtype=np.float64)
-    if total == 0.0:
+    """Calculate particle mixing-state Riemer diversity using natural logs."""
+    particle_mass = np.sum(masses, axis=1, dtype=np.float64)
+    represented_mass = concentrations * particle_mass
+    total = np.sum(represented_mass, dtype=np.float64)
+    if not np.isfinite(total) or total <= 0.0:
         return np.float64(0.0)
-    fractions = inventory / total
-    positive = fractions > 0.0
-    return np.float64(
-        np.exp(-np.sum(fractions[positive] * np.log(fractions[positive])))
+    particle_fractions = represented_mass / total
+    species_fractions = np.divide(
+        masses,
+        particle_mass[:, None],
+        out=np.zeros_like(masses),
+        where=particle_mass[:, None] > 0.0,
     )
+    positive = species_fractions > 0.0
+    entropy = -np.sum(
+        particle_fractions[:, None]
+        * np.where(
+            positive,
+            species_fractions
+            * np.log(np.where(positive, species_fractions, 1.0)),
+            0.0,
+        ),
+        dtype=np.float64,
+    )
+    if not np.isfinite(entropy):
+        return np.float64(0.0)
+    return np.float64(np.exp(entropy))
 
 
 def _validate_remap_diagnostics(
@@ -671,7 +691,7 @@ def _validate_remap_diagnostics(
     replacement_masses: NDArray[np.float64],
     replacement_concentrations: NDArray[np.float64],
     replacement_charges: NDArray[np.float64],
-    bounds: _ResamplingBounds,
+    bounds: _ResamplingBounds | None,
 ) -> None:
     """Check exact inventories and bounded scalar P2 diagnostics."""
     source_number = np.sum(source.concentrations, dtype=np.float64)
@@ -696,6 +716,8 @@ def _validate_remap_diagnostics(
         and np.allclose(charge, source_charge, rtol=1e-12, atol=1e-30)
     ):
         raise ValueError("resampling remap does not conserve inventory")
+    if bounds is None:
+        return
 
     # Diversity is density-independent; radius diagnostics use density in the
     # planner immediately after this exact-inventory check.
@@ -844,6 +866,13 @@ def _build_box_remap(  # noqa: C901
         replacement_charges=tuple(
             np.float64(value) for value in replacement_charges
         ),
+        source_concentrations=tuple(
+            np.float64(value) for value in source.concentrations
+        ),
+        source_masses=tuple(
+            tuple(np.float64(value) for value in row) for row in source.masses
+        ),
+        source_charges=tuple(np.float64(value) for value in source.charges),
     )
 
 
@@ -851,10 +880,10 @@ def plan_resampling(
     particles: ParticleData,
     exhaustion_plan: ExhaustionPlan,
     *,
-    radius_cubed_relative_error: float = 1.0e300,
-    mean_radius_relative_error: float = 1.0e300,
-    surface_relative_error: float = 1.0e300,
-    diversity_absolute_error: float = 1.0e300,
+    radius_cubed_relative_error: float = 1.0,
+    mean_radius_relative_error: float = 1.0,
+    surface_relative_error: float = 1.0,
+    diversity_absolute_error: float = 1.0,
 ) -> _ResamplingPlan:
     """Create an immutable, deterministic CPU fixed-capacity resampling plan.
 
@@ -907,7 +936,7 @@ def plan_resampling(
             _build_box_remap(
                 cached_state[box_index],
                 p1_box_plan.required_release_count,
-                particle_data.density.copy(),
+                particle_data.density,
                 bounds,
             )
         )
@@ -932,6 +961,9 @@ def _validate_resampling_plan(  # noqa: C901
             box_plan.replacement_masses,
             box_plan.replacement_concentrations,
             box_plan.replacement_charges,
+            box_plan.source_concentrations,
+            box_plan.source_masses,
+            box_plan.source_charges,
         )
         if any(type(value) is not tuple for value in tuples):
             raise TypeError("resampling plan fields must be tuples")
@@ -982,6 +1014,29 @@ def _validate_resampling_plan(  # noqa: C901
                 raise ValueError(f"{name} must be finite")
         if any(value <= 0.0 for value in box_plan.replacement_concentrations):
             raise ValueError("replacement concentrations must be positive")
+        if retained or released:
+            source_count = len(retained) + len(released)
+            if (
+                len(box_plan.source_concentrations) != source_count
+                or len(box_plan.source_masses) != source_count
+                or len(box_plan.source_charges) != source_count
+            ):
+                raise ValueError("resampling plan is missing source binding")
+            for masses in box_plan.source_masses:
+                if type(masses) is not tuple or len(masses) != (
+                    particles.n_species
+                ):
+                    raise ValueError(
+                        "source mass rows must have species length"
+                    )
+                if any(type(value) is not np.float64 for value in masses):
+                    raise TypeError("source masses must be numpy float64")
+            for name, values in (
+                ("source concentrations", box_plan.source_concentrations),
+                ("source charges", box_plan.source_charges),
+            ):
+                if any(type(value) is not np.float64 for value in values):
+                    raise TypeError(f"{name} must be numpy float64")
     return plan
 
 
@@ -1024,6 +1079,25 @@ def apply_resampling(
             raise ValueError(
                 "resampling plan must exactly cover current active slots"
             )
+        source = cached_state[box_index]
+        source_masses = tuple(
+            tuple(np.float64(value) for value in row) for row in source.masses
+        )
+        if (
+            tuple(np.float64(value) for value in source.concentrations)
+            != box_plan.source_concentrations
+            or source_masses != box_plan.source_masses
+            or tuple(np.float64(value) for value in source.charges)
+            != box_plan.source_charges
+        ):
+            raise ValueError("resampling plan source state is stale")
+        _validate_remap_diagnostics(
+            source,
+            np.asarray(box_plan.replacement_masses, dtype=np.float64),
+            np.asarray(box_plan.replacement_concentrations, dtype=np.float64),
+            np.asarray(box_plan.replacement_charges, dtype=np.float64),
+            None,
+        )
     for box_index, box_plan in enumerate(resampling_plan.box_plans):
         if not box_plan.retained_indices and not box_plan.released_indices:
             continue
