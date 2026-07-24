@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from types import SimpleNamespace
 from typing import Any
 
@@ -156,6 +157,143 @@ def _assert_snapshot(snapshot: list[np.ndarray], *containers: object) -> None:
     ]
     for value, expected in zip(values, snapshot, strict=True):
         npt.assert_array_equal(value.numpy(), expected)
+
+
+def _numpy_diversity(masses: np.ndarray, concentration: np.ndarray) -> float:
+    """Calculate the independent Riemer diversity for a dense source set."""
+    represented = concentration * np.sum(masses, axis=1)
+    total = np.sum(represented)
+    if not np.isfinite(total) or total <= 0.0:
+        return 0.0
+    entropy = 0.0
+    for particle, particle_mass in enumerate(np.sum(masses, axis=1)):
+        if represented[particle] <= 0.0 or particle_mass <= 0.0:
+            continue
+        fractions = masses[particle] / particle_mass
+        positive_fractions = fractions[fractions > 0.0]
+        entropy -= (
+            represented[particle]
+            / total
+            * np.sum(positive_fractions * np.log(positive_fractions))
+        )
+    return float(np.exp(entropy))
+
+
+def _numpy_remapping_oracle(
+    masses: np.ndarray,
+    concentration: np.ndarray,
+    charge: np.ndarray,
+    density: np.ndarray,
+    counts: np.ndarray,
+) -> dict[str, np.ndarray]:
+    """Independently implement the P2 equal-weight remapping contract."""
+    box_count, particle_count, species_count = masses.shape
+    result = {
+        "masses": masses.copy(),
+        "concentration": concentration.copy(),
+        "charge": charge.copy(),
+        "retained_counts": np.zeros(box_count, dtype=np.int32),
+        "released_counts": np.zeros(box_count, dtype=np.int32),
+        "retained_indices": np.full((box_count, particle_count), -1, np.int32),
+        "released_indices": np.full((box_count, particle_count), -1, np.int32),
+        "sorted_indices": np.full((box_count, particle_count), -1, np.int32),
+        "replacement_masses": np.zeros_like(masses),
+        "replacement_concentration": np.zeros_like(concentration),
+        "replacement_charge": np.zeros_like(charge),
+        "source_radii": np.zeros_like(concentration),
+        "radius_error": np.zeros(box_count),
+        "mean_error": np.zeros(box_count),
+        "surface_error": np.zeros(box_count),
+        "diversity_error": np.zeros(box_count),
+    }
+    for box in range(box_count):
+        if counts[box] == 0:
+            continue
+        active = np.flatnonzero(concentration[box] > 0.0)
+        radii = np.cbrt(
+            3.0 * np.sum(masses[box] / density, axis=1) / (4.0 * np.pi)
+        )
+        result["source_radii"][box, active] = radii[active]
+
+        source_records = []
+        for index in active.tolist():
+            total = np.sum(masses[box, index])
+            fractions = tuple((masses[box, index] / total).tolist())
+            source_records.append(
+                (radii[index], *fractions, charge[box, index], index)
+            )
+        source_records.sort()
+        ordered = np.array(
+            [record[-1] for record in source_records], dtype=np.int32
+        )
+        kept = len(active) - int(counts[box])
+        equal = np.sum(concentration[box, ordered]) / kept
+        result["retained_counts"][box] = kept
+        result["released_counts"][box] = counts[box]
+        result["sorted_indices"][box, : len(ordered)] = ordered
+        result["retained_indices"][box, :kept] = active[:kept]
+        result["released_indices"][box, : counts[box]] = active[kept:]
+
+        source = 0
+        source_end = concentration[box, ordered[0]]
+        for target in range(kept):
+            target_start = target * equal
+            target_end = (target + 1) * equal
+            while source < len(ordered) and source_end <= target_start:
+                source += 1
+                if source < len(ordered):
+                    source_end += concentration[box, ordered[source]]
+            cursor = target_start
+            while cursor < target_end and source < len(ordered):
+                overlap_end = min(target_end, source_end)
+                overlap = overlap_end - cursor
+                particle = ordered[source]
+                result["replacement_masses"][box, target] += (
+                    overlap * masses[box, particle] / equal
+                )
+                result["replacement_charge"][box, target] += (
+                    overlap * charge[box, particle] / equal
+                )
+                cursor = overlap_end
+                if cursor >= source_end:
+                    source += 1
+                    if source < len(ordered):
+                        source_end += concentration[box, ordered[source]]
+            result["replacement_concentration"][box, target] = equal
+
+        source_weight = concentration[box, ordered]
+        source_radii = radii[ordered]
+        replacement = result["replacement_masses"][box, :kept]
+        replacement_radii = np.cbrt(
+            3.0 * np.sum(replacement / density, axis=1) / (4.0 * np.pi)
+        )
+        source_moment = np.sum(source_weight * source_radii**3)
+        source_mean = np.sum(source_weight * source_radii)
+        source_surface = np.sum(source_weight * 4.0 * np.pi * source_radii**2)
+        result["radius_error"][box] = abs(
+            np.sum(equal * replacement_radii**3) - source_moment
+        ) / abs(source_moment)
+        result["mean_error"][box] = abs(
+            np.sum(equal * replacement_radii) - source_mean
+        ) / abs(source_mean)
+        result["surface_error"][box] = abs(
+            np.sum(equal * 4.0 * np.pi * replacement_radii**2) - source_surface
+        ) / abs(source_surface)
+        result["diversity_error"][box] = abs(
+            _numpy_diversity(replacement, np.full(kept, equal))
+            - _numpy_diversity(masses[box, ordered], source_weight)
+        )
+        retained = active[:kept]
+        released = active[kept:]
+        result["masses"][box, retained] = replacement
+        result["concentration"][box, retained] = equal
+        result["charge"][box, retained] = result["replacement_charge"][
+            box, :kept
+        ]
+        result["masses"][box, released] = 0.0
+        result["concentration"][box, released] = 0.0
+        result["charge"][box, released] = 0.0
+    return result
 
 
 def test_resampling_remaps_retained_original_slots_and_conserves_inventory() -> (
@@ -341,6 +479,139 @@ def test_resampling_rejects_diversity_bound_failure_without_commit() -> None:
     assert buffers.planning_status.numpy().tolist() == [5]
 
 
+def test_resampling_pure_species_zero_diversity_bound_preserves_inventory() -> (
+    None
+):
+    """A one-species source has exact diversity despite nonzero remapping error."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    particles, counts, buffers = _custom_state(
+        masses=np.array([[[1.0, 0.0], [3.0, 0.0], [9.0, 0.0]]]),
+        concentration=np.array([[1.0, 2.0, 4.0]]),
+        charge=np.array([[1.0, -2.0, 3.0]]),
+        density=np.array([1.0, 1.0]),
+        counts=np.array([1], dtype=np.int32),
+    )
+    before_mass = np.sum(
+        particles.masses.numpy() * particles.concentration.numpy()[..., None],
+        axis=1,
+    )
+    before_charge = np.sum(
+        particles.charge.numpy() * particles.concentration.numpy(), axis=1
+    )
+
+    assert (
+        resampling_step_gpu(
+            particles, counts, buffers, diversity_absolute_error=0.0
+        )
+        is particles
+    )
+
+    assert buffers.planning_status.numpy().tolist() == [0]
+    assert buffers.diversity_absolute_error.numpy().tolist() == [0.0]
+    npt.assert_allclose(
+        np.sum(
+            particles.masses.numpy()
+            * particles.concentration.numpy()[..., None],
+            axis=1,
+        ),
+        before_mass,
+        rtol=1e-12,
+        atol=1e-30,
+    )
+    npt.assert_allclose(
+        np.sum(
+            particles.charge.numpy() * particles.concentration.numpy(), axis=1
+        ),
+        before_charge,
+        rtol=1e-12,
+        atol=1e-30,
+    )
+
+
+def test_resampling_nonfinite_planning_rejects_all_box_commits() -> None:
+    """An overflowing box prevents a valid sibling box from committing."""
+    from particula.gpu.kernels.exhaustion import (
+        PLANNING_NONFINITE_FAILURE,
+        resampling_step_gpu,
+    )
+
+    particles, counts, buffers = _custom_state(
+        masses=np.array(
+            [
+                [[1.0, 0.0], [2.0, 0.0], [0.0, 0.0]],
+                [[1.0, 0.0], [3.0, 1.0], [8.0, 0.0]],
+            ]
+        ),
+        concentration=np.array([[1e308, 1e308, 0.0], [1.0, 2.0, 3.0]]),
+        charge=np.zeros((2, 3)),
+        density=np.array([1.0, 1.0]),
+        counts=np.array([1, 1], dtype=np.int32),
+    )
+    count_container = SimpleNamespace(counts=counts)
+    particle_snapshot = _snapshot(particles, count_container)
+
+    with pytest.raises(ValueError, match="resampling diagnostic exceeds bound"):
+        resampling_step_gpu(particles, counts, buffers)
+
+    _assert_snapshot(particle_snapshot, particles, count_container)
+    assert buffers.planning_status.numpy().tolist() == [
+        PLANNING_NONFINITE_FAILURE,
+        0,
+    ]
+
+
+def test_resampling_rejects_duplicate_and_protected_alias_without_mutation() -> (
+    None
+):
+    """Duplicate buffers and count-buffer aliasing fail before any caller write."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    particles, counts, buffers = _state()
+    for invalid_buffers in (
+        replace(buffers, released_counts=buffers.retained_counts),
+        replace(buffers, planning_status=counts),
+    ):
+        count_container = SimpleNamespace(counts=counts)
+        snapshots = _snapshot(particles, count_container, buffers)
+        with pytest.raises(
+            ValueError, match="resampling arrays must not overlap"
+        ):
+            resampling_step_gpu(particles, counts, invalid_buffers)
+        _assert_snapshot(snapshots, particles, count_container, buffers)
+
+
+def test_resampling_rejects_strided_masses_without_mutation() -> None:
+    """A strided Warp mass view is rejected before values or buffers are read."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    particles, counts, buffers = _custom_state(
+        masses=np.array([[[1.0, 0.0], [3.0, 1.0]]]),
+        concentration=np.array([[1.0, 2.0]]),
+        charge=np.zeros((1, 2)),
+        density=np.array([1.0, 1.0]),
+        counts=np.array([1], dtype=np.int32),
+    )
+    backing = wp.zeros((1, 4, 2), dtype=wp.float64, device="cpu")
+    particles.masses = wp.array(
+        ptr=backing.ptr,
+        capacity=backing.capacity,
+        dtype=wp.float64,
+        shape=(1, 2, 2),
+        strides=(64, 32, 8),
+        device="cpu",
+        copy=False,
+    )
+    count_container = SimpleNamespace(counts=counts)
+    snapshots = _snapshot(particles, count_container, buffers)
+
+    with pytest.raises(ValueError, match="masses must be a contiguous"):
+        resampling_step_gpu(particles, counts, buffers)
+
+    _assert_snapshot(snapshots, particles, count_container, buffers)
+
+
 @pytest.mark.parametrize("count", [-1, 3])
 def test_resampling_rejects_invalid_release_counts_without_mutation(
     count: int,
@@ -380,6 +651,105 @@ def test_resampling_rejects_non_exact_or_invalid_bounds(bound: Any) -> None:
             particles, counts, buffers, radius_cubed_relative_error=bound
         )
     _assert_snapshot(snapshots, particles, count_container, buffers)
+
+
+def _assert_multi_box_oracle_parity(device: str) -> None:
+    """Compare one multi-box P2 call with the independent NumPy oracle."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    masses = np.array(
+        [
+            [[4.0, 0.0], [1.0, 2.0], [9.0, 3.0], [0.0, 0.0]],
+            [[2.0, 1.0], [8.0, 0.0], [3.0, 4.0], [5.0, 1.0]],
+        ],
+        dtype=np.float64,
+    )
+    concentration = np.array(
+        [[1.0, 2.0, 4.0, 0.0], [3.0, 1.0, 2.0, 5.0]], dtype=np.float64
+    )
+    charge = np.array(
+        [[3.0, -1.0, 2.0, 0.0], [1.0, 4.0, -2.0, 5.0]], dtype=np.float64
+    )
+    density = np.array([1.0, 2.0], dtype=np.float64)
+    counts = np.array([1, 2], dtype=np.int32)
+    expected = _numpy_remapping_oracle(
+        masses, concentration, charge, density, counts
+    )
+    particles, warp_counts, buffers = _custom_state(
+        masses, concentration, charge, density, counts, device=device
+    )
+    before_inventory = np.sum(masses * concentration[..., None], axis=1)
+
+    assert resampling_step_gpu(particles, warp_counts, buffers) is particles
+
+    npt.assert_allclose(
+        particles.masses.numpy(), expected["masses"], rtol=1e-12, atol=0.0
+    )
+    npt.assert_allclose(
+        particles.concentration.numpy(),
+        expected["concentration"],
+        rtol=1e-12,
+        atol=0.0,
+    )
+    npt.assert_allclose(
+        particles.charge.numpy(), expected["charge"], rtol=1e-12, atol=0.0
+    )
+    for name, expected_name in (
+        ("retained_counts", "retained_counts"),
+        ("released_counts", "released_counts"),
+        ("retained_indices", "retained_indices"),
+        ("released_indices", "released_indices"),
+        ("sorted_indices", "sorted_indices"),
+    ):
+        npt.assert_array_equal(
+            getattr(buffers, name).numpy(), expected[expected_name]
+        )
+    for name, expected_name in (
+        ("replacement_masses", "replacement_masses"),
+        ("replacement_concentration", "replacement_concentration"),
+        ("replacement_charge", "replacement_charge"),
+        ("source_radii", "source_radii"),
+        ("radius_cubed_relative_error", "radius_error"),
+        ("mean_radius_relative_error", "mean_error"),
+        ("surface_relative_error", "surface_error"),
+        ("diversity_absolute_error", "diversity_error"),
+    ):
+        npt.assert_allclose(
+            getattr(buffers, name).numpy(),
+            expected[expected_name],
+            rtol=1e-12,
+            atol=1e-15,
+        )
+    npt.assert_array_equal(
+        buffers.planning_status.numpy(), np.zeros(2, np.int32)
+    )
+    # Conservation is intentionally separate from deterministic CPU-oracle parity.
+    npt.assert_allclose(
+        np.sum(
+            particles.masses.numpy()
+            * particles.concentration.numpy()[..., None],
+            axis=1,
+        ),
+        before_inventory,
+        rtol=1e-12,
+        atol=1e-30,
+    )
+
+
+def test_resampling_multi_box_multi_species_matches_independent_numpy_oracle() -> (
+    None
+):
+    """Warp CPU P2 outputs and diagnostics match the independent oracle."""
+    _assert_multi_box_oracle_parity(device="cpu")
+
+
+@pytest.mark.cuda
+def test_resampling_cuda_multi_box_multi_species_matches_numpy_oracle() -> None:
+    """CUDA P2 parity is optional and cleanly skipped on hosts without CUDA."""
+    wp = _warp()
+    if not wp.is_cuda_available():
+        pytest.skip("CUDA is unavailable")
+    _assert_multi_box_oracle_parity(device="cuda:0")
 
 
 @pytest.mark.benchmark

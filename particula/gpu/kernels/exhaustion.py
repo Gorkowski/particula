@@ -39,6 +39,7 @@ PLANNING_RADIUS_CUBED_FAILURE = 2
 PLANNING_MEAN_RADIUS_FAILURE = 3
 PLANNING_SURFACE_FAILURE = 4
 PLANNING_DIVERSITY_FAILURE = 5
+PLANNING_NONFINITE_FAILURE = 6
 
 
 @dataclass(frozen=True)
@@ -77,8 +78,9 @@ class ResamplingBuffers:
         diversity_absolute_error: ``float64`` array shaped ``(B,)`` of
             Riemer-diversity diagnostic errors.
         planning_status: ``int32`` array shaped ``(B,)`` with ``0`` for
-            success, ``1`` for inventory failure, and ``2`` through ``5`` for
-            radius-cubed, mean-radius, surface, and diversity failures.
+            success, ``1`` for inventory failure, ``2`` through ``5`` for
+            radius-cubed, mean-radius, surface, and diversity failures, and
+            ``6`` for non-finite planning results.
     """
 
     retained_counts: Any
@@ -521,6 +523,8 @@ def _plan_resampling(  # noqa: C901, PLR0915
     replacement_moment = wp.float64(0.0)
     replacement_mean = wp.float64(0.0)
     replacement_surface = wp.float64(0.0)
+    replacement_values_finite = bool(True)
+    source_species_count = int(0)
     source_diversity = _riemer_diversity_scattered(
         masses, concentration, sorted_indices, box, active, n_species
     )
@@ -541,12 +545,18 @@ def _plan_resampling(  # noqa: C901, PLR0915
             * radius
         )
     for item in range(kept):
+        if not wp.isfinite(
+            replacement_concentration[box, item]
+        ) or not wp.isfinite(replacement_charge[box, item]):
+            replacement_values_finite = False
         replacement_number += replacement_concentration[box, item]
         replacement_charge_total += (
             replacement_concentration[box, item] * replacement_charge[box, item]
         )
         volume = wp.float64(0.0)
         for species in range(n_species):
+            if not wp.isfinite(replacement_masses[box, item, species]):
+                replacement_values_finite = False
             volume += replacement_masses[box, item, species] / density[species]
         radius = wp.pow(
             wp.float64(3.0) * volume / (wp.float64(4.0) * wp.float64(wp.pi)),
@@ -610,11 +620,37 @@ def _plan_resampling(  # noqa: C901, PLR0915
             )
         for item in range(kept):
             replacement_mass += equal * replacement_masses[box, item, species]
-        if wp.abs(replacement_mass - source_mass) > (
+        if source_mass > 0.0:
+            source_species_count += 1
+        if not wp.isfinite(source_mass) or not wp.isfinite(replacement_mass):
+            replacement_values_finite = False
+        elif wp.abs(replacement_mass - source_mass) > (
             wp.float64(1e-12) * wp.abs(source_mass) + wp.float64(1e-30)
         ):
             status[box] = PLANNING_EXACT_INVENTORY_FAILURE
-    if status[box] == PLANNING_SUCCESS and (
+    if (
+        not replacement_values_finite
+        or not wp.isfinite(total_number)
+        or not wp.isfinite(equal)
+        or not wp.isfinite(source_number)
+        or not wp.isfinite(source_charge_total)
+        or not wp.isfinite(replacement_number)
+        or not wp.isfinite(replacement_charge_total)
+        or not wp.isfinite(source_moment)
+        or not wp.isfinite(source_mean)
+        or not wp.isfinite(source_surface)
+        or not wp.isfinite(replacement_moment)
+        or not wp.isfinite(replacement_mean)
+        or not wp.isfinite(replacement_surface)
+        or not wp.isfinite(source_diversity)
+        or not wp.isfinite(replacement_diversity)
+        or not wp.isfinite(radius_error[box])
+        or not wp.isfinite(mean_error[box])
+        or not wp.isfinite(surface_error[box])
+        or not wp.isfinite(diversity_error[box])
+    ):
+        status[box] = PLANNING_NONFINITE_FAILURE
+    elif status[box] == PLANNING_SUCCESS and (
         radius_error[box] > radius_bound or not wp.isfinite(radius_error[box])
     ):
         status[box] = PLANNING_RADIUS_CUBED_FAILURE
@@ -624,7 +660,7 @@ def _plan_resampling(  # noqa: C901, PLR0915
         surface_error[box]
     ):
         status[box] = PLANNING_SURFACE_FAILURE
-    elif diversity_error[box] > diversity_bound:
+    elif source_species_count > 1 and diversity_error[box] > diversity_bound:
         status[box] = PLANNING_DIVERSITY_FAILURE
 
 
@@ -722,6 +758,22 @@ def _validate_array(
         raise ValueError(f"{name} must have dtype {dtype}")
     if str(value.device) != str(device):
         raise ValueError(f"{name} must be on the particle device")
+    _require_contiguous_array(value, name)
+
+
+def _require_contiguous_array(value: Any, name: str) -> None:
+    """Reject strided Warp views before pointer-range ownership checks."""
+    strides = getattr(value, "strides", None)
+    if strides is None:
+        return
+    dtype_sizes = {wp.float64: 8, wp.int32: 4}
+    expected_strides: list[int] = []
+    stride = dtype_sizes[value.dtype]
+    for dimension in reversed(value.shape):
+        expected_strides.insert(0, stride)
+        stride *= dimension
+    if tuple(strides) != tuple(expected_strides):
+        raise ValueError(f"{name} must be a contiguous, non-view Warp array")
 
 
 def _ranges_overlap(left: Any, right: Any) -> bool:
@@ -841,6 +893,7 @@ def resampling_step_gpu(  # noqa: PLR0913
         raise ValueError("masses must have rank 3")
     if masses.dtype != wp.float64:
         raise ValueError("masses must have dtype float64")
+    _require_contiguous_array(masses, "masses")
     b, n, s = tuple(masses.shape)
     if n == 0:
         raise ValueError("particle capacity must be positive")
