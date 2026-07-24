@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from types import SimpleNamespace
+from typing import Any
 
 import numpy as np
 import numpy.testing as npt
@@ -58,6 +59,69 @@ def _state(device: str = "cpu"):
     )
     counts = wp.array([1], dtype=wp.int32, device=device)
     return particles, counts, buffers
+
+
+def _custom_state(
+    masses: np.ndarray,
+    concentration: np.ndarray,
+    charge: np.ndarray,
+    density: np.ndarray,
+    counts: np.ndarray,
+    device: str = "cpu",
+):
+    """Create a custom Warp state for targeted parity and validation cases."""
+    wp = _warp()
+    from particula.gpu.kernels.exhaustion import ResamplingBuffers
+
+    box_count, particle_count, species_count = masses.shape
+    particles = SimpleNamespace(
+        masses=wp.array(masses, dtype=wp.float64, device=device),
+        concentration=wp.array(concentration, dtype=wp.float64, device=device),
+        charge=wp.array(charge, dtype=wp.float64, device=device),
+        density=wp.array(density, dtype=wp.float64, device=device),
+        volume=wp.array(np.ones(box_count), dtype=wp.float64, device=device),
+    )
+    buffers = ResamplingBuffers(
+        retained_counts=wp.zeros(box_count, dtype=wp.int32, device=device),
+        released_counts=wp.zeros(box_count, dtype=wp.int32, device=device),
+        retained_indices=wp.zeros(
+            (box_count, particle_count), dtype=wp.int32, device=device
+        ),
+        released_indices=wp.zeros(
+            (box_count, particle_count), dtype=wp.int32, device=device
+        ),
+        sorted_indices=wp.zeros(
+            (box_count, particle_count), dtype=wp.int32, device=device
+        ),
+        replacement_masses=wp.zeros(
+            (box_count, particle_count, species_count),
+            dtype=wp.float64,
+            device=device,
+        ),
+        replacement_concentration=wp.zeros(
+            (box_count, particle_count), dtype=wp.float64, device=device
+        ),
+        replacement_charge=wp.zeros(
+            (box_count, particle_count), dtype=wp.float64, device=device
+        ),
+        source_radii=wp.zeros(
+            (box_count, particle_count), dtype=wp.float64, device=device
+        ),
+        radius_cubed_relative_error=wp.zeros(
+            box_count, dtype=wp.float64, device=device
+        ),
+        mean_radius_relative_error=wp.zeros(
+            box_count, dtype=wp.float64, device=device
+        ),
+        surface_relative_error=wp.zeros(
+            box_count, dtype=wp.float64, device=device
+        ),
+        diversity_absolute_error=wp.zeros(
+            box_count, dtype=wp.float64, device=device
+        ),
+        planning_status=wp.zeros(box_count, dtype=wp.int32, device=device),
+    )
+    return particles, wp.array(counts, dtype=wp.int32, device=device), buffers
 
 
 def _single_active_state():
@@ -213,6 +277,70 @@ def test_resampling_failed_diagnostics_do_not_commit_particles() -> None:
         npt.assert_array_equal(value.numpy(), expected)
 
 
+def test_resampling_orders_sources_by_cpu_key_stably() -> None:
+    """The direct planner sorts active sources by the documented CPU key."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    masses = np.array([[[5.0], [1.0], [3.0], [2.0], [4.0]]], dtype=np.float64)
+    concentration = np.ones((1, 5), dtype=np.float64)
+    charge = np.zeros((1, 5), dtype=np.float64)
+    density = np.array([1.0], dtype=np.float64)
+    counts = np.array([2], dtype=np.int32)
+    particles, counts, buffers = _custom_state(
+        masses, concentration, charge, density, counts
+    )
+
+    assert resampling_step_gpu(particles, counts, buffers) is particles
+    assert buffers.sorted_indices.numpy()[0].tolist() == [1, 3, 2, 4, 0]
+    assert buffers.retained_indices.numpy()[0, :3].tolist() == [0, 1, 2]
+    assert buffers.released_indices.numpy()[0, :2].tolist() == [3, 4]
+
+
+def test_resampling_rejects_invalid_density_without_mutation() -> None:
+    """Density validation rejects nonpositive species values before planning."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    particles, counts, buffers = _state()
+    wp = _warp()
+    particles.density = wp.array([1.0, 0.0], dtype=wp.float64, device="cpu")
+    count_container = SimpleNamespace(counts=counts)
+    snapshots = _snapshot(particles, count_container, buffers)
+
+    with pytest.raises(
+        ValueError,
+        match="particles or required_release_counts have invalid values",
+    ):
+        resampling_step_gpu(particles, counts, buffers)
+
+    _assert_snapshot(snapshots, particles, count_container, buffers)
+
+
+def test_resampling_rejects_diversity_bound_failure_without_commit() -> None:
+    """The planning pass surfaces diversity violations before commit."""
+    from particula.gpu.kernels.exhaustion import resampling_step_gpu
+
+    particles, counts, buffers = _custom_state(
+        masses=np.array([[[1.0, 0.0], [0.0, 1.0]]], dtype=np.float64),
+        concentration=np.array([[1.0, 1.0]], dtype=np.float64),
+        charge=np.zeros((1, 2), dtype=np.float64),
+        density=np.array([1.0, 1.0], dtype=np.float64),
+        counts=np.array([1], dtype=np.int32),
+    )
+    count_container = SimpleNamespace(counts=counts)
+    snapshots = _snapshot(particles, count_container)
+
+    with pytest.raises(ValueError, match="resampling diagnostic exceeds bound"):
+        resampling_step_gpu(
+            particles,
+            counts,
+            buffers,
+            diversity_absolute_error=0.0,
+        )
+
+    _assert_snapshot(snapshots, particles, count_container)
+    assert buffers.planning_status.numpy().tolist() == [5]
+
+
 @pytest.mark.parametrize("count", [-1, 3])
 def test_resampling_rejects_invalid_release_counts_without_mutation(
     count: int,
@@ -238,7 +366,7 @@ def test_resampling_rejects_invalid_release_counts_without_mutation(
 
 
 @pytest.mark.parametrize("bound", [0, np.float64(0.0), -1.0, float("nan")])
-def test_resampling_rejects_non_exact_or_invalid_bounds(bound: object) -> None:
+def test_resampling_rejects_non_exact_or_invalid_bounds(bound: Any) -> None:
     """Diagnostic bounds accept only finite nonnegative exact Python floats."""
     from particula.gpu.kernels.exhaustion import resampling_step_gpu
 
@@ -248,9 +376,9 @@ def test_resampling_rejects_non_exact_or_invalid_bounds(bound: object) -> None:
     with pytest.raises(
         (TypeError, ValueError), match="radius_cubed_relative_error"
     ):
-        resampling_step_gpu(
+        resampling_step_gpu(  # type: ignore[arg-type]
             particles, counts, buffers, radius_cubed_relative_error=bound
-        )  # type: ignore[arg-type]
+        )
     _assert_snapshot(snapshots, particles, count_container, buffers)
 
 

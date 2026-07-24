@@ -17,7 +17,7 @@ Its scratch footprint is entirely supplied by :class:`ResamplingBuffers`.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 
@@ -68,9 +68,9 @@ class ResamplingBuffers:
 def _radius(
     masses: wp.array3d(dtype=wp.float64),
     density: wp.array(dtype=wp.float64),
-    box: int,
-    particle: int,
-    species_count: int,
+    box: Any,
+    particle: Any,
+    species_count: Any,
 ) -> wp.float64:
     volume = wp.float64(0.0)
     for species in range(species_count):
@@ -86,12 +86,16 @@ def _less_source(
     masses: wp.array3d(dtype=wp.float64),
     charge: wp.array2d(dtype=wp.float64),
     density: wp.array(dtype=wp.float64),
-    box: int,
-    left: int,
-    right: int,
-    species_count: int,
+    box: Any,
+    left: Any,
+    right: Any,
+    species_count: Any,
 ) -> bool:
     """Compare the CPU P2 key, including original index tie breaking."""
+    if left < 0:
+        return False
+    if right < 0:
+        return True
     left_radius = _radius(masses, density, box, left, species_count)
     right_radius = _radius(masses, density, box, right, species_count)
     if left_radius != right_radius:
@@ -111,8 +115,131 @@ def _less_source(
     return left < right
 
 
+@wp.func
+def _riemer_diversity_scattered(  # noqa: C901
+    masses: wp.array3d(dtype=wp.float64),
+    concentration: wp.array2d(dtype=wp.float64),
+    indices: wp.array2d(dtype=wp.int32),
+    box: Any,
+    count: Any,
+    species_count: Any,
+) -> wp.float64:
+    """Compute Riemer diversity over an indexed active source sequence."""
+    total_mass = wp.float64(0.0)
+    for item in range(count):
+        particle = indices[box, item]
+        particle_mass = wp.float64(0.0)
+        for species in range(species_count):
+            particle_mass += masses[box, particle, species]
+        total_mass += concentration[box, particle] * particle_mass
+    if not wp.isfinite(total_mass) or total_mass <= 0.0:
+        return wp.float64(0.0)
+
+    entropy = wp.float64(0.0)
+    for item in range(count):
+        particle = indices[box, item]
+        particle_mass = wp.float64(0.0)
+        for species in range(species_count):
+            particle_mass += masses[box, particle, species]
+        represented_mass = concentration[box, particle] * particle_mass
+        if represented_mass <= 0.0:
+            continue
+        particle_fraction = represented_mass / total_mass
+        if particle_fraction <= 0.0:
+            continue
+        per_particle_entropy = wp.float64(0.0)
+        for species in range(species_count):
+            species_mass = masses[box, particle, species]
+            if species_mass <= 0.0 or particle_mass <= 0.0:
+                continue
+            species_fraction = species_mass / particle_mass
+            if species_fraction > 0.0:
+                per_particle_entropy -= species_fraction * wp.log(
+                    species_fraction
+                )
+        entropy += particle_fraction * per_particle_entropy
+    if not wp.isfinite(entropy):
+        return wp.float64(0.0)
+    return wp.exp(entropy)
+
+
+@wp.func
+def _riemer_diversity_dense(  # noqa: C901
+    masses: wp.array3d(dtype=wp.float64),
+    concentration: wp.array2d(dtype=wp.float64),
+    box: Any,
+    count: Any,
+    species_count: Any,
+) -> wp.float64:
+    """Compute Riemer diversity over a dense replacement prefix."""
+    total_mass = wp.float64(0.0)
+    for item in range(count):
+        particle_mass = wp.float64(0.0)
+        for species in range(species_count):
+            particle_mass += masses[box, item, species]
+        total_mass += concentration[box, item] * particle_mass
+    if not wp.isfinite(total_mass) or total_mass <= 0.0:
+        return wp.float64(0.0)
+
+    entropy = wp.float64(0.0)
+    for item in range(count):
+        particle_mass = wp.float64(0.0)
+        for species in range(species_count):
+            particle_mass += masses[box, item, species]
+        represented_mass = concentration[box, item] * particle_mass
+        if represented_mass <= 0.0:
+            continue
+        particle_fraction = represented_mass / total_mass
+        if particle_fraction <= 0.0:
+            continue
+        per_particle_entropy = wp.float64(0.0)
+        for species in range(species_count):
+            species_mass = masses[box, item, species]
+            if species_mass <= 0.0 or particle_mass <= 0.0:
+                continue
+            species_fraction = species_mass / particle_mass
+            if species_fraction > 0.0:
+                per_particle_entropy -= species_fraction * wp.log(
+                    species_fraction
+                )
+        entropy += particle_fraction * per_particle_entropy
+    if not wp.isfinite(entropy):
+        return wp.float64(0.0)
+    return wp.exp(entropy)
+
+
+@wp.func
+def _lane_read(
+    primary: wp.array2d(dtype=wp.int32),
+    secondary: wp.array2d(dtype=wp.int32),
+    box: Any,
+    lane: Any,
+    primary_size: Any,
+) -> int:
+    """Read one logical sort lane from the combined index workspace."""
+    if lane < primary_size:
+        return primary[box, lane]
+    return secondary[box, lane - primary_size]
+
+
+@wp.func
+def _lane_write(
+    primary: wp.array2d(dtype=wp.int32),
+    secondary: wp.array2d(dtype=wp.int32),
+    box: Any,
+    lane: Any,
+    primary_size: Any,
+    value: Any,
+) -> None:
+    """Write one logical sort lane into the combined index workspace."""
+    if lane < primary_size:
+        primary[box, lane] = value
+    else:
+        secondary[box, lane - primary_size] = value
+
+
 @wp.kernel
-def _scan_particle_values(
+def _scan_particle_values(  # noqa: C901
     masses: wp.array3d(dtype=wp.float64),
     concentration: wp.array2d(dtype=wp.float64),
     charge: wp.array2d(dtype=wp.float64),
@@ -129,12 +256,13 @@ def _scan_particle_values(
         wp.atomic_add(invalid, 0, 1)
     if particle == 0 and (not wp.isfinite(volume[box]) or volume[box] <= 0.0):
         wp.atomic_add(invalid, 0, 1)
-    if (
-        box == 0
-        and particle == 0
-        and (not wp.isfinite(density[species]) or density[species] <= 0.0)
-    ):
-        wp.atomic_add(invalid, 0, 1)
+    if box == 0 and particle == 0:
+        for density_index in range(density.shape[0]):
+            if (
+                not wp.isfinite(density[density_index])
+                or density[density_index] <= 0.0
+            ):
+                wp.atomic_add(invalid, 0, 1)
     if species == 0:
         if (
             not wp.isfinite(concentration[box, particle])
@@ -177,7 +305,7 @@ def _validate_counts(
     invalid: wp.array(dtype=wp.int32),
 ) -> None:
     """Validate each resolved nonzero release demand against active capacity."""
-    box = wp.tid()
+    box = cast(int, wp.tid())
     active = int(0)
     for particle in range(concentration.shape[1]):
         if concentration[box, particle] > 0.0:
@@ -229,7 +357,14 @@ def _plan_resampling(  # noqa: C901, PLR0915
         for species in range(n_species):
             replacement_masses[box, particle, species] = wp.float64(0.0)
         if concentration[box, particle] > 0.0:
-            sorted_indices[box, active] = particle
+            _lane_write(
+                sorted_indices,
+                released_indices,
+                box,
+                active,
+                n_particles,
+                particle,
+            )
             source_radii[box, particle] = _radius(
                 masses, density, box, particle, n_species
             )
@@ -237,14 +372,6 @@ def _plan_resampling(  # noqa: C901, PLR0915
     kept = active - counts[box]
     retained_counts[box] = kept
     released_counts[box] = counts[box]
-    current = int(0)
-    for particle in range(n_particles):
-        if concentration[box, particle] > 0.0:
-            if current < kept:
-                retained_indices[box, current] = particle
-            else:
-                released_indices[box, current - kept] = particle
-            current += 1
     # Bitonic compare-exchange network.  Inactive lanes are greater-than-all
     # sentinels, so active sources finish in ascending CPU P2 key order.
     padded = int(1)
@@ -254,17 +381,24 @@ def _plan_resampling(  # noqa: C901, PLR0915
     while span <= padded:
         stride = span // 2
         while stride > 0:
-            for position in range(n_particles):
+            for position in range(padded):
                 partner = position ^ stride
-                if (
-                    partner > position
-                    and partner < n_particles
-                    and position < active
-                    and partner < active
-                ):
+                if partner > position and partner < padded:
                     ascending = (position & span) == 0
-                    left = sorted_indices[box, position]
-                    right = sorted_indices[box, partner]
+                    left = _lane_read(
+                        sorted_indices,
+                        released_indices,
+                        box,
+                        position,
+                        n_particles,
+                    )
+                    right = _lane_read(
+                        sorted_indices,
+                        released_indices,
+                        box,
+                        partner,
+                        n_particles,
+                    )
                     swap = _less_source(
                         masses,
                         charge,
@@ -275,10 +409,32 @@ def _plan_resampling(  # noqa: C901, PLR0915
                         n_species,
                     )
                     if swap:
-                        sorted_indices[box, position] = right
-                        sorted_indices[box, partner] = left
+                        _lane_write(
+                            sorted_indices,
+                            released_indices,
+                            box,
+                            position,
+                            n_particles,
+                            right,
+                        )
+                        _lane_write(
+                            sorted_indices,
+                            released_indices,
+                            box,
+                            partner,
+                            n_particles,
+                            left,
+                        )
             stride //= 2
         span *= 2
+    for particle in range(n_particles):
+        sorted_indices[box, particle] = _lane_read(
+            sorted_indices,
+            released_indices,
+            box,
+            particle,
+            n_particles,
+        )
     total_number = wp.float64(0.0)
     for source in range(active):
         total_number += concentration[box, sorted_indices[box, source]]
@@ -312,14 +468,35 @@ def _plan_resampling(  # noqa: C901, PLR0915
                         box, sorted_indices[box, source]
                     ]
         replacement_concentration[box, target] = equal
+    current = int(0)
+    for particle in range(n_particles):
+        if concentration[box, particle] > 0.0:
+            if current < kept:
+                retained_indices[box, current] = particle
+            else:
+                released_indices[box, current - kept] = particle
+            current += 1
+    for particle in range(current, n_particles):
+        released_indices[box, particle] = -1
+    source_number = wp.float64(0.0)
+    source_charge_total = wp.float64(0.0)
+    replacement_number = wp.float64(0.0)
+    replacement_charge_total = wp.float64(0.0)
     source_moment = wp.float64(0.0)
     source_mean = wp.float64(0.0)
     source_surface = wp.float64(0.0)
     replacement_moment = wp.float64(0.0)
     replacement_mean = wp.float64(0.0)
     replacement_surface = wp.float64(0.0)
+    source_diversity = _riemer_diversity_scattered(
+        masses, concentration, sorted_indices, box, active, n_species
+    )
     for item in range(active):
         particle = sorted_indices[box, item]
+        source_number += concentration[box, particle]
+        source_charge_total += (
+            concentration[box, particle] * charge[box, particle]
+        )
         radius = source_radii[box, particle]
         source_moment += concentration[box, particle] * radius * radius * radius
         source_mean += concentration[box, particle] * radius
@@ -331,6 +508,10 @@ def _plan_resampling(  # noqa: C901, PLR0915
             * radius
         )
     for item in range(kept):
+        replacement_number += replacement_concentration[box, item]
+        replacement_charge_total += (
+            replacement_concentration[box, item] * replacement_charge[box, item]
+        )
         volume = wp.float64(0.0)
         for species in range(n_species):
             volume += replacement_masses[box, item, species] / density[species]
@@ -343,6 +524,13 @@ def _plan_resampling(  # noqa: C901, PLR0915
         replacement_surface += (
             equal * wp.float64(4.0) * wp.float64(wp.pi) * radius * radius
         )
+    replacement_diversity = _riemer_diversity_dense(
+        replacement_masses,
+        replacement_concentration,
+        box,
+        kept,
+        n_species,
+    )
     radius_error[box] = wp.float64(0.0)
     mean_error[box] = wp.float64(0.0)
     surface_error[box] = wp.float64(0.0)
@@ -367,12 +555,18 @@ def _plan_resampling(  # noqa: C901, PLR0915
         surface_error[box] = wp.abs(
             replacement_surface - source_surface
         ) / wp.abs(source_surface)
-    diversity_error[box] = wp.float64(
-        0.0
-    )  # Exact mixing diversity is evaluated by output composition.
+    diversity_error[box] = wp.abs(replacement_diversity - source_diversity)
     status[box] = PLANNING_SUCCESS
     # The interval sweep preserves number, species inventory, and charge.  The
     # explicit check makes finite precision drift a planning (not commit) error.
+    if wp.abs(replacement_number - source_number) > (
+        wp.float64(1e-12) * wp.abs(source_number) + wp.float64(1e-30)
+    ):
+        status[box] = PLANNING_EXACT_INVENTORY_FAILURE
+    if wp.abs(replacement_charge_total - source_charge_total) > (
+        wp.float64(1e-12) * wp.abs(source_charge_total) + wp.float64(1e-30)
+    ):
+        status[box] = PLANNING_EXACT_INVENTORY_FAILURE
     for species in range(n_species):
         source_mass = wp.float64(0.0)
         replacement_mass = wp.float64(0.0)
