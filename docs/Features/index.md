@@ -61,6 +61,15 @@ Welcome to the Particula Features documentation! This section provides comprehen
 
     [:octicons-arrow-right-24: Learn more](data-containers-and-gpu-foundations.md)
 
+-   __[Fixed-Capacity Slot Exhaustion Primitives](slot_exhaustion_policies.md)__
+
+    ---
+
+    Developer contract for CPU planning and direct Warp resampling and
+    representative-volume scaling primitives, with explicit integration limits.
+
+    [:octicons-arrow-right-24: Learn more](slot_exhaustion_policies.md)
+
 -   __[Particle & Gas Data Migration](particle-data-migration.md)__
 
     ---

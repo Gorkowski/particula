@@ -73,6 +73,9 @@ activation contracts.
   tested boundary; they prove per-box `pre + source` and, for P4,
   volume-inclusive `scale * pre + source` accounting without implementing a
   policy or source-construction surrogate.
+- Documentation-only P7 updates for CPU planning and direct Warp primitive
+  contracts, including validation commands and explicit deferred boundaries;
+  P7 adds no pytest module or runtime behavior.
 
 ## Out of Scope
 
@@ -84,6 +87,6 @@ activation contracts.
   graph-capture claims, differentiability, and performance claims (Epic G+).
 - Exact CPU/CUDA RNG-stream matching; the bounded design is deterministic and
   does not add policy-owned stochastic state.
-- P1 policy resolution, resampling precedence, slot activation, or source
-  packaging integration for the P4 direct helpers.
+- Runtime policy composition, slot discovery/activation, or source packaging
+  integration for the P4 direct helpers; E6-F5/E6-F6-P5 remain blocked.
 - Production API, export, policy, and public-documentation changes for P6.

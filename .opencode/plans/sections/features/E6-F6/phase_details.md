@@ -91,8 +91,12 @@ validation; P7 documents only the validated policy, precedence, and bounds.
   - Boundary: P6 changes only tests. It adds no P1/P5 policy integration,
     downstream source runtime, production API/export, or public documentation.
 
-- [ ] **E6-F6-P7:** Update development documentation for slot exhaustion policies
-  - Issue: TBD | Size: XS | Status: Not Started
-  - Goal: Publish defaults, precedence, equations, diagnostics, direct imports, failure boundaries, dependencies, and deferred capabilities.
-  - Files: `AGENTS.md`, `docs/Features/`, `docs/Theory/Technical/Dynamics/Nucleation_Equations.md`, E6 plan sections
-  - Tests: Markdown links, API snippets, shape/equation review, terminology, and focused commands.
+- [x] **E6-F6-P7:** Update development documentation for slot exhaustion policies
+  - Issue: #1428 | Size: XS | Status: Implemented (2026-07-24)
+  - Goal: Publish CPU planning defaults and precedence, primitive equations and
+    diagnostics, valid direct imports, failure boundaries, dependencies, and
+    deferred capabilities without promoting a runtime nucleation loop.
+  - Files: `AGENTS.md`, `docs/Features/slot_exhaustion_policies.md`, feature
+    index/roadmap, nucleation theory, and E6 plan sections.
+  - Validation: Manual import/shape/link/terminology review plus focused
+    exhaustion tests and `mkdocs build --strict`. No pytest module is added.

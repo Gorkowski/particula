@@ -1316,6 +1316,13 @@ Delivered bounded wall-loss P1–P6 scope:
   graph capture, differentiability, performance guarantees, and exact RNG
   replay. E6-F9 remains the future integration and closeout work.
 
+Delivered bounded slot-exhaustion primitives are documented in the
+[fixed-capacity slot exhaustion guide](../slot_exhaustion_policies.md): CPU P1
+selects a deferred representation, CPU P2 plans and commits equal-weight
+resampling, CPU P4 scales selected rows, and direct Warp P2/P4 provide the
+corresponding caller-owned fixed-shape boundaries. They do not discover or
+activate slots, construct a source, deplete gas, or compose runtime policy.
+
 Future features:
 
 1. GPU process orchestration, backend selection/fallback policy, scheduling,
@@ -1325,14 +1332,14 @@ Future features:
    (no nucleation code exists in particula today).
 3. GPU nucleation via slot activation (see
    [Particle Slot Management](#particle-slot-management)).
-4. Particle slot management: inactive zero-mass slots, activation,
-   per-box active-count diagnostics, and an exhaustion policy (resampling or
-   volume scaling).
-5. Slot and conservation validation: tests for inactive slots, activation,
-   slot exhaustion handling, and conservation across resampling or volume
-   scaling.
-6. Fixed-shape GPU workflow extensions: resizing policy, graph capture,
-   autodiff, and performance evidence.
+4. Particle slot discovery, inactive-slot activation, per-box active-count
+   diagnostics, and composition of an exhaustion policy with that boundary.
+5. Source/gas inventory handling and complete-sequence slot-exhaustion
+   validation.
+6. Fixed-shape workflow extensions and the deferred capabilities: dynamic
+   allocation/resizing/compaction, hidden transfers/CPU fallback, high-level
+   runnable/scheduler/backend orchestration, graph capture, autodiff,
+   performance guarantees, and exact CPU/Warp/CUDA RNG replay.
 
 ### Particle Slot Management
 
@@ -1342,8 +1349,9 @@ Future features:
 - Avoid dynamic allocation inside timestep kernels. Processes that create new
   particles, including the planned nucleation process, should activate
   inactive slots when available.
-- Add a resampling or volume-scaling policy for cases that would exceed the
-  available particle slots in a box.
+- Future policy composition must select resampling or volume scaling for cases
+  that would exceed available particle slots; shipped primitives do not invoke
+  a policy before exhaustion.
 - Track per-box active particle counts as diagnostics, but keep the underlying
   arrays fixed-shape for GPU kernels and graph capture.
 - Define compaction rules only if needed; inactive zero-mass slots are simpler
@@ -1546,8 +1554,9 @@ scaling numbers across box counts plus a recorded memory-budget model.
   a new setup/capture step.
 - Handle changing active particle counts through inactive slots rather than
   resizing arrays.
-- Use resampling, merging, or volume scaling before a box exhausts inactive
-  particle slots.
+- A future graph-captured loop may compose resampling, merging, or volume
+  scaling with authoritative slot management; no shipped loop does so before
+  exhaustion.
 - Keep graph-captured loops focused on repeated timesteps with stable process
   order, stable buffer shapes, and stable communication maps.
 
@@ -1558,10 +1567,11 @@ re-seeding; explicit initialization happens only during omitted-buffer
 convenience allocation or when `initialize_rng=True` is requested before the
 captured loop or repeated-step run.
 
-For graph capture, particle count changes should be represented as changes in
-active slots, not changes in array shape. If a simulation would create more
-particles than the fixed slots allow, the GPU loop should trigger a documented
-resampling or volume-scaling policy before slot exhaustion.
+For a future graph-captured loop, particle count changes should be represented
+as changes in active slots, not changes in array shape. If a future simulation
+would create more particles than fixed slots allow, it must use a documented
+slot-management and policy-composition boundary; no shipped loop triggers a
+policy before exhaustion.
 
 ### Performance and Memory
 

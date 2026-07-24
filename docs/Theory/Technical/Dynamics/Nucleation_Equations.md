@@ -180,6 +180,17 @@ Each nucleation event moves a small but nonzero mass of each participating vapor
 - **Particle-resolved with fixed slots:** activate inactive particle slots with the injection-size mass and composition. Because nucleation rates can be large, one computational particle typically represents many real particles via its concentration/weighting factor; the number of slots activated per step and the weight assigned to each is a resolution decision. When inactive slots run out, a resampling or volume-scaling policy is required.
 - **Stiffness coupling:** freshly nucleated particles sit at the fast-equilibration end of the condensation stiffness range, so the nucleation source interacts directly with the time-integration scheme chosen for condensation.
 
+### Fixed-capacity primitive boundary
+
+Particula ships bounded CPU planning and direct Warp resampling and
+representative-volume-scaling primitives, documented in the
+[fixed-capacity slot exhaustion guide](../../../Features/slot_exhaustion_policies.md).
+They neither discover nor activate slots, construct a source, nor deplete gas.
+E6-F5 owns slot discovery and activation, while the blocked E6-F6-P5 work will
+compose it with policy selection. These primitives are not a nucleation loop;
+the broader deferred design remains in the
+[Data-Oriented Design and GPU Roadmap](../../../Features/Roadmap/data-oriented-gpu.md).
+
 **Implementation status:**
 
 - No nucleation implementation exists in particula yet (CPU or GPU). This

@@ -522,6 +522,29 @@ pytest particula/gpu/tests/kernel_exports_test.py -q -Werror
 - Policy resolution, exports, host/device transfers, resizing, a runnable,
   CPU fallback, and broader orchestration remain deferred.
 
+### Slot exhaustion policy boundaries
+
+- CPU `resolve_exhaustion()` planning defaults to resampling enabled and
+  representative-volume scaling disabled. For exhausted capacity, sufficiently
+  releasable enabled resampling takes precedence over enabled scaling; neither
+  viable policy raises before a plan returns and source demand is not silently
+  truncated. These are CPU planning rules, not a runtime loop.
+- E6-F5 slot discovery/free-index classification/activation and E6-F6-P5 policy
+  composition are unimplemented. No shipped process applies defaults, discovers
+  slots, activates particles, constructs a source, or depletes gas.
+- Direct Warp P2 and P4 primitives consume caller-owned same-device state;
+  callers synchronize successful asynchronous P4 work before reading results.
+  See [Fixed-Capacity Slot Exhaustion Primitives](docs/Features/slot_exhaustion_policies.md)
+  for imports, schemas, diagnostics, and mutation boundaries.
+
+Focused contract runs:
+
+```bash
+pytest particula/particles/tests/exhaustion_test.py \
+  particula/gpu/kernels/tests/exhaustion_test.py -q -Werror
+mkdocs build --strict
+```
+
 ### GPU wall-loss direct-kernel contract
 
 - Import the direct low-level boundary with
