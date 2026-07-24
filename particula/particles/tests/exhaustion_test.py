@@ -1622,18 +1622,24 @@ def test_representative_scaling_source_fixture_uses_volume_ledger() -> None:
         np.array([6.0, 0.0], dtype=np.float64),
         np.array([2.0, 0.0], dtype=np.float64),
     )
-    source_with_volume = tuple(
-        values * particles.volume[:, None]
-        if values.ndim == 2
-        else values * particles.volume
-        for values in source
+    source_number, source_mass, source_charge = source
+    source_with_volume: tuple[np.ndarray, np.ndarray, np.ndarray] = (
+        source_number * particles.volume,
+        source_mass * particles.volume[:, None],
+        source_charge * particles.volume,
     )
     # P4 scales both concentration and representative volume, so this
     # volume-inclusive ledger carries both selected-row factors.
     scale = np.array([0.25, 1.0], dtype=np.float64)
-    expected = tuple(
-        values * scale[:, None] if values.ndim == 2 else values * scale
-        for values in before
+    expected_number, expected_mass, expected_charge = before
+    expected: tuple[np.ndarray, np.ndarray, np.ndarray] = (
+        expected_number * scale,
+        expected_mass * scale[:, None],
+        expected_charge * scale,
+    )
+    expected_ledger: tuple[np.ndarray, np.ndarray, np.ndarray] = tuple(
+        base + added
+        for base, added in zip(expected, source_with_volume, strict=True)
     )
     _assert_ledger_equal(
         _direct_ledger(
@@ -1643,10 +1649,7 @@ def test_representative_scaling_source_fixture_uses_volume_ledger() -> None:
             particles.volume,
             include_volume=True,
         ),
-        tuple(
-            base + added
-            for base, added in zip(expected, source_with_volume, strict=True)
-        ),
+        expected_ledger,
     )
     npt.assert_allclose(demand, [1.5, 2.0])
     npt.assert_allclose(resolved, [0.5, 1.0])
