@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add a concrete-only direct GPU nucleation preflight module and Warp-guarded tests. The work keeps the boundary read-only, validates fixed-shape config/sidecars and input ordering, and defers all rate, activation, exhaustion, and write paths to later phases.",
+  "discovered_context": "",
+  "review_findings": "Critical: revalidate NucleationConfig at runtime, including nonnegative precursor_index. Warnings: fix mixed-gate union counting, zero-gate ordering, scalar overflow-to-ValueError, and complete-state snapshot coverage."
+}
