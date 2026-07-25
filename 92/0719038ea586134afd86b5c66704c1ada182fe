@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "28c92d58",
+  "issue_number": "1431",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1431-adw-28c92d58",
+  "shipped_at": "2026-07-25T02:19:18.577503Z",
+  "plan_phase": "E6-F7-P2",
+  "plan_summary": "Implement a new pure-planning P2 nucleation boundary in particula/dynamics/nucleation/particle_source.py. It converts survival-adjusted potential event rates plus duration into immutable source-demand records capped by shared gas inventory, without mutating GasData or touching particle/slot exhaustion state. Add direct regression coverage for zero-input, limiting, tie, and validation cases.",
+  "discovered_context": ""
+}
