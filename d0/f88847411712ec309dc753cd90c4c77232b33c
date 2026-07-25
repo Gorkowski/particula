@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b4a760f7",
+  "issue_number": "1430",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1430-adw-b4a760f7",
+  "shipped_at": "2026-07-25T01:07:27.483154Z",
+  "plan_phase": "E6-F7-P1",
+  "plan_summary": "Implement a CPU-only, unexported nucleation subpackage with immutable strategy/configuration records and two potential-rate laws: activation (A*C) and kinetic (K*C^2). Enforce strict scalar-only validation, closed intervals, exact zero/gate behavior, and warning-safe finite conversion, with no sources, mutation, or top-level exports. Add isolated pytest coverage for equations, ordering regressions, frozen records, and import/export boundaries.",
+  "discovered_context": ""
+}
