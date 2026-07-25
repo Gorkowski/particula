@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "2bb7e755",
+  "issue_number": "1439",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1439-adw-2bb7e755",
+  "shipped_at": "2026-07-25T23:22:01.323167Z",
+  "plan_phase": "E6-F8-P2",
+  "plan_summary": "Implement private direct-Warp P2 seam `_plan_nucleation_demand(...)` in `particula/gpu/kernels/nucleation.py`. Reuse P1 preflight to compute activation/kinetic rates, potential demand, and one shared inventory-limited admitted demand before any particle or gas writes, while keeping P2 concrete-only and unexported. Add exact sidecar validation, gate diagnostics, bounded safety correction, and focused Warp/NumPy coverage without touching P3-owned arrays or hidden CPU fallbacks.",
+  "discovered_context": ""
+}
