@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add a CPU-only, single-box Nucleation runnable under particula.dynamics.particle_process. It will validate topology once, run equal sequential substeps, and delegate rate, finalization, and commit work through the existing P1/P2/P3 boundaries while preserving backing container identity.",
+  "architecture_notes": "Publicly expose Nucleation and NucleationCommitConfig only; keep P2/P3 records concrete-only. The runnable is per-substep atomic, not whole-call atomic, and the P7 documentation update is intentionally deferred.",
+  "discovered_context": ""
+}
