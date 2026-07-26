@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "1413ee60",
+  "issue_number": "1449",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1449-adw-1413ee60",
+  "shipped_at": "2026-07-26T19:30:11.327905Z",
+  "plan_phase": "E6-F9-P4",
+  "plan_summary": "Documentation-only E6-F9 P4 work to publish the complete-process GPU docs, reconcile E6 roadmap inventories, and add direct-boundary ownership guidance without changing runtime behavior or exports. The closeout remains gated: current E6 records are mixed, E6-F9 P4 is not started, and the parent/epic can only close once the canonical child and evidence rules pass.",
+  "architecture_notes": "Docs/metadata-only changes: add a fail-closed validator, align roadmap inventories and evidence links, and document explicit transfer/sidecar/RNG ownership while keeping GPU runtime contracts unchanged.",
+  "discovered_context": ""
+}
