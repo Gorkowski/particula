@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "57262856",
+  "issue_number": "1448",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1448-adw-57262856",
+  "shipped_at": "2026-07-26T18:07:24.071008Z",
+  "plan_phase": "E6-F9-P3",
+  "plan_summary": "Add a standalone direct-Warp example and focused regression tests for the E6-F9-P3 explicit-transfer complete-process sequence. The example demonstrates one CPU-to-Warp conversion per container, a fixed five-step kernel order, one synchronization, and one final restore while preserving caller-owned sidecars. The tests cover no-Warp behavior, mocked failures, invalid-input propagation, and Warp-CPU execution.",
+  "discovered_context": ""
+}
