@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "42dcbd3c",
+  "issue_number": "1442",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1442-adw-42dcbd3c",
+  "shipped_at": "2026-07-26T03:39:53.305192Z",
+  "plan_phase": "E6-F8-P5",
+  "plan_summary": "Implement the direct Warp nucleation boundary `particula.gpu.kernels.nucleation_step_gpu` by composing the existing P1--P4 seams, then performing a single fused P5 commit of finalized source particles and matching gas removal. Keep the path fixed-capacity, caller-owned, same-device, and lazily exported, with no Runnable, CPU fallback, transfer helper, resize, compaction, or broader integration. Add the public docstring, export wiring, and focused tests that cover commit correctness, rejection boundaries, and no-op behavior.",
+  "architecture_notes": "The plan preserves the existing concrete-only P1--P4 seams and adds a new P5 handoff/commit validation layer before any particle or gas mutation. It also requires lazy package export hygiene so importing the kernels package does not eagerly import the nucleation module.",
+  "discovered_context": ""
+}
