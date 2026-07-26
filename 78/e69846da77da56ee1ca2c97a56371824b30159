@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Issue #1443 adds independent test/integration coverage for direct-Warp nucleation parity and conservation. It will add a guarded `nucleation_parity_test.py` with NumPy oracles for activation, kinetics, resampling, scaling, no-ops, and rejection paths. No public API or documentation changes are intended.",
+  "discovered_context": ""
+}
