@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "89d06fff",
+  "issue_number": "1446",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1446-adw-89d06fff",
+  "shipped_at": "2026-07-26T14:59:44.987745Z",
+  "plan_phase": "E6-F9-P1",
+  "plan_summary": "P1 adds a new private NumPy-only test module for fixed-shape process-sequence fixtures and invariant helpers. It defines deterministic one-box and multi-box fp64 fixtures plus schema checks, snapshot/ownership helpers, and independent accounting helpers for inventory, dilution, wall loss, slots, and exhaustion. The scope stays test-local: no production code, exports, or direct GPU process execution.",
+  "discovered_context": ""
+}
