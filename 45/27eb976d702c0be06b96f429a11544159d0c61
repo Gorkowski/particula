@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Commit 4527eb976d702c0be06b96f429a11544159d0c61 closes the GPU process-completeness roadmap after E6 shipped. It updates docs/Features/Roadmap/data-oriented-gpu.md so Epic F/E6 and every E6-F9 phase are consistently shipped, Epic G is active, and stale or deferred E6 graph-capture wording is removed.",
+  "architecture_notes": "E6-F6 exhaustion policies are recorded as shipped foundations. E6-F9 is bounded to validation, documentation, and a five-call illustration—not production orchestration—while Epic G owns backend/runtime integration and treats shipped direct kernels as integration inputs.",
+  "discovered_context": "docs/Features/Roadmap/data-oriented-gpu.md only; 118 insertions/110 deletions | normalized Epic F/E6 and E6-F9 shipped status throughout | activated Epic G process coverage around direct-kernel integration inputs | refreshed links, status language, wrapping, and removed stale E6 graph-capture deferrals",
+  "review_findings": "Hooks passed; focused docs tests 2/2 passed; complete-process example tests 22/22 passed; normal MkDocs and git diff --check passed. Strict MkDocs remains blocked by exactly 40 known pre-existing repository-wide link warnings. Four unrelated process-sequence nucleation runtime failures were observed and left unchanged."
+}
