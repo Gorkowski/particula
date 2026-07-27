@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "6c414e39",
+  "issue_number": "1474",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1474-adw-6c414e39",
+  "shipped_at": "2026-07-27T23:52:17.107181Z",
+  "plan_phase": "E7-F2-P5",
+  "plan_summary": "This workflow plan adds a new condensation integration test module for issue #1474. It targets native CPU execution, an independent Warp P2 oracle, zero-time no-op checks, explicit residency-boundary spies, and optional CUDA smoke evidence. No production APIs or documentation changes are in scope.",
+  "discovered_context": "",
+  "review_findings": "State includes redacted review feedback/findings entries; details were not available for condensation in this note."
+}
