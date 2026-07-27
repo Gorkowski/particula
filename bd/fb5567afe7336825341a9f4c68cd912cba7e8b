@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "c9fc9d90",
+  "issue_number": "1472",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1472-adw-c9fc9d90",
+  "shipped_at": "2026-07-27T21:21:51.205432Z",
+  "plan_phase": "E7-F2-P3",
+  "plan_summary": "Add a concrete isothermal condensation execution adapter in `particula/execution/adapters/condensation.py` that preserves P2 carrier identity, dispatches exactly once to CPU `MassCondensation.execute()` or lazily to direct Warp `condensation_step_gpu()`, and normalizes the native result into `ExecutionResult`. Add focused tests for exact-type state construction, preflight validation, lazy Warp dispatch, registration/lookup, and export boundaries without changing the existing P2 carrier or global adapter API.",
+  "architecture_notes": "Keep the boundary concrete-only and selection-driven: CPU code must not import Warp, Warp resolution is lazy after preflight, and both adapters return identity-preserving execution wrappers with no conversion, restoration, retry, or fallback. Isothermal-only semantics reject thermal extensions such as latent heat before backend dispatch.",
+  "discovered_context": ""
+}
