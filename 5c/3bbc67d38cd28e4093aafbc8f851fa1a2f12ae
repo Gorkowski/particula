@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add a new `particula.execution.adapters.condensation` module that introduces frozen, identity-preserving P2 carrier dataclasses for condensation execution state. Migrate `particula.execution` to a package without changing the legacy ten-name public export surface, and add regression tests proving lazy imports, exact-type validation, and non-mutating pre-launch ownership checks for CPU/Warp state construction.",
+  "discovered_context": "",
+  "review_findings": "Use explicit Warp dtype-to-itemsize mapping for ownership ranges; `wp.int32` partitioning can otherwise be mis-sized and spuriously overlap adjacent outputs. Add real-Warp ownership-boundary regression coverage for empty, non-contiguous, and non-identity overlap cases."
+}
