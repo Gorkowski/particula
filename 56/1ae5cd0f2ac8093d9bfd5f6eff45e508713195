@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "0d70f7eb",
+  "issue_number": "1451",
+  "workflow_type": "planner",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1451-adw-0d70f7eb",
+  "shipped_at": "2026-07-27T00:58:39.212616Z",
+  "plan_phase": null,
+  "plan_summary": "Epic E7 is an issue #1451-backed epic plan with ten validated plan documents (E7 and E7-F1..E7-F9). It defines a dependency-ordered GPU execution architecture with explicit boundaries for condensation, coagulation, resident-session state, canonical scheduling, fallback policy, transport, RNG/checkpointing, and closeout validation.",
+  "architecture_notes": "Architecture review passed without changes: the plans are substantive, concrete about module boundaries and integration points, and preserve the no-fallback contract.",
+  "discovered_context": "plan-orchestrator completed E7 epic planning with 10/10 successes | architecture review passed without changes | sizing review revised E7-F2 and E7-F3 adapter references | testing review passed with one missing-test warning | dependency/completeness/consistency reviews found warnings but no blocking issues",
+  "review_findings": "Testing review noted one missing-test warning for the epic scaffold; dependency/completeness/consistency reviews reported warnings around unscaffolded metadata/dependency fields and child-plan metadata, but no changes were required."
+}
