@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "10fbeb2d",
+  "issue_number": "1465",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1465-adw-10fbeb2d",
+  "shipped_at": "2026-07-27T06:34:24.736531Z",
+  "plan_phase": "E7-F1-P4",
+  "plan_summary": "Implement a concrete CPUExecutionAdapter in particula.execution that dispatches a CPUExecutionState to a stored runnable exactly once and returns an ExecutionResult preserving the original state and MutationScope.STATE. Add focused tests for state/control validation, NumPy scalar support, exception propagation, zero-duration behavior, and optional-backend import isolation. Keep runtime imports standard-library-only and avoid changes to the existing registry or ExecutionContext.",
+  "discovered_context": ""
+}
