@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "ea587aa3",
+  "issue_number": "1466",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1466-adw-ea587aa3",
+  "shipped_at": "2026-07-27T07:28:30.917896Z",
+  "plan_phase": "E7-F1-P5",
+  "plan_summary": "Expose the dependency-neutral execution selection vocabulary at the package boundary and add a public, context-local adapter registration seam in particula.execution. Keep imports CPU-only safe, preserve the private registry's existing validation and exact lookup behavior, and add regression tests that lock the ten approved exports while preventing accidental Warp or GPU imports.",
+  "discovered_context": ""
+}
