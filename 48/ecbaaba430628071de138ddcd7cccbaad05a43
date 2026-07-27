@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3622479b",
+  "issue_number": "1463",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1463-adw-3622479b",
+  "shipped_at": "2026-07-27T04:41:41.930346Z",
+  "plan_phase": "E7-F1-P2",
+  "plan_summary": "Add a dependency-neutral execution-context selection boundary in `particula.execution` for P2. The work introduces a typed request, private adapter registration, and deterministic resolution that validates capability support and returns exactly one registered adapter by identity without invoking it or probing availability. Focused tests extend `particula/tests/execution_test.py` to cover canonical CPU normalization, opaque Warp devices, malformed registrations, duplicate keys, and no-fallback behavior.",
+  "discovered_context": ""
+}
