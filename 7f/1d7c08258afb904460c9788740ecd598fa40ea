@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c4dfcf6a",
+  "issue_number": "1482",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1482-adw-c4dfcf6a",
+  "shipped_at": "2026-07-28T17:03:48.529516Z",
+  "plan_phase": "E7-F3-P6",
+  "plan_summary": "Document the concrete-only E7-F3 Brownian coagulation adapter without changing production physics, selection behavior, exports, or the direct-kernel contract. The plan separates the selected CPU reference path from the resident Warp Brownian particle-resolved path, preserves caller ownership of conversion, synchronization, restoration, and persistent RNG state, and keeps the direct kernel multi-mechanism contract intact.",
+  "discovered_context": "PLAN_UPDATE_SHORT_FAILED due to invalid plan status 'Active' during active-plan listing validation | PLAN_UPDATE_SHORT_COMPLETE recorded plan=E7-F3 phases=6 status=Shipped"
+}
