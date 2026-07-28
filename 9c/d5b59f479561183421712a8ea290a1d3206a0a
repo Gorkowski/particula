@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "135b33db",
+  "issue_number": "1481",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1481-adw-135b33db",
+  "shipped_at": "2026-07-28T15:42:47.973338Z",
+  "plan_phase": "E7-F3-P5",
+  "plan_summary": "Add bounded, test-only evidence for completed CPU and resident-Warp Brownian coagulation adapters without changing selection, dispatch, schemas, exports, synchronization, or fallback behavior. Cover CPU kernel parity against a local reference, Warp conservation and identity invariants, zero/one-active no-merge cases, fixed 100-trial stochastic acceptance bounds, persistent RNG advancement/reset behavior, and optional CUDA invariant rows. Keep adapter unit coverage narrow and preserve explicit skip behavior when Warp or CUDA is unavailable.",
+  "discovered_context": ""
+}
