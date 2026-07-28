@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "This workflow plans Brownian capability and selection semantics for issue #1477. It is currently blocked because the required E7-F6 availability/native-device resolver contract is not present in this worktree, so Brownian work must wait for that dependency to land. The note also preserves that existing execution boundaries and condensation adapters already exist and should not be replaced.",
+  "discovered_context": ""
+}
