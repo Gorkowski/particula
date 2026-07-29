@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b68e1e4f",
+  "issue_number": "1488",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1488-adw-b68e1e4f",
+  "shipped_at": "2026-07-29T05:26:59.191612Z",
+  "plan_phase": "E7-F4-P5",
+  "plan_summary": "Implement the explicit checkpoint/finalize/restart lifecycle for resident GPU sessions with concrete-only immutable checkpoint records, direct-import-only controller/restart helpers, and strict same-device validation. Preserve ACTIVE-to-FINALIZED semantics, cached idempotent finalize behavior, canonical payload restoration, and detached inspection copies while keeping restart explicit and non-migrating. Add focused tests and docs covering identity checks, payload fidelity, failure atomicity, export boundaries, and strict docs build validation.",
+  "discovered_context": ""
+}
