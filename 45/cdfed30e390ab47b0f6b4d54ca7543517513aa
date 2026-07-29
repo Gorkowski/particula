@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Document the shipped E7-F5 resident scheduler contract for the docs-only issue: publish the concrete-only ten-node resolver-produced timestep, the profile-dependent dependency/freshness rules, and the identity/lifecycle boundaries. Also align the roadmap and workflow notes so E7-F5 is no longer deferred while keeping E7-F7--E7-F9 ownership and the explicit-transfer example separate.",
+  "discovered_context": "PLAN_UPDATE_SHORT_COMPLETE plan=E7-F5 phases=7 status=Shipped"
+}
