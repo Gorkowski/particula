@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "647b9755",
+  "issue_number": "1493",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1493-adw-647b9755",
+  "shipped_at": "2026-07-29T13:38:20.423982Z",
+  "plan_phase": "E7-F5-P2",
+  "plan_summary": "Add a read-only canonical topological order helper to process_graph and a new direct-import-only scheduler module that resolves enabled nodes, direction policy, freshness dependencies, and canonical schedule order. Preserve P1 validation precedence, avoid resident/GPU imports, and add focused tests for topology, selection, closure, and export boundaries.",
+  "discovered_context": "",
+  "review_findings": "Workflow state contains review_feedback and review_findings entries, but their contents are redacted in the tool preview; preserve them as review metadata without inferring specifics."
+}
