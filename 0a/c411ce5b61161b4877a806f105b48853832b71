@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add direct-import-only resident_scheduler and diagnostics to support a ten-node resident complete-loop and two closed diagnostics snapshots. Keep scheduler declaration-only with blocked-import regression, enforce exact session/registry/guard bindings and resolved schedule provenance, and validate no-transfer/no-fallback/no-rollback behavior. Tests and docs will cover ordered dispatch, diagnostics output ownership, failure handling, and Warp CPU/CUDA coverage.",
+  "architecture_notes": "resident_scheduler remains the Warp-dependent P6 composition boundary; diagnostics is a closed protocol with only GAS_CONCENTRATION_SNAPSHOT and SATURATION_RATIO_SNAPSHOT, both writing into separately owned resident (B, S) caller buffers. Scheduler must dispatch the resolver-produced ten-node schedule exactly and preserve token/ACTIVE/FAULTED lifecycle rules without rollback.",
+  "discovered_context": ""
+}
