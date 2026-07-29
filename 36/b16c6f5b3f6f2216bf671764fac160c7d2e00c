@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "de41534e",
+  "issue_number": "1492",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1492-adw-de41534e",
+  "shipped_at": "2026-07-29T12:22:23.794989Z",
+  "plan_phase": "E7-F5-P1",
+  "plan_summary": "Add a backend-neutral, declaration-only process graph layer for typed capability nodes and timestep plan validation. The new module should normalize immutable declarations, enforce a closed catalogue of supported node kinds and dependencies, and return a resolved graph without scheduling or execution. Focused unit tests will cover frozen records, exact catalogue acceptance, invalid inputs, and deterministic normalization.",
+  "discovered_context": "No messages found"
+}
