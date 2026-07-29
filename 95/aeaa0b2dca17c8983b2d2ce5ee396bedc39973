@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Add a concrete-only resident-process delegation boundary in `particula.execution.process_adapters`. It dispatches dilution through the pinned resident session and wall-loss/nucleation through their exact published resource views, calling one public direct kernel per valid request. The module must preserve identity, avoid transfers/fallbacks/retries, and be covered by focused contract tests under `-Werror`.",
+  "discovered_context": ""
+}
