@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "plan_summary": "Implement P6 in `particula.execution.gpu_session` to classify resident-operation failures, fault active sessions when a writer may have launched, and add terminal `close`/`discard` lifecycle transitions. Update colocated regression tests to cover read-only failure reuse, uncertain post-launch faults, and deterministic rejection/identity behavior for active, faulted, closed, and finalized sessions.",
+  "discovered_context": ""
+}
