@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "92cf4dc1",
+  "issue_number": "1487",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1487-adw-92cf4dc1",
+  "shipped_at": "2026-07-29T03:59:53.006608Z",
+  "plan_phase": "E7-F4-P4",
+  "plan_summary": "Add a concrete-only scheduler-facing timestep guard alongside the resident GPU session and resource registry. The new guard allows exactly one open timestep for one exact ACTIVE session/registry binding, returns an opaque token from begin_step(), and advances completed-step/time bookkeeping only after successful matching completion.",
+  "discovered_context": "",
+  "architecture_notes": "Concrete-only ResidentStepGuard/ResidentStepToken bookkeeping; exact session/registry identity binding; one-open-token rule; post-success-only metadata advancement; future lifecycle boundaries must call a closed-step gate before checkpoint/finalize/close/conversion/resize/rebind/fault work."
+}
