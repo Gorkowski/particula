@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6e1b83fe",
+  "issue_number": "1500",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1500-adw-6e1b83fe",
+  "shipped_at": "2026-07-30T12:52:22.078529Z",
+  "plan_phase": "E7-F6-P1",
+  "plan_summary": "This change introduces a standard-library-only execution capability error taxonomy in particula/execution/errors.py. It defines a closed reason enum, a root structured error with deterministic string rendering, category bases, and eight concrete errors for unknown, unavailable, unsupported, invalid-state, and fallback-disallowed cases. Focused tests lock down exports, hierarchy, chaining, type validation, and CPU-only import neutrality.",
+  "discovered_context": ""
+}
