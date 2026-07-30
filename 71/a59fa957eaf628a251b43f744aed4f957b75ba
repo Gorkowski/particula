@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "71f43b16",
+  "issue_number": "1505",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1505-adw-71f43b16",
+  "shipped_at": "2026-07-30T18:48:05.470201Z",
+  "plan_phase": "E7-F6-P6",
+  "plan_summary": "Documentation-only work for E7-F6/P6 to codify backend selection and fallback boundaries without changing runtime behavior. Add a new backend-selection guide, align the foundation and roadmap docs, and extend regression tests to verify the frozen public API, resolver order, and explicit CPU fallback rules.",
+  "discovered_context": ""
+}
