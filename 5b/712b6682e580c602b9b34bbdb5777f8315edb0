@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "1c8262cd",
+  "issue_number": "1502",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1502-adw-1c8262cd",
+  "shipped_at": "2026-07-30T15:12:32.294310Z",
+  "plan_phase": "E7-F6-P3",
+  "plan_summary": "Implement a direct-import-only CPU fallback boundary in `particula.execution.fallback`. It introduces frozen request/resolution/dispatch carriers, resolves exactly one CPU adapter lookup from a validated fallback request, and dispatches once while preserving native `ExecutionResult.metadata`. The work also adds focused tests and documentation for default-deny policy, accepted boundaries and reasons, and the absence of hidden transfer or recovery behavior.",
+  "discovered_context": "Issue #1502 direct-import-only CPU fallback boundary | one-lookup CPU adapter resolution and one dispatch | focused tests and docs for fail-closed behavior"
+}
