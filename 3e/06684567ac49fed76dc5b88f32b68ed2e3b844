@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b7be2635",
+  "issue_number": "1501",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1501-adw-b7be2635",
+  "shipped_at": "2026-07-30T14:01:56.158469Z",
+  "plan_phase": "E7-F6-P2",
+  "plan_summary": "Add `particula.execution.availability` as a concrete, direct-import-only pre-execution boundary. It will validate already-constructed P1 execution metadata against a capability matrix, then perform deterministic recognition, capability, runtime/device, and state checks before returning an immutable decision. The module must fail closed with existing typed errors and avoid adapters, transfers, synchronization, or execution-state access.",
+  "discovered_context": ""
+}
