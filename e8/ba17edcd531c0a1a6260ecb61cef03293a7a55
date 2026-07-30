@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c66687f0",
+  "issue_number": "1503",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1503-adw-c66687f0",
+  "shipped_at": "2026-07-30T16:29:53.706085Z",
+  "plan_phase": "E7-F6-P4",
+  "plan_summary": "Freeze the execution public boundary at an expanded ordered 26-symbol allowlist: keep core dependency-neutral execution types public, re-export the closed error taxonomy and three fallback policy enums, and keep concrete fallback/availability/session machinery direct-module-only. Update the execution package, top-level package, GPU docstring boundary, and stale docs/tests so they match the new contract without changing runtime behavior.",
+  "discovered_context": ""
+}
