@@ -2,7 +2,9 @@
 
 - [ ] **E7-F7-P1:** Define fixed-shape communication maps and validation with unit tests
   - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Add immutable edge/map, volume-update, mode, and resource-shape contracts with deterministic read-only validation.
+  - Goal: Add immutable edge/map, prescribed-volume, mode, and resource-shape
+    contracts with deterministic read-only payload validation; transfer and
+    writer mechanics remain deferred to P2--P4.
   - Files: `particula/execution/communication.py`, `particula/execution/tests/communication_test.py`
   - Tests: Valid 1D and arbitrary-pair maps; malformed indices/shapes/dtypes/devices; duplicate/conflicting edges; transfer bounds; zero-edge no-op; unchanged state on rejection.
 
