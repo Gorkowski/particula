@@ -961,10 +961,14 @@ pytest particula/gpu/tests/benchmark_test.py --benchmark -k mass_precision -v -s
 - Compatibility is fail-closed: only checkpoint schema version `1`, carrier
   type `"ResidentSession"`, ACTIVE state, complete valid payloads, and an
   exactly equal `Device` restart. E7-F5 scheduling is shipped as this
-  concrete-only bounded contract. `ParticleData.volume` remains fixed resident
-  state; E7-F7 owns transport, mixing/advection, and volume evolution. E7-F8
-  owns detailed scheduled RNG/restart policy, and E7-F9 owns final diagnostics,
-  complete examples, and closeout.
+  concrete-only bounded contract. E7-F7 P1 provides only direct-import-only,
+  read-only fixed-capacity communication-map declaration and Warp validation;
+  it performs no transport, write, transfer, fallback, or public export, and
+  the 26-name `particula.execution` surface remains frozen. `ParticleData.volume`
+  remains fixed resident state; later E7-F7 phases own transport,
+  mixing/advection, and volume evolution. E7-F8 owns detailed scheduled
+  RNG/restart policy, and E7-F9 owns final diagnostics, complete examples, and
+  closeout.
 
 Focused commands:
 

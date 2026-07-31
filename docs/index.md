@@ -323,11 +323,15 @@ print(result)
   — migration workflow and before/after examples for moving from legacy facades
   to the canonical data-container contract documented in the foundation guide.
 - [Data-oriented design and GPU roadmap](Features/Roadmap/data-oriented-gpu.md)
-  — current schema inventory,
-  [authoritative CPU/GPU field ownership policy](Features/Roadmap/data-oriented-gpu.md#authoritative-field-ownership-decisions),
-  shipped coagulation RNG ownership and graph-capture setup guidance,
-  and the [final downstream handoff map for sibling E2
-  features](Features/Roadmap/data-oriented-gpu.md#final-downstream-handoff-map-for-sibling-features).
+   — current schema inventory,
+   [authoritative CPU/GPU field ownership policy](Features/Roadmap/data-oriented-gpu.md#authoritative-field-ownership-decisions),
+   shipped coagulation RNG ownership and graph-capture setup guidance,
+   and the [final downstream handoff map for sibling E2
+   features](Features/Roadmap/data-oriented-gpu.md#final-downstream-handoff-map-for-sibling-features).
+   The E7-F7 P1 resident communication-map declaration is a direct-import-only,
+   read-only validation seam for future transport. It does not transfer state,
+   select a backend, provide fallback, or extend the frozen 26-name
+   `particula.execution` public API.
 - [Mass Precision Recommendation Report](Features/Roadmap/mass-precision-study.md)
   — final E2-F6 policy report covering deterministic NPF-to-droplet GPU
   evidence, the accepted unchanged `fp64`/`wp.float64` production baseline,

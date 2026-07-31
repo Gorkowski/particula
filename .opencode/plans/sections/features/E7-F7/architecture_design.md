@@ -1,5 +1,18 @@
 # Architecture Design
 
+## P1 Delivery Status
+
+E7-F7-P1 shipped a concrete, direct-import-only declaration boundary in
+`particula.execution.communication`. It provides immutable map, volume, and
+resource-shape records plus deterministic read-only Warp validation of the six
+caller-owned fixed-shape arrays. Validation covers schemas, same-device
+placement, pairwise storage aliasing, physical domains, enabled-edge topology,
+per-source finite-safe outbound totals, and the supported particle-resolved
+representation. It returns the original declarations by identity and does not
+write payloads or register resources. Transport, volume mutation, resident
+resource registration, scheduler integration, and all communication kernels
+remain deferred to P2--P5.
+
 ## High-Level Design
 
 Communication is an explicit, opt-in scheduler operation over authoritative
@@ -52,9 +65,13 @@ must declare source/sink ledgers so apparent non-conservation is explicit.
   particle concentration and species inventory, `int32` slot plans/status, and
   documented diagnostics. E7-F4 allocates or validates them once and checkpoints
   mutable state needed for restart.
-- **API surface:** Expose only high-level immutable declarations and scheduler
-  node configuration through `particula.execution`. Keep concrete Warp kernels,
-  scratch records, status buffers, and slot planners module-local.
+- **API surface:** P1 declarations are concrete, direct imports from
+  `particula.execution.communication`; they are not exported from
+  `particula.execution` or the top-level package. The frozen 26-name execution
+  surface remains unchanged. Later phases must retain this direct-import-only
+  boundary unless a separately approved scope change explicitly revises the
+  public API contract; concrete Warp kernels, scratch records, status buffers,
+  and slot planners remain module-local.
 - **Gas semantics:** Treat `gas.concentration` as mass per volume. Stage
   `concentration * old_volume`, transfer synchronously, account for open
   boundaries explicitly, and divide by validated final volume.

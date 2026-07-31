@@ -40,6 +40,8 @@ aerosol = process.execute(aerosol, time_step=10, sub_steps=1000)
 
 See the [migration guide](./docs/Features/particle-data-migration/) for
 current APIs, compatibility notes, and direct-kernel troubleshooting.
+Resident communication-map declarations are an internal validation seam, not a
+public API: they do not transfer state or add a fallback path.
 
 ## Code Structure
 

@@ -6,10 +6,12 @@ must maintain at least 80% coverage.
 
 ## Per-Phase Coverage
 
-- **P1:** Unit-test immutable declarations and stable validation ordering for
-  valid fixed maps, empty maps, index bounds, shape/dtype/device mismatches,
-  duplicate/conflicting edges, non-finite values, outbound overdraw, and
-  preflight immutability.
+- **P1 (shipped):** `particula/execution/tests/communication_test.py` covers
+  immutable declarations, identity-preserving deterministic read-only
+  validation, valid 1D/pair maps, zero-edge/all-disabled maps, schema/device/
+  alias failures, domains, topology, finite-safe outbound totals, and unchanged
+  caller state on rejection. This is declaration/payload-preflight evidence
+  only; it does not test a writer, transport, or volume mutation.
 - **P2:** Compare Warp volume normalization with an independent NumPy amount
   oracle for expansion, compression, unchanged volume, multiple boxes/species,
   sparse slots, and extreme valid values. Assert masses, density, charge,

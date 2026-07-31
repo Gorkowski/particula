@@ -1,19 +1,25 @@
 # mypy: disable-error-code="valid-type, misc, operator"
 
-"""Declare and validate fixed-shape resident communication maps.
+"""Declare and read-only validate fixed-capacity resident communication maps.
 
 This direct-import-only P1 boundary retains caller-owned Warp arrays by
-identity.  It validates one-dimensional or arbitrary directed edge maps,
-per-box positive volumes (m3), and per-source outbound amount bounds.  It
-never transfers data, writes a map payload, registers resources, or executes
-communication.  Empty and disabled maps are valid no-op declarations.
+identity. It validates one-dimensional or arbitrary directed edge maps,
+per-box strictly positive volumes (m³), and per-source outbound amount bounds.
+Rates and bounds use the same operation-defined amount units. It never
+transfers data, writes a map payload, registers resources, resizes or compacts
+storage, or executes communication. Empty and all-disabled maps declare no
+future write and are valid no-op declarations.
 
-Validation is deterministic: records and metadata, array schemas, storage
-aliasing, physical domains, topology, outbound totals, then representation.
-All payload scans are device-side; only a private scalar status is read back.
-The required scans are O(E + B), apart from duplicate-edge checking, and use
-only bounded private validation storage.  A rejected declaration is unchanged
-and may be corrected and retried; writer fault and rollback policy is deferred.
+Validation precedence is deterministic: record and metadata carriers, array
+schemas, storage aliasing, physical domains, enabled-edge topology, outbound
+totals, then representation. All payload scans run on the declared Warp device;
+only private scalar status is read back. Schema and alias checks are O(1) for
+the fixed six carriers, domain and outbound checks are O(E + B), and duplicate
+directed-edge detection is O(E²), where E is edge capacity and B is box count.
+Validation uses private status and per-box total scratch only. It neither
+mutates nor copies caller-owned records or arrays, so a rejected declaration
+may be corrected and retried. Writer execution, transfer, and post-launch
+rollback policy are deferred.
 """
 
 from __future__ import annotations
@@ -64,7 +70,15 @@ def _nonnegative_int(value: object, name: str) -> None:
 
 @dataclass(frozen=True, eq=False)
 class CommunicationDimensions:
-    """Declare fixed resident box, particle-capacity, and species counts."""
+    """Declare nonnegative fixed resident resource dimensions.
+
+    Attributes:
+        n_boxes: Number of resident boxes B.
+        n_particles: Fixed particle capacity per box; not related to edge
+            payloads during P1 validation.
+        n_species: Fixed species capacity per box; not related to edge payloads
+            during P1 validation.
+    """
 
     n_boxes: int
     n_particles: int
@@ -81,7 +95,28 @@ class CommunicationDimensions:
 
 @dataclass(frozen=True, eq=False)
 class CommunicationMap:
-    """Retain fixed-capacity edge lanes without inspecting or copying them."""
+    """Retain caller-owned fixed-capacity communication edge lanes by identity.
+
+    Attributes:
+        form: One-dimensional neighboring-box or arbitrary directed-pair form.
+        transport_mode: Future gas or particle transport selection; P1 does not
+            transport either quantity.
+        boundary_mode: Declared boundary behavior. All declared modes pass P1
+            after prior checks because P1 has no boundary writer.
+        representation: Fixed particle representation required by P1.
+        source_indices: Contiguous same-device ``wp.int32`` edge sources with
+            shape ``(E,)``.
+        destination_indices: Contiguous same-device ``wp.int32`` edge
+            destinations with shape ``(E,)``.
+        enabled: Contiguous same-device ``wp.bool`` edge flags with shape
+            ``(E,)``.
+        rates: Contiguous same-device ``wp.float64`` requested outbound amounts
+            with shape ``(E,)``. Amount units match outbound bounds.
+
+    Array schemas, device placement, and values are intentionally deferred to
+    :func:`validate_communication_declarations` to preserve validation
+    precedence and avoid inspecting or copying payloads during construction.
+    """
 
     form: CommunicationMapForm
     transport_mode: CommunicationTransportMode
@@ -117,7 +152,15 @@ class CommunicationMap:
 
 @dataclass(frozen=True, eq=False)
 class PrescribedVolumeDeclaration:
-    """Retain positive m3 volumes and nonnegative source outbound bounds."""
+    """Retain caller-owned volume and outbound-bound declarations by identity.
+
+    Attributes:
+        volumes: Contiguous same-device ``wp.float64`` resident-box volumes in
+            m³ with shape ``(B,)``. Validation requires finite positive values.
+        outbound_bounds: Contiguous same-device ``wp.float64`` available
+            transferable amounts per source box with shape ``(B,)``. Units
+            match map rates; validation requires finite nonnegative values.
+    """
 
     volumes: Any
     outbound_bounds: Any
@@ -125,7 +168,13 @@ class PrescribedVolumeDeclaration:
 
 @dataclass(frozen=True, eq=False)
 class CommunicationResourceShapes:
-    """Bind fixed dimensions to one declared Warp device metadata carrier."""
+    """Bind fixed dimensions and a declared Warp device for one map payload.
+
+    Attributes:
+        dimensions: Fixed resident dimensions defining B and retained capacity
+            metadata.
+        device: Declared configured ``Backend.WARP`` device for all six arrays.
+    """
 
     dimensions: CommunicationDimensions
     device: Device
@@ -284,10 +333,39 @@ def validate_communication_declarations(  # noqa: C901
 ) -> tuple[
     CommunicationMap, PrescribedVolumeDeclaration, CommunicationResourceShapes
 ]:
-    """Validate declarations without mutation, copying, or payload transport.
+    """Validate communication declarations without caller-visible mutation.
 
-    Validates all schema, physical, topology, and outbound-bound requirements
-    in documented order and returns the three original records by identity.
+    Checks exact record/metadata carriers; six-array schemas, devices, and
+    nonaliasing storage; physical domains; enabled-edge topology; strict
+    per-source outbound bounds; and the supported representation, in that
+    order. All lanes receive schema and domain validation, including disabled
+    lanes. Enabled one-dimensional edges must connect distinct neighboring
+    boxes; pair edges may connect any distinct boxes. Directed duplicates fail,
+    while reverse edges are permitted. Enabled rates are summed per source and
+    must not exceed its bound, with no tolerance.
+
+    Valid empty, all-disabled, and zero-box declarations complete applicable
+    checks and have no transfer effect. A nonempty edge table with zero boxes
+    fails index validation. This read-only preflight uses device-side scans and
+    private validation scratch, but does not transfer, copy, allocate, or
+    mutate caller-owned payloads. It launches no communication writer; later
+    phases own writer behavior and post-launch fault policy.
+
+    Args:
+        communication_map: Fixed-capacity directed edge declaration.
+        prescribed_volume: Per-box volumes in m³ and source outbound bounds in
+            the same amount units as map rates.
+        resource_shapes: Fixed dimensions and declared Warp device.
+
+    Returns:
+        The exact supplied communication map, volume declaration, and resource
+        shapes records, in that order.
+
+    Raises:
+        TypeError: If a required carrier, enum, scalar metadata value, or array
+            dtype is invalid.
+        ValueError: If the device, schema, aliasing, domain, topology, outbound
+            total, or supported representation requirement is invalid.
     """
     if type(communication_map) is not CommunicationMap:
         raise TypeError("communication_map must be a CommunicationMap.")

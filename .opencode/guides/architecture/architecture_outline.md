@@ -30,8 +30,11 @@ behavior remain separate from E7-F1 typed selection and downstream process
 adapter/session layers. E7-F4 P1--P7 ships the bounded, concrete
 GPU-resident lifecycle below; it does not ship a resident loop or scheduler.
 The exact downstream ordering remains
-  `E7-F1 -> E7-F6 -> {E7-F2, E7-F3, E7-F4} -> E7-F5`; E7-F6 owns availability,
-  fallback, error taxonomy, API stability, and export policy. The
+   `E7-F1 -> E7-F6 -> {E7-F2, E7-F3, E7-F4} -> E7-F5`; E7-F6 owns availability,
+   fallback, error taxonomy, API stability, and export policy. E7-F7 P1 adds
+   direct-import-only fixed-capacity communication-map declaration and read-only
+   validation; its writer/transport and volume-evolution phases remain deferred.
+   The
   dependency-neutral `scheduler` remains declaration-only, while E7-F5 P6 adds
   a bounded concrete resident complete-loop composer. E7-F7 transport and
   E7-F8 detailed RNG-stream policy remain deferred, along with implicit
@@ -193,8 +196,22 @@ The exact downstream ordering remains
   diagnostics consumer windows, and completes the token only after the full
   loop succeeds. It has no package export, transfer, synchronization, fallback,
   resource replacement, or rollback; a possible post-launch failure faults the
-  resident session. See
-  [ADR-012](decisions/ADR-012-resident-complete-loop-and-diagnostics.md).
+   resident session. See
+   [ADR-012](decisions/ADR-012-resident-complete-loop-and-diagnostics.md).
+- `communication.py` - Concrete direct-import-only E7-F7 P1 declaration and
+  read-only validation boundary for fixed-capacity one-dimensional neighboring
+  or arbitrary directed-pair resident communication maps. Immutable declarations
+  retain caller-owned same-device Warp edge lanes, per-box volumes, and outbound
+  bounds by identity. Deterministic validation checks metadata, exact schemas,
+  nonaliasing storage, all-lane domains, enabled-edge topology, and strict
+  per-source outbound totals; disabled lanes still receive schema and domain
+  checks, while valid empty/all-disabled maps declare no future write. It uses
+  bounded private validation status/scratch only and never transfers, writes,
+  synchronizes unrelated work, allocates transport resources, registers
+  resources, falls back, resizes, or executes communication. It is absent from
+  the frozen 26-name `particula.execution` and top-level public surfaces; writer,
+  transport, and volume-evolution behavior are deferred to E7-F7 P2+. See
+  [ADR-016](decisions/ADR-016-resident-communication-map-validation-boundary.md).
 - `process_adapters.py` - Concrete-only, direct-import resident delegation
    boundary for dilution, wall loss, and nucleation. Frozen request carriers
    retain the exact active `ResidentSession`, its pinned

@@ -66,8 +66,41 @@
   lifecycle work, restoration, retry, nor rollback. Its concrete module,
   operations, and carriers remain absent from package and top-level exports,
   while its three policy enums are intentionally public. It does not add
-  implicit fallback to resident or direct GPU boundaries. See
-  [ADR-014](decisions/ADR-014-opt-in-cpu-fallback-boundary.md).
+   implicit fallback to resident or direct GPU boundaries. See
+   [ADR-014](decisions/ADR-014-opt-in-cpu-fallback-boundary.md).
+
+## Resident Communication-Map Validation Boundary
+
+- E7-F7 P1 defines `particula.execution.communication` as a concrete,
+  direct-import-only declaration and read-only validation boundary for
+  fixed-capacity resident communication maps. It is deliberately absent from
+  the frozen 26-name `particula.execution` surface and from top-level
+  `particula` exports.
+- Its immutable declarations retain caller-owned Warp arrays by identity for
+  one-dimensional neighboring-box or arbitrary directed-pair edge lanes,
+  enabled flags, requested outbound rates, strictly positive resident-box
+  volumes (m³), and per-source outbound bounds in the same operation-defined
+  amount units as rates. It supports the P1 particle-resolved representation
+  declaration for gas or particle future transport; boundary modes are metadata
+  only until a writer phase exists.
+- `validate_communication_declarations()` deterministically validates outer and
+  nested metadata, fixed array dtype/rank/shape/contiguity/device schemas,
+  pairwise nonaliasing among all six arrays, finite physical domains (including
+  disabled lanes), enabled-edge topology, strict no-tolerance per-source
+  outbound totals, then representation. One-dimensional enabled edges must join
+  distinct neighboring boxes; pair edges may join any distinct boxes; duplicate
+  directed edges fail while reverse directed edges are allowed.
+- The validation boundary is read-only: it retains supplied record identities,
+  writes no caller-owned array, and permits correction and retry after
+  rejection. Its O(E+B) payload scans and bounded private status/total scratch
+  do not materialize payload arrays on the host or synchronize unrelated work.
+  Valid zero-edge, all-disabled, and applicable zero-box declarations are
+  no-op declarations with no transfer effect.
+- P1 neither transfers nor transports data; allocates transport resources;
+  registers resources; falls back; resizes or compacts storage; evolves volume;
+  or invokes a writer. Communication writing/transport and volume-evolution
+  behavior remain owned by later E7-F7 phases. See
+  [ADR-016](decisions/ADR-016-resident-communication-map-validation-boundary.md).
 
 ## Concrete GPU-Resident Session Boundary
 

@@ -2,10 +2,13 @@
 
 ## Execution Layer
 
-- [ ] Add immutable communication, edge-map, transport-mode, volume-update, and
-  boundary-ledger declarations in `particula/execution/communication.py`.
-- [ ] Implement deterministic validation of edge indices, duplicates/conflicts,
-  transfer bounds, dimensions, representation support, and physical values.
+- [x] Add immutable communication-map, transport/boundary-mode,
+  prescribed-volume, and resource-shape declarations in
+  `particula/execution/communication.py`. P1 retains caller array identity and
+  is direct-import-only; it does not add a public package/top-level export.
+- [x] Implement deterministic read-only validation of fixed dimensions; six
+  array schemas, devices, and aliases; physical domains; enabled-edge topology;
+  finite-safe per-source outbound bounds; and particle-resolved representation.
 - [ ] Extend E7-F4 resource registration with fixed-shape communication scratch,
   status, slot-plan, and diagnostic buffers.
 - [ ] Extend E7-F4 checkpoint metadata/resources so restart preserves configured
@@ -36,8 +39,9 @@
 
 ## Tooling / Tests
 
-- [ ] Add `particula/execution/tests/communication_test.py` for declaration and
-  validation contracts.
+- [x] Add `particula/execution/tests/communication_test.py` for immutable
+  declaration and read-only validation contracts, including valid 1D/pair and
+  empty/disabled maps, deterministic rejection, and unchanged caller state.
 - [ ] Add `particula/gpu/kernels/tests/communication_test.py` for volume, gas,
   particle, capacity, atomicity, identity, and no-op behavior.
 - [ ] Add scheduler/session tests for canonical order, resource reuse, no hidden
