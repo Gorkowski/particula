@@ -148,6 +148,8 @@ def test_constructors_are_frozen_and_validate_exact_metadata():
     """Declarations reject invalid metadata and preserve frozen carriers."""
     with pytest.raises(TypeError, match="n_boxes"):
         CommunicationDimensions(True, 0, 0)
+    with pytest.raises(TypeError, match="n_boxes"):
+        CommunicationDimensions(np.int64(1), 0, 0)
     with pytest.raises(ValueError, match="n_particles"):
         CommunicationDimensions(0, -1, 0)
     dimensions = CommunicationDimensions(1, 0, 0)

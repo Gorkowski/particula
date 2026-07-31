@@ -1,7 +1,7 @@
 # Phase Details
 
-- [ ] **E7-F7-P1:** Define fixed-shape communication maps and validation with unit tests
-  - Issue: TBD | Size: S | Status: Not Started
+- [x] **E7-F7-P1:** Define fixed-shape communication maps and validation with unit tests
+  - Issue: TBD | Size: S | Status: Shipped | Completed: 2026-07-31
   - Goal: Add immutable edge/map, prescribed-volume, mode, and resource-shape
     contracts with deterministic read-only payload validation; transfer and
     writer mechanics remain deferred to P2--P4.

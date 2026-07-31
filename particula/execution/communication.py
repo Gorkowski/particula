@@ -1,3 +1,5 @@
+# mypy: disable-error-code="valid-type, misc, operator"
+
 """Declare and validate fixed-shape resident communication maps.
 
 This direct-import-only P1 boundary retains caller-owned Warp arrays by
@@ -18,7 +20,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from numbers import Integral
 from typing import Any
 
 import warp as wp
@@ -55,7 +56,7 @@ class CommunicationRepresentation(str, Enum):
 
 
 def _nonnegative_int(value: object, name: str) -> None:
-    if isinstance(value, bool) or not isinstance(value, Integral):
+    if type(value) is not int:
         raise TypeError(f"{name} must be an int.")
     if value < 0:
         raise ValueError(f"{name} must be nonnegative.")
@@ -228,13 +229,24 @@ def _status(device: Any) -> Any:
     return wp.full(1, 100, dtype=wp.int32, device=device)
 
 
+def _dtype_itemsize(dtype: object) -> int:
+    """Return the item size in bytes for the supported Warp scalar dtypes."""
+    if dtype is wp.bool:
+        return 1
+    if dtype is wp.int32:
+        return 4
+    if dtype is wp.float64:
+        return 8
+    raise TypeError("Unsupported Warp dtype for alias validation.")
+
+
 def _read_status(status: Any) -> int:
     """Read only private scalar validation status after its device scan."""
     return int(status.numpy()[0])
 
 
 def _require_warp_array(
-    value: object, name: str, dtype: Any, shape: tuple[int]
+    value: Any, name: str, dtype: Any, shape: tuple[int]
 ) -> None:
     """Validate fixed Warp-array metadata without reading payload values."""
     required = ("shape", "dtype", "device", "ptr", "contiguous")
@@ -254,11 +266,7 @@ def _validate_aliases(arrays: tuple[tuple[str, Any], ...]) -> None:
     for name, array in arrays:
         if array.shape[0] == 0:
             continue
-        size = (
-            array.shape[0] * 8
-            if array.dtype == wp.float64
-            else array.shape[0] * 4
-        )
+        size = int(array.shape[0]) * _dtype_itemsize(array.dtype)
         start = int(array.ptr)
         ranges.append((name, start, start + size))
     for index, (name, start, end) in enumerate(ranges):
@@ -314,28 +322,23 @@ def validate_communication_declarations(  # noqa: C901
         (dimensions.n_species, "n_species"),
     ):
         _nonnegative_int(value, f"CommunicationDimensions.{name}")
-    for value, expected, name in (
-        (communication_map.form, CommunicationMapForm, "form"),
-        (
-            communication_map.transport_mode,
-            CommunicationTransportMode,
-            "transport_mode",
-        ),
-        (
-            communication_map.boundary_mode,
-            CommunicationBoundaryMode,
-            "boundary_mode",
-        ),
-        (
-            communication_map.representation,
-            CommunicationRepresentation,
-            "representation",
-        ),
+    if type(communication_map.form) is not CommunicationMapForm:
+        raise TypeError("CommunicationMap.form has an invalid enum type.")
+    if type(communication_map.transport_mode) is not CommunicationTransportMode:
+        raise TypeError(
+            "CommunicationMap.transport_mode has an invalid enum type."
+        )
+    if type(communication_map.boundary_mode) is not CommunicationBoundaryMode:
+        raise TypeError(
+            "CommunicationMap.boundary_mode has an invalid enum type."
+        )
+    if (
+        type(communication_map.representation)
+        is not CommunicationRepresentation
     ):
-        if type(value) is not expected:
-            raise TypeError(
-                f"CommunicationMap.{name} has an invalid enum type."
-            )
+        raise TypeError(
+            "CommunicationMap.representation has an invalid enum type."
+        )
     try:
         warp_device = wp.get_device(device.native)
     except Exception as error:
