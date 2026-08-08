@@ -393,7 +393,6 @@ def _validate_metadata(
         raise TypeError(
             "prescribed_volume must be an exact PrescribedVolumeUpdate."
         )
-    _validate_resource_shapes(typed.resource_shapes)
     map_data = typed.communication_map
     if type(map_data.form) is not CommunicationMapForm:
         raise TypeError("map form must be CommunicationMapForm.")
@@ -405,6 +404,7 @@ def _validate_metadata(
         raise TypeError("edge_capacity must be an integral, not bool.")
     if map_data.edge_capacity < 0:
         raise ValueError("edge_capacity must be nonnegative.")
+    _validate_resource_shapes(typed.resource_shapes)
     return typed
 
 

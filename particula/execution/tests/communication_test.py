@@ -156,6 +156,130 @@ def test_carrier_metadata_rejects_invalid_enum_nested_and_roles() -> None:
 
 @pytest.mark.warp
 @pytest.mark.parametrize(
+    ("dimensions", "device", "exc_type", "match"),
+    [
+        (
+            object(),
+            None,
+            TypeError,
+            "dimensions must be an exact ResidentDimensions",
+        ),
+        (
+            None,
+            object(),
+            TypeError,
+            "device must be non-null Warp device metadata",
+        ),
+    ],
+)
+def test_outer_metadata_rejection_order(
+    dimensions: object,
+    device: object,
+    exc_type: type[Exception],
+    match: str,
+) -> None:
+    """Outer metadata rejection is exact before any array preflight."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, valid_dimensions = _configuration(communication)
+    valid_device = wp.get_device("cpu")
+
+    with pytest.raises(exc_type, match=match):
+        communication.validate_communication_configuration(
+            configuration,
+            valid_dimensions if dimensions is None else dimensions,
+            valid_device if device is None else device,
+        )
+
+
+@pytest.mark.warp
+@pytest.mark.parametrize(
+    ("case", "match"),
+    [
+        ("configuration", "configuration must be an exact"),
+        (
+            "communication_map",
+            "communication_map must be an exact CommunicationMap",
+        ),
+        (
+            "prescribed_volume",
+            "prescribed_volume must be an exact PrescribedVolumeUpdate",
+        ),
+    ],
+)
+def test_validate_metadata_rejects_bad_outer_types(
+    case: str,
+    match: str,
+) -> None:
+    """Exact outer carriers are enforced before any array validation."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(communication)
+    if case == "configuration":
+        target: object = object()
+    elif case == "communication_map":
+        target = object()
+        object.__setattr__(configuration, "communication_map", target)
+    else:
+        target = object()
+        object.__setattr__(configuration, "prescribed_volume", target)
+
+    with pytest.raises(TypeError, match=match):
+        communication.validate_communication_configuration(
+            target if case == "configuration" else configuration,
+            dimensions,
+            wp.get_device("cpu"),
+        )
+
+
+@pytest.mark.warp
+@pytest.mark.parametrize(
+    ("resource_shapes", "exc_type", "match"),
+    [
+        ((object(),), TypeError, "resource_shapes must contain exact"),
+        (
+            (
+                lambda communication, wp: (
+                    communication.CommunicationResourceShape(
+                        "edge_rates",
+                        wp.float64,
+                        communication.CommunicationShapeKind.E,
+                    ),
+                    communication.CommunicationResourceShape(
+                        "edge_rates",
+                        wp.float64,
+                        communication.CommunicationShapeKind.E,
+                    ),
+                )
+            ),
+            ValueError,
+            "resource_shapes roles must be unique",
+        ),
+    ],
+)
+def test_validate_metadata_revalidates_resource_shapes(
+    resource_shapes: object,
+    exc_type: type[Exception],
+    match: str,
+) -> None:
+    """Validator rechecks resource shape contents and role uniqueness."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(communication)
+    if callable(resource_shapes):
+        shapes = resource_shapes(communication, wp)
+    else:
+        shapes = resource_shapes
+    object.__setattr__(configuration, "resource_shapes", shapes)
+
+    with pytest.raises(exc_type, match=match):
+        communication.validate_communication_configuration(
+            configuration, dimensions, wp.get_device("cpu")
+        )
+
+
+@pytest.mark.warp
+@pytest.mark.parametrize(
     "form",
     [
         "one_dimensional",
@@ -188,6 +312,34 @@ def test_valid_forms_and_modes_return_exact_configuration(
     assert result is configuration
     assert result.communication_map.source_boxes is source
     assert result.communication_map.destination_boxes is destination
+
+
+@pytest.mark.warp
+@pytest.mark.parametrize(
+    "form",
+    ["one_dimensional", "arbitrary_pairs"],
+)
+@pytest.mark.parametrize("mode", ["gas", "particles", "gas_and_particles"])
+def test_reverse_edges_without_final_volumes_are_valid(
+    form: str, mode: str
+) -> None:
+    """Reverse edges are valid and no-volume forms remain write-free."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(
+        communication,
+        form=communication.CommunicationMapForm(form),
+        mode=communication.CommunicationTransportMode(mode),
+        source=wp.array([0, 1], dtype=wp.int32, device="cpu"),
+        destination=wp.array([1, 0], dtype=wp.int32, device="cpu"),
+    )
+
+    result = communication.validate_communication_configuration(
+        configuration, dimensions, wp.get_device("cpu")
+    )
+
+    assert result is configuration
+    assert result.prescribed_volume.final_volumes is None
 
 
 @pytest.mark.warp
@@ -275,6 +427,39 @@ def test_duplicate_directed_pair_and_disabled_padding() -> None:
 
 
 @pytest.mark.warp
+def test_sparse_duplicate_allocation_scales_with_edges_not_boxes() -> None:
+    """Late duplicate detection uses a bounded edge-sized private table."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    from particula.execution.gpu_session import ResidentDimensions
+
+    configuration, dimensions = _configuration(
+        communication,
+        form=communication.CommunicationMapForm.ARBITRARY_PAIRS,
+        source=wp.array([0, 1, 2, 0], dtype=wp.int32, device="cpu"),
+        destination=wp.array([1, 2, 3, 1], dtype=wp.int32, device="cpu"),
+    )
+    dimensions = ResidentDimensions(4, 2, 1)
+    table_sizes: list[int] = []
+    original_full = communication.wp.full
+
+    def tracked_full(*args: object, **kwargs: object) -> Any:
+        table_sizes.append(int(args[0]) if args else int(kwargs[0]))
+        return original_full(*args, **kwargs)
+
+    communication.wp.full = tracked_full  # type: ignore[assignment]
+    try:
+        with pytest.raises(ValueError, match="directed edge pairs"):
+            communication.validate_communication_configuration(
+                configuration, dimensions, wp.get_device("cpu")
+            )
+    finally:
+        communication.wp.full = original_full  # type: ignore[assignment]
+
+    assert table_sizes == [communication._duplicate_table_size(4)]
+
+
+@pytest.mark.warp
 def test_schema_alias_and_empty_preflight() -> None:
     """Arrays need independent storage, while valid empty maps are no-ops."""
     communication = _communication()
@@ -336,6 +521,21 @@ def test_schema_alias_and_empty_preflight() -> None:
             "null_pointer",
             "source_boxes must have a valid pointer",
         ),
+        (
+            "source_boxes",
+            "contiguity",
+            "source_boxes must be contiguous",
+        ),
+        (
+            "source_boxes",
+            "alignment",
+            "source_boxes pointer must be 4-byte aligned",
+        ),
+        (
+            "source_boxes",
+            "capacity",
+            "source_boxes must have sufficient integral storage capacity",
+        ),
     ],
 )
 def test_source_schema_preflight_rejects_before_payload_scans(
@@ -363,10 +563,262 @@ def test_source_schema_preflight_rejects_before_payload_scans(
             device="cpu",
             copy=False,
         )
+    elif value == "contiguity":
+        replacement = wp.array(
+            ptr=8,
+            capacity=8,
+            dtype=wp.int32,
+            shape=(2,),
+            strides=(8,),
+            device="cpu",
+            copy=False,
+        )
+    elif value == "alignment":
+        replacement = wp.array(
+            ptr=4,
+            capacity=8,
+            dtype=wp.int32,
+            shape=(2,),
+            strides=(4,),
+            device="cpu",
+            copy=False,
+        )
+    elif value == "capacity":
+        replacement = wp.array(
+            ptr=8,
+            capacity=7,
+            dtype=wp.int32,
+            shape=(2,),
+            strides=(4,),
+            device="cpu",
+            copy=False,
+        )
     configuration, dimensions = _configuration(communication)
     object.__setattr__(configuration.communication_map, field, replacement)
 
     with pytest.raises(ValueError, match=match):
+        communication.validate_communication_configuration(
+            configuration, dimensions, wp.get_device("cpu")
+        )
+
+
+@pytest.mark.warp
+@pytest.mark.parametrize(
+    ("field", "replacement", "match"),
+    [
+        (
+            "destination_boxes",
+            "rank",
+            "destination_boxes must have rank 1",
+        ),
+        (
+            "enabled",
+            "dtype",
+            "enabled must have dtype",
+        ),
+        (
+            "rates",
+            "dtype",
+            "rates must have dtype",
+        ),
+    ],
+)
+def test_later_schema_failures_reject_before_payload_scans(
+    field: str,
+    replacement: str,
+    match: str,
+) -> None:
+    """Later field schema failures reject in the documented validation order."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(communication)
+    if field == "destination_boxes":
+        value = wp.array([[0, 1]], dtype=wp.int32, device="cpu")
+    elif field == "enabled":
+        value = wp.array([0.0, 1.0], dtype=wp.float64, device="cpu")
+    else:
+        value = wp.array([1, 2], dtype=wp.int32, device="cpu")
+    object.__setattr__(configuration.communication_map, field, value)
+
+    with pytest.raises(ValueError, match=match):
+        communication.validate_communication_configuration(
+            configuration, dimensions, wp.get_device("cpu")
+        )
+
+
+@pytest.mark.warp
+def test_rejected_validation_preserves_payload_identity_and_values(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Rejected preflight leaves every caller-owned payload unchanged."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(
+        communication,
+        source=wp.array([3, 1], dtype=wp.int32, device="cpu"),
+    )
+    map_data = configuration.communication_map
+    payloads = (
+        map_data.source_boxes,
+        map_data.destination_boxes,
+        map_data.enabled,
+        map_data.rates,
+    )
+    snapshots = [payload.numpy().copy() for payload in payloads]
+    monkeypatch.setattr(
+        communication.wp,
+        "copy",
+        lambda *_args, **_kwargs: pytest.fail("P1 must not copy payloads"),
+    )
+
+    with pytest.raises(ValueError, match="valid distinct topology"):
+        communication.validate_communication_configuration(
+            configuration, dimensions, wp.get_device("cpu")
+        )
+
+    for payload, snapshot in zip(payloads, snapshots, strict=True):
+        npt.assert_array_equal(payload.numpy(), snapshot)
+
+
+@pytest.mark.warp
+@pytest.mark.parametrize(
+    ("value", "match"),
+    [
+        ("rank", "final_volumes must have rank 1"),
+        ("shape", "final_volumes must have shape (3,)"),
+        ("dtype", "final_volumes must have dtype"),
+        ("contiguity", "final_volumes must be contiguous"),
+        (
+            "null_pointer",
+            "final_volumes must have a valid pointer",
+        ),
+        (
+            "alignment",
+            "final_volumes pointer must be 4-byte aligned",
+        ),
+        (
+            "capacity",
+            "final_volumes must have sufficient integral storage capacity",
+        ),
+    ],
+)
+def test_final_volume_schema_rejects_before_topology(
+    value: str,
+    match: str,
+) -> None:
+    """Final volume schema failures reject before any topology check."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(
+        communication,
+        source=wp.array([3, 1], dtype=wp.int32, device="cpu"),
+    )
+    if value == "rank":
+        replacement = wp.array(
+            [[1.0, 2.0, 3.0]], dtype=wp.float64, device="cpu"
+        )
+    elif value == "shape":
+        replacement = wp.array([1.0], dtype=wp.float64, device="cpu")
+    elif value == "dtype":
+        replacement = wp.array([1, 2, 3], dtype=wp.int32, device="cpu")
+    elif value == "contiguity":
+        replacement = wp.array(
+            ptr=8,
+            capacity=8,
+            dtype=wp.float64,
+            shape=(3,),
+            strides=(16,),
+            device="cpu",
+            copy=False,
+        )
+    elif value == "null_pointer":
+        replacement = wp.array(
+            ptr=0,
+            capacity=24,
+            dtype=wp.float64,
+            shape=(3,),
+            strides=(8,),
+            device="cpu",
+            copy=False,
+        )
+    elif value == "alignment":
+        replacement = wp.array(
+            ptr=4,
+            capacity=24,
+            dtype=wp.float64,
+            shape=(3,),
+            strides=(8,),
+            device="cpu",
+            copy=False,
+        )
+    else:
+        replacement = wp.array(
+            ptr=8,
+            capacity=23,
+            dtype=wp.float64,
+            shape=(3,),
+            strides=(8,),
+            device="cpu",
+            copy=False,
+        )
+    object.__setattr__(
+        configuration.prescribed_volume, "final_volumes", replacement
+    )
+
+    with pytest.raises(ValueError, match=match):
+        communication.validate_communication_configuration(
+            configuration, dimensions, wp.get_device("cpu")
+        )
+
+
+@pytest.mark.warp
+def test_source_schema_precedence_over_later_volume_schema() -> None:
+    """Earlier array schema failures surface before later field failures."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+    configuration, dimensions = _configuration(communication)
+    object.__setattr__(
+        configuration.communication_map,
+        "source_boxes",
+        wp.array([[0, 1]], dtype=wp.int32, device="cpu"),
+    )
+    object.__setattr__(
+        configuration.prescribed_volume,
+        "final_volumes",
+        wp.array([1, 2, 3], dtype=wp.int32, device="cpu"),
+    )
+
+    with pytest.raises(ValueError, match="source_boxes must have rank 2"):
+        communication.validate_communication_configuration(
+            configuration, dimensions, wp.get_device("cpu")
+        )
+
+
+@pytest.mark.warp
+def test_source_device_schema_rejects_before_payload_scans(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Array device mismatches reject before any payload scan begins."""
+    communication = _communication()
+    wp = pytest.importorskip("warp")
+
+    class _FakeArray:
+        def __init__(self) -> None:
+            self.shape = (2,)
+            self.dtype = wp.int32
+            self.device = object()
+            self.strides = (4,)
+            self.ptr = 8
+            self.capacity = 8
+
+    configuration, dimensions = _configuration(communication)
+    fake = _FakeArray()
+    monkeypatch.setattr(communication, "_is_warp_array", lambda _value: True)
+    object.__setattr__(configuration.communication_map, "source_boxes", fake)
+
+    with pytest.raises(
+        ValueError, match="source_boxes device must match device"
+    ):
         communication.validate_communication_configuration(
             configuration, dimensions, wp.get_device("cpu")
         )
