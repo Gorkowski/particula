@@ -167,6 +167,12 @@ class CommunicationConfiguration:
 def _scan_enabled(
     enabled: wp.array(dtype=wp.int32), invalid: wp.array(dtype=wp.int32)
 ):
+    """Flag any enabled-entry value other than 0 or 1.
+
+    Args:
+        enabled: One-dimensional integer flag array for enabled edges.
+        invalid: Single-element integer status buffer updated in place.
+    """
     index = wp.tid()
     value = enabled[index]
     if value != 0 and value != 1:
@@ -177,6 +183,12 @@ def _scan_enabled(
 def _scan_rates(
     rates: wp.array(dtype=wp.float64), invalid: wp.array(dtype=wp.int32)
 ):
+    """Flag any rate that is not finite and nonnegative.
+
+    Args:
+        rates: One-dimensional floating-point rate array in 1/s.
+        invalid: Single-element integer status buffer updated in place.
+    """
     index = wp.tid()
     value = rates[index]
     if not wp.isfinite(value) or value < 0.0:
@@ -187,6 +199,12 @@ def _scan_rates(
 def _scan_volumes(
     volumes: wp.array(dtype=wp.float64), invalid: wp.array(dtype=wp.int32)
 ):
+    """Flag any prescribed volume that is not finite and positive.
+
+    Args:
+        volumes: One-dimensional floating-point final-volume array in m^3.
+        invalid: Single-element integer status buffer updated in place.
+    """
     index = wp.tid()
     value = volumes[index]
     if not wp.isfinite(value) or value <= 0.0:
@@ -202,6 +220,16 @@ def _scan_topology(
     one_dimensional: int,
     invalid: wp.array(dtype=wp.int32),
 ):
+    """Flag any enabled edge with invalid bounds or one-dimensional gap.
+
+    Args:
+        source: One-dimensional integer source-box array.
+        destination: One-dimensional integer destination-box array.
+        enabled: One-dimensional integer enabled-edge array.
+        boxes: Number of resident boxes used as the closed topology bound.
+        one_dimensional: Integer flag for the one-dimensional topology rule.
+        invalid: Single-element integer status buffer updated in place.
+    """
     index = wp.tid()
     if enabled[index] == 1:
         left = source[index]
