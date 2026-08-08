@@ -5,7 +5,7 @@ import subprocess
 import sys
 from dataclasses import FrozenInstanceError
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 import numpy.testing as npt
@@ -30,6 +30,7 @@ def _configuration(
     enabled: object | None = None,
     rates: object | None = None,
     volumes: object | None = None,
+    edge_capacity: int = 2,
 ) -> tuple[Any, Any]:
     """Build an independent canonical three-box two-edge configuration."""
     wp = pytest.importorskip("warp")
@@ -64,7 +65,7 @@ def _configuration(
         else wp.array([1.0, 2.0], dtype=wp.float64, device="cpu")
     )
     map_data = communication.CommunicationMap(
-        form, mode, 2, source, destination, enabled, rates
+        form, mode, edge_capacity, source, destination, enabled, rates
     )
     configuration = communication.CommunicationConfiguration(
         map_data,
@@ -361,7 +362,9 @@ def test_domain_validation_precedes_topology(
     }
     dtype = wp.int32 if field == "enabled" else wp.float64
     kwargs[field] = wp.array(values, dtype=dtype, device="cpu")
-    configuration, dimensions = _configuration(communication, **kwargs)
+    configuration, dimensions = _configuration(
+        communication, **cast(Any, kwargs)
+    )
 
     with pytest.raises(ValueError, match=match):
         communication.validate_communication_configuration(
@@ -436,15 +439,19 @@ def test_sparse_duplicate_allocation_scales_with_edges_not_boxes() -> None:
     configuration, dimensions = _configuration(
         communication,
         form=communication.CommunicationMapForm.ARBITRARY_PAIRS,
+        edge_capacity=4,
         source=wp.array([0, 1, 2, 0], dtype=wp.int32, device="cpu"),
         destination=wp.array([1, 2, 3, 1], dtype=wp.int32, device="cpu"),
+        enabled=wp.array([1, 1, 1, 1], dtype=wp.int32, device="cpu"),
+        rates=wp.array([1.0, 1.0, 1.0, 1.0], dtype=wp.float64, device="cpu"),
     )
     dimensions = ResidentDimensions(4, 2, 1)
     table_sizes: list[int] = []
     original_full = communication.wp.full
 
     def tracked_full(*args: object, **kwargs: object) -> Any:
-        table_sizes.append(int(args[0]) if args else int(kwargs[0]))
+        shape = args[0] if args else kwargs["shape"]
+        table_sizes.append(int(cast(Any, shape)))
         return original_full(*args, **kwargs)
 
     communication.wp.full = tracked_full  # type: ignore[assignment]
@@ -694,7 +701,7 @@ def test_rejected_validation_preserves_payload_identity_and_values(
         ),
         (
             "alignment",
-            "final_volumes pointer must be 4-byte aligned",
+            "final_volumes pointer must be 8-byte aligned",
         ),
         (
             "capacity",
@@ -788,7 +795,7 @@ def test_source_schema_precedence_over_later_volume_schema() -> None:
         wp.array([1, 2, 3], dtype=wp.int32, device="cpu"),
     )
 
-    with pytest.raises(ValueError, match="source_boxes must have rank 2"):
+    with pytest.raises(ValueError, match="source_boxes must have rank 1"):
         communication.validate_communication_configuration(
             configuration, dimensions, wp.get_device("cpu")
         )
