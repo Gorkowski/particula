@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3fa36350",
+  "issue_number": "1510",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1510-adw-3fa36350",
+  "shipped_at": "2026-08-09T05:35:10.710374Z",
+  "plan_phase": "E7-F7-P4",
+  "plan_summary": "Implement a concrete-only particle communication GPU seam in particula.gpu.kernels.communication for PARTICLES-only CommunicationConfiguration values. Add fixed-capacity particle transport with deterministic preflight, immutable planning, and a single gated commit that preserves concentration-weighted particle number, species mass, and signed charge while keeping gas, volume, and export surfaces unchanged. Extend tests with an independent NumPy oracle for no-op, validation, aliasing, exact-match/free-slot selection, conservation, and Warp CPU/CUDA parity.",
+  "discovered_context": ""
+}
