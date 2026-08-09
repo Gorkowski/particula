@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "9a267629",
+  "issue_number": "1509",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1509-adw-9a267629",
+  "shipped_at": "2026-08-09T04:26:01.983764Z",
+  "plan_phase": "E7-F7-P3",
+  "plan_summary": "Add a concrete-only direct-Warp `gas_communication_step_gpu(...)` in `particula/gpu/kernels/communication.py` alongside `volume_evolution_step_gpu`, with no changes to P1 carriers, exports, scheduler/session/registry code, or existing P2 behavior. The step performs synchronous explicit-Euler gas transport with immutable amount-ledger staging, aggregate overdraw validation, and a single gas concentration commit. Tests expand `particula/gpu/kernels/tests/communication_test.py` with oracle, aliasing, no-hidden-transfer, open-boundary, and validation coverage.",
+  "discovered_context": ""
+}
