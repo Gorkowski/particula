@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "33868c6d",
+  "issue_number": "1521",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1521-adw-33868c6d",
+  "shipped_at": "2026-08-09T22:39:12.971356Z",
+  "plan_phase": "E7-F8-P2",
+  "plan_summary": "Integrate a resident-owned P1-derived `wp.uint32` RNG sidecar for scheduled Brownian coagulation only. Preserve existing adapter/kernel behavior, keep the array bound to the active resident session by identity, and advance it in place via normal dispatch with `initialize_rng=False`. No wall-loss RNG, reset/inspection API, hidden transfer, or checkpoint persistence is introduced.",
+  "discovered_context": "plan-update-short message reports `adw_plans_read` validation failure: invalid plan status value `Active` while validating `feature.status` for issue #1521"
+}
