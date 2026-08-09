@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "65bc095f",
+  "issue_number": "1513",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1513-adw-65bc095f",
+  "shipped_at": "2026-08-09T16:48:58.617803Z",
+  "plan_phase": "E7-F7-P7",
+  "plan_summary": "Publish the E7-F7 prescribed, fixed-shape multi-box communication and volume-evolution contract without changing runtime behavior or exposing a new public API. Document direct gas, particle, and resident boundaries; align roadmap and architecture guidance; add focused documentation-contract tests; and reconcile E7-F7 plan records after warning-clean documentation checks pass.",
+  "discovered_context": ""
+}
