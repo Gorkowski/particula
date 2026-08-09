@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "29653e17",
+  "issue_number": "1520",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1520-adw-29653e17",
+  "shipped_at": "2026-08-09T21:13:21.621331Z",
+  "plan_phase": "E7-F8-P1",
+  "plan_summary": "Implement a direct-import-only particula.execution.rng module for deterministic per-box RNG stream identities and seeding. It defines frozen stream carriers, exact FNV-style word derivation, and a registry that validates manifests host-side while lazily initializing caller-owned Warp uint32 state arrays. The scope stays isolated from exports, GPUResourceRegistry, sessions, checkpoints, and scheduling.",
+  "discovered_context": "",
+  "review_findings": "Review found three actionable warnings: harden Warp-array validation against spoofed arrays to avoid partial-copy mutation, clarify docs that initialize uses temporary host/device copy sources while preserving caller-array identity, and add real-Warp coverage for same-device mismatch, distinct-object/overlap rejection, and copy-failure sequencing."
+}
