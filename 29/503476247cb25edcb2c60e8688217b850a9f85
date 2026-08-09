@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3b92fc24",
+  "issue_number": "1512",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1512-adw-3b92fc24",
+  "shipped_at": "2026-08-09T14:46:13.343105Z",
+  "plan_phase": "E7-F7-P6",
+  "plan_summary": "Plan adds two new parity/conservation evidence test files for multi-box communication: one under GPU kernels and one under execution resident integration. It uses independent NumPy float64 oracles, compact representative cases, and explicit Warp CPU/CUDA parametrization without changing production kernels, maps, exports, or scheduler behavior.",
+  "discovered_context": "Issue #1512; adds particula/gpu/tests/communication_parity_test.py and particula/execution/tests/multi_box_communication_test.py | covers gas/volume communication, particle communication, repeated sequences, resident integration, conservation and open accounting with local NumPy oracles | Warp CPU baseline with optional CUDA rows; no production behavior changes"
+}
