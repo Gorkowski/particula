@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d8b26462",
+  "issue_number": "1507",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1507-adw-d8b26462",
+  "shipped_at": "2026-08-09T01:47:00.382297Z",
+  "plan_phase": "E7-F7-P1",
+  "plan_summary": "Add a concrete-only `particula.execution.communication` module defining immutable fixed-shape communication map, volume-update, resource-shape, and configuration carriers. Implement an ordered, read-only Warp validator for schemas, devices, aliases, value domains, topology, and duplicate directed edges while preserving caller state and explicitly deferring population-dependent overdraw to P3. Add focused warning-clean tests covering declarations, validation order, no-op cases, mutation safety, sparse complexity, and the unexported API boundary.",
+  "discovered_context": ""
+}
