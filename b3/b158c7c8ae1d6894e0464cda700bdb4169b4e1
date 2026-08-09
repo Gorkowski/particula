@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c912d88a",
+  "issue_number": "1511",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1511-adw-c912d88a",
+  "shipped_at": "2026-08-09T13:30:46.400157Z",
+  "plan_phase": "E7-F7-P5",
+  "plan_summary": "Integrate resident GAS/PARTICLES communication into the execution scheduler by pinning validated communication resources, composing native barrier calls, and extending checkpoints for optional communication state. Add a deterministic twelve-node communication-then-volume barrier graph that invalidates only saturation state while retaining existing consumer refresh behavior. Preserve direct-import boundaries, identity-based validation, no-transfer/no-sync normal execution, and guarded writer-fault lifecycle semantics.",
+  "discovered_context": ""
+}
