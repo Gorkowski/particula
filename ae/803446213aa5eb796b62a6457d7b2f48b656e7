@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "945f4e16",
+  "issue_number": "1525",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1525-adw-945f4e16",
+  "shipped_at": "2026-08-10T04:40:52.652724Z",
+  "plan_phase": "E7-F8-P6",
+  "plan_summary": "Extend concrete-only resident checkpoint/restart support to schema v3 with optional continuation for published coagulation and wall-loss RNG streams. Preserve schema v1/v2 compatibility, enforce bounded capture and fail-closed restart validation, and reconstruct fresh exact-device session/registry state without reseeding unless explicit reset is called.",
+  "discovered_context": ""
+}
