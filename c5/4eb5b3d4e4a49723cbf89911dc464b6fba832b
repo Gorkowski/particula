@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "287564eb",
+  "issue_number": "1523",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1523-adw-287564eb",
+  "shipped_at": "2026-08-10T02:14:58.074487Z",
+  "plan_phase": "E7-F8-P4",
+  "plan_summary": "Add explicit, concrete-only resident RNG lifecycle APIs that can reinitialize all published streams or selected process/logical-box lanes without changing normal dispatcher behavior. The plan keeps inspection host-only and frozen, enforces exact session/registry/guard binding, and preserves direct-module-only exports while updating execution docs and focused regressions.",
+  "architecture_notes": null,
+  "discovered_context": "",
+  "review_findings": "Fix selected multi-process reset failure semantics and the O(N²) default reset validation path; add focused regressions for default reset, no-readback inspection, and repeated dispatch not implicitly resetting."
+}
