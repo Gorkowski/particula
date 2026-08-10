@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "904dee21",
+  "issue_number": "1522",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1522-adw-904dee21",
+  "shipped_at": "2026-08-10T00:39:33.612801Z",
+  "plan_phase": "E7-F8-P3",
+  "plan_summary": "Integrate a persistent, session-owned wall-loss RNG stream into resident scheduler execution, independently derived from coagulation for each logical box. Thread the scheduler’s enabled-box selection to the concrete wall-loss adapter so only selected boxes whose work launches can consume RNG state, while disabled, skipped, zero-time, and no-work lanes remain unchanged. Preserve direct-kernel APIs, session lifecycle behavior, and checkpoint/restart exclusions, with focused resource, adapter, scheduler, kernel, and documentation coverage.",
+  "discovered_context": ""
+}
