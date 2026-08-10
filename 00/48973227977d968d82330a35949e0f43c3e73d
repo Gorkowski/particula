@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "653b9c95",
+  "issue_number": "1524",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1524-adw-653b9c95",
+  "shipped_at": "2026-08-10T03:18:03.437899Z",
+  "plan_phase": "E7-F8-P5",
+  "plan_summary": "Add resident-execution regression coverage proving stochastic streams stay tied to stable logical-box IDs, not physical row placement. The suite compares Brownian coagulation and neutral wall loss against isolated references on the same Warp device across lane permutations, added/removed neighbors, and no-work cases. Production code should remain unchanged unless the matrix exposes a real mapping or gating defect.",
+  "discovered_context": "",
+  "review_findings": "Five warnings: enabled_box_indices mixes logical IDs with physical lanes; snapshot helper syncs the forced CPU instead of the owning device; selected active Brownian/wall-loss paths must assert RNG advancement; active unselected lanes need particle and RNG preservation checks; and zero-time cases need a no-writer launch spy."
+}
