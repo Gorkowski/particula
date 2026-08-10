@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "d99b0c66",
+  "issue_number": "1526",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1526-adw-d99b0c66",
+  "shipped_at": "2026-08-10T05:46:04.501788Z",
+  "plan_phase": "E7-F8-P7",
+  "plan_summary": "Documentation-only update for E7-F8 persisted RNG-stream and restart semantics. It clarifies resident session ownership of coagulation and wall_loss streams, repeated-seed non-reset behavior, and explicit lifecycle reset/metadata-only inspection without changing runtime APIs or backend support.",
+  "architecture_notes": null,
+  "discovered_context": "",
+  "review_findings": "Clarify schema-v3 RNG-stream continuation while preserving v1/v2 restart compatibility; add regression assertions for the documentation-only, no-runtime-API boundary; tighten frozen-configuration wording around unrelated-box invariance."
+}
