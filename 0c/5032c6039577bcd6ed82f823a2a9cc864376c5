@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "4e3a24a0",
+  "issue_number": "1530",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1530-adw-4e3a24a0",
+  "shipped_at": "2026-08-11T01:43:21.517988Z",
+  "plan_phase": "E7-F9-P3",
+  "plan_summary": "Add Warp-gated resident full-loop integration coverage for the resolved 12-node scheduler using independent GAS and PARTICLES closed-map fixtures, two successive dispatches, canonical-order tracing, resident identity checks, bounded environment/derived-state reference comparisons, and closed-system inventory conservation. First reproduce the nucleation thermodynamic-consumer mismatch and make only the private dispatch correction if needed; also cover a late writer failure that closes the guard and faults the session without rollback assertions.",
+  "discovered_context": ""
+}
