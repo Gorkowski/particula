@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "1398983c",
+  "issue_number": "1533",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1533-adw-1398983c",
+  "shipped_at": "2026-08-11T16:50:57.128195Z",
+  "plan_phase": "E7-F9-P6",
+  "plan_summary": "Add a new lazy-loaded example that demonstrates a complete resident simulation loop across two positive dispatches, diagnostic observation, checkpoint/restart on the same device, and cached finalization. The example must respect no-Warp/no-CPU-fallback behavior, use resolver-produced scheduling and the resident scheduler only, and preserve explicit ownership and synchronization boundaries. Add a docs regression test that covers disabled/import/runtime/setup/dispatch failure paths plus a Warp-CPU enabled run.",
+  "discovered_context": ""
+}
