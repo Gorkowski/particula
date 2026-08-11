@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "73a481a5",
+  "issue_number": "1534",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1534-adw-73a481a5",
+  "shipped_at": "2026-08-11T19:08:49.225135Z",
+  "plan_phase": "E7-F9-P7",
+  "plan_summary": "Documentation/closeout for issue #1534: publish the E7-F9 support contract validation matrix, then update roadmap, AGENTS, and docs only after the evidence gates pass. Keep resident GPU behavior unchanged and preserve the concrete-only boundary, with the canonical multi-timestep resident example and issue #1451 link referenced in the closeout.",
+  "discovered_context": ""
+}
