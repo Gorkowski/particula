@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6c09c988",
+  "issue_number": "1531",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1531-adw-6c09c988",
+  "shipped_at": "2026-08-11T12:51:16.579402Z",
+  "plan_phase": "E7-F9-P4",
+  "plan_summary": "Add a self-contained execution test module for independent multi-box resident-scheduler parity, logical-ID isolation, RNG stream ownership, and bounded wall-loss evidence. Keep production code, exports, documentation, checkpoints, and supported physics unchanged; validate fixed capacity, lifecycle cleanup, conservation, deterministic parity, and stochastic behavior with focused Warp CPU and optional CUDA coverage.",
+  "discovered_context": ""
+}
