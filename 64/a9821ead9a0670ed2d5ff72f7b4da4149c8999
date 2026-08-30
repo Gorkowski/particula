@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "227ae9cc",
+  "issue_number": "1536",
+  "workflow_type": "planner",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1536-adw-227ae9cc",
+  "shipped_at": "2026-08-30T15:20:06.197318Z",
+  "plan_phase": null,
+  "plan_summary": "Drafted epic E8 with eight ordered feature tracks (E8-F1 through E8-F8) covering graph capture lifecycle, capture-safe setup, reusable resources, replay, validation, benchmarks, profiling, and documentation closeout. Planning and review completed successfully with 67 valid plan files, no failed plans, and 19 open questions resolved; 13 human decisions remain.",
+  "discovered_context": "Epic and eight feature plans drafted and reviewed | all 67 plan files valid with no placeholders | dependency review found an acyclic E8-F1→E8-F8 DAG | sizing review revised E8-F6 and added split questions for E8-F2/F4 | question resolver revised all 9 plans and froze key design decisions | consistency review corrected parent epic references; global validation was unavailable due to adw_plans_read argument rejection"
+}
