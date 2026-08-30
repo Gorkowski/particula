@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "13882837",
+  "issue_number": "1548",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1548-adw-13882837",
+  "shipped_at": "2026-08-30T23:11:48.010185Z",
+  "plan_phase": "E8-F1-P2",
+  "plan_summary": "Implement host-only graph-capture lifecycle metadata in particula.execution.graph_capture. Add immutable six-state records, failure classifications, and the explicit create, capture, invalidate, classify, retire, renew, and close transitions while preserving P1 carrier identity and first invalidation reasons. Extend hardware-free direct-import tests and keep package exports, resident modules, Warp imports, and unrelated files unchanged.",
+  "discovered_context": ""
+}
