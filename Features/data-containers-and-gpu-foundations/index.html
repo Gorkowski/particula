@@ -12785,6 +12785,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#e7-f9-resident-support-validation-matrix-2026-08-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E7-F9 resident support validation matrix (2026-08-11)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#complete-direct-process-illustration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -16371,6 +16382,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#e7-f9-resident-support-validation-matrix-2026-08-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E7-F9 resident support validation matrix (2026-08-11)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#complete-direct-process-illustration" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -16800,15 +16822,15 @@ state, identity, or mutation guarantee.</p>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">LocalAdapter</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Example-local adapter contract.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Example-local adapter contract."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return this example&#39;s message unchanged.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return this example's message unchanged."""</span>
         <span class="k">return</span> <span class="n">message</span>
 
 
-<span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">Backend</span><span class="o">.</span><span class="n">CPU</span><span class="p">,</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-<span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="s2">&quot;condensation&quot;</span><span class="p">)</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">Backend</span><span class="o">.</span><span class="n">CPU</span><span class="p">,</span> <span class="s2">"cpu"</span><span class="p">)</span>
+<span class="n">process</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="s2">"condensation"</span><span class="p">)</span>
 <span class="n">requirements</span> <span class="o">=</span> <span class="n">CapabilityRequirements</span><span class="p">(</span><span class="nb">frozenset</span><span class="p">())</span>
 <span class="n">matrix</span> <span class="o">=</span> <span class="n">CapabilityMatrix</span><span class="p">(</span>
     <span class="nb">frozenset</span><span class="p">(</span>
@@ -16822,7 +16844,7 @@ state, identity, or mutation guarantee.</p>
 
 <span class="n">selected</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">selected</span> <span class="ow">is</span> <span class="n">adapter</span>
-<span class="k">assert</span> <span class="n">selected</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;example-local result&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;example-local result&quot;</span>
+<span class="k">assert</span> <span class="n">selected</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"example-local result"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"example-local result"</span>
 </code></pre></div>
 <p><code>selected is adapter</code> proves selection preserves adapter identity. No adapter
 <code>execute</code> call occurs before the final assertion, which the caller invokes.
@@ -16972,9 +16994,12 @@ launches. See
 are not exported by <code>particula.execution</code> or the top-level package. The
 scheduler accepts one identity-bound active session, pinned registry, closed
 guard, and resolver-produced complete schedule; direct adapters retain the
-resident objects by identity. Diagnostics is a closed two-snapshot protocol,
-not a callback API: it copies only to separate caller-owned outputs and supplies
-no implicit host inspection or transfer.</p>
+resident objects by identity. Diagnostics accepts either the legacy ordered
+two-snapshot plan (gas concentration, then saturation ratio) or the current
+ordered six-operation plan, which appends total species mass, particle number,
+latent energy, and conservation residual. Other subsets and orderings fail
+closed. This migration rule retains old callers without creating a callback API
+or implicit host inspection or transfer.</p>
 <p>The closed schedule contains exactly these twelve node IDs:</p>
 <p><code>communication</code>, <code>volume_evolution</code>, <code>environment_update</code>, <code>gas_update</code>,
 <code>vapor_pressure_refresh</code>, <code>saturation_refresh</code>, <code>condensation</code>,
@@ -17082,6 +17107,121 @@ physics. Preflight rejection leaves active state unchanged. After writer-capable
 dispatch begins, a failure may fault the session and has no rollback or retry
 guarantee. Checkpoint/finalize/restart remain the explicit exact-device boundary
 documented in <a href="../gpu_resident_checkpoints/">GPU resident checkpoints</a>.</p>
+<h3 id="e7-f9-resident-support-validation-matrix-2026-08-11">E7-F9 resident support validation matrix (2026-08-11)<a class="headerlink" href="#e7-f9-resident-support-validation-matrix-2026-08-11" title="Permanent link">&para;</a></h3>
+<p>The supported resident example is the repository-relative
+<a href="../../Examples/gpu_resident_multi_timestep/">multi-timestep resident source</a>.
+This closeout is scoped to <a href="https://github.com/Gorkowski/particula/issues/1451">issue #1451</a>.</p>
+<p><strong>Status: closeout validation pending.</strong> The historical four-module evidence
+passed, but shipment now requires the corrected five-module coverage command
+below to complete and record its literal result. Epic H and Epic I remain
+deferred.</p>
+<p>The P1--P6 changed executable-module coverage target list is:</p>
+<ul>
+<li><code>particula/execution/diagnostics.py</code></li>
+<li><code>particula/execution/gpu_resources.py</code></li>
+<li><code>particula/execution/checkpoint.py</code></li>
+<li><code>particula/execution/resident_communication.py</code></li>
+<li><code>particula/execution/resident_scheduler.py</code></li>
+</ul>
+<p>Documentation-only P7 files are not executable coverage targets. The required
+changed-module aggregate gate is <strong>at least 80%</strong>. The historical four-module
+closeout passed at 95%; the updated five-module command below must retain its
+literal aggregate and per-target term-missing rows.</p>
+<table>
+<thead>
+<tr>
+<th>Evidence category</th>
+<th>Required command group</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Selection/parity; lifecycle/identity; canonical scheduling/freshness; diagnostic ownership; closed-map transport and conservation; stream/checkpoint continuation; errors/no fallback; example/docs</td>
+<td>Focused assertions</td>
+<td>Passed: 289 assertions, 289 passed; coverage disabled.</td>
+</tr>
+<tr>
+<td>Export boundary</td>
+<td>Frozen export assertions</td>
+<td>Passed: 15 assertions, 15 passed; coverage disabled.</td>
+</tr>
+<tr>
+<td>Resident fast suite</td>
+<td>Full resident suite</td>
+<td>Passed: 891 tests, 891 passed; coverage disabled.</td>
+</tr>
+<tr>
+<td>Full-package coverage</td>
+<td>Whole-package coverage</td>
+<td>Passed: 6,254 tests, 9 skipped, 93% coverage.</td>
+</tr>
+<tr>
+<td>P1--P6 changed-module coverage</td>
+<td>Five-target coverage gate, <code>&gt;=80%</code> aggregate</td>
+<td>Run the command below and retain its literal aggregate and per-target term-missing rows, including <code>resident_communication.py</code>.</td>
+</tr>
+<tr>
+<td>Strict documentation</td>
+<td>Strict MkDocs build</td>
+<td>Passed: <code>mkdocs build --strict</code> validated successfully.</td>
+</tr>
+<tr>
+<td>Optional CUDA</td>
+<td>CUDA guarded suites</td>
+<td>Passed: <code>multi_box_loop_test.py</code> row and <code>condensation_integration_test.py</code> / <code>coagulation_integration_test.py</code> rows passed under <code>-m "warp and cuda"</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Run the groups sequentially; retain literal output, Warp availability, qualified
+devices, test counts, coverage results, and per-target term-missing rows:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>particula/execution/tests/diagnostics_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/gpu_resources_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/checkpoint_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/rng_invariance_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/full_loop_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/multi_box_loop_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/transport_loop_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/restart_loop_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/condensation_integration_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/coagulation_integration_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/errors_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/fallback_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/fallback_integration_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/tests/gpu_resident_multi_timestep_docs_test.py<span class="w"> </span>-q
+pytest<span class="w"> </span>particula/execution/tests/exports_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/tests/execution_exports_test.py<span class="w"> </span>-q
+pytest<span class="w"> </span>particula/execution/tests/<span class="w"> </span>-q
+pytest<span class="w"> </span>--cov<span class="o">=</span>particula<span class="w"> </span>--cov-report<span class="o">=</span>term-missing
+pytest<span class="w"> </span>particula/execution/tests/<span class="w"> </span>-q<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>particula.execution.diagnostics<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>particula.execution.gpu_resources<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>particula.execution.checkpoint<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>particula.execution.resident_communication<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>particula.execution.resident_scheduler<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov-report<span class="o">=</span>term-missing<span class="w"> </span>--cov-fail-under<span class="o">=</span><span class="m">80</span>
+mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
+pytest<span class="w"> </span>particula/execution/tests/multi_box_loop_test.py<span class="w"> </span>-q<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-m<span class="w"> </span><span class="s2">"warp and cuda"</span>
+pytest<span class="w"> </span>particula/execution/tests/condensation_integration_test.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>particula/execution/tests/coagulation_integration_test.py<span class="w"> </span>-q<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-m<span class="w"> </span><span class="s2">"warp and cuda"</span>
+</code></pre></div>
+<p>Acceptance classes remain separate: deterministic comparisons use their owning
+explicit <code>rtol</code>/<code>atol</code>; closed concentration-weighted inventory and ledger
+checks use <code>rtol=1e-12, atol=1e-30</code>; and stochastic evidence is P4's 100-seed
+Warp-CPU aggregate/binomial evidence with an optional 12-seed CUDA bounded
+smoke—not exact per-seed or cross-backend replay.</p>
+<p>The supported boundary remains concrete-only and caller-owned: setup uploads
+each CPU container once; registry resources are identity-pinned; diagnostics
+copy only to caller-owned outputs; schema-v3/v4 current words, not lossy inspection
+carriers, are continuation authority; manual in-memory restart requires the
+exact device and creates fresh identities; and source finalization caches its
+first snapshot. Export expansion, automatic restart, device selection or
+migration, hidden transfer/synchronization, CPU fallback, retry or rollback
+after writer launch, open or unsupported resident communication, graph capture,
+performance/scaling claims, autodiff, multi-GPU/distributed work, and
+cross-backend exact RNG replay remain deferred.</p>
 <h3 id="complete-direct-process-illustration">Complete direct-process illustration<a class="headerlink" href="#complete-direct-process-illustration" title="Permanent link">&para;</a></h3>
 <p>The <a href="https://github.com/Gorkowski/particula/blob/main/docs/Examples/gpu_complete_process_sequence.py">complete direct-process source</a>
 is an illustrative explicit-transfer five-call sequence, not a resident
@@ -17427,7 +17567,7 @@ saturation ratio belong to <code>EnvironmentData</code>.</p>
 <span class="p">)</span>
 
 <span class="n">gas_data</span> <span class="o">=</span> <span class="n">GasData</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Water&quot;</span><span class="p">,</span> <span class="s2">&quot;H2SO4&quot;</span><span class="p">],</span>
+    <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s2">"Water"</span><span class="p">,</span> <span class="s2">"H2SO4"</span><span class="p">],</span>
     <span class="n">molar_mass</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.018</span><span class="p">,</span> <span class="mf">0.098</span><span class="p">]),</span>
     <span class="n">concentration</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">2e-10</span><span class="p">]]),</span>
     <span class="n">partitioning</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]),</span>
@@ -17495,7 +17635,7 @@ re-exported by <code>particula.gpu.kernels</code> or <code>particula.gpu</code>:
 <span class="kn">from</span><span class="w"> </span><span class="nn">particula.gpu.kernels.wall_loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">NeutralWallLossConfig</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">NeutralWallLossConfig</span><span class="p">(</span>
-    <span class="n">geometry</span><span class="o">=</span><span class="s2">&quot;spherical&quot;</span><span class="p">,</span>
+    <span class="n">geometry</span><span class="o">=</span><span class="s2">"spherical"</span><span class="p">,</span>
     <span class="n">wall_eddy_diffusivity</span><span class="o">=</span><span class="mf">1.0e-4</span><span class="p">,</span>  <span class="c1"># m^2/s</span>
     <span class="n">chamber_radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># m</span>
 <span class="p">)</span>
@@ -17607,7 +17747,7 @@ helper boundary when particle-resident arrays must move between CPU-owned
 containers and Warp-owned storage:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">particula.gpu</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_warp_particle_data</span><span class="p">,</span> <span class="n">to_warp_particle_data</span>
 
-<span class="n">gpu_particle</span> <span class="o">=</span> <span class="n">to_warp_particle_data</span><span class="p">(</span><span class="n">particle_data</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">gpu_particle</span> <span class="o">=</span> <span class="n">to_warp_particle_data</span><span class="p">(</span><span class="n">particle_data</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">)</span>
 <span class="n">restored_particle</span> <span class="o">=</span> <span class="n">from_warp_particle_data</span><span class="p">(</span><span class="n">gpu_particle</span><span class="p">)</span>
 </code></pre></div>
 <p>Across this boundary, the shipped particle schema stays aligned:</p>
@@ -17865,7 +18005,7 @@ boundary:</p>
     <span class="n">to_warp_environment_data</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">gpu_environment</span> <span class="o">=</span> <span class="n">to_warp_environment_data</span><span class="p">(</span><span class="n">environment</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">gpu_environment</span> <span class="o">=</span> <span class="n">to_warp_environment_data</span><span class="p">(</span><span class="n">environment</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">)</span>
 <span class="n">restored_environment</span> <span class="o">=</span> <span class="n">from_warp_environment_data</span><span class="p">(</span><span class="n">gpu_environment</span><span class="p">)</span>
 </code></pre></div>
 <p>Across this boundary, shapes stay fixed:</p>
@@ -17933,7 +18073,7 @@ field or a source of hidden CPU↔Warp synchronization.</p>
 <span class="n">vapor_pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2330.0</span><span class="p">,</span> <span class="mf">120.0</span><span class="p">]])</span>
 <span class="n">gpu_gas</span> <span class="o">=</span> <span class="n">to_warp_gas_data</span><span class="p">(</span>
     <span class="n">gas_data</span><span class="p">,</span>
-    <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">,</span>
     <span class="n">vapor_pressure</span><span class="o">=</span><span class="n">vapor_pressure</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">restored_gas</span> <span class="o">=</span> <span class="n">from_warp_gas_data</span><span class="p">(</span><span class="n">gpu_gas</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">gas_data</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -18118,7 +18258,7 @@ the baseline whenever Warp is installed; CUDA is optional, availability-guarded,
 and separately marked. Warp-dependent test imports are lazy, so marker-
 deselected collection does not require Warp. Focused direct-kernel and CPU
 integration smoke commands are:</p>
-<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>particula/gpu/kernels/tests/condensation_test.py<span class="w"> </span>--collect-only<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not warp&quot;</span>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>particula/gpu/kernels/tests/condensation_test.py<span class="w"> </span>--collect-only<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not warp"</span>
 pytest<span class="w"> </span>particula/gpu/kernels/tests/condensation_test.py<span class="w"> </span>-q<span class="w"> </span>-Werror
 pytest<span class="w"> </span>particula/integration_tests/condensation_particle_resolved_test.py<span class="w"> </span>-q<span class="w"> </span>-Werror
 </code></pre></div>
@@ -18382,8 +18522,8 @@ the other evidence classes.</p>
 parity matrix, inventory conservation checks, and latent-heat energy/bookkeeping
 checks are separate: no one class proves either of the others.</p>
 <p><strong>Optional/local CUDA evidence:</strong></p>
-<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>particula/gpu/kernels/tests/condensation_test.py<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;warp and cuda&quot;</span><span class="w"> </span>-Werror
-pytest<span class="w"> </span>particula/gpu/kernels/tests/coagulation_stochastic_validation_test.py<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;warp and cuda&quot;</span><span class="w"> </span>-Werror
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>particula/gpu/kernels/tests/condensation_test.py<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">"warp and cuda"</span><span class="w"> </span>-Werror
+pytest<span class="w"> </span>particula/gpu/kernels/tests/coagulation_stochastic_validation_test.py<span class="w"> </span>-q<span class="w"> </span>-m<span class="w"> </span><span class="s2">"warp and cuda"</span><span class="w"> </span>-Werror
 </code></pre></div>
 <p>This is additive to the required Warp <code>device="cpu"</code> baseline and skips
 cleanly when CUDA is unavailable.</p>
