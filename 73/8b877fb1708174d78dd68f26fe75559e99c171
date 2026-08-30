@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "4c638ca3",
+  "issue_number": "1547",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1547-adw-4c638ca3",
+  "shipped_at": "2026-08-30T21:10:17.670227Z",
+  "plan_phase": "E8-F1-P1",
+  "plan_summary": "Add declaration-only graph-capture capability resolution and identity-based compatibility signatures in a new concrete, direct-import-only execution module. Keep it Warp-import-free at import time, avoid capture/replay, scheduling, resource acquisition, transfers, synchronization, and export-surface changes; add focused capability, import-boundary, exact-signature drift, and regression tests.",
+  "discovered_context": ""
+}
