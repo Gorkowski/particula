@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "1e04b6fb",
+  "issue_number": "1550",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1550-adw-1e04b6fb",
+  "shipped_at": "2026-08-31T02:41:56.030372Z",
+  "plan_phase": "E8-F1-P4",
+  "plan_summary": "Publish the E8-F1 host-side graph-capture capability, identity-compatibility, lifecycle, and scheduler-admission contract through developer documentation and contract-regression tests. Preserve the frozen public exports and explicitly defer native capture/replay, parity, benchmarks, profiling, memory evidence, and examples to E8-F2–E8-F8.",
+  "discovered_context": ""
+}
