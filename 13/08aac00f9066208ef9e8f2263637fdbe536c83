@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "b70a96b1",
+  "issue_number": "1552",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1552-adw-b70a96b1",
+  "shipped_at": "2026-08-31T23:13:03.215049Z",
+  "plan_phase": "E8-F2-P1",
+  "plan_summary": "Add a concrete-only `particula.execution.resident_enqueue` preparation seam that creates frozen, identity-semantic READY-state plans without capture, dispatch, resource acquisition, or lifecycle mutation. Refactor resident scheduler, diagnostics, and communication validation into shared read-only, no-construction helpers; add focused contract/export tests and architecture documentation.",
+  "architecture_notes": "`resident_enqueue` remains direct-import-only and retains exact request, binding, lifecycle, signature, session, registry, guard, schedule, and resource identities. `graph_capture` retains lifecycle ownership, while `ResidentSimulationScheduler` retains CAPTURED admission and dispatch.",
+  "discovered_context": ""
+}
