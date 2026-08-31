@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "c54861dc",
+  "issue_number": "1549",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1549-adw-c54861dc",
+  "shipped_at": "2026-08-31T00:56:26.349191Z",
+  "plan_phase": "E8-F1-P3",
+  "plan_summary": "Integrate metadata-only recapture gates and exact resident binding validation into the concrete resident scheduler. Add one-time request attachment, lifecycle-owned capture completion/retirement/renewal and drift handling, while preserving the twelve-node schedule, dispatch ownership, and writer-failure semantics. Add focused binding, drift, scheduler, export, and optional CUDA regression coverage without introducing replay, fallback, transfer, synchronization, or public exports.",
+  "architecture_notes": "Use a direct-module-only ResidentGraphCaptureBinding retaining exact request, session, registry, guard, lifecycle, and structural signature identities. Scheduler admission gates closed/pinned active state, exact available CUDA capability, captured lifecycle, and unchanged signature before token entry; captured drift invalidates and requires explicit retirement, renewal, and completion.",
+  "discovered_context": ""
+}
