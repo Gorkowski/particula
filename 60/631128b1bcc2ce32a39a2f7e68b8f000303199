@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "b9f06c78",
+  "issue_number": "1555",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1555-adw-b9f06c78",
+  "shipped_at": "2026-09-01T04:45:32.734492Z",
+  "plan_phase": "E8-F2-P4",
+  "plan_summary": "Refactor GPU condensation into a private prepared setup record and device-only enqueue path while preserving the public signature, validation order, four equal gas-coupled substeps, identities, and mutation boundaries. Add concrete resident-adapter binding and focused regression coverage for validation, identity, trace, parity, conservation, and no-allocation/no-sync enqueue behavior.",
+  "discovered_context": ""
+}
