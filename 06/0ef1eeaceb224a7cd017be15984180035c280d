@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c656b00f",
+  "issue_number": "1557",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1557-adw-c656b00f",
+  "shipped_at": "2026-09-01T13:40:22.598596Z",
+  "plan_phase": "E8-F2-P6",
+  "plan_summary": "Implement private prepared-call seams for GPU nucleation and exhaustion while retaining existing public direct wrappers and exports. Preparation validates and pins structural metadata and preallocates private storage; enqueue performs device-gated execution without allocation, host readback, or policy resolution, and observation preserves current error behavior. Add direct-kernel and resident-adapter tests for equivalence, validation, dynamic gating, identity pinning, conservation, and clean CUDA skips.",
+  "discovered_context": ""
+}
