@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "5ab0d707",
+  "issue_number": "1556",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1556-adw-5ab0d707",
+  "shipped_at": "2026-09-01T06:49:56.607488Z",
+  "plan_phase": "E8-F2-P5",
+  "plan_summary": "Implement private two-phase prepare/enqueue seams for GPU coagulation, dilution, and wall-loss kernels, then bind them through resident adapters without changing public APIs or physics. Preserve validation order, identities, no-op behavior, persistent RNG semantics, frozen references, and resident preflight boundaries, with focused regression tests, export checks, Ruff, and the repository test runner.",
+  "discovered_context": ""
+}
