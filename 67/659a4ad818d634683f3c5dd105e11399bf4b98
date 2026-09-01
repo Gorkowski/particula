@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "db861b86",
+  "issue_number": "1553",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1553-adw-db861b86",
+  "shipped_at": "2026-09-01T01:14:01.758553Z",
+  "plan_phase": "E8-F2-P2",
+  "plan_summary": "Split resident state, thermodynamic, and diagnostic execution into validation-capable setup records and fixed device-only enqueue phases bound to P1's exact PreparedResidentTimestep. Preserve standalone executor/coordinator compatibility, canonical writer ordering, empty-schema no-ops, lifecycle ownership, diagnostic behavior, and concrete-only export isolation. Add focused regression coverage for identity validation, drift rejection, enqueue purity, thermodynamic cursor semantics, failure isolation, and compatibility.",
+  "discovered_context": ""
+}
