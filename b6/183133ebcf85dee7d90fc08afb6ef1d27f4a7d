@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6e64d784",
+  "issue_number": "1562",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1562-adw-6e64d784",
+  "shipped_at": "2026-09-02T15:40:03.794895Z",
+  "plan_phase": "E8-F3-P2",
+  "plan_summary": "Implement E8-F3-P2 by extending the concrete GPU resource manifest with canonical descriptors and read-only schema validation for all fixed-shape prepared-process sidecars, including dilution. Update prepared seams and adapter carriers to consume complete registry-supplied views by exact identity while preserving fallback behavior, validation order, and concrete-only boundaries. Add focused descriptor, identity, rejection, zero-size, and enqueue no-work coverage without adding allocation, publication, reacquisition, RNG, communication, checkpoint, or public API behavior.",
+  "discovered_context": ""
+}
