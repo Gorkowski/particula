@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "cc73dc03",
+  "issue_number": "1558",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1558-adw-cc73dc03",
+  "shipped_at": "2026-09-02T00:01:41.996095Z",
+  "plan_phase": "E8-F2-P7",
+  "plan_summary": "Implement a concrete-only, uncaptured prepared resident simulation boundary that composes the existing P1–P6 products into exactly twelve retained operations executed under one token. Add immutable preparation and READY admission checks, private prepared delegates, and shared cleanup while preserving identity, lifecycle, no-fallback, no-transfer, and writer-failure semantics. Validate with focused resident execution tests, the full execution suite, optional CUDA smoke coverage, and the canonical repository test runner.",
+  "discovered_context": ""
+}
