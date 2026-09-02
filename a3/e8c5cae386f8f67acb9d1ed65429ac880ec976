@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "198f6ce6",
+  "issue_number": "1559",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1559-adw-198f6ce6",
+  "shipped_at": "2026-09-02T01:33:01.917828Z",
+  "plan_phase": "E8-F2-P8",
+  "plan_summary": "Document the shipped E8-F2 prepare-once/device-enqueue developer contract without changing runtime behavior or exposing a public capture API. Update bounded developer documentation, concrete-module docstrings, historical E8-F2/E8 records, and deterministic hardware-free documentation regressions while preserving E8-F1 lifecycle ownership and downstream E8-F3–F8 scope. Finalize P8 only after focused assertions and strict MkDocs succeed.",
+  "discovered_context": "No recent ADW messages were found."
+}
