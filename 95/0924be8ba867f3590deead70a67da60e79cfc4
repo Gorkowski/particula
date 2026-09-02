@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "9052dccc",
+  "issue_number": "1561",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1561-adw-9052dccc",
+  "shipped_at": "2026-09-02T13:57:24.046038Z",
+  "plan_phase": "E8-F3-P1",
+  "plan_summary": "Implement a concrete-only immutable logical resource inventory and byte report for GPUResourceRegistry, covering all six canonical manifests without acquisition, payload inspection, synchronization, or export changes. Add frozen metadata/report carriers, centralize checked shape/stride/element/byte arithmetic with zero and overflow handling, provide a deterministic read-only accessor, and extend focused regression tests for formulas, validation, immutability, ordering, exports, and unchanged registry state.",
+  "discovered_context": ""
+}
