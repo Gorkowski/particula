@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "aed95aa7",
+  "issue_number": "1563",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1563-adw-aed95aa7",
+  "shipped_at": "2026-09-02T17:21:05.471001Z",
+  "plan_phase": "E8-F3-P3",
+  "plan_summary": "Implement a concrete-only GPUResourceRegistry capture-registration inventory for one published closed communication view (or none) and ordered diagnostic registrations. Retain exact identities and immutable schema/byte metadata, enforce transactional validation and bounded overlap detection, and add focused regression coverage without changing exports, execution, or checkpoint behavior.",
+  "discovered_context": ""
+}
