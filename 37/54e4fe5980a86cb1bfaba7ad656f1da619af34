@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6276defc",
+  "issue_number": "1564",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1564-adw-6276defc",
+  "shipped_at": "2026-09-02T19:01:09.986253Z",
+  "plan_phase": "E8-F3-P4",
+  "plan_summary": "Implement the concrete-only E8-F3-P4 capture-resource setup transaction in gpu_resources.py. Add exact-identity carrier records, atomic staging/publication with cross-family validation and RNG initialization, metadata-only validation, and narrow optional E8-F2 prepared-view integration while preserving legacy acquisition and deferred P5 behavior. Add focused regression tests for drift, aliasing, failure rollback/retry, identity reuse, and direct-only exports.",
+  "discovered_context": "No recent workflow messages were recorded."
+}
