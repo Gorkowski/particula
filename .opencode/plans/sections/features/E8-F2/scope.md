@@ -74,6 +74,15 @@ concrete-only and retain exact caller-owned resident identities.
   resident sequence with its integration tests. E8-F3--E8-F8 remain pending
   downstream work.
 
+## Implemented in P7
+
+- Composed the READY, uncaptured prepared twelve-node dispatch in
+  `particula/execution/resident_scheduler.py` with retained per-node delegates
+  and operation products.
+- Preserved a concrete-only, unexported boundary: preparation and enqueue do
+  not add native capture/replay, CPU fallback/emulation, transfer,
+  synchronization, resource acquisition, or dynamic schedule resolution.
+
 ## Out of Scope
 
 - P1 does not capture, replay, enqueue, dispatch, create scheduler/executor

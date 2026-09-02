@@ -138,3 +138,13 @@ pending downstream work.
   Warp can capture and replay the fixed sequence without hidden host work.
 - As a direct-kernel caller, I want existing public entry points to remain
   validated and explicit so capture support does not weaken standalone safety.
+
+## Implemented P7 Composition
+
+E8-F2-P7 now composes the READY, uncaptured prepared resident dispatch in
+`particula/execution/resident_scheduler.py`. The concrete-only path retains
+the prepared products and per-node delegates, dispatches the canonical
+twelve-node sequence under one guard token, and retains the existing
+read-only-rejection and writer-failure cleanup semantics. It remains
+unexported and does not perform capture/replay, fallback, transfer,
+synchronization, allocation, or dynamic node resolution during enqueue.

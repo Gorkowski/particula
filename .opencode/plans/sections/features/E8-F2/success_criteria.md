@@ -20,6 +20,14 @@
 - [ ] Untargeted repository coverage and strict documentation validation pass
   without lowering thresholds or changing default test collection.
 
+## P7 completion evidence
+
+- [x] `prepare_resident_simulation()` composes retained products into the exact
+  canonical twelve-node READY prepared sequence.
+- [x] `enqueue_prepared_resident_simulation()` admits only the exact READY
+  binding before token entry, dispatches retained delegates under one token,
+  and preserves existing failure cleanup/classification.
+
 ## Metrics
 
 | Metric | Baseline | Target | Source |

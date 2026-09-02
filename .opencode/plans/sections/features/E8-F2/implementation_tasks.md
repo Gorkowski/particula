@@ -58,7 +58,7 @@
 - [ ] Compose all prepared operations in canonical schedule order without
   per-node dictionary lookup, executor construction, allocation, validation,
   import resolution, host readback, or synchronization during enqueue.
-- [ ] Preserve lifecycle token and writer-failure semantics, E8-F1 signature
+- [x] Preserve lifecycle token and writer-failure semantics, E8-F1 signature
   checks before enqueue, direct API validation ordering, and all existing
   concrete-only export boundaries.
 

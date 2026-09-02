@@ -8,6 +8,23 @@ metadata, launch validation scans, read validation status, normalize controls,
 and build immutable launch records. Enqueue accepts only an exact prepared
 record and emits a predetermined sequence of device operations.
 
+### P7 implemented composition
+
+`resident_scheduler.py` now owns the aggregate composition seam:
+`PreparedResidentSimulation` retains the P1 prepared timestep, exact binding
+metadata, canonical twelve IDs, and twelve ordered private operation records.
+Each record retains its `ProcessNode`, prepared product, bound enqueue callable,
+and conservative writer-capability classification. The direct-module-only
+`prepare_resident_simulation()` prepares dependencies in canonical order and
+reruns READY attachment/signature and identity checks before returning.
+
+`enqueue_prepared_resident_simulation()` uses a READY-specific, read-only
+pre-token gate rather than `gate_resident_graph_capture()`. After that gate it
+opens one token, iterates the retained operation tuple directly, and completes
+the token once. Shared cleanup preserves ACTIVE state for failures before a
+writer may launch and established fault classification after a writer-capable
+delegate. The legacy scheduler retains its CAPTURED admission path.
+
 ```text
 exact ACTIVE session + pinned registry + closed guard
 resolved twelve-node request + E8-F1 READY capture record

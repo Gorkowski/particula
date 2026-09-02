@@ -72,6 +72,14 @@ Coverage thresholds and the normal collection policy must not be lowered.
   in 0.09s) and `mkdocs build --strict` passed (exit 0 in 14.67s). This remains
   assertion-only evidence with no targeted coverage gate.
 
+## Implemented P7 Coverage
+
+`resident_enqueue_test.py`, `resident_communication_test.py`,
+`thermodynamic_updates_test.py`, and `full_loop_test.py` exercise retained
+prepared products, the canonical twelve-node trace, one-token READY dispatch,
+pre-token structural drift, hot-window isolation, and read-only versus
+writer-capable failure cleanup.
+
 ## Validation and Coverage Policy
 
 Focused development checks are assertion-only and coverage disabled, for

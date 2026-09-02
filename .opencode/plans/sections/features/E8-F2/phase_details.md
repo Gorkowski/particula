@@ -129,17 +129,20 @@
     public-wrapper identities, independent parity, conservation, exact resident
     binding, and injected compatibility fallback.
 
-- [ ] **E8-F2-P7:** Compose capture-ready resident sequence with integration tests
-  - Issue: TBD | Size: S | Status: Not Started
+- [x] **E8-F2-P7:** Compose capture-ready resident sequence with integration tests
+  - Issue: #1558 | Size: S | Status: Completed
   - Goal: Enqueue the complete prepared twelve-node timestep in authoritative
     order under one lifecycle token and prove that no setup operation occurs in
     the capture window.
-  - Files: `particula/execution/resident_scheduler.py`,
-    `particula/execution/tests/{resident_enqueue,full_loop}_test.py`, optional
-    focused CUDA capture test
-  - Tests: Full launch trace, exact request/record identity, uncaptured output
-    regression on Warp CPU, lifecycle completion/fault behavior, forbidden host
-    calls, and CUDA capture pass-or-clean-skip smoke evidence.
+  - Implemented: `resident_scheduler.py` composes `PreparedResidentSimulation`
+    from retained P1--P6 products and executes its twelve ordered delegates
+    under one token. READY admission is read-only and does not invoke the
+    CAPTURED graph gate; shared cleanup retains existing writer-fault handling.
+  - Tests: adjacent `resident_enqueue_test.py`,
+    `resident_communication_test.py`, `thermodynamic_updates_test.py`, and
+    `full_loop_test.py` cover identity/admission, canonical dispatch, retained
+    products, hot-window isolation, and failure cleanup. Optional CUDA evidence
+    remains pass-or-clean-skip and does not use Warp CPU as capture fallback.
 
 - [x] **E8-F2-P8:** Update development documentation
   - Issue: #1559 | Size: XS | Status: Shipped | Delivered: 2026-09-01
