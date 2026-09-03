@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "c09c83b8",
+  "issue_number": "1569",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1569-adw-c09c83b8",
+  "shipped_at": "2026-09-03T06:19:09.893064Z",
+  "plan_phase": "E8-F4-P3",
+  "plan_summary": "Implement guarded resident graph replay at the merged E8-F4-P2 captured-plan owner boundary. Validate exact retained identities, capability/lifecycle/signature state, and an unchanged finite duration before opening one writer token; then perform exactly one runtime capture launch and completion with existing failure cleanup. Extend concrete-boundary tests for rejection matrices, repeated replay, payload/RNG updates, drift, and writer failures without exports or documentation changes.",
+  "discovered_context": "",
+  "architecture_notes": null,
+  "review_findings": null
+}
