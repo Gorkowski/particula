@@ -1,10 +1,13 @@
 # Phase Details
 
-All retained E8-F4 phase names and design descriptions below are
-non-authoritative placeholders. P1 (issue #1567) is directly blocked until
-E8-F3 supplies its integrated capture-resource carrier and contract. P2 (issue
-#1568) is directly blocked by absent P1, so E8-F3 is only a transitive
-prerequisite of P2; complete P1 before unblocking or performing P2.
+Retained E8-F4 phase names and unimplemented design details below are planning
+placeholders. P3's required constraints and blocker relationship remain
+authoritative: P3 (issue #1569) is blocked until P2 provides the native
+captured-plan owner, opaque graph handle, and `capture_launch()` runtime
+adapter. P1 (issue #1567) is directly blocked until E8-F3 supplies its
+integrated capture-resource carrier and contract. P2 (issue #1568) is directly
+blocked by absent P1, so E8-F3 is only a transitive prerequisite of P2; complete
+P1 before unblocking or performing P2.
 
 - [ ] **E8-F4-P1:** Prepared resident graph capture controller with unit tests
   - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and

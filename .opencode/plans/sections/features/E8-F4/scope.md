@@ -4,9 +4,11 @@
 
 P1 (issue #1567) is directly blocked: the E8-F3 capture-resource carrier and
 its governing contract are absent. P2 (issue #1568) is directly blocked by
-absent P1, with E8-F3 only a transitive prerequisite. This workflow made no
-implementation, test, or user documentation changes. The planned P2 scope
-remains deferred until E8-F3 enables P1 and P1 then unblocks P2.
+absent P1, with E8-F3 only a transitive prerequisite. P3 (issue #1569) is
+blocked until P2 provides the native captured-plan owner, opaque graph handle,
+and `capture_launch()` runtime adapter. This workflow made no implementation,
+test, or user documentation changes. The deferred P1/P2 scope remains pending
+until E8-F3 enables P1 and P1 then unblocks P2.
 
 E8-F4 implements the runtime owner that consumes the exact E8-F2 prepared
 resident timestep and E8-F3 capture resource set, records its predetermined

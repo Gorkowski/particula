@@ -4,10 +4,11 @@
 
 P1 (issue #1567) is directly blocked by the absent E8-F3 capture-resource
 carrier/contract. P2 (issue #1568) is directly blocked by absent P1, with E8-F3
-only a transitive prerequisite. No user-facing or API documentation was updated.
-Reassess these planned updates after E8-F3 integration completes P1, then
-unblocks P2; do not publish an E8-F4 contract without its required upstream
-authority.
+only a transitive prerequisite. P3 (issue #1569) is blocked until P2 provides
+the native captured-plan owner, opaque graph handle, and `capture_launch()`
+runtime adapter. No user-facing or API documentation was updated. Reassess these
+planned updates after E8-F3 integration completes P1, then unblocks P2; do not
+publish an E8-F4 contract without its required upstream authority.
 
 - Update `docs/Features/Roadmap/data-oriented-gpu.md` to mark the prepared
   fixed-sequence capture, guarded replay, and invalidation implementation while

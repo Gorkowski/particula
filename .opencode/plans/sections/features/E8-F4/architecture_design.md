@@ -4,8 +4,10 @@
 
 P1 (issue #1567) is directly blocked by E8-F3's absent capture-resource carrier
 and contract. P2 (issue #1568) is directly blocked by absent P1; E8-F3 is its
-transitive prerequisite. No E8-F4 architecture was implemented and no resource
-or adapter API was inferred or fabricated.
+transitive prerequisite. P3 (issue #1569) is blocked until P2 provides the
+native captured-plan owner, opaque graph handle, and `capture_launch()` runtime
+adapter. No E8-F4 architecture was implemented and no resource or adapter API
+was inferred or fabricated.
 
 ## High-Level Design
 
