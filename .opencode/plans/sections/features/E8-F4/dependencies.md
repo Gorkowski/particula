@@ -2,6 +2,11 @@
 
 ## Upstream
 
+**Current blocker (issue #1567):** The required E8-F3 capture-resource carrier
+and contract are absent. E8-F4 cannot validate or retain the upstream resource
+identity without inventing an out-of-scope API. No implementation, tests, or user
+documentation changes occurred; resume only after E8-F3 is integrated.
+
 - **E8 parent:** fixes stable shapes, process order, communication maps, explicit
   setup/replay/teardown, no hidden operations, and three-way validation as the
   governing contract.

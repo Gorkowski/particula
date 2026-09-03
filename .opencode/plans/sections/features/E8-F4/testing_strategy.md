@@ -1,5 +1,12 @@
 # Testing Strategy
 
+## Current Workflow Status
+
+Issue #1567 is blocked because E8-F3 has not provided the capture-resource
+carrier and contract required to construct valid fixtures or identity checks. No
+tests were added, changed, or run for this blocked workflow. Test planning below
+is deferred until the upstream contract is integrated.
+
 Every phase ships tests beside the execution modules using the `*_test.py`
 convention. Coverage thresholds are never lowered. Hardware-independent tests
 use an injected fake capture runtime; Warp CPU is the installed-Warp uncaptured

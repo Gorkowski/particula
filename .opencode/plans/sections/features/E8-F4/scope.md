@@ -1,5 +1,12 @@
 # Scope
 
+## Current Workflow Status
+
+Issue #1567 is blocked: the E8-F3 capture-resource carrier and its governing
+contract are absent. This workflow made no implementation, test, or user
+documentation changes. The planned scope remains deferred until E8-F3 provides
+the exact resource, ownership, adapter, and lifecycle authority.
+
 E8-F4 implements the runtime owner that consumes the exact E8-F2 prepared
 resident timestep and E8-F3 capture resource set, records its predetermined
 device sequence into a Warp graph, and replays it only while the E8-F1

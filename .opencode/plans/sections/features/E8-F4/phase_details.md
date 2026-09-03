@@ -1,7 +1,15 @@
 # Phase Details
 
+All retained E8-F4 phase names and design descriptions below are
+non-authoritative placeholders until E8-F3 supplies its integrated
+capture-resource carrier and contract. That shared prerequisite blocks every
+phase; none is independently ready for implementation or testing.
+
 - [ ] **E8-F4-P1:** Prepared resident graph capture controller with unit tests
-  - Issue: TBD | Size: S | Status: Not Started
+  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
+    contract absent
+  - Current outcome: No code, tests, or user documentation changed. Do not create
+    a placeholder carrier or infer its ownership, adapter, or lifecycle contract.
   - Goal: Introduce an exact concrete-only graph owner and injectable Warp
     capture adapter that bind one E8-F2 prepared plan, E8-F3 resource set, and
     E8-F1 READY signature before native capture begins.
@@ -11,7 +19,8 @@
     transitions, opaque-handle ownership, one-time cleanup, and no exports.
 
 - [ ] **E8-F4-P2:** Complete fixed-sequence capture and CUDA smoke tests
-  - Issue: TBD | Size: S | Status: Not Started
+  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
+    contract absent
   - Goal: Capture exactly one complete prepared twelve-node enqueue sequence
     with no setup work inside the capture window and publish the graph only
     after `capture_end` succeeds.
@@ -22,7 +31,8 @@
     pass-or-clean-skip capture smoke coverage.
 
 - [ ] **E8-F4-P3:** Guarded replay and exact compatibility checks with unit tests
-  - Issue: TBD | Size: S | Status: Not Started
+  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
+    contract absent
   - Goal: Validate the current exact resident/prepared/resource/signature
     binding before opening one timestep token and launching the captured graph
     exactly once without reseeding or host process dispatch.
@@ -34,7 +44,8 @@
     launch on failed preflight.
 
 - [ ] **E8-F4-P4:** Lifecycle invalidation fault and recapture handling with tests
-  - Issue: TBD | Size: S | Status: Not Started
+  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
+    contract absent
   - Goal: Connect structural invalidation, resident fault/finalize/close,
     post-launch failure, teardown, and explicit recapture eligibility to the
     E8-F1 state machine without automatic recapture or rollback.
@@ -45,7 +56,8 @@
     terminal-state behavior, and fresh-record-only recapture.
 
 - [ ] **E8-F4-P5:** Three-way full-loop validation and development documentation
-  - Issue: TBD | Size: S | Status: Not Started
+  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
+    contract absent
   - Goal: Validate multiple identical process-sequence timesteps across CPU,
     uncaptured Warp, and captured CUDA, then document the implemented internal
     contract and downstream evidence handoff.

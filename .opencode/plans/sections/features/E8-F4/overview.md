@@ -1,5 +1,12 @@
 # Overview
 
+## Current Status
+
+**Blocked for issue #1567.** E8-F3 has not supplied the required capture-resource
+carrier or contract. No E8-F4 code, tests, or user documentation was implemented
+or updated in this workflow. Implementation must wait for the integrated E8-F3
+carrier and its ownership, adapter, and lifecycle contract.
+
 ## Problem Statement
 
 The resident scheduler currently validates and dispatches every timestep from

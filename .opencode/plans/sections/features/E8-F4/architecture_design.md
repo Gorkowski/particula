@@ -1,5 +1,11 @@
 # Architecture Design
 
+## Current Workflow Status
+
+The design below is deferred for issue #1567. E8-F3's capture-resource carrier
+and contract are absent, so no E8-F4 architecture was implemented and no
+resource or adapter API was inferred or fabricated.
+
 ## High-Level Design
 
 E8-F4 adds a concrete graph owner around the prepared enqueue path; it does not
