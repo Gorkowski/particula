@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "dc52b3e3",
+  "issue_number": "1565",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1565-adw-dc52b3e3",
+  "shipped_at": "2026-09-03T01:04:30.670159Z",
+  "plan_phase": "E8-F3-P5",
+  "plan_summary": "Integrate the pre-published concrete-only CaptureResourceSet into E8-F1 graph-capture and E8-F2 READY prepared-timestep admission, requiring cached identity-safe validation before signatures, token entry, or dispatch. Update request construction, signature/configuration drift handling, prepared metadata freezing, regressions, and bounded documentation while preserving fail-closed lifecycle and no-resource-work guarantees.",
+  "discovered_context": ""
+}
