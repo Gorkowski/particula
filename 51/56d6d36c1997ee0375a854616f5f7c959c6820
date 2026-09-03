@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "0a23472c",
+  "issue_number": "1570",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1570-adw-0a23472c",
+  "shipped_at": "2026-09-03T07:17:18.669492Z",
+  "plan_phase": "E8-F4-P4",
+  "plan_summary": "Implement E8-F4-P4 only after rebasing onto landed E8-F3/P3, extending its single captured-plan owner with exact-once native-handle release, stale invalidation, teardown, terminal retirement, launch-failure faulting, and distinct-owner recapture. Keep graph capture concrete-only, preserve resident lifecycle/checkpoint ownership boundaries, and add focused fake-runtime/session/checkpoint tests proving fail-closed admission, error chaining, no retry, and no graph state in checkpoints.",
+  "discovered_context": ""
+}
