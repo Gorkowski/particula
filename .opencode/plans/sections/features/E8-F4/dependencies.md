@@ -2,12 +2,12 @@
 
 ## Upstream
 
-**Current blockers:** P1 (issue #1567) is directly blocked by the required,
-absent E8-F3 capture-resource carrier and contract. P2 (issue #1568) is directly
-blocked by absent P1; E8-F3 is a transitive prerequisite of P2. E8-F4 cannot
-validate or retain the upstream resource identity without inventing an
-out-of-scope API. No implementation, tests, or user documentation changes
-occurred; complete P1 after E8-F3 integration, then unblock and perform P2.
+**Current blockers:** P3 (issue #1569) is directly blocked because the E8-F4-P2
+native-capture owner is unavailable. The required opaque graph handle, captured
+prepared-plan owner, and `capture_launch()` runtime adapter are not present, so
+P3 cannot replay a captured plan without inventing an out-of-scope boundary.
+No implementation, tests, or user documentation changes occurred in issue
+#1569; resume only after the P2 owner lands.
 
 - **E8 parent:** fixes stable shapes, process order, communication maps, explicit
   setup/replay/teardown, no hidden operations, and three-way validation as the
@@ -48,10 +48,11 @@ occurred; complete P1 after E8-F3 integration, then unblock and perform P2.
 ## Phase Ordering
 
 P1 (issue #1567) establishes the graph owner and native API boundary after its
-direct E8-F3 blocker is resolved. P2 (issue #1568) can then capture the
-prepared sequence; it remains blocked until P1 lands. P3 launches only the
-handle produced by P2. P4 integrates invalidation, fault, teardown, and
-recapture after replay semantics are stable.
+direct E8-F3 blocker is resolved. P2 (issue #1568) captures the prepared
+sequence and supplies the captured-plan owner. P3 (issue #1569) launches only
+the handle produced by that P2 owner and remains blocked while it is
+unavailable. P4 integrates invalidation, fault, teardown, and recapture after
+replay semantics are stable.
 P5 supplies full-loop evidence and documentation last. Unit tests ship with
 P1-P4; P5 contains integration and documentation validation rather than a
 standalone testing-only phase.

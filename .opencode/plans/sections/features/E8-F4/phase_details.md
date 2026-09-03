@@ -32,7 +32,12 @@ prerequisite of P2; complete P1 before unblocking or performing P2.
     pass-or-clean-skip capture smoke coverage.
 
 - [ ] **E8-F4-P3:** Guarded replay and exact compatibility checks with unit tests
-  - Issue: Unassigned | Size: S | Status: Blocked — P2 has not completed
+  - Issue: #1569 | Size: S | Status: Blocked — E8-F4-P2 native-capture owner
+    unavailable
+  - Current outcome: No code, tests, or user documentation changed. The required
+    opaque graph handle, captured prepared-plan owner, and `capture_launch()`
+    runtime adapter did not land; do not create a replacement owner or replay
+    boundary.
   - Goal: Validate the current exact resident/prepared/resource/signature
     binding before opening one timestep token and launching the captured graph
     exactly once without reseeding or host process dispatch.
