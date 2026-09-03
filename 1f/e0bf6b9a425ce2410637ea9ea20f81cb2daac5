@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "93e131bf",
+  "issue_number": "1567",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1567-adw-93e131bf",
+  "shipped_at": "2026-09-03T14:30:06.160778Z",
+  "plan_phase": "E8-F4-P1",
+  "plan_summary": "Implement the concrete-only E8-F4-P1 prepared resident graph-capture qualification boundary in particula.execution.graph_capture. Validate exact resident bindings and metadata before ordered adapter capability probes, retain callable metadata immutably, and preserve READY state without native capture, handles, cleanup, tokens, allocation, synchronization, transfer, or mutation. Add focused host-only tests, export-denial coverage, and lint/format/test validation.",
+  "discovered_context": ""
+}
