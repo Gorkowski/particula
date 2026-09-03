@@ -2,11 +2,12 @@
 
 ## Current Workflow Status
 
-Issue #1567 is blocked by the absent E8-F3 capture-resource carrier/contract.
-No user-facing or API documentation was updated. E8-F4 developer planning and
-status records were updated to preserve the blocker and deferred scope. Reassess
-these planned updates only after E8-F3 is integrated; do not publish an E8-F4
-contract without its required upstream authority.
+P1 (issue #1567) is directly blocked by the absent E8-F3 capture-resource
+carrier/contract. P2 (issue #1568) is directly blocked by absent P1, with E8-F3
+only a transitive prerequisite. No user-facing or API documentation was updated.
+Reassess these planned updates after E8-F3 integration completes P1, then
+unblocks P2; do not publish an E8-F4 contract without its required upstream
+authority.
 
 - Update `docs/Features/Roadmap/data-oriented-gpu.md` to mark the prepared
   fixed-sequence capture, guarded replay, and invalidation implementation while

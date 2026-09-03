@@ -2,10 +2,12 @@
 
 ## Upstream
 
-**Current blocker (issue #1567):** The required E8-F3 capture-resource carrier
-and contract are absent. E8-F4 cannot validate or retain the upstream resource
-identity without inventing an out-of-scope API. No implementation, tests, or user
-documentation changes occurred; resume only after E8-F3 is integrated.
+**Current blockers:** P1 (issue #1567) is directly blocked by the required,
+absent E8-F3 capture-resource carrier and contract. P2 (issue #1568) is directly
+blocked by absent P1; E8-F3 is a transitive prerequisite of P2. E8-F4 cannot
+validate or retain the upstream resource identity without inventing an
+out-of-scope API. No implementation, tests, or user documentation changes
+occurred; complete P1 after E8-F3 integration, then unblock and perform P2.
 
 - **E8 parent:** fixes stable shapes, process order, communication maps, explicit
   setup/replay/teardown, no hidden operations, and three-way validation as the
@@ -45,9 +47,11 @@ documentation changes occurred; resume only after E8-F3 is integrated.
 
 ## Phase Ordering
 
-P1 establishes the graph owner and native API boundary. P2 can then capture the
-prepared sequence. P3 launches only the handle produced by P2. P4 integrates
-invalidation, fault, teardown, and recapture after replay semantics are stable.
+P1 (issue #1567) establishes the graph owner and native API boundary after its
+direct E8-F3 blocker is resolved. P2 (issue #1568) can then capture the
+prepared sequence; it remains blocked until P1 lands. P3 launches only the
+handle produced by P2. P4 integrates invalidation, fault, teardown, and
+recapture after replay semantics are stable.
 P5 supplies full-loop evidence and documentation last. Unit tests ship with
 P1-P4; P5 contains integration and documentation validation rather than a
 standalone testing-only phase.

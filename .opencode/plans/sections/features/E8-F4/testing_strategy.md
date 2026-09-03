@@ -2,10 +2,11 @@
 
 ## Current Workflow Status
 
-Issue #1567 is blocked because E8-F3 has not provided the capture-resource
-carrier and contract required to construct valid fixtures or identity checks. No
-tests were added, changed, or run for this blocked workflow. Test planning below
-is deferred until the upstream contract is integrated.
+P1 (issue #1567) is directly blocked because E8-F3 has not provided the
+capture-resource carrier and contract required to construct valid fixtures or
+identity checks. P2 (issue #1568) is directly blocked by absent P1, with E8-F3
+only a transitive prerequisite. No tests were added, changed, or run for this
+blocked workflow. Test planning below is deferred until P1 is completed.
 
 Every phase ships tests beside the execution modules using the `*_test.py`
 convention. Coverage thresholds are never lowered. Hardware-independent tests

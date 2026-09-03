@@ -1,9 +1,10 @@
 # Phase Details
 
 All retained E8-F4 phase names and design descriptions below are
-non-authoritative placeholders until E8-F3 supplies its integrated
-capture-resource carrier and contract. That shared prerequisite blocks every
-phase; none is independently ready for implementation or testing.
+non-authoritative placeholders. P1 (issue #1567) is directly blocked until
+E8-F3 supplies its integrated capture-resource carrier and contract. P2 (issue
+#1568) is directly blocked by absent P1, so E8-F3 is only a transitive
+prerequisite of P2; complete P1 before unblocking or performing P2.
 
 - [ ] **E8-F4-P1:** Prepared resident graph capture controller with unit tests
   - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
@@ -19,8 +20,8 @@ phase; none is independently ready for implementation or testing.
     transitions, opaque-handle ownership, one-time cleanup, and no exports.
 
 - [ ] **E8-F4-P2:** Complete fixed-sequence capture and CUDA smoke tests
-  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
-    contract absent
+  - Issue: #1568 | Size: S | Status: Blocked — P1 absent (E8-F3 is a transitive
+    prerequisite through P1)
   - Goal: Capture exactly one complete prepared twelve-node enqueue sequence
     with no setup work inside the capture window and publish the graph only
     after `capture_end` succeeds.
@@ -31,8 +32,7 @@ phase; none is independently ready for implementation or testing.
     pass-or-clean-skip capture smoke coverage.
 
 - [ ] **E8-F4-P3:** Guarded replay and exact compatibility checks with unit tests
-  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
-    contract absent
+  - Issue: Unassigned | Size: S | Status: Blocked — P2 has not completed
   - Goal: Validate the current exact resident/prepared/resource/signature
     binding before opening one timestep token and launching the captured graph
     exactly once without reseeding or host process dispatch.
@@ -44,8 +44,7 @@ phase; none is independently ready for implementation or testing.
     launch on failed preflight.
 
 - [ ] **E8-F4-P4:** Lifecycle invalidation fault and recapture handling with tests
-  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
-    contract absent
+  - Issue: Unassigned | Size: S | Status: Blocked — P3 has not completed
   - Goal: Connect structural invalidation, resident fault/finalize/close,
     post-launch failure, teardown, and explicit recapture eligibility to the
     E8-F1 state machine without automatic recapture or rollback.
@@ -56,8 +55,7 @@ phase; none is independently ready for implementation or testing.
     terminal-state behavior, and fresh-record-only recapture.
 
 - [ ] **E8-F4-P5:** Three-way full-loop validation and development documentation
-  - Issue: #1567 | Size: S | Status: Blocked — E8-F3 capture-resource carrier and
-    contract absent
+  - Issue: Unassigned | Size: S | Status: Blocked — P4 has not completed
   - Goal: Validate multiple identical process-sequence timesteps across CPU,
     uncaptured Warp, and captured CUDA, then document the implemented internal
     contract and downstream evidence handoff.

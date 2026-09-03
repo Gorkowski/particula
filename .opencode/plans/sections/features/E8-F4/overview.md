@@ -2,10 +2,11 @@
 
 ## Current Status
 
-**Blocked for issue #1567.** E8-F3 has not supplied the required capture-resource
-carrier or contract. No E8-F4 code, tests, or user documentation was implemented
-or updated in this workflow. Implementation must wait for the integrated E8-F3
-carrier and its ownership, adapter, and lifecycle contract.
+**P2 (issue #1568) is directly blocked by absent P1.** P1 (issue #1567) is directly
+blocked by E8-F3, which is therefore only a transitive prerequisite of P2. No
+E8-F4 code, tests, or user documentation was implemented or updated in this
+workflow. Complete P1 after the integrated E8-F3 carrier and its ownership,
+adapter, and lifecycle contract land, then unblock P2.
 
 ## Problem Statement
 

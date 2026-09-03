@@ -2,9 +2,10 @@
 
 ## Current Workflow Status
 
-The design below is deferred for issue #1567. E8-F3's capture-resource carrier
-and contract are absent, so no E8-F4 architecture was implemented and no
-resource or adapter API was inferred or fabricated.
+P1 (issue #1567) is directly blocked by E8-F3's absent capture-resource carrier
+and contract. P2 (issue #1568) is directly blocked by absent P1; E8-F3 is its
+transitive prerequisite. No E8-F4 architecture was implemented and no resource
+or adapter API was inferred or fabricated.
 
 ## High-Level Design
 
