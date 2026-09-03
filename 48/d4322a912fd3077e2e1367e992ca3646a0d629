@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "c4a73853",
+  "issue_number": "1571",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1571-adw-c4a73853",
+  "shipped_at": "2026-09-03T07:48:20.627342Z",
+  "plan_phase": "E8-F4-P5",
+  "plan_summary": "Validate E8-F4-P5 native CUDA capture/replay with bounded deterministic and stochastic full-loop coverage, lifecycle/failure-path tests, and hardware-free documentation assertions. First verify E8-F4-P1–P4 APIs exist; publish only verified evidence, preserve direct-import/CUDA-only/no-fallback boundaries, and restrict production fixes to reproduced defects.",
+  "discovered_context": ""
+}

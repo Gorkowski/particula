@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "2bbd893f",
+  "issue_number": "1568",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1568-adw-2bbd893f",
+  "shipped_at": "2026-09-03T05:17:15.273313Z",
+  "plan_phase": "E8-F4-P2",
+  "plan_summary": "P2 is blocked because the required E8-F4-P1 prepared-capture controller and captured-plan carrier are absent from this worktree. Merge P1 and re-plan against its landed API before implementing capture completion, the private twelve-operation dispatch helper, and CUDA smoke coverage; no implementation or validation commands should run while blocked.",
+  "discovered_context": ""
+}

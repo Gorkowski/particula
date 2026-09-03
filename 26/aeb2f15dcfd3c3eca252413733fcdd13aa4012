@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "3d038b1c",
+  "issue_number": "1567",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1567-adw-3d038b1c",
+  "shipped_at": "2026-09-03T04:25:31.301961Z",
+  "plan_phase": "E8-F4-P1",
+  "plan_summary": "E8-F4-P1 is blocked because the required E8-F3 capture-resource carrier and adapter contract are absent. Integrate E8-F3 first, then implement concrete-only, lazy-safe identity validation and read-only adapter qualification without native capture, resource work, scheduler dispatch, or exports.",
+  "discovered_context": ""
+}
