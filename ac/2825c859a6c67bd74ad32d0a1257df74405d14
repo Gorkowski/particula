@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "0d33c1ab",
+  "issue_number": "1576",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1576-adw-0d33c1ab",
+  "shipped_at": "2026-09-04T22:53:23.730123Z",
+  "plan_phase": "E8-F5-P2",
+  "plan_summary": "Extend only particula/execution/tests/captured_full_loop_test.py with E8-F5 test-only evidence for real Warp-CPU READY prepared full-loop parity, conservation, ledgers, diagnostics, stable identities, and canonical operation order. Build a scenario-specific prepared binding, exercise exactly three enqueues plus a zero-duration no-work row, and use independent detached NumPy expectations and scoped forbidden-work spies without changing production behavior, exports, fallback, capture/replay, or scientific models.",
+  "discovered_context": ""
+}
