@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "307b8318",
+  "issue_number": "1568",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1568-adw-307b8318",
+  "shipped_at": "2026-09-04T02:58:11.210197Z",
+  "plan_phase": "E8-F4-P2",
+  "plan_summary": "Implement concrete-only E8-F4-P2 CUDA graph capture for one already-prepared resident timestep: validate the exact qualified binding, invoke native begin, dispatch the retained twelve operations, end capture, revalidate, and publish an identity-preserving captured-graph record only after CAPTURED transition. Preserve opaque handles and strict failure cleanup/causal chains, add a capture-safe dispatcher, and cover ordering, drift, failure, export, and real-CUDA smoke behavior with focused tests.",
+  "discovered_context": "No recent workflow messages."
+}
