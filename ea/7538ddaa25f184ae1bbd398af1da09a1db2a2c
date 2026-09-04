@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "4416c6a9",
+  "issue_number": "1569",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1569-adw-4416c6a9",
+  "shipped_at": "2026-09-04T04:31:55.463661Z",
+  "plan_phase": "E8-F4-P3",
+  "plan_summary": "Implement the concrete-only P3 replay boundary for captured resident graphs. Authenticate P2-issued records, revalidate exact bindings, signatures, publication state, device/lifecycle/guard/duration compatibility, then perform one tokenized native launch and completion with writer-capable failure handling. Add focused tests covering provenance, drift, forbidden work, exports, durations, and failure semantics.",
+  "discovered_context": ""
+}
