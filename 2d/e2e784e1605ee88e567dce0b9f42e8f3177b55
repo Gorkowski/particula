@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "faee0d47",
+  "issue_number": "1575",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1575-adw-faee0d47",
+  "shipped_at": "2026-09-04T21:15:26.595960Z",
+  "plan_phase": "E8-F5-P1",
+  "plan_summary": "Implement the E8-F5-P1 test-only boundary in particula/execution/tests/captured_full_loop_test.py. Add immutable validated two-box fixtures, an independent NumPy full-loop oracle with diagnostics and inventory accounting, and CPU-only assertions covering deterministic reconstruction, multi-step behavior, no-work paths, conservation, and rejection safety. Keep all production, GPU, scheduler, graph-capture, export, and documentation code unchanged.",
+  "discovered_context": ""
+}
