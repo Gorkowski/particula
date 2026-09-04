@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "36cd9e1a",
+  "issue_number": "1571",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1571-adw-36cd9e1a",
+  "shipped_at": "2026-09-04T12:52:07.244357Z",
+  "plan_phase": "E8-F4-P5",
+  "plan_summary": "Add test-only, end-to-end evidence for concrete-only resident native graph capture through an independent NumPy reference, uncaptured Warp-CPU execution, and optional native-CUDA capture/replay. Create focused full-loop coverage for deterministic, stochastic, RNG, no-work, and stale-binding boundaries, while adding hardware-free documentation-contract checks. Update only the specified developer documentation; do not add production behavior, exports, capture emulation, or performance claims.",
+  "discovered_context": ""
+}
