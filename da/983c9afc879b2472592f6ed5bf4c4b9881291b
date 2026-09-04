@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "d85b62a7",
+  "issue_number": "1570",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1570-adw-d85b62a7",
+  "shipped_at": "2026-09-04T06:29:48.254376Z",
+  "plan_phase": "E8-F4-P4",
+  "plan_summary": "Implement lifecycle invalidation and terminal teardown for captured resident-graph handles. Centralize graph-owned release and stale-state transitions, attach exact session/registry/guard bindings, and route structural drift, writer faults, finalization, close/discard, and retirement through a private notification seam. Add focused regressions covering provenance, release ordering, fault propagation, recapture, guard validation, and unchanged checkpoint semantics.",
+  "discovered_context": ""
+}
