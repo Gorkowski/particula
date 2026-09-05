@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "817a3e61",
+  "issue_number": "1579",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1579-adw-817a3e61",
+  "shipped_at": "2026-09-05T12:49:03.543517Z",
+  "plan_phase": "E8-F5-P5",
+  "plan_summary": "E8-F5-P5 is a documentation-only validation closeout for issue #1579 that consolidates E8-F5 P1–P4 evidence while preserving the existing E8-F4-P5 graph-capture contract; it changes no production behavior, exports, capture semantics, or examples. It adds an auditable dated evidence record, roadmap closeout section, and hardware-free documentation regression assertion, with shipment conditional on sequential required validation and strict documentation checks.",
+  "discovered_context": ""
+}
