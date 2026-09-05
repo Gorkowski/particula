@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f91376fd",
+  "issue_number": "1578",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1578-adw-f91376fd",
+  "shipped_at": "2026-09-05T01:51:30.129668Z",
+  "plan_phase": "E8-F5-P4",
+  "plan_summary": "Add test-only evidence for independent resident coagulation and wall-loss RNG streams, including persistence across real work, explicit reset behavior, and schema-v4 exact-device checkpoint/restart continuation. Extend focused fake-native graph replay rejection coverage across stale provenance, binding/signature/duration/terminal failures and writer-capable faults, while preserving existing production APIs and documented no-retry/no-rollback boundaries.",
+  "discovered_context": ""
+}
