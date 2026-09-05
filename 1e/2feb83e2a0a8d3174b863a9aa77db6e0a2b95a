@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "ba745a96",
+  "issue_number": "1577",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1577-adw-ba745a96",
+  "shipped_at": "2026-09-05T00:15:25.980001Z",
+  "plan_phase": "E8-F5-P3",
+  "plan_summary": "Add test-only optional native-CUDA evidence for the prepared resident-loop capture boundary, centered on captured_full_loop_test.py with minimal hermetic graph-capture support if needed. Extend independent GAS and PARTICLES scenarios, Warp-CPU baselines, per-device CUDA capture/replay coverage, qualification rejection checks, and replay-only forbidden-host-work instrumentation while preserving no-fallback and lifecycle contracts.",
+  "architecture_notes": "Test-only validation; production modules, exports, APIs, scheduler/resource behavior, graph ownership, checkpointing, and scientific behavior remain unchanged. Use separate exact device bindings and closed communication resource families, with native CUDA capture never falling back to CPU or Warp CPU.",
+  "discovered_context": ""
+}
