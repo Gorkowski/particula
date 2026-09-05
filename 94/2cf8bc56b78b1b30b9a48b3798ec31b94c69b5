@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "6cddbd36",
+  "issue_number": "1581",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1581-adw-6cddbd36",
+  "shipped_at": "2026-09-05T17:19:05.488695Z",
+  "plan_phase": "E8-F6-P1",
+  "plan_summary": "Implement a standard-library-only host-side resident benchmark support module and tests. Define immutable validated benchmark cases, timing results, metadata, deterministic schema-versioned JSON round trips, and path-safe atomic writes under an explicit .artifacts root. Keep Warp/CUDA probing, production execution changes, exports, publication, and documentation out of scope.",
+  "discovered_context": ""
+}
