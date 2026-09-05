@@ -5,8 +5,12 @@ supplemental evidence, not an assertion threshold, and remains opt-in.
 
 ## Per-Phase Approach
 
-- **P1:** Fast unit tests validate case schemas, metadata, stable JSON ordering,
-  raw-sample summaries, path safety, and malformed/overflowing input rejection.
+- **P1 (delivered, issue #1581):** Host-only default-collection tests in
+  `particula/execution/tests/resident_benchmark_support_test.py` validate frozen
+  records, metadata, stable schema-versioned JSON ordering/round trips, raw
+  sample summaries, malformed-input rejection, path/symlink safety, and atomic
+  writer failure handling. They verify that importing the support module does
+  not load Warp and do not probe CUDA or allocate device memory.
 - **P2:** Unit tests spy on prepared/captured routing, warmup exclusion, explicit
   synchronization, exact fixture identity, and separation of setup from replay.
   One opt-in CUDA row records real uncaptured/captured samples.
@@ -31,6 +35,7 @@ integration tests and `particula/gpu/tests/benchmark_helpers_test.py` plus
 Focused fix checks are assertion-only and coverage disabled:
 
 ```bash
+pytest particula/execution/tests/resident_benchmark_support_test.py -q --no-cov
 pytest particula/gpu/tests/benchmark_helpers_test.py \
   particula/gpu/tests/benchmark_safety_test.py -q
 pytest particula/execution/tests/ -q -k "benchmark or memory_budget"

@@ -1,8 +1,11 @@
-"""Concrete host-side support for resident benchmark evidence.
+"""Provide concrete host-only support for resident benchmark evidence.
 
-This test-support module validates and persists benchmark artifacts without
-importing or probing Warp or CUDA, allocating device resources, or changing
-resident execution.
+This test-support module defines the bounded artifact schema used by resident
+benchmark tests. It validates immutable host records, produces deterministic
+JSON, and atomically writes generic JSON below an explicit ``.artifacts``
+root. It neither imports nor probes Warp or CUDA, allocates device resources,
+changes resident execution, adds package exports, nor supplies a user-facing
+API.
 """
 
 # ruff: noqa: C901, E501
@@ -13,9 +16,10 @@ import json
 import math
 import os
 import platform
+import secrets
+import stat
 import statistics
 import sys
-import tempfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
@@ -28,6 +32,18 @@ RESIDENT_BENCHMARK_SCHEMA_VERSION = 1
 
 MAX_TIMING_SAMPLES = 10_000
 """Maximum P1 timing samples accepted for one executed benchmark result."""
+
+MAX_ARTIFACT_PAYLOAD_BYTES = 1_048_576
+"""Maximum UTF-8 size accepted for an untrusted artifact payload."""
+
+MAX_ARTIFACT_NESTING_DEPTH = 32
+"""Maximum JSON nesting depth accepted for an artifact payload."""
+
+MAX_ARTIFACT_ROWS = 500
+"""Maximum case or result rows accepted in one artifact."""
+
+MAX_ARTIFACT_CONTAINER_ITEMS = 1_000
+"""Maximum items in any decoded JSON mapping or list."""
 
 PROCESS_ORDER = (
     "communication",
@@ -60,9 +76,19 @@ REQUIRED_METADATA_FIELDS = frozenset(
     }
 )
 
+_WARP_VERSION_FIELDS = frozenset({"status", "value"})
+_WARP_VERSION_ERROR_FIELDS = frozenset({"status", "value", "error"})
+_DEVICE_FIELDS = frozenset({"status", "identity", "memory"})
+_DEVICE_ERROR_FIELDS = frozenset({"status", "identity", "memory", "error"})
+
 
 class ResidentBenchmarkStatus(str, Enum):
-    """Status of one requested resident benchmark measurement."""
+    """Represent the outcome of one requested resident benchmark measurement.
+
+    ``EXECUTED`` records timing evidence. ``UNAVAILABLE`` and
+    ``SKIPPED_BUDGET`` record an explicit non-execution reason without timing
+    samples.
+    """
 
     EXECUTED = "executed"
     UNAVAILABLE = "unavailable"
@@ -175,7 +201,17 @@ def _freeze_mapping(
 
 
 def _freeze_json_value(value: Any) -> Any:
-    """Recursively make a normalized JSON-compatible value immutable."""
+    """Recursively make a normalized JSON-compatible value immutable.
+
+    Dictionaries become read-only mapping proxies and lists become tuples.
+    Scalar JSON values are returned unchanged.
+
+    Args:
+        value: Normalized JSON-compatible value to freeze.
+
+    Returns:
+        An immutable value with the same JSON-compatible contents.
+    """
     if isinstance(value, dict):
         return MappingProxyType(
             {key: _freeze_json_value(item) for key, item in value.items()}
@@ -186,7 +222,18 @@ def _freeze_json_value(value: Any) -> Any:
 
 
 def _validate_metadata(value: object) -> Mapping[str, Any]:
-    """Validate the complete stable metadata schema for an artifact."""
+    """Validate the complete stable metadata schema for an artifact.
+
+    Args:
+        value: Candidate metadata mapping.
+
+    Returns:
+        An immutable metadata mapping with validated provenance fields.
+
+    Raises:
+        TypeError: If a field has an unsupported type.
+        ValueError: If fields, timestamp, or provenance values are invalid.
+    """
     metadata = _freeze_mapping(value, "metadata", nonempty=True)
     if set(metadata) != REQUIRED_METADATA_FIELDS:
         raise ValueError("metadata has invalid fields.")
@@ -217,10 +264,91 @@ def _validate_metadata(value: object) -> Mapping[str, Any]:
         metadata["timestep_count"], "metadata timestep_count", positive=True
     )
     _require_int(metadata["seed"], "metadata seed")
-    for name in ("warp_version", "device"):
-        if not isinstance(metadata[name], Mapping) or not metadata[name]:
-            raise ValueError(f"metadata {name} must be a nonempty mapping.")
+    _validate_warp_version(metadata["warp_version"])
+    _validate_device_provenance(metadata["device"])
     return metadata
+
+
+def _validate_status(value: object, name: str) -> str:
+    """Validate and return one supported provenance status.
+
+    Args:
+        value: Candidate status value.
+        name: Provenance field name used in error messages.
+
+    Returns:
+        The validated status string.
+
+    Raises:
+        TypeError: If ``value`` is not a string.
+        ValueError: If the status is not supported.
+    """
+    if not isinstance(value, str):
+        raise TypeError(f"{name} status must be a string.")
+    if value not in {"available", "unavailable", "error"}:
+        raise ValueError(f"{name} status is invalid.")
+    return value
+
+
+def _validate_warp_version(value: object) -> None:
+    """Validate exact status-qualified Warp-version provenance.
+
+    Args:
+        value: Candidate Warp-version provenance mapping.
+
+    Raises:
+        TypeError: If the mapping or one of its values has an invalid type.
+        ValueError: If the mapping has an unsupported status or field set.
+    """
+    if not isinstance(value, Mapping):
+        raise TypeError("metadata warp_version must be a mapping.")
+    status = _validate_status(value.get("status"), "metadata warp_version")
+    expected = (
+        _WARP_VERSION_ERROR_FIELDS
+        if status == "error"
+        else _WARP_VERSION_FIELDS
+    )
+    if set(value) != expected:
+        raise ValueError("metadata warp_version has invalid fields.")
+    if status == "available":
+        if not isinstance(value["value"], str) or not value["value"]:
+            raise TypeError("available warp_version value must be a string.")
+    elif value["value"] is not None:
+        raise TypeError("unavailable Warp version value must be None.")
+    if status == "error" and (
+        not isinstance(value["error"], str) or not value["error"]
+    ):
+        raise TypeError(
+            "error Warp version provenance requires an error string."
+        )
+
+
+def _validate_device_provenance(value: object) -> None:
+    """Validate exact status-qualified device provenance.
+
+    Args:
+        value: Candidate device identity and memory mapping.
+
+    Raises:
+        TypeError: If the mapping or one of its values has an invalid type.
+        ValueError: If the mapping has an unsupported status or field set.
+    """
+    if not isinstance(value, Mapping):
+        raise TypeError("metadata device must be a mapping.")
+    status = _validate_status(value.get("status"), "metadata device")
+    expected = _DEVICE_ERROR_FIELDS if status == "error" else _DEVICE_FIELDS
+    if set(value) != expected:
+        raise ValueError("metadata device has invalid fields.")
+    if status == "available":
+        if not isinstance(value["identity"], str) or not value["identity"]:
+            raise TypeError("available device identity must be a string.")
+        _require_int(value["memory"], "available device memory")
+    elif value["identity"] is not None or value["memory"] is not None:
+        raise TypeError("unavailable device values must be None.")
+    if status == "error" and (
+        not isinstance(value["error"], str) or not value["error"]
+    ):
+        raise TypeError("error device provenance requires an error string.")
 
 
 def _canonical_processes(value: object) -> tuple[str, ...]:
@@ -262,7 +390,26 @@ def build_resident_benchmark_case_id(
     timestep_count: int,
     seed: int,
 ) -> str:
-    """Build the canonical, configuration-derived resident case identifier."""
+    """Build the canonical identifier for a resident benchmark configuration.
+
+    Args:
+        requested_shape: Requested ``(boxes, particles, species)`` capacity.
+        actual_shape: Realized ``(boxes, particles, species)`` capacity.
+        active_fraction: Fraction of realized particle slots that are active.
+        processes: Nonempty process tuple in canonical resident order.
+        communication: Supported resident communication selection.
+        diagnostics: Unique diagnostic selection names.
+        warmup: Number of warmup timesteps.
+        timestep_count: Positive number of measured timesteps.
+        seed: Nonnegative deterministic benchmark seed.
+
+    Returns:
+        The exact configuration-derived case identifier.
+
+    Raises:
+        TypeError: If an input has an unsupported type or container shape.
+        ValueError: If a value is out of bounds or not a canonical selection.
+    """
     requested_shape = _validate_shape(requested_shape, "requested_shape")
     actual_shape = _validate_shape(actual_shape, "actual_shape")
     if any(
@@ -293,14 +440,31 @@ def build_resident_benchmark_case_id(
         f"r{requested_shape[0]}x{requested_shape[1]}x{requested_shape[2]}"
         f"-a{actual_shape[0]}x{actual_shape[1]}x{actual_shape[2]}"
         f"-f{active_fraction:.17g}-p{'-'.join(processes)}"
-        f"-c{communication}-d{'-'.join(diagnostics) or 'none'}"
+        f"-c{communication}-d{''.join(f'{len(item)}:{item}' for item in diagnostics) or 'none'}"
         f"-w{warmup}-t{timestep_count}-s{seed}"
     )
 
 
 @dataclass(frozen=True, slots=True)
 class ResidentBenchmarkCase:
-    """Validated requested and realizable resident benchmark configuration."""
+    """Store one immutable, canonical resident benchmark configuration.
+
+    This concrete test-support record validates all host configuration before
+    benchmark execution. Its ``case_id`` must exactly reproduce the canonical
+    identifier derived from the remaining fields.
+
+    Attributes:
+        case_id: Canonical configuration-derived identifier.
+        requested_shape: Requested ``(boxes, particles, species)`` capacity.
+        actual_shape: Realized capacity, bounded by ``requested_shape``.
+        active_fraction: Fraction of realized particle slots that are active.
+        processes: Nonempty canonical resident process selection.
+        communication: Resident communication selection.
+        diagnostics: Unique diagnostic selection names.
+        warmup: Nonnegative count of warmup timesteps.
+        timestep_count: Positive count of measured timesteps.
+        seed: Nonnegative deterministic benchmark seed.
+    """
 
     case_id: str
     requested_shape: tuple[int, int, int]
@@ -314,7 +478,12 @@ class ResidentBenchmarkCase:
     seed: int
 
     def __post_init__(self) -> None:
-        """Validate canonical case configuration before it can be used."""
+        """Validate the canonical configuration after frozen construction.
+
+        Raises:
+            TypeError: If a field has an unsupported type or container shape.
+            ValueError: If capacities, selections, or the identifier are invalid.
+        """
         requested = _validate_shape(self.requested_shape, "requested_shape")
         actual = _validate_shape(self.actual_shape, "actual_shape")
         if any(
@@ -349,7 +518,15 @@ class ResidentBenchmarkCase:
 
 @dataclass(frozen=True, slots=True)
 class ResidentTimingSummary:
-    """Deterministic summary of nonnegative host timing samples."""
+    """Store deterministic summary statistics for nonnegative host timings.
+
+    Attributes:
+        count: Positive number of summarized samples.
+        minimum: Smallest sample value.
+        median: Median sample value.
+        mean: Arithmetic mean of the samples.
+        p95: Nearest-rank 95th-percentile sample value.
+    """
 
     count: int
     minimum: float
@@ -358,17 +535,33 @@ class ResidentTimingSummary:
     p95: float
 
     def __post_init__(self) -> None:
-        """Validate independently constructed timing summary fields."""
+        """Validate independently constructed nonnegative summary fields.
+
+        Raises:
+            TypeError: If a field has an unsupported numeric type.
+            ValueError: If count is not positive or a statistic is invalid.
+        """
         _require_int(self.count, "count", positive=True)
         for name in ("minimum", "median", "mean", "p95"):
             _require_float(getattr(self, name), name, minimum=0.0)
 
 
 def summarize_timing_samples(samples: object) -> ResidentTimingSummary:
-    """Validate samples and return deterministic min/median/mean/p95 summary.
+    """Summarize bounded, nonnegative timing samples deterministically.
 
-    The p95 uses the nearest-rank method: ``ceil(0.95 * count) - 1`` in the
-    sorted zero-based sequence.
+    The input is capped at ``MAX_TIMING_SAMPLES`` before sorting. The p95 uses
+    the nearest-rank index ``ceil(0.95 * count) - 1`` in sorted zero-based
+    order.
+
+    Args:
+        samples: Nonempty tuple of at most ``MAX_TIMING_SAMPLES`` timings.
+
+    Returns:
+        Validated minimum, median, mean, and nearest-rank p95 summary.
+
+    Raises:
+        TypeError: If ``samples`` is not a tuple of numeric values.
+        ValueError: If samples are empty, excessive, nonfinite, or negative.
     """
     if not isinstance(samples, tuple):
         raise TypeError("samples must be a tuple.")
@@ -391,7 +584,21 @@ def summarize_timing_samples(samples: object) -> ResidentTimingSummary:
 
 @dataclass(frozen=True, slots=True)
 class ResidentBenchmarkResult:
-    """Validated evidence or explicit non-execution outcome for one case."""
+    """Store immutable evidence or a non-execution outcome for one case.
+
+    Executed rows require supported timing data whose summary exactly matches
+    the samples. Non-executed rows require a reason and prohibit timing data.
+
+    Attributes:
+        case_id: Identifier of the referenced benchmark case.
+        timing_mode: Supported timing mode for executed rows, otherwise ``None``.
+        requested_shape: Requested shape copied from the referenced case.
+        status: Executed, unavailable, or budget-skipped outcome.
+        reason: Non-execution reason, or ``None`` for executed rows.
+        samples: Raw nonnegative timings for executed rows.
+        summary: Deterministic summary for executed rows, otherwise ``None``.
+        provenance: Nonempty immutable host provenance reference.
+    """
 
     case_id: str
     timing_mode: str | None
@@ -403,7 +610,12 @@ class ResidentBenchmarkResult:
     provenance: Mapping[str, Any]
 
     def __post_init__(self) -> None:
-        """Validate evidence consistency for the declared result status."""
+        """Validate status-specific evidence and provenance consistency.
+
+        Raises:
+            TypeError: If a field or provenance value has an unsupported type.
+            ValueError: If timing evidence or a non-execution outcome is invalid.
+        """
         if not isinstance(self.case_id, str) or not self.case_id:
             raise TypeError("case_id must be a nonempty string.")
         _validate_shape(self.requested_shape, "requested_shape")
@@ -450,14 +662,25 @@ class ResidentBenchmarkResult:
 
 @dataclass(frozen=True, slots=True)
 class ResidentBenchmarkArtifact:
-    """Complete immutable resident benchmark metadata, cases, and results."""
+    """Store one complete, immutable resident benchmark evidence artifact.
+
+    Attributes:
+        metadata: Complete stable host provenance metadata.
+        cases: Canonical benchmark configurations with unique identifiers.
+        results: Case-referencing results with unique case/mode identities.
+    """
 
     metadata: Mapping[str, Any]
     cases: tuple[ResidentBenchmarkCase, ...]
     results: tuple[ResidentBenchmarkResult, ...]
 
     def __post_init__(self) -> None:
-        """Validate complete metadata and cross-record artifact references."""
+        """Validate complete metadata and cross-record artifact references.
+
+        Raises:
+            TypeError: If records are not tuples of the supported record types.
+            ValueError: If metadata, identifiers, or references are inconsistent.
+        """
         metadata = _validate_metadata(self.metadata)
         object.__setattr__(self, "metadata", metadata)
         if not isinstance(self.cases, tuple) or not all(
@@ -503,7 +726,29 @@ def build_resident_benchmark_metadata(
     warp_version: Mapping[str, Any],
     device: Mapping[str, Any],
 ) -> Mapping[str, Any]:
-    """Build complete host-only provenance without importing Warp or devices."""
+    """Build complete host-only provenance without probing Warp or a device.
+
+    The caller supplies Warp and device availability/value mappings explicitly;
+    this helper only reads Python and platform metadata.
+
+    Args:
+        timestamp_utc: UTC-aware timestamp for the benchmark invocation.
+        command: Reproduction command.
+        synchronization_method: Timing synchronization method.
+        warmup: Nonnegative number of warmup timesteps.
+        timestep_count: Positive number of measured timesteps.
+        seed: Nonnegative deterministic benchmark seed.
+        prepared_signature_digest: Nonempty prepared-signature digest.
+        warp_version: Explicit Warp version or availability mapping.
+        device: Explicit device identity or availability mapping.
+
+    Returns:
+        Immutable, complete metadata matching the artifact schema.
+
+    Raises:
+        TypeError: If an input has an unsupported type.
+        ValueError: If UTC, scalar, or mapping validation fails.
+    """
     if not isinstance(timestamp_utc, datetime):
         raise TypeError("timestamp_utc must be a datetime.")
     if (
@@ -596,7 +841,21 @@ def _normalize_json(value: object) -> Any:
 def serialize_resident_benchmark_artifact(
     artifact: ResidentBenchmarkArtifact,
 ) -> str:
-    """Serialize a validated artifact in deterministic schema-versioned JSON."""
+    """Serialize an artifact as deterministic schema-versioned JSON.
+
+    The serialized UTF-8-compatible JSON uses sorted keys, two-space
+    indentation, and exactly one trailing newline.
+
+    Args:
+        artifact: Fully validated resident benchmark evidence artifact.
+
+    Returns:
+        Schema-envelope JSON text with deterministic formatting.
+
+    Raises:
+        TypeError: If ``artifact`` is not a resident benchmark artifact.
+        ValueError: If a nested value is not JSON-normalizable.
+    """
     if not isinstance(artifact, ResidentBenchmarkArtifact):
         raise TypeError("artifact must be a ResidentBenchmarkArtifact.")
     return (
@@ -635,16 +894,85 @@ def _require_fields(
     return value
 
 
+def _validate_payload_structure(value: object) -> None:
+    """Reject decoded JSON structures exceeding bounded artifact limits.
+
+    Args:
+        value: Decoded JSON value to inspect.
+
+    Raises:
+        ValueError: If nesting depth or container size exceeds its limit.
+    """
+    pending = [(value, 0)]
+    while pending:
+        current, depth = pending.pop()
+        if depth > MAX_ARTIFACT_NESTING_DEPTH:
+            raise ValueError("payload exceeds maximum nesting depth.")
+        if isinstance(current, dict):
+            if len(current) > MAX_ARTIFACT_CONTAINER_ITEMS:
+                raise ValueError("payload mapping exceeds maximum item count.")
+            pending.extend((item, depth + 1) for item in current.values())
+        elif isinstance(current, list):
+            if len(current) > MAX_ARTIFACT_CONTAINER_ITEMS:
+                raise ValueError("payload list exceeds maximum item count.")
+            pending.extend((item, depth + 1) for item in current)
+
+
+def _validate_json_nesting(payload: str) -> None:
+    """Bound JSON nesting before the standard-library decoder recurses.
+
+    Args:
+        payload: JSON text whose bracket nesting should be bounded.
+
+    Raises:
+        ValueError: If the text exceeds the maximum nesting depth.
+    """
+    depth = 0
+    quoted = False
+    escaped = False
+    for character in payload:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == '"':
+                quoted = False
+        elif character == '"':
+            quoted = True
+        elif character in "[{":
+            depth += 1
+            if depth > MAX_ARTIFACT_NESTING_DEPTH:
+                raise ValueError("payload exceeds maximum nesting depth.")
+        elif character in "]}":
+            depth -= 1
+
+
 def deserialize_resident_benchmark_artifact(
     payload: str,
 ) -> ResidentBenchmarkArtifact:
-    """Deserialize a schema envelope through all normal record constructors."""
+    """Deserialize a schema envelope through normal record constructors.
+
+    Args:
+        payload: JSON text containing the exact supported schema envelope.
+
+    Returns:
+        A fully validated immutable resident benchmark artifact.
+
+    Raises:
+        TypeError: If ``payload`` is not text.
+        ValueError: If JSON, the envelope, or any reconstructed record is invalid.
+    """
     if not isinstance(payload, str):
         raise TypeError("payload must be a string.")
+    if len(payload.encode("utf-8")) > MAX_ARTIFACT_PAYLOAD_BYTES:
+        raise ValueError("payload exceeds maximum byte size.")
+    _validate_json_nesting(payload)
     try:
         envelope = json.loads(payload)
     except json.JSONDecodeError as error:
         raise ValueError("payload is not valid JSON.") from error
+    _validate_payload_structure(envelope)
     envelope = _require_fields(
         envelope, {"schema_version", "artifact"}, "envelope"
     )
@@ -653,6 +981,11 @@ def deserialize_resident_benchmark_artifact(
     raw = _require_fields(
         envelope["artifact"], {"metadata", "cases", "results"}, "artifact"
     )
+    for name in ("cases", "results"):
+        if not isinstance(raw[name], list):
+            raise ValueError(f"artifact {name} must be a list.")
+        if len(raw[name]) > MAX_ARTIFACT_ROWS:
+            raise ValueError(f"artifact {name} exceeds maximum row count.")
     cases = []
     for item in raw["cases"]:
         item = _require_fields(
@@ -708,7 +1041,27 @@ def write_json_artifact(
     relative_destination: str | os.PathLike[str],
     payload: object,
 ) -> Path:
-    """Atomically write normalized generic JSON below an existing `.artifacts` root."""
+    """Atomically write normalized generic JSON below an existing artifacts root.
+
+    The root must be a non-symlink directory literally named ``.artifacts``.
+    Destinations must be relative, contain no parent traversal, and cannot
+    resolve outside that root. The writer validates and serializes before
+    creating directories or temporary files, then writes, fsyncs, and replaces
+    a same-directory temporary file. It does not promise recovery after a
+    successful replacement followed by an operating-system failure.
+
+    Args:
+        artifact_root: Existing directory named ``.artifacts``.
+        relative_destination: Contained relative JSON destination path.
+        payload: Supported JSON-normalizable value without an artifact envelope.
+
+    Returns:
+        Final destination path after successful atomic replacement.
+
+    Raises:
+        OSError: If serialization, path validation, writing, replacement, or
+            temporary cleanup fails.
+    """
     try:
         serialized = (
             json.dumps(
@@ -722,19 +1075,15 @@ def write_json_artifact(
         )
     except (TypeError, ValueError) as error:
         raise OSError("artifact payload serialization failed.") from error
+    root_path = Path(artifact_root)
+    root_fd: int | None = None
+    parent_fd: int | None = None
+    temporary_name: str | None = None
     try:
-        root_path = Path(artifact_root)
-        if (
-            root_path.name != ".artifacts"
-            or root_path.is_symlink()
-            or not root_path.is_dir()
-        ):
+        if root_path.name != ".artifacts" or not hasattr(os, "O_NOFOLLOW"):
             raise OSError(
                 "artifact_root must be an existing .artifacts directory."
             )
-        root = root_path.resolve(strict=True)
-        if root.name != ".artifacts":
-            raise OSError("artifact_root must resolve to .artifacts.")
         relative = Path(relative_destination)
         if (
             relative.is_absolute()
@@ -744,53 +1093,90 @@ def write_json_artifact(
             raise OSError(
                 "relative_destination must be contained and relative."
             )
-        destination = root / relative
-        existing = root
-        for part in relative.parts:
-            candidate = existing / part
-            if candidate.exists() or candidate.is_symlink():
-                resolved = candidate.resolve(strict=True)
-                if resolved != root and root not in resolved.parents:
-                    raise OSError("artifact path escapes artifact_root.")
-                existing = resolved
-            else:
-                existing = candidate
-        if destination.exists() or destination.is_symlink():
-            resolved_destination = destination.resolve(strict=True)
-            if (
-                resolved_destination != root
-                and root not in resolved_destination.parents
-            ):
-                raise OSError("artifact destination escapes artifact_root.")
-        destination.parent.mkdir(parents=True, exist_ok=True)
-    except (OSError, TypeError, ValueError) as error:
-        raise OSError(f"artifact path validation failed: {error}") from error
-
-    temporary_name: str | None = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            mode="w",
-            encoding="utf-8",
-            dir=destination.parent,
-            prefix=".resident-benchmark-",
-            delete=False,
-        ) as temporary:
-            temporary_name = temporary.name
+        flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+        try:
+            root_fd = os.open(root_path, flags)
+        except OSError as error:
+            raise OSError(
+                f"artifact path validation failed: {error}"
+            ) from error
+        parent_fd = os.dup(root_fd)
+        for part in relative.parts[:-1]:
+            try:
+                child_fd = os.open(part, flags, dir_fd=parent_fd)
+            except FileNotFoundError:
+                os.mkdir(part, dir_fd=parent_fd)
+                try:
+                    child_fd = os.open(part, flags, dir_fd=parent_fd)
+                except OSError as error:
+                    raise OSError(
+                        "artifact path escapes artifact_root."
+                    ) from error
+            except OSError as error:
+                raise OSError("artifact path escapes artifact_root.") from error
+            os.close(parent_fd)
+            parent_fd = child_fd
+        try:
+            destination_status = os.stat(
+                relative.name, dir_fd=parent_fd, follow_symlinks=False
+            )
+        except FileNotFoundError:
+            destination_status = None
+        if destination_status is not None and stat.S_ISLNK(
+            destination_status.st_mode
+        ):
+            raise OSError("artifact path escapes artifact_root.")
+        for _ in range(10):
+            temporary_name = f".resident-benchmark-{secrets.token_hex(16)}"
+            try:
+                temporary_fd = os.open(
+                    temporary_name,
+                    os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                    0o600,
+                    dir_fd=parent_fd,
+                )
+                break
+            except FileExistsError:
+                temporary_name = None
+        else:
+            raise OSError("could not allocate artifact temporary file.")
+        with os.fdopen(temporary_fd, "w", encoding="utf-8") as temporary:
             temporary.write(serialized)
             temporary.flush()
             os.fsync(temporary.fileno())
-        os.replace(temporary_name, destination)
+        os.replace(
+            temporary_name,
+            relative.name,
+            src_dir_fd=parent_fd,
+            dst_dir_fd=parent_fd,
+        )
         temporary_name = None
-        return destination
+        return root_path / relative
     except OSError as error:
+        if (
+            str(error).startswith("artifact path validation failed")
+            or str(error).startswith("artifact path escapes")
+            or str(error).startswith("artifact_root")
+            or str(error).startswith("relative_destination")
+        ):
+            if not str(error).startswith("artifact path"):
+                raise OSError(
+                    f"artifact path validation failed: {error}"
+                ) from error
+            raise
         cleanup_error: OSError | None = None
-        if temporary_name is not None:
+        if temporary_name is not None and parent_fd is not None:
             try:
-                os.unlink(temporary_name)
+                os.unlink(temporary_name, dir_fd=parent_fd)
             except OSError as caught:
                 cleanup_error = caught
         if cleanup_error is not None:
             raise OSError(
                 "artifact write failed; temporary cleanup also failed."
             ) from cleanup_error
-        raise OSError("artifact atomic write failed.") from error
+        raise OSError("artifact write failed.") from error
+    finally:
+        if parent_fd is not None:
+            os.close(parent_fd)
+        if root_fd is not None:
+            os.close(root_fd)

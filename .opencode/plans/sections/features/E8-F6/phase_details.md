@@ -1,15 +1,17 @@
 # Phase Details
 
-- [ ] **E8-F6-P1:** Define resident benchmark matrix and reproducible artifact schema with unit tests
-  - Issue: TBD | Size: S | Status: Not Started
-  - Goal: Add frozen case/result records and serializers in one concrete test
-    support module; keep each record under 100 LOC and reject malformed rows
-    before any CUDA probe or allocation.
-  - Files: `particula/execution/tests/resident_benchmark_support.py`,
-    `particula/execution/tests/resident_benchmark_support_test.py`,
-    `particula/gpu/tests/benchmark_test.py`
-  - Tests: Schema construction/validation, stable JSON serialization, command and
-    device metadata, canonical case IDs, and malformed-record rejection.
+- [x] **E8-F6-P1:** Define resident benchmark matrix and reproducible artifact schema with unit tests
+  - Issue: #1581 | Size: S | Status: Shipped
+  - Delivered: Frozen host-only case, timing-summary, result, and artifact
+    records validate canonical configurations and references before CUDA-facing
+    work. Complete caller-provided provenance, deterministic schema-versioned
+    serialization/deserialization, and a verified-`.artifacts` atomic generic
+    JSON writer are implemented without Warp/CUDA imports or probes.
+  - Files: `particula/execution/tests/resident_benchmark_support.py` and
+    `particula/execution/tests/resident_benchmark_support_test.py`.
+  - Tests: Default-collection host-only coverage for construction, status/sample
+    rules, metadata, canonical IDs, deterministic round trips, malformed rows,
+    import isolation, path/symlink rejection, and atomic-write failures.
 
 - [ ] **E8-F6-P2:** Benchmark captured versus uncaptured repeated resident timesteps with unit tests
   - Issue: TBD | Size: S | Status: Not Started

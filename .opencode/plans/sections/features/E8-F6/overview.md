@@ -18,6 +18,17 @@ canonical logical-byte inventory, separates analytical logical bytes from
 allocator-observed peak memory, and records enough hardware and command context
 for maintainers to reproduce or qualify every claim.
 
+## Delivered P1 Foundation
+
+Issue #1581 delivered the concrete, host-only evidence foundation at
+`particula/execution/tests/resident_benchmark_support.py`, with default-
+collection tests in `particula/execution/tests/resident_benchmark_support_test.py`.
+It validates frozen benchmark cases, results, timing summaries, and complete
+caller-provided provenance before any CUDA-facing work; deterministically
+round-trips schema-versioned JSON; and atomically writes generic JSON only
+beneath a verified `.artifacts` root. It does not execute benchmarks, import or
+probe Warp/CUDA, modify resident execution, add exports, or publish evidence.
+
 ## User Stories
 
 - As a performance engineer, I want captured and uncaptured resident loops run
