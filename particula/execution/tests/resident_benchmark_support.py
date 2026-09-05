@@ -144,6 +144,18 @@ def _validate_metadata(value: object) -> Mapping[str, Any]:
     ):
         if not isinstance(metadata[name], str) or not metadata[name]:
             raise ValueError(f"metadata {name} must be a nonempty string.")
+    try:
+        timestamp = datetime.fromisoformat(
+            metadata["timestamp_utc"].replace("Z", "+00:00")
+        )
+    except ValueError as error:
+        raise ValueError("metadata timestamp_utc must be valid UTC.") from error
+    if (
+        timestamp.tzinfo is None
+        or timestamp.utcoffset() != timezone.utc.utcoffset(timestamp)
+        or not metadata["timestamp_utc"].endswith("Z")
+    ):
+        raise ValueError("metadata timestamp_utc must be valid UTC.")
     _require_int(metadata["warmup"], "metadata warmup")
     _require_int(
         metadata["timestep_count"], "metadata timestep_count", positive=True
@@ -185,8 +197,19 @@ def build_resident_benchmark_case_id(
     """Build the canonical, configuration-derived resident case identifier."""
     requested_shape = _validate_shape(requested_shape, "requested_shape")
     actual_shape = _validate_shape(actual_shape, "actual_shape")
+    if any(
+        actual_item > requested_item
+        for actual_item, requested_item in zip(
+            actual_shape, requested_shape, strict=True
+        )
+    ):
+        raise ValueError("actual_shape must not exceed requested_shape.")
     active_fraction = _require_float(active_fraction, "active_fraction")
+    if not 0.0 <= active_fraction <= 1.0:
+        raise ValueError("active_fraction must be in [0, 1].")
     processes = _canonical_processes(processes)
+    if not isinstance(communication, str):
+        raise TypeError("communication must be a string.")
     if communication not in SUPPORTED_COMMUNICATION:
         raise ValueError("communication must be a supported selection.")
     if not isinstance(diagnostics, tuple):
@@ -337,6 +360,8 @@ class ResidentBenchmarkResult:
             if self.summary != expected:
                 raise ValueError("summary must exactly match timing samples.")
             if self.reason is not None:
+                if not isinstance(self.reason, str):
+                    raise TypeError("reason must be a string or None.")
                 raise ValueError("executed results must not have a reason.")
         else:
             if (
@@ -347,6 +372,8 @@ class ResidentBenchmarkResult:
                 raise ValueError(
                     "non-executed results cannot contain timing data."
                 )
+            if self.reason is not None and not isinstance(self.reason, str):
+                raise TypeError("reason must be a string or None.")
             if not isinstance(self.reason, str) or not self.reason:
                 raise ValueError(
                     "non-executed results require a nonempty reason."
