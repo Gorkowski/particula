@@ -70,6 +70,21 @@ class ResidentBenchmarkStatus(str, Enum):
 
 
 def _require_int(value: object, name: str, *, positive: bool = False) -> int:
+    """Validate and return a non-bool integer field.
+
+    Args:
+        value: Candidate integer value.
+        name: Field name used in error messages.
+        positive: Require a value greater than zero when true; otherwise
+            require a nonnegative value.
+
+    Returns:
+        The validated integer.
+
+    Raises:
+        TypeError: If ``value`` is not an integer or is a boolean.
+        ValueError: If ``value`` violates the requested lower bound.
+    """
     if isinstance(value, bool) or not isinstance(value, int):
         raise TypeError(f"{name} must be a non-bool integer.")
     if (positive and value <= 0) or (not positive and value < 0):
@@ -84,6 +99,20 @@ def _require_float(
     *,
     minimum: float | None = None,
 ) -> float:
+    """Validate and return a finite numeric field.
+
+    Args:
+        value: Candidate numeric value.
+        name: Field name used in error messages.
+        minimum: Optional inclusive lower bound.
+
+    Returns:
+        The value converted to ``float``.
+
+    Raises:
+        TypeError: If ``value`` is not a non-boolean number.
+        ValueError: If the value is nonfinite or below ``minimum``.
+    """
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise TypeError(f"{name} must be a finite number.")
     converted = float(value)
@@ -95,6 +124,19 @@ def _require_float(
 
 
 def _validate_shape(value: object, name: str) -> tuple[int, int, int]:
+    """Validate a positive three-dimensional benchmark shape.
+
+    Args:
+        value: Candidate shape tuple in boxes, particles, and species order.
+        name: Field name used in error messages.
+
+    Returns:
+        The validated shape as a three-item integer tuple.
+
+    Raises:
+        TypeError: If ``value`` is not a three-item tuple of integers.
+        ValueError: If any dimension is not positive.
+    """
     if not isinstance(value, tuple) or len(value) != 3:
         raise TypeError(f"{name} must be a three-item tuple.")
     return tuple(
@@ -106,6 +148,20 @@ def _validate_shape(value: object, name: str) -> tuple[int, int, int]:
 def _freeze_mapping(
     value: object, name: str, *, nonempty: bool = False
 ) -> Mapping[str, Any]:
+    """Normalize and recursively freeze a string-keyed mapping.
+
+    Args:
+        value: Candidate mapping to validate.
+        name: Field name used in error messages.
+        nonempty: Require at least one mapping entry when true.
+
+    Returns:
+        An immutable, normalized mapping suitable for a frozen record.
+
+    Raises:
+        TypeError: If ``value`` is not a mapping or contains unsupported data.
+        ValueError: If the mapping is required to be nonempty but is empty.
+    """
     if not isinstance(value, Mapping):
         raise TypeError(f"{name} must be a mapping.")
     if nonempty and not value:
@@ -168,6 +224,18 @@ def _validate_metadata(value: object) -> Mapping[str, Any]:
 
 
 def _canonical_processes(value: object) -> tuple[str, ...]:
+    """Validate the supported process names and their canonical ordering.
+
+    Args:
+        value: Candidate nonempty process-name tuple.
+
+    Returns:
+        The validated process tuple.
+
+    Raises:
+        TypeError: If the value is not a tuple of strings.
+        ValueError: If names are unsupported, duplicated, or out of order.
+    """
     if not isinstance(value, tuple) or not value:
         raise TypeError("processes must be a nonempty tuple.")
     if any(not isinstance(process, str) for process in value):
@@ -471,6 +539,18 @@ def build_resident_benchmark_metadata(
 
 
 def _normalize_json(value: object) -> Any:
+    """Convert supported values into deterministic JSON-compatible values.
+
+    Args:
+        value: Value to normalize, including supported frozen records.
+
+    Returns:
+        A recursively normalized value containing JSON-compatible types.
+
+    Raises:
+        TypeError: If a value or mapping key is unsupported.
+        ValueError: If a floating-point value is nonfinite.
+    """
     if value is None or isinstance(value, (str, bool)):
         return value
     if isinstance(value, Enum):
@@ -537,6 +617,19 @@ def serialize_resident_benchmark_artifact(
 def _require_fields(
     value: object, fields: set[str], name: str
 ) -> Mapping[str, Any]:
+    """Require an object to be a dictionary with exactly the given fields.
+
+    Args:
+        value: Decoded object to validate.
+        fields: Exact set of permitted keys.
+        name: Object name used in error messages.
+
+    Returns:
+        The validated dictionary.
+
+    Raises:
+        ValueError: If the object is not a dictionary with the exact fields.
+    """
     if not isinstance(value, dict) or set(value) != fields:
         raise ValueError(f"{name} has invalid fields.")
     return value
