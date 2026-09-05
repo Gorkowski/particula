@@ -28,19 +28,27 @@ from particula.execution.tests.resident_benchmark_support import (
 
 def _case() -> ResidentBenchmarkCase:
     """Return a valid canonical host-only benchmark case."""
-    fields = {
-        "requested_shape": (2, 8, 3),
-        "actual_shape": (1, 4, 2),
-        "active_fraction": 0.5,
-        "processes": ("condensation", "dilution"),
-        "communication": "none",
-        "diagnostics": ("gas",),
-        "warmup": 2,
-        "timestep_count": 5,
-        "seed": 7,
-    }
     return ResidentBenchmarkCase(
-        case_id=build_resident_benchmark_case_id(**fields), **fields
+        case_id=build_resident_benchmark_case_id(
+            requested_shape=(2, 8, 3),
+            actual_shape=(1, 4, 2),
+            active_fraction=0.5,
+            processes=("condensation", "dilution"),
+            communication="none",
+            diagnostics=("gas",),
+            warmup=2,
+            timestep_count=5,
+            seed=7,
+        ),
+        requested_shape=(2, 8, 3),
+        actual_shape=(1, 4, 2),
+        active_fraction=0.5,
+        processes=("condensation", "dilution"),
+        communication="none",
+        diagnostics=("gas",),
+        warmup=2,
+        timestep_count=5,
+        seed=7,
     )
 
 
