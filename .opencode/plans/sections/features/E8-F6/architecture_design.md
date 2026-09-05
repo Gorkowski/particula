@@ -9,6 +9,18 @@ captured samples execute the same fixed timestep count, synchronize at explicit
 sample boundaries, and serialize independently so execution order cannot hide
 differences.
 
+### P1 implementation boundary
+
+The delivered P1 support module is a standard-library-only, concrete test
+boundary. Frozen records validate canonical case IDs, capacities, process
+ordering, statuses, samples, summaries, and result references on the host.
+Callers provide complete metadata, including explicit unavailable/error-safe
+Warp and device values. Normalized schema-versioned JSON is deterministic and
+deserialization reconstructs validated records. The generic writer checks
+containment and symlink safety below an existing `.artifacts` root before
+creating directories or temporary files, then writes via fsync and replacement.
+This phase neither imports/probes Warp/CUDA nor invokes resident execution.
+
 ```text
 validated BenchmarkCase + qualified CUDA device
           |

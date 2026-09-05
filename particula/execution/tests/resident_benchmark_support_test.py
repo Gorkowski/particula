@@ -12,6 +12,10 @@ import pytest
 
 from particula.execution.tests import resident_benchmark_support
 from particula.execution.tests.resident_benchmark_support import (
+    MAX_ARTIFACT_CONTAINER_ITEMS,
+    MAX_ARTIFACT_NESTING_DEPTH,
+    MAX_ARTIFACT_PAYLOAD_BYTES,
+    MAX_ARTIFACT_ROWS,
     MAX_TIMING_SAMPLES,
     ResidentBenchmarkArtifact,
     ResidentBenchmarkCase,
@@ -172,6 +176,95 @@ def test_metadata_contains_complete_injected_host_provenance():
         metadata["device"]["status"] = "changed"
 
 
+@pytest.mark.parametrize(
+    "warp_version, device",
+    [
+        (
+            {"status": "available", "value": "1.9"},
+            {"status": "available", "identity": "cuda:0", "memory": 8},
+        ),
+        (
+            {"status": "unavailable", "value": None},
+            {"status": "unavailable", "identity": None, "memory": None},
+        ),
+        (
+            {"status": "error", "value": None, "error": "import failed"},
+            {
+                "status": "error",
+                "identity": None,
+                "memory": None,
+                "error": "probe failed",
+            },
+        ),
+    ],
+)
+def test_metadata_accepts_exact_status_qualified_provenance(
+    warp_version, device
+):
+    """Accept every documented status-qualified provenance schema."""
+    metadata = build_resident_benchmark_metadata(
+        timestamp_utc=datetime(2026, 1, 2, tzinfo=timezone.utc),
+        command="pytest resident",
+        synchronization_method="explicit",
+        warmup=2,
+        timestep_count=5,
+        seed=7,
+        prepared_signature_digest="abc",
+        warp_version=warp_version,
+        device=device,
+    )
+    assert metadata["warp_version"] == warp_version
+    assert metadata["device"] == device
+
+
+@pytest.mark.parametrize(
+    "warp_version, device, error",
+    [
+        (
+            {"status": "unknown", "value": None},
+            {"status": "unavailable", "identity": None, "memory": None},
+            ValueError,
+        ),
+        (
+            {"status": "available", "value": None},
+            {"status": "unavailable", "identity": None, "memory": None},
+            TypeError,
+        ),
+        (
+            {"status": "unavailable", "value": None, "extra": None},
+            {"status": "unavailable", "identity": None, "memory": None},
+            ValueError,
+        ),
+        (
+            {"status": "unavailable", "value": None},
+            {"status": "available", "identity": "cuda:0", "memory": True},
+            TypeError,
+        ),
+        (
+            {"status": "unavailable", "value": None},
+            {"status": "error", "identity": None, "memory": None},
+            ValueError,
+        ),
+    ],
+)
+def test_metadata_rejects_malformed_status_qualified_provenance(
+    warp_version, device, error
+):
+    """Reject extra, missing, and mistyped provenance fields deterministically."""
+    with pytest.raises(error):
+        build_resident_benchmark_metadata(
+            timestamp_utc=datetime(2026, 1, 2, tzinfo=timezone.utc),
+            command="pytest resident",
+            synchronization_method="explicit",
+            warmup=2,
+            timestep_count=5,
+            seed=7,
+            prepared_signature_digest="abc",
+            warp_version=warp_version,
+            device=device,
+        )
+
+
 def test_result_statuses_require_their_respective_evidence():
     """Validate executed and explicit non-executed result contracts."""
     case = _case()
@@ -269,6 +362,25 @@ def test_schema_rejects_noncanonical_and_invalid_result_references():
             1,
             0,
         )
+
+
+def test_canonical_case_id_uses_injective_diagnostic_encoding():
+    """Keep distinct hyphen-containing diagnostic selections distinct."""
+    common = {
+        "requested_shape": (1, 1, 1),
+        "actual_shape": (1, 1, 1),
+        "active_fraction": 1.0,
+        "processes": ("condensation",),
+        "communication": "none",
+        "warmup": 0,
+        "timestep_count": 1,
+        "seed": 0,
+    }
+    first = build_resident_benchmark_case_id(diagnostics=("a-b", "c"), **common)
+    second = build_resident_benchmark_case_id(
+        diagnostics=("a", "b-c"), **common
+    )
+    assert first != second
     with pytest.raises(ValueError, match="canonical"):
         ResidentBenchmarkCase(
             "bad",
@@ -332,6 +444,30 @@ def test_artifact_rejects_duplicate_rows_and_malformed_deserialization():
         deserialize_resident_benchmark_artifact('{"schema_version": 1}')
 
 
+def test_artifact_deserialization_enforces_bounded_untrusted_input():
+    """Reject excessive bytes, depth, rows, and nested metadata containers."""
+    artifact = json.loads(serialize_resident_benchmark_artifact(_artifact()))
+    boundary = json.dumps(artifact)
+    assert deserialize_resident_benchmark_artifact(boundary)
+    with pytest.raises(ValueError, match="byte size"):
+        deserialize_resident_benchmark_artifact(
+            " " * (MAX_ARTIFACT_PAYLOAD_BYTES + 1)
+        )
+    with pytest.raises(ValueError, match="nesting depth"):
+        deserialize_resident_benchmark_artifact(
+            "[" * (MAX_ARTIFACT_NESTING_DEPTH + 1)
+        )
+    artifact["artifact"]["cases"] = [{}] * (MAX_ARTIFACT_ROWS + 1)
+    with pytest.raises(ValueError, match="row count"):
+        deserialize_resident_benchmark_artifact(json.dumps(artifact))
+    artifact = json.loads(serialize_resident_benchmark_artifact(_artifact()))
+    artifact["artifact"]["metadata"]["nested"] = list(
+        range(MAX_ARTIFACT_CONTAINER_ITEMS + 1)
+    )
+    with pytest.raises(ValueError, match="item count"):
+        deserialize_resident_benchmark_artifact(json.dumps(artifact))
+
+
 def test_write_json_artifact_is_contained_deterministic_and_atomic(
     tmp_path: Path,
 ):
@@ -368,19 +504,19 @@ def test_write_json_artifact_preserves_completed_file_on_write_failures(
         raise OSError("fsync failed")
 
     monkeypatch.setattr(resident_benchmark_support.os, "fsync", raise_fsync)
-    with pytest.raises(OSError, match="atomic write"):
+    with pytest.raises(OSError, match="(validation|write)"):
         write_json_artifact(root, "result.json", {"version": 2})
     assert destination.read_bytes() == original
     assert not list(root.glob(".resident-benchmark-*"))
 
     monkeypatch.setattr(resident_benchmark_support.os, "fsync", native_fsync)
 
-    def raise_replace(_: str, __: Path) -> None:
+    def raise_replace(*_: object, **__: object) -> None:
         """Simulate replacement failure after a complete temporary write."""
         raise OSError("replace failed")
 
     monkeypatch.setattr(resident_benchmark_support.os, "replace", raise_replace)
-    with pytest.raises(OSError, match="atomic write"):
+    with pytest.raises(OSError, match="artifact write"):
         write_json_artifact(root, "result.json", {"version": 3})
     assert destination.read_bytes() == original
     assert not list(root.glob(".resident-benchmark-*"))
@@ -430,11 +566,11 @@ def test_write_json_artifact_rejects_invalid_roots_and_cleanup_failure(
     destination = write_json_artifact(root, "result.json", {"version": 1})
     original = destination.read_bytes()
 
-    def raise_replace(_: str, __: Path) -> None:
+    def raise_replace(*_: object, **__: object) -> None:
         """Simulate replacement failure after writing a temporary file."""
         raise OSError("replace failed")
 
-    def raise_unlink(_: str) -> None:
+    def raise_unlink(*_: object, **__: object) -> None:
         """Simulate temporary cleanup failure."""
         raise OSError("unlink failed")
 
@@ -447,3 +583,31 @@ def test_write_json_artifact_rejects_invalid_roots_and_cleanup_failure(
     monkeypatch.undo()
     for temporary in root.glob(".resident-benchmark-*"):
         temporary.unlink()
+
+
+def test_write_json_artifact_rejects_directory_swap_to_external_symlink(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    """Keep descriptor-relative writes inside root during a directory swap."""
+    root = tmp_path / ".artifacts"
+    outside = tmp_path / "outside"
+    root.mkdir()
+    outside.mkdir()
+    native_mkdir = os.mkdir
+
+    def swap_after_mkdir(
+        path: str, mode: int = 0o777, *, dir_fd: int | None = None
+    ) -> None:
+        """Replace the newly made destination directory before it is reopened."""
+        native_mkdir(path, mode, dir_fd=dir_fd)
+        if path == "nested":
+            nested = root / path
+            nested.rename(root / "nested-original")
+            nested.symlink_to(outside, target_is_directory=True)
+
+    monkeypatch.setattr(
+        resident_benchmark_support.os, "mkdir", swap_after_mkdir
+    )
+    with pytest.raises(OSError, match="escapes"):
+        write_json_artifact(root, "nested/result.json", {"safe": True})
+    assert not (outside / "result.json").exists()

@@ -22,6 +22,16 @@ to the exact E8 resource inventory.
   behind the existing `--benchmark` gate.
 - Reproducible JSON evidence and a user-facing roadmap/feature report.
 
+## Delivered in P1 (Issue #1581)
+
+- Concrete host-only schema, provenance, deterministic JSON round-trip, and
+  path-safe atomic generic JSON writer in
+  `particula/execution/tests/resident_benchmark_support.py`.
+- Default-collection host-only contract tests in
+  `particula/execution/tests/resident_benchmark_support_test.py`.
+- No benchmark dispatch, CUDA/Warp import or probe, production execution change,
+  package export, public documentation, or artifact publication.
+
 ## Out of Scope
 
 - Changing scientific kernels, process ordering, graph semantics, or memory
