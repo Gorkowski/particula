@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "8b23c231",
+  "issue_number": "1582",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1582-adw-8b23c231",
+  "shipped_at": "2026-09-05T20:16:12.834211Z",
+  "plan_phase": "E8-F6-P2",
+  "plan_summary": "Implement opt-in, CUDA-only device-synchronized benchmark evidence comparing prepared uncaptured resident timesteps with captured replay, without public APIs, fallbacks, or performance claims. Add host-only schema/artifact support, lazy CUDA test support, isolated artifact persistence, and focused validation for timing, identity, cleanup, and unavailable-CUDA behavior.",
+  "discovered_context": ""
+}
