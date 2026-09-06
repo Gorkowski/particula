@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "78562b86",
+  "issue_number": "1592",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1592-adw-78562b86",
+  "shipped_at": "2026-09-06T23:04:06.515803Z",
+  "plan_phase": "E8-F7-P4",
+  "plan_summary": "Add a host-only, test-support analysis layer in particula/gpu/tests/profiling_support.py for machine- and workload-bounded performance recommendations. It will bind immutable P2 host timing and P3 Nsight evidence, perform deterministic fail-closed aggregation and synchronized-device reconciliation, and enforce provenance, confidence, limitation, and non-portability guardrails. Add hardware-free regression coverage without changing production behavior, exports, artifacts, documentation, or profiler execution.",
+  "discovered_context": ""
+}
