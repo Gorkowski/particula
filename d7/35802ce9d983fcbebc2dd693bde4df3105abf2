@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "ff13fedd",
+  "issue_number": "1586",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1586-adw-ff13fedd",
+  "shipped_at": "2026-09-06T06:47:55.447254Z",
+  "plan_phase": "E8-F6-P6",
+  "plan_summary": "Publish documentation-only resident benchmark and memory-budget evidence for E8-F6-P6. Add a roadmap subsection, a linked report describing the unavailable schema-v3 artifact state, fixed CUDA-only matrix, accounting vocabulary, projected tape scenarios, and limitations, plus a hardware-free stdlib documentation contract test. Validate with the focused docs test, strict MkDocs, and the repository test runner without running the CUDA benchmark.",
+  "discovered_context": ""
+}
