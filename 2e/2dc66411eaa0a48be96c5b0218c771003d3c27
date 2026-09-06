@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "ca33db07",
+  "issue_number": "1583",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1583-adw-ca33db07",
+  "shipped_at": "2026-09-06T01:26:26.707760Z",
+  "plan_phase": "E8-F6-P3",
+  "plan_summary": "Implement E8-F6-P3’s host-only resident benchmark matrix for 1, 10, 100, and 1000 boxes, with exact requested capacities and pre-allocation budget-aware classification. Extend the opt-in CUDA benchmark seam to forward exact dimensions, preserve P1/P2 artifact and availability contracts, and aggregate all matrix rows in one artifact. Add hardware-free coverage for budget boundaries, unavailable CUDA/capture outcomes, dimension forwarding, cleanup, and no-fallback behavior.",
+  "discovered_context": ""
+}
