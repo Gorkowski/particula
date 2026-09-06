@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "f21ba319",
+  "issue_number": "1589",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1589-adw-f21ba319",
+  "shipped_at": "2026-09-06T17:52:33.762208Z",
+  "plan_phase": "E8-F7-P1",
+  "plan_summary": "Implement host-only profiling test support for E8-F7-P1. Add strict versioned workload/evidence records, the exact small and medium resident workload matrix, safe raw-report provenance, and bounded canonical JSON serialization/deserialization, with no Warp, CUDA, profiler, production-code, or public-API dependencies. Add hardware-free tests covering validation, IDs, round trips, bounds, and path/symlink safety.",
+  "discovered_context": "",
+  "architecture_notes": null,
+  "review_findings": null
+}
