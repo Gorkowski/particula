@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "88c7f306",
+  "issue_number": "1591",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1591-adw-88c7f306",
+  "shipped_at": "2026-09-06T21:18:51.542918Z",
+  "plan_phase": "E8-F7-P3",
+  "plan_summary": "Implement bounded, host-side Nsight orchestration in particula/gpu/tests/profiling_support.py with strict versioned schemas, parsers, typed outcomes, safe subprocess handling, path containment, and deterministic attribution/aggregation. Add hardware-free tests, a closed native-CUDA workload worker, and an opt-in CUDA/Nsight smoke path while preserving existing P1 artifacts and avoiding production APIs, fallbacks, or documentation changes.",
+  "discovered_context": ""
+}
