@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "62d25590",
+  "issue_number": "1585",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1585-adw-62d25590",
+  "shipped_at": "2026-09-06T04:56:31.656953Z",
+  "plan_phase": "E8-F6-P5",
+  "plan_summary": "Add optional native-CUDA allocator high-water evidence to captured-resident benchmark artifacts without changing production execution or timing behavior. Implement host-only schema-v3 memory records, a lazy documented CUDA Runtime UsedMemHigh adapter, lifecycle-aware fixture monitoring, and one observation per executed CUDA case. Preserve structured unavailable evidence, legacy artifact decoding, exact-device coverage, and focused safety/benchmark tests.",
+  "discovered_context": ""
+}
