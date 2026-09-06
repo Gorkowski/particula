@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adw_id": "492c5362",
+  "issue_number": "1590",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1590-adw-492c5362",
+  "shipped_at": "2026-09-06T19:44:07.885361Z",
+  "plan_phase": "E8-F7-P2",
+  "plan_summary": "Add opt-in, native-CUDA-only profiling evidence for prepared-uncaptured enqueue and captured-replay host-launch versus synchronized completion costs. Extend the private CUDA benchmark fixture with identity-preserving reset support, collect the two frozen workloads across all replay/sample combinations, and publish four P1-valid artifacts plus a manifest and raw provenance reports. Add hardware-free regression coverage for timing boundaries, ordering, failures, atomic publication, and unavailable prerequisites.",
+  "architecture_notes": "Keep production APIs, exports, scheduler behavior, and CPU/Warp fallback unchanged. Use one exact qualified fixture identity per workload, with same-device reset/drain preserving resident payload, RNG, capture, and resource identities; host timing has no synchronization, while synchronized timing has exactly one post-loop synchronization. Publish separate one-method P1 artifacts under the profiling benchmark directory, with raw provenance required and complete unavailable rows when native CUDA capture is unavailable.",
+  "discovered_context": "Implementation plan targets particula/execution/tests/resident_benchmark_cuda_support.py, its tests, particula/gpu/tests/benchmark_test.py, and benchmark_helpers_test.py; no recent workflow messages were present. Existing resident memory/comparison collection remains separate."
+}
