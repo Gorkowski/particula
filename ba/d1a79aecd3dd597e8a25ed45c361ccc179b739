@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "7993bdfc",
+  "issue_number": "1584",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1584-adw-7993bdfc",
+  "shipped_at": "2026-09-06T03:24:04.383897Z",
+  "plan_phase": "E8-F6-P4",
+  "plan_summary": "Implement a standard-library-only analytical resident-memory model in the host benchmark-support module, with checked bounded arithmetic, immutable category/model records, exact primary/diagnostic/communication/checkpoint accounting, and tape projections. Extend the co-located tests to cover formulas, validation boundaries, overflow, reconciliation, immutability, zero cases, tape scenarios, and subprocess import isolation while changing only the two specified support files.",
+  "discovered_context": ""
+}
