@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "44f6ebaa",
+  "issue_number": "1593",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1593-adw-44f6ebaa",
+  "shipped_at": "2026-09-07T00:27:38.863727Z",
+  "plan_phase": "E8-F7-P5",
+  "plan_summary": "Publish an honest E8-F7/T7 CUDA profiling record for issue #1593, documenting a frozen native-CUDA matrix, exact collection commands, provenance rules, and unavailable/unshipped status because no reviewed normalized artifact or manifest exists. Update the roadmap and AGENTS guidance, add a hardware-free cross-document contract test, and validate with focused docs tests, strict MkDocs, repository tests, and diff checks without CUDA fallback or fabricated evidence.",
+  "discovered_context": ""
+}
