@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "8ac87f2a",
+  "issue_number": "1597",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1597-adw-8ac87f2a",
+  "shipped_at": "2026-09-07T17:30:50.707845Z",
+  "plan_phase": "E8-F8-P3",
+  "plan_summary": "Create a hardware-free, fail-closed Epic H closeout record and documentation contract for E8-F8-P3. Record the committed UNSHIPPED/BLOCKED disposition, explicit unavailable evidence, H1–H11 traceability, command/provenance ledgers, and a stdlib-only test without changing runtime behavior or inventing results.",
+  "discovered_context": ""
+}
