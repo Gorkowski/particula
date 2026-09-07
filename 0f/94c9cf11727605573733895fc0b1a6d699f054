@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "677cf10f",
+  "issue_number": "1598",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1598-adw-677cf10f",
+  "shipped_at": "2026-09-07T19:34:37.360715Z",
+  "plan_phase": "E8-F8-P4",
+  "plan_summary": "Reconcile Epic H and E8-F8 documentation around the delivered graph-capture tracks, linking the canonical native-CUDA example, operator runbook, roadmap, and P3 closeout authority while preserving active/unshipped status. Extend hardware-free documentation contracts for local-link safety, ownership, durable commands, limitations, and blocked evidence language; reconcile parent/child plan records without promotion, then run focused contracts, plan validation, lint, full tests, and strict MkDocs.",
+  "discovered_context": ""
+}
