@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "02fae9f0",
+  "issue_number": "1596",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1596-adw-02fae9f0",
+  "shipped_at": "2026-09-07T15:46:21.509260Z",
+  "plan_phase": "E8-F8-P2",
+  "plan_summary": "Add a documentation-only graph-capture operator runbook and a stdlib-only hardware-free contract test. Document CUDA qualification, exact setup/replay/lifecycle and recapture boundaries, structural invalidation triggers, opaque handle limits, checkpoint interactions, and literal validation commands without changing runtime APIs or examples.",
+  "discovered_context": ""
+}
