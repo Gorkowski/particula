@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adw_id": "7600f24f",
+  "issue_number": "1595",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1595-adw-7600f24f",
+  "shipped_at": "2026-09-07T14:16:17.859790Z",
+  "plan_phase": "E8-F8-P1",
+  "plan_summary": "Add a native-CUDA-only resident graph-capture example with lazy capability probing, deterministic unavailable behavior, explicit capture/replay, structural invalidation, retirement, renewal, and teardown. Add hardware-free contract coverage, an optional native-CUDA smoke test, and an Examples-index link while leaving runtime semantics, exports, scheduling, and later closeout material unchanged.",
+  "discovered_context": "",
+  "architecture_notes": null,
+  "review_findings": null
+}
