@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "94cf733d",
+  "issue_number": "1611",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1611-adw-94cf733d",
+  "shipped_at": "2026-09-28T14:46:35.396793Z",
+  "plan_phase": "E9-M1-P2",
+  "plan_summary": "Specify, rather than implement, the future E9-M2 identity-preserving whole-container replacement contract for Aerosol. P2 is blocked pending explicit P1 scientific approval and resolution of structural-versus-process validation scope; once cleared, publish the acceptance matrix and add only narrow characterization tests for existing CPU containers. Do not add aggregate APIs, validators, or future-API tests in this phase.",
+  "discovered_context": ""
+}
