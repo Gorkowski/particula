@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "f853734e",
+  "issue_number": "1610",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1610-adw-f853734e",
+  "shipped_at": "2026-09-28T14:07:27.585512Z",
+  "plan_phase": "E9-M1-P1",
+  "plan_summary": "E9-M1-P1 freezes a reviewed specification—not new runtime behavior—for native and legacy particle storage, volume normalization, PDF quadrature, ordered gas/environment species alignment, and future process-owned lane maps. It adds a P1 ledger plus CPU and explicit Warp-transfer characterization tests across volumes 0.25, 1, and 4 m³ while preserving existing behavior. Scientific approval for PDF/grid, metadata/defaults, and normalization is required before P2; otherwise P1 remains pending/blocked.",
+  "discovered_context": ""
+}
