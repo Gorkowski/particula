@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "e6ea452f",
+  "issue_number": "1613",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1613-adw-e6ea452f",
+  "shipped_at": "2026-09-29T12:15:20.835555Z",
+  "plan_phase": "E9-M1-P4",
+  "plan_summary": "E9-M1-P4 (#1613) plans a concrete read-only validate_aerosol_structure helper for particle, gas, and environment raw shapes, shared box/species axes, and ordered unique gas names; it must not validate physics or infer ratio provenance. Add focused CPU regressions, document the M3/M4 process-admission handoff, and run focused tests plus lint, mypy, full coverage, and strict docs; verify P3 completion gate before implementation.",
+  "discovered_context": ""
+}
