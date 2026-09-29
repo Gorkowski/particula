@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "adw_id": "8ef4d823",
+  "issue_number": "1612",
+  "workflow_type": "complete",
+  "pr_number": null,
+  "model_tier": "default",
+  "branch_name": "issue-1612-adw-8ef4d823",
+  "shipped_at": "2026-09-29T02:13:09.604515Z",
+  "plan_phase": "E9-M1-P3",
+  "plan_summary": "E9-M1-P3 (#1612) plans read-only ParticleData number/PDF density and per-species inventory helpers with non-unit-volume tests, preserving raw float64 storage and per-particle total_mass. Implementation is blocked until maintainer-approved P1 scientific rules, P2 acceptance/ownership, and volume policy are recorded; tagged Warp and resident transfers require separate provenance and safety approval.",
+  "discovered_context": ""
+}
