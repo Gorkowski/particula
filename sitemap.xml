@@ -29,6 +29,10 @@
          <lastmod>2026-11-11</lastmod>
     </url>
     <url>
+         <loc>https://uncscode.github.io/particula/API/particula/_legacy_aerosol/</loc>
+         <lastmod>2026-11-11</lastmod>
+    </url>
+    <url>
          <loc>https://uncscode.github.io/particula/API/particula/abc_builder/</loc>
          <lastmod>2026-11-11</lastmod>
     </url>
@@ -721,6 +725,10 @@
          <lastmod>2026-11-11</lastmod>
     </url>
     <url>
+         <loc>https://uncscode.github.io/particula/API/particula/particles/particle_data_initialization/</loc>
+         <lastmod>2026-11-11</lastmod>
+    </url>
+    <url>
          <loc>https://uncscode.github.io/particula/API/particula/particles/properties/</loc>
          <lastmod>2026-11-11</lastmod>
     </url>
@@ -1290,6 +1298,10 @@
     </url>
     <url>
          <loc>https://uncscode.github.io/particula/Features/particle-data-migration/</loc>
+         <lastmod>2026-11-11</lastmod>
+    </url>
+    <url>
+         <loc>https://uncscode.github.io/particula/Features/particle-data-migration/construction/</loc>
          <lastmod>2026-11-11</lastmod>
     </url>
     <url>
