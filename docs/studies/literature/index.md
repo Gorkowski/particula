@@ -4,6 +4,18 @@ Follow comparisons with published measurements, reference calculations and datas
 
 <div class="study-figures">
 
+[![The fitted Manchester network grew from 38 to 40 channels as α-pinene vapor returned to labile particle material and o-cresol dimer-family vapor returned to retained material. Refitting accounted for about 90% of the reduction in worst joint error and the added channels for 10%. Joint error fell in 12 of 15 experiments.](../../images/manchester-soa/campaign-performance-toc.svg)\
+Twelve of 15 Manchester runs improved, yet the average joint error rose](evaporation-and-uptake/manchester-campaign-performance/index.md)
+
+[![From the measured peak to the final sample, measured and fitted binary aerosol mass fell by 30.9 and 32.5 µg m⁻³. Ternary mass fell by 10.2 µg m⁻³ while the fit gained 7.6 µg m⁻³.](../../images/manchester-soa/network-growth-toc.png)\
+Manchester’s ternary aerosol declined while the fitted reaction network still predicted growth](evaporation-and-uptake/manchester-network-growth/index.md)
+
+[![At 248.3 K, 0.38 pptv ammonia and 1.80 × 10⁷ sulfuric acid molecules cm⁻³, both models’ 90% scenario intervals for the formation rate overlap. The diamond marks the archived 0.030 particles per cubic centimetre per second.](../../images/dunne-cloud/formation-toc.png)\
+At 248 K, similar CLOUD formation rates admit different chemical pathways](dunne-cloud/index.md)
+
+[![Manchester ternary mixture with a measured aerosol yield of 11.7%, a single-precursor estimate of 16.1% and a Particula bulk fit of 13.8%. At two hours, the measured and refitted size distributions peak in the same diameter bin. The model using bulk-fit chemistry peaks one bin larger.](../../images/manchester-soa/graphical-abstract.svg)\
+How well does Particula reproduce organic aerosol formation in the Manchester chamber?](evaporation-and-uptake/manchester-soa/index.md)
+
 [![After a cooling tube, measured and fitted particle counts rise from 3.0 and 5.2 million per cm³ at zero added sulfur dioxide to 29.2 and 27.8 million per cm³ at 500 ppm.](../../images/straw-combustion/toc.png)\
 Particula fits the measured rise in particle number with sulfur dioxide in a straw-combustion analogue](straw-combustion/index.md)
 
@@ -67,6 +79,7 @@ At the inferred Π Chamber humidity, modeled sulfate haze falls below the optica
 - [A 35% polarization effect for a charged 4 nm NaCl tracer shrinks to 0.06% in the modeled chamber scan](nacl-scavenging/index.md)
 - [A delayed source predicts 19 minutes of the 21-minute gap between two chamber isomer signals](pinic-isomers/index.md)
 - [After a day in simulated polluted air, archived MAM4xx retains nearly three times the sub-100 nm count predicted by two models with attraction](mam4xx-coagulation/index.md)
+- [At 248 K, similar CLOUD formation rates admit different chemical pathways](dunne-cloud/index.md)
 - [At low ion production, CLOUD’s 70% humidity measurement exceeds the ceiling set by the reported wall loss](cloud-ion-humidity/index.md)
 - [Evaporation and reactive uptake](evaporation-and-uptake/index.md)
 - [Fitting mean drop mass with a constant collision rate leaves a sixfold shortfall in counts at twice the starting radius](shear-drop-spectrum/index.md)

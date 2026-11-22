@@ -32,14 +32,15 @@ existing basenames. The marker-policy regression lives in
 
 ## Installed-package checks from 0.3.4
 
-The package release suite collects all package test directories, including Warp
-CPU and CUDA-marked tests, from an isolated workspace. It runs ordinary tests
+The package release suite collects tests directly from the installed distribution,
+including Warp CPU and CUDA-marked cases. The test runner starts in an isolated
+workspace and verifies that the build shipped the source tree’s tests and fixtures. It runs ordinary tests
 with the installed runtime dependencies. Slow, performance and benchmark tests
 have separate execution policies. Tests that require CUDA can skip on CPU
 builders. Actual CUDA execution requires a CUDA-capable runner.
 
-Keep package test helpers and their data in the installed package. Study scripts
-can import a shared case from `particula.execution.tests`. A source CI regression
+Keep package test helpers and their data in the installed package. The coupled restart tests
+use a fixed case that ships with the package. A source CI regression
 also checks package tests for imports from checkout-only directories, including
 imports inside CUDA-only branches.
 
@@ -159,7 +160,7 @@ Missing declared fixtures fail rather than silently skipping tests.
 
 | Suite | Selection and isolated inputs |
 | --- | --- |
-| `--suite package` (default) | Tests, fixtures, conftests, and config; no documentation. |
+| `--suite package` (default) | Installed package tests and their installed data, with the release pytest configuration. |
 | `--suite examples` | Three CPU test/script pairs plus root conftest/config. |
 
 Conda tests the already-installed package with both commands in this order:
