@@ -2954,6 +2954,80 @@
       "start_here": false
     },
     {
+      "source": "docs/studies/literature/cloud-1833/index.md",
+      "title": "How sulfuric acid capture shapes particle growth in CLOUD run 1833",
+      "topic": "condensation",
+      "also": [
+        "chambers",
+        "nucleation",
+        "interparticle-forces"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "cloud-1833",
+        "runs": [
+          "cloud-1833-growth-laws"
+        ],
+        "companions": [
+          "docs/studies/literature/cloud-1833/water-and-sizing.md",
+          "docs/studies/literature/cloud-1833/particle-entry.md",
+          "docs/studies/literature/cloud-1833/wall-loss.md"
+        ],
+        "relations": [
+          {
+            "target": "docs/guide/processes/condensation.md",
+            "label": "Condensation guide"
+          }
+        ]
+      },
+      "tocFigure": "cloud-1833/CLOUD-1833-growth-TOC.png",
+      "tocSource": "studies/cloud-1833/source/cloud_growth_toc.py"
+    },
+    {
+      "source": "docs/studies/literature/cloud-1833/growth_law_comparison.py",
+      "title": "Compare particle capture laws at the same incoming flux",
+      "topic": "condensation",
+      "also": [
+        "chambers"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/cloud-1833/water-and-sizing.md",
+      "title": "Water uptake changes the measured diameter, but the larger particles still accumulate late",
+      "topic": "activity-nonideal",
+      "also": [
+        "condensation",
+        "chambers"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/cloud-1833/particle-entry.md",
+      "title": "Changing particle entry timing shortens the simulated rise from 134 to 36 minutes",
+      "topic": "nucleation",
+      "also": [
+        "chambers",
+        "charged"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/cloud-1833/wall-loss.md",
+      "title": "Similar dark particle counts admit different wall-loss rates",
+      "topic": "losses-deposition",
+      "also": [
+        "chambers",
+        "losses-dilution"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
       "source": "docs/studies/literature/dunne-cloud/index.md",
       "title": "At 248 K, similar CLOUD formation rates admit different chemical pathways",
       "topic": "nucleation",
@@ -5708,6 +5782,105 @@
       },
       "tocFigure": "antarctic-ccn/graphical-abstract.png",
       "tocSource": "scripts/antarctic_ccn/toc.py"
+    },
+    {
+      "source": "docs/studies/examples/thermodynamics/equilibria/aiomfac_humidity_sweep.py",
+      "title": "When does drying split an alcohol–salt droplet into two liquids?",
+      "topic": "partitioning",
+      "also": [
+        "activity-nonideal"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "aiomfac-humidity-sweep",
+        "runs": [
+          "aiomfac-humidity-sweep"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/theory/thermodynamics/equilibria-theory.md",
+            "label": "Phase stability and reservoir constraints"
+          },
+          {
+            "target": "docs/studies/examples/thermodynamics/equilibria/aiomfac_evaporating_droplet.py",
+            "label": "Follow the same mixture during evaporation"
+          },
+          {
+            "target": "docs/studies/examples/thermodynamics/equilibria/aiomfac_mixing_state_ramp.py",
+            "label": "Compare 1,000 particle mixing states during drying"
+          }
+        ]
+      }
+    },
+    {
+      "source": "docs/studies/examples/thermodynamics/equilibria/aiomfac_evaporating_droplet.py",
+      "title": "How long does an evaporating droplet take to reach two-liquid equilibrium?",
+      "topic": "condensation-reservoirs",
+      "also": [
+        "activity-nonideal"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "aiomfac-evaporating-droplet",
+        "runs": [
+          "aiomfac-evaporating-droplet"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/theory/thermodynamics/equilibria-theory.md",
+            "label": "Phase stability and reservoir constraints"
+          },
+          {
+            "target": "docs/studies/examples/thermodynamics/equilibria/aiomfac_humidity_sweep.py",
+            "label": "Find the phase boundary at prescribed humidity"
+          },
+          {
+            "target": "docs/studies/examples/thermodynamics/equilibria/aiomfac_mixing_state_ramp.py",
+            "label": "Compare 1,000 particle mixing states during drying"
+          }
+        ]
+      }
+    },
+    {
+      "source": "docs/studies/examples/thermodynamics/equilibria/aiomfac_mixing_state_ramp.py",
+      "title": "Which of 1,000 drying droplets first separate into two liquids?",
+      "topic": "condensation-reservoirs",
+      "also": [
+        "activity-nonideal",
+        "partitioning",
+        "gpu"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "aiomfac-mixing-state-ramp",
+        "runs": [
+          "aiomfac-mixing-state-ramp"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/guide/processes/activity.md",
+            "label": "Choose the phase-aware activity model"
+          },
+          {
+            "target": "docs/theory/thermodynamics/equilibria-theory.md",
+            "label": "Stability and coexistence in the liquid phases"
+          },
+          {
+            "target": "docs/studies/examples/thermodynamics/equilibria/aiomfac_humidity_sweep.py",
+            "label": "Compare with a single-inventory equilibrium sweep"
+          },
+          {
+            "target": "docs/studies/examples/thermodynamics/equilibria/aiomfac_evaporating_droplet.py",
+            "label": "Follow evaporation in a single particle"
+          }
+        ]
+      }
     }
   ],
   "supporting": [
