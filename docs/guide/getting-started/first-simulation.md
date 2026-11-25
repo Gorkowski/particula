@@ -4,26 +4,31 @@ Follow a finite vapor reservoir as it grows 100 nm organic particles over ten
 minutes. The [complete executable example](../../studies/tutorials/first_cpu_workflow.py)
 creates native state, records a time series, saves and reloads results, and
 checks an exact restart at five minutes. Its published page includes the plots.
-This workflow requires a development checkout containing the new concrete
-`particula.execution` modules; it is not a claim about an older installed release.
 
 ## Run and save the experiment
 
-Download the example's Python source as `first_cpu_workflow.py`, install
-Particula and Matplotlib in the selected environment, and run:
+Start with Python 3.12 or newer and an active virtual environment. On the
+[worked example page](../../studies/tutorials/first_cpu_workflow.py), download
+the Python script and save it as `first_cpu_workflow.py`. From the directory
+where you saved it, install Particula and run the example:
 
 ```bash
+python -m pip install "particula>=0.3.5"
 python first_cpu_workflow.py
 ```
 
-In a repository checkout, the equivalent command is:
+If you are working from a repository checkout, run its matching package and
+example together from the repository root:
 
 ```bash
+python -m pip install -e .
 python docs/studies/tutorials/first_cpu_workflow.py
 ```
 
-The script creates `first-cpu-results/` containing a growth figure, an analysis
-file and a separate restart file for each of two initial vapor concentrations.
+The script creates `first-cpu-results/` with an analysis file and a restart file for each
+initial vapor concentration. If Matplotlib is installed, the script also saves
+`growth.png`. To add the graph to a run, install the plotting extra with
+`python -m pip install "particula[plot]>=0.3.5"` and rerun the script.
 The publication pipeline uses temporary storage and retains only compact plot
 data, never the full restart files.
 
@@ -64,6 +69,8 @@ identity. Histories contain selected diagnostics; full particle arrays are
 opt-in and storage is bounded. Analysis files cannot be used as exact restarts.
 The files use ZIP, JSON and numeric arrays and never require pickle to load.
 
+![Particle radius rises as gas condenses. The case starting at 20 µg m⁻³ grows larger particles than the 10 µg m⁻³ case.](../../../website/results/first-cpu-workflow/figure-4-1.png)
+
 The saved calculation reaches radii of about 136.69 nm and 162.13 nm for the
 10 and 20 µg m⁻³ cases. Remaining vapor is about 0.89 and 0.87 µg m⁻³.
 More initial vapor supplies more particle material; growth slows as the vapor
@@ -74,16 +81,20 @@ real organic aerosol or an independent numerical reference.
 
 ## Resume the five-minute checkpoint
 
-Place the downloaded example beside your script so its explicit physics setup
-can be imported. From a checkout, add `docs/studies/tutorials` to the Python
-module search path, or run this beside that source file with an absolute result
-path. Keep the same physical configuration and subsequent output boundaries:
+Start Python in the directory containing both the downloaded script and
+`first-cpu-results/`. For the checkout route, start Python from the repository
+root with `PYTHONPATH=docs/studies/tutorials python` (Bash). The example
+supplies the same physical configuration used to write the checkpoint.
+Load the saved analysis to compare the gas history from 300 to 600 seconds:
 
 ```python
+import numpy as np
+from particula.execution.analysis_io import load_analysis
 from first_cpu_workflow import build_case
 from particula.execution.cpu_restart import load_cpu_checkpoint, resume_condensation
 from particula.execution.recording import Recorder, run_until
 
+result = load_analysis("first-cpu-results/organic-10.analysis")
 _, strategy = build_case(10.0)
 saved = load_cpu_checkpoint("first-cpu-results/organic-10.restart")
 resumed = resume_condensation(saved, strategy)
@@ -114,10 +125,114 @@ then rerun and compare both remaining vapor and radius. Select a new output
 directory to preserve earlier files. Before interpreting a named compound,
 justify its material properties and compare with independent measurements.
 
-Next: [recording, forcing and restart](recording-restart.md),
-[native construction](../data-model/construction.md),
-[ownership](../data-model/ownership.md), and
-[condensation](../processes/condensation.md). Process combinations and broader
-size distributions need their own numerical and scientific checks.
+## Walk through the simulation script
 
-Browse [all runnable Python scripts](../../studies/scripts.md) to find another workflow by topic or required device.
+Follow these excerpts in order in the [complete script](../../studies/tutorials/first_cpu_workflow.py).
+They share the variables defined inside its functions.
+
+### Represent a population with one particle size
+
+Inside `build_case`, `c` is a short local name for `CONFIGURATION`, the
+dictionary of physical inputs defined near the top of the script. For example,
+`c["radius_m"]` reads the starting particle radius in meters (100 nm, or
+1 × 10⁻⁷ m). The next lines use that radius and the material density to compute
+the mass of one spherical particle.
+
+```python
+c = CONFIGURATION
+density = c["material_density_kg_m3"]
+mass = 4 * np.pi * density * c["radius_m"] ** 3 / 3
+particles = par.particles.create_resolved_particle_data(
+    masses=[mass],
+    density=density,
+    concentration=[c["number_density_m-3"] * c["volume_m3"]],
+    volume=c["volume_m3"],
+)
+```
+
+Here, `mass` is kilograms **per particle**. Multiplying the number density
+(10⁹ m⁻³) by the box volume (10⁻⁶ m³) gives 1,000 particles in the box.
+Storing that count alongside one mass lets all 1,000 identical particles grow
+together. For other population types, see [constructing native particle data](../data-model/construction.md).
+
+### Put the available vapor in the gas reservoir
+
+The gas concentration is a mass per volume. One microgram is 10⁻⁹ kg, so the
+conversion below puts either 10 or 20 µg m⁻³ into Particula's native units.
+
+```python
+gas = par.gas.GasData(
+    name=["organic"],
+    molar_mass=np.array([c["molar_mass_kg_mol"]]),
+    concentration=np.array([[vapor_ug_m3 * 1e-9]]),
+    partitioning=np.array([True]),
+)
+```
+
+The two array dimensions of `concentration` identify the box and gas species.
+The partitioning flag makes the organic species available for exchange.
+Later in `build_case`, the condensation strategy pairs it with particle
+component zero. Its constant vapor pressure and curvature model set the
+equilibrium vapor concentration at the particle surface. Vapor above that
+concentration drives growth. See [condensation physics](../processes/condensation.md).
+
+### Run both cases to the same checkpoint
+
+In `simulate`, each pass through the loop builds fresh particle and gas state.
+Only the initial vapor supply changes. The solver advances that state while
+the recorder samples it on the requested time grid.
+
+```python
+for vapor in (10.0, 20.0):
+    initial, strategy = build_case(vapor)
+    owner = CondensationODE(initial, strategy, **NUMERICS)
+    recorder = Recorder()
+    run_until(owner, 300.0, output_times=times[:31], recorder=recorder)
+```
+
+The first 31 samples span 0 through 300 seconds at ten-second intervals.
+Between samples the solver can take smaller steps to meet its error tolerances.
+At 300 seconds the script saves the state and controller so it can compare
+two continuations from exactly the same instant. See [recording and restart](recording-restart.md).
+
+### Check that resuming gives the same answer
+
+One solver stays in memory. The other starts from the checkpoint on disk and
+uses the same condensation strategy. Both advance to 600 seconds, landing on
+the same remaining sample times.
+
+```python
+resumed = resume_condensation(load_cpu_checkpoint(restart), strategy)
+# Compare future physics using identical requested output boundaries.
+run_until(owner, 600.0, output_times=times[30:])
+run_until(resumed, 600.0, output_times=times, recorder=recorder)
+np.testing.assert_array_equal(owner.solver.state, resumed.solver.state)
+```
+
+The original solver provides the comparison. Only the resumed solver appends
+to the recorder, which already contains the first five minutes. After checking
+the final state, the script also compares the proposed next step. This tests
+whether saving and loading preserved the adaptive controller.
+
+### Turn recorded mass into the growth graph
+
+The analysis file stores particle mass per volume and particle number per
+volume. Dividing the former by the latter gives mass per particle. The script
+uses material density to convert that mass to volume, then inverts the sphere
+volume formula to recover radius.
+
+```python
+radius = np.cbrt(
+    3
+    * particle
+    / (4 * np.pi * CONFIGURATION["material_density_kg_m3"] * number)
+)
+```
+
+This gives the radius of each particle because the population has a single
+size. For a mixture of sizes, the same calculation gives the radius of a
+sphere with the **mean particle volume**. The upper panel plots the two radius
+histories in nanometers. In the lower panel, the falling gas curve and rising
+particle curve for each case add to a constant mass concentration at every
+sample. To reuse the panel layout, colors and legend placement in your own
+figure, see [Particula figure styles](figure-styles.md).

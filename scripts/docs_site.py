@@ -524,15 +524,15 @@ def prepare():
             "hero": {
                 "title": "Small particles.\nBig questions.",
                 "tagline": (
-                    "Model how particles form, grow, collide, and evolve. "
-                    "Build a simulation from physical processes, then "
-                    "explore the science behind the results."
+                    "Compare simulations with measurements to discover new "
+                    "reactions, understand aerosol processes, and explore "
+                    "their impacts."
                 ),
                 "actions": [
                     {
-                        "text": "Explore topics",
-                        "link": BASE + "guide/topics/",
-                        "icon": "right-arrow",
+                        "text": "Get Particula Helper",
+                        "link": BASE + "guide/agent-plugins/",
+                        "attrs": {"data-plugin-icon": "particula-helper"},
                     },
                     {
                         "text": "Getting started",

@@ -1,4 +1,5 @@
 ---
+import { Icon } from '@astrojs/starlight/components';
 import { graph, resourcePath } from './topic-model.mjs';
 
 interface Resource {
@@ -11,8 +12,9 @@ interface Props {
   label: string;
   resources?: Resource[];
   featured?: string[];
+  literatureLink?: boolean;
 }
-const { label, resources = graph.resources, featured } = Astro.props;
+const { label, resources = graph.resources, featured, literatureLink } = Astro.props;
 const illustrated = resources.filter((r) => r.tocFigure);
 const slides = featured
   ? featured.map((id) => {
@@ -38,20 +40,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </button>
     </>}
   </div>
-  {slides.length > 1 && <div class="controls" hidden>
-    <button type="button" data-rotate aria-label="Pause automatic rotation">
-      <svg class="pause-mark" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4h3v12H6zm5 0h3v12h-3z" /></svg>
-      <svg class="play-mark" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 10 7-10 7z" /></svg>
-    </button>
-    <span class="position">1 / {slides.length}</span>
-    <button type="button" data-prev aria-label="Previous study">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
-    </button>
-    <button type="button" data-next aria-label="Next study">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
-    </button>
-    <span class="sr-only" aria-live="polite" aria-atomic="true"></span>
-  </div>}
+  <div class="carousel-footer">
+    {slides.length > 1 && <div class="controls" hidden>
+      <button type="button" data-rotate aria-label="Pause automatic rotation">
+        <svg class="pause-mark" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4h3v12H6zm5 0h3v12h-3z" /></svg>
+        <svg class="play-mark" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 10 7-10 7z" /></svg>
+      </button>
+      <span class="position">1 / {slides.length}</span>
+      <button type="button" data-prev aria-label="Previous study">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12 4-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
+      </button>
+      <button type="button" data-next aria-label="Next study">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m8 4 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" /></svg>
+      </button>
+      <span class="sr-only" aria-live="polite" aria-atomic="true"></span>
+    </div>}
+    {literatureLink && <a class="literature-link" href={`${base}/studies/literature/`} aria-label="All literature studies" title="All literature studies">
+      <Icon name="open-book" size="1.125rem" />
+    </a>}
+  </div>
 </study-carousel>}
 
 <style>
@@ -69,14 +76,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .peek img { opacity: .52; }
   .peek:hover img, .peek:focus-visible img { opacity: .85; }
   .slide:hover .study-title, .slide:focus-visible .study-title { text-decoration: underline; text-decoration-thickness: .08em; text-underline-offset: .16em; }
-  .controls { display: flex; justify-content: center; align-items: center; gap: .45rem; margin-top: .6rem; }
+  .carousel-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; column-gap: .45rem; }
+  .literature-link { grid-column: 2; justify-self: center; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; color: var(--sl-color-text); }
+  .controls:not([hidden]) + .literature-link { grid-column: 3; justify-self: start; }
+  .literature-link:hover { color: var(--sl-color-text-accent); background: var(--sl-color-gray-6); }
+  .carousel-footer > * { margin-block: 0; }
+  .controls { grid-column: 2; display: flex; justify-content: center; align-items: center; gap: .45rem; }
   .controls[hidden], .play-mark, [data-paused] .pause-mark { display: none; }
   [data-paused] .play-mark { display: inline; }
   .controls button { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; margin: 0; border: 1px solid var(--sl-color-gray-5); border-radius: 50%; background: var(--sl-color-bg); color: var(--sl-color-text); font: inherit; cursor: pointer; }
-  .controls button svg { width: 1rem; height: 1rem; fill: currentColor; }
+  .controls button svg { width: 1rem; height: 1rem; margin: 0; fill: currentColor; }
   .controls button:hover { color: var(--sl-color-text-accent); border-color: currentColor; }
-  button:focus-visible, .slide:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 3px; }
-  .position { font-size: .82rem; min-width: 3.8em; text-align: center; font-variant-numeric: tabular-nums; color: var(--sl-color-gray-2); }
+  button:focus-visible, .slide:focus-visible, .literature-link:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 3px; }
+  .position { margin: 0; font-size: .82rem; min-width: 3.8em; text-align: center; font-variant-numeric: tabular-nums; color: var(--sl-color-gray-2); }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 </style>
 

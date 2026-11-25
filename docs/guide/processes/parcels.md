@@ -53,8 +53,9 @@ Each CSV contains one parcel ID and strictly increasing times. Its header is
 The JSON carries the initial aerosol spectrum, initial wet radii, species
 ownership, units, sampling rule and provenance. The supplied trace was generated
 by Particula. A researcher preparing an external history can use the CSV/JSON
-pair in the replay study download as a template. Independent CFD replay remains
-an open validation step.
+pair in the replay study download as a template. For an independent
+fixed-grid reference, the [cavity study](../../studies/validation/prescribed-flow/cavity_replay.py)
+uses face transfers and scalar snapshots from OpenFOAM.
 
 Temperature, pressure, vapor and volume are prescribed. Supersaturation at a
 record checks consistency with those inputs. Wet-radius and liquid histories
@@ -128,3 +129,109 @@ particles per layout. Call its `simulate(replicas_per_stratum=16)` to release
 catalog and final destinations share a row for each ID. Smooth humidity and
 flow sensitivities use the replay and exchange paths. Discrete crossing runs
 reject gradient requests. [Stack, periodic row and translating block](../../studies/examples/thermodynamics/parcel-experiments/cluster_lofting.py)
+
+## Use one flow for parcels and stationary grids
+
+Use `FlowFactory` to construct a `uniform`, `sounding`, or `dune` provider.
+Each samples east, north and vertical wind (m/s), temperature (K), pressure
+(Pa) and vapor (kg/kg dry air). Its `parcel_trace` method takes an initial
+world position, times, and a native aerosol template and returns the moving
+center and a trace for `replay`. Supply normalized SI sounding columns
+`height_m,temperature_K,pressure_Pa,vapor_kg_per_kg_dry_air,east_m_s,north_m_s`.
+The profile must cover every sampled level.
+
+This example transports one named gas through a periodic horizontal layer
+over 10 seconds. The layer is 5 m thick. Cell IDs follow C-order x, y, z
+indexing. Each inventory entry is kg per physical cell. Change the shape to
+`(32, 1, 8)` for a vertical section or `(32, 8, 8)` for a volume and set
+bounds appropriate to the experiment.
+
+```python
+import numpy as np
+from particula.coupling import FlowFactory, FlowGrid
+from particula.coupling.flow_replay import GridReplay
+from particula.coupling.flows import DirectionalMixing
+from particula.coupling.grid_inventory import InventoryLayout
+from particula.coupling.grid_run import GridRun
+
+wind = FlowFactory().get_strategy("uniform", {
+    "velocity": (2, 0, 0), "temperature": 290, "pressure": 100000,
+    "vapor": 0.008,
+})
+grid = FlowGrid((32, 8, 1), ((0, 160), (-20, 20), (0, 5)),
+                ("periodic", "periodic", "closed", "closed", "closed", "closed"))
+forcing = GridReplay.record(grid, wind, [0, 5, 10],
+                            DirectionalMixing((0.5, 0.2, 0)),
+                            provenance="uniform wind control")
+mass = np.zeros((len(grid.volume), 1))
+mass[4, 0] = 1e-6
+run = GridRun(forcing, InventoryLayout(("organic",)), mass)
+for frame in forcing.frames:
+    run.advance()
+np.testing.assert_allclose(run.budget()["state"], [1e-6])
+```
+
+`DirectionalMixing` supplies grid-line diffusivities (m²/s). The terrain
+grid uses a diagonal diffusion approximation in layer coordinates. To model
+stability-class spreading, use `StabilityMixing("D", source_x=...)` with a
+flat grid, steady positive x wind, and an inlet downstream of the source.
+Initialize the inlet with the plume width at that fetch. Upwind advection
+adds numerical spreading that decreases with cell size. For example, for
+uniform one-dimensional advection its added variance is
+$|U|\,\Delta x\,(1-|U|\Delta t/\Delta x)t$, using the actual substep.
+
+`InventoryLayout` maps named gases, bins and materials to extensive lanes.
+For neutral native discrete boxes, `pack` converts gas and number densities
+using the physical cell volume, and `unpack` returns detached native copies.
+Supply `Uptake` for first-order transfer of a named gas into an occupied bin.
+Prescribed humidity belongs to the flow. For resolved grains, `Release`
+takes a native particle record, a terminal slip speed in m/s, and a launch
+interval. An interval of -1 starts airborne. Grid cells have stable row IDs
+represented as strings on particle records. A deposited grain retains its
+identity and payload at the bed. The grid bins and resolved releases represent
+separate populations.
+
+`forcing.save(path)` writes versioned gridded forcing for
+`FlowFactory().get_strategy("grid_replay", {"path": path})`. It retains
+geometry, air, diffusivity, actual face transfers and effective mixing over
+each accepted interval. Trajectory replay reads the existing CSV/JSON pair
+using the `trajectory_replay` strategy and `trajectory(parcel_id)`.
+`run.checkpoint(path)` saves aerosol state and the next interval. Construct
+a run with matching forcing, releases, bed and uptake to `restore(path)`.
+For CUDA, pass `device="cuda:0"` to both recording and execution.
+Recording materializes forcing on the host. Transport state stays on device
+between observations. A host that owns field transport can supply accepted
+`HostTransport` inventories and boundary ledgers at each interval.
+
+For an external driver, construct `LiveGrid(grid, start, source_id)` from
+`particula.coupling.flow_replay` and pass it to `GridRun`. The driver calls
+`advance_interval(frame)` when its next accepted time becomes known. Pass
+`host=HostTransport(...)` on a host-owned run. Both modes check the same
+geometry and conservation rules as offline runs. The binding retains the
+accepted forcing until `recording().save(path)`. For a host restart, load the
+matching forcing prefix into `LiveGrid(..., history=prefix)` before restoring
+the aerosol checkpoint.
+
+### Changing wind, turbulent spread and finite dust sources
+
+Use the `sounding_sequence` factory entry to drive parcels and fixed grids
+from the same set of profiles. Read a CSV with `SoundingSequence.from_csv`
+from `particula.coupling.sounding_sequence`, supplying `time_origin` and
+`provenance`. Pass the returned object as `{"sequence": sequence}`. For a
+dune, pass it as the existing builder's `sounding` parameter alongside the
+crest height, width and lid. Record the supplied time origin and source in
+the archive provenance. The provider advances as far as the next profile
+knot or reversal of a face flux. Always use the accepted time when stepping
+an external driver. [Turning wind and wet radius](../../studies/examples/gas-transport/turning_sounding.py)
+
+To compare a resolved puff with a gridded one, give both runs the same
+diffusivity and release mass. Enable particle dispersion on the resolved
+run and inspect both variance and boundary losses. [Particle and grid dispersion](../../studies/examples/gas-transport/turbulent_puff.py)
+
+For finite bed patches, specify a mass and threshold for each size class.
+Use the remaining bed inventory and the airborne, deposited and exported
+totals to check what each gust removed. [Two gusts over a dune](../../studies/examples/particle-processes/gust_dust_emission.py)
+
+For an independent CFD comparison, import the pressure-corrected face fluxes
+and compare the replay with the scalar transported by the host at the same
+time. The example download supplies the frozen cavity data. [OpenFOAM cavity replay](../../studies/validation/prescribed-flow/cavity_replay.py)

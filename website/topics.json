@@ -5134,6 +5134,46 @@
       "start_here": false
     },
     {
+      "source": "docs/studies/literature/particle-water-uptake/mt-soledad/index.md",
+      "title": "At Mt. Soledad, the denuded path counted fewer droplets of nearly unchanged mean size",
+      "topic": "activity-kappa",
+      "also": [
+        "activity-nonideal",
+        "condensation"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "mt-soledad",
+        "runs": [
+          "mt-soledad-droplet-response"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/guide/processes/activity.md",
+            "label": "Water activity and hygroscopicity"
+          },
+          {
+            "target": "docs/guide/processes/condensation.md",
+            "label": "Condensational growth"
+          }
+        ]
+      },
+      "tocFigure": "mt-soledad/graphical-abstract.svg",
+      "tocSource": "studies/mt-soledad/figures/toc.py"
+    },
+    {
+      "source": "docs/studies/literature/particle-water-uptake/mt-soledad/droplet_response.py",
+      "title": "Compare count loss and droplet growth at Mt. Soledad",
+      "topic": "condensation",
+      "also": [
+        "activity-kappa"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
       "source": "docs/studies/literature/mam4xx-coagulation/mam4xx_coagulation.py",
       "title": "Compare MAM4xx and particle-resolved Brownian coagulation",
       "topic": "brownian",
@@ -5346,6 +5386,31 @@
       },
       "tocFigure": "drizzle-settling.svg",
       "tocSource": "docs/studies/literature/drizzle-settling/toc.svg.in"
+    },
+    {
+      "source": "docs/studies/literature/dust-tray-retention/index.md",
+      "title": "A Particula-based model reduces mean error in three-hour dust median diameter by 37%",
+      "topic": "losses-deposition",
+      "also": [
+        "transport",
+        "optics",
+        "verification-scientific"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "dust-tray-retention",
+        "runs": [],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/guide/processes/wall-loss.md",
+            "label": "Size-dependent particle deposition"
+          }
+        ]
+      },
+      "tocFigure": "dust-tray-retention/analysis-toc.png",
+      "tocSource": "studies/dust-tray-retention/analysis_toc.py"
     },
     {
       "source": "docs/studies/examples/thermodynamics/moist_parcel.py",
@@ -5881,6 +5946,327 @@
           }
         ]
       }
+    },
+    {
+      "source": "docs/studies/literature/pallas-cloud-probes/index.md",
+      "title": "One droplet, two reported sizes: Simulating the Pallas cloud probes",
+      "topic": "optics",
+      "also": [
+        "size"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "pallas-cloud-probes",
+        "runs": [
+          "pallas-cloud-probes"
+        ],
+        "companions": [
+          "docs/studies/literature/pallas-cloud-probes/specification.md"
+        ],
+        "relations": [
+          {
+            "target": "docs/guide/optics/index.md",
+            "label": "Light scattering by spherical particles"
+          }
+        ]
+      },
+      "tocFigure": "pallas-cloud-probes/study-toc.png",
+      "tocSource": "studies/pallas-cloud-probes/figures/make_toc.py"
+    },
+    {
+      "source": "docs/studies/literature/pallas-cloud-probes/specification.md",
+      "title": "Reproduce the Pallas cloud probe comparison",
+      "topic": "optics",
+      "also": [
+        "size"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/pallas-cloud-probes/pallas_cloud_probes.py",
+      "title": "Compare Pallas cloud-probe spectra and optical sizing",
+      "topic": "optics",
+      "also": [
+        "size"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/theory/dynamics/prescribed-transport.md",
+      "title": "Transport in prescribed wind fields",
+      "topic": "transport",
+      "also": [
+        "parcels",
+        "atmosphere"
+      ],
+      "role": "Theory",
+      "start_here": false
+    },
+    {
+      "source": "docs/theory/dynamics/surface-emission.md",
+      "title": "Wind-driven emission from a finite dust bed",
+      "topic": "atmosphere",
+      "also": [
+        "parcels",
+        "transport"
+      ],
+      "role": "Theory",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/examples/gas-transport/turning_sounding.py",
+      "title": "Where does a dust puff go when the wind turns?",
+      "topic": "parcels",
+      "also": [
+        "atmosphere",
+        "transport"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "turning-sounding",
+        "runs": [
+          "turning-sounding"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/theory/thermodynamics/parcel-dynamics.md",
+            "label": "Interpolate measured heights and times"
+          },
+          {
+            "target": "docs/guide/processes/parcels.md",
+            "label": "Configure the prescribed flow and its transport",
+            "fragment": "use-one-flow-for-parcels-and-stationary-grids"
+          }
+        ]
+      }
+    },
+    {
+      "source": "docs/studies/examples/gas-transport/turbulent_puff.py",
+      "title": "How wide is the same puff on a grid and as individual particles?",
+      "topic": "transport",
+      "also": [
+        "parcels",
+        "atmosphere"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "turbulent-puff",
+        "runs": [
+          "turbulent-puff"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/theory/dynamics/prescribed-transport.md",
+            "label": "Derive particle and grid moments"
+          },
+          {
+            "target": "docs/guide/processes/parcels.md",
+            "label": "Configure the prescribed flow and its transport",
+            "fragment": "use-one-flow-for-parcels-and-stationary-grids"
+          }
+        ]
+      }
+    },
+    {
+      "source": "docs/studies/examples/particle-processes/gust_dust_emission.py",
+      "title": "What does the second gust lift from a partly depleted dune?",
+      "topic": "atmosphere",
+      "also": [
+        "parcels",
+        "transport"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "gust-dust-emission",
+        "runs": [
+          "gust-dust-emission"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/theory/dynamics/surface-emission.md",
+            "label": "Relate shear and area to the emitted mass"
+          },
+          {
+            "target": "docs/guide/processes/parcels.md",
+            "label": "Configure the prescribed flow and its transport",
+            "fragment": "use-one-flow-for-parcels-and-stationary-grids"
+          }
+        ]
+      }
+    },
+    {
+      "source": "docs/studies/validation/prescribed-flow/cavity_replay.py",
+      "title": "Can Particula reproduce the cavity’s tracer circulation?",
+      "topic": "transport",
+      "also": [
+        "parcels",
+        "gpu"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "cavity-replay",
+        "runs": [
+          "cavity-replay"
+        ],
+        "companions": [],
+        "relations": [
+          {
+            "target": "docs/theory/dynamics/prescribed-transport.md",
+            "label": "Track inventory through each CFD face"
+          },
+          {
+            "target": "docs/guide/processes/parcels.md",
+            "label": "Configure the prescribed flow and its transport",
+            "fragment": "use-one-flow-for-parcels-and-stationary-grids"
+          }
+        ]
+      }
+    },
+    {
+      "source": "docs/studies/literature/pallas-activation/index.md",
+      "title": "Which particles carry the salt? What the Pallas activation curves reveal beyond their midpoints",
+      "topic": "activity-kappa",
+      "also": [
+        "activity-nonideal",
+        "size"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "pallas-activation",
+        "runs": [
+          "pallas-activation"
+        ],
+        "companions": [
+          "docs/studies/literature/pallas-activation/chemistry.md"
+        ],
+        "relations": [
+          {
+            "target": "docs/guide/processes/ccn-retrieval.md",
+            "label": "Retrieve hygroscopicity from cloud activation"
+          }
+        ]
+      },
+      "tocFigure": "pallas-activation/salt-toc.png",
+      "tocSource": "studies/pallas-activation/figures/toc.py"
+    },
+    {
+      "source": "docs/studies/literature/pallas-activation/chemistry.md",
+      "title": "How the regional chemistry bounds the inferred salt allocation",
+      "topic": "activity-kappa",
+      "also": [
+        "activity-nonideal",
+        "size"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/pallas-activation/daily_salt.py",
+      "title": "Which Pallas dates require salt enrichment at 120 nm?",
+      "topic": "activity-kappa",
+      "also": [
+        "activity-nonideal",
+        "size"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/lund-freezing/index.md",
+      "title": "Fresh aerosol can form ice while entrainment reduces freezing across the cloud",
+      "topic": "transport",
+      "also": [
+        "condensation",
+        "parcels"
+      ],
+      "role": "Studies",
+      "start_here": false,
+      "study": {
+        "id": "lund-freezing",
+        "runs": [
+          "lund-freezing"
+        ],
+        "companions": [
+          "docs/studies/literature/lund-freezing/assay-and-pulse.md",
+          "docs/studies/literature/lund-freezing/reference-eddy.md",
+          "docs/studies/literature/lund-freezing/cloud-sensitivity.md",
+          "docs/studies/literature/lund-freezing/reproducibility.md"
+        ],
+        "relations": [
+          {
+            "target": "docs/theory/dynamics/prescribed-transport.md",
+            "label": "Follow water vapor through the prescribed flow"
+          }
+        ]
+      },
+      "tocFigure": "lund-freezing/cloud-toc.png",
+      "tocSource": "studies/lund-freezing/cloud-sources/plots.py"
+    },
+    {
+      "source": "docs/studies/literature/lund-freezing/assay-and-pulse.md",
+      "title": "Short freezing histories identify which droplets still form ice hours later",
+      "topic": "transport",
+      "also": [
+        "condensation",
+        "parcels"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/lund-freezing/reference-eddy.md",
+      "title": "Fresh dust-like aerosol increases primary ice while entrained air controls cloud water",
+      "topic": "transport",
+      "also": [
+        "condensation",
+        "parcels"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/lund-freezing/cloud-sensitivity.md",
+      "title": "How aerosol source, cloud water and circulation change the response to entrainment",
+      "topic": "transport",
+      "also": [
+        "condensation",
+        "parcels"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/lund-freezing/reproducibility.md",
+      "title": "Reproduce the Lund freezing and entrainment comparisons",
+      "topic": "transport",
+      "also": [
+        "condensation",
+        "parcels"
+      ],
+      "role": "Studies",
+      "start_here": false
+    },
+    {
+      "source": "docs/studies/literature/lund-freezing/compare_baselines.py",
+      "title": "Does the same fresh dust increase freezing against both controls?",
+      "topic": "transport",
+      "also": [
+        "condensation",
+        "parcels"
+      ],
+      "role": "Studies",
+      "start_here": false
     }
   ],
   "supporting": [
@@ -6151,11 +6537,14 @@
     {
       "source": "docs/studies/validation/chemistry/index.md",
       "reason": "Browsing directory for mechanism discovery validation."
+    },
+    {
+      "source": "docs/studies/validation/prescribed-flow/index.md",
+      "reason": "Browsing directory for prescribed-flow validation."
     }
   ],
   "study_group_exceptions": {
     "docs/studies/validation/condensation": "The sparse-activity benchmark compares chemistry construction, lookup and fallback costs across both parcel and box workflows. Its reference and timing matrix are shared across integrators.",
-    "docs/studies/literature": "Six primary choices cover distinct measurement or process families. The seventh is a cross-listed validation against wall loss theory.",
-    "docs/studies/validation": "Eight study collections distinguish mechanism inference and optical validation from the existing physical-process and workflow qualifications."
+    "docs/studies/validation": "The validation collections distinguish prescribed-flow replay against external CFD from local process tests, optics and release qualification."
   }
 }

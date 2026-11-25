@@ -2079,5 +2079,156 @@
       "studies/cloud-1833/full-transfer/stage-scores.csv": "stage-scores.csv"
     },
     "full_canvas": true
+  },
+  "mt-soledad-droplet-response": {
+    "title": "Compare count loss and droplet growth at Mt. Soledad",
+    "source": "docs/studies/literature/particle-water-uptake/mt-soledad/droplet_response.py",
+    "policy": "cpu",
+    "device": "cpu",
+    "timeout": 120,
+    "inputs": [
+      "studies/mt-soledad/figures/optical-spectrum.csv",
+      "studies/mt-soledad/figures/optical-summary.csv"
+    ],
+    "input_destinations": {
+      "studies/mt-soledad/figures/optical-spectrum.csv": "optical-spectrum.csv",
+      "studies/mt-soledad/figures/optical-summary.csv": "optical-summary.csv"
+    },
+    "data_expression": "report",
+    "render_functions": [],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "pallas-cloud-probes": {
+    "title": "Compare Pallas cloud-probe spectra and optical sizing",
+    "source": "docs/studies/literature/pallas-cloud-probes/pallas_cloud_probes.py",
+    "policy": "cpu",
+    "device": "cpu",
+    "timeout": 120,
+    "inputs": [
+      "docs/data/pallas-cloud-probes/distributions.csv",
+      "docs/data/pallas-cloud-probes/method-sizing.csv",
+      "docs/data/pallas-cloud-probes/method-budget.csv"
+    ],
+    "input_destinations": {
+      "docs/data/pallas-cloud-probes/distributions.csv": "distributions.csv",
+      "docs/data/pallas-cloud-probes/method-sizing.csv": "method-sizing.csv",
+      "docs/data/pallas-cloud-probes/method-budget.csv": "method-budget.csv"
+    },
+    "data_expression": "report",
+    "render_functions": [],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "turning-sounding": {
+    "title": "Where does a dust puff go when the wind turns?",
+    "source": "docs/studies/examples/gas-transport/turning_sounding.py",
+    "policy": "cuda",
+    "device": "cuda",
+    "timeout": 1800,
+    "inputs": [
+      "docs/data/prescribed-flow/turning-soundings.csv"
+    ],
+    "invoke": "report = run_example()",
+    "data_expression": "report",
+    "replot_invoke": "report = saved_data\nplot_results(report)",
+    "render_functions": [
+      "plot_results"
+    ],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "turbulent-puff": {
+    "title": "How wide is the same puff on a grid and as individual particles?",
+    "source": "docs/studies/examples/gas-transport/turbulent_puff.py",
+    "policy": "cuda",
+    "device": "cuda",
+    "timeout": 1800,
+    "inputs": [],
+    "invoke": "report = simulate(device=\"cuda:0\")\nplot_results(report)\nplt.show()",
+    "data_expression": "report",
+    "replot_invoke": "report = saved_data\nplot_results(report)",
+    "render_functions": [
+      "plot_results"
+    ],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "gust-dust-emission": {
+    "title": "What does the second gust lift from a partly depleted dune?",
+    "source": "docs/studies/examples/particle-processes/gust_dust_emission.py",
+    "policy": "cuda",
+    "device": "cuda",
+    "timeout": 1800,
+    "inputs": [],
+    "invoke": "report = simulate(device=\"cuda:0\")\nplot_results(report)\nplt.show()",
+    "data_expression": "report",
+    "replot_invoke": "report = saved_data\nplot_results(report)",
+    "render_functions": [
+      "plot_results"
+    ],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "cavity-replay": {
+    "title": "Can Particula reproduce the cavity’s tracer circulation?",
+    "source": "docs/studies/validation/prescribed-flow/cavity_replay.py",
+    "policy": "cuda",
+    "device": "cuda",
+    "timeout": 1800,
+    "inputs": [
+      "docs/data/prescribed-flow-cavity/cavity.npz",
+      "docs/data/prescribed-flow-cavity/cavity.json"
+    ],
+    "invoke": "report = simulate(device=\"cuda:0\")\nplot_results(report)\nplt.show()",
+    "data_expression": "report",
+    "replot_invoke": "report = saved_data\nplot_results(report)",
+    "render_functions": [
+      "plot_results"
+    ],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "pallas-activation": {
+    "title": "Which Pallas dates require salt enrichment at 120 nm?",
+    "source": "docs/studies/literature/pallas-activation/daily_salt.py",
+    "policy": "cpu",
+    "device": "cpu",
+    "timeout": 120,
+    "inputs": [
+      "docs/data/pallas-activation/daily.csv"
+    ],
+    "input_destinations": {
+      "docs/data/pallas-activation/daily.csv": "daily.csv"
+    },
+    "invoke": "report = run_example()",
+    "data_expression": "report",
+    "replot_invoke": "report = saved_data\nplot_results(report)",
+    "render_functions": [
+      "plot_results"
+    ],
+    "plot_inputs": [],
+    "full_canvas": true
+  },
+  "lund-freezing": {
+    "title": "Does the same fresh dust increase freezing against both controls?",
+    "source": "docs/studies/literature/lund-freezing/compare_baselines.py",
+    "policy": "cpu",
+    "device": "cpu",
+    "timeout": 120,
+    "inputs": [
+      "docs/data/lund-freezing/entrainment-baselines.csv"
+    ],
+    "input_destinations": {
+      "docs/data/lund-freezing/entrainment-baselines.csv": "entrainment-baselines.csv"
+    },
+    "invoke": "report = run_example()",
+    "data_expression": "report",
+    "replot_invoke": "report = saved_data\nplot_results(report)",
+    "render_functions": [
+      "plot_results"
+    ],
+    "plot_inputs": [],
+    "full_canvas": true
   }
 }
